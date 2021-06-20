@@ -18,8 +18,8 @@
         Deliver a fast, smooth experience to everyone - on mobile, console, PC or in VR.
     </p>
     <nav>
-        <a href="/tutorials/" class="arrow-link">Get started</a>
-        <a href="#learn-more" class="arrow-link external-link">Download latest</a>
+        <a href="tutorials/" class="arrow-link">Get started</a>
+        <a href="https://github.com/Elttob/Fusion/releases" class="arrow-link external-link">Download latest</a>
     </nav>
 </section>
 
@@ -306,10 +306,10 @@ return New "TextLabel" {
     function updateScroll() {
         if(document.body.scrollTop > 10) {
             document.documentElement.scrollTop = 100;
-            document.body.style.marginTop = "100px";
+            document.body.style.transform = "translateY(100px)";
         } else {
             document.documentElement.scrollTop = 0;
-            document.body.style.marginTop = "0px";
+            document.body.style.transform = "translateY(0px)";
         }
     }
 
