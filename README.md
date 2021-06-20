@@ -1,7 +1,6 @@
-
-<h1 align="center">
-  Fusion
-</h1>
+<p align="center" width="100%">
+  <img width="128em" src="/README-logo.png" alt="Fusion logo">
+</p>
 <p align="center">
 Fusion is a modern reactive UI library, built specifically for <a href="https://developer.roblox.com/">Roblox</a> and <a href="https://luau-lang.org/">Luau</a>.
 </p>
