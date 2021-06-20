@@ -1,0 +1,79 @@
+site_name: Fusion
+repo_name: Elttob/Fusion
+repo_url: https://github.com/Elttob/Fusion
+
+theme:
+  name: material
+  logo: images/logo-dark.svg
+  favicon: images/logo-dark.svg
+  palette:
+    scheme: fusion-dark
+    primary: black
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tracking
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Tutorials:
+    - Get Started: tutorials/index.md
+    - Instances:
+      - Hello, Fusion!: tutorials/instances/hello-fusion.md
+      - Handling Events: tutorials/instances/handling-events.md
+    - Basic State:
+      - State Objects: tutorials/basic-state/state-objects.md
+      - Computations: tutorials/basic-state/computations.md
+      - Linking UI and State: tutorials/basic-state/linking-ui-and-state.md
+    - "Project 1: Counting Clicks": tutorials/project-1-counting-clicks.md
+    - More State:
+      - Creating Lists: tutorials/more-state/creating-lists.md
+    - Organisation:
+      - Components: tutorials/organisation/organisation.md
+    - "Project 2: To-Do List": tutorials/project-2-to-do-list.md
+    - Animation:
+      - Simple Animation: tutorials/animation/simple-animation.md
+      - Advanced Tweens: tutorials/animation/advanced-tweens.md
+      - Advanced Springs: tutorials/animation/advanced-springs.md
+    - "Project 3: Tabbed Settings": tutorials/project-3-to-do-list.md
+  - Examples:
+    - null: null.md
+  - API Reference:
+    - Home: api-reference/index.md
+    - Luau Types: api-reference/luau-types.md
+    - Errors & Messages: api-reference/errors-and-messages.md
+    - Instances:
+      - New: api-reference/new.md
+      - Children: api-reference/children.md
+      - OnEvent: api-reference/onevent.md
+      - OnChange: api-reference/onchange.md
+    - State Management:
+      - State: api-reference/state.md
+      - Computed: api-reference/computed.md
+      - ComputedPairs: api-reference/computedpairs.md
+    - Animation:
+      - Tween: api-reference/tween.md
+      - TweenController: api-reference/tweencontroller.md
+      - Spring: api-reference/spring.md
+      - SpringController: api-reference/springcontroller.md
+
+extra_css:
+  - stylesheets/fusion.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - meta
+  - pymdownx.superfences
+  - pymdownx.betterem
+  - pymdownx.details
+  - pymdownx.tabbed
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      guess_lang: false
