@@ -182,6 +182,10 @@ return New "TextLabel" {
         background: none;
     }
 
+    .md-content__inner > .md-content__button:first-child {
+        display: none;
+    }
+
     .fusion-home-landing {
         min-height: 50rem;
         font-size: 1.25em;
@@ -229,7 +233,6 @@ return New "TextLabel" {
         margin-right: 0.25em;
         transition: margin 0.2s ease;
     }
-
 
     .fusion-home-landing a.arrow-link:hover::after {
         margin-left: 0.5em;
@@ -286,6 +289,12 @@ return New "TextLabel" {
     .md-typeset hr {
         border-bottom-color: var(--md-default-fg-color);
         opacity: calc(35 / 255);
+    }
+
+    @media screen and (max-width: 45rem) {
+        .fusion-home-landing {
+            font-size: 1em;
+        }
     }
 
     @media screen and (max-width: 60rem) {
