@@ -301,15 +301,13 @@ return New "TextLabel" {
 </style>
 
 <script>
-    // hack; if the body is scrolled, scroll the html
-    // I'M SO SORRY this is sinful
+    // hack; if the body is scrolled, manually activate the header background
+    const header = document.querySelector("[data-md-color-primary=black] .md-header")
     function updateScroll() {
         if(document.body.scrollTop > 10) {
-            document.documentElement.scrollTop = 100;
-            document.body.style.transform = "translateY(100px)";
+            header.dataset.mdState = "shadow";
         } else {
-            document.documentElement.scrollTop = 0;
-            document.body.style.transform = "translateY(0px)";
+            header.dataset.mdState = "";
         }
     }
 
