@@ -4,7 +4,7 @@
 	scroll-behavior: smooth;
 }
 
-body {
+:root {
 	overflow-x: hidden;
 }
 
