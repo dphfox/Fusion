@@ -4,6 +4,10 @@
 	scroll-behavior: smooth;
 }
 
+body {
+	overflow-x: hidden;
+}
+
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {

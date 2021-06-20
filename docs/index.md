@@ -227,12 +227,13 @@ return New "TextLabel" {
         display: inline-block;
         margin-left: 0.25em;
         margin-right: 0.25em;
-        transition: transform 0.2s ease;
+        transition: margin 0.2s ease;
     }
 
 
     .fusion-home-landing a.arrow-link:hover::after {
-        transform: translateX(0.25em);
+        margin-left: 0.5em;
+        margin-right: 0em;
     }
 
     .fusion-home-landing .landing-image {
