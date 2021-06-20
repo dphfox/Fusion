@@ -6,3 +6,6 @@
 
 # Ignore lock files
 *.lock
+
+# Ignore site folder
+/site/
