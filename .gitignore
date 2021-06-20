@@ -1,0 +1,8 @@
+# Ignore Roblox files
+*.rbxlx
+*.rbxmx
+*.rbxm
+*.rbxl
+
+# Ignore lock files
+*.lock
