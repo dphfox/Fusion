@@ -1,0 +1,1372 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/logo-dark.svg">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
+    
+    
+      
+        <title>Errors & Messages - Fusion</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f955dcd.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,400i,700%7CJetBrains+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Inter";--md-code-font-family:"JetBrains Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/fusion.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="fusion-dark" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#computedcallbackerror" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fusion" class="md-header__button md-logo" aria-label="Fusion" data-md-component="logo">
+      
+  <img src="../../images/logo-dark.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fusion
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Errors & Messages
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Elttob/Fusion/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Elttob/Fusion
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../null.md" class="md-tabs__link">
+        Examples
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link md-tabs__link--active">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
+      
+  <img src="../../images/logo-dark.svg" alt="logo">
+
+    </a>
+    Fusion
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Elttob/Fusion/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Elttob/Fusion
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorials
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/" class="md-nav__link">
+        Get Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      <label class="md-nav__link" for="__nav_2_2">
+        Instances
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Instances
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/instances/hello-fusion/" class="md-nav__link">
+        Hello, Fusion!
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/instances/handling-events/" class="md-nav__link">
+        Handling Events
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      <label class="md-nav__link" for="__nav_2_3">
+        Basic State
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Basic State" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Basic State
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/basic-state/state-objects/" class="md-nav__link">
+        State Objects
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/basic-state/computations/" class="md-nav__link">
+        Computations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/basic-state/linking-ui-and-state.md" class="md-nav__link">
+        Linking UI and State
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/project-1-counting-clicks/" class="md-nav__link">
+        Project 1: Counting Clicks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      <label class="md-nav__link" for="__nav_2_5">
+        More State
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="More State" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          More State
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/more-state/creating-lists.md" class="md-nav__link">
+        Creating Lists
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      <label class="md-nav__link" for="__nav_2_6">
+        Organisation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Organisation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Organisation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/organisation/organisation.md" class="md-nav__link">
+        Components
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/project-2-to-do-list.md" class="md-nav__link">
+        Project 2: To-Do List
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      <label class="md-nav__link" for="__nav_2_8">
+        Animation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/animation/simple-animation.md" class="md-nav__link">
+        Simple Animation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/animation/advanced-tweens.md" class="md-nav__link">
+        Advanced Tweens
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/animation/advanced-springs.md" class="md-nav__link">
+        Advanced Springs
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/project-3-to-do-list.md" class="md-nav__link">
+        Project 3: Tabbed Settings
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Examples
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../null.md" class="md-nav__link">
+        None
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        API Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../luau-types/" class="md-nav__link">
+        Luau Types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Errors & Messages
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Errors & Messages
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#computedcallbackerror" class="md-nav__link">
+    computedCallbackError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cannotcreateclass" class="md-nav__link">
+    cannotCreateClass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cannotassignproperty" class="md-nav__link">
+    cannotAssignProperty
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strictreaderror" class="md-nav__link">
+    strictReadError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eventnotfound" class="md-nav__link">
+    eventNotFound
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propertynotfound" class="md-nav__link">
+    propertyNotFound
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognisedpropertykey" class="md-nav__link">
+    unrecognisedPropertyKey
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unknownmessage" class="md-nav__link">
+    unknownMessage
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        Instances
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Instances
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new.md" class="md-nav__link">
+        New
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../children.md" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../onevent.md" class="md-nav__link">
+        OnEvent
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../onchange.md" class="md-nav__link">
+        OnChange
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      <label class="md-nav__link" for="__nav_4_5">
+        State Management
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="State Management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          State Management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../state.md" class="md-nav__link">
+        State
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../computed.md" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../computedpairs.md" class="md-nav__link">
+        ComputedPairs
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        Animation
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tween.md" class="md-nav__link">
+        Tween
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tweencontroller.md" class="md-nav__link">
+        TweenController
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring.md" class="md-nav__link">
+        Spring
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../springcontroller.md" class="md-nav__link">
+        SpringController
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#computedcallbackerror" class="md-nav__link">
+    computedCallbackError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cannotcreateclass" class="md-nav__link">
+    cannotCreateClass
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cannotassignproperty" class="md-nav__link">
+    cannotAssignProperty
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strictreaderror" class="md-nav__link">
+    strictReadError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eventnotfound" class="md-nav__link">
+    eventNotFound
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propertynotfound" class="md-nav__link">
+    propertyNotFound
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognisedpropertykey" class="md-nav__link">
+    unrecognisedPropertyKey
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unknownmessage" class="md-nav__link">
+    unknownMessage
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Elttob/Fusion/edit/master/docs/api-reference/errors-and-messages.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Errors & Messages</h1>
+                
+                <p>If your code isn't working properly, or if Fusion is malfunctioning, you may see
+some errors being printed to the output. Each message comes with a unique ID at
+the end.</p>
+<p>On this page, you can learn more about any error messages you're receiving.</p>
+<hr />
+<h2 id="computedcallbackerror">computedCallbackError<a class="headerlink" href="#computedcallbackerror" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Computed callback error: attempt to index a nil value</p>
+</blockquote>
+<p>When you create a new <a href="/api-reference/api/computed.md">computed object</a>, you
+can pass in a callback. The callback determines the computed object's value:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">example</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="c1">-- this is the computed&#39;s callback</span>
+    <span class="kr">return</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+<p>If an error is thrown inside of the callback, this message will show with
+details of the error.</p>
+<p>Furthermore, if your code attempts to <code>:get()</code> the value of a computed object
+that errored last time it attempted a computation, the same error will be thrown.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Is there a bug or unhandled edge case in your callback?</li>
+<li>Is your computed object using correct, valid data?</li>
+<li>Are you trying to access data which doesn't exist yet? (for example, trying
+to index something expected to be a table, but which currently is <code>nil</code>)</li>
+<li>Are you calling a function which can error sometimes, but aren't catching the
+error using <code>pcall</code>?</li>
+</ul>
+<hr />
+<h2 id="cannotcreateclass">cannotCreateClass<a class="headerlink" href="#cannotcreateclass" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Can't create a new instance of class 'Foo'.
+Did you spell the class name correctly?</p>
+</blockquote>
+<p>When using the <a href="/api-reference/api/new.md">New</a> function to construct instances,
+you're required to pass in a string specifying the class type of the instance:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- this will create a new Folder instance called MyThing</span>
+<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;MyThing&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>However, if an invalid class type is passed in, then this error will be thrown.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Did you spell the class name correctly?</li>
+<li>Are you trying to instantiate a class type which is not creatable?</li>
+<li>Does your script have the necessary privileges to create that class type?</li>
+</ul>
+<hr />
+<h2 id="cannotassignproperty">cannotAssignProperty<a class="headerlink" href="#cannotassignproperty" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>The class type 'Foo' has no assignable property 'Bar'.
+Did you spell the property name correctly?</p>
+</blockquote>
+<p>When using the <a href="/api-reference/api/new.md">New</a> function to construct instances,
+you're able to pass in properties to be assigned to the instance:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- this will create a new Folder instance called MyThing</span>
+<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;MyThing&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>However, if you attempt to assign a non-existent or locked property, then this
+error will be thrown.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Did you spell the property name correctly?</li>
+<li>Does your script have the necessary privileges to assign that property?</li>
+</ul>
+<hr />
+<h2 id="strictreaderror">strictReadError<a class="headerlink" href="#strictreaderror" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>'Foo' is not a valid member of 'Bar'.
+Did you spell the member name correctly?</p>
+</blockquote>
+<p>In Fusion, some tables may have strict reading rules. This is typically used on
+public APIs as a defense against typos.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Did you spell the member name correctly?</li>
+<li>Are you trying to access a member that doesn't exist?<ul>
+<li>You might encounter this problem after updating Fusion, if you're moving
+to a version with breaking changes. Make sure to review your code for bugs!</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="eventnotfound">eventNotFound<a class="headerlink" href="#eventnotfound" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>The Frame class doesn't have an event called 'Foo'.
+Did you spell the event name correctly?</p>
+</blockquote>
+<p>When using the <a href="/api-reference/api/new.md">New</a> function to construct instances,
+you can register event handlers by using the <a href="/api-reference/api/onevent.md">OnEvent</a>
+function and passing an event name:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- this will print a message when a user clicks this button</span>
+<span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I was clicked!&quot;</span><span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>However, if no event with that name was found, then you'll see this error.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Did you spell the event name correctly?</li>
+<li>Are you using a property name instead of an event name?<ul>
+<li>If you want to handle property change events, consider using the <code>Changed</code>
+event, or registering a property change handler using <a href="/api-reference/api/onchange.md">OnChange</a>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="propertynotfound">propertyNotFound<a class="headerlink" href="#propertynotfound" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>The Frame class doesn't have a property called 'Foo'.
+Did you spell the property name correctly?</p>
+</blockquote>
+<p>When using the <a href="/api-reference/api/new.md">New</a> function to construct instances,
+you can register property change handlers by using the <a href="/api-reference/api/onchange.md">OnChange</a>
+function and passing a property name:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- this will print a message when a user types in this text box</span>
+<span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextBox&quot;</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">OnChange</span> <span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">newText</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span> <span class="n">newText</span><span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>However, if no property with that name was found, then you'll see this error.</p>
+<p>If you're seeing this error, consider the following:</p>
+<ul>
+<li>Did you spell the property name correctly?</li>
+</ul>
+<hr />
+<h2 id="unrecognisedpropertykey">unrecognisedPropertyKey<a class="headerlink" href="#unrecognisedpropertykey" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>'number' keys aren't accepted in the property table of <code>New</code>.
+Make sure you're only passing strings or symbols as keys.</p>
+</blockquote>
+<p>When you create an instance in Fusion using <a href="/api-reference/api/new.md">New</a>,
+you can pass in a 'property table' containing properties, children, event and
+property change handlers, etc.</p>
+<p>This table is only expected to contain keys of two types:</p>
+<ul>
+<li>string keys, e.g. <code>Name = "Example"</code></li>
+<li>symbol keys, e.g. <code>[OnEvent.Foo] = ...</code></li>
+</ul>
+<p>If keys of a different type are present, it's usually not intentional. Fusion
+will ignore any key/value pairs with unrecognised key types, but will produce
+this warning to make sure you're aware of the issue.</p>
+<p>If you're getting this warning, consider the following:</p>
+<ul>
+<li>Does your property table have an array part? For example:
+<div class="highlight"><pre><span></span><code><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+
+    <span class="c1">-- this Frame isn&#39;t going to be added as a child!</span>
+    <span class="c1">-- it&#39;s being added to the array part of the table, and so it&#39;ll have a</span>
+    <span class="c1">-- number key, which will produce this warning</span>
+    <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>If you're building the property table at runtime, are you accidentally indexing
+non-string or non-symbol parts of the table? For example:
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">propertyTable</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="kr">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="kr">in</span> <span class="nb">pairs</span><span class="p">(</span><span class="n">someData</span><span class="p">)</span> <span class="kr">do</span>
+    <span class="c1">-- are you sure that `key` is valid here?</span>
+    <span class="c1">-- if `someData` was an array, then `key` would be a number!</span>
+    <span class="n">propertyTable</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="kr">end</span>
+
+<span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">(</span><span class="n">propertyTable</span><span class="p">)</span>
+</code></pre></div></li>
+</ul>
+<hr />
+<h2 id="unknownmessage">unknownMessage<a class="headerlink" href="#unknownmessage" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Unknown message - the code logging this message didn't provide a valid message
+ID.</p>
+</blockquote>
+<p>When Fusion code attempts to log a message, warning or error, it needs to
+provide an ID. This ID is used to show the correct message, and serves as a
+simple, memorable identifier if you need to look up the message later.
+However, if that code provides an invalid ID, then the message will be replaced
+with this one.</p>
+<p>If you see this message, it's almost certainly an internal bug, so make sure to
+get in contact so the issue can be fixed.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../luau-types/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Luau Types
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>
