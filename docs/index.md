@@ -210,8 +210,16 @@ return New "TextLabel" {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 2em;
+        flex-wrap: wrap;
+        column-gap: 2em;
+        row-gap: 1lh;
     }
+
+    .fusion-home-landing nav > * {
+        flex-shrink: 0;
+        flex-grow: 0;
+    }
+
 
     .fusion-home-landing a.arrow-link::after {
         content: "->";
@@ -284,8 +292,8 @@ return New "TextLabel" {
         }
 
         body::before {
-            top: 20rem;
-            transform: translateZ(-0.5px) scale(1.2);
+            top: 30rem;
+            transform: translateZ(-0.7px) scale(1.2);
         }
     }
 
