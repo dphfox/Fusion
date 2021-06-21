@@ -120,7 +120,7 @@ return New "TextLabel" {
     </p>
     <p>
         Build your most beautiful, bold, animated interfaces with confidence -
-        Fusion scales to high-refresh-rate phones and VR effortlessly.
+        Fusion scales to high-refresh-rate devices and VR effortlessly.
     </p>
 </section>
 
