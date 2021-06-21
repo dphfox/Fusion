@@ -4,6 +4,9 @@
     - navigation
 ---
 
+<link rel="stylesheet" href="assets/index.css">
+<script src="assets/index.js"></script>
+
 <section class="fusion-home-landing">
     <h1>Build your best UI.</h1>
     <p>
@@ -136,6 +139,3 @@ return New "TextLabel" {
         seasoned UI developers to novice scripters.
     </p>
 </section>
-
-<link rel="stylesheet" href="assets/index.css">
-<script src="assets/index.js"></script>
