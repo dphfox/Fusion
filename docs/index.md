@@ -148,18 +148,6 @@ return New "TextLabel" {
         scroll-behavior: auto;
     }
 
-    html::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 0;
-        display: block;
-        width: 100%;
-        height: 100px;
-        z-index: -9999;
-        pointer-events: none;
-    }
-
     body {
         position: absolute;
         top: 0;
@@ -293,6 +281,11 @@ return New "TextLabel" {
     @media screen and (max-width: 45rem) {
         .fusion-home-landing {
             font-size: 1em;
+        }
+
+        body::before {
+            top: 20rem;
+            transform: translateZ(-0.5px) scale(1.2);
         }
     }
 
