@@ -59,11 +59,11 @@ return New "ScreenGui" {
 <section class="fusion-home-float">
     <h2>Reactive state management</h2>
     <p>
-        Fluidly write all your calculations, and they'll be intelligently run as
+        Fluidly write all your calculations, and they'll be automatically run as
         your variables change.
     </p>
     <p>
-        Fusion brings true granular reactivity from academia to the real world.
+        Fusion accelerates and optimises all of your computations for you.
     </p>
 </section>
 
@@ -92,7 +92,7 @@ return New "TextLabel" {
         of any Roblox library. Access tweens and springs with one line of code.
     </p>
     <p>
-        Animated data can be processed exactly like any other data.
+        Animate anything instantly, no refactoring or performance tricks required.
     </p>
 </section>
 
@@ -116,12 +116,11 @@ return New "TextLabel" {
     <h2>Fusion is built with performance in mind, from idea to implementation.</h2>
     <p>
         From top-end desktop PCs to budget phones from years ago, Fusion
-        delivers an exceptionally light, fluid experience for everyone.
+        delivers an exceptionally light, fluid experience as standard.
     </p>
     <p>
-        This ensures your code will scale now and into the future. Even with
-        high-resolution, high-refresh-rate screens coming to low-end devices,
-        all of your UIs will feel fast and stay fast.
+        Build your most beautiful, bold, animated interfaces with confidence -
+        Fusion scales to high-refresh-rate phones and VR effortlessly.
     </p>
 </section>
 
