@@ -120,7 +120,7 @@ local gui = New "ScreenGui" {
 If you press 'Play', you should see that a ScreenGui has appeared in your
 PlayerGui, with all of the properties we've set:
 
-![Explorer screenshot](/images/tutorials/learning-fusion/hello-fusion/MyFirstGui.png)
+![Explorer screenshot](MyFirstGui.png)
 
 Hopefully you're getting comfortable with this syntax - we'll expand on it in
 the next section.
@@ -170,7 +170,7 @@ local gui = New "ScreenGui" {
 
 If you press 'Play' now, you should see a TextLabel in the centre of your screen:
 
-![Final result](/images/tutorials/learning-fusion/hello-fusion/FinalResult.png)
+![Final result](FinalResult.png)
 
 -----
 
@@ -232,7 +232,7 @@ local gui = New "ScreenGui" {
 
 If you press 'Play', you should see both TextLabels appear:
 
-![Final result with many messages](/images/tutorials/learning-fusion/hello-fusion/FinalResult-Many.png)
+![Final result with many messages](FinalResult-Many.png)
 
 -----
 

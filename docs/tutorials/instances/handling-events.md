@@ -92,7 +92,7 @@ from the event. Here, we're just printing them out for demonstration purposes.
 If you press 'Play' and click the button a few times, you should see something
 like this in the output:
 
-![Event handler output](/images/tutorials/learning-fusion/handling-events/Clicked-Output.png)
+![Event handler output](Clicked-Output.png)
 
 That's all there is to event handling! Fusion will manage the event connections
 for you automatically.
@@ -149,7 +149,7 @@ changes:
 Now, if you press 'Play' and start typing into the TextBox, you should see the
 TextBox's contents being printed to the output for each character you type:
 
-![Property change handler output](/images/tutorials/learning-fusion/handling-events/Typing-Output.png)
+![Property change handler output](Typing-Output.png)
 
 -----
 

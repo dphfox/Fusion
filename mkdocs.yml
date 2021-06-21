@@ -5,8 +5,8 @@ repo_url: https://github.com/Elttob/Fusion
 
 theme:
   name: material
-  logo: images/logo-dark.svg
-  favicon: images/logo-dark.svg
+  logo: assets/logo-dark.svg
+  favicon: assets/logo-dark.svg
   palette:
     scheme: fusion-dark
     primary: black
@@ -17,6 +17,9 @@ theme:
     - navigation.tabs
   icon:
     repo: fontawesome/brands/github
+
+extra_css:
+  - assets/fusion.css
 
 nav:
   - Home: index.md
@@ -60,9 +63,6 @@ nav:
       - TweenController: api-reference/tweencontroller.md
       - Spring: api-reference/spring.md
       - SpringController: api-reference/springcontroller.md
-
-extra_css:
-  - stylesheets/fusion.css
 
 markdown_extensions:
   - admonition

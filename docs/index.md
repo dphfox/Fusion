@@ -112,7 +112,7 @@ return New "TextLabel" {
 ```
 
 <section class="fusion-home-centre" style="margin-top: 5em">
-    <img style="display: block; width: 100%; height: auto;" src="images/index/performance.svg" alt="Vector illustration of different device types" width="586" height="200">
+    <img style="display: block; width: 100%; height: auto;" src="index/performance.svg" alt="Vector illustration of different device types" width="586" height="200">
     <h2>Fusion is built with performance in mind, from idea to implementation.</h2>
     <p>
         From top-end desktop PCs to budget phones from years ago, Fusion
@@ -125,7 +125,7 @@ return New "TextLabel" {
 </section>
 
 <section class="fusion-home-centre" style="margin-top: 5em">
-    <img style="display: block; width: 100%; height: auto;" src="images/index/get-started.svg" alt="Vector illustration of 'get started' process" width="586" height="200">
+    <img style="display: block; width: 100%; height: auto;" src="index/get-started.svg" alt="Vector illustration of 'get started' process" width="586" height="200">
     <h2>Get up and running with Fusion in minutes.</h2>
     <p>
         Downloading and importing Fusion into Studio is quick, easy and 100%
@@ -186,7 +186,7 @@ return New "TextLabel" {
         left: calc(50% - (116.4rem / 2));
         width: 116.4rem;
         height: 65.475rem;
-        background: url("images/index/background2.jpg");
+        background: url("index/parallax-background.jpg");
         background-size: 100%;
         background-repeat: no-repeat;
 

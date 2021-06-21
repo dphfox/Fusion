@@ -146,5 +146,5 @@ run without any errors.
 	If you're using the installation guide from above, your `ReplicatedStorage`
 	should look like this:
 
-	![Explorer screenshot](/images/tutorials/get-started/ReplicatedStorage-Fusion.png)
+	![Explorer screenshot](index/ReplicatedStorage-Fusion.png)
 
