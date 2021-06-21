@@ -1,6 +1,3 @@
-!!! fail "Unreleased"
-	Fusion is not yet released - check back here later!
-
 Welcome to the Fusion tutorial section! Here, you'll learn how to build great
 interfaces with Fusion, even if you're a complete newcomer to the library.
 
@@ -74,6 +71,10 @@ the script as it appears after following all the steps of the tutorial.
 
 ## Installing Fusion
 
+!!! fail "Unreleased"
+	Fusion is not yet released - check back here later!
+
+<!--
 Fusion is distributed as a single `ModuleScript`. Before starting, you'll need
 to add this module script to your game. Here's how:
 
@@ -110,6 +111,7 @@ using a plugin, here's how to install Fusion:
 
 	Once everything is set up, you should see Fusion appear in Studio when you
 	next synchronise your project.
+	-->
 
 -----
 
