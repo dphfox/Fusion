@@ -34,16 +34,19 @@ nav:
       - Properties & State: tutorials/basic-state/properties-&-state.md
     - "Project 1: Counting Clicks": tutorials/project-1-counting-clicks.md
     - More State:
+      - Computing Arrays: tutorials/more-state/computing-arrays.md
       - Children & State: tutorials/more-state/children-&-state.md
-      - Creating Lists: tutorials/more-state/creating-lists.md
     - Organisation:
-      - Components: tutorials/organisation/organisation.md
+      - Components: tutorials/organisation/components.md
+      - Structure: tutorials/organisation/structure.md
     - "Project 2: To-Do List": tutorials/project-2-to-do-list.md
-    - Animation:
-      - Simple Animation: tutorials/animation/simple-animation.md
-      - Advanced Tweens: tutorials/animation/advanced-tweens.md
-      - Advanced Springs: tutorials/animation/advanced-springs.md
-    - "Project 3: Tabbed Settings": tutorials/project-3-to-do-list.md
+    - Tweens:
+      - Simple Tweening: tutorials/tweens/simple-tweening.md
+      - Tween Controllers: tutorials/tweens/tween-controllers.md
+    - Springs:
+      - Simple Springs: tutorials/springs/simple-springs.md
+      - Spring Controllers: tutorials/springs/spring-controllers.md
+    - "Project 3: Messaging": tutorials/project-3-messaging.md
   - Examples:
     - null: null.md
   - API Reference:
