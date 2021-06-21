@@ -6,8 +6,7 @@
 	color-scheme: dark;
 }
 
-:root {
-	width: 100%;
+body {
 	overflow-x: hidden;
 }
 
