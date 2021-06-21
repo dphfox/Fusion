@@ -2,6 +2,8 @@
 
 * {
 	scroll-behavior: smooth;
+	scrollbar-color: dark;
+	color-scheme: dark;
 }
 
 body {
