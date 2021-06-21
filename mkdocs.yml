@@ -31,9 +31,10 @@ nav:
     - Basic State:
       - State Objects: tutorials/basic-state/state-objects.md
       - Computations: tutorials/basic-state/computations.md
-      - Linking UI and State: tutorials/basic-state/linking-ui-and-state.md
+      - Properties & State: tutorials/basic-state/properties-&-state.md
     - "Project 1: Counting Clicks": tutorials/project-1-counting-clicks.md
     - More State:
+      - Children & State: tutorials/more-state/children-&-state.md
       - Creating Lists: tutorials/more-state/creating-lists.md
     - Organisation:
       - Components: tutorials/organisation/organisation.md
