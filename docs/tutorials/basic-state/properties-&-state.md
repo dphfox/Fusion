@@ -73,7 +73,7 @@ reason why it's good to build our UIs from code.
 
 Using a state or computed object as a property works intuitively:
 
-```Lua linenums="11" hl_lines="19"
+```Lua linenums="11" hl_lines="18"
 local numPlayers = State(5)
 local message = Computed(function()
 	return "There are " .. numPlayers:get() .. " online."
