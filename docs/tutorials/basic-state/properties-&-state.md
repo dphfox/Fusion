@@ -36,7 +36,11 @@ link up properties to our UI state so we can display a message on-screen.
 
 -----
 
-## Using State For Properties
+## Passing State To Properties
+
+Up until now, we've dealt with UI and state management as two separate systems.
+However, the `New` function allows us to connect the two easily; this is one of
+the things building UI from code makes simpler.
 
 We already know that the `New` function can be used to set properties - in the
 code above, we're already using this to build a simple UI:
@@ -57,8 +61,8 @@ local gui = New "ScreenGui" {
 }
 ```
 
-Additionally, we now know how to work with UI state, using `State` and `Computed`
-objects to store and process data:
+Above that, we're using state and computed objects to store and process some
+simple data:
 
 ```Lua linenums="11"
 local numPlayers = State(5)
@@ -67,11 +71,8 @@ local message = Computed(function()
 end)
 ```
 
-Up until now, we've dealt with UI and state management as two separate systems.
-However, the `New` function allows us to combine the two; this is part of the
-reason why it's good to build our UIs from code.
-
-Using a state or computed object as a property works intuitively:
+The `New` function accepts these objects as properties directly. In other words,
+we can intuitively set the Text of our label to be `message`:
 
 ```Lua linenums="11" hl_lines="18"
 local numPlayers = State(5)
@@ -124,8 +125,8 @@ local gui = New "ScreenGui" {
 }
 ```
 
-That's all you need to know - connecting properties to instances is extremely
-straightforward with the `New` function!
+That's all you need to know - it's trivial to use any state as a property when
+using the `New` function.
 
 -----
 
