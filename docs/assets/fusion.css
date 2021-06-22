@@ -6,10 +6,6 @@
 	color-scheme: dark;
 }
 
-body {
-	overflow-x: hidden;
-}
-
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
@@ -68,6 +64,7 @@ body {
 	--md-text-link-color: var(--md-typeset-a-color);
 
 	--fusion-header-glass-background: rgba(13, 13, 15, 1);
+	--fusion-header-glass-blur: initial;
 
 	--md-footer-fg-color: var(--md-default-fg-color);
 	--md-footer-fg-color--light: var(--md-default-fg-color--light);
@@ -89,8 +86,11 @@ body {
 }
 
 @supports (backdrop-filter: blur(1rem)) {
-	[data-md-color-scheme="fusion-dark"] {
-		--fusion-header-glass-background: rgba(13, 13, 15, 0.8);
+	@media screen and (min-width: 59.9375em) {
+		[data-md-color-scheme="fusion-dark"] {
+			--fusion-header-glass-background: rgba(13, 13, 15, 0.8);
+			--fusion-header-glass-blur: blur(1rem);
+		}
 	}
 }
 
@@ -104,7 +104,7 @@ body {
 [data-md-color-primary=black] .md-header[data-md-state="shadow"] {
 	background: var(--fusion-header-glass-background);
 	box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-	backdrop-filter: blur(1rem);
+	backdrop-filter: var(--fusion-header-glass-blur);
 }
 
 [data-md-color-primary=black] .md-tabs {
