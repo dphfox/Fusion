@@ -12,7 +12,7 @@ On this page, you can learn more about any error messages you're receiving.
 Computed callback error: attempt to index a nil value
 ```
 
-When you create a new [computed object](/api-reference/api/computed.md), you
+When you create a new [computed object](../computed), you
 can pass in a callback. The callback determines the computed object's value:
 
 ```Lua
