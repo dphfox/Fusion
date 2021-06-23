@@ -132,7 +132,45 @@ using the `New` function.
 
 ## Deferred Updates
 
-It's worth noting that property changes aren't applied right away.
+It's worth noting that property changes aren't applied right away - they're
+deferred until the next render step.
+
+In this example, the value of the state object is changed many times, however
+only one change will actually happen (detected by the change handler). This is
+because Fusion waits until the next render step before applying any changes:
+
+=== "Lua"
+	```Lua
+	local state = State(1)
+
+	local ins = New "NumberValue" {
+		Value = state,
+		[OnChange "Value"] = function(newValue)
+			print("Value is now: ", newValue)
+		end)
+	}
+
+	state:set(2)
+	state:set(3)
+	state:set(4)
+	state:set(5)
+	```
+=== "Expected output"
+	```Lua
+	Value is now: 5
+	```
+
+This is done for optimisation purposes; while it's relatively cheap to update
+state objects many times per frame, it's expensive to update instances.
+Furthermore, there's no reason to update an instance many times per frame, since
+it'll only be rendered once.
+
+In almost all cases, this is a desirable optimisation. However, in a select few
+cases, it can be problematic.
+
+Specifically, in the above example, the `OnChange` handler fires *one frame after*
+the state object is changed, rather than immediately. For this reason, be
+cautious about using `OnChange` on properties you also bind state to.
 
 -----
 
