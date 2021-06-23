@@ -3,7 +3,7 @@ local Children: Symbol
 ```
 
 The symbol used to denote the children of an instance when working with the
-`New` function.
+[New](../new) function.
 
 When using this symbol as a key in `New`'s property table, the values will be
 treated as children, and parented according to the rules below.

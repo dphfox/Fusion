@@ -2,7 +2,7 @@
 function OnEvent(eventName: string): Symbol
 ```
 
-Generates symbols used to denote event handlers when working with the `New`
+Generates symbols used to denote event handlers when working with the [New](../new)
 function.
 
 When using this symbol as a key in `New`'s property table, the value is expected
