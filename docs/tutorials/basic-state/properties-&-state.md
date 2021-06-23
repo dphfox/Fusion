@@ -135,9 +135,9 @@ using the `New` function.
 It's worth noting that property changes aren't applied right away - they're
 deferred until the next render step.
 
-In this example, the value of the state object is changed many times, however
-only one change will actually happen (detected by the change handler). This is
-because Fusion waits until the next render step before applying any changes:
+In this example, the value of the state object is changed many times. However,
+Fusion will only update the property at the next render step, meaning we only
+see the last change have an effect:
 
 === "Lua"
 	```Lua
@@ -168,8 +168,11 @@ it'll only be rendered once.
 In almost all cases, this is a desirable optimisation. However, in a select few
 cases, it can be problematic.
 
-Specifically, in the above example, the `OnChange` handler fires *one frame after*
-the state object is changed, rather than immediately. For this reason, be
+Specifically, in the above example, the `OnChange` handler is not fired every
+time the state object changes value. Instead, it's fired in the render step
+*after* the state object is changed.
+
+This can lead to subtle off-by-one-frame errors if you're not careful, so be
 cautious about using `OnChange` on properties you also bind state to.
 
 -----
