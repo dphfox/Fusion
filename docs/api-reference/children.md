@@ -25,6 +25,7 @@ local example = New "Folder" {
 ## Processing Children
 
 A 'child' is defined (recursively) as:
+
 - an instance
 - a [state object](../state) or [computed object](../computed) containing children
 - an array of children
