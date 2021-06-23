@@ -81,9 +81,9 @@ myName:set("John")
 Fusion provides additional symbol keys for other, specialised purposes - see
 their documentation for more info on how each one works:
 
-- [Children](./children.md) - parents other instances into this
+- [Children](../children.md) - parents other instances into this
 instance
-- [OnEvent](./onevent.md) - connects a callback to an event on
+- [OnEvent](../onevent.md) - connects a callback to an event on
 this instance
-- [OnChange](./onchange.md) - connects a callback to the
+- [OnChange](../onchange.md) - connects a callback to the
 `GetPropertyChangedSignal` event for a property on this instance
