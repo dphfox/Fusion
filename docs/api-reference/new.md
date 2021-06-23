@@ -1,3 +1,5 @@
+# `New`
+
 ```Lua
 function New(className: string): (props: {[string | Symbol]: any}) -> (Instance)
 ```

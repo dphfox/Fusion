@@ -1,3 +1,5 @@
+# `OnChange`
+
 ```Lua
 function OnChange(propertyName: string): Symbol
 ```
