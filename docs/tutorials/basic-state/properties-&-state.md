@@ -170,7 +170,8 @@ cases, it can be problematic.
 
 Specifically, in the above example, the `OnChange` handler is not fired every
 time the state object changes value. Instead, it's fired in the render step
-*after* the state object is changed.
+*after* the state object is changed, because that's when the property actually
+changes.
 
 This can lead to subtle off-by-one-frame errors if you're not careful, so be
 cautious about using `OnChange` on properties you also bind state to.
