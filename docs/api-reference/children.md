@@ -78,8 +78,11 @@ local parent = New "Frame" {
 
 When using a state or computed object as a child, it will be bound; when the
 value of the state object changes, it'll unparent the old children and parent
-the new children. Note that, as with bound properties, updates are deferred to
-the next render step, and so don't happen right away:
+the new children.
+
+!!! note
+	As with bound properties, updates are deferred to the next render step, and
+	so parenting won't occur right away.
 
 ```Lua
 local child1 = New "Folder" {
@@ -102,3 +105,10 @@ wait(1) -- wait for deferred updates to run
 
 print(parent:GetChildren()) -- { Child two }
 ```
+
+!!! warning
+	When using state objects, note that old children *won't* be destroyed, only
+	unparented - it's up to you to decide if/when children need to be destroyed.
+
+	If you're using a helper like [ComputedPairs](../computedpairs), instance
+	cleanup is handled for you by default (though this is configurable).
