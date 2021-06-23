@@ -146,7 +146,7 @@ because Fusion waits until the next render step before applying any changes:
 	local ins = New "NumberValue" {
 		Value = state,
 		[OnChange "Value"] = function(newValue)
-			print("Value is now: ", newValue)
+			print("Value is now:", newValue)
 		end)
 	}
 
@@ -156,7 +156,7 @@ because Fusion waits until the next render step before applying any changes:
 	state:set(5)
 	```
 === "Expected output"
-	```Lua
+	```
 	Value is now: 5
 	```
 

@@ -223,3 +223,26 @@
 .md-content {
 	padding-bottom: 5em;
 }
+
+@media screen and (min-width: 60rem) {
+	.fusion-404 {
+		padding-left: 8rem;
+	}
+
+	.fusion-404 h1 {
+		margin-left: -8rem;
+	}
+}
+
+.fusion-404 h1 {
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
+.fusion-404 h1 img{
+	width: 6rem;
+	margin-right: 2rem;
+}
