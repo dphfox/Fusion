@@ -46,7 +46,7 @@ Can't create a new instance of class 'Foo'.
 Did you spell the class name correctly?
 ```
 
-When using the [New](/api-reference/api/new.md) function to construct instances,
+When using the [New](../new) function to construct instances,
 you're required to pass in a string specifying the class type of the instance:
 
 ```Lua
@@ -73,7 +73,7 @@ The class type 'Foo' has no assignable property 'Bar'.
 Did you spell the property name correctly?
 ```
 
-When using the [New](/api-reference/api/new.md) function to construct instances,
+When using the [New](../new) function to construct instances,
 you're able to pass in properties to be assigned to the instance:
 
 ```Lua
@@ -119,8 +119,8 @@ The Frame class doesn't have an event called 'Foo'.
 Did you spell the event name correctly?
 ```
 
-When using the [New](/api-reference/api/new.md) function to construct instances,
-you can register event handlers by using the [OnEvent](/api-reference/api/onevent.md)
+When using the [New](../new) function to construct instances,
+you can register event handlers by using the [OnEvent](../onevent)
 function and passing an event name:
 
 ```Lua
@@ -139,7 +139,7 @@ If you're seeing this error, consider the following:
 - Did you spell the event name correctly?
 - Are you using a property name instead of an event name?
 	- If you want to handle property change events, consider using the `Changed`
-	event, or registering a property change handler using [OnChange](/api-reference/api/onchange.md).
+	event, or registering a property change handler using [OnChange](../onchange).
 
 -----
 
@@ -150,8 +150,8 @@ The Frame class doesn't have a property called 'Foo'.
 Did you spell the property name correctly?
 ```
 
-When using the [New](/api-reference/api/new.md) function to construct instances,
-you can register property change handlers by using the [OnChange](/api-reference/api/onchange.md)
+When using the [New](../new) function to construct instances,
+you can register property change handlers by using the [OnChange](../onchange)
 function and passing a property name:
 
 ```Lua
@@ -178,7 +178,7 @@ If you're seeing this error, consider the following:
 Make sure you're only passing strings or symbols as keys.
 ```
 
-When you create an instance in Fusion using [New](/api-reference/api/new.md),
+When you create an instance in Fusion using [New](../new),
 you can pass in a 'property table' containing properties, children, event and
 property change handlers, etc.
 

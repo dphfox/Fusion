@@ -12,7 +12,7 @@ Represents a named symbol. Symbols are named constants which carry special
 meaning.
 
 In Fusion, symbols are commonly used for special keys, such as
-[Children](/api-reference/children) or [OnEvent](/api-reference/onevent).
+[Children](../children) or [OnEvent](../onevent).
 
 ```Lua
 local example: Symbol = Fusion.Children

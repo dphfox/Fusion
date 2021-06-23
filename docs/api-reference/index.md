@@ -19,13 +19,13 @@ page.
 Jump directly to the documentation for some common APIs:
 
 ### Instances
-- [New](api-reference/new)
+- [New](../new)
 
 ### State Management
-- [State](api-reference/state)
-- [Computed](api-reference/computed)
-- [ComputedPairs](api-reference/computedpairs)
+- [State](../state)
+- [Computed](../computed)
+- [ComputedPairs](../computedpairs)
 
 ### Animation
-- [TweenController](api-reference/tweencontroller)
-- [SpringController](api-reference/springcontroller)
+- [TweenController](../tweencontroller)
+- [SpringController](../springcontroller)
