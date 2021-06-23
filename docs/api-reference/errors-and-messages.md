@@ -6,9 +6,11 @@ On this page, you can learn more about any error messages you're receiving.
 
 -----
 
-## computedCallbackError
+## `computedCallbackError`
 
-> Computed callback error: attempt to index a nil value
+```
+Computed callback error: attempt to index a nil value
+```
 
 When you create a new [computed object](/api-reference/api/computed.md), you
 can pass in a callback. The callback determines the computed object's value:
@@ -37,10 +39,12 @@ error using `pcall`?
 
 -----
 
-## cannotCreateClass
+## `cannotCreateClass`
 
-> Can't create a new instance of class 'Foo'.
+```
+Can't create a new instance of class 'Foo'.
 Did you spell the class name correctly?
+```
 
 When using the [New](/api-reference/api/new.md) function to construct instances,
 you're required to pass in a string specifying the class type of the instance:
@@ -62,10 +66,12 @@ If you're seeing this error, consider the following:
 
 -----
 
-## cannotAssignProperty
+## `cannotAssignProperty`
 
-> The class type 'Foo' has no assignable property 'Bar'.
+```
+The class type 'Foo' has no assignable property 'Bar'.
 Did you spell the property name correctly?
+```
 
 When using the [New](/api-reference/api/new.md) function to construct instances,
 you're able to pass in properties to be assigned to the instance:
@@ -87,10 +93,12 @@ If you're seeing this error, consider the following:
 
 -----
 
-## strictReadError
+## `strictReadError`
 
-> 'Foo' is not a valid member of 'Bar'.
+```
+'Foo' is not a valid member of 'Bar'.
 Did you spell the member name correctly?
+```
 
 In Fusion, some tables may have strict reading rules. This is typically used on
 public APIs as a defense against typos.
@@ -104,10 +112,12 @@ If you're seeing this error, consider the following:
 
 -----
 
-## eventNotFound
+## `eventNotFound`
 
-> The Frame class doesn't have an event called 'Foo'.
+```
+The Frame class doesn't have an event called 'Foo'.
 Did you spell the event name correctly?
+```
 
 When using the [New](/api-reference/api/new.md) function to construct instances,
 you can register event handlers by using the [OnEvent](/api-reference/api/onevent.md)
@@ -133,10 +143,12 @@ If you're seeing this error, consider the following:
 
 -----
 
-## propertyNotFound
+## `propertyNotFound`
 
-> The Frame class doesn't have a property called 'Foo'.
+```
+The Frame class doesn't have a property called 'Foo'.
 Did you spell the property name correctly?
+```
 
 When using the [New](/api-reference/api/new.md) function to construct instances,
 you can register property change handlers by using the [OnChange](/api-reference/api/onchange.md)
@@ -159,10 +171,12 @@ If you're seeing this error, consider the following:
 
 -----
 
-## unrecognisedPropertyKey
+## `unrecognisedPropertyKey`
 
-> 'number' keys aren't accepted in the property table of `New`.
+```
+'number' keys aren't accepted in the property table of `New`.
 Make sure you're only passing strings or symbols as keys.
+```
 
 When you create an instance in Fusion using [New](/api-reference/api/new.md),
 you can pass in a 'property table' containing properties, children, event and
@@ -170,8 +184,8 @@ property change handlers, etc.
 
 This table is only expected to contain keys of two types:
 
-- string keys, e.g. `Name = "Example"`
-- symbol keys, e.g. `[OnEvent.Foo] = ...`
+- string keys, e.g. `#!Lua Name = "Example"`
+- symbol keys, e.g. `#!Lua [OnEvent "Foo"] = ...`
 
 If keys of a different type are present, it's usually not intentional. Fusion
 will ignore any key/value pairs with unrecognised key types, but will produce
@@ -208,10 +222,12 @@ New "Part" (propertyTable)
 
 -----
 
-## unknownMessage
+## `unknownMessage`
 
-> Unknown message - the code logging this message didn't provide a valid message
+```
+Unknown message - the code logging this message didn't provide a valid message
 ID.
+```
 
 When Fusion code attempts to log a message, warning or error, it needs to
 provide an ID. This ID is used to show the correct message, and serves as a
