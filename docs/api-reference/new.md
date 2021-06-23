@@ -17,6 +17,14 @@ local myInstance = New "Frame" {...}
 
 -----
 
+## Parameters
+
+- `className: string` - the class type of instance to create
+- `props: {[string | Symbol]: any}` - a table of properties, event handlers and
+other attributes to apply to the instance
+
+-----
+
 ## Example Usage
 
 ```Lua
