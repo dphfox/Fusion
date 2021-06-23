@@ -1,5 +1,3 @@
-# `OnEvent`
-
 ```Lua
 function OnEvent(eventName: string): Symbol
 ```
