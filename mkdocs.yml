@@ -49,7 +49,7 @@ nav:
       - Spring Controllers: tutorials/springs/spring-controllers.md
     - "Project 3: Messaging": tutorials/project-3-messaging.md
   - Examples:
-    - null: null.md
+    - Home: examples/index.md
   - API Reference:
     - Home: api-reference/index.md
     - Luau Types: api-reference/luau-types.md
