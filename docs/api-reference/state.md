@@ -32,7 +32,7 @@ end)
 
 ## Object Methods
 
-### get()
+### `get()`
 
 ```Lua
 function State:get(): any
@@ -42,7 +42,7 @@ Returns the currently stored value of this state object.
 If dependencies are currently being detected (e.g. inside a computed callback),
 then this state object will be used as a dependency.
 
-### set()
+### `set()`
 
 ```Lua
 function State:set(newValue: any)
@@ -56,6 +56,6 @@ dependent state objects immediately.
 
 ## Object Events
 
-### onChange
+### `onChange`
 
 Fired when the value of this state object is changed.
