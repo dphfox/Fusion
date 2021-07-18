@@ -134,8 +134,9 @@ That's the basic idea of computed objects; they let you define your values
 	print(goodValue:get()) -- prints 'Say World'
 	```
 
-	This also applies to any functions that change value, like `os.clock()`. If
-	in doubt, stick to state and computed objects.
+	This also applies to any functions that change on their own, like
+	`os.clock()`. If you need to use them, store values from the function in a
+	state object, and update the value of that object as often as required.
 -----
 
 ## Listening for Changes
