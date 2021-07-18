@@ -29,38 +29,13 @@ However, there's a problem - when `numPlayers` changes, we have to manually
 re-calculate the `message` value ourselves. If you don't, then the message will
 show the wrong amount of players - an issue known as 'data desynchronisation'.
 
-This very same problem appears with Fusion's state objects - after all, they
-behave much the same as variables do. We can cause a data desynchronisation bug
-by changing the number of players without also changing the message:
-
-=== "Lua"
-	```Lua
-	local numPlayers = State(5)
-	local message = State("There are " .. numPlayers:get() .. " players online.")
-
-	print("Num players:", numPlayers:get())
-	print("Message:", message:get())
-
-	numPlayers:set(12)
-
-	print("Num players:", numPlayers:get())
-	print("Message:", message:get())
-	```
-=== "Expected output"
-	```
-	Num players: 5
-	Message: There are 5 players online.
-	Num players: 12
-	Message: There are 5 players online.
-	```
-
 -----
 
 ## Computed Objects
 
 To solve this problem, Fusion introduces a second kind of object - *'computed
-objects'*. Instead of storing a fixed value, they run a given computation to
-find the value.
+objects'*. Instead of storing a fixed value, they run a computation based on
+other state objects.
 
 To use computed objects, we first need to import the `Computed` constructor:
 
@@ -98,8 +73,8 @@ At any time, you can get the computed value with the `:get()` method:
 	There are 5 players online.
 	```
 
-If you're using other state (or computed) objects in your computation, then the
-value will update automatically as those other objects change:
+When you use another state object in your computation, the computed object will
+update whenever the state object changes value:
 
 === "Lua"
 	```Lua linenums="7" hl_lines="8-9"
@@ -119,17 +94,16 @@ value will update automatically as those other objects change:
 	There are 12 players online.
 	```
 
-With that, you understand the basic idea of computed objects! They let you
-define your values *reactively* - as automatically-updating computations.
+That's the basic idea of computed objects; they let you define your values
+*reactively*, i.e. as automatically-updating computations.
 
 -----
 
 !!! danger
 	Stick to using state objects and computed objects inside your computations.
-	Fusion can detect these objects and listen for changes.
+	Fusion can detect when you use these objects and listen for changes.
 
-	Fusion can't automatically detect changes when you use 'normal' variables,
-	or get values from 'normal' functions:
+	Fusion *can't* automatically detect changes when you use 'normal' variables:
 
 	```Lua
 	local theVariable = "Hello"
@@ -145,12 +119,12 @@ define your values *reactively* - as automatically-updating computations.
 	```
 
 	By using a state object here, Fusion can correctly update the computed
-	object when the variable changes:
+	object, because it knows we used the state object:
 
 	```Lua
 	local theVariable = State("Hello")
 	local goodValue = Computed(function()
-		-- this is much better!
+		-- this is much better - Fusion can detect we used this state object!
 		return "Say " .. theVariable:get()
 	end)
 
@@ -160,6 +134,8 @@ define your values *reactively* - as automatically-updating computations.
 	print(goodValue:get()) -- prints 'Say World'
 	```
 
+	This also applies to any functions that change value, like `os.clock()`. If
+	in doubt, stick to state and computed objects.
 -----
 
 ## Listening for Changes
