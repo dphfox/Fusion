@@ -57,32 +57,32 @@ unnecessary updates:
 
 === "Lua"
 	```Lua
-		local stateA = State(5)
-		local stateB = State(5)
-		local selector = State("A")
+	local stateA = State(5)
+	local stateB = State(5)
+	local selector = State("A")
 
-		local computed = Computed(function()
-			print("> updating computed!")
-			local selected = selector:get()
-			if selected == "A" then
-				return stateA:get()
-			elseif selected == "B" then
-				return stateB:get()
-			end
-		end)
+	local computed = Computed(function()
+		print("> updating computed!")
+		local selected = selector:get()
+		if selected == "A" then
+			return stateA:get()
+		elseif selected == "B" then
+			return stateB:get()
+		end
+	end)
 
-		print("increment state A (expect update below)")
-		stateA:set(stateA:get() + 1)
-		print("increment state B (expect no update)")
-		stateA:set(stateA:get() + 1)
+	print("increment state A (expect update below)")
+	stateA:set(stateA:get() + 1)
+	print("increment state B (expect no update)")
+	stateA:set(stateA:get() + 1)
 
-		print("switch to select B")
-		selector:set("B")
+	print("switch to select B")
+	selector:set("B")
 
-		print("increment state A (expect no update)")
-		stateA:set(stateA:get() + 1)
-		print("increment state B (expect update below)")
-		stateA:set(stateA:get() + 1)
+	print("increment state A (expect no update)")
+	stateA:set(stateA:get() + 1)
+	print("increment state B (expect update below)")
+	stateA:set(stateA:get() + 1)
 	```
 === "Expected output"
 	```
