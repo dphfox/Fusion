@@ -1,5 +1,5 @@
 ```Lua
-function New(className: string): (props: {[string | Symbol]: any}) -> (Instance)
+function New(className: string): (props: {[string | Symbol]: any}) -> Instance
 ```
 
 Constructs and returns a new instance, with options for setting properties,

@@ -55,17 +55,17 @@ nav:
     - Luau Types: api-reference/luau-types.md
     - Errors & Messages: api-reference/errors-and-messages.md
     - Instances:
-      - New: api-reference/new.md
-      - Children: api-reference/children.md
-      - OnEvent: api-reference/onevent.md
-      - OnChange: api-reference/onchange.md
+      - New: api-reference/api/new.md
+      - Children: api-reference/api/children.md
+      - OnEvent: api-reference/api/onevent.md
+      - OnChange: api-reference/api/onchange.md
     - State Management:
-      - State: api-reference/state.md
-      - Computed: api-reference/computed.md
-      - ComputedPairs: api-reference/computedpairs.md
+      - State: api-reference/api/state.md
+      - Computed: api-reference/api/computed.md
+      - ComputedPairs: api-reference/api/computedpairs.md
     - Animation:
-      - Tween: api-reference/tween.md
-      - Spring: api-reference/spring.md
+      - Tween: api-reference/api/tween.md
+      - Spring: api-reference/api/spring.md
 
 markdown_extensions:
   - admonition
