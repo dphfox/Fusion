@@ -1,33 +1,23 @@
 ```Lua
 function ComputedPairs(
-	originalTable: StateOrValue<{[any]: any}>,
+	inputTable: StateOrValue<{[any]: any}>,
 	processor: (key: any, value: any) -> any,
 	destructor: ((any) -> any)?
 ): Computed
 ```
 
 Constructs and returns a new computed object, which generates a table by
-processing values from another table. The table may be passed in directly or
-stored in a state object.
+processing values from another table.
 
-Specifically, this object constructs a new table, and for each key-value pair
-in `originalTable`, passes the pair into `processor` to generate a new value,
-then saves the new value to the new table using the existing key.
+The input table may be passed in directly, or inside a state object or computed
+object.
 
-If `originalTable` is a state object, then the new table will be updated as
-`originalTable` is updated; new pairs will be generated, existing pairs will be
-cached, and deleted pairs will be removed.
+The output table will have all the keys of the input table, but all the values
+will be passed through the `processor` function.
 
-When a pair is removed, the generated value (originally from `processor`) may
-optionally be passed into a `destructor` function - this is useful if you're
-generating values that require cleanup, such as instances. If no `destructor` is
-provided, then a default Maid-like destructor will be used:
-
-- Instances will be destroyed
-- Event connections will be disconnected
-- Functions will be invoked
-- Tables with :destroy() or :Destroy() methods will have those methods called
-- Arrays will have their values destructed
+When values are removed from the output table, they may optionally be passed
+through a `destructor` function. This allows you to properly clean up some types
+such as instances - more details can be found below.
 
 -----
 
