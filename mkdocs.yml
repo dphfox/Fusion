@@ -65,9 +65,7 @@ nav:
       - ComputedPairs: api-reference/computedpairs.md
     - Animation:
       - Tween: api-reference/tween.md
-      - TweenController: api-reference/tweencontroller.md
       - Spring: api-reference/spring.md
-      - SpringController: api-reference/springcontroller.md
 
 markdown_extensions:
   - admonition
