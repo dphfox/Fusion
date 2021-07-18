@@ -31,7 +31,7 @@ print(doubleCoins:get()) --> 4
 
 -----
 
-## Dependency Management & Updates
+## Dependency Management
 
 Computed objects automatically detect dependencies used inside their callback
 each time their callback runs. This means, when you use a function like `:get()`
@@ -96,6 +96,45 @@ unnecessary updates:
 	increment state B (expect update below)
 	> updating computed!
 	```
+
+!!! danger
+	Stick to using state objects and computed objects inside your computations.
+	Fusion can detect when you use these objects and listen for changes.
+
+	Fusion *can't* automatically detect changes when you use 'normal' variables:
+
+	```Lua
+	local theVariable = "Hello"
+	local badValue = Computed(function()
+		-- don't do this! use state objects or computed objects in here
+		return "Say " .. theVariable
+	end)
+
+	print(badValue:get()) -- prints 'Say Hello'
+
+	theVariable = "World"
+	print(badValue:get()) -- still prints 'Say Hello' - that's a problem!
+	```
+
+	By using a state object here, Fusion can correctly update the computed
+	object, because it knows we used the state object:
+
+	```Lua
+	local theVariable = State("Hello")
+	local goodValue = Computed(function()
+		-- this is much better - Fusion can detect we used this state object!
+		return "Say " .. theVariable:get()
+	end)
+
+	print(goodValue:get()) -- prints 'Say Hello'
+
+	theVariable:set("World")
+	print(goodValue:get()) -- prints 'Say World'
+	```
+
+	This also applies to any functions that change on their own, like
+	`os.clock()`. If you need to use them, store values from the function in a
+	state object, and update the value of that object as often as required.
 
 -----
 

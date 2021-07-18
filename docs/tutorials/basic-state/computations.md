@@ -97,8 +97,6 @@ update whenever the state object changes value:
 That's the basic idea of computed objects; they let you define your values
 *reactively*, i.e. as automatically-updating computations.
 
------
-
 !!! danger
 	Stick to using state objects and computed objects inside your computations.
 	Fusion can detect when you use these objects and listen for changes.
@@ -137,6 +135,7 @@ That's the basic idea of computed objects; they let you define your values
 	This also applies to any functions that change on their own, like
 	`os.clock()`. If you need to use them, store values from the function in a
 	state object, and update the value of that object as often as required.
+
 -----
 
 ## Listening for Changes
