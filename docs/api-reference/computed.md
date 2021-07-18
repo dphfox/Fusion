@@ -14,6 +14,29 @@ for this computed object.
 
 -----
 
+## Object Methods
+
+### `get()`
+
+```Lua
+function Computed:get(): any
+```
+Returns the cached value of this computed object, as returned from the callback
+function.
+
+If dependencies are currently being detected (e.g. inside a computed callback),
+then this computed object will be used as a dependency.
+
+-----
+
+## Object Events
+
+### `onChange`
+
+Fired when the cached value of this computed object is changed.
+
+-----
+
 ## Example Usage
 
 ```Lua
@@ -135,26 +158,3 @@ unnecessary updates:
 	This also applies to any functions that change on their own, like
 	`os.clock()`. If you need to use them, store values from the function in a
 	state object, and update the value of that object as often as required.
-
------
-
-## Object Methods
-
-### `get()`
-
-```Lua
-function Computed:get(): any
-```
-Returns the cached value of this computed object, as returned from the callback
-function.
-
-If dependencies are currently being detected (e.g. inside a computed callback),
-then this computed object will be used as a dependency.
-
------
-
-## Object Events
-
-### `onChange`
-
-Fired when the cached value of this computed object is changed.

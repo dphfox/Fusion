@@ -13,23 +13,6 @@ object.
 
 -----
 
-## Example Usage
-
-```Lua
-local numCoins = State(50)
-
-print(numCoins:get()) --> 50
-
-numCoins:set(25)
-print(numCoins:get()) --> 25
-
-numCoins.onChange:Connect(function()
-	print("Coins changed to:", numCoins:get())
-end)
-```
-
------
-
 ## Object Methods
 
 ### `get()`
@@ -59,3 +42,20 @@ dependent state objects immediately.
 ### `onChange`
 
 Fired when the value of this state object is changed.
+
+-----
+
+## Example Usage
+
+```Lua
+local numCoins = State(50)
+
+print(numCoins:get()) --> 50
+
+numCoins:set(25)
+print(numCoins:get()) --> 25
+
+numCoins.onChange:Connect(function()
+	print("Coins changed to:", numCoins:get())
+end)
+```
