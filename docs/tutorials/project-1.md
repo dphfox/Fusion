@@ -18,7 +18,7 @@ Fusion's basic tools work together in a real project.
 
 -----
 
-## Building A Counting Button
+## Building The UI
 
 We'll be creating a button which shows how many times you've clicked it - this
 is often used as an introductory UI example for many libraries and frameworks
@@ -50,7 +50,7 @@ local gui = New "ScreenGui" {
 Next, we'll create a TextButton we can click, and a message TextLabel which will
 eventually show how many clicks we've performed:
 
-```Lua linenums="12" hl_lines="7-28"
+```Lua linenums="12" hl_lines="7-29"
 local gui = New "ScreenGui" {
 	Parent = Players.LocalPlayer.PlayerGui,
 
@@ -84,3 +84,7 @@ local gui = New "ScreenGui" {
 
 ```
 
+With just these three instances, we have enough to work with for the rest of
+this tutorial. Running the above script gives us this:
+
+![Image of basic UI](BasicUI.png)
