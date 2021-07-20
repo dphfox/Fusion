@@ -27,21 +27,21 @@ nav:
   - Tutorials:
     - Get Started: tutorials/index.md
     - Fundamentals:
-      - Creating UI: tutorials/instances/hello-fusion.md
-      - Handling Events: tutorials/instances/handling-events.md
-      - Storing State: tutorials/basic-state/state-objects.md
-      - Computations: tutorials/basic-state/computations.md
-      - Changing Properties: tutorials/basic-state/properties-and-state.md
-      - Changing Children: tutorials/more-state/children-and-state.md
-      - "Project 1: Counting Clicks": tutorials/project-1.md
+      - Creating UI: tutorials/fundamentals/creating-ui.md
+      - Handling Events: tutorials/fundamentals/handling-events.md
+      - Storing State: tutorials/fundamentals/storing-state.md
+      - Computations: tutorials/fundamentals/computations.md
+      - Changing Properties: tutorials/fundamentals/changing-properties.md
+      - Changing Children: tutorials/fundamentals/changing-children.md
+      - "Project 1: Counting Clicks": tutorials/fundamentals/project-1.md
     - Further Basics:
-      - Reusing Components: tutorials/organisation/components.md
-      - Lists and Arrays: tutorials/more-state/computing-arrays.md
-      - "Project 2: To-Do List": tutorials/project-2.md
+      - Reusing Components: tutorials/further-basics/components.md
+      - Lists and Arrays: tutorials/further-basics/computing-arrays.md
+      - "Project 2: To-Do List": tutorials/further-basics/project-2.md
     - Animation:
-      - Tweens: tutorials/tweens.md
-      - Springs: tutorials/springs/simple-springs.md
-      - "Project 3: Messaging": tutorials/project-3.md
+      - Tweens: tutorials/animation/tweens.md
+      - Springs: tutorials/animation/prings.md
+      - "Project 3: Messaging": tutorials/animation/project-3.md
   - Examples:
     - Home: examples/index.md
   - API Reference:
