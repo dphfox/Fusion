@@ -29,14 +29,14 @@ nav:
     - Fundamentals:
       - Creating UI: tutorials/instances/hello-fusion.md
       - Handling Events: tutorials/instances/handling-events.md
-      - State Objects: tutorials/basic-state/state-objects.md
+      - Storing State: tutorials/basic-state/state-objects.md
       - Computations: tutorials/basic-state/computations.md
-      - Properties & State: tutorials/basic-state/properties-and-state.md
+      - Changing Properties: tutorials/basic-state/properties-and-state.md
+      - Changing Children: tutorials/more-state/children-and-state.md
       - "Project 1: Counting Clicks": tutorials/project-1.md
     - Further Basics:
-      - Computing Arrays: tutorials/more-state/computing-arrays.md
-      - Children & State: tutorials/more-state/children-and-state.md
-      - Components: tutorials/organisation/components.md
+      - Reusing UI: tutorials/organisation/components.md
+      - Lists and Arrays: tutorials/more-state/computing-arrays.md
       - "Project 2: To-Do List": tutorials/project-2.md
     - Animation:
       - Tweens: tutorials/tweens.md
