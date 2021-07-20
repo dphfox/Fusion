@@ -1,5 +1,5 @@
-UI often depends on data being updated over time, for example round timers and
-money counters. Let's learn how to store simple values that change over time.
+Our UIs may use some data - called 'state' - to change how it appears. Let's
+learn how to store this data in Fusion.
 
 ??? abstract "Required code"
 
@@ -10,11 +10,27 @@ money counters. Let's learn how to store simple values that change over time.
 
 -----
 
-## Storing Single Values
+## What is State?
 
-Fusion has multiple tools for dealing with 'state' - the pieces of data that
-change over time in your UI. The simplest is the State object, an OOP object
-that stores a single value.
+State is (simplistically) the variables that determine what your UI looks like
+at a given point in time.
+
+A simple example of this is a health bar. To know what the health bar looks like
+at any point in time, we need to know two things:
+
+- the current health to show
+- the max health of the player
+
+These two variables are therefore known as the 'state' of the health bar. To
+show the health bar on the screen, we need to use the values of these variables.
+
+-----
+
+## Storing State
+
+Fusion provides some nice tools for manipulating state and using it in our UI,
+but in order to use those tools, we need to store our state in 'state objects' -
+simple OOP objects that store a single value.
 
 To use state objects, we first need to import the `State` constructor:
 
@@ -144,8 +160,8 @@ function which, when called, will disconnect your event handler:
 
 -----
 
-With that, you should now have a basic idea of what state objects can do -
-they're the simplest and most fundamental tool Fusion offers for managing state.
+With that, you should now have a basic idea of what state objects do - by using
+these, we can now easily manipulate and use it in our UIs.
 
 ??? summary "Finished code"
 	```Lua linenums="1"

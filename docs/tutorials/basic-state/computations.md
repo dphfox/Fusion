@@ -1,6 +1,5 @@
-Often, we don't use raw values directly in our UI; instead, we need to perform
-computations on those values. Let's learn how to compute new values from existing
-ones.
+Usually, we don't use state as-is in our UI; we normally process it first. Let's
+learn how to perform computations on our state.
 
 ??? abstract "Required code"
 
@@ -34,8 +33,8 @@ show the wrong amount of players - an issue known as 'data desynchronisation'.
 ## Computed Objects
 
 To solve this problem, Fusion introduces a second kind of object - *'computed
-objects'*. Instead of storing a fixed value, they run a computation based on
-other state objects.
+objects'*. Instead of storing a fixed value, they run a computation. Think of it
+like a spreadsheet, where you can type in an equation that uses other values.
 
 To use computed objects, we first need to import the `Computed` constructor:
 
@@ -73,8 +72,8 @@ At any time, you can get the computed value with the `:get()` method:
 	There are 5 players online.
 	```
 
-When you use another state object in your computation, the computed object will
-update whenever the state object changes value:
+Now for the magic - whenever you use a state object as part of your computation,
+the computed object will update when the state object changes:
 
 === "Lua"
 	```Lua linenums="7" hl_lines="8-9"
@@ -94,8 +93,12 @@ update whenever the state object changes value:
 	There are 12 players online.
 	```
 
-That's the basic idea of computed objects; they let you define your values
-*reactively*, i.e. as automatically-updating computations.
+This solves our previous 'data desynchronisation' issue - we don't have to
+manually recalculate the message. Instead, Fusion handles it for us, because
+we're storing our state in Fusion's objects.
+
+That's the basic idea of computed objects; they let you naturally define values
+in terms of other values.
 
 !!! danger
 	Stick to using state objects and computed objects inside your computations.

@@ -35,7 +35,7 @@ nav:
       - Changing Children: tutorials/more-state/children-and-state.md
       - "Project 1: Counting Clicks": tutorials/project-1.md
     - Further Basics:
-      - Reusing UI: tutorials/organisation/components.md
+      - Reusing Components: tutorials/organisation/components.md
       - Lists and Arrays: tutorials/more-state/computing-arrays.md
       - "Project 2: To-Do List": tutorials/project-2.md
     - Animation:

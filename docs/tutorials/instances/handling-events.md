@@ -1,5 +1,5 @@
-Since we can create instances, we should also be able to listen for events and
-user inputs. Let's learn how you can do this with the `New` function.
+Now that we can create instances, let's learn how to handle events and property
+changes.
 
 ??? abstract "Required code"
 
