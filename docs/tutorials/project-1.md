@@ -88,3 +88,46 @@ With just these three instances, we have enough to work with for the rest of
 this tutorial. Running the above script gives us this:
 
 ![Image of basic UI](BasicUI.png)
+
+-----
+
+## Adding State
+
+Now, let's add some state to make our UI dynamic. Let's start with a state
+object to store the number of clicks:
+
+```Lua linenums="12" hl_lines="1"
+local numClicks = State(0)
+
+local gui = New "ScreenGui" {
+	Parent = Players.LocalPlayer.PlayerGui,
+
+	Name = "CountingGui",
+	ZIndexBehavior = "Sibling",
+
+	[Children] = {
+
+```
+
+Now, we can replace the placeholder text with some computed state, to turn our
+number of clicks into a fully-formed message:
+
+```Lua linenums="29" hl_lines="12-14"
+			Text = "Click me!"
+		},
+
+		New "TextLabel" {
+			Name = "Message",
+			Position = UDim2.new(0.5, 0, 0.5, 100),
+			Size = UDim2.fromOffset(200, 50),
+			AnchorPoint = Vector2.new(.5, .5),
+
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+
+			Text = Computed(function()
+				return "You clicked " .. numClicks:get() .. " times."
+			end)
+		}
+	}
+}
+```
