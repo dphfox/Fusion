@@ -136,11 +136,11 @@
 	font-weight: 400;
 }
 
-[data-md-color-primary=black] .md-search__input {
+[data-md-color-primary=black] .md-search__form {
     background-color: rgba(255, 255, 255, 0);
 }
 
-[data-md-color-primary=black] .md-search__input:hover {
+[data-md-color-primary=black] .md-search__form:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
