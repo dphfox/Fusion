@@ -131,3 +131,63 @@ number of clicks into a fully-formed message:
 	}
 }
 ```
+
+You'll now notice the message's text reflects the number of clicks stored in
+`numClicks`:
+
+![Image of UI with message using computed state](UIWithState.png)
+
+-----
+
+## Listening for Clicks
+
+Now that we have our UI in place and it's working with our state, we just need
+to increment the number stored in `numClicks` when we click the button.
+
+To start, let's add an `OnEvent` handler for the button's Activated event. This
+will run when we click the button:
+
+```Lua hl_lines="12-15"
+	[Children] = {
+		New "TextButton" {
+			Name = "ClickButton",
+			Position = UDim2.fromScale(.5, .5),
+			Size = UDim2.fromOffset(200, 50),
+			AnchorPoint = Vector2.new(.5, .5),
+
+			BackgroundColor3 = Color3.fromRGB(85, 255, 0),
+
+			Text = "Click me!",
+
+			[OnEvent "Activated"] = function()
+				-- the button was clicked!
+				-- TODO: increment state
+			end
+		},
+
+		New "TextLabel" {
+```
+
+Then, to increment the state, we can `:get()` the number of clicks, add one,
+then `:set()` it to the new value:
+
+```Lua hl_lines="14"
+	[Children] = {
+		New "TextButton" {
+			Name = "ClickButton",
+			Position = UDim2.fromScale(.5, .5),
+			Size = UDim2.fromOffset(200, 50),
+			AnchorPoint = Vector2.new(.5, .5),
+
+			BackgroundColor3 = Color3.fromRGB(85, 255, 0),
+
+			Text = "Click me!",
+
+			[OnEvent "Activated"] = function()
+				-- the button was clicked!
+				numClicks:set(numClicks:get() + 1)
+			end
+		},
+
+		New "TextLabel" {
+```
