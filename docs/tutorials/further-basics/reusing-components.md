@@ -74,7 +74,8 @@ In the above code;
 - the `Greeting` function creates and returns our TextLabel for us
 - the returned TextLabel becomes part of the `[Children]`
 
-Therefore, when we run this code, we'll see our greeting text show up.
+Therefore, when we run this code, we'll see our greeting TextLabel show up in
+our ScreenGui.
 
 That's the basic idea of 'components' in Fusion; they're just functions which
 take in some properties and return some UI.
