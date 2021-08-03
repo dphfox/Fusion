@@ -191,3 +191,17 @@ then `:set()` it to the new value:
 
 		New "TextLabel" {
 ```
+
+That's everything - try clicking the button, and watch the message change in
+response:
+
+![Image of finished UI responding to clicks](FinishedUI.png)
+
+-----
+
+If you've managed to follow along, congratulations - you should now have a good
+understanding of Fusion's fundamental concepts!
+
+With just these tools alone, you'll be able to build almost anything you can
+think of. However, Fusion still has more tools available to make your code
+simpler and easier to manage - we'll cover this in *'Further Basics'*.
