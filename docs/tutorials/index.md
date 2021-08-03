@@ -26,11 +26,11 @@ You can find the tutorials in the navigation bar to your left. Tutorials are
 grouped together by category, and are designed to explore specific features of
 Fusion:
 
-- *Fundamentals* introduces the core ideas of Fusion - making instances, storing
+- *'Fundamentals'* introduces the core ideas of Fusion - making instances, storing
 state and responding to events.
-- *Further Basics* builds on those core ideas by adding in useful utilities for
+- *'Further Basics'* builds on those core ideas by adding in useful utilities for
 building more complex UIs.
-- *Animation* demonstrates how to add tweens, transitions and spring physics to
+- *'Animation'* demonstrates how to add tweens, transitions and spring physics to
 bring your UI to life.
 
 You can either do them in order (recommended for newcomers), or you can
