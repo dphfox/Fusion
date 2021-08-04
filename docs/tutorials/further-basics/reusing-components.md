@@ -78,7 +78,8 @@ Therefore, when we run this code, we'll see our greeting TextLabel show up in
 our ScreenGui.
 
 That's the basic idea of 'components' in Fusion; they're just functions which
-take in some properties and return some UI.
+take in some properties and return some UI. For the rest of this tutorial, we'll
+take a look at some code patterns that you can use with components in Fusion.
 
 -----
 
@@ -275,4 +276,8 @@ some type checking first.
 -----
 
 ## Callbacks
+
+-----
+
+## Module Scripts
 
