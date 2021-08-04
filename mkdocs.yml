@@ -35,7 +35,7 @@ nav:
       - Changing Children: tutorials/fundamentals/changing-children.md
       - "Project 1: Counting Clicks": tutorials/fundamentals/project-1.md
     - Further Basics:
-      - Reusing Components: tutorials/further-basics/reusing-components.md
+      - Components: tutorials/further-basics/components.md
       - Lists and Arrays: tutorials/further-basics/computing-arrays.md
       - "Project 2: To-Do List": tutorials/further-basics/project-2.md
     - Animation:

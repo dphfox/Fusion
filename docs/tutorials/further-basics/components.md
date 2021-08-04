@@ -3,7 +3,7 @@ It's often a good idea to split our UI into reusable parts, known as
 
 -----
 
-## Components Are Just Functions
+## Reusing UI
 
 When we want to reuse a bit of code, we often put it in a function. We can give
 it different parameters to modify what the function does. This makes them useful
@@ -80,6 +80,208 @@ our ScreenGui.
 That's the basic idea of 'components' in Fusion; they're just functions which
 take in some properties and return some UI. For the rest of this tutorial, we'll
 take a look at some code patterns that you can use with components in Fusion.
+
+-----
+
+## Passing in Children
+
+Sometimes, we want to create components that can hold children. For example,
+take a look at this component, which arranges some children into a scrolling
+grid:
+
+```Lua
+local function Gallery(props)
+	return New "ScrollingFrame" {
+		Position = props.Position,
+		Size = props.Size,
+		AnchorPoint = props.AnchorPoint,
+
+		[Children] = {
+			New "UIGridLayout" {
+				CellPadding = UDim2.fromOffset(4, 4),
+				CellSize = UDim2.fromOffset(100, 100)
+			},
+
+			-- TODO: put some children here?
+		}
+	}
+end
+```
+
+Suppose we'd like users to be able to pass in children to show up in the grid:
+
+```Lua
+Gallery {
+	Position = UDim2.fromScale(.5, .5)
+	Size = UDim2.fromOffset(400, 300),
+	AnchorPoint = Vector2.new(.5, .5),
+
+	[Children] = {
+		New "ImageLabel" { ... },
+		New "ImageLabel" { ... },
+		New "ImageLabel" { ... }
+	}
+}
+```
+
+We can access those children in our function using `#!Lua props[Children]`. Since the
+`New` function lets us pass in arrays of children, we can just include it
+directly in our code like so:
+
+```Lua
+local function Gallery(props)
+	return New "ScrollingFrame" {
+		Position = props.Position,
+		Size = props.Size,
+		AnchorPoint = props.AnchorPoint,
+
+		[Children] = {
+			New "UIGridLayout" {
+				CellPadding = UDim2.fromOffset(4, 4),
+				CellSize = UDim2.fromOffset(100, 100)
+			},
+
+			props[Children]
+		}
+	}
+end
+```
+
+That's all there is to it! Just keep in mind that `Children` is still a property
+like any other, so if you're processing the children, it might be good to do
+some type checking first.
+
+-----
+
+## Multiple Instances
+
+In some specific circumstances, you may want to return more than one instance
+from a component.
+
+You shouldn't return multiple values from a component directly. Because of how
+Lua works, this can introduce subtle bugs in your code:
+
+```Lua
+local function ManyThings(props)
+	-- don't do this!
+	-- you should only return one value from a component
+	return
+		New "TextLabel" {...},
+		New "ImageButton" {...},
+		New "Frame" {...}
+end
+
+local gui1 = New "ScreenGui" {
+	-- this will only parent the TextLabel!
+	[Children] = ManyThings {}
+}
+
+local gui2 = New "ScreenGui" {
+	[Children] = {
+		New "TextLabel" {...},
+
+		-- this is also broken
+		ManyThings {},
+
+		New "TextLabel" {...}
+	}
+}
+```
+
+A better way to do this is to return an *array* of instances. This means you
+only return a single value - the array. This gets around the subtle bugs that
+normally occur when dealing with multiple return values.
+
+Since `[Children]` supports arrays of children, all our instances are now
+parented as expected:
+
+```Lua
+local function ManyThings(props)
+	-- using an array ensures we only return one value
+	return {
+		New "TextLabel" {...},
+		New "ImageButton" {...},
+		New "Frame" {...}
+	}
+end
+
+local gui1 = New "ScreenGui" {
+	-- this now works!
+	[Children] = ManyThings {}
+}
+
+local gui2 = New "ScreenGui" {
+	[Children] = {
+		New "TextLabel" {...},
+
+		-- this also now works!
+		ManyThings {},
+
+		New "TextLabel" {...}
+	}
+}
+
+```
+
+!!! tip
+	If you're coming from other UI libraries or frameworks, you may have heard
+	of this concept referred to as 'fragments'. In Fusion, fragments are just
+	plain arrays of children rather than a special kind of object.
+
+-----
+
+## Callbacks
+
+For some components (e.g. buttons or text boxes), some code might need to run in
+response to events like clicks or typing. You can use callbacks to achieve this.
+
+Consider this `Button` component as an example. Notice we're using `props.OnClick`
+with `#!Lua [OnEvent "Activated"]`:
+
+```Lua
+local function Button(props)
+	return New "TextButton" {
+		Position = props.Position,
+		AnchorPoint = props.AnchorPoint,
+		Size = props.Size,
+
+		BackgroundColor3 = Color3.new(0, 0.4, 1),
+		TextColor3 = Color3.new(1, 1, 1),
+		Text = props.Message,
+
+		[OnEvent "Activated"] = props.OnClick
+	}
+end
+```
+
+This means that anyone using the `Button` component can provide a callback
+function, which will then be run when the button is clicked:
+
+```Lua
+local gui = New "ScreenGui" {
+	Name = "ExampleGui",
+	ZIndexBehavior = "Sibling",
+
+	[Children] = {
+		Button {
+			Position = UDim2.fromScale(.5, .5),
+			AnchorPoint = Vector2.new(.5, .5),
+			Size = UDim2.fromOffset(200, 50),
+
+			Message = "Click me!",
+
+			OnClick = function()
+				-- this callback function will be passed into OnEvent, so it'll
+				-- run when the button is clicked
+				print("The button was clicked!")
+			end
+		},
+	}
+}
+```
+
+This isn't just limited to event handlers, either - any time you want to let
+the caller provide some code, callbacks are a great option.
 
 -----
 
@@ -202,199 +404,3 @@ local gui = New "ScreenGui" {
 
 Because we create a new button each time we call the function, each button keeps
 it's own state and functions independently.
-
------
-
-## Passing in Children
-
-Sometimes, we want to create components that can hold children. For example,
-take a look at this component, which arranges some children into a scrolling
-grid:
-
-```Lua
-local function Gallery(props)
-	return New "ScrollingFrame" {
-		Position = props.Position,
-		Size = props.Size,
-		AnchorPoint = props.AnchorPoint,
-
-		[Children] = {
-			New "UIGridLayout" {
-				CellPadding = UDim2.fromOffset(4, 4),
-				CellSize = UDim2.fromOffset(100, 100)
-			},
-
-			-- TODO: put some children here?
-		}
-	}
-end
-```
-
-Suppose we'd like users to be able to pass in children to show up in the grid:
-
-```Lua
-Gallery {
-	Position = UDim2.fromScale(.5, .5)
-	Size = UDim2.fromOffset(400, 300),
-	AnchorPoint = Vector2.new(.5, .5),
-
-	[Children] = {
-		New "ImageLabel" { ... },
-		New "ImageLabel" { ... },
-		New "ImageLabel" { ... }
-	}
-}
-```
-
-We can access those children in our function using `#!Lua props[Children]`. Since the
-`New` function lets us pass in arrays of children, we can just include it
-directly in our code like so:
-
-```Lua
-local function Gallery(props)
-	return New "ScrollingFrame" {
-		Position = props.Position,
-		Size = props.Size,
-		AnchorPoint = props.AnchorPoint,
-
-		[Children] = {
-			New "UIGridLayout" {
-				CellPadding = UDim2.fromOffset(4, 4),
-				CellSize = UDim2.fromOffset(100, 100)
-			},
-
-			props[Children]
-		}
-	}
-end
-```
-
-That's all there is to it! Just keep in mind that `Children` is still a property
-like any other, so if you're processing the children, it might be good to do
-some type checking first.
-
------
-
-## Callbacks
-
-For some components (e.g. buttons or text boxes), some code might need to run in
-response to events like clicks or typing. You can use callbacks to achieve this.
-
-Consider this `Button` component as an example. Notice we're using `props.OnClick`
-with `#!Lua [OnEvent "Activated"]`:
-
-```Lua
-local function Button(props)
-	return New "TextButton" {
-		Position = props.Position,
-		AnchorPoint = props.AnchorPoint,
-		Size = props.Size,
-
-		BackgroundColor3 = Color3.new(0, 0.4, 1),
-		TextColor3 = Color3.new(1, 1, 1),
-		Text = props.Message,
-
-		[OnEvent "Activated"] = props.OnClick
-	}
-end
-```
-
-This means that anyone using the `Button` component can provide a callback
-function, which will then be run when the button is clicked:
-
-```Lua
-local gui = New "ScreenGui" {
-	Name = "ExampleGui",
-	ZIndexBehavior = "Sibling",
-
-	[Children] = {
-		Button {
-			Position = UDim2.fromScale(.5, .5),
-			AnchorPoint = Vector2.new(.5, .5),
-			Size = UDim2.fromOffset(200, 50),
-
-			Message = "Click me!",
-
-			OnClick = function()
-				-- this callback function will be passed into OnEvent, so it'll
-				-- run when the button is clicked
-				print("The button was clicked!")
-			end
-		},
-	}
-}
-```
-
-This isn't just limited to event handlers, either - any time you want to let
-the caller provide some code, callbacks are a great option.
-
------
-
-## Returning Many Children
-
-In some specific circumstances, you may want to return more than one instance
-from a component.
-
-You shouldn't return multiple values from a component directly. Because of how
-Lua works, this can introduce subtle bugs in your code:
-
-```Lua
-local function ManyThings(props)
-	-- don't do this!
-	-- you should only return one value from a component
-	return
-		New "TextLabel" {...},
-		New "ImageButton" {...},
-		New "Frame" {...}
-end
-
-local gui1 = New "ScreenGui" {
-	-- this will only parent the TextLabel!
-	[Children] = ManyThings {}
-}
-
-local gui2 = New "ScreenGui" {
-	[Children] = {
-		New "TextLabel" {...},
-
-		-- this is also broken
-		ManyThings {}
-
-		New "TextLabel" {...}
-	}
-}
-```
-
-A better way to do this is to return an *array* of instances. This means you
-only return a single value - the array.
-
-This solves all of our issues; since `[Children]` supports arrays of children,
-all our instances are now parented as expected:
-
-```Lua
-local function ManyThings(props)
-	-- using an array ensures we only return one value
-	return {
-		New "TextLabel" {...},
-		New "ImageButton" {...},
-		New "Frame" {...}
-	}
-end
-
-local gui1 = New "ScreenGui" {
-	-- this now works!
-	[Children] = ManyThings {}
-}
-
-local gui2 = New "ScreenGui" {
-	[Children] = {
-		New "TextLabel" {...},
-
-		-- this also now works!
-		ManyThings {},
-
-		New "TextLabel" {...}
-	}
-}
-
-```
