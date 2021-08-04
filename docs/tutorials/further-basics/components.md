@@ -5,33 +5,16 @@ It's often a good idea to split our UI into reusable parts, known as
 
 ## Reusing UI
 
-When we want to reuse a bit of code, we often put it in a function. We can give
-it different parameters to modify what the function does. This makes them useful
-for creating reusable pieces of UI, often known as 'components'.
+When we want to reuse a bit of code, we often put it in a function. We can then
+use that code snippet in multiple places, optionally providing arguments to
+tweak how it runs.
 
-You might have seen something like this before when developing Roblox UIs:
+This lines up with what we need 'components' to do - we want to be able to reuse
+parts of our UI in multiple places, optionally providing properties to tweak how
+it looks.
 
-```Lua
--- this functions takes in a table of properties (props), and returns some UI
-local function Greeting(props)
-	local greeting = Instance.new("TextLabel")
-	-- every greeting will have these properties
-	greeting.BackgroundColor3 = Color3.new(1, 1, 0)
-	greeting.TextColor3 = Color3.new(0, 0, 1)
-	greeting.Size = UDim2.fromOffset(200, 50)
-	-- different greetings can have different messages though!
-	greeting.Text = props.message
-
-	return greeting
-end
-```
-
-This is a relatively intuitive way to make components normally, since it hides
-away all the common properties we don't care about (e.g. colours), and exposes
-only the properties that we want to modify (e.g. the message).
-
-Because Fusion is designed around instances, we can borrow this code pattern.
-The function below returns a TextLabel instance just like we do above:
+That's why, in Fusion, components are just functions. They take in a table of
+properties, create some UI, and return it:
 
 ```Lua
 local function Greeting(props)
@@ -39,47 +22,46 @@ local function Greeting(props)
 		BackgroundColor3 = Color3.new(1, 1, 0),
 		TextColor3 = Color3.new(0, 0, 1),
 		Size = UDim2.fromOffset(200, 50),
-		Text = props.message
+		Text = props.Message
 	}
 end
 ```
 
-Furthermore, since `#!Lua [Children]` works with instances, it's very easy to
-add a `Greeting` as a child:
+We can now call the `Greeting` function to get a copy of that UI with any
+message we'd like:
+
+```Lua
+local greeting1 = Greeting {
+	Message = "Hello!"
+}
+
+local greeting2 = Greeting {
+	Message = "Hey :)"
+}
+```
+
+!!! note
+	If you're using a single `props` argument (like we did above), you don't
+	need any parentheses `()` when you call the function with a table!
+
+We can also blend components into our other Fusion code easily:
 
 ```Lua
 local gui = New "ScreenGui" {
 	Name = "ExampleGui",
 	ZIndexBehavior = "Sibling",
 
-	[Children] = {
-		New "Frame" {
-			-- some other UI...
-		},
-
-		Greeting {
-			message = "Hello, world!"
-		}
+	[Children] = Greeting {
+		Message = "What's up? B)"
 	}
 }
 ```
 
-!!! note
-	Because our function accepts just one table as an argument (`props`), we
-	don't need parentheses `()` when we call the function with a new table!
+This makes components a powerful tool for creating tidy, reusable UI code inside
+Fusion.
 
-In the above code;
-
-- we call `Greeting` with a table of properties, containing our message
-- the `Greeting` function creates and returns our TextLabel for us
-- the returned TextLabel becomes part of the `[Children]`
-
-Therefore, when we run this code, we'll see our greeting TextLabel show up in
-our ScreenGui.
-
-That's the basic idea of 'components' in Fusion; they're just functions which
-take in some properties and return some UI. For the rest of this tutorial, we'll
-take a look at some code patterns that you can use with components in Fusion.
+For the rest of this tutorial, let's look at a few common scripting patterns you
+can use with components to make them even more useful.
 
 -----
 
@@ -285,7 +267,7 @@ the caller provide some code, callbacks are a great option.
 
 -----
 
-## State In Components
+## State
 
 Because components are functions, we can do more than just creating instances.
 You can also store state inside them!
