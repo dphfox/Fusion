@@ -330,5 +330,71 @@ the caller provide some code, callbacks are a great option.
 
 -----
 
-## Module Scripts
+## Returning Many Children
 
+In some specific circumstances, you may want to return more than one instance
+from a component.
+
+You shouldn't return multiple values from a component directly. Because of how
+Lua works, this can introduce subtle bugs in your code:
+
+```Lua
+local function ManyThings(props)
+	-- don't do this!
+	-- you should only return one value from a component
+	return
+		New "TextLabel" {...},
+		New "ImageButton" {...},
+		New "Frame" {...}
+end
+
+local gui1 = New "ScreenGui" {
+	-- this will only parent the TextLabel!
+	[Children] = ManyThings {}
+}
+
+local gui2 = New "ScreenGui" {
+	[Children] = {
+		New "TextLabel" {...},
+
+		-- this is also broken
+		ManyThings {}
+
+		New "TextLabel" {...}
+	}
+}
+```
+
+A better way to do this is to return an *array* of instances. This means you
+only return a single value - the array.
+
+This solves all of our issues; since `[Children]` supports arrays of children,
+all our instances are now parented as expected:
+
+```Lua
+local function ManyThings(props)
+	-- using an array ensures we only return one value
+	return {
+		New "TextLabel" {...},
+		New "ImageButton" {...},
+		New "Frame" {...}
+	}
+end
+
+local gui1 = New "ScreenGui" {
+	-- this now works!
+	[Children] = ManyThings {}
+}
+
+local gui2 = New "ScreenGui" {
+	[Children] = {
+		New "TextLabel" {...},
+
+		-- this also now works!
+		ManyThings {},
+
+		New "TextLabel" {...}
+	}
+}
+
+```
