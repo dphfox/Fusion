@@ -44,8 +44,8 @@ local function Greeting(props)
 end
 ```
 
-Furthermore, since `[Children]` works with instances, it's very easy to add a
-`Greeting` as a child:
+Furthermore, since `#!Lua [Children]` works with instances, it's very easy to
+add a `Greeting` as a child:
 
 ```Lua
 local gui = New "ScreenGui" {
@@ -246,7 +246,7 @@ Gallery {
 }
 ```
 
-We can access those children in our function using `props[Children]`. Since the
+We can access those children in our function using `#!Lua props[Children]`. Since the
 `New` function lets us pass in arrays of children, we can just include it
 directly in our code like so:
 
@@ -276,6 +276,57 @@ some type checking first.
 -----
 
 ## Callbacks
+
+For some components (e.g. buttons or text boxes), some code might need to run in
+response to events like clicks or typing. You can use callbacks to achieve this.
+
+Consider this `Button` component as an example. Notice we're using `props.OnClick`
+with `#!Lua [OnEvent "Activated"]`:
+
+```Lua
+local function Button(props)
+	return New "TextButton" {
+		Position = props.Position,
+		AnchorPoint = props.AnchorPoint,
+		Size = props.Size,
+
+		BackgroundColor3 = Color3.new(0, 0.4, 1),
+		TextColor3 = Color3.new(1, 1, 1),
+		Text = props.Message,
+
+		[OnEvent "Activated"] = props.OnClick
+	}
+end
+```
+
+This means that anyone using the `Button` component can provide a callback
+function, which will then be run when the button is clicked:
+
+```Lua
+local gui = New "ScreenGui" {
+	Name = "ExampleGui",
+	ZIndexBehavior = "Sibling",
+
+	[Children] = {
+		Button {
+			Position = UDim2.fromScale(.5, .5),
+			AnchorPoint = Vector2.new(.5, .5),
+			Size = UDim2.fromOffset(200, 50),
+
+			Message = "Click me!",
+
+			OnClick = function()
+				-- this callback function will be passed into OnEvent, so it'll
+				-- run when the button is clicked
+				print("The button was clicked!")
+			end
+		},
+	}
+}
+```
+
+This isn't just limited to event handlers, either - any time you want to let
+the caller provide some code, callbacks are a great option.
 
 -----
 
