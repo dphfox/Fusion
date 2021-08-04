@@ -93,7 +93,7 @@ end
 Suppose we'd like users to be able to pass in children to show up in the grid:
 
 ```Lua
-Gallery {
+local gallery = Gallery {
 	Position = UDim2.fromScale(.5, .5)
 	Size = UDim2.fromOffset(400, 300),
 	AnchorPoint = Vector2.new(.5, .5),
