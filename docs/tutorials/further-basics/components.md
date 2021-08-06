@@ -11,8 +11,13 @@ into these 'blocks':
 
 ![Diagram of components highlighted in UI](ComponentsDiagram.png)
 
-In UI design and development, these are known as 'components'. We can define
-what a component looks like, then use that to fill in those blocks.
+In UI design and development, these are widely known as 'components'.
+
+Components are useful, because we only need to define what each component looks
+like *generally*. We can then apply that look to every component across our UI.
+You can even provide some properties to tweak how they look each time:
+
+![Diagram of defining and applying how a component looks](ComponentsDefinitionDiagram.png)
 
 -----
 
