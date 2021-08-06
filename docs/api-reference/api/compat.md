@@ -10,9 +10,12 @@ Some example uses include synchronising theme colours to non-Fusion UIs, or
 saving state objects to data stores as they change.
 
 !!! warning
-	You *shouldn't* use Compat in regular Fusion code. Fusion already provides
-	reactive tools for almost every single use case, which can be better
-	optimised by Fusion and lead to cleaner and more idiomatic code.
+	You should only use `Compat` when dealing with non-Fusion code.
+
+	If you're building an interface with Fusion, there are already reactive
+	tools for almost every single use case, which can be better optimised by
+	Fusion and lead to cleaner and more idiomatic code. Using `Compat` in these
+	situations is highly discouraged.
 
 	Changing state objects in `:onChange()` is a particular anti-pattern which
 	abusing Compat may encourage. If you need to update the value of a state
