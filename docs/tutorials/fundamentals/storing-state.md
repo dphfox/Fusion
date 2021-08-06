@@ -91,77 +91,11 @@ You can also set the value by calling `:set()` with a new value:
 	The new value is: World
 	```
 
-That's the basic idea of state objects - they're kind of like variables, but in
-object form.
-
 -----
 
-## Listening for Changes
-
-You can listen for changes using the `onChange` event, which will fire every
-time a new value is stored in the state object:
-
-=== "Lua"
-	```Lua linenums="1" hl_lines="9-11"
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local Fusion = require(ReplicatedStorage.Fusion)
-
-	local State = Fusion.State
-
-	local message = State("Hello")
-	print("The value is:", message:get())
-
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
-	message:set("World")
-	print("The new value is:", message:get())
-	```
-=== "Expected output"
-	``` hl_lines="2"
-	The value is: Hello
-	The message was changed!
-	The new value is: World
-	```
-
-If you'd like to disconnect from the event later, `:Connect()` returns a
-function which, when called, will disconnect your event handler:
-
-=== "Lua"
-	```Lua linenums="1" hl_lines="16-19"
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local Fusion = require(ReplicatedStorage.Fusion)
-
-	local State = Fusion.State
-
-	local message = State("Hello")
-	print("The value is:", message:get())
-
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
-	message:set("World")
-	print("The new value is:", message:get())
-
-	disconnect()
-
-	message:set("Sneaky")
-	print("The final value is:", message:get())
-	```
-=== "Expected output"
-	``` hl_lines="4"
-	The value is: Hello
-	The message was changed!
-	The new value is: World
-	The final value is: Sneaky
-	```
-
------
-
-With that, you should now have a basic idea of what state objects do - by using
-these, we can now easily manipulate and use it in our UIs.
+With that, you should have the basic idea of state objects - they're kind of
+like variables, but in object form. These objects will later act like 'inputs'
+into Fusion's other state management tools.
 
 ??? summary "Finished code"
 	```Lua linenums="1"
@@ -173,15 +107,6 @@ these, we can now easily manipulate and use it in our UIs.
 	local message = State("Hello")
 	print("The value is:", message:get())
 
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
 	message:set("World")
 	print("The new value is:", message:get())
-
-	disconnect()
-
-	message:set("Sneaky")
-	print("The final value is:", message:get())
 	```

@@ -36,7 +36,8 @@ nav:
       - "Project 1: Counting Clicks": tutorials/fundamentals/project-1.md
     - Further Basics:
       - Components: tutorials/further-basics/components.md
-      - Lists and Arrays: tutorials/further-basics/computing-arrays.md
+      - Arrays and Lists: tutorials/further-basics/arrays-and-lists.md
+      - Compatibility: tutorials/further-basics/compatibility.md
       - "Project 2: To-Do List": tutorials/further-basics/project-2.md
     - Animation:
       - Tweens: tutorials/animation/tweens.md
@@ -57,6 +58,7 @@ nav:
       - State: api-reference/api/state.md
       - Computed: api-reference/api/computed.md
       - ComputedPairs: api-reference/api/computedpairs.md
+      - Compat: api-reference/api/compat.md
     - Animation:
       - Tween: api-reference/api/tween.md
       - Spring: api-reference/api/spring.md

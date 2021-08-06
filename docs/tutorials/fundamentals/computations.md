@@ -141,68 +141,6 @@ in terms of other values.
 
 -----
 
-## Listening for Changes
-
-You can listen for changes using the `onChange` event, which will fire every
-time the computed object updates its value:
-
-=== "Lua"
-	```Lua linenums="7" hl_lines="8-10"
-	local numPlayers = State(5)
-	local message = Computed(function()
-		return "There are " .. numPlayers:get() .. " players online."
-	end)
-
-	print(message:get())
-
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
-	numPlayers:set(12)
-	print(message:get())
-	```
-=== "Expected output"
-	``` hl_lines="2"
-	There are 5 players online.
-	The message was changed!
-	There are 12 players online.
-	```
-
-If you'd like to disconnect from the event later, `:Connect()` returns a
-function which, when called, will disconnect your event handler:
-
-=== "Lua"
-	```Lua linenums="7" hl_lines="15-18"
-	local numPlayers = State(5)
-	local message = Computed(function()
-		return "There are " .. numPlayers:get() .. " players online."
-	end)
-
-	print(message:get())
-
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
-	numPlayers:set(12)
-	print(message:get())
-
-	disconnect()
-
-	numPlayers:set(0)
-	print(message:get())
-	```
-=== "Expected output"
-	``` hl_lines="4"
-	There are 5 players online.
-	The message was changed!
-	There are 12 players online.
-	There are 0 players online.
-	```
-
------
-
 Now, we've covered everything we need to know about Fusion's basic state tools.
 Using computed objects and state objects together, you can easily store and
 compute values while avoiding data desynchronisation bugs.
@@ -222,15 +160,6 @@ compute values while avoiding data desynchronisation bugs.
 
 	print(message:get())
 
-	local disconnect = message.onChange:Connect(function()
-		print("The message was changed!")
-	end)
-
 	numPlayers:set(12)
-	print(message:get())
-
-	disconnect()
-
-	numPlayers:set(0)
 	print(message:get())
 	```
