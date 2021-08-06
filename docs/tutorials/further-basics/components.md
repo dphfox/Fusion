@@ -17,7 +17,7 @@ Components are useful, because we only need to define what each component looks
 like *generally*. We can then apply that look to every component across our UI.
 You can even provide some properties to tweak how they look each time:
 
-![Diagram of defining and applying how a component looks](ComponentsDefinitionDiagram.png)
+![Diagram of defining and applying how a component looks](ComponentDefinitionDiagram.png)
 
 -----
 
