@@ -20,6 +20,10 @@ icon:
 
 ![Diagram of defining and applying how a component looks](ComponentDefinitionDiagram.png)
 
+Building our UI by assembling components (rather than creating every instance
+manually) will help us to reuse and organise our UI code, and makes it easier to
+read and edit.
+
 -----
 
 ## Reusing UI
