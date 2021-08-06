@@ -3,6 +3,20 @@ It's often a good idea to split our UI into reusable parts, known as
 
 -----
 
+## What are Components?
+
+When we think about UIs as humans, we typically think of them in terms of
+reusable 'blocks' of UI. For example, you may divide up the following interface
+into these 'blocks':
+
+![Diagram of components highlighted in UI](ComponentsDiagram.png)
+
+In UI design and development, these are known as 'components'. They're a useful
+tool for hiding away the implementation details of our UI, and replacing them
+with a simple and easy-to-read representation.
+
+-----
+
 ## Reusing UI
 
 When we want to reuse a bit of code, we often put it in a function. We can then
