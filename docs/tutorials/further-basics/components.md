@@ -15,7 +15,8 @@ In UI design and development, these are widely known as 'components'.
 
 Components are useful, because we only need to define what each component looks
 like *generally*. We can then apply that look to every component across our UI.
-You can even provide some properties to tweak how they look each time:
+You can even provide properties, like some text to insert, or whether to show an
+icon:
 
 ![Diagram of defining and applying how a component looks](ComponentDefinitionDiagram.png)
 
