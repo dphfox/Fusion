@@ -86,7 +86,7 @@ event:
             Position = UDim2.new(0.5, 0, 0.5, 100),
 ```
 
-This works just like a regular `:Connect` - you'll recieve all the arguments
+This works just like a regular `:Connect()` - you'll recieve all the arguments
 from the event. Here, we're just printing them out for demonstration purposes.
 
 If you press 'Play' and click the button a few times, you should see something
@@ -101,8 +101,8 @@ for you automatically.
 
 ## Responding to Change
 
-In addition to regular events, you can listen to property change events (also
-known as: the events returned by `GetPropertyChangedSignal`).
+In addition to regular events, you can listen to property change events (the
+events returned by `GetPropertyChangedSignal`).
 
 In order to use property change events, you'll need to import `OnChange`:
 

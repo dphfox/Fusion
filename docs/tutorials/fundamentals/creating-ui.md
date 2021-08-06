@@ -66,7 +66,7 @@ for now we'll just use it to set properties.
 
 Let's use the `New` function to create a ScreenGui.
 
-We're going to put it in our `PlayerGui`, so we need to import the `Players`
+We're going to put it in our PlayerGui, so we need to import the `Players`
 service:
 
 ```Lua linenums="1" hl_lines="2"
@@ -86,18 +86,18 @@ local New = Fusion.New
 ```
 
 Now, we can use the `New` function like we did in the snippet above. We want to
-create a `ScreenGui` with these properties:
+create a ScreenGui with these properties:
 
-- a name of `"MyFirstGui"`
+- a name of 'MyFirstGui'
 - `ResetOnSpawn` disabled
-- the `ZIndexBehavior` set to `Sibling`
-- parented to our `PlayerGui`
+- the `ZIndexBehavior` set to 'Sibling'
+- parented to our PlayerGui
 
 ??? question "What do these properties do?"
 	- A name makes it easier to find our UI in the Explorer.
 	- Disabling `ResetOnSpawn` stops Roblox destroying our UI after we respawn.
 	- `ZIndexBehavior` is mostly preference, but [it changes how UI is arranged by depth](https://devforum.roblox.com/t/new-zindexbehavior-property-is-now-live/76051).
-	- Parenting it to the `PlayerGui` makes our UI visible on-screen.
+	- Parenting it to the PlayerGui makes our UI visible on-screen.
 
 The following code snippet does all of this for us:
 
@@ -129,7 +129,7 @@ the next section.
 
 ## Adding a Child
 
-Let's now add a `TextLabel` with a message and parent it to our `ScreenGui`.
+Let's now add a TextLabel with a message and parent it to our ScreenGui.
 
 To help with this, the `New` function lets us add children directly to our
 instance. In order to use this feature, we first need to import `Children` from

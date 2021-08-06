@@ -152,7 +152,7 @@ local function Gallery(props)
 end
 ```
 
-That's all there is to it! Just keep in mind that `Children` is still a property
+That's all there is to it! Just keep in mind that `#!Lua [Children]` is still a property
 like any other, so if you're processing the children, it might be good to do
 some type checking first.
 
@@ -197,7 +197,7 @@ A better way to do this is to return an *array* of instances. This means you
 only return a single value - the array. This gets around the subtle bugs that
 normally occur when dealing with multiple return values.
 
-Since `[Children]` supports arrays of children, all our instances are now
+Since `#!Lua [Children]` supports arrays of children, all our instances are now
 parented as expected:
 
 ```Lua
