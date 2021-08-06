@@ -19,6 +19,8 @@ saving state objects to data stores as they change.
 	object when another state object is changed, consider using [computed state](../computed.md)
 	instead.
 
+	[For further details, see this issue on GitHub.](https://github.com/Elttob/Fusion/issues/8#issuecomment-888109650)
+
 -----
 
 ## Parameters
