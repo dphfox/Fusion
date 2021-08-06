@@ -11,9 +11,8 @@ into these 'blocks':
 
 ![Diagram of components highlighted in UI](ComponentsDiagram.png)
 
-In UI design and development, these are known as 'components'. They're a useful
-tool for hiding away the implementation details of our UI, and replacing them
-with a simple and easy-to-read representation.
+In UI design and development, these are known as 'components'. We can define
+what a component looks like, then use that to fill in those blocks.
 
 -----
 
