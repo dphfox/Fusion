@@ -14,7 +14,7 @@ saving state objects to data stores as they change.
 	reactive tools for almost every single use case, which can be better
 	optimised by Fusion and lead to cleaner and more idiomatic code.
 
-	Changing state objects in `onChange:()` is a particular anti-pattern which
+	Changing state objects in `:onChange()` is a particular anti-pattern which
 	abusing Compat may encourage. If you need to update the value of a state
 	object when another state object is changed, consider using [computed state](../computed.md)
 	instead.
