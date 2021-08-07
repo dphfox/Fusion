@@ -42,7 +42,7 @@ nav:
     - Animation:
       - Tweens: tutorials/animation/tweens.md
       - Springs: tutorials/animation/prings.md
-      - "Project 3: Messaging": tutorials/animation/project-3.md
+      - "Project 3: Switches": tutorials/animation/project-3.md
   - Examples:
     - Home: examples/index.md
   - API Reference:
