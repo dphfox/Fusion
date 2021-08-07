@@ -15,6 +15,13 @@ local myInstance = New("Frame")({...})
 local myInstance = New "Frame" {...}
 ```
 
+!!! warning "Instance cleanup"
+	Make sure to destroy your instances properly. Without using an explicit
+	`:Destroy()`, it's easy to accidentally introduce memory leaks.
+
+	For lists of instances, you can use [ComputedPairs][../computedpairs], which
+	comes with good defaults for instance caching and cleanup.
+
 -----
 
 ## Parameters
