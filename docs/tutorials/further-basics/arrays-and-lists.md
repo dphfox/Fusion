@@ -242,3 +242,26 @@ lists of instances. The less unnecessary recalculation, the better!
 With that, you should now have a basic idea of how to work with table state in
 Fusion. When you get used to this workflow, you can express your logic cleanly,
 and get great caching and cleanup behaviour for free.
+
+??? abstract "Finished code"
+
+	```Lua linenums="1"
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Fusion = require(ReplicatedStorage.Fusion)
+
+	local State = Fusion.State
+	local Computed = Fusion.Computed
+	local ComputedPairs = Fusion.ComputedPairs
+
+	local data = State({Red = true, Green = true, Blue = true, Yellow = true})
+
+	print("Creating processedData...")
+
+	local processedData = ComputedPairs(function(key)
+		print("  ...recalculating key: " .. key)
+		return key
+	end)
+
+	print("Removing Blue...")
+	data:set({Red = true, Green = true, Yellow = true})
+	```
