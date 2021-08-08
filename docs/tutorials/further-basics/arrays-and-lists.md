@@ -231,4 +231,16 @@ them stable, because they won't be affected by other insertions or removals:
 	Removing Blue...
 	```
 
+Notice that, when we remove Blue, no other values are recalculated. This is
+ideal, and means we're not doing unnecessary processing:
+
 ![Diagram showing stable keys](StableKeys.png)
+
+This is especially important when optimising 'heavy' arrays, for example long
+lists of instances. The less unnecessary recalculation, the better!
+
+-----
+
+With that, you should now have a basic idea of how to work with table state in
+Fusion. When you get used to this workflow, you can express your code much more
+quickly and cleanly.
