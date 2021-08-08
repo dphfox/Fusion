@@ -161,8 +161,9 @@ stays the same:
 	  ...recalculating key: Four
 	```
 
-You can illustrate this with a diagram - because the keys `Two` and `Four` have
-different values after the change, they're recalculated:
+Because the keys `Two` and `Four` have different values after the change,
+they're recalculated. However, `One` and `Three` have the same values, so
+they'll be reused instead:
 
 ![Diagram showing how keys are cached](OptimisedKeyValues.png)
 
