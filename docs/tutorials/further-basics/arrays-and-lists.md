@@ -204,9 +204,8 @@ changed, so it triggered a recalculation:
 
 ![Diagram showing unstable keys](UnstableKeys.png)
 
-If the order of the values doesn't matter, you can use the values as keys
-instead, which solves the problem. Now, the only time a value is recalculated
-is when a key is added:
+If the keys aren't needed, you can use your values as keys instead. This makes
+them stable, because they won't be affected by other insertions or removals:
 
 === "Lua"
 	```Lua
@@ -216,11 +215,11 @@ is when a key is added:
 
 	local processedData = ComputedPairs(function(key)
 		print("  ...recalculating key: " .. key)
-		return key * 2
+		return key
 	end)
 
-	print("Adding a new value...")
-	data:set({Red = true, Green = true, Yellow = true, Pink = true, Blue = true})
+	print("Removing Blue...")
+	data:set({Red = true, Green = true, Yellow = true})
 	```
 === "Expected output"
 	```
@@ -229,8 +228,7 @@ is when a key is added:
 	  ...recalculating key: Green
 	  ...recalculating key: Blue
 	  ...recalculating key: Yellow
-	Adding a new value...
-	  ...recalculating key: Pink
+	Removing Blue...
 	```
 
-This is a concept known as 'stable keys'.
+![Diagram showing stable keys](StableKeys.png)
