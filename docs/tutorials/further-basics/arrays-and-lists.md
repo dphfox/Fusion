@@ -110,7 +110,7 @@ overwritten, so you can clean it up:
 		end
 	)
 
-	names:set("John", "Trey", "Charlie")
+	names:set({"John", "Trey", "Charlie"})
 	```
 === "Expected output"
 	```
