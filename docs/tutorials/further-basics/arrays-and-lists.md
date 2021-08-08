@@ -124,3 +124,109 @@ overwritten, so you can clean it up:
 
 ## Optimisation
 
+To improve performance, `ComputedPairs` doesn't recalculate a key if its value
+stays the same:
+
+=== "Lua"
+	```Lua
+	local data = State({
+		One = 1,
+		Two = 2,
+		Three = 3
+	})
+
+	print("Creating processedData...")
+
+	local processedData = ComputedPairs(function(key, value)
+		print("  ...recalculating key: " .. key)
+		return value * 2
+	end)
+
+	print("Changing the values of some keys...")
+	data:set({
+		One = 1,
+		Two = 100,
+		Three = 3,
+		Four = 4
+	})
+	```
+=== "Expected output"
+	```
+	Creating processedData...
+	  ...recalculating key: One
+	  ...recalculating key: Two
+	  ...recalculating key: Three
+	Changing the values of some keys...
+	  ...recalculating key: Two
+	  ...recalculating key: Four
+	```
+
+You can illustrate this with a diagram - because the keys `Two` and `Four` have
+different values after the change, they're recalculated:
+
+![Diagram showing how keys are cached](OptimisedKeyValues.png)
+
+Be careful, though - this means arrays may not be optimised by default. To be
+specific, if the values in your array change position, they'll be recalculated,
+because each key may now correspond to a different value:
+
+=== "Lua"
+	```Lua
+	local data = State({"Red", "Green", "Blue", "Yellow"})
+
+	print("Creating processedData...")
+
+	local processedData = ComputedPairs(function(key, value)
+		print("  ...recalculating key: " .. key .. " value: " .. value)
+		return value * 2
+	end)
+
+	print("Moving the values around...")
+	data:set({"Blue", "Yellow", "Red", "Green"})
+	```
+=== "Expected output"
+	```
+	Creating processedData...
+	  ...recalculating key: 1 value: Red
+	  ...recalculating key: 2 value: Green
+	  ...recalculating key: 3 value: Blue
+	  ...recalculating key: 4 value: Yellow
+	Moving the values around...
+	  ...recalculating key: 1 value: Blue
+	  ...recalculating key: 2 value: Yellow
+	  ...recalculating key: 3 value: Red
+	  ...recalculating key: 4 value: Green
+	```
+
+These keys are considered 'unstable', because
+
+If the order of the values doesn't matter, you can use the values as keys
+instead, which solves the problem. Now, the only time a value is recalculated
+is when a key is added:
+
+=== "Lua"
+	```Lua
+	local data = State({Red = true, Green = true, Blue = true, Yellow = true})
+
+	print("Creating processedData...")
+
+	local processedData = ComputedPairs(function(key)
+		print("  ...recalculating key: " .. key)
+		return key * 2
+	end)
+
+	print("Adding a new value...")
+	data:set({Red = true, Green = true, Yellow = true, Pink = true, Blue = true})
+	```
+=== "Expected output"
+	```
+	Creating processedData...
+	  ...recalculating key: Red
+	  ...recalculating key: Green
+	  ...recalculating key: Blue
+	  ...recalculating key: Yellow
+	Adding a new value...
+	  ...recalculating key: Pink
+	```
+
+This is a concept known as 'stable keys'.
