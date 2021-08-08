@@ -167,9 +167,12 @@ they'll be reused instead:
 
 ![Diagram showing how keys are cached](OptimisedKeyValues.png)
 
-Be careful, though - this means arrays may not be optimised by default. To be
-specific, if the values in your array change position, they'll be recalculated,
-because each key may now correspond to a different value:
+This is a simple rule which should work well for tables with 'stable keys' (keys
+that don't change as other values are added and removed).
+
+However, if you're working with 'unstable keys' (e.g. an array where values can
+move to different keys) then you can get unnecessary recalculations. In the
+following code, `Yellow` gets recalculated, because it moves to a different key:
 
 === "Lua"
 	```Lua
@@ -179,11 +182,11 @@ because each key may now correspond to a different value:
 
 	local processedData = ComputedPairs(function(key, value)
 		print("  ...recalculating key: " .. key .. " value: " .. value)
-		return value * 2
+		return value
 	end)
 
-	print("Moving the values around...")
-	data:set({"Blue", "Yellow", "Red", "Green"})
+	print("Removing Blue...")
+	data:set({"Red", "Green", "Yellow"})
 	```
 === "Expected output"
 	```
@@ -193,13 +196,13 @@ because each key may now correspond to a different value:
 	  ...recalculating key: 3 value: Blue
 	  ...recalculating key: 4 value: Yellow
 	Moving the values around...
-	  ...recalculating key: 1 value: Blue
-	  ...recalculating key: 2 value: Yellow
-	  ...recalculating key: 3 value: Red
-	  ...recalculating key: 4 value: Green
+	  ...recalculating key: 3 value: Yellow
 	```
 
-These keys are considered 'unstable', because
+You can see this more clearly in the following diagram - the value of key 3 was
+changed, so it triggered a recalculation:
+
+![Diagram showing unstable keys](UnstableKeys.png)
 
 If the order of the values doesn't matter, you can use the values as keys
 instead, which solves the problem. Now, the only time a value is recalculated
