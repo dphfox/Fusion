@@ -78,3 +78,49 @@ end)
 print(processedData:get()) --> {Blue = "Blue is good", Green = "Green is bad"}
 ```
 
+-----
+
+## Cleaning Up Values
+
+Sometimes, you might use `ComputedPairs` to generate lists of instances, or
+other similar data types. When we're done with these, we need to destroy them.
+
+Conveniently, `ComputedPairs` already cleans up some types when they're removed
+from the output array:
+
+- returned instances will be destroyed
+- returned event connections will be disconnected
+- returned functions will be run
+- returned objects will have their `:Destroy()` or `:destroy()` methods called
+- returned arrays will have their contents cleaned up
+
+This should cover most use cases by default. However, if you need to override
+this cleanup behaviour, you can pass in an optional `destructor` function as
+the second argument. It will be called any time a generated value is removed or
+overwritten, so you can clean it up:
+
+=== "Lua"
+	```Lua linenums="8" hl_lines="7-9"
+	local names = State({"John", "Dave", "Sebastian"})
+
+	local greetings = ComputedPairs(
+		function(index, name)
+			return "Hello, " .. name
+		end,
+		function(greeting)
+			print("Removed: " .. greeting)
+		end
+	)
+
+	names:set("John", "Trey", "Charlie")
+	```
+=== "Expected output"
+	```
+	Removed: Hello, Dave
+	Removed: Hello, Sebastian
+	```
+
+-----
+
+## Optimisation
+
