@@ -1,5 +1,5 @@
-Efficiently working with tables can be difficult normally. Let's learn about the
-tools Fusion provides to make working with arrays and tables easier.
+Efficiently working with tables can be difficult. Let's learn about the tools
+Fusion provides to make working with arrays and tables easier.
 
 ??? abstract "Required code"
 
@@ -26,7 +26,7 @@ local numbers = State({1, 2, 3, 4, 5})
 
 local doubledNumbers = Computed(function()
 	local doubled = {}
-	for index, number in pairs(numbers) do
+	for index, number in pairs(numbers:get()) do
 		doubled[index] = number * 2
 	end
 	return doubled
@@ -36,14 +36,12 @@ print(doubledNumbers:get()) --> {2, 4, 6, 8, 10}
 ```
 
 While this works, it's pretty verbose. To make this code simpler, Fusion has a
-special computed object designed for processing arrays of values, known as
-`ComputedPairs`.
+special computed object designed for processing tables, known as `ComputedPairs`.
 
 To use it, we need to import `ComputedPairs` from Fusion:
 
 ```Lua linenums="1" hl_lines="7"
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local State = Fusion.State
@@ -68,7 +66,7 @@ print(doubledNumbers:get()) --> {2, 4, 6, 8, 10}
 This can be used to process any kind of table, not just arrays. Notice how the
 keys stay the same, and the value is whatever you return:
 
-```Lua
+```Lua linenums="8"
 local data = State({Blue = "good", Green = "bad"})
 
 local processedData = ComputedPairs(function(colour, word)
@@ -128,7 +126,7 @@ To improve performance, `ComputedPairs` doesn't recalculate a key if its value
 stays the same:
 
 === "Lua"
-	```Lua
+	```Lua linenums="8"
 	local data = State({
 		One = 1,
 		Two = 2,
@@ -175,7 +173,7 @@ move to different keys) then you can get unnecessary recalculations. In the
 following code, `Yellow` gets recalculated, because it moves to a different key:
 
 === "Lua"
-	```Lua
+	```Lua linenums="8"
 	local data = State({"Red", "Green", "Blue", "Yellow"})
 
 	print("Creating processedData...")
@@ -208,7 +206,7 @@ If the keys aren't needed, you can use your values as keys instead. This makes
 them stable, because they won't be affected by other insertions or removals:
 
 === "Lua"
-	```Lua
+	```Lua linenums="8" hl_lines="1 5-8 11"
 	local data = State({Red = true, Green = true, Blue = true, Yellow = true})
 
 	print("Creating processedData...")
@@ -231,7 +229,7 @@ them stable, because they won't be affected by other insertions or removals:
 	Removing Blue...
 	```
 
-Notice that, when we remove Blue, no other values are recalculated. This is
+Notice that, when we remove `Blue`, no other values are recalculated. This is
 ideal, and means we're not doing unnecessary processing:
 
 ![Diagram showing stable keys](StableKeys.png)
@@ -242,5 +240,5 @@ lists of instances. The less unnecessary recalculation, the better!
 -----
 
 With that, you should now have a basic idea of how to work with table state in
-Fusion. When you get used to this workflow, you can express your code much more
-quickly and cleanly.
+Fusion. When you get used to this workflow, you can express your logic cleanly,
+and get great caching and cleanup behaviour for free.
