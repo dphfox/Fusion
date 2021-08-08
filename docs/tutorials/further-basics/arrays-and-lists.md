@@ -56,7 +56,7 @@ new array:
 ```Lua linenums="8" hl_lines="3-5"
 local numbers = State({1, 2, 3, 4, 5})
 
-local doubledNumbers = ComputedPairs(function(index, number)
+local doubledNumbers = ComputedPairs(numbers, function(index, number)
 	return number *  2
 end)
 
@@ -69,7 +69,7 @@ keys stay the same, and the value is whatever you return:
 ```Lua linenums="8"
 local data = State({Blue = "good", Green = "bad"})
 
-local processedData = ComputedPairs(function(colour, word)
+local processedData = ComputedPairs(data, function(colour, word)
 	return colour .. " is " .. word
 end)
 
@@ -102,6 +102,7 @@ overwritten, so you can clean it up:
 	local names = State({"John", "Dave", "Sebastian"})
 
 	local greetings = ComputedPairs(
+		names,
 		function(index, name)
 			return "Hello, " .. name
 		end,
@@ -135,7 +136,7 @@ stays the same:
 
 	print("Creating processedData...")
 
-	local processedData = ComputedPairs(function(key, value)
+	local processedData = ComputedPairs(data, function(key, value)
 		print("  ...recalculating key: " .. key)
 		return value * 2
 	end)
@@ -178,7 +179,7 @@ following code, `Yellow` gets recalculated, because it moves to a different key:
 
 	print("Creating processedData...")
 
-	local processedData = ComputedPairs(function(key, value)
+	local processedData = ComputedPairs(data, function(key, value)
 		print("  ...recalculating key: " .. key .. " value: " .. value)
 		return value
 	end)
@@ -211,7 +212,7 @@ them stable, because they won't be affected by other insertions or removals:
 
 	print("Creating processedData...")
 
-	local processedData = ComputedPairs(function(key)
+	local processedData = ComputedPairs(data, function(key)
 		print("  ...recalculating key: " .. key)
 		return key
 	end)
@@ -257,7 +258,7 @@ and get great caching and cleanup behaviour for free.
 
 	print("Creating processedData...")
 
-	local processedData = ComputedPairs(function(key)
+	local processedData = ComputedPairs(data, function(key)
 		print("  ...recalculating key: " .. key)
 		return key
 	end)
