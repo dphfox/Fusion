@@ -98,7 +98,7 @@ the second argument. It will be called any time a generated value is removed or
 overwritten, so you can clean it up:
 
 === "Lua"
-	```Lua linenums="8" hl_lines="7-9"
+	```Lua linenums="8" hl_lines="8-10"
 	local names = State({"John", "Dave", "Sebastian"})
 
 	local greetings = ComputedPairs(
