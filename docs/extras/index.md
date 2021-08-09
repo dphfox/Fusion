@@ -6,6 +6,7 @@ brand assets and backgrounds.
 ## Backgrounds
 
 All backgrounds are PNG format, and have been optimised for these resolutions:
+
 - Ultrawide (7680 x 1440)
 - Widescreen (2560 x 1440)
 - 3:2 (2256 x 1504)
