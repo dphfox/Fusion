@@ -62,6 +62,7 @@ nav:
     - Animation:
       - Tween: api-reference/api/tween.md
       - Spring: api-reference/api/spring.md
+  - Extras: extras/index.md
 
 markdown_extensions:
   - admonition
