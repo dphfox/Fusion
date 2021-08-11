@@ -6,40 +6,6 @@ On this page, you can learn more about any error messages you're receiving.
 
 -----
 
-## `computedCallbackError`
-
-```
-Computed callback error: attempt to index a nil value
-```
-
-This message shows when the callback of a [computed object](../computed)
-encounters an error:
-
-```Lua
-local example = Computed(function()
-	local badMath = 2 + "fish"
-end)
-```
-
------
-
-## `cannotCreateClass`
-
-```
-Can't create a new instance of class 'Foo'.
-```
-
-This message shows when using the [New](../new) function with an invalid class
-type:
-
-```Lua
-local instance = New "ThisClassTypeIsInvalid" {
-	...
-}
-```
-
------
-
 ## `cannotAssignProperty`
 
 ```
@@ -63,16 +29,22 @@ local folder = New "Folder" {
 
 -----
 
-## `strictReadError`
+## `cannotConnectChange`
 
 ```
-'Foo' is not a valid member of 'Bar'.
+The Frame class doesn't have a property called 'Foo'.
 ```
 
-In Fusion, some tables may have strict reading rules. This is typically used on
-public APIs as a defense against typos.
+This message shows if you try to connect a handler to a non-existent property
+change event when using the [New](../new) function:
 
-This message shows when trying to read a non-existent member of these tables.
+```Lua
+local textBox = New "TextBox" {
+	[OnChange "ThisPropertyDoesntExist"] = function()
+		...
+	end)
+}
+```
 
 -----
 
@@ -95,49 +67,36 @@ local button = New "TextButton" {
 
 -----
 
-## `cannotConnectChange`
+## `cannotCreateClass`
 
 ```
-The Frame class doesn't have a property called 'Foo'.
+Can't create a new instance of class 'Foo'.
 ```
 
-This message shows if you try to connect a handler to a non-existent property
-change event when using the [New](../new) function:
+This message shows when using the [New](../new) function with an invalid class
+type:
 
 ```Lua
-local textBox = New "TextBox" {
-	[OnChange "ThisPropertyDoesntExist"] = function()
-		...
-	end)
+local instance = New "ThisClassTypeIsInvalid" {
+	...
 }
 ```
 
 -----
 
-## `unrecognisedPropertyKey`
+## `computedCallbackError`
 
 ```
-'number' keys aren't accepted in the property table of `New`.
+Computed callback error: attempt to index a nil value
 ```
 
-When you create an instance in Fusion using [New](../new),
-you can pass in a 'property table' containing properties, children, event and
-property change handlers, etc.
-
-This table is only expected to contain keys of two types:
-
-- string keys, e.g. `#!Lua Name = "Example"`
-- a few symbol keys, e.g. `#!Lua [OnEvent "Foo"] = ...`
-
-This message shows if Fusion finds a key of a different type, or if the key
-isn't one of the few symbol keys used in New:
+This message shows when the callback of a [computed object](../computed)
+encounters an error:
 
 ```Lua
-local folder = New "Folder" {
-	[Vector3.new()] = "Example",
-
-	"This", "Shouldn't", "Be", "Here"
-}
+local example = Computed(function()
+	local badMath = 2 + "fish"
+end)
 ```
 
 -----
@@ -181,23 +140,23 @@ is not simulatable or physically sensible.
 
 -----
 
-## `springTypeMismatch`
+## `pairsDestructorError`
 
 ```
-The type 'number' doesn't match the spring's type 'Color3'.
+ComputedPairs destructor error: attempt to index a nil value
 ```
 
-Some methods on [spring](../spring) objects require incoming values to match
-the types previously being used on the spring.
-
-This message shows when an incoming value doesn't have the same type as values
-used previously on the spring:
+This message shows when the `destructor` callback of a [ComputedPairs object](../computedpairs)
+encounters an error:
 
 ```Lua
-local colour = State(Color3.new(1, 0, 0))
-local colourSpring = Spring(colour)
-
-colourSpring:addVelocity(Vector2.new(2, 3))
+local example = ComputedPairs(
+	data,
+	processor,
+	function(value)
+		local badMath = 2 + "fish"
+	end
+)
 ```
 
 -----
@@ -219,24 +178,54 @@ end)
 
 -----
 
-## `pairsDestructorError`
+## `springTypeMismatch`
 
 ```
-ComputedPairs destructor error: attempt to index a nil value
+The type 'number' doesn't match the spring's type 'Color3'.
 ```
 
-This message shows when the `destructor` callback of a [ComputedPairs object](../computedpairs)
-encounters an error:
+Some methods on [spring](../spring) objects require incoming values to match
+the types previously being used on the spring.
+
+This message shows when an incoming value doesn't have the same type as values
+used previously on the spring:
 
 ```Lua
-local example = ComputedPairs(
-	data,
-	processor,
-	function(value)
-		local badMath = 2 + "fish"
-	end
-)
+local colour = State(Color3.new(1, 0, 0))
+local colourSpring = Spring(colour)
+
+colourSpring:addVelocity(Vector2.new(2, 3))
 ```
+
+-----
+
+## `strictReadError`
+
+```
+'Foo' is not a valid member of 'Bar'.
+```
+
+In Fusion, some tables may have strict reading rules. This is typically used on
+public APIs as a defense against typos.
+
+This message shows when trying to read a non-existent member of these tables.
+
+-----
+
+## `unknownMessage`
+
+```
+Unknown error: attempt to index a nil value
+```
+
+If you see this message, it's almost certainly an internal bug, so make sure to
+get in contact so the issue can be fixed.
+
+When Fusion code attempts to log a message, warning or error, it needs to
+provide an ID. This ID is used to show the correct message, and serves as a
+simple, memorable identifier if you need to look up the message later.
+However, if that code provides an invalid ID, then the message will be replaced
+with this one.
 
 -----
 
@@ -268,17 +257,28 @@ local instance = New "Folder" {
 
 -----
 
-## `unknownMessage`
+## `unrecognisedPropertyKey`
 
 ```
-Unknown error: attempt to index a nil value
+'number' keys aren't accepted in the property table of `New`.
 ```
 
-If you see this message, it's almost certainly an internal bug, so make sure to
-get in contact so the issue can be fixed.
+When you create an instance in Fusion using [New](../new),
+you can pass in a 'property table' containing properties, children, event and
+property change handlers, etc.
 
-When Fusion code attempts to log a message, warning or error, it needs to
-provide an ID. This ID is used to show the correct message, and serves as a
-simple, memorable identifier if you need to look up the message later.
-However, if that code provides an invalid ID, then the message will be replaced
-with this one.
+This table is only expected to contain keys of two types:
+
+- string keys, e.g. `#!Lua Name = "Example"`
+- a few symbol keys, e.g. `#!Lua [OnEvent "Foo"] = ...`
+
+This message shows if Fusion finds a key of a different type, or if the key
+isn't one of the few symbol keys used in New:
+
+```Lua
+local folder = New "Folder" {
+	[Vector3.new()] = "Example",
+
+	"This", "Shouldn't", "Be", "Here"
+}
+```
