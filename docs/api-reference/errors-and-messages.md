@@ -12,30 +12,14 @@ On this page, you can learn more about any error messages you're receiving.
 Computed callback error: attempt to index a nil value
 ```
 
-When you create a new [computed object](../computed), you
-can pass in a callback. The callback determines the computed object's value:
+This message shows when the callback of a [computed object](../computed)
+encounters an error:
 
 ```Lua
 local example = Computed(function()
-	-- this is the computed's callback
-	return 2 + 2
+	local badMath = 2 + "fish"
 end)
 ```
-
-If an error is thrown inside of the callback, this message will show with
-details of the error.
-
-Furthermore, if your code attempts to `:get()` the value of a computed object
-that errored last time it attempted a computation, the same error will be thrown.
-
-If you're seeing this error, consider the following:
-
-- Is there a bug or unhandled edge case in your callback?
-- Is your computed object using correct, valid data?
-- Are you trying to access data which doesn't exist yet? (for example, trying
-to index something expected to be a table, but which currently is `nil`)
-- Are you calling a function which can error sometimes, but aren't catching the
-error using `pcall`?
 
 -----
 
@@ -43,26 +27,16 @@ error using `pcall`?
 
 ```
 Can't create a new instance of class 'Foo'.
-Did you spell the class name correctly?
 ```
 
-When using the [New](../new) function to construct instances,
-you're required to pass in a string specifying the class type of the instance:
+This message shows when using the [New](../new) function with an invalid class
+type:
 
 ```Lua
--- this will create a new Folder instance called MyThing
-local folder = New "Folder" {
-	Name = "MyThing"
+local instance = New "ThisClassTypeIsInvalid" {
+	...
 }
 ```
-
-However, if an invalid class type is passed in, then this error will be thrown.
-
-If you're seeing this error, consider the following:
-
-- Did you spell the class name correctly?
-- Are you trying to instantiate a class type which is not creatable?
-- Does your script have the necessary privileges to create that class type?
 
 -----
 
@@ -70,26 +44,22 @@ If you're seeing this error, consider the following:
 
 ```
 The class type 'Foo' has no assignable property 'Bar'.
-Did you spell the property name correctly?
 ```
 
-When using the [New](../new) function to construct instances,
-you're able to pass in properties to be assigned to the instance:
+This message shows if you try to assign a non-existent or locked property using
+the [New](../new) function:
 
 ```Lua
--- this will create a new Folder instance called MyThing
 local folder = New "Folder" {
-	Name = "MyThing"
+	DataCost = 12345,
+	ThisPropertyDoesntExist = "Example"
 }
 ```
 
-However, if you attempt to assign a non-existent or locked property, then this
-error will be thrown.
-
-If you're seeing this error, consider the following:
-
-- Did you spell the property name correctly?
-- Does your script have the necessary privileges to assign that property?
+!!! tip
+	Different scripts may have different privileges - for example, plugins will
+	be allowed more privileges than in-game scripts. Make sure you have the
+	necessary privileges to assign to your properties!
 
 -----
 
@@ -97,77 +67,50 @@ If you're seeing this error, consider the following:
 
 ```
 'Foo' is not a valid member of 'Bar'.
-Did you spell the member name correctly?
 ```
 
 In Fusion, some tables may have strict reading rules. This is typically used on
 public APIs as a defense against typos.
 
-If you're seeing this error, consider the following:
-
-- Did you spell the member name correctly?
-- Are you trying to access a member that doesn't exist?
-	- You might encounter this problem after updating Fusion, if you're moving
-	to a version with breaking changes. Make sure to review your code for bugs!
+This message shows when trying to read a non-existent member of these tables.
 
 -----
 
-## `eventNotFound`
+## `cannotConnectEvent`
 
 ```
 The Frame class doesn't have an event called 'Foo'.
-Did you spell the event name correctly?
 ```
 
-When using the [New](../new) function to construct instances,
-you can register event handlers by using the [OnEvent](../onevent)
-function and passing an event name:
+This message shows if you try to connect a handler to a non-existent event when
+using the [New](../new) function:
 
 ```Lua
--- this will print a message when a user clicks this button
 local button = New "TextButton" {
-	[OnEvent "Activated"] = function()
-		print("I was clicked!")
+	[OnEvent "ThisEventDoesntExist"] = function()
+		...
 	end)
 }
 ```
-
-However, if no event with that name was found, then you'll see this error.
-
-If you're seeing this error, consider the following:
-
-- Did you spell the event name correctly?
-- Are you using a property name instead of an event name?
-	- If you want to handle property change events, consider using the `Changed`
-	event, or registering a property change handler using [OnChange](../onchange).
 
 -----
 
-## `propertyNotFound`
+## `cannotConnectChange`
 
 ```
 The Frame class doesn't have a property called 'Foo'.
-Did you spell the property name correctly?
 ```
 
-When using the [New](../new) function to construct instances,
-you can register property change handlers by using the [OnChange](../onchange)
-function and passing a property name:
+This message shows if you try to connect a handler to a non-existent property
+change event when using the [New](../new) function:
 
 ```Lua
--- this will print a message when a user types in this text box
-local button = New "TextBox" {
-	[OnChange "Text"] = function(newText)
-		print("You typed:", newText)
+local textBox = New "TextBox" {
+	[OnChange "ThisPropertyDoesntExist"] = function()
+		...
 	end)
 }
 ```
-
-However, if no property with that name was found, then you'll see this error.
-
-If you're seeing this error, consider the following:
-
-- Did you spell the property name correctly?
 
 -----
 
@@ -175,7 +118,6 @@ If you're seeing this error, consider the following:
 
 ```
 'number' keys aren't accepted in the property table of `New`.
-Make sure you're only passing strings or symbols as keys.
 ```
 
 When you create an instance in Fusion using [New](../new),
@@ -185,55 +127,158 @@ property change handlers, etc.
 This table is only expected to contain keys of two types:
 
 - string keys, e.g. `#!Lua Name = "Example"`
-- symbol keys, e.g. `#!Lua [OnEvent "Foo"] = ...`
+- a few symbol keys, e.g. `#!Lua [OnEvent "Foo"] = ...`
 
-If keys of a different type are present, it's usually not intentional. Fusion
-will ignore any key/value pairs with unrecognised key types, but will produce
-this warning to make sure you're aware of the issue.
+This message shows if Fusion finds a key of a different type, or if the key
+isn't one of the few symbol keys used in New:
 
-If you're getting this warning, consider the following:
-
-- Does your property table have an array part? For example:
 ```Lua
-New "ScreenGui" {
-	Name = "Example",
+local folder = New "Folder" {
+	[Vector3.new()] = "Example",
 
-	-- this Frame isn't going to be added as a child!
-	-- it's being added to the array part of the table, and so it'll have a
-	-- number key, which will produce this warning
-	New "Frame" {
-		...
+	"This", "Shouldn't", "Be", "Here"
+}
+```
+
+-----
+
+## `invalidSpringDamping`
+
+```
+The damping ratio for a spring must be >= 0. (damping was %.2f)
+```
+
+This message shows if you try to provide a damping ratio to a [spring](../spring)
+which is less than 0:
+
+```Lua
+local speed = 10
+local damping = -12345
+local spring = Spring(state, speed, damping)
+```
+
+Damping ratio must always be between 0 and infinity for a spring to be
+physically simulatable.
+
+-----
+
+## `invalidSpringSpeed`
+
+```
+The speed of a spring must be >= 0. (speed was %.2f)
+```
+
+This message shows if you try to provide a speed to a [spring](../spring) which
+is less than 0:
+
+```Lua
+local speed = -12345
+local spring = Spring(state, speed)
+```
+
+Since a speed of 0 is equivalent to a spring that doesn't move, any slower speed
+is not simulatable or physically sensible.
+
+-----
+
+## `springTypeMismatch`
+
+```
+The type 'number' doesn't match the spring's type 'Color3'.
+```
+
+Some methods on [spring](../spring) objects require incoming values to match
+the types previously being used on the spring.
+
+This message shows when an incoming value doesn't have the same type as values
+used previously on the spring:
+
+```Lua
+local colour = State(Color3.new(1, 0, 0))
+local colourSpring = Spring(colour)
+
+colourSpring:addVelocity(Vector2.new(2, 3))
+```
+
+-----
+
+## `pairsProcessorError`
+
+```
+ComputedPairs callback error: attempt to index a nil value
+```
+
+This message shows when the `processor` callback of a [ComputedPairs object](../computedpairs)
+encounters an error:
+
+```Lua
+local example = ComputedPairs(data, function(key, value)
+	local badMath = 2 + "fish"
+end)
+```
+
+-----
+
+## `pairsDestructorError`
+
+```
+ComputedPairs destructor error: attempt to index a nil value
+```
+
+This message shows when the `destructor` callback of a [ComputedPairs object](../computedpairs)
+encounters an error:
+
+```Lua
+local example = ComputedPairs(
+	data,
+	processor,
+	function(value)
+		local badMath = 2 + "fish"
+	end
+)
+```
+
+-----
+
+## `unrecognisedChildType`
+
+```
+'number' type children aren't accepted as children in `New`.
+```
+
+This message shows when attempting to pass something as a child which isn't an
+instance, table of instances, or state object containing an instance (when using
+the [New](../new.md) function):
+
+```Lua
+local instance = New "Folder" {
+	[Children] = {
+		1, 2, 3, 4, 5,
+
+		{true, false},
+
+		State(Enum.Material.Grass)
 	}
 }
 ```
-- If you're building the property table at runtime, are you accidentally indexing
-non-string or non-symbol parts of the table? For example:
-```Lua
-local propertyTable = {}
 
-for key, value in pairs(someData) do
-	-- are you sure that `key` is valid here?
-	-- if `someData` was an array, then `key` would be a number!
-	propertyTable[key] = value
-end
-
-New "Part" (propertyTable)
-```
+!!! note
+	Note that state objects are allowed to store `nil` to represent the absence
+	of an instance, as an exception to these rules.
 
 -----
 
 ## `unknownMessage`
 
 ```
-Unknown message - the code logging this message didn't provide a valid message
-ID.
+Unknown error: attempt to index a nil value
 ```
+
+If you see this message, it's almost certainly an internal bug, so make sure to
+get in contact so the issue can be fixed.
 
 When Fusion code attempts to log a message, warning or error, it needs to
 provide an ID. This ID is used to show the correct message, and serves as a
 simple, memorable identifier if you need to look up the message later.
 However, if that code provides an invalid ID, then the message will be replaced
 with this one.
-
-If you see this message, it's almost certainly an internal bug, so make sure to
-get in contact so the issue can be fixed.
