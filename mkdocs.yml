@@ -47,7 +47,6 @@ nav:
     - Home: examples/index.md
   - API Reference:
     - Home: api-reference/index.md
-    - Luau Types: api-reference/luau-types.md
     - Errors & Messages: api-reference/errors-and-messages.md
     - Instances:
       - New: api-reference/api/new.md
