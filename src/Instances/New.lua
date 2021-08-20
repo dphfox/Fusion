@@ -15,7 +15,7 @@ local logWarn = require(Package.Logging.logWarn)
 
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
-local ENABLE_EXPERIMENTAL_GC_MODE = true
+local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
 local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = setmetatable({}, WEAK_KEYS_METATABLE)
