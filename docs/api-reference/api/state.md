@@ -28,12 +28,22 @@ then this state object will be used as a dependency.
 ### `set()`
 
 ```Lua
-function State:set(newValue: any)
+function State:set(newValue: any, force: boolean?)
 ```
 Sets the new value of this state object.
 
-If the new and old values differ, this will fire `onChange` and update all
-dependent state objects immediately.
+If the new and old values differ, this will update any other objects using this
+state object. However, if they're the same, no update will be performed.
+
+!!! tip "Force updating"
+	If you want to override this behaviour, you can set `force` to `true`. This
+	will ensure updates are always performed, even if the new and old values
+	are the same (as measured by the == operator). This is most useful when
+	working with mutable tables.
+
+	However, be very careful with this, and only force updates when you need to
+	for performance reasons. Try a solution involving immutable tables first.
+	Abuse of force updating can lead to suboptimal code that updates redundantly.
 
 -----
 
