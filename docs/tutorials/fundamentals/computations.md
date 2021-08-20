@@ -100,7 +100,39 @@ we're storing our state in Fusion's objects.
 That's the basic idea of computed objects; they let you naturally define values
 in terms of other values.
 
-!!! danger
+!!! danger "Danger - Yielding"
+	Code inside of a computed callback should never yield. While Fusion does not
+	currently throw an error for this, there are plans to change this.
+
+	Yielding in a callback may break a lot of Fusion code which depends on
+	updates to your variables being instant, for example dependency management.
+	It can also lead to internally inconsistent code.
+
+	If you need to perform a web call when some state changes, consider using
+	`Compat(state):onChange()` to bind a change listener, whish *is* allowed to
+	yield, and store the result of the web call in a state object for use
+	elsewhere:
+
+	```Lua
+	local playerID = State(1670764)
+
+	-- bad - this will break!
+	local playerData = Computed(function()
+		return ReplicatedStorage.GetPlayerData:InvokeServer(playerID:get())
+	end)
+
+	-- better - this moves the yielding safely outside of any state objects
+	-- make sure to load the data for the first time if that's important
+	local playerData = State(nil)
+	Compat(playerData):onChange(function()
+		playerData:set(ReplicatedStorage.GetPlayerData:InvokeServer(playerID:get()))
+	end)
+	```
+
+	In the future, there are plans to make yielding code easier to work with.
+	[See this issue for more details.](https://github.com/Elttob/Fusion/issues/4)
+
+!!! danger "Danger - Using non-state objects"
 	Stick to using state objects and computed objects inside your computations.
 	Fusion can detect when you use these objects and listen for changes.
 
