@@ -37,14 +37,6 @@ dependent state objects immediately.
 
 -----
 
-## Object Events
-
-### `onChange`
-
-Fired when the value of this state object is changed.
-
------
-
 ## Example Usage
 
 ```Lua

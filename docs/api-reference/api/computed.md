@@ -29,14 +29,6 @@ then this computed object will be used as a dependency.
 
 -----
 
-## Object Events
-
-### `onChange`
-
-Fired when the cached value of this computed object is changed.
-
------
-
 ## Example Usage
 
 ```Lua

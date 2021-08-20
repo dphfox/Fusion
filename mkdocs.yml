@@ -41,7 +41,7 @@ nav:
       - "Project 2: To-Do List": tutorials/further-basics/project-2.md
     - Animation:
       - Tweens: tutorials/animation/tweens.md
-      - Springs: tutorials/animation/prings.md
+      - Springs: tutorials/animation/springs.md
       - "Project 3: Switches": tutorials/animation/project-3.md
   - Examples:
     - Home: examples/index.md
