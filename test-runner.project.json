@@ -1,0 +1,27 @@
+{
+  "name": "Fusion Test Runner",
+  "tree": {
+	"$className": "DataModel",
+
+	"ReplicatedStorage": {
+	  "$className": "ReplicatedStorage",
+	  "Fusion": {
+		  "$path": "src"
+	  },
+	  "FusionBench": {
+		"$path": "benchmark"
+	  },
+	  "FusionTest": {
+		"$path": "test"
+	  }
+	},
+
+	"StarterPlayer": {
+		"$className": "StarterPlayer",
+		"StarterPlayerScripts": {
+			"$className": "StarterPlayerScripts",
+			"$path": "test-runner"
+		}
+	}
+  }
+}
