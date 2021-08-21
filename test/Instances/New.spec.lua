@@ -146,7 +146,7 @@ return function()
 
 				[OnEvent "Frobulate"] = function() end
 			}
-		end).to.throw("cannotConnectChange")
+		end).to.throw("cannotConnectEvent")
 	end)
 
 	it("should throw for non-event event handlers", function()
@@ -156,7 +156,7 @@ return function()
 
 				[OnEvent "Name"] = function() end
 			}
-		end).to.throw("cannotConnectChange")
+		end).to.throw("cannotConnectEvent")
 	end)
 
 	it("shouldn't fire events during initialisation", function()

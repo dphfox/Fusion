@@ -118,7 +118,7 @@ local function New(className: string)
 						end) or
 						typeof(event) ~= "RBXScriptSignal"
 					then
-						logError("cannotConnectChange", nil, className, key.key)
+						logError("cannotConnectEvent", nil, className, key.key)
 					end
 
 					toConnect[event] = value
