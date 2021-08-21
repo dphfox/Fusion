@@ -1,0 +1,55 @@
+# Taken from roblox-ts under the MIT license https://github.com/roblox-ts/roblox-ts/blob/master/.github/workflows/ci.yml
+
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches:
+            - master
+
+jobs:
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2.3.4
+
+            - name: Install Foreman
+              uses: rojo-rbx/setup-foreman@v1.0.1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Run Selene
+              run: selene . -q
+    unit-tests:
+        name: Unit Tests
+        runs-on: windows-latest
+        timeout-minutes: 10
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2.3.4
+
+            - name: Install Roblox Studio
+              uses: OrbitalOwen/roblox-win-installer-action@1.1
+              with:
+                  cookie: ${{ secrets.ROBLOSECURITY || '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_93CD13D0319857D71CAC0F0FF54E23569A897639C7CBEDC2C7CF2A56A0EF8E7BD1929168E014730A1F6AA39C965365457CF173783E74E6AA07F075D99123A297EDA39437905522A97A3D91D049AE42797619BA008C038D6596AA8C7DC265CA708B0A162EEA7EC34DC55C6B753FD48240D33F0FD9001958AD6749CDA9C5888DC22DD4AAEF16D271F15E5A304362E50AF72DCFF2EB9A2C59DF2E130CE3B8AE92AE56186F57C4B49469DA9764D26D82BA101E3EDF599E6B28C360B5F643741F54D8FDFBE393AC0ADDC1F7F800CC5767068CDDF27D9EB9F98E63D105518EEEDFC0130977FDF4780B3B23F5BCF99FB1975C3AE3B499886B23F258FE07E701666BE702F5255149620A55D7CC14EDD258E40C8381EAB3926755E9539B853649EF1C3A2DE25F74404F3F320D0CF24F7735071786A83873059A449AFFB3A9B7FE4901174E06B6BAF1E057A974F84B264A126827E21A31F178' }}
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Install Foreman
+              uses: rojo-rbx/setup-foreman@v1.0.1
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build test place
+              run: rojo build test-runner.project.json -o test.rbxl
+
+            - name: Run tests
+              run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
+
+            # - name: Report Coverage
+            #   continue-on-error: true
+            #   uses: coverallsapp/github-action@v1.1.2
+            #   with:
+            #       github-token: ${{ secrets.GITHUB_TOKEN }}
