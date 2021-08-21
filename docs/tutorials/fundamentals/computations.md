@@ -109,7 +109,7 @@ in terms of other values.
 	It can also lead to internally inconsistent code.
 
 	If you need to perform a web call when some state changes, consider using
-	`Compat(state):onChange()` to bind a change listener, whish *is* allowed to
+	`Compat(state):onChange()` to bind a change listener, which *is* allowed to
 	yield, and store the result of the web call in a state object for use
 	elsewhere:
 
