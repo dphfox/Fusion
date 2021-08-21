@@ -28,7 +28,7 @@ containing any children you'd like to add, and they'll be bound similarly:
 local child = State(New "Folder" {})
 
 local gui = New "TextLabel" {
-	[Chlidren] = child
+	[Children] = child
 }
 
 child:set(New "ScreenGui") -- changes the child from the folder to the screen gui
@@ -43,7 +43,7 @@ local child3 = New "Folder" {}
 local children = State({child1, child2})
 
 local gui = New "TextLabel" {
-	[Chlidren] = children
+	[Children] = child
 }
 
 children:set({child2, child3}) -- unparents child1, parents child2
