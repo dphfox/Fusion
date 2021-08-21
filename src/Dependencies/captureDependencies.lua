@@ -10,6 +10,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local parseError = require(Package.Logging.parseError)
 local sharedState = require(Package.Dependencies.sharedState)
+local noYield = require(Package.Utility.noYield)
 
 local initialisedStack = sharedState.initialisedStack
 -- counts how many sets are currently stored in `initialisedStack`, whether
@@ -52,7 +53,9 @@ local function captureDependencies(saveToSet: Types.Set<Types.Dependency<any>>, 
 	-- now that the shared state has been set up, call the callback in a pcall.
 	-- using a pcall means the shared state can be reset afterwards, even if an
 	-- error occurs.
-	local ok, value = xpcall(callback, parseError, ...)
+	local ok, value = xpcall(function() 
+		noYield(callback, ...)
+	end, parseError)
 
 	-- restore the previous set being saved to
 	sharedState.dependencySet = prevDependencySet
