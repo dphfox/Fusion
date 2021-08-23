@@ -1,3 +1,8 @@
+local Package = script.Parent.Parent
+local Logging = Package.Logging
+
+local logError = require(Logging.logError)
+
 --[[
     This is a semantically identical implementation to Rodux::NoYield
 
@@ -16,11 +21,11 @@
 local function resultHandler(thread, ok: boolean, ...) 
     if not ok then 
         -- We have to wrap it around with parantheses to prevent the return values to pollute the level argument
-        error(debug.traceback(thread, (...)), 2)
+        logError(debug.traceback(thread, (...)), 2)
     end
 
     if coroutine.status(thread) ~= "dead" then 
-        error(debug.traceback(thread, "Attempted to yield inside of a Computed"), 2)
+        logError(debug.traceback(thread, "Attempted to yield inside of a Computed"), 2)
     end
 
     return ...
