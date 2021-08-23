@@ -53,11 +53,7 @@ local function captureDependencies(saveToSet: Types.Set<Types.Dependency<any>>, 
 	-- now that the shared state has been set up, call the callback in a pcall.
 	-- using a pcall means the shared state can be reset afterwards, even if an
 	-- error occurs.
-	local ok, value = xpcall(function() 
-		noYield(function(...) 
-			noYield(callback, ...)
-		end, parseError, ...)
-	end, parseError)
+	local ok, value = xpcall(noYield, parseError, callback, ...)
 
 	-- restore the previous set being saved to
 	sharedState.dependencySet = prevDependencySet
