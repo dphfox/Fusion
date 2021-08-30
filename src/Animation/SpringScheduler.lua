@@ -36,6 +36,16 @@ function SpringScheduler.add(spring: Spring)
 	local damping = spring._damping
 	local speed = spring._speed
 
+	if spring._dampingIsState then
+		damping = damping:get(false)
+	end
+	if spring._speedIsState then
+		speed = speed:get(false)
+	end
+
+	spring._lastDamping = damping
+	spring._lastSpeed = speed
+
 	local dampingBucket = springBuckets[damping]
 
 	if dampingBucket == nil then
@@ -59,8 +69,8 @@ end
 	Removes a Spring from the scheduler.
 ]]
 function SpringScheduler.remove(spring: Spring)
-	local damping = spring._damping
-	local speed = spring._speed
+	local damping = spring._lastDamping
+	local speed = spring._lastSpeed
 
 	local dampingBucket = springBuckets[damping]
 
