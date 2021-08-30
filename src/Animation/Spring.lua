@@ -57,6 +57,7 @@ function class:update()
 	if goalValue == self._goalValue then
 		-- speed/damping change - re-add to spring scheduler to assign to a new
 		-- bucket
+		SpringScheduler.remove(self)
 		SpringScheduler.add(self)
 		return false
 
