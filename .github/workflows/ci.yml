@@ -20,7 +20,7 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Run Selene
-              run: selene . -q
+              run: selene .
     format:
         name: Format
         runs-on: ubuntu-latest
@@ -57,7 +57,6 @@ jobs:
 
             - name: Run tests
               run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
-
             # - name: Report Coverage
             #   continue-on-error: true
             #   uses: coverallsapp/github-action@v1.1.2
