@@ -57,8 +57,3 @@ jobs:
 
             - name: Run tests
               run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
-            # - name: Report Coverage
-            #   continue-on-error: true
-            #   uses: coverallsapp/github-action@v1.1.2
-            #   with:
-            #       github-token: ${{ secrets.GITHUB_TOKEN }}
