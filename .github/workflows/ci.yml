@@ -20,7 +20,7 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Run Selene
-              run: selene -q .
+              run: selene .
     format:
         name: Format
         runs-on: ubuntu-latest
