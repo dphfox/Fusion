@@ -21,6 +21,18 @@ jobs:
 
             - name: Run Selene
               run: selene . -q
+    format:
+        name: Format
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2.3.4
+
+            - name: Run StyLua check
+              uses: JohnnyMorganz/stylua-action@1.0.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  args: --check .
     unit-tests:
         name: Unit Tests
         runs-on: windows-latest
