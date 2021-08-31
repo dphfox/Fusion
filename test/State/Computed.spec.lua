@@ -67,7 +67,7 @@ return function()
 				-- reactive updates from taking place
 				-- to avoid this, dependencies captured when a callback errors
 				-- have to be discarded
-				error("This is a test error from a unit test")
+				error("This is an intentional error from a unit test")
 			end
 
 			return state:get()
