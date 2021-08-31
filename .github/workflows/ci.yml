@@ -3,57 +3,57 @@
 name: CI
 
 on:
-    pull_request:
-    push:
+  pull_request:
+  push:
 
 jobs:
-    lint:
-        name: Lint
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2.3.4
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
 
-            - name: Install Foreman
-              uses: rojo-rbx/setup-foreman@v1.0.1
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Foreman
+        uses: rojo-rbx/setup-foreman@v1.0.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Run Selene
-              run: selene .
-    format:
-        name: Format
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2.3.4
+      - name: Run Selene
+        run: selene src test benchmark
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
 
-            - name: Run StyLua check
-              uses: JohnnyMorganz/stylua-action@1.0.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  args: --check .
-    unit-tests:
-        name: Unit Tests
-        runs-on: windows-latest
-        timeout-minutes: 10
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2.3.4
+      - name: Run StyLua check
+        uses: JohnnyMorganz/stylua-action@1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --check .
+  unit-tests:
+    name: Unit Tests
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
 
-            - name: Install Roblox Studio
-              uses: OrbitalOwen/roblox-win-installer-action@1.1
-              with:
-                  cookie: ${{ secrets.ROBLOSECURITY || '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_634F0972CB16BCA5FB173683BABB012C40C92C2DD6B5BF86373F7CEC97806CA3FF9B8FD3E2186923C9C24B4EAEA8A5566A4D68879B62FEA92029F32673108C8BFACA10D2968499FACD66B80E4B9DD3035908C08F5ACFACDCDB6B5BD2B786B4FD591D9AA633F770B26AE89DA6F8C79480404B16FDA4B17ECB756903C5922DC9EBD071840AB99BB8E7A981B236F81CD514828C5A7229214B3ED3C29BB00FBEC0D0B6AB652BECA1820B7E85CF1F13DA87353BCEF950C2372C9BEF479214410165B4C75B3D682FAFE9F3F0889E6F8A4BA0EC963FFAF40596EDBEEE3C4238053B9F79FF0ABCEF197081A56984298260A47CC0871603357EE4125F6124B35164D3D17C5B8B5270643E3A4479D3D1BA01C13DDF7557AF9ACC20A892C842B6E2CC13392F0D39A49FDE9B38FD7A9A0CA2986B400F4ABFD0BFF865157B974F9DA87073758593D6E35C01544BD71F8940B2C68BC58C2ABABB2A' }}
-                  token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Roblox Studio
+        uses: OrbitalOwen/roblox-win-installer-action@1.1
+        with:
+          cookie: ${{ secrets.ROBLOSECURITY || '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_634F0972CB16BCA5FB173683BABB012C40C92C2DD6B5BF86373F7CEC97806CA3FF9B8FD3E2186923C9C24B4EAEA8A5566A4D68879B62FEA92029F32673108C8BFACA10D2968499FACD66B80E4B9DD3035908C08F5ACFACDCDB6B5BD2B786B4FD591D9AA633F770B26AE89DA6F8C79480404B16FDA4B17ECB756903C5922DC9EBD071840AB99BB8E7A981B236F81CD514828C5A7229214B3ED3C29BB00FBEC0D0B6AB652BECA1820B7E85CF1F13DA87353BCEF950C2372C9BEF479214410165B4C75B3D682FAFE9F3F0889E6F8A4BA0EC963FFAF40596EDBEEE3C4238053B9F79FF0ABCEF197081A56984298260A47CC0871603357EE4125F6124B35164D3D17C5B8B5270643E3A4479D3D1BA01C13DDF7557AF9ACC20A892C842B6E2CC13392F0D39A49FDE9B38FD7A9A0CA2986B400F4ABFD0BFF865157B974F9DA87073758593D6E35C01544BD71F8940B2C68BC58C2ABABB2A' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Install Foreman
-              uses: rojo-rbx/setup-foreman@v1.0.1
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Foreman
+        uses: rojo-rbx/setup-foreman@v1.0.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Build test place
-              run: rojo build test-runner.project.json -o test.rbxl
+      - name: Build test place
+        run: rojo build test-runner.project.json -o test.rbxl
 
-            - name: Run tests
-              run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
+      - name: Run tests
+        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
