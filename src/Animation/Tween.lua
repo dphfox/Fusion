@@ -4,6 +4,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)

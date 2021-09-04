@@ -4,6 +4,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
