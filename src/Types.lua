@@ -8,6 +8,7 @@ export type State<T> = {
   get: (State<T>, asDependency: boolean?) -> T,
   set: (State<T>, newValue: any, force: boolean?) -> ()
 }
+
 export type StateOrValue<T> = State<T> | T
 
 export type Computed<T> = {
