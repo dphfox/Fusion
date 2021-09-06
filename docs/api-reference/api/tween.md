@@ -41,10 +41,8 @@ local ui = New "Frame" {
 ```
 
 ```Lua
-local EASE = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
-
 local playerCount = State(0)
-local smoothPlayerCount = Tween(playerCount, EASE)
+local smoothPlayerCount = Tween(playerCount)
 
 local message = Computed(function()
 	return "Currently online: " .. math.floor(smoothPlayerCount:get())
