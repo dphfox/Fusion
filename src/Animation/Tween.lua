@@ -41,7 +41,7 @@ function class:update()
 	if self._tweenInfo.Reverses then
 		tweenDuration += self._tweenInfo.Time
 	end
-	tweenDuration *= self._tweenInfo.RepeatCount
+	tweenDuration *= math.max(self._tweenInfo.RepeatCount, 1)
 	self._currentTweenDuration = tweenDuration
 
 	-- start animating this tween
