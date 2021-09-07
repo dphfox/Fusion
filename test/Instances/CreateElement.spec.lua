@@ -424,5 +424,11 @@ return function()
 		expect(object:FindFirstChild("Fred")).to.be.ok()
 	end)
 
+	it("should throw for invalid types", function()
+		expect(function()
+			CreateElement(1, {})
+		end).to.throw("cannotCreateClassWithType")
+	end)
+
 	-- TODO: test for garbage collection
 end
