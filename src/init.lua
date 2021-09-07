@@ -5,12 +5,13 @@
 local Types = require(script.Types)
 local restrictRead = require(script.Utility.restrictRead)
 
-export type State = Types.State
-export type StateOrValue = Types.StateOrValue
+export type State<T> = Types.State<T>
+export type StateOrValue<T> = Types.StateOrValue<T>
 export type Symbol = Types.Symbol
 
 return restrictRead("Fusion", {
 	New = require(script.Instances.New),
+	CreateElement = require(script.Instances.CreateElement),
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
