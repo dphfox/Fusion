@@ -156,7 +156,7 @@ local gui = New "ScreenGui" {
 
 	Name = "MyFirstGui",
 	ResetOnSpawn = false,
-	ZIndexBehavior = "Sibling"
+	ZIndexBehavior = "Sibling",
 
 	[Children] = New "TextLabel" {
 		Position = UDim2.fromScale(.5, .5),
@@ -186,7 +186,7 @@ local gui = New "ScreenGui" {
 
 	Name = "MyFirstGui",
 	ResetOnSpawn = false,
-	ZIndexBehavior = "Sibling"
+	ZIndexBehavior = "Sibling",
 
 	[Children] = {
 		New "TextLabel" {
@@ -208,7 +208,7 @@ local gui = New "ScreenGui" {
 
 	Name = "MyFirstGui",
 	ResetOnSpawn = false,
-	ZIndexBehavior = "Sibling"
+	ZIndexBehavior = "Sibling",
 
 	[Children] = {
 		New "TextLabel" {
@@ -257,7 +257,7 @@ throughout almost all Fusion code.
 
 		Name = "MyFirstGui",
 		ResetOnSpawn = false,
-		ZIndexBehavior = "Sibling"
+		ZIndexBehavior = "Sibling",
 
 		[Children] = {
 			New "TextLabel" {
