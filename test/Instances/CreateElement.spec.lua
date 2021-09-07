@@ -408,5 +408,21 @@ return function()
 		expect(child.Parent).to.equal(nil)
 	end)
 
+	local function FolderComponent(props: {Name: string})
+		return CreateElement("Folder", {
+			Name = props.Name
+		})
+	end
+
+	it("should take a component function", function()
+		local object = CreateElement("Folder", {}, {
+			CreateElement(FolderComponent, {
+				Name = "Fred"
+			})
+		})
+
+		expect(object:FindFirstChild("Fred")).to.be.ok()
+	end)
+
 	-- TODO: test for garbage collection
 end
