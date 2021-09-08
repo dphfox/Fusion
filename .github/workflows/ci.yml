@@ -57,4 +57,9 @@ jobs:
 
       - name: Run tests
         shell: bash
-        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua || grep "0 failed, 0 skipped"
+        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua > test-out.txt
+        continue-on-error: true
+        
+      - name: Check test status
+        shell: bash
+        run: cat test-out.txt | grep "0 failed, 0 skipped"
