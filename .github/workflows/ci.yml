@@ -56,4 +56,5 @@ jobs:
         run: rojo build test-runner.project.json -o test.rbxl
 
       - name: Run tests
-        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua
+        shell: bash
+        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua | grep "0 failed, 0 skipped"
