@@ -17,7 +17,7 @@ return function()
 		local computed = Computed(function()
 		end)
 
-		expect(computed).to.be.a("table")
+		expect(computed).never.to.be.a("table")
 		expect(computed.type).to.equal("State")
 		expect(computed.kind).to.equal("Computed")
 	end)
