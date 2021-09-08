@@ -57,4 +57,4 @@ jobs:
 
       - name: Run tests
         shell: bash
-        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua | grep "0 failed, 0 skipped"
+        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua || grep "0 failed, 0 skipped"
