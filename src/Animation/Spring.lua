@@ -185,19 +185,15 @@ local function Spring(
 	end
 
 	local dependencySet = {[goalState] = true}
-	local speedValue = speed
-	local dampingValue = damping
 	local speedIsState = typeof(speed) == "table" and speed.type == "State"
 	local dampingIsState = typeof(damping) == "table" and damping.type == "State"
 
 	if speedIsState then
 		dependencySet[speed] = true
-		speedValue = speed:get(false)
 	end
 
 	if dampingIsState then
 		dependencySet[damping] = true
-		dampingValue = damping:get(false)
 	end
 
 	local self = setmetatable({
