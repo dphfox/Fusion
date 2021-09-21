@@ -57,6 +57,7 @@ function class:update()
 	if goalValue == self._goalValue then
 		-- speed/damping change - re-add to spring scheduler to assign to a new
 		-- bucket
+
 		SpringScheduler.remove(self)
 		SpringScheduler.add(self)
 		return false
@@ -183,15 +184,20 @@ local function Spring(
 		damping = 1
 	end
 
+	local dependencySet = {[goalState] = true}
+	local speedValue = speed
+	local dampingValue = damping
 	local speedIsState = typeof(speed) == "table" and speed.type == "State"
 	local dampingIsState = typeof(damping) == "table" and damping.type == "State"
 
-	local dependencySet = {[goalState] = true}
 	if speedIsState then
 		dependencySet[speed] = true
+		speedValue = speed:get(false)
 	end
+
 	if dampingIsState then
 		dependencySet[damping] = true
+		dampingValue = damping:get(false)
 	end
 
 	local self = setmetatable({

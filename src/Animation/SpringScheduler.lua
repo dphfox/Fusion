@@ -8,6 +8,7 @@ local Package = script.Parent.Parent
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
+local logError = require(Package.Logging.logError)
 
 local SpringScheduler = {}
 
@@ -41,6 +42,18 @@ function SpringScheduler.add(spring: Spring)
 	end
 	if spring._speedIsState then
 		speed = speed:get(false)
+	end
+
+	if typeof(damping) ~= "number" then
+		logError("mistypedSpringDamping", typeof(damping))
+	elseif damping < 0 then
+		logError("invalidSpringDamping", damping)
+	end
+
+	if typeof(speed) ~= "number" then
+		logError("mistypedSpringSpeed", typeof(speed))
+	elseif speed < 0 then
+		logError("invalidSpringSpeed", speed)
 	end
 
 	spring._lastDamping = damping
