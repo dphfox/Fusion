@@ -5,7 +5,18 @@
 ---
 
 <link rel="stylesheet" href="assets/index.css">
-<script src="assets/index.js"></script>
+<script>
+    const header = document.querySelector("[data-md-color-primary=black] .md-header")
+    function updateScroll() {
+	if(document.body.scrollTop > 10) {
+		header.dataset.mdState = "shadow";
+	} else {
+		header.dataset.mdState = "";
+	    }
+    }
+    updateScroll();
+    document.body.addEventListener("scroll", updateScroll);
+</script>
 
 <section class="fusion-home-landing">
     <h1>Build your best UI.</h1>

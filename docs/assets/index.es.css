@@ -1,0 +1,169 @@
+/* i apologise in advance to anyone who has to maintain this, I've had to
+do a ton of hacks to get css parallax to work */
+
+html {
+	height: 100%;
+	overflow-y: hidden;
+	scroll-behavior: auto;
+}
+
+body {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: var(--md-primary-fg-color);
+	perspective: 1px;
+	perspective-origin: top center;
+	overscroll-behaviour: contain;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+[data-md-color-primary=black] .md-header {
+	background: none;
+}
+
+[data-md-color-primary=black] .md-tabs {
+	background: none;
+}
+
+.md-content__inner > .md-content__button:first-child {
+	display: none;
+}
+
+.fusion-home-landing {
+	min-height: 50rem;
+	font-size: 1.25em;
+	text-align: center;
+}
+
+body::before {
+	content: '';
+	position: absolute;
+	top: 40rem;
+	left: calc(50% - (116.4rem / 2));
+	width: 116.4rem;
+	height: 65.475rem;
+	background: url("../index/parallax-background.jpg");
+	background-size: 100%;
+	background-repeat: no-repeat;
+
+	z-index: -10;
+
+	transform: translateZ(-0.8px) scale(1.8);
+	transform-style: preserve-3d;
+}
+
+.fusion-home-landing h1 {
+	margin-bottom: 0.5em;
+}
+
+.fusion-home-landing p {
+	max-width: 38em;
+	margin: 1em auto;
+}
+
+.fusion-home-landing nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	column-gap: 2em;
+	row-gap: 1lh;
+}
+
+.fusion-home-landing nav > * {
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+
+
+.fusion-home-landing a.arrow-link::after {
+	content: "->";
+	display: inline-block;
+	margin-left: 0.25em;
+	margin-right: 0.25em;
+	transition: margin 0.2s ease;
+}
+
+.fusion-home-landing a.arrow-link:hover::after {
+	margin-left: 0.5em;
+	margin-right: 0em;
+}
+
+.fusion-home-landing .landing-image {
+	margin-top: 3em;
+	margin-bottom: 3em;
+	width: 100%;
+	max-width: 48em;
+	height: auto;
+}
+
+.fusion-home-float {
+	float: left;
+	width: 50%;
+	padding-right: 1rem;
+}
+
+.fusion-home-centre {
+	margin: auto;
+	max-width: 40em;
+	padding-right: 1rem;
+}
+
+/* adding some height to the #learn-more anchor tag means the title of the
+	first section won't be cut off by the page header.
+*/
+#learn-more {
+	display: block;
+	width: 1em;
+	height: 3em;
+}
+
+/* HACK: code blocks don't support being floated properly, so they end up taking 100% of
+	the page width, overlapping the paragraph next to them.
+
+	To fix this, we disable pointer events on the code block directly, but enable it for the
+	children, which are correctly positioned.
+*/
+div.highlight {
+	pointer-events: none;
+}
+
+div.highlight * * {
+	pointer-events: initial;
+}
+
+.md-typeset code {
+	background: var(--md-primary-fg-color);
+}
+
+.md-typeset hr {
+	border-bottom-color: var(--md-default-fg-color);
+	opacity: calc(35 / 255);
+}
+
+@media screen and (max-width: 45rem) {
+	.fusion-home-landing {
+		font-size: 1em;
+	}
+
+	body::before {
+		top: 30rem;
+		transform: translateZ(-0.7px) scale(1.2);
+	}
+}
+
+@media screen and (max-width: 60rem) {
+	.fusion-home-float {
+		float: none;
+		width: 100%;
+		padding: 0rem;
+	}
+}
+
+section h2 {
+	margin-top: 0 !important;
+}

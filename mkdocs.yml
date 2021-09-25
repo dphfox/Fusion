@@ -1,10 +1,12 @@
 site_name: Fusion
+site_description: Fusion is a modern reactive UI library, built specifically for Roblox and Luau. Build your UI with a declarative syntax that's easy to read and write.
 site_url: https://elttob.github.io/Fusion/
 repo_name: Elttob/Fusion
 repo_url: https://github.com/Elttob/Fusion
 
 theme:
   name: material
+  language: en
   custom_dir: docs/assets/overrides
   logo: assets/logo-dark.svg
   favicon: assets/logo-dark.svg
@@ -21,6 +23,15 @@ theme:
 
 extra_css:
   - assets/fusion.css
+
+extra:
+  alternate:
+    - name: English
+      link: ./
+      lang: en
+    - name: Español
+      link: ./es/
+      lang: es
 
 nav:
   - Home: index.md
@@ -74,7 +85,45 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tabbed
   - pymdownx.inlinehilite
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - toc:
       permalink: true
   - pymdownx.highlight:
       guess_lang: false
+
+plugins:
+  - search
+  - i18n:
+      default_language: en
+      languages:
+        en: English
+        es: Español
+      material_alternate: false
+      nav_translations:
+         es:
+            Home: Inicio
+            Tutorials: Tutoriales
+            Get Started: Empezar
+            Fundamentals: Fundamentos
+            Creating UI: Creando UI
+            Handling Events: Manejando Eventos
+            Storing State: Guardando Estados
+            Computations: Cómputos
+            Changing Properties: Cambiando Propiedades
+            Changing Children: Cambiando Children
+            "Project 1: Counting Clicks": "Proyecto 1: Contando Clics"
+            Further Basics: Otros Fundamentos
+            Components: Componentes
+            Arrays and Lists: Arrays y Listas
+            Compatibility: Compatibilidad
+            "Project 2: To-Do List": "Proyecto 2: Lista To-Do"
+            Animation: Animación
+            "Project 3: Switches": "Proyecto 3: Switches"
+            Examples: Ejemplos
+            API Reference: Referencia del API
+            Errors & Messages: Errores y Mensajes
+            Instances: Instancias
+            State Management: Gestión de Estados
+            Backgrounds: Fondos
