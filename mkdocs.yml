@@ -109,7 +109,7 @@ plugins:
             Fundamentals: Fundamentos
             Creating UI: Creando UI
             Handling Events: Manejando Eventos
-            Storing State: Guardando Estados
+            Storing State: Guardando States
             Computations: Cómputos
             Changing Properties: Cambiando Propiedades
             Changing Children: Cambiando Children
