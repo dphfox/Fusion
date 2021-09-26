@@ -12,7 +12,7 @@ Aprendamos a guardar estos datos en Fusion.
 
 ## ¿Qué es State?
 
-State es (simplemente) las variables que determinan como tu UI se ve en un cierto 
+State es (simplificando) las variables que determinan como tu UI se ve en un cierto 
 punto del tiempo.
 
 Un simple ejemplo de esto es una barra de vida. Para saber como la barra de vida 
@@ -21,7 +21,7 @@ se ve en cualquier cierto punto del tiempo, necesitamos saber dos cosas:
 - la vida actual a mostrar
 - el máximo de vida del jugador
 
-Estas dos variables por lo tanto son conocidas como el 'state' de la barra de vida. 
+Por lo tanto, estas dos variables son conocidas como el 'state' de la barra de vida. 
 Para mostrar la barra de vida en pantalla, necesitamos usar los valores de estas variables.
 
 -----
@@ -29,7 +29,7 @@ Para mostrar la barra de vida en pantalla, necesitamos usar los valores de estas
 ## Guardando State
 
 Fusion proporciona algunas herramientas buenas para manipular state y usarlo en 
-nuestro UI, pero para usar esas herramientas, necesitamos guardar nuestro state 
+nuestro UI; pero para usar esas herramientas necesitamos guardar nuestro state 
 en 'state objects' - objetos simples que guardan un solo valor usando OOP.
 
 Para usar state objects, primero tenemos que importar el constructor `State`:
@@ -53,7 +53,7 @@ local State = Fusion.State
 local message = State("Hola")
 ```
 
-En cualquier momento, puedes obtener el valor actualmente guardado con el método `:get()`:
+En cualquier momento puedes obtener el valor actualmente guardado con el método `:get()`:
 
 === "Lua"
 	```Lua linenums="1" hl_lines="7"
@@ -111,4 +111,4 @@ otras herramientas de manejo de state en Fusion.
 	print("El nuevo valor es:", message:get())
 	```
 
-!!! quote "Última Actualización de la Localización 25/09/2021"
+!!! quote "Última Actualización de la Localización 26/09/2021"

@@ -1,4 +1,4 @@
-Usualmente, no usamos state tal cual en nuestro UI; normalmente primero la procesamos. 
+Usualmente, no usamos state tal cual en nuestra UI; normalmente primero la procesamos. 
 Aprendamos cómo realizar cómputos en nuestro state. 
 
 ??? abstract "Código necesario"
@@ -111,7 +111,7 @@ en términos de otros valores.
 	También puede dirigirse a código inconsistente interno.
 
 	Si necesitas realizar un llamado web cuando un state cambia, considera usar 
-	`Compat(state):onChange()` para conectar un listener, el cual *es* permitido de yildearse, 
+	`Compat(state):onChange()` para vincular un listener, el cual *es* permitido de yildearse, 
 	y guardar el resultado del llamado web en un state object para usarlo en cualquier lugar:
 
 	```Lua
@@ -199,4 +199,4 @@ de datos.
 	print(message:get())
 	```
 
-!!! quote "Última Actualización de la Localización 25/09/2021"
+!!! quote "Última Actualización de la Localización 26/09/2021"

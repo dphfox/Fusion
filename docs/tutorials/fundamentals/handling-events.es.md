@@ -88,7 +88,7 @@ el evento `Activated`:
 ```
 
 Esto funciona como un regular `:Connect()` - recibirás todos los argumentos de este 
-evento. Aquí, solo estamos los estamos printeando por propósitos de demostración.
+evento. Aquí, solo estamos les estamos haciendo print por propósitos de demostración.
 
 Si presionas 'Play' y cliqueas el botón unas cuantas veces, deberías ver algo así 
 en el output:
@@ -119,10 +119,10 @@ local OnChange = Fusion.OnChange
 ```
 
 Ahora puedes pasar funciones usando `#!Lua [OnChange "PropertyName"]` como la key. 
-Cuando la propiedad cambia, tu función será llamada con el nuevo valor como su 
+Cuando la propiedad es cambiada, tu función será llamada con el nuevo valor como su 
 único argumento.
 
-Para demostrar esto, aquí estamos printeando el texto en nuestro TextBox cuando 
+Para demostrar esto, aquí estamos haciendo print del texto en nuestro TextBox cuando 
 sea que cambie:
 
 ```Lua linenums="25" hl_lines="14-16"
@@ -148,8 +148,7 @@ sea que cambie:
 ```
 
 Ahora, si presionas 'Play' y empiezas a escribir dentro del TextBox, deberías 
-ver el contenido del TextBox siendo printeado en el output por cada carácter 
-que escribes:
+ver el contenido del TextBox reflejado en el output por cada carácter que escribes:
 
 ![Output del controlador de cambio](Typing-Output.png)
 
@@ -208,4 +207,4 @@ al input del usuario.
 
 	```
 
-!!! quote "Última Actualización de la Localización 25/09/2021"
+!!! quote "Última Actualización de la Localización 26/09/2021"

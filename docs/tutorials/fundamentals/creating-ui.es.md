@@ -1,5 +1,5 @@
 Ahora que tenemos Fusion en marcha, aprendamos a crear instancias desde un 
-script de manera rápida y formidable. 
+script de manera rápida y ordenada. 
 
 ??? abstract "Código necesario"
 
@@ -18,7 +18,7 @@ componentes de UI y hacer uso de herramientas potentes para conectar tu UI
 y scripts del juego juntos.
 
 Para hacer la experiencia más agradable, Fusion introduce una alternativa a 
-`Instance.new` que te permite construir instancias completas en golpe - 
+`Instance.new` que te permite construir instancias completas de golpe - 
 llamada la función `New`.
 
 Aqui esta un fragmento de código de ejemplo usando `New` - puedes compararlo a `Instance.new`:
@@ -58,8 +58,8 @@ En el fragmento de código anterior, la función `New`:
 - asigna el workspace como su parent
 - retorna la parte, para que pueda ser guardada en `myPart`
 
-La función `New` tiene muchas características incorporadas, que usarás 
-después, pero por ahora las usaremos para establecer propiedades.
+La función `New` tiene muchas características incorporadas, las cuales usarás 
+después, pero por ahora la usaremos para establecer propiedades.
 
 -----
 
@@ -85,7 +85,7 @@ local Fusion = require(ReplicatedStorage.Fusion)
 local New = Fusion.New
 ```
 
-Ahora, podemos usar la función `New` como hicimos en el fragmento anterior. 
+Ahora podemos usar la función `New` como hicimos en el fragmento anterior. 
 Queremos crear un ScreenGui con estas propiedades:
 
 - un nombre de 'MyFirstGui'
@@ -94,12 +94,12 @@ Queremos crear un ScreenGui con estas propiedades:
 - PlayerGui como su parent
 
 ??? question "¿Qué hacen estas propiedades?"
-	- Un nombre hace más fácil encontrar nuestro UI en el Explorer.
-	- Deshabilitando `ResetOnSpawn` detiene que Roblox destruya nuestro UI 
-	después de que reaparezcamos
-	- `ZIndexBehavior` es más que todo preferencia, pero cambia como [el UI 
-	es organizado por profundidad](https://devforum.roblox.com/t/new-zindexbehavior-property-is-now-live/76051).
-	- Asignando el PlayerGui como su parent hace nuestro UI visible en la pantalla.
+	- Un nombre hace más fácil encontrar nuestra UI en el Explorer.
+	- Deshabilitando `ResetOnSpawn` detiene que Roblox destruya nuestra UI 
+	después de que reaparezcamos.
+	- `ZIndexBehavior` es más que todo preferencia, pero [cambia como la UI 
+	es organizada por profundidad](https://devforum.roblox.com/t/new-zindexbehavior-property-is-now-live/76051).
+	- Asignando el PlayerGui como su parent hace nuestra UI visible en la pantalla.
 
 
 El siguiente fragmento de código hace todo esto por nosotros:
@@ -125,14 +125,14 @@ PlayerGui, con todas las propiedades que hemos establecido:
 
 ![Pantallazo del Explorer](MyFirstGui.png)
 
-Esperamos que te estés acomodando con esta sintaxis - nos extenderemos en esto 
-en la siguiente sección.
+Esperamos que te estés sintiendo cómodo con esta sintaxis - nos extenderemos en 
+esto en la siguiente sección.
 
 -----
 
 ## Agregando un Child
 
-Ahora agreguemos un TextLabel con un mensaje y parent dentro de nuestro ScreenGui.
+Ahora agreguemos un TextLabel con un mensaje y asignar su parent a nuestro ScreenGui.
 
 Para ayudar con esto, la función `New` nos permite agregar children directamente a 
 nuestra instancia. Para usar esta característica, primero tendremos que importar 
@@ -148,7 +148,7 @@ local Children = Fusion.Children
 
 ```
 
-Ahora, podemos crear cualquier instancia como child de nuestro ScreenGui - solo 
+Ahora podemos crear cualquier instancia como child de nuestro ScreenGui - solo 
 pasalo usando `#!Lua [Children]` como la key.
 
 Por ejemplo, aquí estamos creando nuestro TextLabel, y agregandolo como un child:
@@ -240,10 +240,10 @@ Si presionas 'Play', deberías ver ambos TextLabels aparecer:
 -----
 
 Felicidades - ¡has aprendido a crear instancias simples con Fusion! Durante 
-el curso de los siguientes pocos tutoriales, verás esta sintaxis usada mucho, 
-asi que tendrás un poco de tiempo para acostumbrarte a esta.
+el curso de los siguientes tutoriales, verás usada esta sintaxis mucho, 
+así que tendrás un poco de tiempo para acostumbrarte a esta.
 
-Es importante entender lo básico de la función `New`, debido a que es usado a lo largo de casi todo el código de Fusion.
+Es importante entender lo básico de la función `New`, debido a que es usada a lo largo de casi todo el código de Fusion.
 
 ??? abstract "Código finalizado"
 	```Lua linenums="1"
@@ -282,4 +282,4 @@ Es importante entender lo básico de la función `New`, debido a que es usado a 
 
 	```
 
-!!! quote "Última Actualización de la Localización 25/09/2021"
+!!! quote "Última Actualización de la Localización 26/09/2021"
