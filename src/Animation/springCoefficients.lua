@@ -16,6 +16,9 @@
 
 	This function assumes the damping ratio, speed and time step are all >= 0,
 	with the expectation that these values have been verified beforehand.
+
+	Special thanks to AxisAngle for helping to reduce some floating point errors
+	for underdamped springs.
 ]]
 
 local function springCoefficients(timeStep: number, damping: number, speed: number): (number, number, number, number)
