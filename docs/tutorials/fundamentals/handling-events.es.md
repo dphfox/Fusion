@@ -103,7 +103,7 @@ del evento por ti automáticamente.
 ## Respondiendo al Cambio
 
 Además de eventos regulares, puedes escuchar eventos de cambio de propiedad (los 
-eventos retornados por `GetPropertyChangedSignal`).
+eventos regresados por `GetPropertyChangedSignal`).
 
 Para usar eventos de cambio de propiedad, necesitarás importar `OnChange`:
 
@@ -207,4 +207,4 @@ al input del usuario.
 
 	```
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 27/09/2021"

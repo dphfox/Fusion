@@ -56,7 +56,7 @@ En el fragmento de código anterior, la función `New`:
 - crea una nueva parte
 - le da una posición, tamaño y color
 - asigna el workspace como su parent
-- retorna la parte, para que pueda ser guardada en `myPart`
+- regresa la parte, para que pueda ser guardada en `myPart`
 
 La función `New` tiene muchas características incorporadas, las cuales usarás 
 después, pero por ahora la usaremos para establecer propiedades.
@@ -282,4 +282,4 @@ Es importante entender lo básico de la función `New`, debido a que es usada a 
 
 	```
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 27/09/2021"
