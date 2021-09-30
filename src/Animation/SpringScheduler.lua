@@ -45,15 +45,15 @@ function SpringScheduler.add(spring: Spring)
 	end
 
 	if typeof(damping) ~= "number" then
-		logError("mistypedSpringDamping", typeof(damping))
+		logError("mistypedSpringDamping", nil, typeof(damping))
 	elseif damping < 0 then
-		logError("invalidSpringDamping", damping)
+		logError("invalidSpringDamping", nil, damping)
 	end
 
 	if typeof(speed) ~= "number" then
-		logError("mistypedSpringSpeed", typeof(speed))
+		logError("mistypedSpringSpeed", nil, typeof(speed))
 	elseif speed < 0 then
-		logError("invalidSpringSpeed", speed)
+		logError("invalidSpringSpeed", nil, speed)
 	end
 
 	spring._lastDamping = damping
