@@ -1,6 +1,6 @@
 Ahora que ya sabemos cómo representar y trabajar con state de la UI, aprendamos 
-cómo vincular propiedades a nuestro state de la UI así podemos mostrar un mensaje 
-en pantalla.
+cómo vincular propiedades a nuestro state de la UI para que podamos mostrar un 
+mensaje en pantalla.
 
 ??? abstract "Código necesario"
 
@@ -39,7 +39,7 @@ en pantalla.
 
 ## Pasando State a Propiedades
 
-En nuestro código actual, estamos usando state y computed objects para guardar 
+En nuestro código actual estamos usando state y computed objects para guardar 
 y procesar algunos datos:
 
 ```Lua linenums="11"
@@ -51,7 +51,7 @@ end)
 
 Cuando usamos la función `New`, podemos usar estos state objects como propiedades. 
 En otras palabras, podemos establecer el Text de nuestro TextLabel para que sea 
-nuestro `message` state:
+nuestro estado `message`:
 
 ```Lua linenums="11" hl_lines="18"
 local numPlayers = State(5)
@@ -77,10 +77,10 @@ local gui = New "ScreenGui" {
 ```
 
 Esto establecerá el Text a lo que esté guardado en `message`, y lo mantiene 
-actualizado a medida que `message` es cambiado.
+actualizado a medida que `message` se cambia.
 
 Para mantener las cosas organizadas, puedes crear el computed object directamente 
-junto de la propiedad, para mantenerla cerca de donde se usa:
+junto a la propiedad, para mantenerla cerca de donde se usa:
 
 ```Lua linenums="11" hl_lines="15-17"
 local numPlayers = State(5)
@@ -110,12 +110,12 @@ cuando se usa la función `New`.
 
 ## Actualizaciones Pospuestas
 
-Vale la pena saber que los cambios de propiedad no son aplicados de inmediato - 
+Vale la pena saber que los cambios de propiedades no son aplicados de inmediato - 
 son pospuestos hasta el siguiente render step.
 
 En este ejemplo, el valor del state object cambia muchas veces. Sin embargo, 
 Fusion solo actualizará la propiedad en el siguiente render step, esto significa 
-que solo vemos el último cambio tener efecto:
+que solo veremos el último cambio tener efecto:
 
 === "Lua"
 	```Lua
@@ -144,21 +144,21 @@ Además, no hay ningún motivo para actualizar una instancia tantas veces por fo
 porque este solo se renderiza una vez.
 
 En casi todos los casos, esto es una optimización conveniente. Sin embargo, en 
-unos pocos casos, puede ser problemático.
+unos pocos casos puede ser problemático.
 
 En concreto, en el ejemplo anterior, el controlador de `OnChange` no se ejecuta 
 cada vez que el valor del state object cambia. En cambio, se ejecuta en el render 
 step *después* de que el state object cambia, porque es cuando la propiedad cambia 
 en realidad.
 
-Esto puede dirigirse a errores off-by-one (por un paso) de un fotograma si no eres 
+Esto puede conducir a errores off-by-one-frame (por un fotograma) si no eres 
 cuidadoso, así que sé cauteloso en cuanto uses `OnChange` en propiedades que 
 vincules al state.
 
 -----
 
 Eso es todo lo que tienes que saber para conectar propiedades con state - es un 
-concepto simple, pero fundamental para crear UIs dinámicas e interactivas.
+concepto simple pero fundamental para crear UIs dinámicas e interactivas.
 
 ??? summary "Código finalizado"
 	```Lua linenums="1"
@@ -193,4 +193,4 @@ concepto simple, pero fundamental para crear UIs dinámicas e interactivas.
 	}
 	```
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 30/09/2021"

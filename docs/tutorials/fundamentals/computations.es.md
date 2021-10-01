@@ -16,7 +16,7 @@ Aprendamos cómo realizar cómputos en nuestro state.
 
 ## El Problema de Cómputo
 
-En desarrollo de UI, un montón de valores son computados basados en otros valores. 
+En desarrollo de UI, muchos valores son computados basados en otros valores. 
 Por ejemplo, puedes computar un mensaje basado en el número de jugadores en línea:
 
 ```Lua
@@ -26,7 +26,7 @@ local message = "Hay " .. numPlayers .. " jugadores en línea."
 
 Sin embargo, hay un problema - cuando `numPlayers` cambia, tenemos que manualmente 
 recalcular el valor `message` por nosotros mismos. Si no lo haces, entonces el 
-mensaje mostrará el valor incorrecto de los jugadores - un problema conocido como 
+mensaje mostrará el valor incorrecto de jugadores - un problema conocido como 
 'data desynchronisation'.
 
 -----
@@ -75,7 +75,7 @@ En cualquier momento, puedes conseguir el computed value con el método `:get()`
 	```
 
 Ahora para la magia - cuando sea que uses un state object como parte de tu cómputo, 
-el computed object se actualizará cuando el state object cambia:
+el computed object se actualizará cuando el state object cambie:
 
 === "Lua"
 	```Lua linenums="7" hl_lines="8-9"
@@ -96,23 +96,23 @@ el computed object se actualizará cuando el state object cambia:
 	```
 
 Esto resuelve nuestro problema anterior 'data desynchronisation' - no tenemos 
-que manualmente recalcular el mensaje. En cambio, Fusion lo controla por nosotros, 
+que recalcular manualmente el mensaje. En cambio, Fusion lo controla por nosotros, 
 porque estamos guardando nuestro state en los objetos de Fusion.
 
 Esta es la idea básica de computed objects; te permiten naturalmente definir valores 
 en términos de otros valores.
 
 !!! danger "Peligro - Yielding"
-	Código que esté dentro de un computed callback nunca se debería yieldiar. 
-	Mientras Fusion actualmente no echa un error por esto, hay planes para cambiar esto.
+	El código que esté dentro de un computed callback nunca se debería yieldiar. 
+	Mientras actualmente Fusion no muestra un error por esto, hay planes para cambiarlo.
 
-	Yielding en un callback puede romper mucho código de Fusion lo cual depende en las 
-	actualizaciones a tus variables siendo instantáneas, por ejemplo manejo de dependencias. 
-	También puede dirigirse a código inconsistente interno.
+	Yielding en un callback puede romper mucho código de Fusion, lo cual depende de las 
+	actualizaciones a tus variables en ser instantáneas, por ejemplo manejo de dependencias. 
+	También puede dirigirse a código inconsistente internamente.
 
-	Si necesitas realizar un llamado web cuando un state cambia, considera usar 
-	`Compat(state):onChange()` para vincular un listener, el cual *es* permitido de yildearse, 
-	y guardar el resultado del llamado web en un state object para usarlo en cualquier lugar:
+	Si necesitas realizar un llamado web cuando algún state cambia, considera usar 
+	`Compat(state):onChange()` para vincular un listener, el cual *es* permitido de 
+	yildearse, y guardar el resultado del llamado web en un state object para usarlo en cualquier lugar:
 
 	```Lua
 	local playerID = State(1670764)
@@ -130,12 +130,12 @@ en términos de otros valores.
 	end)
 	```
 
-	En el futuro, hay planes de hacer el yielding del código más fácil de trabajar con. 
+	En el futuro, hay planes de hacer el yielding del código más fácil de trabajar. 
 	[Mira este issue por más detalles.](https://github.com/Elttob/Fusion/issues/4)
 
 !!! danger "Peligro - Usar non-state objects"
-	Aférrate a usar state y computed objects dentro de tus cómputos. Fusion puede 
-	detectar cuando usas estos objetos y escuchas los cambios.
+	Aférrate a usar state objects y computed objects dentro de tus cómputos. Fusion puede 
+	detectar cuando usas estos objetos y escuchar cambios.
 
 	Fusion *no puede* automáticamente detectar cambios cuando usas variables 'normales':
 
@@ -153,7 +153,7 @@ en términos de otros valores.
 	```
 
 	Usando un state object aqui, Fusion puede actualizar el computed object 
-	correctamente, porque conoce que usamos el state object:
+	correctamente, porque sabe que usamos el state object:
 
 	```Lua
 	local theVariable = State("Hola")
@@ -168,15 +168,15 @@ en términos de otros valores.
 	print(goodValue:get()) -- printea 'Di Mundo'
 	```
 
-	Esto también aplica a cualquier función que puede cambiarse por sí solas, 
-	como `os.clock()`. Si necesitas usarlas, guardar valores desde la función 
-	en un state object, y actualizar el valor de un objeto tantas veces como 
+	Esto también aplica a cualquier función que pueden cambiarse por sí mismas, 
+	como `os.clock()`. Si necesitas usarlas, guarda valores de la función en un 
+	state object, y actualiza el valor de ese objeto tantas veces como 
 	sea necesario.
 
 -----
 
 Ahora, hemos cubierto todo lo que necesitamos saber acerca de las herramientas 
-básicas de state en Fusion. Usando computed y state objects juntos, puedes 
+básicas de state en Fusion. Usando computed objects y state objects juntos, puedes 
 guardar y calcular valores fácilmente mientras evitas bugs de desincronización 
 de datos.
 
@@ -199,4 +199,4 @@ de datos.
 	print(message:get())
 	```
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 30/09/2021"
