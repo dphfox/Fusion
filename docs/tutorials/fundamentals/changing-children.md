@@ -63,3 +63,9 @@ ComputedPairs.
 
 Changes to bound children are deferred until the next render step, just like
 changes to bound properties.
+
+-----
+
+## Adding a new child
+
+Use Fusion.New, using the parent property as the source of the parent.
