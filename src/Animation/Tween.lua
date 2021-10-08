@@ -14,8 +14,6 @@ local class = {}
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
-local ENABLE_PARAM_SETTERS = false
-
 --[[
 	Returns the current value of this Tween object.
 	The object will be registered as a dependency unless `asDependency` is false.
@@ -50,18 +48,7 @@ function class:update()
 	return false
 end
 
-if ENABLE_PARAM_SETTERS then
-
-	--[[
-		Specifies a new TweenInfo to use when the goal state changes in the future.
-	]]
-	function class:setTweenInfo(newTweenInfo: TweenInfo)
-		self._tweenInfo = newTweenInfo
-	end
-
-end
-
-local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: TweenInfo?)
+local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: Types.StateOrValue<TweenInfo>?)
 	local currentValue = goalState:get(false)
 
 	local self = setmetatable({
