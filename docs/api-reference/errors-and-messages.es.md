@@ -103,7 +103,7 @@ end)
 ## `invalidSpringDamping`
 
 ```
-The damping ratio for a spring must be >= 0. (damping was %.2f)
+The damping ratio for a spring must be >= 0. (damping was -0.50)
 ```
 
 Este mensaje aparece si estás intentando proporcionar un amortiguamiento a una 
@@ -115,15 +115,15 @@ local damping = -12345
 local spring = Spring(state, speed, damping)
 ```
 
-Damping ratio must always be between 0 and infinity for a spring to be
-physically simulatable.
+El amortiguamiento siempre tiene que ser entre 0 y infinito para que una spring 
+sea físicamente simulable.
 
 -----
 
 ## `invalidSpringSpeed`
 
 ```
-The speed of a spring must be >= 0. (speed was %.2f)
+The speed of a spring must be >= 0. (speed was -2.00)
 ```
 
 Este mensaje aparece si estás intentando proporcionar una velocidad a una 
@@ -134,8 +134,41 @@ local speed = -12345
 local spring = Spring(state, speed)
 ```
 
-Since a speed of 0 is equivalent to a spring that doesn't move, any slower speed
-is not simulatable or physically sensible.
+Ya que una velocidad de 0 es equivalente a una spring que no se mueve, cualquier 
+velocidad menor no es simulable o físicamente sensible.
+
+-----
+
+## `mistypedSpringDamping`
+
+```
+The damping ratio for a spring must be a number. (got a boolean)
+```
+
+Este mensaje aparece si estás intentando proporcionar un amortiguamiento a una 
+[spring](../spring) que no sea un número:
+
+```Lua
+local speed = 10
+local damping = true
+local spring = Spring(state, speed, damping)
+```
+
+-----
+
+## `mistypedSpringSpeed`
+
+```
+The speed of a spring must be a number. (got a boolean)
+```
+
+Este mensaje aparece si estás intentando proporcionar una velocidad a una 
+[spring](../spring) que no sea un número:
+
+```Lua
+local speed = true
+local spring = Spring(state, speed)
+```
 
 -----
 
@@ -282,4 +315,4 @@ local folder = New "Folder" {
 }
 ```
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 08/10/2021"

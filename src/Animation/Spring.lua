@@ -4,6 +4,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
@@ -30,7 +31,16 @@ function class:get(asDependency: boolean?)
 end
 
 --[[
-	Called when the goal state changes value.
+	Called when the goal state changes value, or when the speed or damping has
+	changed.
+
+	For speed/damping changes:
+
+	The spring will be updated in the spring scheduler to match the new speed
+	and damping values. Returns false, as this has no immediate impact on the
+	current value of the Spring object.
+
+	For goal changes:
 
 	If the new goal can be animated to, the equilibrium point of the internal
 	springs will be moved, but the springs themselves stay in place.
@@ -44,74 +54,62 @@ end
 function class:update()
 	local goalValue = self._goalState:get(false)
 
-	local oldType = self._currentType
-	local newType = typeof(goalValue)
+	-- figure out if this was a goal change or a speed/damping change
+	if goalValue == self._goalValue then
+		-- speed/damping change - re-add to spring scheduler to assign to a new
+		-- bucket
 
-	self._goalValue = goalValue
-	self._currentType = newType
+		SpringScheduler.remove(self)
+		SpringScheduler.add(self)
+		return false
 
-	local springGoals = unpackType(goalValue, newType)
-	local numSprings = #springGoals
+	else
+		-- goal change - reconfigure spring to target new goal
+		local oldType = self._currentType
+		local newType = typeof(goalValue)
 
-	self._springGoals = springGoals
+		self._goalValue = goalValue
+		self._currentType = newType
 
-	if newType ~= oldType then
-		-- if the type changed, we need to set the position and velocity
-		local springPositions = table.create(numSprings, 0)
-		local springVelocities = table.create(numSprings, 0)
+		local springGoals = unpackType(goalValue, newType)
+		local numSprings = #springGoals
 
-		for index, springGoal in ipairs(springGoals) do
-			springPositions[index] = springGoal
+		self._springGoals = springGoals
+
+		if newType ~= oldType then
+			-- if the type changed, we need to set the position and velocity
+			local springPositions = table.create(numSprings, 0)
+			local springVelocities = table.create(numSprings, 0)
+
+			for index, springGoal in ipairs(springGoals) do
+				springPositions[index] = springGoal
+			end
+
+			self._springPositions = springPositions
+			self._springVelocities = springVelocities
+			self._currentValue = self._goalValue
+
+			SpringScheduler.remove(self)
+			return true
+
+		elseif numSprings == 0 then
+			-- if the type hasn't changed, but isn't animatable, just change the
+			-- current value
+			self._currentValue = self._goalValue
+
+			SpringScheduler.remove(self)
+			return true
+
+		else
+			-- types match, and is animatable, so just add to the spring
+			-- scheduler and let it animate to the goal!
+			SpringScheduler.add(self)
+			return false
 		end
-
-		self._springPositions = springPositions
-		self._springVelocities = springVelocities
-		self._currentValue = self._goalValue
-
-		SpringScheduler.remove(self)
-		return true
-
-	elseif numSprings == 0 then
-		-- if the type hasn't changed, but isn't animatable, just change the
-		-- current value
-		self._currentValue = self._goalValue
-
-		SpringScheduler.remove(self)
-		return true
 	end
-
-	SpringScheduler.add(self)
-	return false
 end
 
 if ENABLE_PARAM_SETTERS then
-
-	--[[
-		Changes the damping ratio of this Spring.
-	]]
-	function class:setDamping(damping: number)
-		if damping < 0 then
-			logError("invalidSpringDamping", nil, damping)
-		end
-
-		SpringScheduler.remove(self)
-		self._damping = damping
-		SpringScheduler.add(self)
-	end
-
-	--[[
-		Changes the angular frequency of this Spring.
-	]]
-	function class:setSpeed(speed: number)
-		if speed < 0 then
-			logError("invalidSpringSpeed", nil, speed)
-		end
-
-		SpringScheduler.remove(self)
-		self._speed = speed
-		SpringScheduler.add(self)
-	end
-
 	--[[
 		Sets the position of the internal springs, meaning the value of this
 		Spring will jump to the given value. This doesn't affect velocity.
@@ -173,29 +171,45 @@ if ENABLE_PARAM_SETTERS then
 
 end
 
-local function Spring(goalState: Types.State<Types.Animatable>, speed: number?, damping: number?)
-	-- check and apply defaults for speed and damping
+local function Spring(
+	goalState: Types.State<Types.Animatable>,
+	speed: Types.StateOrValue<number>?,
+	damping: Types.StateOrValue<number>?
+)
+	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10
-	elseif speed < 0 then
-		logError("invalidSpringSpeed", nil, speed)
 	end
 
 	if damping == nil then
 		damping = 1
-	elseif damping < 0 then
-		logError("invalidSpringDamping", nil, damping)
+	end
+
+	local dependencySet = {[goalState] = true}
+	local speedIsState = typeof(speed) == "table" and speed.type == "State"
+	local dampingIsState = typeof(damping) == "table" and damping.type == "State"
+
+	if speedIsState then
+		dependencySet[speed] = true
+	end
+
+	if dampingIsState then
+		dependencySet[damping] = true
 	end
 
 	local self = setmetatable({
 		type = "State",
 		kind = "Spring",
-		dependencySet = {[goalState] = true},
+		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_speed = speed,
+		_speedIsState = speedIsState,
+		_lastSpeed = nil,
 		_damping = damping,
+		_dampingIsState = dampingIsState,
+		_lastDamping = nil,
 
 		_goalState = goalState,
 		_goalValue = nil,

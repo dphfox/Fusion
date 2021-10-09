@@ -5,9 +5,11 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
+local logError = require(Package.Logging.logError)
 
 local SpringScheduler = {}
 
@@ -36,6 +38,28 @@ function SpringScheduler.add(spring: Spring)
 	local damping = spring._damping
 	local speed = spring._speed
 
+	if spring._dampingIsState then
+		damping = damping:get(false)
+	end
+	if spring._speedIsState then
+		speed = speed:get(false)
+	end
+
+	if typeof(damping) ~= "number" then
+		logError("mistypedSpringDamping", nil, typeof(damping))
+	elseif damping < 0 then
+		logError("invalidSpringDamping", nil, damping)
+	end
+
+	if typeof(speed) ~= "number" then
+		logError("mistypedSpringSpeed", nil, typeof(speed))
+	elseif speed < 0 then
+		logError("invalidSpringSpeed", nil, speed)
+	end
+
+	spring._lastDamping = damping
+	spring._lastSpeed = speed
+
 	local dampingBucket = springBuckets[damping]
 
 	if dampingBucket == nil then
@@ -59,8 +83,8 @@ end
 	Removes a Spring from the scheduler.
 ]]
 function SpringScheduler.remove(spring: Spring)
-	local damping = spring._damping
-	local speed = spring._speed
+	local damping = spring._lastDamping
+	local speed = spring._lastSpeed
 
 	local dampingBucket = springBuckets[damping]
 
