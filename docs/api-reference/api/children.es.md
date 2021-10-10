@@ -24,14 +24,14 @@ local example = New "Folder" {
 
 ## Procesando Children
 
-Un 'child' es definido (repetidamente) como:
+Un 'child' es definido (recursivamente) como:
 
 - una instancia
 - un [state object](../state) o [computed object](../computed) que contenga children
 - una array de children
 
 Dado que esta definición es recursiva, arrays y state objects pueden ser anidadas; 
-es decir, el siguiente código es válido:
+es decir que el siguiente código es válido:
 
 ```Lua
 local example = New "Folder" {
@@ -83,7 +83,7 @@ el parent a los nuevos children.
 
 !!! note
 	Al igual que con propiedades bound, las actualizaciones son pospuestas al siguiente 
-	render step, y por lo que el establecimiento de un parent no ocurrirá al instante.
+	render step, por lo que el establecimiento de un parent no ocurrirá al instante.
 
 ```Lua
 local child1 = New "Folder" {
@@ -115,4 +115,4 @@ print(parent:GetChildren()) -- { Child dos }
 	Si estás usando un helper como [ComputedPairs](../computedpairs), la limpieza 
 	de instancias es controlada por defecto por ti (aunque esto es ajustable).
 
-!!! quote "Última Actualización de la Localización 28/09/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

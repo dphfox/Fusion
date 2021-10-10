@@ -3,13 +3,13 @@ function Computed(callback: () -> any): Computed
 ```
 
 Construye y regresa un nuevo computed object, usando el callback dado para calcular 
-este valor del objeto basado en otros [state objects](../state) o computed objects.
+los valores del objeto basado en otros [state objects](../state) o computed objects.
 
 -----
 
 ## Parámetros
 
-- `callback: () -> any` - una función que calcula y regresa el valor usado para 
+- `callback: () -> any` - una función que calcula y regresa el valor a usar para 
 este computed object.
 
 -----
@@ -21,9 +21,9 @@ este computed object.
 ```Lua
 function Computed:get(): any
 ```
-Regresa el valor caché de este computed object, como regreso de la función callback.
+Regresa el valor caché de este computed object, como regresa de la función callback.
 
-Si las dependencias están actualmente siendo detectadas (ej. dentro de un computed 
+Si las dependencias actualmente están siendo detectadas (ej. dentro de un computed 
 callback), entonces este computed object será usado como una dependencia.
 
 -----
@@ -55,7 +55,7 @@ cada vez que su callback se ejecuta. Esto significa, que al usar una función co
 local numCoins = State(50)
 
 local doubleCoins = Computed(function()
-	-- Fusion Detecta que llamamos :get() en `numCoins`, y por esto agrega `numCoins`
+	-- Fusion detecta que llamamos :get() en `numCoins`, y por esto agrega `numCoins`
 	-- como una dependencia de este computed object.
 	return numCoins:get() * 2
 end)
@@ -65,8 +65,8 @@ Cuando una dependencia cambia su valor, el computed object re-ejecuta su callbac
 para generar y almacenar el valor actual internamente. Este valor es luego expuesto 
 mediante el método `:get()`.
 
-Algo importante es que las dependencias son dinámicas; puedes cambiar que valores 
-tus computed objects dependen de, y las dependencias serán actualizadas para 
+Algo importante es que las dependencias son dinámicas; puedes cambiar los valores de 
+los que dependen tus computed objects, y las dependencias serán actualizadas para 
 reducir actualizaciones innecesarias:
 
 === "Lua"
@@ -113,9 +113,9 @@ reducir actualizaciones innecesarias:
 
 !!! danger
 	Aférrate a usar state y computed objects dentro de tus cómputos. Fusion puede 
-	detectar cuando usas estos objetos y escuchas los cambios.
+	detectar cuando usas estos objetos y escucha cuando hay cambios.
 
-	Fusion *no puede* automáticamente detectar cambios cuando usas variables 'normales':
+	Fusion *no puede* detectar cambios automáticamente cuando usas variables 'normales':
 
 	```Lua
 	local theVariable = "Hola"
@@ -146,9 +146,9 @@ reducir actualizaciones innecesarias:
 	print(goodValue:get()) -- printea 'Di Mundo'
 	```
 
-	Esto también aplica a cualquier función que pueden cambiarse por sí mismas, 
+	Esto también aplica a cualquier función que pueda cambiarse por sí misma, 
 	como `os.clock()`. Si necesitas usarlas, guarda valores de la función en un 
 	state object, y actualiza el valor de ese objeto tantas veces como 
 	sea necesario.
 
-!!! quote "Última Actualización de la Localización 08/10/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

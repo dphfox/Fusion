@@ -1,38 +1,38 @@
-Usualmente es una buena idea separar nuestra UI en partes reusables, 
-conocidas como 'componentes'. Aprendamos cómo crear estas con Fusion.
+Usualmente es una buena idea separar nuestra UI en partes reutilizables, 
+conocidas como 'componentes'. Aprendamos cómo crearlas con Fusion.
 
 -----
 
 ## ¿Qué son los Componentes?
 
-Cuando pensamos en nuestras UIs como humanos, usualmente pensamos de estas en 
-términos de ‘bloques’ reusables de UI. Por ejemplo, puedes dividir la siguiente 
+Cuando pensamos en UIs como humanos, usualmente las pensamos en 
+términos de ‘bloques’ reutilizables de UI. Por ejemplo, puedes dividir la siguiente 
 interfaz en estos ‘bloques’.
 
 ![Diagrama de componentes resaltados en la UI](ComponentsDiagram.png)
 
 En el diseño y desarrollo de UI, estos son ampliamente conocidos como ‘componentes’.
 
-Los componentes son útiles, porque solo necesitan definir *generalmente* como cada 
-uno se ve. Luego podemos aplicar como se ven a cada componente a lo largo de nuestra UI. 
-Puedes incluso proporcionar propiedades, como texto a insertar, o si se muestra un icono:
+Los componentes son útiles, porque solo necesitamos definir como cada uno se ve
+*en general*. Luego podemos aplicar esa apariencia a cada componente a lo largo de nuestra 
+UI. Puedes incluso proporcionar propiedades, como texto a insertar, o si se muestra un icono:
 
-![Diagrama definiendo y aplicando como cada componente se ve](ComponentDefinitionDiagram.png)
+![Diagrama definiendo y aplicando cómo se ve cada componente](ComponentDefinitionDiagram.png)
 
 Construyendo nuestra UI ensamblando componentes (en vez de crear cada instancia 
-manualmente) nos ayudará a reusar y organizar nuestro código de UI, y lo hace más 
+manualmente) nos ayudará a reutilizar y organizar nuestro código de UI, y lo hace más 
 fácil de leer y editar.
 
 -----
 
 ## Reutilizando UI
 
-Cuando queremos reutilizar un poco de código, usualmente lo ponemos en una función. 
+Cuando queremos reutilizar algo de código, usualmente lo ponemos en una función. 
 Después podemos usar ese fragmento de código en múltiples lugares, opcionalmente 
 proporcionando argumentos para ajustar cómo se ejecuta.
 
-Eso se alinea con lo que necesitamos que los ‘componentes’ hagan - queremos que se 
-pueda reutilizar partes de nuestra UI en múltiples lugares, opcionalmente proporcionando 
+Eso se alinea con lo que necesitamos que los ‘componentes’ hagan - queremos que sea 
+posible reutilizar partes de nuestra UI en múltiples lugares, opcionalmente proporcionando 
 propiedades para ajustar cómo se ve.
 
 Por esto, en Fusion, los componentes son solo funciones. Toman una tabla de propiedades, 
@@ -49,7 +49,7 @@ local function Greeting(props)
 end
 ```
 
-Podemos llamar la función `Greeting` para tener una copia de esa UI con cualquier mensaje 
+Podemos llamar la función `Greeting` para obtener una copia de esa UI con cualquier mensaje 
 que deseemos:
 
 ```Lua
@@ -63,7 +63,7 @@ local greeting2 = Greeting {
 ```
 
 !!! note
-	Si estás usando un solo argumento `props` (como lo hacemos posteriormente), 
+	Si estás usando un solo argumento `props` (como lo hicimos anteriormente), 
 	¡no necesitas paréntesis `()` al llamar la función con una tabla!
 
 También podemos incorporar componentes dentro de otro código de Fusion facilmente:
@@ -74,7 +74,7 @@ local gui = New "ScreenGui" {
 	ZIndexBehavior = "Sibling",
 
 	[Children] = Greeting {
-		Message = "¿Qué onda? B)"
+		Message = "¿Qué pasa? B)"
 	}
 }
 ```
@@ -89,8 +89,8 @@ con componentes para hacerlos aún más útiles.
 
 ## Pasando Children
 
-A veces, podemos crear componentes que puede tener children. Por ejemplo, veamos 
-este componente, que ordena children dentro de un scrolling grid:
+A veces, deseamos crear componentes que pueden tener children. Por ejemplo, veamos 
+este componente que ordena children dentro de un scrolling grid:
 
 ```Lua
 local function Gallery(props)
@@ -158,16 +158,16 @@ una comprobación de tipos:
 
 ## Múltiples Instancias
 
-En algunas específicas circunstancias, desearías regresar más de una instancia 
+En algunas circunstancias específicas, podrías desear regresar más de una instancia 
 de un componente.
 
-No deberías regresar múltiples valores de un componente directamente. Debido a como 
+No debes regresar múltiples valores de un componente directamente. Debido a como 
 Lua funciona, esto puede producir bugs sutiles en tu código:
 
 ```Lua
 local function ManyThings(props)
 	-- ¡no hagas esto!
-	-- deberías regresar un valor de un componente
+	-- debes regresar un solo valor de un componente
 	return
 		New "TextLabel" {...},
 		New "ImageButton" {...},
@@ -183,7 +183,7 @@ local gui2 = New "ScreenGui" {
 	[Children] = {
 		New "TextLabel" {...},
 
-		-- this is also broken
+		-- esto tampoco funciona
 		ManyThings {},
 
 		New "TextLabel" {...}
@@ -191,16 +191,16 @@ local gui2 = New "ScreenGui" {
 }
 ```
 
-A better way to do this is to return an *array* of instances. This means you
-only return a single value - the array. This gets around the subtle bugs that
-normally occur when dealing with multiple return values.
+Una mejor manera de hacer esto es regresar una *array* de instancias. Esto 
+significa que regresas un solo valor - la array. Esto evita los bugs 
+sutiles que usualmente ocurren al lidiar con múltiples valores regresados.
 
-Since `#!Lua [Children]` supports arrays of children, all our instances are now
-parented as expected:
+Ya que `#!Lua [Children]` permite arrays de children, todos los parents de 
+nuestras instancias fueron establecidos como lo esperado:
 
 ```Lua
 local function ManyThings(props)
-	-- using an array ensures we only return one value
+	-- usar una array se asegura de que solo regresamos un valor
 	return {
 		New "TextLabel" {...},
 		New "ImageButton" {...},
@@ -209,7 +209,7 @@ local function ManyThings(props)
 end
 
 local gui1 = New "ScreenGui" {
-	-- this now works!
+	-- ¡ahora esto funciona!
 	[Children] = ManyThings {}
 }
 
@@ -217,7 +217,7 @@ local gui2 = New "ScreenGui" {
 	[Children] = {
 		New "TextLabel" {...},
 
-		-- this also now works!
+		-- ¡esto también funciona ahora!
 		ManyThings {},
 
 		New "TextLabel" {...}
@@ -227,19 +227,20 @@ local gui2 = New "ScreenGui" {
 ```
 
 !!! tip
-	If you're coming from other UI libraries or frameworks, you may have heard
-	of this concept referred to as 'fragments'. In Fusion, fragments are just
-	plain arrays of children rather than a special kind of object.
+	Si vienes de otras bibliotecas de UI o frameworks, podrías haber escuchado de 
+	este concepto referido como 'fragmentos'. En Fusion, los fragmentos son solo 
+	plain arrays de children en vez de algún tipo de objeto especial.
 
 -----
 
 ## Callbacks
 
-For some components (e.g. buttons or text boxes), some code might need to run in
-response to events like clicks or typing. You can use callbacks to achieve this.
+Para algunos componentes (ej. botones o text boxes), es posible que algún código 
+deba ejecutarse en respuesta a eventos como clics o escritura. Puedes usar callbacks 
+para lograr esto.
 
-Consider this `Button` component as an example. Notice we're using `props.OnClick`
-with `#!Lua [OnEvent "Activated"]`:
+Considera este componente `Button` como un ejemplo. Fíjate que ahora usamos 
+`props.OnClick` con `#!Lua [OnEvent "Activated"]`:
 
 ```Lua
 local function Button(props)
@@ -257,8 +258,8 @@ local function Button(props)
 end
 ```
 
-This means that anyone using the `Button` component can provide a callback
-function, which will then be run when the button is clicked:
+Esto significa que cualquiera que use el componente `Button` puede proporcionar 
+una función callback, la cual será ejecutada cuando el botón sea presionado:
 
 ```Lua
 local gui = New "ScreenGui" {
@@ -271,32 +272,32 @@ local gui = New "ScreenGui" {
 			AnchorPoint = Vector2.new(.5, .5),
 			Size = UDim2.fromOffset(200, 50),
 
-			Message = "Click me!",
+			Message = "¡Cliqueame!",
 
 			OnClick = function()
-				-- this callback function will be passed into OnEvent, so it'll
-				-- run when the button is clicked
-				print("The button was clicked!")
+				-- esta función callback será pasada dentro de OnEvent,
+				-- y se ejecutará cuando el botón sea presionado
+				print("¡El botón fue cliqueado!")
 			end
 		},
 	}
 }
 ```
 
-This isn't just limited to event handlers, either - any time you want to let
-the caller provide some code, callbacks are a great option.
+Esto no está limitado a controladores de evento, en cualquier momento que 
+desees permitir al caller proporcionar código, los callbacks son una buena opción.
 
 -----
 
 ## State
 
-Because components are functions, we can do more than just creating instances.
-You can also store state inside them!
+Debido a que los componentes son funciones, podemos hacer más que solo crear 
+instancias. ¡También puedes guardar state dentro de estos!
 
-Let's make a 'toggle button' component to demonstrate this. When we click it,
-it should toggle on and off.
+Crearemos un componente de 'toggle button' para demostrar esto. Cuando lo 
+presionamos, debería alternarse entre on y off.
 
-Here's some basic code to get started - we just need to add some state to this:
+Aquí hay código básico para empezar - sólo necesitamos agregarle un state a esto:
 
 ```Lua
 local function ToggleButton(props)
@@ -307,14 +308,14 @@ local function ToggleButton(props)
 		Text = props.message,
 
 		[OnEvent "Activated"] = function()
-			-- TODO: toggle the button!
+			-- TODO: ¡alternar el botón!
 		end
 	}
 end
 ```
 
-Firstly, let's create a state object to store whether the button is currently
-toggled on or off:
+Primero, crearemos un state object para guardar en que estado está el botón, 
+on o off:
 
 ```Lua
 local function ToggleButton(props)
@@ -326,13 +327,13 @@ local function ToggleButton(props)
 		Text = props.message,
 
 		[OnEvent "Activated"] = function()
-			-- TODO: toggle the button!
+			-- TODO: ¡alternar el botón!
 		end
 	}
 end
 ```
 
-Next, we can toggle the stored value in our event handler:
+Después, podemos alternar el valor guardado en nuestro controlador de eventos:
 
 ```Lua
 local function ToggleButton(props)
@@ -350,8 +351,8 @@ local function ToggleButton(props)
 end
 ```
 
-Finally, we can make the background colour show whether the button is toggled on
-or off, using some computed state:
+Por último, podemos hacer que el color del fondo muestre si el botón está alternado 
+en on o off, usando un computed state:
 
 ```Lua
 local function ToggleButton(props)
@@ -360,9 +361,9 @@ local function ToggleButton(props)
 	return New "TextButton" {
 		BackgroundColor3 = Computed(function()
 			if isButtonOn:get() then
-				return Color3.new(0, 1, 0) -- green when toggled on
+				return Color3.new(0, 1, 0) -- verde cuando está en on
 			else
-				return Color3.new(1, 0, 0) -- red when toggled off
+				return Color3.new(1, 0, 0) -- rojo cuando está en off
 			end
 		end),
 		TextColor3 = Color3.new(0, 0, 0),
@@ -375,10 +376,11 @@ local function ToggleButton(props)
 end
 ```
 
-With just this code, we've made our toggle button fully functional! Again, this
-is a regular Lua function, so nothing fancy is going on behind the scenes.
+¡Con solo este código hicimos que nuestro botón sea completamente funcional! 
+De nuevo, esta es una función normal de Lua, así que no está pasando nada 
+sofisticado tras bambalinas.
 
-Just like before, we can now include our toggle button in our UI easily:
+Tal como antes, ahora podemos incluir nuestro botón en nuestra UI fácilmente:
 
 ```Lua
 local gui = New "ScreenGui" {
@@ -391,19 +393,23 @@ local gui = New "ScreenGui" {
 		},
 
 		ToggleButton {
-			message = "Click me!"
+			message = "¡Cliqueame!"
 		},
 
 		ToggleButton {
-			message = "Also, click me!"
+			message = "También, ¡cliqueame!"
 		},
 
 		ToggleButton {
-			message = "Each button is independent :)"
+			message = "Cada botón es independiente :)"
 		}
 	}
 }
 ```
 
-Because we create a new button each time we call the function, each button keeps
-it's own state and functions independently.
+Ya que creamos un nuevo botón cada vez que llamamos la función, cada botón guarda 
+su propio state y funciones de manera independiente.
+
+-----
+
+!!! quote "Última Actualización de la Localización 10/10/2021"

@@ -43,4 +43,4 @@ Dirígete directamente a la documentación para ver algunas APIs comunes:
 - [Tween](api/tween)
 - [Spring](api/tween)
 
-!!! quote "Última Actualización de la Localización 26/09/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

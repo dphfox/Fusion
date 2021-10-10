@@ -19,6 +19,7 @@ When values are removed from the output table, they may optionally be passed
 through a `destructor` function. This allows you to properly clean up some types
 such as instances - [more details can be found in the tutorial.](../../../tutorials/further-basics/arrays-and-lists)
 
+
 -----
 
 ## Parameters

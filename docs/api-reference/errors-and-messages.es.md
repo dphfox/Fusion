@@ -1,5 +1,5 @@
-Si tu código no está funcionando adecuadamente, o si Fusion está fallando, podrías 
-ver algunos errores apareciendo en el output. Cada mensaje tiene un ID único en el final.
+Si tu código no está funcionando adecuadamente o si Fusion está fallando, podrías 
+ver algunos errores aparecer en el output. Cada mensaje tiene un ID único al final.
 
 En esta página, puedes aprender más acerca de cualquier error que estés recibiendo.
 
@@ -23,7 +23,7 @@ local folder = New "Folder" {
 
 !!! tip
 	Diferentes scripts pueden tener diferentes privilegios - por ejemplo, los plugins 
-	tienen un mayor privilegio sobre los scripts del juego. ¡Asegúrate de tener los 
+	tienen un mayor privilegio que los scripts del juego. ¡Asegúrate de tener los 
 	privilegios necesarios para poder asignar a tus propiedades!
 
 -----
@@ -35,7 +35,7 @@ The Frame class doesn't have a property called 'Foo'.
 ```
 
 Este mensaje aparece si estás intentando conectar un handler con una propiedad 
-que no existe mediante un evento de change usando la función [New](../new):
+de change event que no existe usando la función [New](../new):
 
 ```Lua
 local textBox = New "TextBox" {
@@ -106,7 +106,7 @@ end)
 The damping ratio for a spring must be >= 0. (damping was -0.50)
 ```
 
-Este mensaje aparece si estás intentando proporcionar un amortiguamiento a una 
+Este mensaje aparece si estás intentando proporcionar una amortiguación a un 
 [spring](../spring) que sea menor que 0:
 
 ```Lua
@@ -115,7 +115,7 @@ local damping = -12345
 local spring = Spring(state, speed, damping)
 ```
 
-El amortiguamiento siempre tiene que ser entre 0 y infinito para que una spring 
+La amortiguación siempre tiene que ser entre 0 y infinito para que un spring 
 sea físicamente simulable.
 
 -----
@@ -126,7 +126,7 @@ sea físicamente simulable.
 The speed of a spring must be >= 0. (speed was -2.00)
 ```
 
-Este mensaje aparece si estás intentando proporcionar una velocidad a una 
+Este mensaje aparece si estás intentando proporcionar una velocidad a un 
 [spring](../spring) que sea menor que 0:
 
 ```Lua
@@ -134,7 +134,7 @@ local speed = -12345
 local spring = Spring(state, speed)
 ```
 
-Ya que una velocidad de 0 es equivalente a una spring que no se mueve, cualquier 
+Ya que una velocidad de 0 es equivalente a un spring que no se mueve, cualquier 
 velocidad menor no es simulable o físicamente sensible.
 
 -----
@@ -145,7 +145,7 @@ velocidad menor no es simulable o físicamente sensible.
 The damping ratio for a spring must be a number. (got a boolean)
 ```
 
-Este mensaje aparece si estás intentando proporcionar un amortiguamiento a una 
+Este mensaje aparece si estás intentando proporcionar una amortiguación a un 
 [spring](../spring) que no sea un número:
 
 ```Lua
@@ -162,7 +162,7 @@ local spring = Spring(state, speed, damping)
 The speed of a spring must be a number. (got a boolean)
 ```
 
-Este mensaje aparece si estás intentando proporcionar una velocidad a una 
+Este mensaje aparece si estás intentando proporcionar una velocidad a un 
 [spring](../spring) que no sea un número:
 
 ```Lua
@@ -216,11 +216,11 @@ end)
 The type 'number' doesn't match the spring's type 'Color3'.
 ```
 
-Algunos métodos en objetos de [spring](../spring) requieren valores entrantes para e
-mparejar los tipos que fueron usados previamente en la spring.
+Algunos métodos en objetos de [spring](../spring) requieren valores entrantes para 
+emparejar los tipos que fueron usados previamente en el spring.
 
-Este mensaje aparece cuando un valor entrante no tiene el mismo tipo que valores que 
-fueron usados previamente en la spring:
+Este mensaje aparece cuando un valor entrante no tiene el mismo tipo que los valores 
+usados previamente en el spring:
 
 ```Lua
 local colour = State(Color3.new(1, 0, 0))
@@ -237,7 +237,7 @@ colourSpring:addVelocity(Vector2.new(2, 3))
 'Foo' is not a valid member of 'Bar'.
 ```
 
-En Fusion, algunas tablas pueden tener reglas de lectura estrictas(strict). Esto 
+En Fusion, algunas tablas pueden tener reglas de lectura estrictas (strict). Esto 
 es comúnmente usado en APIs públicas como defensa de errores de escritura.
 
 Este mensaje aparece cuando se intenta leer un miembro no existente de estas tablas.
@@ -250,12 +250,12 @@ Este mensaje aparece cuando se intenta leer un miembro no existente de estas tab
 Unknown error: attempt to index a nil value
 ```
 
-Si ves este mensaje, es casi seguro que es un bug interno, así que asegúrate de 
+Si ves este mensaje, es casi seguro que sea un bug interno, así que asegúrate de 
 ponerte en contacto para que el error pueda ser arreglado.
 
 Cuando el código de Fusion intenta registrar un mensaje, advertencia o error, 
 necesita proporcionar un ID. Este ID es usado para mostrar el mensaje correcto, 
-y funciona como un simple y recordable identificador por si necesitas buscar el 
+y funciona como un identificador simple y memorable por si necesitas buscar el 
 mensaje después. Sin embargo, si ese código no proporciona un ID válido, entonces 
 el mensaje será reemplazado con este.
 
@@ -267,7 +267,7 @@ el mensaje será reemplazado con este.
 'number' type children aren't accepted as children in `New`.
 ```
 
-Este mensaje aparece cuando se intenta pasar algo como un hijo que no es una 
+Este mensaje aparece cuando se intenta pasar algo como un child que no es una 
 instancia, tabla de instancias, o state object que contenga una instancia (cuando 
 se usa la función [New](../new.md)):
 
@@ -285,7 +285,7 @@ local instance = New "Folder" {
 
 !!! note
 	Ten en cuenta que los state objects pueden guardar `nil` para representar 
-	la ausencia de una instancia, como excepción de estas reglas.
+	la ausencia de una instancia, como excepción a estas reglas.
 
 -----
 
@@ -301,7 +301,7 @@ propiedad y eventos, etc.
 
 Esta tabla solo se espera que contenga keys de dos tipos:
 
-- string keys, ej. `#!Lua Name = "Example"`
+- string keys, ej. `#!Lua Name = "Ejemplo"`
 - unas cuantas keys de símbolos, ej. `#!Lua [OnEvent "Foo"] = ...`
 
 Este mensaje aparece si Fusion encuentra una key de un tipo diferente, o si 
@@ -315,4 +315,4 @@ local folder = New "Folder" {
 }
 ```
 
-!!! quote "Última Actualización de la Localización 08/10/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

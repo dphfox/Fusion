@@ -2,7 +2,7 @@
 function State(initialValue: any?): State
 ```
 
-Construye y regresa un nuevo state object, con un valor inicial opcional.
+Construye y regresa un nuevo state object con un valor inicial opcional.
 
 -----
 
@@ -22,7 +22,7 @@ function State:get(): any
 ```
 Regresa el valor actualmente guardado de este state object.
 
-Si las dependencias están actualmente siendo detectadas (ej. dentro de un computed 
+Si las dependencias actualmente están siendo detectadas (ej. dentro de un computed 
 callback), entonces este state object será usado como una dependencia.
 
 ### `set()`
@@ -32,20 +32,20 @@ function State:set(newValue: any, force: boolean?)
 ```
 Establece el nuevo valor de este state object.
 
-Si los nuevos y antiguos valores se diferencian, esto actualizará otros objetos 
-que usen este state object. Sin embargo, si son los mismos, no se realizará una 
-actualización.
+Si los nuevos y antiguos valores son distintos, esto actualizará otros objetos 
+que usen este state object. Sin embargo, si son los mismos, no se realizará  
+la actualización.
 
 !!! tip "Forzar actualización"
 	Si quieres anular este comportamiento, puedes establecer `force` a `true`. 
-	Esto se asegurará de que las actualizaciones siempre serán realizadas, aun 
+	Esto se asegurará que las actualizaciones siempre sean realizadas, aún 
 	si los nuevos y antiguos valores son iguales (medido por el operador ==). 
 	Esto es más útil al trabajar con tablas mutables.
 
-	Sin embargo, ten mucho cuidado con esto, y solo fuerza actualizaciones cuando 
-	lo necesites por razones de rendimiento. Prueba primero una solución que 
+	Sin embargo, ten mucho cuidado con esto y solo fuerza actualizaciones cuando 
+	lo necesites, por razones de rendimiento. Prueba primero una solución que 
 	involucre tablas inmutables. El abuso de forzar actualizaciones puede 
-	dirigirse a código no óptimo que se actualiza redundantemente.
+	llevar a código no óptimo que se actualiza redundantemente.
 
 -----
 
@@ -64,4 +64,4 @@ numCoins.onChange:Connect(function()
 end)
 ```
 
-!!! quote "Última Actualización de la Localización 08/10/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

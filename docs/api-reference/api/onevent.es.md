@@ -9,8 +9,8 @@ Al usar este símbolo como una key en la tabla de propiedades de `New`, se esper
 que el valor sea una función callback, la cual será conectada al evento dado en 
 la instancia.
 
-La función funciona al igual que un controlador de eventos; recibe todo los argumentos 
-del evento. La conexión se limpia cuando la instancia se destruye automáticamente.
+La función se comporta al igual que un controlador de eventos; recibe todo los argumentos 
+del evento. La conexión se limpia automáticamente cuando la instancia se destruye.
 
 -----
 
@@ -30,4 +30,4 @@ local example = New "TextButton" {
 }
 ```
 
-!!! quote "Última Actualización de la Localización 30/09/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

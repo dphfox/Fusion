@@ -53,7 +53,7 @@ muestra cómo pueden interactuar y trabajar juntos en un entorno real.
 -----
 
 En el comienzo de cada tutorial, verás una sección titulada 'Código necesario'. 
-Se ven así - puedes darle clic para expandirlos:
+Se ven así - puedes presionarlos para expandirlos:
 
 ??? abstract "Código necesario"
 
@@ -99,7 +99,7 @@ Si programas en Roblox Studio, aquí te decimos como instalar Fusion:
 !!! example "Pasos"
 	1. Dirigete a la [página de  'Releases' de Fusion](https://github.com/Elttob/Fusion/releases).
 	Ahí, podrás encontrar la última versión de Fusion.
-	2. Debajo de 'Assets', haz clic en el archivo `.rbxm` para descargarlo. Este contiene 
+	2. Debajo de 'Assets', presiona en el archivo `.rbxm` para descargarlo. Este contiene 
 	el module script de Fusion.
 	3. En Roblox Studio, abre o crea un place.
 	4. Da clic derecho en ReplicatedStorage, y selecciona 'Insert from File'.
@@ -113,10 +113,10 @@ Si programas en Roblox Studio, aquí te decimos como instalar Fusion:
 Si usas un editor externo para programar, y los sincronizas a Roblox usando un 
 plugin, aquí te decimos como instalar Fusion:
 
-??? example "Pasos (haz clic para expandir)"
+??? example "Pasos (presiona para expandir)"
 	1. Dirigete a la [página de  'Releases' de Fusion](https://github.com/Elttob/Fusion/releases). 
 	Ahí, podrás encontrar la última versión de Fusion.
-	2.Debajo de 'Assets', haz clic en el archivo `.zip` para descargarlo. Dentro 
+	2.Debajo de 'Assets', presiona en el archivo `.zip` para descargarlo. Dentro 
 	de este se encuentra una copia del repositorio de GitHub de Fusion.
 	3. Dentro del zip, copia la carpeta `src` - puede que esté dentro de otra 
 	carpeta.
