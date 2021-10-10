@@ -26,7 +26,7 @@ These tutorials assume:
 
 Of course, based on your existing knowledge, you may find some tutorials easier
 or harder. Fusion's built to be easy to learn, but it may still take a bit of
-time to absorb some concepts, so don't be discouraged 🙂
+time to absorb some concepts, so don't be discouraged :smile:
 
 -----
 
