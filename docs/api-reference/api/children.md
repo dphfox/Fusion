@@ -113,4 +113,3 @@ print(parent:GetChildren()) -- { Child two }
 
 	If you're using a helper like [ComputedPairs](../computedpairs), instance
 	cleanup is handled for you by default (though this is configurable).
-	
