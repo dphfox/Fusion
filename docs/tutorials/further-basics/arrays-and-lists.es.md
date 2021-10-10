@@ -1,5 +1,5 @@
-Trabajar eficientemente con tablas puede ser difícil. Aprendamos acerca de las herramientas 
-que Fusion proporciona para que trabajar con arrays y tablas sea más fácil.
+Trabajar eficientemente con tablas puede ser difícil. Aprendamos acerca de las 
+herramientas que Fusion proporciona para que trabajar con arrays y tablas sea más fácil.
 
 ??? abstract "Código necesario"
 
@@ -18,7 +18,7 @@ que Fusion proporciona para que trabajar con arrays y tablas sea más fácil.
 ## Computed Arrays
 
 Supón que tenemos un state object que guarda una array de números, y queremos crear 
-un computed object el cual incluya cada número. Podemos lograr esto usando un loop 
+un computed object el cual duplique cada número. Podemos lograr esto usando un loop 
 for-pairs:
 
 ```Lua linenums="7" hl_lines="3-9"
@@ -35,7 +35,7 @@ end)
 print(doubledNumbers:get()) --> {2, 4, 6, 8, 10}
 ```
 
-Mientras esto funciona, es muy verboso. Para hacer este código más simple, Fusion tiene 
+Aunque esto funciona, es muy verboso. Para hacer este código más simple, Fusion tiene 
 un computed object especial diseñado para procesar tablas, conocido como `ComputedPairs`.
 
 Para usarlo, tenemos que importar `ComputedPairs` desde Fusion:
@@ -49,7 +49,7 @@ local Computed = Fusion.Computed
 local ComputedPairs = Fusion.ComputedPairs
 ```
 
-`ComputedPairs` actúa de manera similar a el loop for-pairs que escribimos debajo - este 
+`ComputedPairs` actúa de manera similar a el loop for-pairs que escribimos arriba - este 
 va por cada entrada de la array, procesa el valor, y lo guarda dentro de la nueva array:
 
 ```Lua linenums="8" hl_lines="3-5"
@@ -63,7 +63,7 @@ print(doubledNumbers:get()) --> {2, 4, 6, 8, 10}
 ```
 
 Esto puede ser usado para procesar cualquier tipo de tabla, no solo arrays. Observa que 
-las keys son las mismas, y el valor es lo que sea que regreses:
+las keys son las mismas, y el valor es lo que sea que tu regreses:
 
 ```Lua linenums="8"
 local data = State({Blue = "bueno", Green = "malo"})
@@ -80,10 +80,10 @@ print(processedData:get()) --> {Blue = "Blue es bueno", Green = "Green es malo"}
 ## Limpiando Valores
 
 A veces, podrías usar `ComputedPairs` para generar listas de instancias, o otro 
-tipo de datos parecido. Cuando acabemos con estos, los necesitamos destruir
+tipo de datos parecido. Cuando acabemos con estos, necesitamos destruirlos.
 
 Convenientemente, `ComputedPairs` ya limpia algunos tipos cuando son eliminados 
-de la array generada. 
+de la array generada:
 
 - instancias regresadas serán destruidas
 - conexiones a eventos regresadas serán destruidas
@@ -93,12 +93,12 @@ de la array generada.
 
 Esto debería cubrir la mayoría de usos por defecto. Sin embargo, si necesitas anular 
 este comportamiento de limpieza, puedes pasar una función opcional `destructor` como 
-un segundo argumento. Cuando el valor generado es eliminado o anulado será ejecutado, 
+un segundo argumento. Cuando el valor generado es eliminado o anulado, será ejecutado 
 para que lo puedas limpiar:
 
 === "Lua"
 	```Lua linenums="8" hl_lines="8-10"
-	local names = State({"John", "Dave", "Sebastián"})
+	local names = State({"John", "Dave", "Sebastian"})
 
 	local greetings = ComputedPairs(
 		names,

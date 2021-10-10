@@ -22,9 +22,9 @@ interpolado hacia el valor del objetivo usando el `tweenInfo` dado.
 ```Lua
 function Tween:get(): any
 ```
-Regresa el valor guardado actualmente de este state object de Tween.
+Regresa el actual valor guardado de este state object de Tween.
 
-Si las dependencias están actualmente siendo detectadas (ej. dentro de un computed 
+Si las dependencias están siendo detectadas actualmente (ej. dentro de un computed 
 callback), entonces este state object será usado como una dependencia.
 
 -----
@@ -51,4 +51,4 @@ end)
 
 -----
 
-!!! quote "Última Actualización de la Localización 09/10/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"

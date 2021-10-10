@@ -10,9 +10,9 @@ vinculado al valor del objetivo por un amortiguador.
 a un movimiento que es dos veces más rápido.
 
 `dampingRatio` afecta la fricción; `0` representa que no hay fricción, y `1` es 
-solo la suficiente fricción para alcanzar el objetivo sin rebasamiento o 
+solo la suficiente fricción para alcanzar el objetivo sin rebasamiento u 
 oscilación. Esto se puede variar libremente para ajustar la cantidad de fricción 
-o 'rebote' que tiene su movimiento.
+o 'rebote' que tiene el movimiento.
 
 -----
 
@@ -33,7 +33,7 @@ function Spring:get(): any
 ```
 Regresa el valor guardado actualmente de este state object de Spring.
 
-Si las dependencias están actualmente siendo detectadas (ej. dentro de un computed 
+Si las dependencias están siendo detectadas actualmente (ej. dentro de un computed 
 callback), entonces este state object será usado como una dependencia.
 
 -----
@@ -59,4 +59,4 @@ end)
 
 -----
 
-!!! quote "Última Actualización de la Localización 09/10/2021"
+!!! quote "Última Actualización de la Localización 10/10/2021"
