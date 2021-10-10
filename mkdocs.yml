@@ -95,10 +95,6 @@ markdown_extensions:
 
 plugins:
   - search
-  - social:
-      cards_color:
-        fill: "#0D0D0F" 
-        text: "#F8F8FA"
   - i18n:
       default_language: en
       languages:
