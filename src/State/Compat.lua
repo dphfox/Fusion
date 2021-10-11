@@ -4,7 +4,6 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
 local initDependency = require(Package.Dependencies.initDependency)
 
 local class = {}
