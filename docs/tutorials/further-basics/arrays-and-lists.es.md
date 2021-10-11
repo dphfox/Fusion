@@ -196,8 +196,8 @@ En el siguiente código, `Yellow` es recalculado, porque se mueve a una key dife
 	  ...recalculando key: 3 valor: Yellow
 	```
 
-Puedes ver esto más claro en el siguiente diagrama - el valor de la key 3 ha 
-cambiado, así que se provocó una recálculacion:
+Puedes ver esto más claramente en el siguiente diagrama - el valor de la key 3 
+ha cambiado, así que provocó una recalculación:
 
 ![Diagrama que muestra las keys inestables](UnstableKeys.png)
 
@@ -238,7 +238,7 @@ listas de instancias. ¡Entre menos recálculo innecesario, mejor!
 
 -----
 
-Con esto, deberías tener una idea básica de como trabajar con tablas estables en 
+Con esto, deberías tener una idea básica de como trabajar con state de tablas en 
 Fusion. Cuando te acostumbres a este flujo de trabajo, puedes expresar tu lógica 
 hábilmente, y tener un buen comportamiento de almacenamiento de caché y limpieza 
 gratuitamente.
