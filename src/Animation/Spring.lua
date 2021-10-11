@@ -31,10 +31,12 @@ end
 
 --[[
 	Called when the goal state changes value.
+	
 	If the new goal can be animated to, the equilibrium point of the internal
 	springs will be moved, but the springs themselves stay in place.
 	Returns false, as this has no immediate impact on the current value of the
 	Spring object.
+
 	If the new goal can't be animated to (different types/non-animatable type),
 	then the springs will be instantly moved to the goal value. Returns true, as
 	the current value of the Spring object will jump directly to the goal.
@@ -113,6 +115,7 @@ if ENABLE_PARAM_SETTERS then
 	--[[
 		Sets the position of the internal springs, meaning the value of this
 		Spring will jump to the given value. This doesn't affect velocity.
+
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
@@ -133,6 +136,7 @@ if ENABLE_PARAM_SETTERS then
 	--[[
 		Sets the velocity of the internal springs, overwriting the existing velocity
 		of this Spring. This doesn't affect position.
+
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
@@ -149,6 +153,7 @@ if ENABLE_PARAM_SETTERS then
 	--[[
 		Adds to the velocity of the internal springs, on top of the existing
 		velocity of this Spring. This doesn't affect position.
+		
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
