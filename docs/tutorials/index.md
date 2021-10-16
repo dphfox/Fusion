@@ -173,6 +173,6 @@ understanding of Fusion!
 
 Whatever you're looking for, here are some resources for you to get help:
 
-- [The Roblox OSS Discord](https://discord.gg/h2NV8PqhAD) has a #fusion channel
+- [The Roblox OSS Discord](https://discord.gg/h2NV8PqhAD) has a [#fusion](https://discord.com/channels/385151591524597761/895437663040077834) channel
 - Check out [our Discussions page](https://github.com/Elttob/Fusion/discussions) on GitHub
 - [Open an issue](https://github.com/Elttob/Fusion/issues) if you run into bugs or have feature requests
