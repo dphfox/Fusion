@@ -1,8 +1,7 @@
 [package]
-name = "Elttob/Fusion"
-description = "A modern reactive UI library, built specifically for Roblox and Luau"
-realm = "shared"
+name = "elttob/fusion"
+version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
-version = "0.0.1-beta"
+realm = "shared"
 
 [dependencies]
