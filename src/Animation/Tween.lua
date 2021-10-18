@@ -1,3 +1,5 @@
+--!nonstrict
+
 --[[
 	Constructs a new computed state object, which follows the value of another
 	state object using a tween.
@@ -5,6 +7,7 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local LibTypes = require(Package.LibTypes)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
@@ -13,8 +16,6 @@ local class = {}
 
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
-
-local ENABLE_PARAM_SETTERS = false
 
 --[[
 	Returns the current value of this Tween object.
@@ -31,7 +32,7 @@ end
 	Called when the goal state changes value; this will initiate a new tween.
 	Returns false as the current value doesn't change right away.
 ]]
-function class:update()
+function class:update(): boolean
 	self._prevValue = self._currentValue
 	self._nextValue = self._goalState:get(false)
 
@@ -50,18 +51,11 @@ function class:update()
 	return false
 end
 
-if ENABLE_PARAM_SETTERS then
+local function Tween<T>(
+	goalState: Types.State<T>,
+	tweenInfo: TweenInfo?
+): LibTypes.Tween<T>
 
-	--[[
-		Specifies a new TweenInfo to use when the goal state changes in the future.
-	]]
-	function class:setTweenInfo(newTweenInfo: TweenInfo)
-		self._tweenInfo = newTweenInfo
-	end
-
-end
-
-local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: TweenInfo?)
 	local currentValue = goalState:get(false)
 
 	local self = setmetatable({
