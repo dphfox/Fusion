@@ -99,7 +99,7 @@ export type Spring<T> = StateObject<T> & Dependent & {
 -- An object which can listen for updates on another state object.
 export type Compat = Dependent & {
 	-- kind: "Compat" (add this when Luau supports singleton types)
-  	onChange: (Compat, callback: () -> ()) -> ()
+  	onChange: (Compat, callback: () -> ()) -> (() -> ())
 }
 
 --[[
