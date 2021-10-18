@@ -1,22 +1,27 @@
+--!nonstrict
+
 --[[
 	Constructs a new state object, which exposes compatibility APIs for
 	integrating with non-reactive code.
+
+	FIXME: enabling strict types here causes free types to leak
 ]]
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local LibTypes = require(Package.LibTypes)
 local initDependency = require(Package.Dependencies.initDependency)
 
 local class = {}
 local CLASS_METATABLE = {__index = class}
 
 -- Table used to hold Compat objects in memory.
-local strongRefs = {}
+local strongRefs: Types.Set<LibTypes.Compat> = {}
 
 --[[
 	Called when the watched state changes value.
 ]]
-function class:update()
+function class:update(): boolean
 	for callback in pairs(self._changeListeners) do
 		coroutine.wrap(callback)()
 	end
@@ -54,7 +59,7 @@ function class:onChange(callback: () -> ())
 	end
 end
 
-local function Compat(watchedState: Types.State<any>)
+local function Compat(watchedState: Types.State<any>): LibTypes.Compat
 	local self = setmetatable({
 		type = "State",
 		kind = "Compat",

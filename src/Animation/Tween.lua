@@ -21,7 +21,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Returns the current value of this Tween object.
 	The object will be registered as a dependency unless `asDependency` is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end

@@ -26,7 +26,7 @@ local ENABLE_PARAM_SETTERS = false
 	Returns the current value of this Spring object.
 	The object will be registered as a dependency unless `asDependency` is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end
