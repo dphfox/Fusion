@@ -7,6 +7,7 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local LibTypes = require(Package.LibTypes)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
@@ -53,7 +54,7 @@ end
 	then the springs will be instantly moved to the goal value. Returns true, as
 	the current value of the Spring object will jump directly to the goal.
 ]]
-function class:update()
+function class:update(): boolean
 	local goalValue = self._goalState:get(false)
 
 	-- figure out if this was a goal change or a speed/damping change
@@ -177,7 +178,7 @@ local function Spring<T>(
 	goalState: Types.State<T>,
 	speed: Types.StateOrValue<number>?,
 	damping: Types.StateOrValue<number>?
-)
+): LibTypes.Spring<T>
 	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10
