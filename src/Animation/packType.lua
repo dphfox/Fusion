@@ -3,6 +3,10 @@
 --[[
 	Packs an array of numbers into a given animatable data type.
 	If the type is not animatable, nil will be returned.
+
+	FUTURE: When Luau supports singleton types, those could be used in
+	conjunction with intersection types to make this function fully statically
+	type checkable.
 ]]
 
 local Package = script.Parent.Parent

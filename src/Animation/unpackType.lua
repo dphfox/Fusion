@@ -6,6 +6,10 @@
 
 	FIXME: This function uses a lot of redefinitions to suppress false positives
 	from the Luau typechecker - ideally these wouldn't be required
+
+	FUTURE: When Luau supports singleton types, those could be used in
+	conjunction with intersection types to make this function fully statically
+	type checkable.
 ]]
 
 local Package = script.Parent.Parent
