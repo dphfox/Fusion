@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	The 'smarter' version of `cleanupOnDestroy` - this attempts to match the
 	results from the 'dumber' polling-based version by using events to reduce
@@ -31,7 +33,7 @@ local function cleanupOnDestroy(instance: Instance?, task: cleanup.Task): (() ->
 	-- We can't keep a reference to the instance, but we need to keep track of
 	-- when the instance is parented to `nil`.
 	-- To get around this, we can save the parent from AncestryChanged here
-	local isNilParented = instance.Parent == nil
+	local isNilParented = (instance :: Instance).Parent == nil
 
 	-- when AncestryChanged is called, run some destroy-checking logic
 	-- this function can yield when called, so make sure to call in a new thread
@@ -97,12 +99,12 @@ local function cleanupOnDestroy(instance: Instance?, task: cleanup.Task): (() ->
 		end
 	end
 
-	ancestryChangedConn = instance.AncestryChanged:Connect(onInstanceMove)
+	ancestryChangedConn = (instance :: Instance).AncestryChanged:Connect(onInstanceMove)
 
 	-- in case the instance is currently in nil, we should call `onInstanceMove`
 	-- before any other code has the opportunity to run
 	if isNilParented then
-		onInstanceMove(nil, instance.Parent)
+		onInstanceMove(nil, (instance :: Instance).Parent)
 	end
 
 	-- remove this functions' reference to the instance, so it doesn't influence
