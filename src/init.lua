@@ -4,24 +4,24 @@
 	The entry point for the Fusion library.
 ]]
 
-local Types = require(script.Types)
+local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
 
-export type StateObject<T> = Types.StateObject<T>
-export type StateOrValue<T> = Types.StateOrValue<T>
-export type Symbol = Types.Symbol
-export type State<T> = Types.State<T>
-export type Computed<T> = Types.Computed<T>
-export type ComputedPairs<K, V> = Types.ComputedPairs<K, V>
-export type Compat = Types.Compat
-export type Tween<T> = Types.Tween<T>
-export type Spring<T> = Types.Spring<T>
+export type StateObject<T> = PubTypes.StateObject<T>
+export type StateOrValue<T> = PubTypes.StateOrValue<T>
+export type Symbol = PubTypes.Symbol
+export type State<T> = PubTypes.State<T>
+export type Computed<T> = PubTypes.Computed<T>
+export type ComputedPairs<K, V> = PubTypes.ComputedPairs<K, V>
+export type Compat = PubTypes.Compat
+export type Tween<T> = PubTypes.Tween<T>
+export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
-  New: (className: string) -> ((propertyTable: Types.PropertyTable) -> Instance),
-  Children: Types.ChildrenKey,
-  OnEvent: (eventName: string) -> Types.OnEventKey,
-  OnChange: (propertyName: string) -> Types.OnChangeKey,
+  New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+  Children: PubTypes.ChildrenKey,
+  OnEvent: (eventName: string) -> PubTypes.OnEventKey,
+  OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
 
   State: <T>(initialValue: T) -> State<T>,
   Computed: <T>(callback: () -> T) -> Computed<T>,

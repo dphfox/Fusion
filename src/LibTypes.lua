@@ -1,50 +1,70 @@
 --!strict
 
 --[[
-	Stores common private type information for Fusion APIs.
+	Stores common type information used internally.
+
 	These types may be used internally so Fusion code can type-check, but
 	should never be exposed to public users, as these definitions are fair game
 	for breaking changes.
 ]]
 
 local Package = script.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
+
+type Set<T> = {[T]: any}
+
+--[[
+	General use types
+]]
+
+-- A symbol that represents the absence of a value.
+export type None = PubTypes.Symbol & {
+	-- name: "None" (add this when Luau supports singleton types)
+}
+
+-- Stores useful information about Luau errors.
+export type Error = {
+	type: string, -- replace with "Error" when Luau supports singleton types
+	raw: string,
+	message: string,
+	trace: string
+}
 
 --[[
 	Specific reactive graph types
 ]]
 
 -- A state object whose value can be set at any time by the user.
-export type State<T> = Types.State<T> & {
+export type State<T> = PubTypes.State<T> & {
 	_value: T
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type Computed<T> = Types.Computed<T> & {
-	_oldDependencySet: Types.Set<Types.Dependency>,
+export type Computed<T> = PubTypes.Computed<T> & {
+	_oldDependencySet: Set<PubTypes.Dependency>,
 	_callback: () -> T,
 	_value: T
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type ComputedPairs<K, VI, VO> = Types.ComputedPairs<K, VO> & {
-	_oldDependencySet: Types.Set<Types.Dependency>,
+export type ComputedPairs<K, VI, VO> = PubTypes.ComputedPairs<K, VO> & {
+	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (K, VI) -> VO,
 	_destructor: (VO) -> (),
 	_inputIsState: boolean,
-	_inputTable: Types.StateOrValue<{[K]: VI}>,
+	_inputTable: PubTypes.StateOrValue<{[K]: VI}>,
 	_oldInputTable: {[K]: VI},
 	_outputTable: {[K]: VO},
 	_oldOutputTable: {[K]: VO},
 	_keyData: {[K]: {
-		dependencySet: Types.Set<Types.Dependency>,
-		oldDependencySet: Types.Set<Types.Dependency>,
-		dependencyValues: {[Types.Dependency]: any}
+		dependencySet: Set<PubTypes.Dependency>,
+		oldDependencySet: Set<PubTypes.Dependency>,
+		dependencyValues: {[PubTypes.Dependency]: any}
 	}}
 }
 
 -- A state object which follows another state object using tweens.
-export type Tween<T> = Types.Tween<T> & {
+export type Tween<T> = PubTypes.Tween<T> & {
 	_goalState: State<T>,
 	_tweenInfo: TweenInfo,
 	_prevValue: T,
@@ -56,11 +76,11 @@ export type Tween<T> = Types.Tween<T> & {
 }
 
 -- A state object which follows another state object using spring simulation.
-export type Spring<T> = Types.Spring<T> & {
-	_speed: Types.StateOrValue<number>,
+export type Spring<T> = PubTypes.Spring<T> & {
+	_speed: PubTypes.StateOrValue<number>,
 	_speedIsState: boolean,
 	_lastSpeed: number,
-	_damping: Types.StateOrValue<number>,
+	_damping: PubTypes.StateOrValue<number>,
 	_dampingIsState: boolean,
 	_lastDamping: number,
 	_goalState: State<T>,
@@ -73,8 +93,8 @@ export type Spring<T> = Types.Spring<T> & {
 }
 
 -- An object which can listen for updates on another state object.
-export type Compat = Types.Compat & {
-	_changeListeners: Types.Set<() -> ()>,
+export type Compat = PubTypes.Compat & {
+	_changeListeners: Set<() -> ()>,
 	_numChangeListeners: number
 }
 

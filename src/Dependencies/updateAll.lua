@@ -8,11 +8,12 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 
-type Descendant = (Types.Dependent & Types.Dependency) | Types.Dependent
+type Set<T> = {[T]: any}
+type Descendant = (PubTypes.Dependent & PubTypes.Dependency) | PubTypes.Dependent
 
-local function updateAll(ancestor: Types.Dependency)
+local function updateAll(ancestor: PubTypes.Dependency)
 	--[[
 		First things first, we need to mark all indirect dependents as needing
 		an update. This means we can ignore any dependencies that aren't related
@@ -20,7 +21,7 @@ local function updateAll(ancestor: Types.Dependency)
 	]]
 
 	-- set of all dependents that still need to be updated
-	local needsUpdateSet: Types.Set<Descendant> = {}
+	local needsUpdateSet: Set<Descendant> = {}
 	-- the dependents to be processed now
 	local processNow: {Descendant} = {}
 	local processNowSize = 0
@@ -46,7 +47,7 @@ local function updateAll(ancestor: Types.Dependency)
 			-- add the dependents of the member for processing
 			-- FIXME: Typed Luau doesn't understand this type narrowing yet
 			if (member :: any).dependentSet ~= nil then
-				local member = member :: Types.Dependent & Types.Dependency
+				local member = member :: PubTypes.Dependent & PubTypes.Dependency
 				for dependent in pairs(member.dependentSet) do
 					processNextSize += 1
 					processNext[processNextSize] = dependent
@@ -92,7 +93,7 @@ local function updateAll(ancestor: Types.Dependency)
 			-- dependents, because they don't need processing.
 			-- FIXME: Typed Luau doesn't understand this type narrowing yet
 			if didChange and (member :: any).dependentSet ~= nil then
-				local member = member :: Types.Dependent & Types.Dependency
+				local member = member :: PubTypes.Dependent & PubTypes.Dependency
 				for dependent in pairs(member.dependentSet) do
 					-- don't add dependents that have un-updated dependencies
 					local allDependenciesUpdated = true

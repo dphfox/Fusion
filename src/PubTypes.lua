@@ -4,12 +4,11 @@
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
+type Set<T> = {[T]: any}
+
 --[[
 	General use types
 ]]
-
--- A set collection - keys are the elements of the set. Values are ignored.
-export type Set<T> = {[T]: any}
 
 -- A unique symbolic value.
 export type Symbol = {
@@ -17,20 +16,7 @@ export type Symbol = {
 	name: string
 }
 
--- A symbol that represents the absence of a value.
-export type None = Symbol & {
-	-- name: "None" (add this when Luau supports singleton types)
-}
-
--- Stores useful information about Luau errors.
-export type Error = {
-	type: string, -- replace with "Error" when Luau supports singleton types
-	raw: string,
-	message: string,
-	trace: string
-}
-
--- Types that can be expressed as vectors of numbers, and so can be animated.
+-- PubTypes that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
 	number |
 	CFrame |

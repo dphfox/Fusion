@@ -6,9 +6,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 
-local function OnChange(propertyName: string): Types.OnChangeKey
+local function OnChange(propertyName: string): PubTypes.OnChangeKey
 	return {
 		type = "Symbol",
 		name = "OnChange",

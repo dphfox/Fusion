@@ -9,7 +9,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local LibTypes = require(Package.LibTypes)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
@@ -182,7 +182,7 @@ function class:update(): boolean
 end
 
 local function ComputedPairs<K, VI, VO>(
-	inputTable: Types.StateOrValue<{[K]: VI}>,
+	inputTable: PubTypes.StateOrValue<{[K]: VI}>,
 	processor: (K, VI) -> VO,
 	destructor: (VO) -> ()?
 ): LibTypes.ComputedPairs<K, VI, VO>

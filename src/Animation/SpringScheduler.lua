@@ -7,13 +7,14 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local LibTypes = require(Package.LibTypes)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
 local logError = require(Package.Logging.logError)
 
+type Set<T> = {[T]: any}
 type Spring = LibTypes.Spring<any>
 
 local SpringScheduler = {}
@@ -25,7 +26,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local MOVEMENT_EPSILON = 0.0001
 
 -- organises springs by speed and damping, for batch processing
-local springBuckets: {[number]: {[number]: Types.Set<Spring>}} = {}
+local springBuckets: {[number]: {[number]: Set<Spring>}} = {}
 
 --[[
 	Adds a Spring to be updated every render step.
@@ -35,14 +36,14 @@ function SpringScheduler.add(spring: Spring)
 	local speed: number
 
 	if spring._dampingIsState then
-		local state: Types.StateObject<number> = spring._damping
+		local state: PubTypes.StateObject<number> = spring._damping
 		damping = state:get(false)
 	else
 		damping = spring._damping
 	end
 
 	if spring._speedIsState then
-		local state: Types.StateObject<number> = spring._speed
+		local state: PubTypes.StateObject<number> = spring._speed
 		speed = state:get(false)
 	else
 		speed = spring._speed

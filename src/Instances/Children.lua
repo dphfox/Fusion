@@ -6,9 +6,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 
 return {
 	type = "Symbol",
 	name = "Children"
-} :: Types.ChildrenKey
+} :: PubTypes.ChildrenKey

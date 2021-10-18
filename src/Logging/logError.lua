@@ -5,10 +5,10 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local messages = require(Package.Logging.messages)
 
-local function logError(messageID: string, errObj: Types.Error?, ...)
+local function logError(messageID: string, errObj: PubTypes.Error?, ...)
 	local formatString: string
 
 	if messages[messageID] ~= nil then

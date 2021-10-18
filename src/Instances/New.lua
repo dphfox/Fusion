@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
 local Scheduler = require(Package.Instances.Scheduler)
@@ -20,11 +20,11 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
-local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = {}
+local overrideParents: {[Instance]: PubTypes.StateOrValue<Instance>} = {}
 setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
 local function New(className: string)
-	return function(propertyTable: Types.PropertyTable): Instance
+	return function(propertyTable: PubTypes.PropertyTable): Instance
 		-- things to clean up when the instance is destroyed or gc'd
 		local cleanupTasks = {}
 		-- event handlers to connect

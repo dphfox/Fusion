@@ -13,15 +13,17 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local parseError = require(Package.Logging.parseError)
 local sharedState = require(Package.Dependencies.sharedState)
+
+type Set<T> = {[T]: any}
 
 local initialisedStack = sharedState.initialisedStack
 local initialisedStackCapacity = 0
 
 local function captureDependencies(
-	saveToSet: Types.Set<Types.Dependency>,
+	saveToSet: Set<PubTypes.Dependency>,
 	callback: (...any) -> any,
 	...
 ): (boolean, any)

@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local LibTypes = require(Package.LibTypes)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
@@ -120,7 +120,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:setPosition(newValue: Types.Animatable)
+	function class:setPosition(newValue: PubTypes.Animatable)
 		local newType = typeof(newValue)
 		if newType ~= self._currentType then
 			logError("springTypeMismatch", nil, newType, self._currentType)
@@ -141,7 +141,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:setVelocity(newValue: Types.Animatable)
+	function class:setVelocity(newValue: PubTypes.Animatable)
 		local newType = typeof(newValue)
 		if newType ~= self._currentType then
 			logError("springTypeMismatch", nil, newType, self._currentType)
@@ -158,7 +158,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:addVelocity(deltaValue: Types.Animatable)
+	function class:addVelocity(deltaValue: PubTypes.Animatable)
 		local deltaType = typeof(deltaValue)
 		if deltaType ~= self._currentType then
 			logError("springTypeMismatch", nil, deltaType, self._currentType)
@@ -175,9 +175,9 @@ if ENABLE_PARAM_SETTERS then
 end
 
 local function Spring<T>(
-	goalState: Types.State<T>,
-	speed: Types.StateOrValue<number>?,
-	damping: Types.StateOrValue<number>?
+	goalState: PubTypes.State<T>,
+	speed: PubTypes.StateOrValue<number>?,
+	damping: PubTypes.StateOrValue<number>?
 ): LibTypes.Spring<T>
 	-- apply defaults for speed and damping
 	if speed == nil then

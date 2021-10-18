@@ -10,10 +10,10 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
 
-local function packType(numbers: {number}, typeString: string): Types.Animatable?
+local function packType(numbers: {number}, typeString: string): PubTypes.Animatable?
 	if typeString == "number" then
 		return numbers[1]
 

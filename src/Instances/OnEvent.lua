@@ -6,9 +6,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 
-local function OnEvent(eventName: string): Types.OnEventKey
+local function OnEvent(eventName: string): PubTypes.OnEventKey
 	return {
 		type = "Symbol",
 		name = "OnEvent",

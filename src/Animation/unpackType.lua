@@ -13,7 +13,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
 
 local function unpackType(value: any, typeString: string): {number}

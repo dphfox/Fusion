@@ -5,13 +5,15 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
+
+type Set<T> = {[T]: any}
 
 -- The set where used dependencies should be saved to.
-local dependencySet: Types.Set<Types.Dependency>? = nil
+local dependencySet: Set<PubTypes.Dependency>? = nil
 
 -- A stack of sets where newly created dependencies should be stored.
-local initialisedStack: {Types.Set<Types.Dependency>} = {}
+local initialisedStack: {Set<PubTypes.Dependency>} = {}
 local initialisedStackSize = 0
 
 return {

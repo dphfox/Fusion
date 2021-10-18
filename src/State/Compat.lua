@@ -8,15 +8,17 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local LibTypes = require(Package.LibTypes)
 local initDependency = require(Package.Dependencies.initDependency)
+
+type Set<T> = {[T]: any}
 
 local class = {}
 local CLASS_METATABLE = {__index = class}
 
 -- Table used to hold Compat objects in memory.
-local strongRefs: Types.Set<LibTypes.Compat> = {}
+local strongRefs: Set<LibTypes.Compat> = {}
 
 --[[
 	Called when the watched state changes value.
@@ -59,7 +61,7 @@ function class:onChange(callback: () -> ())
 	end
 end
 
-local function Compat(watchedState: Types.State<any>): LibTypes.Compat
+local function Compat(watchedState: PubTypes.State<any>): LibTypes.Compat
 	local self = setmetatable({
 		type = "State",
 		kind = "Compat",
