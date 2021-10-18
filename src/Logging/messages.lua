@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Stores templates for different kinds of logging messages.
 ]]

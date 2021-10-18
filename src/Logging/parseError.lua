@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	An xpcall() error handler to collect and parse useful information about
 	errors, such as clean messages and stack traces.
