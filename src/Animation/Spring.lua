@@ -7,7 +7,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
@@ -178,7 +178,7 @@ local function Spring<T>(
 	goalState: PubTypes.State<T>,
 	speed: PubTypes.StateOrValue<number>?,
 	damping: PubTypes.StateOrValue<number>?
-): LibTypes.Spring<T>
+): Types.Spring<T>
 	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10

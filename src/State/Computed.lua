@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
@@ -75,7 +75,7 @@ function class:update(): boolean
 	end
 end
 
-local function Computed<T>(callback: () -> T): LibTypes.Computed<T>
+local function Computed<T>(callback: () -> T): Types.Computed<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",

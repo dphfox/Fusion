@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
@@ -47,7 +47,7 @@ function class:set(newValue: any, force: boolean?)
 	updateAll(self)
 end
 
-local function State<T>(initialValue: T): LibTypes.State<T>
+local function State<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "State",

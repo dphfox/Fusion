@@ -10,7 +10,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
@@ -185,7 +185,7 @@ local function ComputedPairs<K, VI, VO>(
 	inputTable: PubTypes.StateOrValue<{[K]: VI}>,
 	processor: (K, VI) -> VO,
 	destructor: (VO) -> ()?
-): LibTypes.ComputedPairs<K, VI, VO>
+): Types.ComputedPairs<K, VI, VO>
 	-- if destructor function is not defined, use the default cleanup function
 	if destructor == nil then
 		destructor = (cleanup) :: (VO) -> ()

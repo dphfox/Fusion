@@ -7,7 +7,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
@@ -54,7 +54,7 @@ end
 local function Tween<T>(
 	goalState: PubTypes.State<T>,
 	tweenInfo: TweenInfo?
-): LibTypes.Tween<T>
+): Types.Tween<T>
 
 	local currentValue = goalState:get(false)
 

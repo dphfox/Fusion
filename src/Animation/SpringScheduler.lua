@@ -8,14 +8,14 @@ local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
 local logError = require(Package.Logging.logError)
 
 type Set<T> = {[T]: any}
-type Spring = LibTypes.Spring<any>
+type Spring = Types.Spring<any>
 
 local SpringScheduler = {}
 

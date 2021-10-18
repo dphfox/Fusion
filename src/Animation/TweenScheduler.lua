@@ -7,7 +7,7 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local LibTypes = require(Package.LibTypes)
+local Types = require(Package.Types)
 local lerpType = require(Package.Animation.lerpType)
 local getTweenRatio = require(Package.Animation.getTweenRatio)
 local updateAll = require(Package.Dependencies.updateAll)
@@ -15,7 +15,7 @@ local updateAll = require(Package.Dependencies.updateAll)
 local TweenScheduler = {}
 
 type Set<T> = {[T]: any}
-type Tween = LibTypes.Tween<any>
+type Tween = Types.Tween<any>
 
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 

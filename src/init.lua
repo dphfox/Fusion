@@ -18,18 +18,18 @@ export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
-  New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
-  Children: PubTypes.ChildrenKey,
-  OnEvent: (eventName: string) -> PubTypes.OnEventKey,
-  OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
+	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	Children: PubTypes.ChildrenKey,
+	OnEvent: (eventName: string) -> PubTypes.OnEventKey,
+	OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
 
-  State: <T>(initialValue: T) -> State<T>,
-  Computed: <T>(callback: () -> T) -> Computed<T>,
-  ComputedPairs: <K, VI, VO>(inputTable: StateOrValue<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
-  Compat: (watchedState: StateObject<any>) -> Compat,
+	State: <T>(initialValue: T) -> State<T>,
+	Computed: <T>(callback: () -> T) -> Computed<T>,
+	ComputedPairs: <K, VI, VO>(inputTable: StateOrValue<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
+	Compat: (watchedState: StateObject<any>) -> Compat,
 
-  Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
-  Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
+	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
+	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
 }
 
 return restrictRead("Fusion", {
