@@ -5,109 +5,99 @@
 	the New function.
 ]]
 
-local defaultProps: {[string]: {[string]: any}}
+return {
+	ScreenGui = {
+		ResetOnSpawn = false,
+		ZIndexBehavior = "Sibling"
+	},
 
-local ENABLE_SENSIBLE_DEFAULTS = true
+	BillboardGui = {
+		ResetOnSpawn = false,
+		ZIndexBehavior = "Sibling"
+	},
 
-if ENABLE_SENSIBLE_DEFAULTS then
-	defaultProps = {
-		ScreenGui = {
-			ResetOnSpawn = false,
-			ZIndexBehavior = "Sibling"
-		},
+	SurfaceGui = {
+		ResetOnSpawn = false,
+		ZIndexBehavior = "Sibling",
 
-		BillboardGui = {
-			ResetOnSpawn = false,
-			ZIndexBehavior = "Sibling"
-		},
+		SizingMode = "PixelsPerStud",
+		PixelsPerStud = 50
+	},
 
-		SurfaceGui = {
-			ResetOnSpawn = false,
-			ZIndexBehavior = "Sibling",
+	Frame = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0
+	},
 
-			SizingMode = "PixelsPerStud",
-			PixelsPerStud = 50
-		},
+	ScrollingFrame = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
 
-		Frame = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0
-		},
+		ScrollBarImageColor3 = Color3.new(0, 0, 0)
+	},
 
-		ScrollingFrame = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0,
+	TextLabel = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
 
-			ScrollBarImageColor3 = Color3.new(0, 0, 0)
-		},
+		Font = "SourceSans",
+		Text = "",
+		TextColor3 = Color3.new(0, 0, 0),
+		TextSize = 14
+	},
 
-		TextLabel = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0,
+	TextButton = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
 
-			Font = "SourceSans",
-			Text = "",
-			TextColor3 = Color3.new(0, 0, 0),
-			TextSize = 14
-		},
+		AutoButtonColor = false,
 
-		TextButton = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0,
+		Font = "SourceSans",
+		Text = "",
+		TextColor3 = Color3.new(0, 0, 0),
+		TextSize = 14
+	},
 
-			AutoButtonColor = false,
+	TextBox = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
 
-			Font = "SourceSans",
-			Text = "",
-			TextColor3 = Color3.new(0, 0, 0),
-			TextSize = 14
-		},
+		ClearTextOnFocus = false,
 
-		TextBox = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0,
+		Font = "SourceSans",
+		Text = "",
+		TextColor3 = Color3.new(0, 0, 0),
+		TextSize = 14
+	},
 
-			ClearTextOnFocus = false,
+	ImageLabel = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0
+	},
 
-			Font = "SourceSans",
-			Text = "",
-			TextColor3 = Color3.new(0, 0, 0),
-			TextSize = 14
-		},
+	ImageButton = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0,
 
-		ImageLabel = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0
-		},
+		AutoButtonColor = false
+	},
 
-		ImageButton = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0,
+	ViewportFrame = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0
+	},
 
-			AutoButtonColor = false
-		},
-
-		ViewportFrame = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0
-		},
-
-		VideoFrame = {
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderColor3 = Color3.new(0, 0, 0),
-			BorderSizePixel = 0
-		}
+	VideoFrame = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0
 	}
-else
-	defaultProps = {}
-end
-
-return defaultProps
+}
