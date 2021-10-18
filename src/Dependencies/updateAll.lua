@@ -10,6 +10,8 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 
+type Descendant = (Types.Dependent & Types.Dependency) | Types.Dependent
+
 local function updateAll(ancestor: Types.Dependency)
 	--[[
 		First things first, we need to mark all indirect dependents as needing
@@ -18,12 +20,12 @@ local function updateAll(ancestor: Types.Dependency)
 	]]
 
 	-- set of all dependents that still need to be updated
-	local needsUpdateSet: Types.Set<Types.Dependent> = {}
+	local needsUpdateSet: Types.Set<Descendant> = {}
 	-- the dependents to be processed now
-	local processNow: {Types.Dependent} = {}
+	local processNow: {Descendant} = {}
 	local processNowSize = 0
 	-- the dependents of the open set to be processed next
-	local processNext: {Types.Dependent} = {}
+	local processNext: {Descendant} = {}
 	local processNextSize = 0
 
 	-- initialise `processNow` with dependents of ancestor
@@ -42,7 +44,9 @@ local function updateAll(ancestor: Types.Dependency)
 			needsUpdateSet[member] = true
 
 			-- add the dependents of the member for processing
-			if member.dependentSet ~= nil then
+			-- FIXME: Typed Luau doesn't understand this type narrowing yet
+			if (member :: any).dependentSet ~= nil then
+				local member = member :: Types.Dependent & Types.Dependency
 				for dependent in pairs(member.dependentSet) do
 					processNextSize += 1
 					processNext[processNextSize] = dependent
@@ -86,12 +90,17 @@ local function updateAll(ancestor: Types.Dependency)
 			-- add the dependents of the member for processing
 			-- optimisation: if nothing changed, then we don't need to add these
 			-- dependents, because they don't need processing.
-			if didChange and member.dependentSet ~= nil then
+			-- FIXME: Typed Luau doesn't understand this type narrowing yet
+			if didChange and (member :: any).dependentSet ~= nil then
+				local member = member :: Types.Dependent & Types.Dependency
 				for dependent in pairs(member.dependentSet) do
 					-- don't add dependents that have un-updated dependencies
 					local allDependenciesUpdated = true
 					for dependentDependency in pairs(dependent.dependencySet) do
-						if needsUpdateSet[dependentDependency] then
+						-- HACK: keys of needsUpdateSet must be Dependents, so
+						-- since we want to ignore non-Dependents, we just type
+						-- cast here regardless of safety
+						if needsUpdateSet[dependentDependency :: any] then
 							allDependenciesUpdated = false
 							break
 						end
