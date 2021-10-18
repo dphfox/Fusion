@@ -38,7 +38,7 @@ end
 	As long as there is at least one active change listener, this Compat object
 	will be held in memory, preventing GC, so disconnecting is important.
 ]]
-function class:onChange(callback: () -> ())
+function class:onChange(callback: () -> ()): () -> ()
 	self._numChangeListeners += 1
 	self._changeListeners[callback] = true
 
