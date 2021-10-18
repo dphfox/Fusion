@@ -1,7 +1,7 @@
 --!strict
 
 --[[
-	Stores Luau type definitions shared across scripts in Fusion.
+	Stores common public-facing type information for Fusion APIs.
 ]]
 
 --[[
@@ -11,11 +11,10 @@
 -- A set collection - keys are the elements of the set. Values are ignored.
 export type Set<T> = {[T]: any}
 
--- A unique symbolic value - can also store a key for variants.
+-- A unique symbolic value.
 export type Symbol = {
 	type: string, -- replace with "Symbol" when Luau supports singleton types
-	name: string,
-	key: string?
+	name: string
 }
 
 -- Stores useful information about Luau errors.
@@ -111,5 +110,45 @@ export type Compat = Dependent & {
 	-- kind: "Compat" (add this when Luau supports singleton types)
   	onChange: (Compat, callback: () -> ()) -> ()
 }
+
+--[[
+	Property table types
+]]
+
+-- Denotes children instances in an instance or component's property table.
+export type ChildrenKey = Symbol & {
+	-- name: "Children" (add this when Luau supports singleton types)
+}
+
+-- Denotes property change handlers in an instance's property table.
+export type OnChangeKey = Symbol & {
+	-- name: "OnChange" (add this when Luau supports singleton types)
+	key: string
+}
+
+-- Denotes event  handlers in an instance's property table.
+export type OnEventKey = Symbol & {
+	-- name: "OnEvent" (add this when Luau supports singleton types)
+	key: string
+}
+
+-- A collection of instances that may be parented to another instance.
+export type Children = Instance | StateObject<Children> | {[any]: Children}
+
+-- A table that defines an instance's properties, handlers and children.
+-- FUTURE: Typed Luau is not advanced enough to express this type in full
+-- specificity yet, so we have to settle for some runtime type checking here.
+-- In psuedo-Luau, this definition should be akin to the following:
+-- export type PropertyTable<ClassName> = {
+--     [ClassName::Property]: StateOrValue<Property::Value>
+--     [OnEventKey]: (any...) -> (),
+--     [OnChangeKey]: (any) -> (),
+--     [ChildrenKey]: Children
+-- }
+export type PropertyTable = {
+	[string | OnEventKey | OnChangeKey | ChildrenKey]: any
+}
+
+
 
 return nil
