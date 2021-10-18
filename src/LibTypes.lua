@@ -10,7 +10,6 @@
 local Package = script.Parent
 local Types = require(Package.Types)
 
-
 --[[
 	Specific reactive graph types
 ]]
