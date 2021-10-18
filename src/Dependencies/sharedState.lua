@@ -7,11 +7,15 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 
-return {
-	-- The set where used dependencies should be saved to.
-	dependencySet = nil :: Types.Set<Types.Dependency>?,
+-- The set where used dependencies should be saved to.
+local dependencySet: Types.Set<Types.Dependency>? = nil
 
-	-- A stack of sets where newly created dependencies should be stored.
-	initialisedStack = {} :: {Types.Set<Types.Dependency>},
-	initialisedStackSize = 0
+-- A stack of sets where newly created dependencies should be stored.
+local initialisedStack: {Types.Set<Types.Dependency>} = {}
+local initialisedStackSize = 0
+
+return {
+	dependencySet = dependencySet,
+	initialisedStack = initialisedStack,
+	initialisedStackSize = initialisedStackSize
 }
