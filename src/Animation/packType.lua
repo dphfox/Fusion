@@ -9,7 +9,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local Oklab = require(Package.Colour.Oklab)
 
-local function packType(numbers: {number}, typeString: string): Types.Animatable
+local function packType(numbers: {number}, typeString: string): Types.Animatable?
 	if typeString == "number" then
 		return numbers[1]
 
@@ -86,6 +86,8 @@ local function packType(numbers: {number}, typeString: string): Types.Animatable
 
 	elseif typeString == "Vector3int16" then
 		return Vector3int16.new(numbers[1], numbers[2], numbers[3])
+	else
+		return nil
 	end
 end
 

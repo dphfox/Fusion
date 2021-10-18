@@ -5,7 +5,7 @@
 	If the types are different or not animatable, then the first value will be
 	returned for ratios below 0.5, and the second value for 0.5 and above.
 
-	HACK: This function uses a lot of redefinitions to suppress false positives
+	FIXME: This function uses a lot of redefinitions to suppress false positives
 	from the Luau typechecker - ideally these wouldn't be required
 ]]
 
