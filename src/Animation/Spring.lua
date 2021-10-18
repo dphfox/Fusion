@@ -1,3 +1,5 @@
+--!nonstrict
+
 --[[
 	Constructs a new computed state object, which follows the value of another
 	state object using a spring simulation.
@@ -171,8 +173,8 @@ if ENABLE_PARAM_SETTERS then
 
 end
 
-local function Spring(
-	goalState: Types.State<Types.Animatable>,
+local function Spring<T>(
+	goalState: Types.State<T>,
 	speed: Types.StateOrValue<number>?,
 	damping: Types.StateOrValue<number>?
 )
