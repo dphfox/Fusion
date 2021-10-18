@@ -20,6 +20,7 @@ export type Symbol = {
 
 -- Stores useful information about Luau errors.
 export type Error = {
+	type: string, -- replace with "Error" when Luau supports singleton typse
 	raw: string,
 	message: string,
 	trace: string
