@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Stores Luau type definitions shared across scripts in Fusion.
 ]]
