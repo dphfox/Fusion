@@ -79,21 +79,20 @@ local function New(className: string)
 						logError("cannotAssignProperty", nil, className, key)
 					end
 
-					table.insert(cleanupTasks,
-						Compat(value):onChange(function()
-							if ref.instance == nil then
-								if ENABLE_EXPERIMENTAL_GC_MODE then
-									if conn.Connected then
-										warn("ref is nil and instance is around!!!")
-									else
-										print("ref is nil, but instance was destroyed")
-									end
+					local disconnect = Compat(value):onChange(function()
+						if ref.instance == nil then
+							if ENABLE_EXPERIMENTAL_GC_MODE then
+								if conn.Connected then
+									warn("ref is nil and instance is around!!!")
+								else
+									print("ref is nil, but instance was destroyed")
 								end
-								return
 							end
-							Scheduler.enqueueProperty(ref.instance, key, value:get(false))
-						end)
-					)
+							return
+						end
+						Scheduler.enqueueProperty(ref.instance, key, value:get(false))
+					end)
+					table.insert(cleanupTasks, disconnect)
 
 				-- Properties with constant values
 				else

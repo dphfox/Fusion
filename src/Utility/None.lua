@@ -5,9 +5,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local LibTypes = require(Package.LibTypes)
 
 return {
 	type = "Symbol",
 	name = "None"
-} :: PubTypes.None
+} :: LibTypes.None

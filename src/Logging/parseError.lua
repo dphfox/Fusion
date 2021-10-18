@@ -8,9 +8,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local LibTypes = require(Package.LibTypes)
 
-local function parseError(err: string): PubTypes.Error
+local function parseError(err: string): LibTypes.Error
 	return {
 		type = "Error",
 		raw = err,
