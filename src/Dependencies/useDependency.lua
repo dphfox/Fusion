@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	If a target set was specified by captureDependencies(), this will add the
 	given dependency to the target set.
@@ -9,7 +11,7 @@ local sharedState = require(Package.Dependencies.sharedState)
 
 local initialisedStack = sharedState.initialisedStack
 
-local function useDependency(dependency: Types.Dependency<any>)
+local function useDependency(dependency: Types.Dependency)
 	local dependencySet = sharedState.dependencySet
 
 	if dependencySet ~= nil then

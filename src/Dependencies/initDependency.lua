@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Registers the creation of an object which can be used as a dependency.
 
@@ -11,7 +13,7 @@ local sharedState = require(Package.Dependencies.sharedState)
 
 local initialisedStack = sharedState.initialisedStack
 
-local function initDependency(dependency: Types.Dependency<any>)
+local function initDependency(dependency: Types.Dependency)
 	local initialisedStackSize = sharedState.initialisedStackSize
 
 	for index, initialisedSet in ipairs(initialisedStack) do

@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Given a reactive object, updates all dependent reactive objects.
 	Objects are only ever updated after all of their dependencies are updated,
@@ -8,7 +10,7 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 
-local function updateAll(ancestor: Types.Dependency<any>)
+local function updateAll(ancestor: Types.Dependency)
 	--[[
 		First things first, we need to mark all indirect dependents as needing
 		an update. This means we can ignore any dependencies that aren't related
@@ -16,12 +18,12 @@ local function updateAll(ancestor: Types.Dependency<any>)
 	]]
 
 	-- set of all dependents that still need to be updated
-	local needsUpdateSet: Types.Set<Types.Dependent<any>> = {}
+	local needsUpdateSet: Types.Set<Types.Dependent> = {}
 	-- the dependents to be processed now
-	local processNow: {Types.Dependent<any>} = {}
+	local processNow: {Types.Dependent} = {}
 	local processNowSize = 0
 	-- the dependents of the open set to be processed next
-	local processNext: {Types.Dependent<any>} = {}
+	local processNext: {Types.Dependent} = {}
 	local processNextSize = 0
 
 	-- initialise `processNow` with dependents of ancestor
