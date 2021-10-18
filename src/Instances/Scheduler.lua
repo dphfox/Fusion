@@ -40,7 +40,7 @@ end
 --[[
 	Enqueues a callback to be run next render step.
 ]]
-function Scheduler.enqueueCallback(callback: TaskCallback)
+function Scheduler.enqueueCallback(callback: () -> ())
 	willUpdate = true
 	callbacks[callback] = true
 end
@@ -61,7 +61,8 @@ function Scheduler.runTasks()
 			if value == None then
 				value = nil
 			end
-			instance[property] = value
+			-- FIXME: Typed Luau doesn't understand this yet
+			(instance :: any)[property] = value
 		end
 	end
 

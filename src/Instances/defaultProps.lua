@@ -5,10 +5,12 @@
 	the New function.
 ]]
 
+local defaultProps: {[string]: {[string]: any}}
+
 local ENABLE_SENSIBLE_DEFAULTS = true
 
 if ENABLE_SENSIBLE_DEFAULTS then
-	return {
+	defaultProps = {
 		ScreenGui = {
 			ResetOnSpawn = false,
 			ZIndexBehavior = "Sibling"
@@ -105,5 +107,7 @@ if ENABLE_SENSIBLE_DEFAULTS then
 		}
 	}
 else
-	return {}
+	defaultProps = {}
 end
+
+return defaultProps
