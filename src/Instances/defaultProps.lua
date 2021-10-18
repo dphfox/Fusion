@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Stores 'sensible default' properties to be applied to instances created by
 	the New function.

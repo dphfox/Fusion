@@ -17,6 +17,11 @@ export type Symbol = {
 	name: string
 }
 
+-- A symbol that represents the absence of a value.
+export type None = Symbol & {
+	-- name: "None" (add this when Luau supports singleton types)
+}
+
 -- Stores useful information about Luau errors.
 export type Error = {
 	type: string, -- replace with "Error" when Luau supports singleton types

@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Defers and orders UI data binding updates.
 ]]

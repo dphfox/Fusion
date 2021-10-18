@@ -1,3 +1,5 @@
+--!nonstrict
+
 --[[
 	Constructs and returns a new instance, with options for setting properties,
 	event handlers and other attributes on the instance right away.
@@ -18,10 +20,11 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
-local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = setmetatable({}, WEAK_KEYS_METATABLE)
+local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = {}
+setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
 local function New(className: string)
-	return function(propertyTable: {[string | Types.Symbol]: any})
+	return function(propertyTable: Types.PropertyTable): Instance
 		-- things to clean up when the instance is destroyed or gc'd
 		local cleanupTasks = {}
 		-- event handlers to connect
