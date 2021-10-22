@@ -14,7 +14,7 @@ without explicit written consent.
 ## Extrusion
 
 A Fusion logo, with extruded fill lines coming out of the logo. Background is
-#0D0D0F, and so might not be ideal for OLED screens.
+hex colour #0D0D0F, and so might not be ideal for OLED screens.
 
 ![Sample of Extrusion background](samples/Extrusion.jpg)
 
