@@ -44,6 +44,17 @@ function class:set(newValue: any, force: boolean?)
 	updateAll(self)
 end
 
+--[[
+	Sets the value in this State object to the initial value.
+	
+	If `force` is enabled, this will skip equality checks and always update the
+	state object and any dependents - use this with care as this can lead to
+	unnecessary updates.
+]]
+function class:reset(force: boolean?)
+	self:set(self._initialValue, force)
+end
+
 local function State(initialValue: any)
 	local self = setmetatable({
 		type = "State",
@@ -51,7 +62,8 @@ local function State(initialValue: any)
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_value = initialValue
+		_value = initialValue,
+		_initialValue = initialValue
 	}, CLASS_METATABLE)
 
 	initDependency(self)
