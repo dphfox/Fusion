@@ -20,4 +20,15 @@ return function()
 		state:set(State)
 		expect(state:get()).to.equal(State)
 	end)
+
+    it("should be able to reset to it's initial value", function()
+        local initialValue = 10
+        local state = State(initialValue)
+
+        state:set(0)
+        expect(state:get()).never.to.equal(initialValue)
+
+        state:reset()
+        expect(state:get()).to.equal(initialValue)
+    end)
 end

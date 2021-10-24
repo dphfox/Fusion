@@ -45,6 +45,13 @@ state object. However, if they're the same, no update will be performed.
 	for performance reasons. Try a solution involving immutable tables first.
 	Abuse of force updating can lead to suboptimal code that updates redundantly.
 
+### `reset()`
+
+```Lua
+function State:reset(force: boolean?)
+```
+Resets the value of the state to the initial value provided when the state was constructed. This will use the `set()` method and pass along the force parameter, all of the same rules apply.
+
 -----
 
 ## Example Usage
