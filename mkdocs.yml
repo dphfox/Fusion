@@ -64,6 +64,7 @@ nav:
   - Extras:
     - Home: extras/index.md
     - Backgrounds: extras/backgrounds.md
+    - Brand Guidelines: extras/brand-guidelines.md
 
 markdown_extensions:
   - admonition
