@@ -111,11 +111,11 @@ local New = Fusion.New
 local gui = New "ScreenGui" {
 	Parent = Players.LocalPlayer.PlayerGui,
 
-	Name = "MyFirstGui",
-	ResetOnSpawn = false,
-	ZIndexBehavior = "Sibling"
+	Name = "MyFirstGui"
 }
 ```
+
+`ZIndexBehavior` and `ResetOnSpawn` are automatically set to `Sibling` and `false` by Fusion respectively. [You can check other sensible defaults here](https://elttob.github.io/Fusion/api-reference/api/new/#default-properties)
 
 If you press 'Play', you should see that a ScreenGui has appeared in your
 PlayerGui, with all of the properties we've set:
