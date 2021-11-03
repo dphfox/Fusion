@@ -132,13 +132,17 @@ local function updateAllSprings(timeStep: number)
 						isMoving = true
 					end
 
-					positions[index] = newDisplacement + goal
+					positions[index] = isMoving and newDisplacement + goal or goal
 					velocities[index] = newVelocity
 				end
 
 				-- if the spring moved a significant distance, update its
 				-- current value, otherwise stop animating
-				if isMoving then
+				if not spring._finished then
+					if not isMoving then
+						spring._finished = true
+					end
+					
 					spring._currentValue = packType(positions, spring._currentType)
 					updateAll(spring)
 				else

@@ -65,6 +65,8 @@ function class:update()
 
 	else
 		-- goal change - reconfigure spring to target new goal
+		self._finished = false
+
 		local oldType = self._currentType
 		local newType = typeof(goalValue)
 
@@ -204,6 +206,7 @@ local function Spring(
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		_finished = true,
 		_speed = speed,
 		_speedIsState = speedIsState,
 		_lastSpeed = nil,
