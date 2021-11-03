@@ -173,6 +173,22 @@ local spring = Spring(state, speed)
 
 -----
 
+## `mistypedTweenInfo`
+
+```
+The tween info of a tween must be a TweenInfo. (got a boolean)
+```
+
+This message shows if you try to provide a tween info to a [tween](../tween)
+which isn't a TweenInfo:
+
+```Lua
+local tweenInfo = true
+local tween = Tween(state, tweenInfo)
+```
+
+-----
+
 ## `pairsDestructorError`
 
 ```

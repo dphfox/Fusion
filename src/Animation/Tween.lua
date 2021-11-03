@@ -8,6 +8,7 @@ local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
+local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local class = {}
@@ -44,9 +45,10 @@ function class:update()
 		tweenInfo = tweenInfo:get()
 	end
 
+	-- if we receive a bad TweenInfo, then error and stop the update
 	if typeof(tweenInfo) ~= "TweenInfo" then
 		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
-		return
+		return false
 	end
 
 	self._prevValue = self._currentValue
@@ -81,6 +83,10 @@ local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: Types.
 
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
+	end
+
+	if typeof(tweenInfo) ~= "TweenInfo" then
+		logError("mistypedTweenInfo", nil, typeof(tweenInfo))
 	end
 
 	local self = setmetatable({
