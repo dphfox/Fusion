@@ -71,6 +71,7 @@ export type Tween<T> = {
 
 export type Spring<T> = {
 	get: (Spring<T>, asDependency: boolean?) -> any,
+	isFinished: (Spring<T>, asDependency: boolean?) -> boolean,
 	update: (Spring<T>) -> (),
 	-- Uncomment when ENABLE_PARAM_SETTERS is enabled
 	-- setDamping: (Spring<T>, damping: number) -> (),
