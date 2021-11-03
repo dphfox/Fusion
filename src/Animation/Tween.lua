@@ -8,6 +8,7 @@ local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local class = {}
 
@@ -38,17 +39,27 @@ function class:update()
 		return
 	end
 
+	local tweenInfo = self._tweenInfo
+	if self._tweenInfoIsState then
+		tweenInfo = tweenInfo:get()
+	end
+
+	if typeof(tweenInfo) ~= "TweenInfo" then
+		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
+		return
+	end
+
 	self._prevValue = self._currentValue
 	self._nextValue = goalValue
 
 	self._currentTweenStartTime = os.clock()
-	self._currentTweenInfo = self._tweenInfo
+	self._currentTweenInfo = tweenInfo
 
-	local tweenDuration = self._tweenInfo.DelayTime + self._tweenInfo.Time
-	if self._tweenInfo.Reverses then
-		tweenDuration += self._tweenInfo.Time
+	local tweenDuration = tweenInfo.DelayTime + tweenInfo.Time
+	if tweenInfo.Reverses then
+		tweenDuration += tweenInfo.Time
 	end
-	tweenDuration *= math.max(self._tweenInfo.RepeatCount, 1)
+	tweenDuration *= math.max(tweenInfo.RepeatCount, 1)
 	self._currentTweenDuration = tweenDuration
 
 	-- start animating this tween
@@ -60,15 +71,28 @@ end
 local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: Types.StateOrValue<TweenInfo>?)
 	local currentValue = goalState:get(false)
 
+	-- apply defaults for tween info
+	if tweenInfo == nil then
+		tweenInfo = TweenInfo.new()
+	end
+	
+	local dependencySet = {[goalState] = true}
+	local tweenInfoIsState = typeof(tweenInfo) == "table" and tweenInfo.type == "State"
+
+	if tweenInfoIsState then
+		dependencySet[tweenInfo] = true
+	end
+
 	local self = setmetatable({
 		type = "State",
 		kind = "Tween",
-		dependencySet = {[goalState] = true},
+		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_goalState = goalState,
-		_tweenInfo = tweenInfo or TweenInfo.new(),
+		_tweenInfo = tweenInfo,
+		_tweenInfoIsState = tweenInfoIsState
 
 		_prevValue = currentValue,
 		_nextValue = currentValue,
