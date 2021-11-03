@@ -31,6 +31,17 @@ function class:get(asDependency: boolean?)
 end
 
 --[[
+	Returns the current _finished state of the Spring object.
+	The object will be registered as a dependency unless `asDependency` is false.
+]]
+function class:isFinished(asDependency: boolean?)
+	if asDependency ~= false then
+		useDependency(self)
+	end
+	return self._finished
+end
+
+--[[
 	Called when the goal state changes value, or when the speed or damping has
 	changed.
 
