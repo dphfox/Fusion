@@ -30,8 +30,16 @@ end
 	Returns false as the current value doesn't change right away.
 ]]
 function class:update()
+	local goalValue = self._goalState:get(false)
+
+	-- if the goal hasn't changed, then this is a TweenInfo change.
+	-- in that case, if we're not currently animating, we can skip everything
+	if goalValue == self._nextValue and not self._currentlyAnimating then
+		return
+	end
+
 	self._prevValue = self._currentValue
-	self._nextValue = self._goalState:get(false)
+	self._nextValue = goalValue
 
 	self._currentTweenStartTime = os.clock()
 	self._currentTweenInfo = self._tweenInfo
@@ -45,6 +53,7 @@ function class:update()
 
 	-- start animating this tween
 	TweenScheduler.add(self)
+
 	return false
 end
 
@@ -69,7 +78,8 @@ local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: Types.
 		-- isn't affected by :setTweenInfo() until next change
 		_currentTweenInfo = tweenInfo,
 		_currentTweenDuration = 0,
-		_currentTweenStartTime = 0
+		_currentTweenStartTime = 0,
+		_currentlyAnimating = false
 	}, CLASS_METATABLE)
 
 	initDependency(self)
