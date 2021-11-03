@@ -12,3 +12,9 @@ Deliver a fast, smooth experience to everyone - on mobile, console, PC or in VR.
 <p align="center">
 <a href="https://elttob.github.io/Fusion/">Go to the Fusion website →</a>
 </p>
+
+-----
+
+## Contributing
+
+Please read [our contribution policies](/CONTRIBUTING.md) before opening an issue or pull request.
