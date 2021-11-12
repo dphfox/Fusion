@@ -11,7 +11,7 @@ local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
 local Scheduler = require(Package.Instances.Scheduler)
 local defaultProps = require(Package.Instances.defaultProps)
-local Compat = require(Package.State.Compat)
+local Observer = require(Package.State.Observer)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 
@@ -79,7 +79,7 @@ local function New(className: string)
 						logError("cannotAssignProperty", nil, className, key)
 					end
 
-					local disconnect = Compat(value):onChange(function()
+					local disconnect = Observer(value):onChange(function()
 						if ref.instance == nil then
 							if ENABLE_EXPERIMENTAL_GC_MODE then
 								if conn.Connected then
@@ -222,7 +222,7 @@ local function New(className: string)
 								-- FUTURE: does this need to be cleaned up when
 								-- the instance is destroyed at any point?
 								-- If so, how?
-								currentConnections[child] = Compat(child):onChange(function()
+								currentConnections[child] = Observer(child):onChange(function()
 									Scheduler.enqueueCallback(updateCurrentlyParented)
 								end)
 							end
@@ -278,7 +278,7 @@ local function New(className: string)
 				end
 
 				table.insert(cleanupTasks,
-					Compat(parent):onChange(function()
+					Observer(parent):onChange(function()
 						if ref.instance == nil then
 							if ENABLE_EXPERIMENTAL_GC_MODE then
 								if conn.Connected then
