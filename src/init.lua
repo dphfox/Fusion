@@ -13,7 +13,7 @@ export type Symbol = PubTypes.Symbol
 export type State<T> = PubTypes.State<T>
 export type Computed<T> = PubTypes.Computed<T>
 export type ComputedPairs<K, V> = PubTypes.ComputedPairs<K, V>
-export type Compat = PubTypes.Compat
+export type Observer = PubTypes.Observer
 export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 
@@ -26,7 +26,7 @@ type Fusion = {
 	State: <T>(initialValue: T) -> State<T>,
 	Computed: <T>(callback: () -> T) -> Computed<T>,
 	ComputedPairs: <K, VI, VO>(inputTable: StateOrValue<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
-	Compat: (watchedState: StateObject<any>) -> Compat,
+	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
@@ -41,7 +41,7 @@ return restrictRead("Fusion", {
 	State = require(script.State.State),
 	Computed = require(script.State.Computed),
 	ComputedPairs = require(script.State.ComputedPairs),
-	Compat = require(script.State.Compat),
+	Observer = require(script.State.Observer),
 
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring)

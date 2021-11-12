@@ -14,7 +14,7 @@ return function()
 			State = "function",
 			Computed = "function",
 			ComputedPairs = "function",
-			Compat = "function",
+			Observer = "function",
 
 			Tween = "function",
 			Spring = "function"
