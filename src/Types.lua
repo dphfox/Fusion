@@ -1,83 +1,101 @@
+--!strict
+
 --[[
-	Stores Luau type definitions shared across scripts in Fusion.
+	Stores common type information used internally.
+
+	These types may be used internally so Fusion code can type-check, but
+	should never be exposed to public users, as these definitions are fair game
+	for breaking changes.
 ]]
 
-export type Set<T> = {[T]: any}
+local Package = script.Parent
+local PubTypes = require(Package.PubTypes)
 
-export type State<T> = {
-  get: (State<T>, asDependency: boolean?) -> T,
-  set: (State<T>, newValue: any, force: boolean?) -> ()
+type Set<T> = {[T]: any}
+
+--[[
+	General use types
+]]
+
+-- A symbol that represents the absence of a value.
+export type None = PubTypes.Symbol & {
+	-- name: "None" (add this when Luau supports singleton types)
 }
 
-export type StateOrValue<T> = State<T> | T
-
-export type Computed<T> = {
-  get: (Computed<T>, asDependency: boolean?) -> T,
-  update: (Computed<T>) -> boolean
-}
-
-export type Compat = {
-  update: (Compat) -> boolean,
-  onChange: (Compat, callback: () -> ()) -> ()
-}
-
-export type Symbol = {
-	type: string,
-	name: string,
-	key: string?
-}
-
+-- Stores useful information about Luau errors.
 export type Error = {
+	type: string, -- replace with "Error" when Luau supports singleton types
 	raw: string,
 	message: string,
 	trace: string
 }
 
-export type Dependency<T> = State<T> & {
-	dependentSet: Set<Dependent<any>>
+--[[
+	Specific reactive graph types
+]]
+
+-- A state object whose value can be set at any time by the user.
+export type State<T> = PubTypes.State<T> & {
+	_value: T
 }
 
-export type Dependent<T> = State<T> & {
-	update: (Dependent<T>) -> boolean,
-	dependencySet: Set<Dependency<any>>
+-- A state object whose value is derived from other objects using a callback.
+export type Computed<T> = PubTypes.Computed<T> & {
+	_oldDependencySet: Set<PubTypes.Dependency>,
+	_callback: () -> T,
+	_value: T
 }
 
-export type Animatable =
-	number |
-	CFrame |
-	Color3 |
-	ColorSequenceKeypoint |
-	DateTime |
-	NumberRange |
-	NumberSequenceKeypoint |
-	PhysicalProperties |
-	Ray |
-	Rect |
-	Region3 |
-	Region3int16 |
-	UDim |
-	UDim2 |
-	Vector2 |
-	Vector2int16 |
-	Vector3 |
-	Vector3int16
-
-export type Tween<T> = {
-	get: (Tween<T>, asDependency: boolean?) -> State<T>,
-	update: (Tween<T>) -> (),
-	-- Uncomment when ENABLE_PARAM_SETTERS is enabled
-	-- setTweenInfo: (Tween<T>, newTweenInfo: TweenInfo) -> ()
+-- A state object whose value is derived from other objects using a callback.
+export type ComputedPairs<K, VI, VO> = PubTypes.ComputedPairs<K, VO> & {
+	_oldDependencySet: Set<PubTypes.Dependency>,
+	_processor: (K, VI) -> VO,
+	_destructor: (VO) -> (),
+	_inputIsState: boolean,
+	_inputTable: PubTypes.StateOrValue<{[K]: VI}>,
+	_oldInputTable: {[K]: VI},
+	_outputTable: {[K]: VO},
+	_oldOutputTable: {[K]: VO},
+	_keyData: {[K]: {
+		dependencySet: Set<PubTypes.Dependency>,
+		oldDependencySet: Set<PubTypes.Dependency>,
+		dependencyValues: {[PubTypes.Dependency]: any}
+	}}
 }
 
-export type Spring<T> = {
-	get: (Spring<T>, asDependency: boolean?) -> any,
-	update: (Spring<T>) -> (),
-	-- Uncomment when ENABLE_PARAM_SETTERS is enabled
-	-- setDamping: (Spring<T>, damping: number) -> (),
-	-- setSpeed: (Spring<T>, speed: number) -> (),
-	-- setPosition: (Spring<T>, newValue: Animatable) -> (),
-	-- setVelocity: (Spring<T>, newValue: Animatable) -> (),
-	-- addVelocity: (Spring<T>, deltaValue: Animatable) -> ()
+-- A state object which follows another state object using tweens.
+export type Tween<T> = PubTypes.Tween<T> & {
+	_goalState: State<T>,
+	_tweenInfo: TweenInfo,
+	_prevValue: T,
+	_nextValue: T,
+	_currentValue: T,
+	_currentTweenInfo: TweenInfo,
+	_currentTweenDuration: number,
+	_currentTweenStartTime: number
+}
+
+-- A state object which follows another state object using spring simulation.
+export type Spring<T> = PubTypes.Spring<T> & {
+	_speed: PubTypes.StateOrValue<number>,
+	_speedIsState: boolean,
+	_lastSpeed: number,
+	_damping: PubTypes.StateOrValue<number>,
+	_dampingIsState: boolean,
+	_lastDamping: number,
+	_goalState: State<T>,
+	_goalValue: T,
+	_currentType: string,
+	_currentValue: T,
+	_springPositions: {number},
+	_springGoals: {number},
+	_springVelocities: {number}
+}
+
+-- An object which can listen for updates on another state object.
+export type Compat = PubTypes.Compat & {
+	_changeListeners: Set<() -> ()>,
+	_numChangeListeners: number
 }
 
 return nil

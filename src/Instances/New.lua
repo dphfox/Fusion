@@ -1,10 +1,12 @@
+--!nonstrict
+
 --[[
 	Constructs and returns a new instance, with options for setting properties,
 	event handlers and other attributes on the instance right away.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
 local Scheduler = require(Package.Instances.Scheduler)
@@ -18,10 +20,11 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
-local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = setmetatable({}, WEAK_KEYS_METATABLE)
+local overrideParents: {[Instance]: PubTypes.StateOrValue<Instance>} = {}
+setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
 local function New(className: string)
-	return function(propertyTable: {[string | Types.Symbol]: any})
+	return function(propertyTable: PubTypes.PropertyTable): Instance
 		-- things to clean up when the instance is destroyed or gc'd
 		local cleanupTasks = {}
 		-- event handlers to connect
@@ -76,21 +79,20 @@ local function New(className: string)
 						logError("cannotAssignProperty", nil, className, key)
 					end
 
-					table.insert(cleanupTasks,
-						Compat(value):onChange(function()
-							if ref.instance == nil then
-								if ENABLE_EXPERIMENTAL_GC_MODE then
-									if conn.Connected then
-										warn("ref is nil and instance is around!!!")
-									else
-										print("ref is nil, but instance was destroyed")
-									end
+					local disconnect = Compat(value):onChange(function()
+						if ref.instance == nil then
+							if ENABLE_EXPERIMENTAL_GC_MODE then
+								if conn.Connected then
+									warn("ref is nil and instance is around!!!")
+								else
+									print("ref is nil, but instance was destroyed")
 								end
-								return
 							end
-							Scheduler.enqueueProperty(ref.instance, key, value:get(false))
-						end)
-					)
+							return
+						end
+						Scheduler.enqueueProperty(ref.instance, key, value:get(false))
+					end)
+					table.insert(cleanupTasks, disconnect)
 
 				-- Properties with constant values
 				else

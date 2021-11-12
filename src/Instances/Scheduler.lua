@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Defers and orders UI data binding updates.
 ]]
@@ -5,14 +7,15 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
 local None = require(Package.Utility.None)
+
+type Set<T> = {[T]: any}
 
 local Scheduler = {}
 
 local willUpdate = false
 local propertyChanges: {[Instance]: {[string]: any}} = {}
-local callbacks: Types.Set<() -> ()> = {}
+local callbacks: Set<() -> ()> = {}
 
 --[[
 	Enqueues an instance property to be updated next render step.
@@ -38,7 +41,7 @@ end
 --[[
 	Enqueues a callback to be run next render step.
 ]]
-function Scheduler.enqueueCallback(callback: TaskCallback)
+function Scheduler.enqueueCallback(callback: () -> ())
 	willUpdate = true
 	callbacks[callback] = true
 end
@@ -59,7 +62,8 @@ function Scheduler.runTasks()
 			if value == None then
 				value = nil
 			end
-			instance[property] = value
+			-- FIXME: Typed Luau doesn't understand this yet
+			(instance :: any)[property] = value
 		end
 	end
 

@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Cleans up the task passed in as the argument.
 	A task can be any of the following:
@@ -17,7 +19,7 @@ export type Task =
 	{Destroy: (any) -> ()} |
 	{Task}
 
-local function cleanup(task: Task)
+local function cleanup(task: any)
 	local taskType = typeof(task)
 
 	-- case 1: Instance

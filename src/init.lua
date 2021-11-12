@@ -1,31 +1,35 @@
+--!strict
+
 --[[
 	The entry point for the Fusion library.
 ]]
 
-local Types = require(script.Types)
+local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
 
-export type State<T> = Types.State<T>
-export type StateOrValue<T> = Types.StateOrValue<T>
-export type Symbol = Types.Symbol
-export type Computed<T> = Types.Computed<T>
-export type Compat = Types.Compat
-export type Tween<T> = Types.Tween<T>
-export type Spring<T> = Types.Spring<T>
+export type StateObject<T> = PubTypes.StateObject<T>
+export type StateOrValue<T> = PubTypes.StateOrValue<T>
+export type Symbol = PubTypes.Symbol
+export type State<T> = PubTypes.State<T>
+export type Computed<T> = PubTypes.Computed<T>
+export type ComputedPairs<K, V> = PubTypes.ComputedPairs<K, V>
+export type Compat = PubTypes.Compat
+export type Tween<T> = PubTypes.Tween<T>
+export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
-  New: (className: string) -> ((propertyTable: {[string | Types.Symbol]: any}) -> Instance | nil),
-  Children: Types.Symbol,
-  OnEvent: (eventName: string) -> Types.Symbol,
-  OnChange: (propertyName: string) -> Types.Symbol,
+	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	Children: PubTypes.ChildrenKey,
+	OnEvent: (eventName: string) -> PubTypes.OnEventKey,
+	OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
 
-  State: (initialValue: any) -> State<any>,
-  Computed: (callback: () -> any) -> Computed<any>,
-  ComputedPairs: (inputTable: Types.StateOrValue<{[any]: any}>, processor: (any) -> any, destructor: (any) -> ()?) -> Computed<any>,
-  Compat: (watchedState: Types.State<any>) -> Compat,
+	State: <T>(initialValue: T) -> State<T>,
+	Computed: <T>(callback: () -> T) -> Computed<T>,
+	ComputedPairs: <K, VI, VO>(inputTable: StateOrValue<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
+	Compat: (watchedState: StateObject<any>) -> Compat,
 
-  Tween: (goalState: Types.State<Types.Animatable>, tweenInfo: TweenInfo?) -> Tween<any>,
-  Spring: (goalState: Types.State<Types.Animatable>, speed: number?, damping: number?) -> Spring<any>
+	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
+	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
 }
 
 return restrictRead("Fusion", {

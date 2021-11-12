@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Returns a 2x2 matrix of coefficients for a given damping ratio, speed and
 	time step. These coefficients can then be multiplied with the position and

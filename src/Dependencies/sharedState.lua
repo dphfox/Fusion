@@ -1,24 +1,23 @@
+--!strict
+
 --[[
 	Stores shared state for dependency management functions.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 
-type SharedState = {
-	dependencySet: Types.Set<Types.Dependency<any>>?,
+type Set<T> = {[T]: any}
 
-	initialisedStack: {Types.Set<Types.Dependency<any>>},
-	initialisedStackSize: number
+-- The set where used dependencies should be saved to.
+local dependencySet: Set<PubTypes.Dependency>? = nil
+
+-- A stack of sets where newly created dependencies should be stored.
+local initialisedStack: {Set<PubTypes.Dependency>} = {}
+local initialisedStackSize = 0
+
+return {
+	dependencySet = dependencySet,
+	initialisedStack = initialisedStack,
+	initialisedStackSize = initialisedStackSize
 }
-
-local sharedState: SharedState = {
-	-- The set where used dependencies should be saved to.
-	dependencySet = nil,
-
-	-- A stack of sets where newly created dependencies should be stored.
-	initialisedStack = {},
-	initialisedStackSize = 0
-}
-
-return sharedState
