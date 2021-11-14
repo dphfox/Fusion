@@ -182,7 +182,7 @@ function class:update(): boolean
 end
 
 local function ComputedPairs<K, VI, VO>(
-	inputTable: PubTypes.StateOrValue<{[K]: VI}>,
+	inputTable: PubTypes.CanBeState<{[K]: VI}>,
 	processor: (K, VI) -> VO,
 	destructor: (VO) -> ()?
 ): Types.ComputedPairs<K, VI, VO>

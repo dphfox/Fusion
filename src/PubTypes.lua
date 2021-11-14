@@ -60,7 +60,7 @@ export type StateObject<T> = Dependency & {
 }
 
 -- Either a constant value of type T, or a state object containing type T.
-export type StateOrValue<T> = StateObject<T> | T
+export type CanBeState<T> = StateObject<T> | T
 
 --[[
 	Specific reactive graph types
@@ -131,7 +131,7 @@ export type Children = Instance | StateObject<Children> | {[any]: Children}
 -- specificity yet, so we have to settle for some runtime type checking here.
 -- In psuedo-Luau, this definition should be akin to the following:
 -- export type PropertyTable<ClassName> = {
---     [ClassName::Property]: StateOrValue<Property::Value>
+--     [ClassName::Property]: CanBeState<Property::Value>
 --     [OnEventKey]: (any...) -> (),
 --     [OnChangeKey]: (any) -> (),
 --     [ChildrenKey]: Children

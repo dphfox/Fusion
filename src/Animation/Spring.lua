@@ -176,8 +176,8 @@ end
 
 local function Spring<T>(
 	goalState: PubTypes.State<T>,
-	speed: PubTypes.StateOrValue<number>?,
-	damping: PubTypes.StateOrValue<number>?
+	speed: PubTypes.CanBeState<number>?,
+	damping: PubTypes.CanBeState<number>?
 ): Types.Spring<T>
 	-- apply defaults for speed and damping
 	if speed == nil then

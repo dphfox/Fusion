@@ -52,7 +52,7 @@ export type ComputedPairs<K, VI, VO> = PubTypes.ComputedPairs<K, VO> & {
 	_processor: (K, VI) -> VO,
 	_destructor: (VO) -> (),
 	_inputIsState: boolean,
-	_inputTable: PubTypes.StateOrValue<{[K]: VI}>,
+	_inputTable: PubTypes.CanBeState<{[K]: VI}>,
 	_oldInputTable: {[K]: VI},
 	_outputTable: {[K]: VO},
 	_oldOutputTable: {[K]: VO},
@@ -77,10 +77,10 @@ export type Tween<T> = PubTypes.Tween<T> & {
 
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = PubTypes.Spring<T> & {
-	_speed: PubTypes.StateOrValue<number>,
+	_speed: PubTypes.CanBeState<number>,
 	_speedIsState: boolean,
 	_lastSpeed: number,
-	_damping: PubTypes.StateOrValue<number>,
+	_damping: PubTypes.CanBeState<number>,
 	_dampingIsState: boolean,
 	_lastDamping: number,
 	_goalState: State<T>,

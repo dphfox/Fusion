@@ -8,7 +8,7 @@ local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
 
 export type StateObject<T> = PubTypes.StateObject<T>
-export type StateOrValue<T> = PubTypes.StateOrValue<T>
+export type CanBeState<T> = PubTypes.CanBeState<T>
 export type Symbol = PubTypes.Symbol
 export type State<T> = PubTypes.State<T>
 export type Computed<T> = PubTypes.Computed<T>
@@ -25,7 +25,7 @@ type Fusion = {
 
 	State: <T>(initialValue: T) -> State<T>,
 	Computed: <T>(callback: () -> T) -> Computed<T>,
-	ComputedPairs: <K, VI, VO>(inputTable: StateOrValue<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
+	ComputedPairs: <K, VI, VO>(inputTable: CanBeState<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,

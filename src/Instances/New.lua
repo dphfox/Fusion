@@ -20,7 +20,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
-local overrideParents: {[Instance]: PubTypes.StateOrValue<Instance>} = {}
+local overrideParents: {[Instance]: PubTypes.CanBeState<Instance>} = {}
 setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
 local function New(className: string)
