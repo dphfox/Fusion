@@ -38,7 +38,7 @@ return restrictRead("Fusion", {
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
 
-	State = require(script.State.State),
+	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
 	ComputedPairs = require(script.State.ComputedPairs),
 	Observer = require(script.State.Observer),
