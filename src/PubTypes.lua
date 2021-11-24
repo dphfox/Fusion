@@ -67,9 +67,9 @@ export type CanBeState<T> = StateObject<T> | T
 ]]
 
 -- A state object whose value can be set at any time by the user.
-export type State<T> = StateObject<T> & {
+export type Value<T> = StateObject<T> & {
 	-- kind: "State" (add this when Luau supports singleton types)
- 	set: (State<T>, newValue: any, force: boolean?) -> ()
+ 	set: (Value<T>, newValue: any, force: boolean?) -> ()
 }
 
 -- A state object whose value is derived from other objects using a callback.

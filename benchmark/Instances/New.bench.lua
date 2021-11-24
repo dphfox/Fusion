@@ -3,7 +3,7 @@ local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local OnEvent = require(Package.Instances.OnEvent)
 local OnChange = require(Package.Instances.OnChange)
-local State = require(Package.State.State)
+local Value = require(Package.State.Value)
 
 local function callback()
 
@@ -37,7 +37,7 @@ return {
 
 		run = function()
 			New "Frame" {
-				Name = State("Foo")
+				Name = Value("Foo")
 			}
 		end
 	},
@@ -49,7 +49,7 @@ return {
 		preRun = function()
 		end,
 
-		run = function(parent)
+		run = function()
 			New "Folder" {
 				Parent = Instance.new("Folder")
 			}
@@ -66,7 +66,7 @@ return {
 
 		run = function(parent)
 			New "Folder" {
-				Parent = State(parent)
+				Parent = Value(parent)
 			}
 		end,
 
@@ -117,7 +117,7 @@ return {
 
 		run = function(child)
 			New "Frame" {
-				[Children] = State(child)
+				[Children] = Value(child)
 			}
 		end
 	},

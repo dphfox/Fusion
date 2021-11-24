@@ -47,7 +47,7 @@ function class:set(newValue: any, force: boolean?)
 	updateAll(self)
 end
 
-local function State<T>(initialValue: T): Types.State<T>
+local function Value<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "State",
@@ -62,4 +62,4 @@ local function State<T>(initialValue: T): Types.State<T>
 	return self
 end
 
-return State
+return Value

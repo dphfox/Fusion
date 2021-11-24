@@ -52,7 +52,7 @@ function class:update(): boolean
 end
 
 local function Tween<T>(
-	goalState: PubTypes.State<T>,
+	goalState: PubTypes.Value<T>,
 	tweenInfo: TweenInfo?
 ): Types.Tween<T>
 

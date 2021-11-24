@@ -6,7 +6,7 @@ local Children = require(Package.Instances.Children)
 local OnEvent = require(Package.Instances.OnEvent)
 local OnChange = require(Package.Instances.OnChange)
 
-local State = require(Package.State.State)
+local Value = require(Package.State.Value)
 local Computed = require(Package.State.Computed)
 
 local function waitForDefer()
@@ -241,7 +241,7 @@ return function()
 	end)
 
 	it("should bind State objects passed as properties", function()
-		local name = State("Foo")
+		local name = Value("Foo")
 		local ins = New "Folder" {
 			Name = name
 		}
@@ -254,7 +254,7 @@ return function()
 	end)
 
 	it("should bind Computed objects passed as properties", function()
-		local name = State("Foo")
+		local name = Value("Foo")
 		local ins = New "Folder" {
 			Name = Computed(function()
 				return "The" .. name:get()
@@ -269,7 +269,7 @@ return function()
 	end)
 
 	it("should defer bound state updates", function()
-		local name = State("Foo")
+		local name = Value("Foo")
 		local ins = New "Folder" {
 			Name = name
 		}
@@ -303,7 +303,7 @@ return function()
 		local parent1 = New "Folder" {}
 		local parent2 = New "Folder" {}
 
-		local parent = State(parent1)
+		local parent = Value(parent1)
 
 		local child = New "Folder" {
 			Parent = parent
@@ -325,7 +325,7 @@ return function()
 		local child3 = New "Folder" {}
 		local child4 = New "Folder" {}
 
-		local children = State({child1})
+		local children = Value({child1})
 
 		local parent = New "Folder" {
 			[Children] = {
@@ -357,7 +357,7 @@ return function()
 		local child1 = New "Folder" {}
 		local child2 = New "Folder" {}
 
-		local children = State(child1)
+		local children = Value(child1)
 
 		local parent = New "Folder" {
 			[Children] = {
@@ -384,12 +384,12 @@ return function()
 		local child3 = New "Folder" {}
 		local child4 = New "Folder" {}
 
-		local children = State({
+		local children = Value({
 			child1,
-			State(child2),
-			State({
+			Value(child2),
+			Value({
 				child3,
-				State(State(child4))
+				Value(Value(child4))
 			})
 		})
 
@@ -408,7 +408,7 @@ return function()
 	it("should allow for State children to be nil", function()
 		local child = New "Folder" {}
 
-		local children = State(nil)
+		local children = Value(nil)
 
 		local parent = New "Folder" {
 			[Children] = {

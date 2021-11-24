@@ -35,7 +35,7 @@ export type Error = {
 ]]
 
 -- A state object whose value can be set at any time by the user.
-export type State<T> = PubTypes.State<T> & {
+export type State<T> = PubTypes.Value<T> & {
 	_value: T
 }
 

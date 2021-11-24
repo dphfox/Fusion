@@ -175,7 +175,7 @@ if ENABLE_PARAM_SETTERS then
 end
 
 local function Spring<T>(
-	goalState: PubTypes.State<T>,
+	goalState: PubTypes.Value<T>,
 	speed: PubTypes.CanBeState<number>?,
 	damping: PubTypes.CanBeState<number>?
 ): Types.Spring<T>
