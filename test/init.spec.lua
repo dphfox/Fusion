@@ -11,7 +11,7 @@ return function()
 			OnEvent = "function",
 			OnChange = "function",
 
-			State = "function",
+			Value = "function",
 			Computed = "function",
 			ComputedPairs = "function",
 			Observer = "function",

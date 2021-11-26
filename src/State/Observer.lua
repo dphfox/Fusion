@@ -61,7 +61,7 @@ function class:onChange(callback: () -> ()): () -> ()
 	end
 end
 
-local function Observer(watchedState: PubTypes.State<any>): Types.Observer
+local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 	local self = setmetatable({
 		type = "State",
 		kind = "Observer",

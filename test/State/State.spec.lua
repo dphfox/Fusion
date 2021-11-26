@@ -1,9 +1,9 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local State = require(Package.State.State)
+local Value = require(Package.State.Value)
 
 return function()
 	it("should construct a State object", function()
-		local state = State()
+		local state = Value()
 
 		expect(state).to.be.a("table")
 		expect(state.type).to.equal("State")
@@ -11,13 +11,13 @@ return function()
 	end)
 
 	it("should be able to store arbitrary values", function()
-		local state = State(0)
+		local state = Value(0)
 		expect(state:get()).to.equal(0)
 
 		state:set(10)
 		expect(state:get()).to.equal(10)
 
-		state:set(State)
-		expect(state:get()).to.equal(State)
+		state:set(Value)
+		expect(state:get()).to.equal(Value)
 	end)
 end
