@@ -10,6 +10,7 @@ We love contributions and suggestions from you guys! To make sure everything goe
 Don't open an issue to ask a question - see our
 <a href="https://elttob.github.io/Fusion/tutorials/#where-to-get-help">Get Started page</a>
 to find places to get help! Our communities are always happy to help out new people 🙂
+<hr>
 </details>
 
 <!----------------------------------------------------------------------------->
@@ -19,6 +20,7 @@ to find places to get help! Our communities are always happy to help out new peo
 <br>
 Please use our [vulnerability reporting process](./SECURITY.md). Do not openly
 disclose sensitive bugs, issues or vulnerabilities - this is dangerous!
+<hr>
 </details>
 
 <!----------------------------------------------------------------------------->
@@ -76,6 +78,7 @@ some time to respond.</li>
 <li>Don't bump or chase up your issue - commenting 'Any updates on this?' does
 not add value to the conversation, and only clutters the issue.</li>
 </ul>
+<hr>
 </details>
 
 <!----------------------------------------------------------------------------->
@@ -192,6 +195,7 @@ maintainers and users, and often more performant.
 like relying on it, it's sometimes a necessary evil for the benefit of the
 developer)
 </details>
+<hr>
 </details>
 
 <!----------------------------------------------------------------------------->
@@ -259,4 +263,5 @@ or proposed at the wrong time.</li>
 be merged into the main Fusion codebase at a later time.</li>
 </ul>
 </details>
+<hr>
 </details>
