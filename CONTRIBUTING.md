@@ -5,7 +5,8 @@ We love contributions and suggestions from you guys! To make sure everything goe
 <!----------------------------------------------------------------------------->
 
 <details>
-<summary><u>I have a question, or am stuck and need help using Fusion</u></summary>
+<summary>I have a question, or am stuck and need help using Fusion</summary>
+<br>
 Don't open an issue to ask a question - see our
 <a href="https://elttob.github.io/Fusion/tutorials/#where-to-get-help">Get Started page</a>
 to find places to get help! Our communities are always happy to help out new people 🙂
@@ -14,14 +15,16 @@ to find places to get help! Our communities are always happy to help out new peo
 <!----------------------------------------------------------------------------->
 
 <details>
-<summary><u>I found a security vulnerability or other sensitive issue</u></summary>
+<summary>I found a security vulnerability or other sensitive issue</summary>
+<br>
 Please use our [vulnerability reporting process](./SECURITY.md). Do not openly
 disclose sensitive bugs, issues or vulnerabilities - this is dangerous!
 </details>
 
 <!----------------------------------------------------------------------------->
 <details>
-<summary><u>I found a non-security bug or issue</u></summary>
+<summary>I found a non-security bug or issue</summary>
+<br>
 Here's our bug reporting process - you can click any step
 for more info:
 
@@ -78,7 +81,8 @@ not add value to the conversation, and only clutters the issue.</li>
 <!----------------------------------------------------------------------------->
 
 <details>
-<summary><u>I have an idea, suggestion or feature request</u></summary>
+<summary>I have an idea, suggestion or feature request</summary>
+<br>
 Here's our feature request process - you can click any step for more info:
 
 <details>
@@ -193,7 +197,8 @@ developer)
 <!----------------------------------------------------------------------------->
 
 <details>
-<summary><u>I want to make a code modification or open a pull request</u></summary>
+<summary>I want to make a code modification or open a pull request</summary>
+<br>
 
 While we do accept community pull requests, please observe that Fusion has a
 very high bar for code and API quality. We're used by a lot of important people
