@@ -29,7 +29,7 @@ disclose sensitive bugs, issues or vulnerabilities - this is dangerous!
 <br>
 Here's our bug reporting process - you can click any step
 for more info:
-
+<br>
 <details>
 <summary>Check - are you the first person to report it?</summary>
 <ul>
@@ -87,7 +87,7 @@ not add value to the conversation, and only clutters the issue.</li>
 <summary>I have an idea, suggestion or feature request</summary>
 <br>
 Here's our feature request process - you can click any step for more info:
-
+<br>
 <details>
 <summary>Check - are you the first person to suggest it?</summary>
 <ul>
@@ -133,7 +133,7 @@ of how it should look and function in Fusion.</li>
 
 New features are hard to get right! To help you design your feature request, we
 have some tips you could consider:
-
+<br>
 <details>
 <summary>Design for declarative coding</summary>
 Fusion is designed around <i>declarative code</i>; an end user of Fusion should
@@ -170,7 +170,7 @@ it's at the expense of some ease of writing.
 <hr>
 
 We also have some guidelines for what kind of features we tend to reject:
-
+<br>
 <details>
 <summary>Overly specific features</summary>
 Fusion works best as a flexible, general base that people can build their own
