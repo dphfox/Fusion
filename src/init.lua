@@ -14,6 +14,7 @@ export type State<T> = PubTypes.State<T>
 export type Computed<T> = PubTypes.Computed<T>
 export type ComputedPairs<K, V> = PubTypes.ComputedPairs<K, V>
 export type Observer = PubTypes.Observer
+export type Delay<T> = PubTypes.Delay<T>
 export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 
@@ -27,6 +28,7 @@ type Fusion = {
 	Computed: <T>(callback: () -> T) -> Computed<T>,
 	ComputedPairs: <K, VI, VO>(inputTable: CanBeState<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
+  Delay: <T>(valueState: StateObject<T>, delayDuration: CanBeState<number>) -> Delay<T>,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
@@ -42,6 +44,7 @@ return restrictRead("Fusion", {
 	Computed = require(script.State.Computed),
 	ComputedPairs = require(script.State.ComputedPairs),
 	Observer = require(script.State.Observer),
+  Delay = require(script.State.Delay),
 
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring)

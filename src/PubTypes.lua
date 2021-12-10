@@ -102,6 +102,11 @@ export type Observer = Dependent & {
   	onChange: (Observer, callback: () -> ()) -> (() -> ())
 }
 
+-- An object delays a state object's updates.
+export type Delay<T> = StateObject<T> & Dependent & {
+  -- kind: "Delay" (add this when Luau supports singleton types)
+}
+
 --[[
 	Property table types
 ]]
