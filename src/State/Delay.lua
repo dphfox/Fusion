@@ -7,9 +7,9 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local DelayScheduler = require(Package.State.DelayScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
+local updateAll = require(Package.Dependencies.updateAll)
 
 local class = {}
 
@@ -28,36 +28,28 @@ function class:get(asDependency: boolean?): any
 end
 
 --[[
-  Called when the wrapped value object changes value, or when the
-  delay duration has changed.
+  Called when the wrapped value object changes value.
 
-  For value object changes:
-
-  The delay object will be added with the new value to the scheduler.
-
-  For duration changes:
-
-  Existing value updates in the scheduler will be remain enqueued with
-  their previous duration and any updates after this duration change will
-  be added to the scheduler with the new delay.
+  The delay object will begin a new coroutine that will
+  be delayed in execution by the delay's duration.
 ]]
 function class:update(): boolean
-  self._nextValue = self._valueState:get(false)
+  local goal = self._valueState:get(false)
 
-  DelayScheduler.add(self)
-
+  task.delay(
+    self._duration,
+    function()
+      self._currentValue = goal
+      updateAll(self)
+    end
+  )
+  
   return false
 end
 
-local function Delay<T>(valueState: PubTypes.Value<T>, delayDuration: PubTypes.CanBeState<number>)
+local function Delay<T>(valueState: PubTypes.Value<T>, delayDuration: number)
   local currentValue = valueState:get(false)
-  
   local dependencySet = {[valueState] = true}
-  local delayIsState = typeof(delayDuration) == "table" and delayDuration.type == "State"
-  
-  if delayIsState then
-    dependencySet[delayDuration] = true
-  end
 
   local self = setmetatable({
     type = "State",
@@ -68,11 +60,9 @@ local function Delay<T>(valueState: PubTypes.Value<T>, delayDuration: PubTypes.C
     dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 
     _valueState = valueState,
-    _nextValue = currentValue,
     _currentValue = currentValue,
 
-    _duration = delayDuration,
-    _durationIsState = delayIsState,
+    _duration = delayDuration
   }, CLASS_METATABLE)
 
   initDependency(self)

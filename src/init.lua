@@ -28,7 +28,7 @@ type Fusion = {
 	Computed: <T>(callback: () -> T) -> Computed<T>,
 	ComputedPairs: <K, VI, VO>(inputTable: CanBeState<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
-  Delay: <T>(valueState: StateObject<T>, delayDuration: CanBeState<number>) -> Delay<T>,
+  Delay: <T>(valueState: StateObject<T>, delayDuration: number) -> Delay<T>,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
