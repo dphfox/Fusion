@@ -124,4 +124,30 @@ return function()
 
 		expect(counter).to.equal(2)
 	end)
+
+	it("should not allow the callback to yield", function()
+		local state = Value("foo")
+
+		expect(function()
+			Computed(function()
+				task.wait()
+				return state:get()
+			end)
+		end).to.throw("cannotYield")
+
+		local counter = 0
+		local computedDelayed = Computed(function()
+			if counter > 0 then
+				task.wait()
+			end
+
+			counter = counter + 1
+
+			return state:get()
+		end)
+
+		expect(function()
+			state:set("bar")
+		end).to.throw("cannotYield")
+	end)
 end
