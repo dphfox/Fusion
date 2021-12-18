@@ -44,6 +44,14 @@ return function()
 		end).to.throw("cannotAssignProperty")
 	end)
 
+	it("should throw for invalid property type", function()
+		expect(function()
+			New "Folder" {
+				Name = UDim.new()
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
 	it("should throw for unrecognised keys", function()
 		expect(function()
 			New "Folder" {
