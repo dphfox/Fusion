@@ -9,6 +9,7 @@ return {
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
+	cannotYield = "Attempted to yield in a synchronous thread. Information: %s",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
 	invalidSpringDamping = "The damping ratio for a spring must be >= 0. (damping was %.2f)",
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
