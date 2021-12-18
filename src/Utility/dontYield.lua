@@ -18,7 +18,8 @@ local DEFAULT_ERROR_MESSAGE: string = "N/A"
 
 --[[
     Handles the return values resulting from calling `coroutine.resume(func, ...)`
-    We do this so that we can return the 
+    Makes it so we don't have to use table.unpack to get the Variant returned from
+    calling `coroutine.resume(func, ...)`
 ]]
 local function handleResult(taskCoroutine, errorMessage, success, ...)
     if success then
