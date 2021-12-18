@@ -56,21 +56,55 @@ return function()
 		end).to.throw("cannotAssignProperty")
 	end)
 
-	it("should throw on invalid constant property type", function()
+	it("should throw on invalid property type for non-Parent", function()
 		expect(function()
 			New "Folder" {
 				Name = UDim.new()
 			}
 		end).to.throw("invalidPropertyType")
-	end)
 
-	it("should throw on invalid value property type", function()
 		local state = Value(true)
 
 		expect(function()
 			New "Folder" {
 				Name = Computed(function()
 					state:get()
+				end)
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
+	it("should throw on invalid property type for Parent", function()
+		expect(function()
+			New "Folder" {
+				Parent = "Foo"
+			}
+		end).to.throw("invalidPropertyType")
+
+		local state = Value(true)
+
+		expect(function()
+			New "Folder" {
+				Parent = Computed(function()
+					return state:get()
+				end)
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
+	it("should throw on invalid property type for Instances", function()
+		expect(function()
+			New "ObjectValue" {
+				Value = "Foo"
+			}
+		end).to.throw("invalidPropertyType")
+
+		local state = Value(true)
+
+		expect(function()
+			New "ObjectValue" {
+				Value = Computed(function()
+					return state:get()
 				end)
 			}
 		end).to.throw("invalidPropertyType")

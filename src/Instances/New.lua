@@ -72,7 +72,7 @@ local function New(className: string)
 				-- Properties bound to state
 				if typeof(value) == "table" and value.type == "State" then
 					local existingValue, attemptedValue
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						-- store values for error reporting
 						existingValue = ref.instance[key]
 						attemptedValue = value:get(false)
@@ -82,7 +82,7 @@ local function New(className: string)
 					end)
 					
 					if not assignOK then
-						if existingValue ~= nil then
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
 							logError("invalidPropertyType", nil, className, key, typeof(attemptedValue), typeof(existingValue))
 						else
 							logError("cannotAssignProperty", nil, className, key)
@@ -107,7 +107,7 @@ local function New(className: string)
 				-- Properties with constant values
 				else
 					local existingValue
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						-- store values for error reporting
 						existingValue = ref.instance[key]
 
@@ -116,7 +116,7 @@ local function New(className: string)
 					end)
 					
 					if not assignOK then
-						if existingValue ~= nil then
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
 							logError("invalidPropertyType", nil, className, key, typeof(value), typeof(existingValue))
 						else
 							logError("cannotAssignProperty", nil, className, key)
@@ -293,7 +293,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, className, "Parent", typeof(parent:get(false)), "Instance")
 				end
 
 				table.insert(cleanupTasks,
@@ -319,7 +319,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, className, "Parent", typeof(parent), "Instance")
 				end
 			end
 		end
