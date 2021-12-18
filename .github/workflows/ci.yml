@@ -52,6 +52,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Wally packages
+        run: wally install
+
       - name: Build test place
         run: rojo build test-runner.project.json -o test.rbxl
 
