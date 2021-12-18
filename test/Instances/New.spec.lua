@@ -36,7 +36,7 @@ return function()
 		expect(ins.Name).to.equal("Bob")
 	end)
 
-	it("should throw for non-existent properties", function()
+	it("should throw for non-existent constant properties", function()
 		expect(function()
 			New "Folder" {
 				Frobulator = "Frobulateur"
@@ -44,10 +44,34 @@ return function()
 		end).to.throw("cannotAssignProperty")
 	end)
 
-	it("should throw for invalid property type", function()
+	it("should throw for non-existent value properties", function()
+		local state = Value("Frobulateur")
+
+		expect(function()
+			New "Folder" {
+				Frobulator = Computed(function()
+					state:get()
+				end)
+			}
+		end).to.throw("cannotAssignProperty")
+	end)
+
+	it("should throw on invalid constant property type", function()
 		expect(function()
 			New "Folder" {
 				Name = UDim.new()
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
+	it("should throw on invalid value property type", function()
+		local state = Value(true)
+
+		expect(function()
+			New "Folder" {
+				Name = Computed(function()
+					state:get()
+				end)
 			}
 		end).to.throw("invalidPropertyType")
 	end)
