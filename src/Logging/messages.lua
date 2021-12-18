@@ -10,6 +10,7 @@ return {
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
+	invalidPropertyType = "The class type '%s' has property '%s', but you attempted to set it to a '%s', while it expected a '%s'.",
 	invalidSpringDamping = "The damping ratio for a spring must be >= 0. (damping was %.2f)",
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",

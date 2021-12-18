@@ -71,12 +71,22 @@ local function New(className: string)
 
 				-- Properties bound to state
 				if typeof(value) == "table" and value.type == "State" then
+					local existingValue, attemptedValue
 					local assignOK = pcall(function()
-						ref.instance[key] = value:get(false)
-					end)
+						-- store values for error reporting
+						existingValue = ref.instance[key]
+						attemptedValue = value:get(false)
 
+						-- set value
+						ref.instance[key] = attemptedValue
+					end)
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						if existingValue ~= nil then
+							logError("invalidPropertyType", nil, className, key, typeof(attemptedValue), typeof(existingValue))
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 
 					local disconnect = Observer(value):onChange(function()
@@ -96,12 +106,21 @@ local function New(className: string)
 
 				-- Properties with constant values
 				else
+					local existingValue
 					local assignOK = pcall(function()
+						-- store values for error reporting
+						existingValue = ref.instance[key]
+
+						-- set value
 						ref.instance[key] = value
 					end)
-
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						if existingValue ~= nil then
+							logError("invalidPropertyType", nil, className, key, typeof(value), typeof(existingValue))
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 				end
 
