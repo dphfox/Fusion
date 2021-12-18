@@ -17,6 +17,7 @@ local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local cleanup = require(Package.Utility.cleanup)
+local dontYield = require(Package.Utility.dontYield)
 
 local class = {}
 
@@ -114,7 +115,11 @@ function class:update(): boolean
 			table.clear(keyData.dependencySet)
 
 			local oldOutValue = oldOutput[key]
-			local processOK, newOutValue = captureDependencies(keyData.dependencySet, self._processor, key, newInValue)
+			local processOK, newOutValue = dontYield(
+				captureDependencies,
+				"Cannot yield inside of the ComputedPairs processor function.",
+				keyData.dependencySet, self._processor, key, newInValue
+			)
 
 			if processOK then
 				-- if the calculated value has changed

@@ -11,6 +11,7 @@ local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local dontYield = require(Package.Utility.dontYield)
 
 local class = {}
 
@@ -46,7 +47,11 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue = captureDependencies(self.dependencySet, self._callback)
+	local ok, newValue = dontYield(
+		captureDependencies,
+		"Cannot yield inside of the Computed callback function.",
+		self.dependencySet, self._callback
+	)
 
 	if ok then
 		local oldValue = self._value
