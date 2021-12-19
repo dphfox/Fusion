@@ -83,7 +83,7 @@ local function New(className: string)
 						end)
 
 						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
-							logError("invalidPropertyType", nil, className, key, typeof(attemptedValue), typeof(existingValue))
+							logError("invalidPropertyType", nil, key, typeof(attemptedValue), typeof(existingValue), className)
 						else
 							logError("cannotAssignProperty", nil, className, key)
 						end
@@ -117,7 +117,7 @@ local function New(className: string)
 						end)
 
 						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
-							logError("invalidPropertyType", nil, className, key, typeof(value), typeof(existingValue))
+							logError("invalidPropertyType", nil, key, typeof(value), typeof(existingValue), className)
 						else
 							logError("cannotAssignProperty", nil, className, key)
 						end
@@ -293,7 +293,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("invalidPropertyType", nil, className, "Parent", typeof(parent:get(false)), "Instance")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent:get(false)), "Instance", className)
 				end
 
 				table.insert(cleanupTasks,
@@ -319,7 +319,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("invalidPropertyType", nil, className, "Parent", typeof(parent), "Instance")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent), "Instance", className)
 				end
 			end
 		end
