@@ -49,7 +49,7 @@ function class:update(): boolean
 
 	local ok, newValue = dontYield(
 		captureDependencies,
-		"Cannot yield inside of the Computed callback function.",
+		"computedCannotYield",
 		self.dependencySet, self._callback
 	)
 

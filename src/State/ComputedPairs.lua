@@ -117,7 +117,7 @@ function class:update(): boolean
 			local oldOutValue = oldOutput[key]
 			local processOK, newOutValue = dontYield(
 				captureDependencies,
-				"Cannot yield inside of the ComputedPairs processor function.",
+				"computedPairsCannotYield",
 				keyData.dependencySet, self._processor, key, newInValue
 			)
 
