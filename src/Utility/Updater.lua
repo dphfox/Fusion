@@ -10,18 +10,10 @@
 
 local RunService = game:GetService("RunService")
 
-local Package = script.Parent.Parent
-local Signal = require(Package.Parent.Signal)
-
 local Updater = {}
 
-local stepped = Signal.new
 local paused = false
-local thread = (RunService:IsServer() and RunService.Stepped or RunService.RenderStepped):Connect(function(dt)
-    if paused == false then
-        stepped:Fire(dt)
-    end
-end)
+local stepped = RunService:IsServer() and RunService.Stepped or RunService.RenderStepped
 
 --[[
     Binds a function to be called whenever the Updater gets stepped. By default, this function will
