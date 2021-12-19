@@ -3,6 +3,7 @@ local RunService = game:GetService("RunService")
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
+local Ref = require(Package.Instances.Ref)
 local OnEvent = require(Package.Instances.OnEvent)
 local OnChange = require(Package.Instances.OnChange)
 
@@ -297,6 +298,22 @@ return function()
 		}
 
 		expect(child.Parent).to.equal(targetParent)
+	end)
+
+	it("should set State objects passed as [Ref]", function()
+		local refValue = Value()
+
+		local child = New "Folder" {
+			[Ref] = refValue;
+		}
+		
+		local targetParent = New "Folder" {
+			[Children] = {
+				child
+			}
+		}
+
+		expect(refValue:get()).to.equal(child)
 	end)
 
 	it("should bind State objects passed as the parent", function()
