@@ -43,15 +43,7 @@ local function cleanup(task: any)
 		elseif typeof(task.Destroy) == "function" then
 			task:Destroy()
 
-		-- case 6: disconnect() function
-		elseif typeof(task.disconnect) == "function" then
-			task:disconnect()
-
-		-- case 7: Disconnect() function
-		elseif typeof(task.Disconnect) == "function" then
-			task:Disconnect()
-
-		-- case 8: array of tasks
+		-- case 6: array of tasks
 		elseif task[1] ~= nil then
 			for _, subtask in ipairs(task) do
 				cleanup(subtask)
