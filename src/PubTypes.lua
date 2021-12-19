@@ -111,7 +111,7 @@ export type ChildrenKey = Symbol & {
 	-- name: "Children" (add this when Luau supports singleton types)
 }
 
--- Denotes referebce instances in an instance or component's property table.
+-- Denotes reference instances in an instance or component's property table.
 export type RefKey = Symbol & {
 	-- name: "Ref" (add this when Luau supports singleton types)
 }

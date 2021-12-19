@@ -10,5 +10,5 @@ local PubTypes = require(Package.PubTypes)
 
 return {
 	type = "Symbol",
-	name = "RefKey"
+	name = "Ref"
 } :: PubTypes.RefKey
