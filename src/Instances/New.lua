@@ -71,17 +71,17 @@ local function New(className: string)
 
 				-- Properties bound to state
 				if typeof(value) == "table" and value.type == "State" then
-					local existingValue, attemptedValue
 					local assignOK, errorMessage = pcall(function()
-						-- store values for error reporting
-						existingValue = ref.instance[key]
-						attemptedValue = value:get(false)
-
-						-- set value
-						ref.instance[key] = attemptedValue
+						ref.instance[key] = value:get(false)
 					end)
 					
 					if not assignOK then
+						local existingValue, attemptedValue
+						pcall(function()
+							existingValue = ref.instance[key]
+							attemptedValue = value:get(false)
+						end)
+
 						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
 							logError("invalidPropertyType", nil, className, key, typeof(attemptedValue), typeof(existingValue))
 						else
@@ -106,16 +106,16 @@ local function New(className: string)
 
 				-- Properties with constant values
 				else
-					local existingValue
 					local assignOK, errorMessage = pcall(function()
-						-- store values for error reporting
-						existingValue = ref.instance[key]
-
-						-- set value
 						ref.instance[key] = value
 					end)
 					
 					if not assignOK then
+						local existingValue
+						pcall(function()
+							existingValue = ref.instance[key]
+						end)
+
 						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
 							logError("invalidPropertyType", nil, className, key, typeof(value), typeof(existingValue))
 						else
