@@ -8,6 +8,7 @@ return function()
 		local api = {
 			New = "function",
 			Children = "table",
+			Cleanup = "table",
 			OnEvent = "function",
 			OnChange = "function",
 
