@@ -9,6 +9,7 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
+local Cleanup = require(Package.Instances.Cleanup)
 local Scheduler = require(Package.Instances.Scheduler)
 local defaultProps = require(Package.Instances.defaultProps)
 local Observer = require(Package.State.Observer)
@@ -313,7 +314,15 @@ local function New(className: string)
 		end
 
 		--[[
-			STEP 6: Register cleanup tasks if needed
+			STEP 6: If provided, parent [Children] to instance
+		]]
+		local userCleanup = propertyTable[Cleanup]
+		if userCleanup ~= nil then
+			table.insert(cleanupTasks, userCleanup)
+		end
+
+		--[[
+			STEP 7: Register cleanup tasks if needed
 		]]
 		if cleanupTasks[1] ~= nil then
 			if ENABLE_EXPERIMENTAL_GC_MODE then
