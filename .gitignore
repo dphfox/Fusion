@@ -7,8 +7,5 @@
 # Ignore lock files
 *.lock
 
-# Ignore Packages folder
-/Packages/
-
 # Ignore site folder
 /site/
