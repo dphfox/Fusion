@@ -133,7 +133,7 @@ return function()
 				task.wait()
 				return state:get()
 			end)
-		end).to.throw("cannotYield")
+		end).to.throw("computedCannotYield")
 
 		local counter = 0
 		local computedDelayed = Computed(function()
@@ -148,6 +148,6 @@ return function()
 
 		expect(function()
 			state:set("bar")
-		end).to.throw("cannotYield")
+		end).to.throw("computedCannotYield")
 	end)
 end
