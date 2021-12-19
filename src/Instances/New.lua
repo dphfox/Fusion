@@ -62,7 +62,7 @@ local function New(className: string)
 		]]
 		for key, value in pairs(propertyTable) do
 			-- ignore some keys which will be processed later
-			if key == Children or key == "Parent" then
+			if key == Children or key == Cleanup or key == "Parent" then
 				continue
 
 			--[[
@@ -314,11 +314,11 @@ local function New(className: string)
 		end
 
 		--[[
-			STEP 6: If provided, parent [Children] to instance
+			STEP 6: If provided, insert cleanup tasks from [Cleanup] into `cleanupTasks`
 		]]
-		local userCleanup = propertyTable[Cleanup]
-		if userCleanup ~= nil then
-			table.insert(cleanupTasks, userCleanup)
+		local userCleanupTasks = propertyTable[Cleanup]
+		if userCleanupTasks ~= nil then
+			table.insert(cleanupTasks, userCleanupTasks)
 		end
 
 		--[[
