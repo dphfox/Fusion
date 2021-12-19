@@ -9,6 +9,7 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
+local Ref = require(Package.Instances.Ref)
 local Scheduler = require(Package.Instances.Scheduler)
 local defaultProps = require(Package.Instances.defaultProps)
 local Observer = require(Package.State.Observer)
@@ -61,7 +62,7 @@ local function New(className: string)
 		]]
 		for key, value in pairs(propertyTable) do
 			-- ignore some keys which will be processed later
-			if key == Children or key == "Parent" then
+			if key == Children or key == Ref or key == "Parent" then
 				continue
 
 			--[[
@@ -261,7 +262,15 @@ local function New(className: string)
 		end
 
 		--[[
-			STEP 4: If provided, override the Parent of this instance
+			STEP 4: If provided, set the value of [Ref] to ref.instance
+		]]
+		local refValue = propertyTable[Ref]
+		if refValue ~= nil then
+			refValue:set(ref.instance)
+		end
+
+		--[[
+			STEP 5: If provided, override the Parent of this instance
 		]]
 		local parent = propertyTable.Parent
 		if parent ~= nil then
@@ -306,14 +315,14 @@ local function New(className: string)
 		end
 
 		--[[
-			STEP 5: Connect event handlers
+			STEP 6: Connect event handlers
 		]]
 		for event, callback in pairs(toConnect) do
 			table.insert(cleanupTasks, event:Connect(callback))
 		end
 
 		--[[
-			STEP 6: Register cleanup tasks if needed
+			STEP 7: Register cleanup tasks if needed
 		]]
 		if cleanupTasks[1] ~= nil then
 			if ENABLE_EXPERIMENTAL_GC_MODE then
