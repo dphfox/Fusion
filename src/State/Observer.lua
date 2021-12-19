@@ -54,7 +54,7 @@ function class:onChange(callback: () -> ()): () -> ()
 			return
 		end
 		disconnected = true
-		self._changeListeners[uniqueIdentifier] = callback
+		self._changeListeners[uniqueIdentifier] = nil
 		self._numChangeListeners -= 1
 
 		if self._numChangeListeners == 0 then
