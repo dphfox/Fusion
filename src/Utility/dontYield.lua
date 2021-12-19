@@ -14,14 +14,14 @@
 local Package = script.Parent.Parent
 local logError = require(Package.Logging.logError)
 
-local DEFAULT_ERROR_MESSAGE: string = "N/A"
+local DEFAULT_ERROR_MESSAGE_ID: string = "cannotYield"
 
 --[[
     Handles the return values resulting from calling `coroutine.resume(func, ...)`
     Makes it so we don't have to use table.unpack to get the Variant returned from
     calling `coroutine.resume(func, ...)`
 ]]
-local function handleResult(taskCoroutine, errorMessage, success, ...)
+local function handleResult(taskCoroutine, messageID: string?, success, ...)
     if success then
         if coroutine.status(taskCoroutine) == "dead" then
             -- we didn't yield
@@ -29,7 +29,7 @@ local function handleResult(taskCoroutine, errorMessage, success, ...)
             
         else
             -- we yielded
-            logError("cannotYield", ({...})[1], errorMessage or DEFAULT_ERROR_MESSAGE)
+            logError(messageID or DEFAULT_ERROR_MESSAGE_ID, ({...})[1])
         end
     else
         -- this is a user error that has nothing to do with the thread yielding,
@@ -43,10 +43,10 @@ end
     yields, then it will log the error `cannotYield`, and also display the supplied 
     error message (errorMessage), or `N/A`.
 ]]
-local function dontYield(task, errorMessage: string?, ...)
+local function dontYield(task, messageID: string?, ...)
     local taskCoroutine = coroutine.create(task)
 
-    return handleResult(taskCoroutine, errorMessage, coroutine.resume(taskCoroutine, ...))
+    return handleResult(taskCoroutine, messageID, coroutine.resume(taskCoroutine, ...))
 end
 
 return dontYield
