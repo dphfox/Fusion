@@ -111,6 +111,11 @@ export type ChildrenKey = Symbol & {
 	-- name: "Children" (add this when Luau supports singleton types)
 }
 
+-- Denotes referebce instances in an instance or component's property table.
+export type RefKey = Symbol & {
+	-- name: "Ref" (add this when Luau supports singleton types)
+}
+
 -- Denotes property change handlers in an instance's property table.
 export type OnChangeKey = Symbol & {
 	-- name: "OnChange" (add this when Luau supports singleton types)
@@ -135,9 +140,10 @@ export type Children = Instance | StateObject<Children> | {[any]: Children}
 --     [OnEventKey]: (any...) -> (),
 --     [OnChangeKey]: (any) -> (),
 --     [ChildrenKey]: Children
+--     [RefKey]: Value
 -- }
 export type PropertyTable = {
-	[string | OnEventKey | OnChangeKey | ChildrenKey]: any
+	[string | OnEventKey | OnChangeKey | ChildrenKey | RefKey]: any
 }
 
 
