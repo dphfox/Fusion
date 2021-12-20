@@ -72,12 +72,22 @@ local function New(className: string)
 
 				-- Properties bound to state
 				if typeof(value) == "table" and value.type == "State" then
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						ref.instance[key] = value:get(false)
 					end)
-
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						local existingValue, attemptedValue
+						pcall(function()
+							existingValue = ref.instance[key]
+							attemptedValue = value:get(false)
+						end)
+
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
+							logError("invalidPropertyType", nil, key, typeof(attemptedValue), typeof(existingValue), className)
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 
 					local disconnect = Observer(value):onChange(function()
@@ -97,12 +107,21 @@ local function New(className: string)
 
 				-- Properties with constant values
 				else
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						ref.instance[key] = value
 					end)
-
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						local existingValue
+						pcall(function()
+							existingValue = ref.instance[key]
+						end)
+
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
+							logError("invalidPropertyType", nil, key, typeof(value), typeof(existingValue), className)
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 				end
 
@@ -283,7 +302,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent:get(false)), "Instance", className)
 				end
 
 				table.insert(cleanupTasks,
@@ -309,7 +328,7 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent), "Instance", className)
 				end
 			end
 		end
