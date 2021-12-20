@@ -39,9 +39,8 @@ end
 	will be held in memory, preventing GC, so disconnecting is important.
 ]]
 function class:onChange(callback: () -> ()): () -> ()
-	local uniqueIdentifier = tostring(self._createdChangeListeners)
+	local uniqueIdentifier = {}
 
-	self._createdChangeListeners += 1
 	self._numChangeListeners += 1
 	self._changeListeners[uniqueIdentifier] = callback
 
@@ -72,7 +71,6 @@ local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 		dependentSet = {},
 		_changeListeners = {},
 		_numChangeListeners = 0,
-		_createdChangeListeners = 0,
 	}, CLASS_METATABLE)
 
 	initDependency(self)
