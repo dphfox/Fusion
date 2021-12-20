@@ -19,6 +19,7 @@ export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
 	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	Ref: PubTypes.RefKey,
 	Children: PubTypes.ChildrenKey,
 	OnEvent: (eventName: string) -> PubTypes.OnEventKey,
 	OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
@@ -34,6 +35,7 @@ type Fusion = {
 
 return restrictRead("Fusion", {
 	New = require(script.Instances.New),
+	Ref = require(script.Instances.Ref),
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),

@@ -7,6 +7,7 @@ return function()
 
 		local api = {
 			New = "function",
+			Ref = "table",
 			Children = "table",
 			OnEvent = "function",
 			OnChange = "function",
