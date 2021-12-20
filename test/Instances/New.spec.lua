@@ -2,7 +2,7 @@ local RunService = game:GetService("RunService")
 
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
-local Children = require(Package.Instances.Children
+local Children = require(Package.Instances.Children)
 local Cleanup = require(Package.Instances.Cleanup)
 local Ref = require(Package.Instances.Ref)
 local OnEvent = require(Package.Instances.OnEvent)
