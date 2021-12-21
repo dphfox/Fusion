@@ -185,6 +185,37 @@ return function()
 		error("Instance was incorrectly collected")
 	end)
 
+	it("should not run tasks when parent is in nil, we hop to another parent in nil, and the first parent gets destroyed", function()
+		local parent1 = Instance.new("Folder")
+		local parent2 = Instance.new("Folder")
+		local ins = Instance.new("Folder")
+		ins.Parent = parent1
+
+		local done = false
+		local function callback()
+			done = true
+		end
+
+		cleanupOnDestroy(ins, callback)
+		
+		RunService.RenderStepped:Wait()
+		ins.Parent = parent2
+		RunService.RenderStepped:Wait()
+		parent1:Destroy()
+
+		local start = os.clock()
+		local timeout = 6
+
+		repeat
+			RunService.RenderStepped:Wait()
+			if os.clock() - start > timeout then
+				return
+			end
+		until done
+
+		error("Instance was incorrectly collected")
+	end)
+
 	it("should run tasks if parent is moved to nil then goes out of scope", function()
 		local done = false
 		local function callback()

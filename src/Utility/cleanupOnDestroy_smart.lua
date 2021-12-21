@@ -77,6 +77,9 @@ local function cleanupOnDestroy(instance: Instance?, cleanupTask: cleanup.Task):
 			end
 		end
 
+		if child == nil and not isNilParented and parentTreeSize > 0 then
+			print("Detected nil where it otherwise wouldn't")
+		end
 		isNilParented = child == nil
 		child = nil
 	end
