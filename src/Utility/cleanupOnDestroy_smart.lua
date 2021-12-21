@@ -45,7 +45,7 @@ local function cleanupOnDestroy(instance: Instance?, cleanupTask: cleanup.Task):
 	local isNilParented = (instance :: Instance).Parent == nil
 	local parentTreeSize = 0
 
-	local function calculateFromTree(child: Instance)
+	local function calculateFromTree(child: Instance?)
 		parentTreeSize = 0
 
 		local finished = child == nil or child == game
@@ -55,7 +55,7 @@ local function cleanupOnDestroy(instance: Instance?, cleanupTask: cleanup.Task):
 		else
 			while finished == false do
 				parentTreeSize += 1
-				local parent = child.Parent
+				local parent: Instance? = child and child.Parent or nil
 	
 				if parent == nil or parent == game then
 					if child then
@@ -76,10 +76,7 @@ local function cleanupOnDestroy(instance: Instance?, cleanupTask: cleanup.Task):
 				child = parent
 			end
 		end
-
-		if child == nil and not isNilParented and parentTreeSize > 0 then
-			print("Detected nil where it otherwise wouldn't")
-		end
+		
 		isNilParented = child == nil
 		child = nil
 	end
