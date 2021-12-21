@@ -7,7 +7,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy_smart)
+local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
 local Ref = require(Package.Instances.Ref)
 local Scheduler = require(Package.Instances.Scheduler)
