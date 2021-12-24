@@ -5,7 +5,7 @@ local ForPairs = require(Package.State.ForPairs)
 local Value = require(Package.State.Value)
 
 local function waitForGC()
-	local ref = setmetatable({{}}, {__mode = "kv"})
+	local ref = setmetatable({ {} }, { __mode = "kv" })
 
 	repeat
 		RunService.Heartbeat:Wait()
@@ -13,206 +13,207 @@ local function waitForGC()
 end
 
 return function()
-    it("should construct a ForPairs object", function()
-        local forPairs = ForPairs({}, function()
-		end)
+	it("should construct a ForPairs object", function()
+		local forPairs = ForPairs({}, function() end)
 
 		expect(forPairs).to.be.a("table")
 		expect(forPairs.type).to.equal("State")
 		expect(forPairs.kind).to.equal("ForPairs")
-    end)
-    
+	end)
+
 	it("should calculate and retrieve its value", function()
-		local computedPair = ForPairs({["foo"] = "bar"}, function(key, value)
+		local computedPair = ForPairs({ ["foo"] = "bar" }, function(key, value)
 			return key .. "baz", value .. "biz"
 		end)
 
-        local state = computedPair:get()
+		local state = computedPair:get()
 
-        expect(state["foobaz"]).to.be.ok()
-        expect(state["foobaz"]).to.equal("barbiz")
+		expect(state["foobaz"]).to.be.ok()
+		expect(state["foobaz"]).to.equal("barbiz")
 	end)
 
-    it("should not recalculate its KO/VO in response to an unchanged KI/VI", function()
-        local state = Value {
-            ["foo"] = "bar",
-        }
+	it("should not recalculate its KO/VO in response to an unchanged KI/VI", function()
+		local state = Value({
+			["foo"] = "bar",
+		})
 
-        local computedPair = ForPairs(state, function(key, value)
-            return key .. "biz", {value}
-        end)
+		local computedPair = ForPairs(state, function(key, value)
+			return key .. "biz", { value }
+		end)
 
-        local foobiz = computedPair:get()["foobiz"]
+		local foobiz = computedPair:get()["foobiz"]
 
-        state:set {
-            ["foo"] = "bar",
-            ["baz"] = "bar",
-        }
+		state:set({
+			["foo"] = "bar",
+			["baz"] = "bar",
+		})
 
-        expect(computedPair:get()["foobiz"]).to.equal(foobiz)
-    end)
+		expect(computedPair:get()["foobiz"]).to.equal(foobiz)
+	end)
 
-    it("should call the destructor when a key/value pair gets changed", function()
-        local state = Value {
-            ["foo"] = "bar",
-            ["baz"] = "bar",
-        }
+	it("should call the destructor when a key/value pair gets changed", function()
+		local state = Value({
+			["foo"] = "bar",
+			["baz"] = "bar",
+		})
 
-        local destructions = 0
+		local destructions = 0
 
-        local computedPair = ForPairs(state, function(key, value)
-            return key .. "biz", value .. "biz"
-        end, function(key, value)
-            destructions += 1
-        end)
+		local computedPair = ForPairs(state, function(key, value)
+			return key .. "biz", value .. "biz"
+		end, function(key, value)
+			destructions += 1
+		end)
 
-        state:set {
-            ["foo"] = "bar",
-        }
+		state:set({
+			["foo"] = "bar",
+		})
 
-        expect(destructions).to.equal(1)
+		expect(destructions).to.equal(1)
 
-        state:set {
-            ["baz"] = "bar",
-        }
+		state:set({
+			["baz"] = "bar",
+		})
 
-        expect(destructions).to.equal(2)
+		expect(destructions).to.equal(2)
 
-        state:set {
-            ["foo"] = "bar",
-            ["baz"] = "bar",
-        }
+		state:set({
+			["foo"] = "bar",
+			["baz"] = "bar",
+		})
 
-        expect(destructions).to.equal(2)
+		expect(destructions).to.equal(2)
 
-        state:set {}
+		state:set({})
 
-        expect(destructions).to.equal(4)
-    end)
+		expect(destructions).to.equal(4)
+	end)
 
-	it("should not call the destructor when an output key/value pair still remains with a new input key/value pair", function()
-        local state = Value {
-            ["foo"] = "bar",
-        }
+	it(
+		"should not call the destructor when an output key/value pair still remains with a new input key/value pair",
+		function()
+			local state = Value({
+				["foo"] = "bar",
+			})
 
-        local destructions = 0
+			local destructions = 0
 
-        local computedPair = ForPairs(state, function(key, value)
-            return value, value
-        end, function(key, value)
-            destructions += 1
-        end)
+			local computedPair = ForPairs(state, function(key, value)
+				return value, value
+			end, function(key, value)
+				destructions += 1
+			end)
 
-        state:set {
-            ["baz"] = "bar",
-        }
+			state:set({
+				["baz"] = "bar",
+			})
 
-        expect(destructions).to.equal(0)
+			expect(destructions).to.equal(0)
 
-        state:set {
-            ["biz"] = "baz",
-        }
+			state:set({
+				["biz"] = "baz",
+			})
 
-        expect(destructions).to.equal(1)
-		
-        state:set {
-            ["foo"] = "bar",
-            ["biz"] = "baz",
-        }
-		
-        expect(destructions).to.equal(1)
-		
-        state:set {
-            ["foo"] = "baz",
-            ["biz"] = "bar",
-        }
+			expect(destructions).to.equal(1)
 
-        expect(destructions).to.equal(1)
+			state:set({
+				["foo"] = "bar",
+				["biz"] = "baz",
+			})
 
-        state:set {
-            ["biz"] = "bar",
-        }
-		
-        expect(destructions).to.equal(2)
+			expect(destructions).to.equal(1)
 
-        state:set {}
+			state:set({
+				["foo"] = "baz",
+				["biz"] = "bar",
+			})
 
-        expect(destructions).to.equal(3)
-    end)
+			expect(destructions).to.equal(1)
+
+			state:set({
+				["biz"] = "bar",
+			})
+
+			expect(destructions).to.equal(2)
+
+			state:set({})
+
+			expect(destructions).to.equal(3)
+		end
+	)
 
 	it("should throw if two input key/value pairs write to the same output key", function()
 		expect(function()
-			local state = Value {
+			local state = Value({
 				["foo"] = "bar",
 				["baz"] = "bar",
-			}
+			})
 
 			local computed = ForPairs(state, function(key, value)
 				return value, key
 			end)
 		end).to.throw("forPairsKeyAlreadyWrittenTo")
 
-		
-		local state = Value {
+		local state = Value({
 			["foo"] = "bar",
-		}
+		})
 
 		local computed = ForPairs(state, function(key, value)
 			return value, key
 		end)
 
 		expect(function()
-			state:set {
+			state:set({
 				["foo"] = "bar",
 				["baz"] = "bar",
-			}
+			})
 		end).to.throw("forPairsKeyAlreadyWrittenTo")
 	end)
 
-    it("should call the destructor with meta data", function()
-        local state = Value {
-            ["foo"] = "bar",
-        }
+	it("should call the destructor with meta data", function()
+		local state = Value({
+			["foo"] = "bar",
+		})
 
-        local destructions = 0
+		local destructions = 0
 
-        local computedPair = ForPairs(state, function(key, value)
-            local newKey = key .. "biz"
-            local newValue = value .. "biz"
+		local computedPair = ForPairs(state, function(key, value)
+			local newKey = key .. "biz"
+			local newValue = value .. "biz"
 
-            return newKey, newValue, newKey..newValue
-        end, function(key, value, meta)
-            expect(meta).to.equal(key..value)
-            destructions += 1
-        end)
+			return newKey, newValue, newKey .. newValue
+		end, function(key, value, meta)
+			expect(meta).to.equal(key .. value)
+			destructions += 1
+		end)
 
-        state:set {
-            ["foo"] = "baz",
-        }
+		state:set({
+			["foo"] = "baz",
+		})
 
-        -- this verifies that the meta expectation passed
-        expect(destructions).to.equal(1)
+		-- this verifies that the meta expectation passed
+		expect(destructions).to.equal(1)
 
-        state:set {}
+		state:set({})
 
-        -- this verifies that the meta expectation passed
-        expect(destructions).to.equal(2)
-    end)
+		-- this verifies that the meta expectation passed
+		expect(destructions).to.equal(2)
+	end)
 
 	it("should recalculate its value in response to State objects", function()
-		local currentNumber = Value({["foo"] = 2})
+		local currentNumber = Value({ ["foo"] = 2 })
 		local doubled = ForPairs(currentNumber, function(key, value)
 			return key .. "bar", value * 2
 		end)
 
-        expect(doubled:get()["foobar"]).to.equal(4)
+		expect(doubled:get()["foobar"]).to.equal(4)
 
-		currentNumber:set({["foo"] = 4})
-        expect(doubled:get()["foobar"]).to.equal(8)
+		currentNumber:set({ ["foo"] = 4 })
+		expect(doubled:get()["foobar"]).to.equal(8)
 	end)
 
 	it("should recalculate its value in response to ForPairs objects", function()
-		local currentNumbers = Value({1,2})
+		local currentNumbers = Value({ 1, 2 })
 		local doubled = ForPairs(currentNumbers, function(key, value)
 			return key * 2, value * 2
 		end)
@@ -223,13 +224,13 @@ return function()
 		expect(tripled:get()[4]).to.equal(4)
 		expect(tripled:get()[8]).to.equal(8)
 
-		currentNumbers:set({2, 4})
+		currentNumbers:set({ 2, 4 })
 		expect(tripled:get()[4]).to.equal(8)
 		expect(tripled:get()[8]).to.equal(16)
 	end)
 
 	it("should not corrupt dependencies after an error", function()
-		local state = Value({1})
+		local state = Value({ 1 })
 		local simulateError = false
 		local computed = ForPairs(state, function(key, value)
 			if simulateError then
@@ -247,16 +248,16 @@ return function()
 		expect(computed:get()[1]).to.equal(1)
 
 		simulateError = true
-		state:set({5}) -- update the computed to invoke the error
+		state:set({ 5 }) -- update the computed to invoke the error
 
 		simulateError = false
-		state:set({10}) -- if dependencies are corrupt, the computed won't update
+		state:set({ 10 }) -- if dependencies are corrupt, the computed won't update
 
 		expect(computed:get()[1]).to.equal(10)
 	end)
 
 	it("should garbage-collect unused objects", function()
-		local state = Value({2})
+		local state = Value({ 2 })
 
 		local counter = 0
 
@@ -268,13 +269,13 @@ return function()
 		end
 
 		waitForGC()
-		state:set({5})
+		state:set({ 5 })
 
 		expect(counter).to.equal(1)
 	end)
 
 	it("should not garbage-collect objects in use", function()
-		local state = Value({2})
+		local state = Value({ 2 })
 		local computed2
 
 		local counter = 0
@@ -291,7 +292,7 @@ return function()
 		end
 
 		waitForGC()
-		state:set({5})
+		state:set({ 5 })
 
 		expect(counter).to.equal(2)
 	end)

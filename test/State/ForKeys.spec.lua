@@ -5,7 +5,7 @@ local ForKeys = require(Package.State.ForKeys)
 local Value = require(Package.State.Value)
 
 local function waitForGC()
-	local ref = setmetatable({{}}, {__mode = "kv"})
+	local ref = setmetatable({ {} }, { __mode = "kv" })
 
 	repeat
 		RunService.Heartbeat:Wait()
@@ -13,177 +13,176 @@ local function waitForGC()
 end
 
 return function()
-    it("should construct a ForKeys object", function()
-        local forKeys = ForKeys({}, function()
-		end)
+	it("should construct a ForKeys object", function()
+		local forKeys = ForKeys({}, function() end)
 
 		expect(forKeys).to.be.a("table")
 		expect(forKeys.type).to.equal("State")
 		expect(forKeys.kind).to.equal("ForKeys")
-    end)
-    
+	end)
+
 	it("should calculate and retrieve its value", function()
-		local computedPair = ForKeys({["foo"] = true}, function(key)
+		local computedPair = ForKeys({ ["foo"] = true }, function(key)
 			return key .. "baz"
 		end)
 
-        local state = computedPair:get()
+		local state = computedPair:get()
 
-        expect(state["foobaz"]).to.be.ok()
-        expect(state["foobaz"]).to.equal(true)
+		expect(state["foobaz"]).to.be.ok()
+		expect(state["foobaz"]).to.equal(true)
 	end)
 
-    it("should not recalculate its KO in response to a changed KI", function()
-        local state = Value {
-            ["foo"] = "bar",
-        }
+	it("should not recalculate its KO in response to a changed KI", function()
+		local state = Value({
+			["foo"] = "bar",
+		})
 
-        local calculations = 0
+		local calculations = 0
 
-        local computedPair = ForKeys(state, function(key)
-            calculations += 1
-            return key
-        end)
+		local computedPair = ForKeys(state, function(key)
+			calculations += 1
+			return key
+		end)
 
-        local foobiz = computedPair:get()["foobiz"]
+		local foobiz = computedPair:get()["foobiz"]
 
-        expect(calculations).to.equal(1)
+		expect(calculations).to.equal(1)
 
-        state:set {
-            ["foo"] = "biz",
-            ["baz"] = "bar",
-        }
+		state:set({
+			["foo"] = "biz",
+			["baz"] = "bar",
+		})
 
-        expect(calculations).to.equal(2)
-    end)
+		expect(calculations).to.equal(2)
+	end)
 
-    it("should call the destructor when a key gets removed", function()
-        local state = Value {
-            ["foo"] = "bar",
-            ["baz"] = "bar",
-        }
+	it("should call the destructor when a key gets removed", function()
+		local state = Value({
+			["foo"] = "bar",
+			["baz"] = "bar",
+		})
 
-        local destructions = 0
+		local destructions = 0
 
-        local computedPair = ForKeys(state, function(key)
-            return key .. "biz"
-        end, function(key)
-            destructions += 1
-        end)
+		local computedPair = ForKeys(state, function(key)
+			return key .. "biz"
+		end, function(key)
+			destructions += 1
+		end)
 
-        state:set {
-            ["foo"] = "bar",
-        }
+		state:set({
+			["foo"] = "bar",
+		})
 
-        expect(destructions).to.equal(1)
+		expect(destructions).to.equal(1)
 
-        state:set {
-            ["baz"] = "bar",
-        }
+		state:set({
+			["baz"] = "bar",
+		})
 
-        expect(destructions).to.equal(2)
+		expect(destructions).to.equal(2)
 
-        state:set {
-            ["foo"] = "bar",
-            ["baz"] = "bar",
-        }
+		state:set({
+			["foo"] = "bar",
+			["baz"] = "bar",
+		})
 
-        expect(destructions).to.equal(2)
+		expect(destructions).to.equal(2)
 
-        state:set {}
+		state:set({})
 
-        expect(destructions).to.equal(4)
-    end)
+		expect(destructions).to.equal(4)
+	end)
 
-    it("should call the destructor with meta data", function()
-        local state = Value {
-            ["foo"] = "bar",
-        }
+	it("should call the destructor with meta data", function()
+		local state = Value({
+			["foo"] = "bar",
+		})
 
-        local destructions = 0
+		local destructions = 0
 
-        local computedKey = ForKeys(state, function(key)
-            local newKey = key .. "biz"
-            return newKey, newKey
-        end, function(key, meta)
-            expect(meta).to.equal(key)
-            destructions += 1
-        end)
+		local computedKey = ForKeys(state, function(key)
+			local newKey = key .. "biz"
+			return newKey, newKey
+		end, function(key, meta)
+			expect(meta).to.equal(key)
+			destructions += 1
+		end)
 
-        state:set {
-            ["baz"] = "bar",
-        }
+		state:set({
+			["baz"] = "bar",
+		})
 
-        -- this verifies that the meta expectation passed
-        expect(destructions).to.equal(1)
+		-- this verifies that the meta expectation passed
+		expect(destructions).to.equal(1)
 
-        state:set {}
+		state:set({})
 
-        -- this verifies that the meta expectation passed
-        expect(destructions).to.equal(2)
-    end)
+		-- this verifies that the meta expectation passed
+		expect(destructions).to.equal(2)
+	end)
 
-    it("should only destruct an output key when it has no associated input key", function()
-        local map = {
-            ["foo"] = "fiz";
-            ["bar"] = "fiz";
-            ["baz"] = "fuzz";
-        }
+	it("should only destruct an output key when it has no associated input key", function()
+		local map = {
+			["foo"] = "fiz",
+			["bar"] = "fiz",
+			["baz"] = "fuzz",
+		}
 
-        local state = Value {
-            ["foo"] = true,
-        }
+		local state = Value({
+			["foo"] = true,
+		})
 
-        local destructions = 0
+		local destructions = 0
 
-        local computedKey = ForKeys(state, function(key)
-            return map[key]
-        end, function()
-            destructions += 1
-        end)
+		local computedKey = ForKeys(state, function(key)
+			return map[key]
+		end, function()
+			destructions += 1
+		end)
 
-        state:set {
-            ["bar"] = true,
-        }
+		state:set({
+			["bar"] = true,
+		})
 
-        expect(destructions).to.equal(0)
+		expect(destructions).to.equal(0)
 
-        state:set {
-            ["foo"] = true,
-            ["bar"] = true,
-            ["baz"] = true,
-        }
-        
-        expect(destructions).to.equal(0)
+		state:set({
+			["foo"] = true,
+			["bar"] = true,
+			["baz"] = true,
+		})
 
-        state:set {
-            ["baz"] = true;
-        }
-        
-        expect(destructions).to.equal(1)
-    end)
+		expect(destructions).to.equal(0)
+
+		state:set({
+			["baz"] = true,
+		})
+
+		expect(destructions).to.equal(1)
+	end)
 
 	it("should recalculate its value in response to State objects", function()
-		local baseMap = Value {
-            ["foo"] = "baz",
-        }
+		local baseMap = Value({
+			["foo"] = "baz",
+		})
 		local barMap = ForKeys(baseMap, function(key)
 			return key .. "bar"
 		end)
 
-        expect(barMap:get()["foobar"]).to.be.ok()
+		expect(barMap:get()["foobar"]).to.be.ok()
 
-		baseMap:set {
-            ["baz"] = "foo"
-        }
-        
-        expect(barMap:get()["bazbar"]).to.be.ok()
+		baseMap:set({
+			["baz"] = "foo",
+		})
+
+		expect(barMap:get()["bazbar"]).to.be.ok()
 	end)
 
 	it("should recalculate its value in response to ForKeys objects", function()
-		local baseMap = Value {
-            ["foo"] = "baz",
-        }
+		local baseMap = Value({
+			["foo"] = "baz",
+		})
 		local barMap = ForKeys(baseMap, function(key)
 			return key .. "bar"
 		end)
@@ -194,11 +193,11 @@ return function()
 		expect(barMap:get()["foobar"]).to.be.ok()
 		expect(bizMap:get()["foobarbiz"]).to.be.ok()
 
-		baseMap:set {
-            ["fiz"] = "foo",
-            ["baz"] = "foo",
-        }
-        
+		baseMap:set({
+			["fiz"] = "foo",
+			["baz"] = "foo",
+		})
+
 		expect(barMap:get()["fizbar"]).to.be.ok()
 		expect(bizMap:get()["fizbarbiz"]).to.be.ok()
 		expect(barMap:get()["bazbar"]).to.be.ok()
@@ -206,9 +205,9 @@ return function()
 	end)
 
 	it("should not corrupt dependencies after an error", function()
-		local state = Value {
-            ["foo"] = "bar",
-        }
+		local state = Value({
+			["foo"] = "bar",
+		})
 		local simulateError = false
 		local computed = ForKeys(state, function(key)
 			if simulateError then
@@ -226,22 +225,22 @@ return function()
 		expect(computed:get()["foo"]).to.be.ok()
 
 		simulateError = true
-		state:set {
-            ["bar"] = "baz",
-        } -- update the computed to invoke the error
+		state:set({
+			["bar"] = "baz",
+		}) -- update the computed to invoke the error
 
 		simulateError = false
-		state:set {
-            ["bar"] = "fiz",
-        } -- if dependencies are corrupt, the computed won't update
+		state:set({
+			["bar"] = "fiz",
+		}) -- if dependencies are corrupt, the computed won't update
 
 		expect(computed:get()["bar"]).to.be.ok()
 	end)
 
 	it("should garbage-collect unused objects", function()
-		local state = Value {
-            ["foo"] = "bar",
-        }
+		local state = Value({
+			["foo"] = "bar",
+		})
 
 		local counter = 0
 
@@ -254,17 +253,17 @@ return function()
 
 		waitForGC()
 
-        state:set {
-            ["bar"] = "baz",
-        }
+		state:set({
+			["bar"] = "baz",
+		})
 
 		expect(counter).to.equal(1)
 	end)
 
 	it("should not garbage-collect objects in use", function()
-		local state = Value {
-            ["foo"] = "bar",
-        }
+		local state = Value({
+			["foo"] = "bar",
+		})
 		local computed2
 
 		local counter = 0
@@ -281,9 +280,9 @@ return function()
 		end
 
 		waitForGC()
-		state:set {
-            ["bar"] = "baz",
-        }
+		state:set({
+			["bar"] = "baz",
+		})
 
 		expect(counter).to.equal(2)
 	end)
