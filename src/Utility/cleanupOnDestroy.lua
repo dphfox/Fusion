@@ -21,11 +21,12 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local cleanup = require(Package.Utility.cleanup)
 
 type TaskData = {
 	connection: RBXScriptConnection,
-	task: cleanup.Task,
+	task: PubTypes.Task,
 	cleaned: boolean
 }
 
@@ -79,7 +80,7 @@ end
 
 RunService.Heartbeat:Connect(runCleanupTasks)
 
-local function cleanupOnDestroy(instance: Instance?, task: cleanup.Task): (() -> ())
+local function cleanupOnDestroy(instance: Instance?, task: PubTypes.Task): (() -> ())
 	-- set up connection so we can check if the instance is alive
 	-- we don't care about the event we're connecting to, just that we can see
 	-- when it's disconnected by the garbage collector

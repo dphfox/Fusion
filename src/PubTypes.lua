@@ -16,7 +16,7 @@ export type Symbol = {
 	name: string
 }
 
--- PubTypes that can be expressed as vectors of numbers, and so can be animated.
+-- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
 	number |
 	CFrame |
@@ -36,6 +36,15 @@ export type Animatable =
 	Vector2int16 |
 	Vector3 |
 	Vector3int16
+
+-- A task which can be accepted for cleanup.
+export type Task =
+	Instance |
+	RBXScriptConnection |
+	() -> () |
+	{destroy: (any) -> ()} |
+	{Destroy: (any) -> ()} |
+	{Task}
 
 --[[
 	Generic reactive graph types
