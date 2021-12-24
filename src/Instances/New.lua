@@ -7,22 +7,23 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local defaultProps = require(Package.Instances.defaultProps)
+local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
 local function New(className: string)
-	return function(propertyTable: PubTypes.PropertyTable): Instance
+	return function(props: PubTypes.PropertyTable): Instance
+		local instance = Instance.new(className)
 
-		-- stage 1: configure self
-		--     properties
-		-- stage 2: configure descendants
-		--     Children
-		-- stage 3: configure ancestor
-		--     Parent
-		-- stage 4: configure observers
-		--     Ref
-		--     OnEvent / OnChange
+		local classDefaults = defaultProps[className]
+		if classDefaults ~= nil then
+			for defaultProp, defaultValue in pairs(classDefaults) do
+				instance[defaultProp] = defaultValue
+			end
+		end
 
+		applyInstanceProps(props, instance)
 
-		-- TODO: implement this
+		return instance
 	end
 end
 
