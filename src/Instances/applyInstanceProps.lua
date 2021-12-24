@@ -7,9 +7,10 @@
 	No strong reference is kept by default - special keys should take care not
 	to accidentally hold strong references to instances forever.
 
-	If a property of an instance is assigned to twice, an error will be raised.
-	It's encouraged for special keys to do the same where multiple assignment
-	doesn't make sense.
+	If a key is used twice, an error will be thrown. This is done to avoid
+	double assignments or double bindings. However, some special keys may want
+	to enable such assignments - in which case unique keys should be used for
+	each occurence.
 ]]
 
 local Package = script.Parent.Parent
