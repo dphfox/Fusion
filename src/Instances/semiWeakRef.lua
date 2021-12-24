@@ -30,6 +30,7 @@ local function semiWeakRef_impl(strongReferTo: Instance?): Types.SemiWeakRef
 	end
 
 	local ref: Types.SemiWeakRef = { instance = strongReferTo }
+	cachedRefs[strongReferTo] = ref
 	-- we don't want a strong reference lingering around in any closures here
 	strongReferTo = nil
 
@@ -42,7 +43,7 @@ local function semiWeakRef_impl(strongReferTo: Instance?): Types.SemiWeakRef
 	(ref.instance :: Instance).AncestryChanged:Connect(updateStrength)
 	task.defer(updateStrength)
 
-	cachedRefs[strongReferTo] = ref
+
 	return ref
 end
 
