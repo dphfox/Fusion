@@ -45,7 +45,7 @@ function Children:apply(propValue: any, applyToRef: Types.SemiWeakRef, cleanupTa
 		table.clear(newParented)
 		table.clear(newDisconnects)
 
-		local function processChild(child: PubTypes.Children?, autoName: string?)
+		local function processChild(child: any, autoName: string?)
 			local kind = typeof(child)
 
 			if kind == "Instance" then
@@ -108,6 +108,8 @@ function Children:apply(propValue: any, applyToRef: Types.SemiWeakRef, cleanupTa
 				logWarn("unrecognisedChildType", kind)
 			end
 		end
+
+		processChild(propValue)
 	end
 
 	queueUpdate = function()
