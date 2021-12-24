@@ -14,7 +14,9 @@ return function()
 
 			Value = "function",
 			Computed = "function",
-			ComputedPairs = "function",
+			ForPairs = "function",
+			ForKeys = "function",
+			ForValues = "function",
 			Observer = "function",
 
 			Tween = "function",
