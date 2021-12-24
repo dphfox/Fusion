@@ -7,8 +7,8 @@
 	Optionally, a `destructor` function can be specified for cleaning up values.
 	If omitted, the default cleanup function will be used instead.
 
-    Additionally, a `meta` table/value can optionally be returned to pass data created
-    when running the processor to the destructor when the created object is cleaned up.
+	Additionally, a `meta` table/value can optionally be returned to pass data created
+	when running the processor to the destructor when the created object is cleaned up.
 ]]
 
 local Package = script.Parent.Parent
@@ -24,8 +24,8 @@ local cleanup = require(Package.Utility.cleanup)
 
 local class = {}
 
-local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local CLASS_METATABLE = { __index = class }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 local function forPairsCleanup(keyOut: any, valueOut: any, meta: any?)
 	cleanup(keyOut)
@@ -68,24 +68,24 @@ end
 function class:update(): boolean
 	local inputIsState = self._inputIsState
 	local oldInputPairs = self._oldInputTable
-    local newInputPairs = self._inputTable
+	local newInputPairs = self._inputTable
 	local keyIOMap = self._keyIOMap
 	local meta = self._meta
 
-    if inputIsState then
+	if inputIsState then
 		newInputPairs = newInputPairs:get(false)
 	end
 
-    local didChange = false
+	local didChange = false
 
-    -- clean out main dependency set
+	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-    -- if the input table is a state object, add as dependency
+	-- if the input table is a state object, add as dependency
 	if inputIsState then
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
@@ -98,9 +98,9 @@ function class:update(): boolean
 	local newOutputPairs = self._outputTable
 	table.clear(newOutputPairs)
 
-    -- STEP 1: find key/value pairs that changed value or were not previously present
+	-- STEP 1: find key/value pairs that changed value or were not previously present
 
-    --[[
+	--[[
 		- if a key/value input pair doesn't change, it will have the same key/value output pair
 		- if only a value changes, (KI) -> (OVI) is replaced by (KI) -> (NVI)
 		- if only a key changes, (NKI) -> (VI) is added on to (OKI) -> (VI), and may replace (NKI) -> (OVI)
@@ -124,16 +124,16 @@ function class:update(): boolean
 					- it is expected for differing (KI, VI) to give the same VO
 	]]
 
-    for newInKey, newInValue in pairs(newInputPairs) do
+	for newInKey, newInValue in pairs(newInputPairs) do
 		-- get or create key data
-        local keyData = self._keyData[newInKey]
+		local keyData = self._keyData[newInKey]
 		if keyData == nil then
 			keyData = {
 				-- we don't need strong references here - the main set does that
 				-- for us, so let's not introduce unnecessary leak opportunities
 				dependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
 				oldDependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
-				dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE)
+				dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE),
 			}
 			self._keyData[newInKey] = keyData
 		end
@@ -141,7 +141,7 @@ function class:update(): boolean
 		-- if an inputKey's inputValue hasn't changed, neither will its outputKey or outputValue
 		local shouldRecalculate = oldInputPairs[newInKey] ~= newInValue
 
-        if not shouldRecalculate then
+		if not shouldRecalculate then
 			-- check if dependencies have changed
 			for dependency, oldValue in pairs(keyData.dependencyValues) do
 				-- if the dependency changed value, then this needs recalculating
@@ -152,29 +152,40 @@ function class:update(): boolean
 			end
 		end
 
-        -- if we should recalculate the output by this point, do that
-        if shouldRecalculate then
+		-- if we should recalculate the output by this point, do that
+		if shouldRecalculate then
 			keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 			table.clear(keyData.dependencySet)
 
-            local processOK, newOutKey, newOutValue, newMetaValue = captureDependencies(keyData.dependencySet, self._processor, newInKey, newInValue)
-            
-            if processOK then
+			local processOK, newOutKey, newOutValue, newMetaValue = captureDependencies(
+				keyData.dependencySet,
+				self._processor,
+				newInKey,
+				newInValue
+			)
+
+			if processOK then
 				local oldOutValue = oldOutputPairs[newOutKey]
 				local oldMetaValue = meta[newOutKey]
 
-                -- if the output key/value pair has changed
-                if oldOutValue ~= newOutValue then
-                    didChange = true
+				-- if the output key/value pair has changed
+				if oldOutValue ~= newOutValue then
+					didChange = true
 
-                    -- clean up the old calculated value
-                    if oldOutValue ~= nil then
-						local destructOK, err = xpcall(self._destructor, parseError, newOutKey, oldOutValue, oldMetaValue)
+					-- clean up the old calculated value
+					if oldOutValue ~= nil then
+						local destructOK, err = xpcall(
+							self._destructor,
+							parseError,
+							newOutKey,
+							oldOutValue,
+							oldMetaValue
+						)
 						if not destructOK then
 							logErrorNonFatal("forPairsDestructorError", err)
 						end
-                    end
-                end
+					end
+				end
 
 				-- if this key was already written to on this run-through, throw a fatal error.
 				-- when this occurs, (KIA, VIA) -> (KO, VOA) exists; but (KIB, VIB) -> (KO, VOB) also exists
@@ -197,28 +208,34 @@ function class:update(): boolean
 					end
 
 					if previousNewKey ~= nil then
-						logError("forPairsKeyAlreadyWrittenTo", nil, tostring(newOutKey), tostring(previousNewKey), tostring(previousNewValue), tostring(newInKey), tostring(newInValue))
+						logError(
+							"forPairsKeyAlreadyWrittenTo",
+							nil,
+							tostring(newOutKey),
+							tostring(previousNewKey),
+							tostring(previousNewValue),
+							tostring(newInKey),
+							tostring(newInValue)
+						)
 					end
 				end
 
-                -- make the old input match the new input
-                oldInputPairs[newInKey] = newInValue
-                -- store the key IO map for key removal detection
-                keyIOMap[newInKey] = newOutKey
+				-- make the old input match the new input
+				oldInputPairs[newInKey] = newInValue
+				-- store the key IO map for key removal detection
+				keyIOMap[newInKey] = newOutKey
 				-- store the new meta value in the table
 				meta[newOutKey] = newMetaValue
-                -- store the new output value for next time we run the output comparison
-                oldOutputPairs[newOutKey] = newOutValue
-                -- store the new output value in the table we give to the user
-                newOutputPairs[newOutKey] = newOutValue
-
+				-- store the new output value for next time we run the output comparison
+				oldOutputPairs[newOutKey] = newOutValue
+				-- store the new output value in the table we give to the user
+				newOutputPairs[newOutKey] = newOutValue
 			else
 				-- restore old dependencies, because the new dependencies may be corrupt
 				keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 
 				logErrorNonFatal("forPairsProcessorError", newOutKey)
-            end
-
+			end
 		else
 			local newOutKey = keyIOMap[newInKey]
 
@@ -237,14 +254,22 @@ function class:update(): boolean
 				end
 
 				if previousNewKey ~= nil then
-					logError("forPairsKeyAlreadyWrittenTo", nil, tostring(newOutKey), tostring(previousNewKey), tostring(previousNewValue), tostring(newInKey), tostring(newInValue))
+					logError(
+						"forPairsKeyAlreadyWrittenTo",
+						nil,
+						tostring(newOutKey),
+						tostring(previousNewKey),
+						tostring(previousNewValue),
+						tostring(newInKey),
+						tostring(newInValue)
+					)
 				end
 			end
 
 			-- store the old output value in the new table we give to the user
 			newOutputPairs[newOutKey] = oldOutputPairs[newOutKey]
-        end
-    end
+		end
+	end
 
 	-- STEP 2: find keys that were removed
 
@@ -285,13 +310,13 @@ function class:update(): boolean
 end
 
 local function ForPairs<KI, VI, KO, VO, M>(
-	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
+	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
 	-- if destructor function is not defined, use the default cleanup function
 	if destructor == nil then
-		destructor = (forPairsCleanup) :: (KO, VO, M?) -> ()
+		destructor = forPairsCleanup :: (KO, VO, M?) -> ()
 	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
@@ -314,7 +339,7 @@ local function ForPairs<KI, VI, KO, VO, M>(
 		_outputTable = {},
 		_oldOutputTable = {},
 		_keyIOMap = {},
-        _keyData = {},
+		_keyData = {},
 		_meta = {},
 	}, CLASS_METATABLE)
 

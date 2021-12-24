@@ -23,8 +23,8 @@ local cleanup = require(Package.Utility.cleanup)
 
 local class = {}
 
-local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local CLASS_METATABLE = { __index = class }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 local function forValuesCleanup(keyOut: any, meta: any?)
 	cleanup(keyOut)
@@ -65,63 +65,63 @@ end
 ]]
 function class:update(): boolean
 	local inputIsState = self._inputIsState
-    local inputValues = self._inputTable
-    local outputValues = {}
+	local inputValues = self._inputTable
+	local outputValues = {}
 	local meta = self._meta
 
-    if inputIsState then
+	if inputIsState then
 		inputValues = inputValues:get(false)
 	end
 
-    local didChange = false
+	local didChange = false
 
-    -- clean out main dependency set
+	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-    -- clean out main value cache
-    self._oldValueCache, self._valueCache = self._valueCache, self._oldValueCache
-    table.clear(self._valueCache)
+	-- clean out main value cache
+	self._oldValueCache, self._valueCache = self._valueCache, self._oldValueCache
+	table.clear(self._valueCache)
 
-    local newValueCache = self._valueCache
-    local oldValueCache = self._oldValueCache
+	local newValueCache = self._valueCache
+	local oldValueCache = self._oldValueCache
 
-    -- clean out main dependencyUpdates storage; this is used for storing if dependencies
-    -- updated, so that we know if we can use cached values or not
-    local dependencyUpdates = self._dependencyUpdates
-    table.clear(dependencyUpdates)
+	-- clean out main dependencyUpdates storage; this is used for storing if dependencies
+	-- updated, so that we know if we can use cached values or not
+	local dependencyUpdates = self._dependencyUpdates
+	table.clear(dependencyUpdates)
 
-    -- if the input table is a state object, add as dependency
+	-- if the input table is a state object, add as dependency
 	if inputIsState then
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
 	end
 
-    -- STEP 1: find values that changed or were not previously present
-    for _key, inValue in ipairs(inputValues) do
-        local cachedValue = oldValueCache[inValue]
-        local shouldRecalculate = cachedValue == nil
+	-- STEP 1: find values that changed or were not previously present
+	for _key, inValue in ipairs(inputValues) do
+		local cachedValue = oldValueCache[inValue]
+		local shouldRecalculate = cachedValue == nil
 
-        -- get value data
-        local valueData = self._valueData[inValue]
-        if valueData == nil then
-            valueData = {
-                -- we don't need strong references here - the main set does that
-                -- for us, so let's not introduce unnecessary leak opportunities
-                dependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
-                oldDependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
-                dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE)
-            }
-            self._valueData[inValue] = valueData
-        end
+		-- get value data
+		local valueData = self._valueData[inValue]
+		if valueData == nil then
+			valueData = {
+				-- we don't need strong references here - the main set does that
+				-- for us, so let's not introduce unnecessary leak opportunities
+				dependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
+				oldDependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
+				dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE),
+			}
+			self._valueData[inValue] = valueData
+		end
 
-        -- check inputValue dependencies if we have a cached value
-        -- if we don't have a cached value, then there's no point in checking dependencies
-        if not shouldRecalculate then
-            -- check if dependencies have changed
+		-- check inputValue dependencies if we have a cached value
+		-- if we don't have a cached value, then there's no point in checking dependencies
+		if not shouldRecalculate then
+			-- check if dependencies have changed
 			for dependency, oldValue in pairs(valueData.dependencyValues) do
 				-- if the dependency changed value, then this needs recalculating
 				if oldValue ~= dependency:get(false) then
@@ -130,146 +130,148 @@ function class:update(): boolean
 				end
 			end
 
-            --[[
+			--[[
                 If the dependencies have changed then:
                     1: clean up cached value(s), because they are no longer any good
                     2: Swap the old/new dependencies
 
                 This also makes the cached value 'nil', which fits
             ]]
-            if shouldRecalculate then
-                -- step 1: clean up cached value(s), because they are no longer any good
-                -- this also tells future runs to calculate a fresh output value
-                cachedValue = if type(cachedValue) == "table" then cachedValue else {cachedValue};
-                
-                for _, outputValue in ipairs(cachedValue) do
-                    -- clean up the old calculated value
-                    local oldMetaValue = meta[outputValue]
-                    local destructOK, err = xpcall(self._destructor, parseError, outputValue, oldMetaValue)
-                    if not destructOK then
-                        logErrorNonFatal("forValuesDestructorError", err)
-                    end
+			if shouldRecalculate then
+				-- step 1: clean up cached value(s), because they are no longer any good
+				-- this also tells future runs to calculate a fresh output value
+				cachedValue = if type(cachedValue) == "table" then cachedValue else {cachedValue}
 
-                    -- remove stored value data
-                    meta[outputValue] = nil
-                end
+				for _, outputValue in ipairs(cachedValue) do
+					-- clean up the old calculated value
+					local oldMetaValue = meta[outputValue]
+					local destructOK, err = xpcall(self._destructor, parseError, outputValue, oldMetaValue)
+					if not destructOK then
+						logErrorNonFatal("forValuesDestructorError", err)
+					end
 
-                -- step 2: swap the old/new dependencies; clean out the new dependency set so we get a fresh start
-                valueData.oldDependencySet, valueData.dependencySet = valueData.dependencySet, valueData.oldDependencySet
-                table.clear(valueData.dependencySet)
+					-- remove stored value data
+					meta[outputValue] = nil
+				end
 
-                -- step 3: remove stored cached value
-                oldValueCache[inValue] = nil
-                cachedValue = nil
-            end
-        end
+				-- step 2: swap the old/new dependencies; clean out the new dependency set so we get a fresh start
+				valueData.oldDependencySet, valueData.dependencySet =
+					valueData.dependencySet, valueData.oldDependencySet
+				table.clear(valueData.dependencySet)
 
-        -- if we still don't need to recalculate, then we can re-use a cached value
-        -- if there are no cached values, then set recalculate to true and
-        -- calculate a new value
-        if not shouldRecalculate then
-            -- if we're using a table, then try to pull a value from the cache
-            if type(cachedValue) == "table" then
-                local cachedValues = cachedValue
-                local cachedValuesSize = #cachedValues
+				-- step 3: remove stored cached value
+				oldValueCache[inValue] = nil
+				cachedValue = nil
+			end
+		end
 
-                if cachedValuesSize > 0 then
-                    cachedValue = cachedValues[cachedValuesSize]
-                    table.remove(cachedValues, cachedValuesSize)
+		-- if we still don't need to recalculate, then we can re-use a cached value
+		-- if there are no cached values, then set recalculate to true and
+		-- calculate a new value
+		if not shouldRecalculate then
+			-- if we're using a table, then try to pull a value from the cache
+			if type(cachedValue) == "table" then
+				local cachedValues = cachedValue
+				local cachedValuesSize = #cachedValues
 
-                else
-                    cachedValue = nil
-                    shouldRecalculate = true
-                end
-            end
-        end
+				if cachedValuesSize > 0 then
+					cachedValue = cachedValues[cachedValuesSize]
+					table.remove(cachedValues, cachedValuesSize)
+				else
+					cachedValue = nil
+					shouldRecalculate = true
+				end
+			end
+		end
 
-        if shouldRecalculate then
-            local capturedDependencies = {}
-            local processOK, newOutValue, newMetaValue = captureDependencies(capturedDependencies, self._processor, inValue)
+		if shouldRecalculate then
+			local capturedDependencies = {}
+			local processOK, newOutValue, newMetaValue = captureDependencies(
+				capturedDependencies,
+				self._processor,
+				inValue
+			)
 
-            if processOK then
-                for dependency in pairs(capturedDependencies) do
-                    capturedDependencies[dependency] = true
-                end
+			if processOK then
+				for dependency in pairs(capturedDependencies) do
+					capturedDependencies[dependency] = true
+				end
 
-                -- store meta value, since we don't touch that when reusing values
-                meta[newOutValue] = newMetaValue
+				-- store meta value, since we don't touch that when reusing values
+				meta[newOutValue] = newMetaValue
 
-                didChange = true
-            else
-                logErrorNonFatal("forPairsProcessorError", newOutValue)
-            end
-        end
+				didChange = true
+			else
+				logErrorNonFatal("forPairsProcessorError", newOutValue)
+			end
+		end
 
-        -- if we successfully created a new value or found a value to reuse,
-        -- cache it and update the stored data
-        if cachedValue ~= nil then
-            -- we store tables and objects in an array of cached objects, since they need to be unique
-            if type(cachedValue) == "table" or getmetatable(cachedValue) then
-                local cachedValues = newValueCache[inValue]
-                if not cachedValues then
-                    cachedValues = {}
-                    newValueCache[inValue] = cachedValues
-                end
+		-- if we successfully created a new value or found a value to reuse,
+		-- cache it and update the stored data
+		if cachedValue ~= nil then
+			-- we store tables and objects in an array of cached objects, since they need to be unique
+			if type(cachedValue) == "table" or getmetatable(cachedValue) then
+				local cachedValues = newValueCache[inValue]
+				if not cachedValues then
+					cachedValues = {}
+					newValueCache[inValue] = cachedValues
+				end
 
-                table.insert(cachedValues, cachedValue)
+				table.insert(cachedValues, cachedValue)
+			else
+				newValueCache[inValue] = cachedValue
+			end
 
-            else
-                newValueCache[inValue] = cachedValue
-            end
-
-            outputValues[_key] = cachedValue
-        end
-    end
-
-	-- STEP 2: find values that were removed
-    for oldInValue, oldCachedValue in pairs(oldValueCache) do
-        if type(oldCachedValue) == "table" then
-            -- clean up any remaining cached values
-            for _, cachedValue in ipairs(oldCachedValue) do
-                local oldMetaValue = meta[cachedValue]
-                local destructOK, err = xpcall(self._destructor, parseError, cachedValue, oldMetaValue)
-                if not destructOK then
-                    logErrorNonFatal("forValuesDestructorError", err)
-                end
-    
-                -- remove stored value data
-                meta[cachedValue] = nil
-
-                -- if we removed a value, then we did change
-                didChange = true
-            end
-
-        elseif inputValues[oldInValue] == nil then
-            -- clean up the old calculated value
-            local oldMetaValue = meta[oldCachedValue]
-            local destructOK, err = xpcall(self._destructor, parseError, oldCachedValue, oldMetaValue)
-            if not destructOK then
-                logErrorNonFatal("forValuesDestructorError", err)
-            end
-
-            -- remove stored value data
-            meta[oldCachedValue] = nil
-            
-            -- if we removed a value, then we did change
-            didChange = true
-        end
+			outputValues[_key] = cachedValue
+		end
 	end
 
-    self._outputTable = outputValues
+	-- STEP 2: find values that were removed
+	for oldInValue, oldCachedValue in pairs(oldValueCache) do
+		if type(oldCachedValue) == "table" then
+			-- clean up any remaining cached values
+			for _, cachedValue in ipairs(oldCachedValue) do
+				local oldMetaValue = meta[cachedValue]
+				local destructOK, err = xpcall(self._destructor, parseError, cachedValue, oldMetaValue)
+				if not destructOK then
+					logErrorNonFatal("forValuesDestructorError", err)
+				end
+
+				-- remove stored value data
+				meta[cachedValue] = nil
+
+				-- if we removed a value, then we did change
+				didChange = true
+			end
+		elseif inputValues[oldInValue] == nil then
+			-- clean up the old calculated value
+			local oldMetaValue = meta[oldCachedValue]
+			local destructOK, err = xpcall(self._destructor, parseError, oldCachedValue, oldMetaValue)
+			if not destructOK then
+				logErrorNonFatal("forValuesDestructorError", err)
+			end
+
+			-- remove stored value data
+			meta[oldCachedValue] = nil
+
+			-- if we removed a value, then we did change
+			didChange = true
+		end
+	end
+
+	self._outputTable = outputValues
 
 	return didChange
 end
 
 local function ForValues<VI, VO, M>(
-	inputTable: PubTypes.CanBeState<{[VI]: VO}>,
+	inputTable: PubTypes.CanBeState<{ [VI]: VO }>,
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>
 	-- if destructor function is not defined, use the default cleanup function
 	if destructor == nil then
-		destructor = (forValuesCleanup) :: (VO, M?) -> ()
+		destructor = forValuesCleanup :: (VO, M?) -> ()
 	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
@@ -289,7 +291,7 @@ local function ForValues<VI, VO, M>(
 
 		_inputTable = inputTable,
 		_outputTable = {},
-        _keyData = {},
+		_keyData = {},
 		_meta = {},
 	}, CLASS_METATABLE)
 
