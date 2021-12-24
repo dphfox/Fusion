@@ -265,7 +265,7 @@ function class:update(): boolean
 end
 
 local function ForValues<VI, VO, M>(
-	inputTable: PubTypes.CanBeState<{ [VI]: VO }>,
+	inputTable: PubTypes.CanBeState<{ [any]: VI }>,
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>

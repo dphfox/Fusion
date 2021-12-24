@@ -182,7 +182,7 @@ function class:update(): boolean
 end
 
 local function ForKeys<KI, KO, M>(
-	inputTable: PubTypes.CanBeState<{ [KI]: KO }>,
+	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
