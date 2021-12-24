@@ -18,6 +18,9 @@ local isAccessible = require(Package.Instances.isAccessible)
 local WEAK_MODE = { __mode = "v" }
 local STRONG_MODE = { __mode = "" }
 
+-- Because the semi-weak refs are stored strongly here, the instance keys won't
+-- garbage collect unless the semi-weak ref is weak, which only occurs when the
+-- instance is not accessible.
 local cachedRefs: {[Instance]: Types.SemiWeakRef} = {}
 setmetatable(cachedRefs, { __mode = "k"})
 
