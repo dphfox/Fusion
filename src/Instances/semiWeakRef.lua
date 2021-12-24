@@ -1,7 +1,7 @@
 --!strict
 
 --[[
-	Returns a new semi-weak reference to the given instance:
+	Returns a semi-weak reference to the given instance:
 
 	- the reference acts like a strong reference when the instance can be
 	accessed via the data model (see `isAccessible.lua`)
@@ -18,7 +18,14 @@ local isAccessible = require(Package.Instances.isAccessible)
 local WEAK_MODE = { __mode = "v" }
 local STRONG_MODE = { __mode = "" }
 
+local cachedRefs: {[Instance]: Types.SemiWeakRef} = {}
+setmetatable(cachedRefs, { __mode = "k"})
+
 local function semiWeakRef_impl(strongReferTo: Instance?): Types.SemiWeakRef
+	if cachedRefs[strongReferTo] then
+		return cachedRefs[strongReferTo]
+	end
+
 	local ref: Types.SemiWeakRef = { instance = strongReferTo }
 	-- we don't want a strong reference lingering around in any closures here
 	strongReferTo = nil
@@ -32,6 +39,7 @@ local function semiWeakRef_impl(strongReferTo: Instance?): Types.SemiWeakRef
 	(ref.instance :: Instance).AncestryChanged:Connect(updateStrength)
 	task.defer(updateStrength)
 
+	cachedRefs[strongReferTo] = ref
 	return ref
 end
 
