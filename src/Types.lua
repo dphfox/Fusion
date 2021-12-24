@@ -66,7 +66,7 @@ export type ForPairs<KI, VI, KO, VO, M> = PubTypes.ForPairs<KO, VO> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KI, KO> & {
+export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (KI) -> (KO),
 	_destructor: (KO, M?) -> (),
@@ -84,7 +84,7 @@ export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KI, KO> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type ForValues<VI, VO, M> = PubTypes.ForValues<VI, VO> & {
+export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (VI) -> (VO),
 	_destructor: (VO, M?) -> (),

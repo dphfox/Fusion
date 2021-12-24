@@ -28,9 +28,9 @@ type Fusion = {
 
 	Value: <T>(initialValue: T) -> Value<T>,
 	Computed: <T>(callback: () -> T) -> Computed<T>,
-	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VO}>, processor: (KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
-	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: KO}>, processor: (KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KI, KO>,
-	ForValues: <VI, VO, M>(inputTable: CanBeState<{[VI]: VO}>, processor: (VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForKeys<VI, VO>,
+	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
+	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
+	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
