@@ -166,7 +166,6 @@ function class:update(): boolean
 
 			if processOK then
 				local oldOutValue = oldOutputPairs[newOutKey]
-				local oldMetaValue = meta[newOutKey]
 
 				-- if the output key/value pair has changed
 				if oldOutValue ~= newOutValue then
@@ -174,6 +173,8 @@ function class:update(): boolean
 
 					-- clean up the old calculated value
 					if oldOutValue ~= nil then
+						local oldMetaValue = meta[newOutKey]
+
 						local destructOK, err = xpcall(
 							self._destructor,
 							parseError,
@@ -209,7 +210,7 @@ function class:update(): boolean
 
 					if previousNewKey ~= nil then
 						logError(
-							"forPairsKeyAlreadyWrittenTo",
+							"forPairsKeyCollision",
 							nil,
 							tostring(newOutKey),
 							tostring(previousNewKey),
@@ -255,7 +256,7 @@ function class:update(): boolean
 
 				if previousNewKey ~= nil then
 					logError(
-						"forPairsKeyAlreadyWrittenTo",
+						"forPairsKeyCollision",
 						nil,
 						tostring(newOutKey),
 						tostring(previousNewKey),

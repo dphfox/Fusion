@@ -19,6 +19,7 @@ local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local logError = require(Package.Logging.logError)
 local cleanup = require(Package.Utility.cleanup)
 
 local class = {}
@@ -132,6 +133,13 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				local oldInKey = keyOIMap[newOutKey]
+
+				-- if there are colliding output keys, throw an error
+				if oldInKey ~= newInKey and newInputKeys[oldInKey] ~= nil then
+					logError("forKeysKeyCollision", nil, tostring(newOutKey), tostring(oldInKey), tostring(newOutKey))
+				end
+
 				-- make the old input match the new input value
 				oldInputKeys[newInKey] = _value
 				-- store the new meta value in the table
