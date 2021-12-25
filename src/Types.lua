@@ -52,17 +52,19 @@ export type ForPairs<KI, VI, KO, VO, M> = PubTypes.ForPairs<KO, VO> & {
 	_processor: (KI, VI) -> (KO, VO),
 	_destructor: (VO, M?) -> (),
 	_inputIsState: boolean,
-	_inputTable: PubTypes.CanBeState<{[KI]: VI}>,
-	_oldInputTable: {[KI]: VI},
-	_outputTable: {[KO]: VO},
-	_oldOutputTable: {[KO]: VO},
-	_keyIOMap: {[KI]: KO},
-	_meta: {[KO]: M?},
-	_keyData: {[KI]: {
-		dependencySet: Set<PubTypes.Dependency>,
-		oldDependencySet: Set<PubTypes.Dependency>,
-		dependencyValues: {[PubTypes.Dependency]: any}
-	}},
+	_inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
+	_oldInputTable: { [KI]: VI },
+	_outputTable: { [KO]: VO },
+	_oldOutputTable: { [KO]: VO },
+	_keyIOMap: { [KI]: KO },
+	_meta: { [KO]: M? },
+	_keyData: {
+		[KI]: {
+			dependencySet: Set<PubTypes.Dependency>,
+			oldDependencySet: Set<PubTypes.Dependency>,
+			dependencyValues: { [PubTypes.Dependency]: any },
+		},
+	},
 }
 
 -- A state object whose value is derived from other objects using a callback.
@@ -71,16 +73,18 @@ export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 	_processor: (KI) -> (KO),
 	_destructor: (KO, M?) -> (),
 	_inputIsState: boolean,
-	_inputTable: PubTypes.CanBeState<{[KI]: KO}>,
-	_oldInputTable: {[KI]: KO},
-	_outputTable: {[KO]: any},
-	_keyOIMap: {[KO]: KI},
-	_meta: {[KO]: M?},
-	_keyData: {[KI]: {
-		dependencySet: Set<PubTypes.Dependency>,
-		oldDependencySet: Set<PubTypes.Dependency>,
-		dependencyValues: {[PubTypes.Dependency]: any}
-	}},
+	_inputTable: PubTypes.CanBeState<{ [KI]: KO }>,
+	_oldInputTable: { [KI]: KO },
+	_outputTable: { [KO]: any },
+	_keyOIMap: { [KO]: KI },
+	_meta: { [KO]: M? },
+	_keyData: {
+		[KI]: {
+			dependencySet: Set<PubTypes.Dependency>,
+			oldDependencySet: Set<PubTypes.Dependency>,
+			dependencyValues: { [PubTypes.Dependency]: any },
+		},
+	},
 }
 
 -- A state object whose value is derived from other objects using a callback.
@@ -89,16 +93,18 @@ export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_processor: (VI) -> (VO),
 	_destructor: (VO, M?) -> (),
 	_inputIsState: boolean,
-	_inputTable: PubTypes.CanBeState<{[VI]: VO}>,
-	_outputTable: {[any]: VI},
-	_valueCache: {[VO]: any},
-	_oldValueCache: {[VO]: any},
-	_meta: {[VO]: M?},
-	_valueData: {[VI]: {
-		dependencySet: Set<PubTypes.Dependency>,
-		oldDependencySet: Set<PubTypes.Dependency>,
-		dependencyValues: {[PubTypes.Dependency]: any}
-	}},
+	_inputTable: PubTypes.CanBeState<{ [VI]: VO }>,
+	_outputTable: { [any]: VI },
+	_valueCache: { [VO]: any },
+	_oldValueCache: { [VO]: any },
+	_meta: { [VO]: M? },
+	_valueData: {
+		[VI]: {
+			dependencySet: Set<PubTypes.Dependency>,
+			oldDependencySet: Set<PubTypes.Dependency>,
+			dependencyValues: { [PubTypes.Dependency]: any },
+		},
+	},
 }
 
 -- A state object which follows another state object using tweens.
