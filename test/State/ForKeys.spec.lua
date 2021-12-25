@@ -32,7 +32,7 @@ return function()
 		expect(state["foobaz"]).to.equal(true)
 	end)
 
-	it("should not recalculate its KO in response to a changed KI", function()
+	it("should not recalculate its KO in response to an unchanged KI", function()
 		local state = Value({
 			["foo"] = "bar",
 		})
@@ -43,8 +43,6 @@ return function()
 			calculations += 1
 			return key
 		end)
-
-		local foobiz = computedPair:get()["foobiz"]
 
 		expect(calculations).to.equal(1)
 
@@ -92,6 +90,34 @@ return function()
 		state:set({})
 
 		expect(destructions).to.equal(4)
+	end)
+
+	it("should throw if there is a key collision", function()
+		expect(function()
+			local state = Value({
+				["foo"] = "bar",
+				["baz"] = "bar",
+			})
+
+			local computed = ForKeys(state, function()
+				return "foo"
+			end)
+		end).to.throw("forKeysKeyCollision")
+
+		local state = Value({
+			["foo"] = "bar",
+		})
+
+		local computed = ForKeys(state, function()
+			return "foo"
+		end)
+
+		expect(function()
+			state:set({
+				["foo"] = "bar",
+				["baz"] = "bar",
+			})
+		end).to.throw("forKeysKeyCollision")
 	end)
 
 	it("should call the destructor with meta data", function()

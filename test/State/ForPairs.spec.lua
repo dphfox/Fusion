@@ -142,7 +142,7 @@ return function()
 		end
 	)
 
-	it("should throw if two input key/value pairs write to the same output key", function()
+	it("should throw if there is a key collision", function()
 		expect(function()
 			local state = Value({
 				["foo"] = "bar",
@@ -152,7 +152,7 @@ return function()
 			local computed = ForPairs(state, function(key, value)
 				return value, key
 			end)
-		end).to.throw("forPairsKeyAlreadyWrittenTo")
+		end).to.throw("forPairsKeyCollision")
 
 		local state = Value({
 			["foo"] = "bar",
@@ -167,7 +167,7 @@ return function()
 				["foo"] = "bar",
 				["baz"] = "bar",
 			})
-		end).to.throw("forPairsKeyAlreadyWrittenTo")
+		end).to.throw("forPairsKeyCollision")
 	end)
 
 	it("should call the destructor with meta data", function()
