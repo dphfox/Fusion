@@ -91,8 +91,10 @@ export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_inputIsState: boolean,
 	_inputTable: PubTypes.CanBeState<{[VI]: VO}>,
 	_outputTable: {[any]: VI},
+	_valueCache: {[VO]: any},
+	_oldValueCache: {[VO]: any},
 	_meta: {[VO]: M?},
-	_keyData: {[VI]: {
+	_valueData: {[VI]: {
 		dependencySet: Set<PubTypes.Dependency>,
 		oldDependencySet: Set<PubTypes.Dependency>,
 		dependencyValues: {[PubTypes.Dependency]: any}

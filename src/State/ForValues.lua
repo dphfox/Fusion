@@ -66,6 +66,9 @@ end
 function class:update(): boolean
 	local inputIsState = self._inputIsState
 	local inputValues = self._inputTable
+	local newValueCache = self._oldValueCache -- _oldValueCache and _valueCache get swapped and cleared below
+	local oldValueCache = self._valueCache
+	local dependenciesCaptured = {} -- we use this to cache dependency checks/captures
 	local outputValues = {}
 	local meta = self._meta
 
@@ -82,17 +85,9 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	-- clean out main value cache
-	self._oldValueCache, self._valueCache = self._valueCache, self._oldValueCache
-	table.clear(self._valueCache)
-
-	local newValueCache = self._valueCache
-	local oldValueCache = self._oldValueCache
-
-	-- clean out main dependencyUpdates storage; this is used for storing if dependencies
-	-- updated, so that we know if we can use cached values or not
-	local dependencyUpdates = self._dependencyUpdates
-	table.clear(dependencyUpdates)
+	-- swap caches and clear out the old value cache
+	self._oldValueCache, self._valueCache = oldValueCache, newValueCache
+	table.clear(newValueCache)
 
 	-- if the input table is a state object, add as dependency
 	if inputIsState then
@@ -101,8 +96,9 @@ function class:update(): boolean
 	end
 
 	-- STEP 1: find values that changed or were not previously present
-	for _key, inValue in ipairs(inputValues) do
+	for _key, inValue in pairs(inputValues) do
 		local cachedValue = oldValueCache[inValue]
+		local newCachedValue = newValueCache[inValue]
 		local shouldRecalculate = cachedValue == nil
 
 		-- get value data
@@ -118,9 +114,17 @@ function class:update(): boolean
 			self._valueData[inValue] = valueData
 		end
 
+		-- if we already cached a new constant (non-table) value on this run-through,
+		-- then we can just re-use that as the cached value
+		if newCachedValue ~= nil and type(newCachedValue) ~= "table" then
+			cachedValue = newCachedValue
+			shouldRecalculate = false
+
 		-- check inputValue dependencies if we have a cached value
 		-- if we don't have a cached value, then there's no point in checking dependencies
-		if not shouldRecalculate then
+		-- we also verify that we haven't already captured the dependencies for this inValue
+		-- since if we have, then we don't need to recalculate and can skip this step
+		elseif not shouldRecalculate and dependenciesCaptured[inValue] == nil then
 			-- check if dependencies have changed
 			for dependency, oldValue in pairs(valueData.dependencyValues) do
 				-- if the dependency changed value, then this needs recalculating
@@ -162,6 +166,10 @@ function class:update(): boolean
 				-- step 3: remove stored cached value
 				oldValueCache[inValue] = nil
 				cachedValue = nil
+			else
+				-- inform future runs that we already checked this inValue's dependencies,
+				-- and that we don't need to re-capture dependencies
+				dependenciesCaptured[inValue] = true
 			end
 		end
 
@@ -184,25 +192,34 @@ function class:update(): boolean
 			end
 		end
 
+		-- if we should recalculate the output by this point, do that
 		if shouldRecalculate then
-			local capturedDependencies = {}
-			local processOK, newOutValue, newMetaValue = captureDependencies(
-				capturedDependencies,
-				self._processor,
-				inValue
-			)
+			local processOK, newOutValue, newMetaValue
+			
+			-- if we already captured the dependencies for this inValue, we don't need to do it again
+			if dependenciesCaptured[inValue] then
+				processOK, newOutValue, newMetaValue = pcall(self._processor, inValue)
+
+			-- otherwise, we need to capture the dependencies
+			else
+				processOK, newOutValue, newMetaValue = captureDependencies(
+					valueData.dependencySet,
+					self._processor,
+					inValue
+				)
+			end
 
 			if processOK then
-				for dependency in pairs(capturedDependencies) do
-					capturedDependencies[dependency] = true
-				end
-
+				-- prepare the value to be cached
+				cachedValue = newOutValue
 				-- store meta value, since we don't touch that when reusing values
 				meta[newOutValue] = newMetaValue
+				-- inform future runs that we already captured the dependencies
+				dependenciesCaptured[inValue] = true
 
 				didChange = true
 			else
-				logErrorNonFatal("forPairsProcessorError", newOutValue)
+				logErrorNonFatal("forValuesProcessorError", newOutValue)
 			end
 		end
 
@@ -210,7 +227,7 @@ function class:update(): boolean
 		-- cache it and update the stored data
 		if cachedValue ~= nil then
 			-- we store tables and objects in an array of cached objects, since they need to be unique
-			if type(cachedValue) == "table" or getmetatable(cachedValue) then
+			if type(cachedValue) == "userdata" or type(cachedValue) == "table" then
 				local cachedValues = newValueCache[inValue]
 				if not cachedValues then
 					cachedValues = {}
@@ -222,11 +239,13 @@ function class:update(): boolean
 				newValueCache[inValue] = cachedValue
 			end
 
+			-- store the value in the output with the same key
 			outputValues[_key] = cachedValue
 		end
 	end
 
 	-- STEP 2: find values that were removed
+	-- for tables of data, we just need to check if it's still in the cache
 	for oldInValue, oldCachedValue in pairs(oldValueCache) do
 		if type(oldCachedValue) == "table" then
 			-- clean up any remaining cached values
@@ -243,7 +262,7 @@ function class:update(): boolean
 				-- if we removed a value, then we did change
 				didChange = true
 			end
-		elseif inputValues[oldInValue] == nil then
+		elseif newValueCache[oldInValue] ~= oldCachedValue then
 			-- clean up the old calculated value
 			local oldMetaValue = meta[oldCachedValue]
 			local destructOK, err = xpcall(self._destructor, parseError, oldCachedValue, oldMetaValue)
@@ -278,7 +297,7 @@ local function ForValues<VI, VO, M>(
 
 	local self = setmetatable({
 		type = "State",
-		kind = "ForKeys",
+		kind = "ForValues",
 		dependencySet = {},
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
@@ -291,7 +310,9 @@ local function ForValues<VI, VO, M>(
 
 		_inputTable = inputTable,
 		_outputTable = {},
-		_keyData = {},
+		_valueCache = {},
+		_oldValueCache = {},
+		_valueData = {},
 		_meta = {},
 	}, CLASS_METATABLE)
 
