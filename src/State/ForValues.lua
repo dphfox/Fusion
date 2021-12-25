@@ -120,10 +120,10 @@ function class:update(): boolean
 			cachedValue = newCachedValue
 			shouldRecalculate = false
 
-		-- check inputValue dependencies if we have a cached value
-		-- if we don't have a cached value, then there's no point in checking dependencies
-		-- we also verify that we haven't already captured the dependencies for this inValue
-		-- since if we have, then we don't need to recalculate and can skip this step
+			-- check inputValue dependencies if we have a cached value
+			-- if we don't have a cached value, then there's no point in checking dependencies
+			-- we also verify that we haven't already captured the dependencies for this inValue
+			-- since if we have, then we don't need to recalculate and can skip this step
 		elseif not shouldRecalculate and dependenciesCaptured[inValue] == nil then
 			-- check if dependencies have changed
 			for dependency, oldValue in pairs(valueData.dependencyValues) do
@@ -195,12 +195,12 @@ function class:update(): boolean
 		-- if we should recalculate the output by this point, do that
 		if shouldRecalculate then
 			local processOK, newOutValue, newMetaValue
-			
+
 			-- if we already captured the dependencies for this inValue, we don't need to do it again
 			if dependenciesCaptured[inValue] then
 				processOK, newOutValue, newMetaValue = pcall(self._processor, inValue)
 
-			-- otherwise, we need to capture the dependencies
+				-- otherwise, we need to capture the dependencies
 			else
 				processOK, newOutValue, newMetaValue = captureDependencies(
 					valueData.dependencySet,

@@ -66,7 +66,7 @@ return function()
 
 			return value .. "biz"
 		end)
-		
+
 		expect(processorCalls).to.equal(1)
 
 		state:set({
@@ -75,25 +75,24 @@ return function()
 
 		expect(processorCalls).to.equal(2)
 
-
 		state:set({
 			[2] = "bar",
 			[3] = "bar",
 		})
-		
+
 		expect(processorCalls).to.equal(2)
 
 		state:set({
 			[1] = "bar",
 			[2] = "bar",
 		})
-		
+
 		expect(processorCalls).to.equal(2)
 
 		state:set({})
-		
+
 		expect(processorCalls).to.equal(2)
-		
+
 		state:set({
 			[1] = "bar",
 			[2] = "foo",
@@ -154,7 +153,7 @@ return function()
 		local computed = ForValues(state, function(value)
 			local obj = Instance.new("Folder")
 			obj.Parent = value
-			
+
 			return obj
 		end, function(value)
 			destructions += 1
