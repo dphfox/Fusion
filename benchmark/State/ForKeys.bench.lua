@@ -28,12 +28,8 @@ return {
 		name = "ForKeys with input table - constant output",
 		calls = 20000,
 
-		preRun = function()
-			return { ["Foo"] = "bar" }
-		end,
-
-		run = function(set)
-			ForKeys(set, constantOutput)
+		run = function()
+			ForKeys({ ["Foo"] = "bar" }, constantOutput)
 		end,
 	},
 
@@ -41,12 +37,8 @@ return {
 		name = "ForKeys with input table - dynamic output",
 		calls = 20000,
 
-		preRun = function()
-			return { ["Foo"] = "bar" }
-		end,
-
-		run = function(set)
-			ForKeys(set, dynamicOutput)
+		run = function()
+			ForKeys({ ["Foo"] = "bar" }, dynamicOutput)
 		end,
 	},
 
@@ -55,12 +47,8 @@ return {
 		name = "ForKeys with input state - constant output",
 		calls = 20000,
 
-		preRun = function()
-			return Value({ ["Foo"] = "bar" })
-		end,
-
-		run = function(state)
-			ForKeys(state, constantOutput)
+		run = function()
+			ForKeys(Value({ ["Foo"] = "bar" }), constantOutput)
 		end,
 	},
 
@@ -68,12 +56,8 @@ return {
 		name = "ForKeys with input state - dynamic output",
 		calls = 20000,
 
-		preRun = function()
-			return Value({ ["Foo"] = "bar" })
-		end,
-
-		run = function(state)
-			ForKeys(state, dynamicOutput)
+		run = function()
+			ForKeys(Value({ ["Foo"] = "bar" }), dynamicOutput)
 		end,
 	},
 
@@ -81,12 +65,8 @@ return {
 		name = "ForKeys with changed input table - constant output",
 		calls = 20000,
 
-		preRun = function()
-			return { ["Foo"] = "bar" }
-		end,
-
-		run = function(set)
-			local computed = ForKeys(set, constantOutput)
+		run = function()
+			local computed = ForKeys({ ["Foo"] = "bar" }, constantOutput)
 			computed.__inputTable = { ["Bar"] = "foo" }
 			computed:update()
 		end,
@@ -96,12 +76,8 @@ return {
 		name = "ForKeys with changed input table - dynamic output",
 		calls = 20000,
 
-		preRun = function()
-			return { ["Foo"] = "bar" }
-		end,
-
-		run = function(set)
-			local computed = ForKeys(set, dynamicOutput)
+		run = function()
+			local computed = ForKeys({ ["Foo"] = "bar" }, dynamicOutput)
 			computed.__inputTable = { ["Bar"] = "foo" }
 			computed:update()
 		end,

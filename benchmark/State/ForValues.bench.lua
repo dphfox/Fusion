@@ -28,12 +28,8 @@ return {
 		name = "ForValues with input table - constant output",
 		calls = 20000,
 
-		preRun = function()
-			return { 1 }
-		end,
-
-		run = function(arr)
-			ForValues(arr, constantOutput)
+		run = function()
+			ForValues({ 1 }, constantOutput)
 		end,
 	},
 
@@ -41,12 +37,8 @@ return {
 		name = "ForValues with input table - dynamic output",
 		calls = 20000,
 
-		preRun = function()
-			return { 1 }
-		end,
-
-		run = function(arr)
-			ForValues(arr, dynamicOutput)
+		run = function()
+			ForValues({ 1 }, dynamicOutput)
 		end,
 	},
 
@@ -64,7 +56,7 @@ return {
 		name = "ForValues with input state - dynamic output",
 		calls = 20000,
 
-		run = function(state)
+		run = function()
 			ForValues(Value({ 1 }), dynamicOutput)
 		end,
 	},
@@ -73,12 +65,8 @@ return {
 		name = "ForValues with changed input table - constant output",
 		calls = 20000,
 
-		preRun = function()
-			return { 1 }
-		end,
-
-		run = function(arr)
-			local computed = ForValues(arr, constantOutput)
+		run = function()
+			local computed = ForValues({ 1 }, constantOutput)
 			computed.__inputTable = { 2 }
 			computed:update()
 		end,
@@ -88,12 +76,8 @@ return {
 		name = "ForValues with changed input table - dynamic output",
 		calls = 20000,
 
-		preRun = function()
-			return { 1 }
-		end,
-
-		run = function(arr)
-			local computed = ForValues(arr, dynamicOutput)
+		run = function()
+			local computed = ForValues({ 1 }, dynamicOutput)
 			computed.__inputTable = { 2 }
 			computed:update()
 		end,
