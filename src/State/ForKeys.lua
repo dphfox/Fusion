@@ -148,6 +148,9 @@ function class:update(): boolean
 				keyOIMap[newOutKey] = newInKey
 				-- store the new output key in the table with its original value, which we give to the user
 				outputKeys[newOutKey] = _value
+
+				-- if we had to recalculate the output, then we did change
+				didChange = true
 			else
 				-- restore old dependencies, because the new dependencies may be corrupt
 				keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
