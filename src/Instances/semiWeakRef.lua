@@ -43,7 +43,6 @@ local function semiWeakRef_impl(strongReferTo: Instance?): Types.SemiWeakRef
 	(ref.instance :: Instance).AncestryChanged:Connect(updateStrength)
 	task.defer(updateStrength)
 
-
 	return ref
 end
 
