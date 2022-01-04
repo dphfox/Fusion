@@ -17,7 +17,7 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
-
+local logError = require(Package.Logging.logError)
 
 
 local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: Types.SemiWeakRef)
@@ -31,7 +31,49 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 	--     Ref
 	--     OnEvent / OnChange
 
-	-- TODO: implement this
+	-- TODO: type this
+	local specialKeys = {
+		self = {},
+		descendants = {},
+		ancestor = {},
+		observer = {}
+	}
+
+	local parentTo: Instance? = nil
+	-- TODO: when do we connect to cleanupOnDestroy?
+	local cleanupTasks = {}
+
+	for key, value in pairs(props) do
+		if key == "Parent" then
+			-- the only string key we need to save for later (the ancestor step)
+			parentTo = value
+		elseif typeof(key) == "string" then
+			-- apply any other string keys as properties directly
+			applyToRef.instance[key] = value
+		elseif typeof(key) == "table" and key.type == "SpecialKey" then
+			-- unmix special keys into their appropriate stages
+			-- TODO: type this
+			local keys = specialKeys[key.stage]
+
+			if keys == nil then
+				logError("unrecognisedPropertyStage", nil, key.stage)
+			else
+				keys[key] = value
+			end
+		end
+	end
+
+	local function applySpecialKeys(keys)
+		for key, value in pairs(keys) do
+			key:apply(value, applyToRef, cleanupTasks)
+		end
+	end
+
+	applySpecialKeys(specialKeys.self)
+	applySpecialKeys(specialKeys.descendants)
+	applyToRef.instance.Parent = parentTo
+	applySpecialKeys(specialKeys.ancestor)
+	applySpecialKeys(specialKeys.observer)
 end
 
 local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)

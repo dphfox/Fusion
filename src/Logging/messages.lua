@@ -21,5 +21,6 @@ return {
 	strictReadError = "'%s' is not a valid member of '%s'.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",
 	unrecognisedChildType = "'%s' type children aren't accepted as children in `New`.",
-	unrecognisedPropertyKey = "'%s' keys aren't accepted in the property table of `New`"
+	unrecognisedPropertyKey = "'%s' keys aren't accepted in the property table of `New`.",
+	unrecognisedPropertyStage = "The special key stage '%s' isn't recognised by `New`."
 }

@@ -17,7 +17,7 @@ local Children = {
 	type = "SpecialKey",
 	kind = "Children",
 
-	step = "descendants"
+	stage = "descendants"
 }
 
 -- Experimental flag: name children based on the key used in the [Children] table
