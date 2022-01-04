@@ -60,6 +60,13 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 			else
 				keys[key] = value
 			end
+		else
+			-- we don't recognise what this key is supposed to be
+			local keyString = typeof(key)
+			if keyString == "table" and typeof(key.type) == "string" then
+				keyString = key.type
+			end
+			logError("unrecognisedPropertyKey", nil, keyString)
 		end
 	end
 
