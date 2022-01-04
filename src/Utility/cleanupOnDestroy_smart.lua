@@ -13,12 +13,13 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local cleanup = require(Package.Utility.cleanup)
 
 -- The event to use for waiting (typically Heartbeat)
 local STEP_EVENT = RunService.Heartbeat
 
-local function cleanupOnDestroy(instance: Instance?, task: cleanup.Task): (() -> ())
+local function cleanupOnDestroy(instance: Instance?, task: PubTypes.Task): (() -> ())
 	-- set up manual disconnection logic
 	local isDisconnected = false
 	local ancestryChangedConn
