@@ -27,7 +27,7 @@ local function onDestroy(instanceRef: Types.SemiWeakRef, callback: (...any) -> (
 		-- somewhere else - usually the instance isn't destroyed until later!
 		logWarn("onDestroyNilRef")
 		callback(...)
-		return
+		return function() end
 	end
 
 	local ancestryConn: RBXScriptConnection
@@ -35,7 +35,7 @@ local function onDestroy(instanceRef: Types.SemiWeakRef, callback: (...any) -> (
 
 	local function disconnect()
 		if not disconnected then
-			disconnect = true
+			disconnected = true
 			ancestryConn:Disconnect()
 		end
 	end
@@ -60,7 +60,7 @@ local function onDestroy(instanceRef: Types.SemiWeakRef, callback: (...any) -> (
 			return
 		end
 
-		accessible = isAccessible(instanceRef.instance)
+		accessible = isAccessible(instanceRef.instance :: Instance)
 
 		if accessible then
 			-- don't need to monitor the instance if it's safely in the game
@@ -85,7 +85,7 @@ local function onDestroy(instanceRef: Types.SemiWeakRef, callback: (...any) -> (
 		end)
 	end
 
-	ancestryConn = instanceRef.instance.AncestryChanged:Connect(onAncestryChange)
+	ancestryConn = (instanceRef.instance :: Instance).AncestryChanged:Connect(onAncestryChange)
 	onAncestryChange()
 
 	return disconnect
