@@ -1,4 +1,4 @@
---!nonstrict
+--!strict
 
 --[[
 	Runs a callback with arguments when the referenced instance is destroyed.
