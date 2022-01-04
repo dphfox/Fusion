@@ -15,12 +15,11 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local Types = require(Package.Types)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local logError = require(Package.Logging.logError)
 
 
-local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: Types.SemiWeakRef)
+local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
 	-- stage 1: configure self
 	--     properties
 	-- stage 2: configure descendants
@@ -49,7 +48,7 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 			parentTo = value
 		elseif typeof(key) == "string" then
 			-- apply any other string keys as properties directly
-			applyToRef.instance[key] = value
+			(applyToRef.instance :: any)[key] = value
 		elseif typeof(key) == "table" and key.type == "SpecialKey" then
 			-- unmix special keys into their appropriate stages
 			-- TODO: type this
@@ -78,7 +77,7 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 
 	applySpecialKeys(specialKeys.self)
 	applySpecialKeys(specialKeys.descendants)
-	applyToRef.instance.Parent = parentTo
+	;(applyToRef.instance :: Instance).Parent = parentTo
 	applySpecialKeys(specialKeys.ancestor)
 	applySpecialKeys(specialKeys.observer)
 end

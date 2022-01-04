@@ -30,12 +30,6 @@ export type Error = {
 	trace: string
 }
 
--- A semi-weak instance reference.
-export type SemiWeakRef = {
-	type: string, -- replace with "SemiWeakRef" when Luau supports singleton types
-	instance: Instance?
-}
-
 --[[
 	Specific reactive graph types
 ]]

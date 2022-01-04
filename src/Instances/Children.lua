@@ -7,23 +7,20 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local Types = require(Package.Types)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 
 type Set<T> = {[T]: boolean}
 
-local Children = {
-	type = "SpecialKey",
-	kind = "Children",
-
-	stage = "descendants"
-}
-
 -- Experimental flag: name children based on the key used in the [Children] table
 local EXPERIMENTAL_AUTO_NAMING = false
 
-function Children:apply(propValue: any, applyToRef: Types.SemiWeakRef, cleanupTasks: {PubTypes.Task})
+local Children = {}
+Children.type = "SpecialKey"
+Children.kind = "Children"
+Children.stage = "descendants"
+
+function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 
@@ -128,4 +125,4 @@ function Children:apply(propValue: any, applyToRef: Types.SemiWeakRef, cleanupTa
 	updateChildren()
 end
 
-return Children :: PubTypes.ChildrenKey
+return Children :: PubTypes.SpecialKey

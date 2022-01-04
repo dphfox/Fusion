@@ -112,49 +112,27 @@ export type Observer = Dependent & {
 }
 
 --[[
-	Property table types
+	Instance related types
 ]]
 
+-- A semi-weak instance reference.
+export type SemiWeakRef = {
+	type: string, -- replace with "SemiWeakRef" when Luau supports singleton types
+	instance: Instance?
+}
+
 -- Denotes children instances in an instance or component's property table.
-export type ChildrenKey = Symbol & {
-	-- name: "Children" (add this when Luau supports singleton types)
-}
-
--- Denotes reference instances in an instance or component's property table.
-export type RefKey = Symbol & {
-	-- name: "Ref" (add this when Luau supports singleton types)
-}
-
--- Denotes property change handlers in an instance's property table.
-export type OnChangeKey = Symbol & {
-	-- name: "OnChange" (add this when Luau supports singleton types)
-	key: string
-}
-
--- Denotes event  handlers in an instance's property table.
-export type OnEventKey = Symbol & {
-	-- name: "OnEvent" (add this when Luau supports singleton types)
-	key: string
+export type SpecialKey = {
+	type: string, -- replace with "SpecialKey" when Luau supports singleton types
+	kind: string,
+	stage: string, -- replace with "self" | "descendants" | "ancestor" | "observer" when Luau supports singleton types
+	apply: (SpecialKey, value: any, applyTo: SemiWeakRef, cleanupTasks: {Task}) -> ()
 }
 
 -- A collection of instances that may be parented to another instance.
 export type Children = Instance | StateObject<Children> | {[any]: Children}
 
 -- A table that defines an instance's properties, handlers and children.
--- FUTURE: Typed Luau is not advanced enough to express this type in full
--- specificity yet, so we have to settle for some runtime type checking here.
--- In psuedo-Luau, this definition should be akin to the following:
--- export type PropertyTable<ClassName> = {
---     [ClassName::Property]: CanBeState<Property::Value>
---     [OnEventKey]: (any...) -> (),
---     [OnChangeKey]: (any) -> (),
---     [ChildrenKey]: Children
---     [RefKey]: Value
--- }
-export type PropertyTable = {
-	[string | OnEventKey | OnChangeKey | ChildrenKey | RefKey]: any
-}
-
-
+export type PropertyTable = {[string | SpecialKey]: any}
 
 return nil
