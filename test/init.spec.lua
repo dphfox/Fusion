@@ -6,6 +6,8 @@ return function()
 		expect(Fusion).to.be.a("table")
 
 		local api = {
+			version = "table",
+
 			New = "function",
 			Ref = "table",
 			Children = "table",
