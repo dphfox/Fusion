@@ -17,6 +17,7 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local onDestroy = require(Package.Instances.onDestroy)
 local cleanup = require(Package.Utility.cleanup)
+local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)
 
@@ -44,7 +45,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 end
 
 local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
-	if type(value) == "table" and value.type == "State" then
+	if xtypeof(value) == "State" then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
 		local function updateLater()
@@ -73,33 +74,23 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 		observer = {} :: {[PubTypes.SpecialKey]: any}
 	}
 
-	local parentTo: Instance? = nil
 	local cleanupTasks = {}
 
 	for key, value in pairs(props) do
-		if key == "Parent" then
-			-- the only string key we need to save for later (the ancestor step)
-			parentTo = value
+		local keyType = xtypeof(key)
 
-		elseif typeof(key) == "string" then
-			-- apply any other string keys as properties directly
+		if keyType == "string" and key ~= "Parent" then
 			bindProperty(applyToRef.instance, key, value, cleanupTasks)
-
-		elseif typeof(key) == "table" and key.type == "SpecialKey" then
-			local keys: {[PubTypes.SpecialKey]: any} = specialKeys[key.stage]
+		elseif keyType == "SpecialKey" then
+			local keys = specialKeys[key.stage]
 			if keys == nil then
 				logError("unrecognisedPropertyStage", nil, key.stage)
 			else
 				keys[key] = value
 			end
-
 		else
 			-- we don't recognise what this key is supposed to be
-			local keyString = typeof(key)
-			if keyString == "table" and typeof(key.type) == "string" then
-				keyString = key.type
-			end
-			logError("unrecognisedPropertyKey", nil, keyString)
+			logError("unrecognisedPropertyKey", nil, xtypeof(key))
 		end
 	end
 
@@ -109,7 +100,11 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 	for key, value in pairs(specialKeys.descendants) do
 		key:apply(value, applyToRef, cleanupTasks)
 	end
-	bindProperty(applyToRef.instance, "Parent", parentTo, cleanupTasks)
+
+	if props.Parent ~= nil then
+		bindProperty(applyToRef.instance, "Parent", props.Parent, cleanupTasks)
+	end
+
 	for key, value in pairs(specialKeys.ancestor) do
 		key:apply(value, applyToRef, cleanupTasks)
 	end
