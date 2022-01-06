@@ -14,10 +14,22 @@
 ]]
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local PubTypes = require(Package.PubTypes)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local logError = require(Package.Logging.logError)
+local parseError = require(Package.Logging.parseError)
 
+-- this is passed to xpcall later for safe property setting
+local function setProperty(instance: Instance, property: string, value: any)
+	(instance :: any)[property] = value
+end
+
+local function isPropertyAssignable(instance: Instance, property: string)
+	return pcall(function()
+		instance[property] = instance[property]
+	end)
+end
 
 local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
 	-- stage 1: configure self
@@ -48,7 +60,22 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 			parentTo = value
 		elseif typeof(key) == "string" then
 			-- apply any other string keys as properties directly
-			(applyToRef.instance :: any)[key] = value
+			local ok, result = xpcall(setProperty, parseError, applyToRef.instance, key, value)
+			if not ok then
+				-- handle incorrect property assignments
+				local result = result :: Types.Error
+				local className = applyToRef.instance.ClassName
+
+				if isPropertyAssignable(applyToRef.instance, key) then
+					-- gave a value of a different type
+					local givenType = typeof(value)
+					local expectedType = typeof((applyToRef.instance :: any)[key])
+					logError("invalidPropertyType", result, givenType, expectedType, className)
+				else
+					-- setting a property that doesn't exist or can't be set
+					logError("cannotAssignProperty", result, className, key)
+				end
+			end
 		elseif typeof(key) == "table" and key.type == "SpecialKey" then
 			-- unmix special keys into their appropriate stages
 			-- TODO: type this
