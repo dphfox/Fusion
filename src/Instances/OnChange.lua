@@ -21,7 +21,7 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 		if not ok then
 			logError("cannotConnectChange", nil, instance.ClassName, callback)
 		elseif typeof(callback) ~= "function" then
-			logError("invalidChangeHandler", nil, propertyName, instance.ClassName)
+			logError("invalidChangeHandler", nil, propertyName)
 		else
 			table.insert(cleanupTasks, event:Connect(callback))
 		end

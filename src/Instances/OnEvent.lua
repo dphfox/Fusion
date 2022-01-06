@@ -25,7 +25,7 @@ local function OnEvent(eventName: string): PubTypes.SpecialKey
 		if not ok or typeof(event) ~= "RBXScriptSignal" then
 			logError("cannotConnectEvent", nil, instance.ClassName, eventName)
 		elseif typeof(callback) ~= "function" then
-			logError("invalidEventHandler", nil, eventName, instance.ClassName)
+			logError("invalidEventHandler", nil, eventName)
 		else
 			table.insert(cleanupTasks, event:Connect(callback))
 		end
