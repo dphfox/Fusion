@@ -18,7 +18,7 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 	function changeKey:apply(callback: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
 		local instance = applyToRef.instance :: Instance
 		local ok, event = pcall(instance.GetPropertyChangedSignal, instance, propertyName)
-		if not ok or typeof(event) ~= "RBXScriptSignal" then
+		if not ok then
 			logError("cannotConnectChange", nil, instance.ClassName, callback)
 		elseif typeof(callback) ~= "function" then
 			logError("invalidChangeHandler", nil, propertyName, instance.ClassName)
