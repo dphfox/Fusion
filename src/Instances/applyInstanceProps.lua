@@ -29,7 +29,6 @@ local function testPropertyAssignable(instance: Instance, property: string)
 end
 
 local function setProperty(instance: Instance, property: string, value: any)
-	-- try and set the property
 	if not pcall(setProperty_unsafe, instance, property, value) then
 		if not pcall(testPropertyAssignable, instance, property) then
 			-- property is not assignable
@@ -87,10 +86,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 			bindProperty(applyToRef.instance, key, value, cleanupTasks)
 
 		elseif typeof(key) == "table" and key.type == "SpecialKey" then
-			-- unmix special keys into their appropriate stages
-			-- TODO: type this
-			local keys = specialKeys[key.stage]
-
+			local keys: {[PubTypes.SpecialKey]: any} = specialKeys[key.stage]
 			if keys == nil then
 				logError("unrecognisedPropertyStage", nil, key.stage)
 			else
