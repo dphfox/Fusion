@@ -1,8 +1,8 @@
 --!strict
 
 --[[
-	The symbol used to denote the children of an instance when working with the
-	`New` function.
+	A special key for property tables, which parents any given descendants into
+	an instance.
 ]]
 
 local Package = script.Parent.Parent
