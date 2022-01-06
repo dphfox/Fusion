@@ -14,6 +14,7 @@ return {
 	invalidChangeHandler = "The change handler for the '%s' property must be a function. (for class '%s')",
 	invalidEventHandler = "The handler for the '%s' event must be a function. (for class '%s')",
 	invalidPropertyType = "'%s' expected a '%s', but got a '%s' (for class '%s')",
+	invalidRefType = "Instance refs must be Value objects.",
 	invalidSpringDamping = "The damping ratio for a spring must be >= 0. (damping was %.2f)",
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
