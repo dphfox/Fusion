@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 
 local function getProperty_unsafe(instance: Instance, property: string)
-	return instance[property]
+	return (instance :: any)[property]
 end
 
 local function OnEvent(eventName: string): PubTypes.SpecialKey
@@ -20,11 +20,12 @@ local function OnEvent(eventName: string): PubTypes.SpecialKey
 	eventKey.stage = "observer"
 
 	function eventKey:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
-		local ok, event = pcall(getProperty_unsafe, applyToRef.instance :: Instance, eventName)
+		local instance = applyToRef.instance :: Instance
+		local ok, event = pcall(getProperty_unsafe, instance, eventName)
 		if not ok or typeof(event) ~= "RBXScriptSignal" then
-			logError("cannotConnectEvent", nil, applyToRef.instance.ClassName, eventName)
+			logError("cannotConnectEvent", nil, instance.ClassName, eventName)
 		elseif typeof(propValue) ~= "function" then
-			logError("invalidEventHandler", nil, eventName, applyToRef.instance.ClassName)
+			logError("invalidEventHandler", nil, eventName, instance.ClassName)
 		else
 			table.insert(cleanupTasks, event:Connect(propValue))
 		end
