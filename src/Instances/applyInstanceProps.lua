@@ -19,6 +19,7 @@ local onDestroy = require(Package.Instances.onDestroy)
 local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 
 local function setProperty_unsafe(instance: Instance, property: string, value: any)
@@ -26,7 +27,7 @@ local function setProperty_unsafe(instance: Instance, property: string, value: a
 end
 
 local function testPropertyAssignable(instance: Instance, property: string)
-	instance[property] = instance[property]
+	(instance :: any)[property] = (instance :: any)[property]
 end
 
 local function setProperty(instance: Instance, property: string, value: any)
@@ -59,7 +60,7 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 		end
 
 		setProperty(instance, property, value:get(false))
-		table.insert(cleanupTasks, Observer(value):onChange(updateLater))
+		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
 		setProperty(instance, property, value)
@@ -67,24 +68,29 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 end
 
 local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
+	if applyToRef.instance == nil then
+		-- this is possible, but not useful, so probably indicates an issue!
+		return logWarn("applyPropsNilRef")
+	end
+
 	local specialKeys = {
 		self = {} :: {[PubTypes.SpecialKey]: any},
 		descendants = {} :: {[PubTypes.SpecialKey]: any},
 		ancestor = {} :: {[PubTypes.SpecialKey]: any},
 		observer = {} :: {[PubTypes.SpecialKey]: any}
 	}
-
 	local cleanupTasks = {}
 
 	for key, value in pairs(props) do
 		local keyType = xtypeof(key)
 
 		if keyType == "string" and key ~= "Parent" then
-			bindProperty(applyToRef.instance, key, value, cleanupTasks)
+			bindProperty(applyToRef.instance :: Instance, key :: string, value, cleanupTasks)
 		elseif keyType == "SpecialKey" then
-			local keys = specialKeys[key.stage]
+			local stage = (key :: PubTypes.SpecialKey).stage
+			local keys = specialKeys[stage]
 			if keys == nil then
-				logError("unrecognisedPropertyStage", nil, key.stage)
+				logError("unrecognisedPropertyStage", nil, stage)
 			else
 				keys[key] = value
 			end
@@ -102,7 +108,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyToRef.instance, "Parent", props.Parent, cleanupTasks)
+		bindProperty(applyToRef.instance :: Instance, "Parent", props.Parent, cleanupTasks)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do

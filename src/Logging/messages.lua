@@ -5,6 +5,7 @@
 ]]
 
 return {
+	applyPropsNilRef = "`applyInstanceProps` got a nil ref! (this is an internal issue)",
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
@@ -15,7 +16,7 @@ return {
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
-	onDestroyNilRef = "`onDestroy` got a nil ref! (probably an internal issue, was the instance lost too early?)",
+	onDestroyNilRef = "`onDestroy` got a nil ref! (this is an internal issue, was the instance lost too early?)",
 	onDestroyLostRef = "`onDestroy` lost the instance reference too early! (this is an internal issue)",
 	pairsDestructorError = "ComputedPairs destructor error: ERROR_MESSAGE",
 	pairsProcessorError = "ComputedPairs callback error: ERROR_MESSAGE",
