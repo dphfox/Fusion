@@ -9,6 +9,7 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
+local xtypeof = require(Package.Utility.xtypeof)
 
 type Set<T> = {[T]: boolean}
 
@@ -43,7 +44,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 		table.clear(newDisconnects)
 
 		local function processChild(child: any, autoName: string?)
-			local kind = typeof(child)
+			local kind = xtypeof(child)
 
 			if kind == "Instance" then
 				-- case 1; single instance
@@ -64,7 +65,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 					child.Name = autoName
 				end
 
-			elseif kind == "table" and child.type == "State" then
+			elseif kind == "State" then
 				-- case 2; state object
 
 				local value = child:get(false)
