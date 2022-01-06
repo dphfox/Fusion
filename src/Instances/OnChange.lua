@@ -1,19 +1,33 @@
 --!strict
 
 --[[
-	Generates symbols used to denote property change handlers when working with
-	the `New` function.
+	Constructs special keys for property tables which connect property change
+	listeners to an instance.
 ]]
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local logError = require(Package.Logging.logError)
 
-local function OnChange(propertyName: string): PubTypes.OnChangeKey
-	return {
-		type = "Symbol",
-		name = "OnChange",
-		key = propertyName
-	}
+local function OnChange(propertyName: string): PubTypes.SpecialKey
+	local changeKey = {}
+	changeKey.type = "SpecialKey"
+	changeKey.kind = "OnChange"
+	changeKey.stage = "observer"
+
+	function changeKey:apply(callback: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
+		local instance = applyToRef.instance :: Instance
+		local ok, event = pcall(instance.GetPropertyChangedSignal, instance, propertyName)
+		if not ok or typeof(event) ~= "RBXScriptSignal" then
+			logError("cannotConnectChange", nil, instance.ClassName, callback)
+		elseif typeof(callback) ~= "function" then
+			logError("invalidChangeHandler", nil, propertyName, instance.ClassName)
+		else
+			table.insert(cleanupTasks, event:Connect(callback))
+		end
+	end
+
+	return changeKey
 end
 
 return OnChange
