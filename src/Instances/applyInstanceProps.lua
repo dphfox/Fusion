@@ -15,7 +15,6 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local semiWeakRef = require(Package.Instances.semiWeakRef)
 local onDestroy = require(Package.Instances.onDestroy)
 local cleanup = require(Package.Utility.cleanup)
 local logError = require(Package.Logging.logError)
@@ -67,7 +66,7 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 	end
 end
 
-local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
+local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
 	local specialKeys = {
 		self = {} :: {[PubTypes.SpecialKey]: any},
 		descendants = {} :: {[PubTypes.SpecialKey]: any},
@@ -123,10 +122,6 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 	end
 
 	onDestroy(applyToRef, cleanup, cleanupTasks)
-end
-
-local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)
-	applyInstanceProps_impl(props, semiWeakRef(applyTo))
 end
 
 return applyInstanceProps

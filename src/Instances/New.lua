@@ -8,6 +8,7 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local defaultProps = require(Package.Instances.defaultProps)
+local semiWeakRef = require(Package.Instances.semiWeakRef)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
 local function New(className: string)
@@ -21,7 +22,7 @@ local function New(className: string)
 			end
 		end
 
-		applyInstanceProps(props, instance)
+		applyInstanceProps(props, semiWeakRef(instance))
 
 		return instance
 	end
