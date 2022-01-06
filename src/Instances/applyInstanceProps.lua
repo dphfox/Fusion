@@ -14,21 +14,33 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
 local PubTypes = require(Package.PubTypes)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local logError = require(Package.Logging.logError)
-local parseError = require(Package.Logging.parseError)
+local Observer = require(Package.State.Observer)
 
--- this is passed to xpcall later for safe property setting
-local function setProperty(instance: Instance, property: string, value: any)
+local function setProperty_unsafe(instance: Instance, property: string, value: any)
 	(instance :: any)[property] = value
 end
 
-local function isPropertyAssignable(instance: Instance, property: string)
-	return pcall(function()
-		instance[property] = instance[property]
-	end)
+local function testPropertyAssignable(instance: Instance, property: string)
+	instance[property] = instance[property]
+end
+
+local function setProperty(instance: Instance, property: string, value: any)
+	-- try and set the property
+	if not pcall(setProperty_unsafe, instance, property, value) then
+		if not pcall(testPropertyAssignable, instance, property) then
+			-- property is not assignable
+			logError("cannotAssignProperty", nil, instance.ClassName, property)
+		else
+			-- property is assignable, but this specific assignment failed
+			-- this typically implies the wrong type was received
+			local givenType = typeof(value)
+			local expectedType = typeof((instance :: any)[property])
+			logError("invalidPropertyType", nil, givenType, expectedType, instance.ClassName)
+		end
+	end
 end
 
 local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
@@ -58,24 +70,27 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 		if key == "Parent" then
 			-- the only string key we need to save for later (the ancestor step)
 			parentTo = value
+
 		elseif typeof(key) == "string" then
 			-- apply any other string keys as properties directly
-			local ok, result = xpcall(setProperty, parseError, applyToRef.instance, key, value)
-			if not ok then
-				-- handle incorrect property assignments
-				local result = result :: Types.Error
-				local className = applyToRef.instance.ClassName
-
-				if isPropertyAssignable(applyToRef.instance, key) then
-					-- gave a value of a different type
-					local givenType = typeof(value)
-					local expectedType = typeof((applyToRef.instance :: any)[key])
-					logError("invalidPropertyType", result, givenType, expectedType, className)
-				else
-					-- setting a property that doesn't exist or can't be set
-					logError("cannotAssignProperty", result, className, key)
+			if type(value) == "table" and value.type == "State" then
+				local willUpdate = false
+				local function updateLater()
+					if not willUpdate then
+						willUpdate = true
+						task.defer(function()
+							willUpdate = false
+							setProperty(applyToRef.instance, key, value:get(false))
+						end)
+					end
 				end
+
+				setProperty(applyToRef.instance, key, value:get(false))
+				table.insert(cleanupTasks, Observer(value):onChange(updateLater))
+			else
+				setProperty(applyToRef.instance, key, value)
 			end
+
 		elseif typeof(key) == "table" and key.type == "SpecialKey" then
 			-- unmix special keys into their appropriate stages
 			-- TODO: type this
@@ -86,6 +101,7 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 			else
 				keys[key] = value
 			end
+
 		else
 			-- we don't recognise what this key is supposed to be
 			local keyString = typeof(key)
