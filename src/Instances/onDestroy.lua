@@ -14,14 +14,14 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local isAccessible = require(Package.Instances.isAccessible)
 
 -- FIXME: whenever they fix generic type packs in Roblox LSP:
 --- onDestroy<A...>(instanceRef: Types.SemiWeakRef, callback: (A...) -> (), ...: A...)
 
-local function onDestroy(instanceRef: Types.SemiWeakRef, callback: (...any) -> (), ...: any): () -> ()
+local function onDestroy(instanceRef: PubTypes.SemiWeakRef, callback: (...any) -> (), ...: any): () -> ()
 	if instanceRef.instance == nil then
 		-- if we get a nil reference initially, then there's probably an issue
 		-- somewhere else - usually the instance isn't destroyed until later!
