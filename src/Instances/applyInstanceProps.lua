@@ -16,6 +16,8 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
+local onDestroy = require(Package.Instances.onDestroy)
+local cleanup = require(Package.Utility.cleanup)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)
 
@@ -43,27 +45,37 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
-	-- stage 1: configure self
-	--     properties
-	-- stage 2: configure descendants
-	--     Children
-	-- stage 3: configure ancestor
-	--     Parent
-	-- stage 4: configure observers
-	--     Ref
-	--     OnEvent / OnChange
+local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
+	if type(value) == "table" and value.type == "State" then
+		-- value is a state object - assign and observe for changes
+		local willUpdate = false
+		local function updateLater()
+			if not willUpdate then
+				willUpdate = true
+				task.defer(function()
+					willUpdate = false
+					setProperty(instance, property, value:get(false))
+				end)
+			end
+		end
 
-	-- TODO: type this
+		setProperty(instance, property, value:get(false))
+		table.insert(cleanupTasks, Observer(value):onChange(updateLater))
+	else
+		-- value is a constant - assign once only
+		setProperty(instance, property, value)
+	end
+end
+
+local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
 	local specialKeys = {
-		self = {},
-		descendants = {},
-		ancestor = {},
-		observer = {}
+		self = {} :: {[PubTypes.SpecialKey]: any},
+		descendants = {} :: {[PubTypes.SpecialKey]: any},
+		ancestor = {} :: {[PubTypes.SpecialKey]: any},
+		observer = {} :: {[PubTypes.SpecialKey]: any}
 	}
 
 	local parentTo: Instance? = nil
-	-- TODO: when do we connect to cleanupOnDestroy?
 	local cleanupTasks = {}
 
 	for key, value in pairs(props) do
@@ -73,23 +85,7 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 
 		elseif typeof(key) == "string" then
 			-- apply any other string keys as properties directly
-			if type(value) == "table" and value.type == "State" then
-				local willUpdate = false
-				local function updateLater()
-					if not willUpdate then
-						willUpdate = true
-						task.defer(function()
-							willUpdate = false
-							setProperty(applyToRef.instance, key, value:get(false))
-						end)
-					end
-				end
-
-				setProperty(applyToRef.instance, key, value:get(false))
-				table.insert(cleanupTasks, Observer(value):onChange(updateLater))
-			else
-				setProperty(applyToRef.instance, key, value)
-			end
+			bindProperty(applyToRef.instance, key, value, cleanupTasks)
 
 		elseif typeof(key) == "table" and key.type == "SpecialKey" then
 			-- unmix special keys into their appropriate stages
@@ -112,17 +108,21 @@ local function applyInstanceProps_impl(props: PubTypes.PropertyTable, applyToRef
 		end
 	end
 
-	local function applySpecialKeys(keys)
-		for key, value in pairs(keys) do
-			key:apply(value, applyToRef, cleanupTasks)
-		end
+	for key, value in pairs(specialKeys.self) do
+		key:apply(value, applyToRef, cleanupTasks)
+	end
+	for key, value in pairs(specialKeys.descendants) do
+		key:apply(value, applyToRef, cleanupTasks)
+	end
+	bindProperty(applyToRef.instance, "Parent", parentTo, cleanupTasks)
+	for key, value in pairs(specialKeys.ancestor) do
+		key:apply(value, applyToRef, cleanupTasks)
+	end
+	for key, value in pairs(specialKeys.observer) do
+		key:apply(value, applyToRef, cleanupTasks)
 	end
 
-	applySpecialKeys(specialKeys.self)
-	applySpecialKeys(specialKeys.descendants)
-	;(applyToRef.instance :: Instance).Parent = parentTo
-	applySpecialKeys(specialKeys.ancestor)
-	applySpecialKeys(specialKeys.observer)
+	onDestroy(applyToRef, cleanup, cleanupTasks)
 end
 
 local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)
