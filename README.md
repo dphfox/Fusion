@@ -3,6 +3,9 @@
 ![Fusion logo](./logo-dark-theme.png#gh-dark-mode-only)
 ![Fusion logo](./logo-light-theme.png#gh-light-mode-only)
 
+<img align="left" src="./logo-dark-theme.png#gh-dark-mode-only" alt="Fusion">
+<img align="left" src="./logo-light-theme.png#gh-light-mode-only" alt="Fusion">
+
 Fusion is a modern reactive UI library, built specifically for [Roblox](https://developer.roblox.com/) and [Luau](https://luau-lang.org/).
 
 Build your UI with a declarative syntax that's easy to read and write.<br>
