@@ -1,4 +1,4 @@
-[<img align="right" src="./doclink-dark-theme.png" alt="View docs">](https://elttob.github.io/Fusion/)
+[<img align="right" src="./link-download.png" alt="Download">](https://elttob.github.io/Fusion/)[<img align="right" src="./link docs.png" alt="Docs">](https://elttob.github.io/Fusion/)
 ![Fusion logo](./logo-dark-theme.png#gh-dark-mode-only)
 ![Fusion logo](./logo-light-theme.png#gh-light-mode-only)
 
