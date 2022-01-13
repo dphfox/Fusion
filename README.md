@@ -1,4 +1,5 @@
-[![Fusion logo](./logo-dark-theme.png#gh-dark-mode-only)![Fusion logo](./logo-light-theme.png#gh-light-mode-only)](https://elttob.github.io/Fusion/)
+![Fusion logo](./logo-dark-theme.png#gh-dark-mode-only)
+![Fusion logo](./logo-light-theme.png#gh-light-mode-only)
 
 Fusion is a modern reactive UI library, built specifically for [Roblox](https://developer.roblox.com/) and [Luau](https://luau-lang.org/).
 
