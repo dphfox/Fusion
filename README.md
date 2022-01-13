@@ -6,7 +6,9 @@ Build your UI with a declarative syntax that's easy to read and write.<br>
 Plug in live data with simple, flexible, truly reactive state management.<br>
 Deliver a fast, smooth experience to everyone - on mobile, console, PC or in VR.<br>
 
-[Visit the Fusion documentation to learn more 🡪](https://elttob.github.io/Fusion/)
+<a href="https://elttob.github.io/Fusion/">
+Visit the Fusion documentation to learn more <img valign="middle" src="./gh-assets/icon-link-extern.png" alt="(external link)" title="(external link)">
+</a>
 
 -----
 
