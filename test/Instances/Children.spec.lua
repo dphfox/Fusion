@@ -72,18 +72,6 @@ return function()
 		expect(ins:FindFirstChild("Harry")).to.be.ok()
 	end)
 
-	itSKIP("should respect Parents of assigned children", function()
-		local targetParent = New "Folder" {}
-		local child = New "Folder" {
-			Parent = targetParent
-		}
-		local constructedParent = New "Folder" {
-			[Children] = child
-		}
-
-		expect(child.Parent).to.equal(targetParent)
-	end)
-
 	it("should bind State objects passed as children", function()
 		local child1 = New "Folder" {}
 		local child2 = New "Folder" {}
