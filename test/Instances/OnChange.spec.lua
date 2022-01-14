@@ -18,7 +18,7 @@ return function()
 		expect(fires).never.to.equal(0)
 	end)
 
-	it("should connect property change handlers", function()
+	it("should pass the new value to the handler", function()
 		local arg = nil
 		local ins = New "Folder" {
 			Name = "Foo",
