@@ -354,7 +354,7 @@ return function()
 		expect(ins.Name).to.equal("Baz")
 	end)
 
-	it("should respect Parents of assigned children", function()
+	itSKIP("should respect Parents of assigned children", function()
 		local targetParent = New "Folder" {}
 		local child = New "Folder" {
 			Parent = targetParent
@@ -370,13 +370,7 @@ return function()
 		local refValue = Value()
 
 		local child = New "Folder" {
-			[Ref] = refValue;
-		}
-		
-		local targetParent = New "Folder" {
-			[Children] = {
-				child
-			}
+			[Ref] = refValue
 		}
 
 		expect(refValue:get()).to.equal(child)

@@ -10,10 +10,15 @@ local PubTypes = require(Package.PubTypes)
 local defaultProps = require(Package.Instances.defaultProps)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
+local logError= require(Package.Logging.logError)
 
 local function New(className: string)
 	return function(props: PubTypes.PropertyTable): Instance
-		local instance = Instance.new(className)
+		local ok, instance = pcall(Instance.new, className)
+
+		if not ok then
+			logError("cannotCreateClass", nil, className)
+		end
 
 		local classDefaults = defaultProps[className]
 		if classDefaults ~= nil then

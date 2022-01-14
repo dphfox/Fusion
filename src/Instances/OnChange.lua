@@ -19,7 +19,7 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 		local instance = applyToRef.instance :: Instance
 		local ok, event = pcall(instance.GetPropertyChangedSignal, instance, propertyName)
 		if not ok then
-			logError("cannotConnectChange", nil, instance.ClassName, callback)
+			logError("cannotConnectChange", nil, instance.ClassName, propertyName)
 		elseif typeof(callback) ~= "function" then
 			logError("invalidChangeHandler", nil, propertyName)
 		else

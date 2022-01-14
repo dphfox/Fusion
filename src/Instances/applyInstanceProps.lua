@@ -84,8 +84,10 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 	for key, value in pairs(props) do
 		local keyType = xtypeof(key)
 
-		if keyType == "string" and key ~= "Parent" then
-			bindProperty(applyToRef.instance :: Instance, key :: string, value, cleanupTasks)
+		if keyType == "string" then
+			if key ~= "Parent" then
+				bindProperty(applyToRef.instance :: Instance, key :: string, value, cleanupTasks)
+			end
 		elseif keyType == "SpecialKey" then
 			local stage = (key :: PubTypes.SpecialKey).stage
 			local keys = specialKeys[stage]
