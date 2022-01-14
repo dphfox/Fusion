@@ -62,7 +62,7 @@ return function()
 		value:set(parent2)
 		task.wait() -- property changes are deferred
 
-		expect(instance.Name).to.equal(parent2)
+		expect(instance.Parent).to.equal(parent2)
 	end)
 
 	it("should throw for non-existent properties (constant)", function()
@@ -111,18 +111,6 @@ return function()
 				semiWeakRef(instance)
 			)
 		end).to.throw("invalidPropertyType")
-
-		expect(function()
-			local value = Value("Bobulator")
-			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Name = value
-				},
-				semiWeakRef(instance)
-			)
-			value:set(UDim2.new())
-		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for invalid Parent types (constant)", function()
@@ -146,18 +134,6 @@ return function()
 				},
 				semiWeakRef(instance)
 			)
-		end).to.throw("invalidPropertyType")
-
-		expect(function()
-			local value = Value(Instance.new("Folder"))
-			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Parent = value
-				},
-				semiWeakRef(instance)
-			)
-			value:set(UDim2.new())
 		end).to.throw("invalidPropertyType")
 	end)
 
