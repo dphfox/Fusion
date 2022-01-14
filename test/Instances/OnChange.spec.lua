@@ -9,7 +9,6 @@ return function()
 			Name = "Foo",
 
 			[OnChange "Name"] = function(newName)
-				arg = newName
 				fires += 1
 			end
 		}
@@ -17,7 +16,6 @@ return function()
 		ins.Name = "Bar"
 		task.wait()
 		expect(fires).never.to.equal(0)
-		expect(arg).to.equal("Bar")
 	end)
 
 	it("should connect property change handlers", function()
