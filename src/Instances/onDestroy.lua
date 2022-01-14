@@ -46,21 +46,9 @@ local function onDestroy(instanceRef: PubTypes.SemiWeakRef, callback: (...any) -
 	local function onAncestryChange()
 		if disconnected then
 			return
-
-		elseif instanceRef.instance == nil then
-			-- this would be weird, because AncestryChanged gives us a fresh
-			-- instance reference, but who knows maybe it might happen
-			if ancestryConn.Connected then
-				-- this implies the instance is around but the reference is lost,
-				-- which is 100% a bug and pretty dangerous
-				logWarn("onDestroyLostRef")
-			end
-			callback(table.unpack(args, 1, args.n))
-			disconnect()
-			return
 		end
 
-		accessible = isAccessible(instanceRef.instance :: Instance)
+		accessible = if instanceRef.instance == nil then false else isAccessible(instanceRef.instance :: Instance)
 
 		if accessible then
 			-- don't need to monitor the instance if it's safely in the game
@@ -70,12 +58,7 @@ local function onDestroy(instanceRef: PubTypes.SemiWeakRef, callback: (...any) -
 		-- start monitoring the instance for destruction
 		task.defer(function()
 			while not accessible and not disconnected do
-				if instanceRef.instance == nil then
-					if ancestryConn.Connected then
-						-- this implies the instance is around but the reference is lost,
-						-- which is 100% a bug and pretty dangerous
-						logWarn("onDestroyLostRef")
-					end
+				if not ancestryConn.Connected then
 					callback(table.unpack(args, 1, args.n))
 					disconnect()
 					return
