@@ -107,7 +107,11 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 			end
 		end
 
-		processChild(propValue)
+		if propValue ~= nil then
+			-- `propValue` is set to nil on cleanup, so we don't process children
+			-- in that case
+			processChild(propValue)
+		end
 
 		-- unparent any children that are no longer present
 		for oldInstance in pairs(oldParented) do
