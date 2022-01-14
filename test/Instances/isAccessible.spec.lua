@@ -27,8 +27,6 @@ return function()
 			expect(isAccessible(instance)).to.equal(true)
 			instance.Parent = nil
 		end)
-	else
-		it("should recognise instances in plugin (can't test - needs to run as plugin)", function() end)
 	end
 
 	it("should not recognise instances directly in nil", function()
