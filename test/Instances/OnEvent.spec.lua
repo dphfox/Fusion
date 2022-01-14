@@ -1,0 +1,82 @@
+local RunService = game:GetService("RunService")
+
+local Package = game:GetService("ReplicatedStorage").Fusion
+local New = require(Package.Instances.New)
+local Children = require(Package.Instances.Children)
+local OnEvent = require(Package.Instances.OnEvent)
+
+local function waitForDefer()
+	RunService.RenderStepped:Wait()
+	RunService.RenderStepped:Wait()
+end
+
+return function()
+	it("should connect event handlers", function()
+		local fires = 0
+		local ins = New "Folder" {
+			Name = "Foo",
+
+			[OnEvent "AncestryChanged"] = function()
+				fires += 1
+			end
+		}
+
+		ins.Parent = game
+		ins:Destroy()
+
+		waitForDefer()
+
+		expect(fires).never.to.equal(0)
+	end)
+
+	it("should throw for non-existent events", function()
+		expect(function()
+			New "Folder" {
+				Name = "Foo",
+
+				[OnEvent "Frobulate"] = function() end
+			}
+		end).to.throw("cannotConnectEvent")
+	end)
+
+	it("should throw for non-event event handlers", function()
+		expect(function()
+			New "Folder" {
+				Name = "Foo",
+
+				[OnEvent "Name"] = function() end
+			}
+		end).to.throw("cannotConnectEvent")
+	end)
+
+	it("shouldn't fire events during initialisation", function()
+		local fires = 0
+		local ins = New "Folder" {
+			Parent = game,
+			Name = "Foo",
+
+			[OnEvent "ChildAdded"] = function()
+				fires += 1
+			end,
+
+			[OnEvent "Changed"] = function()
+				fires += 1
+			end,
+
+			[OnEvent "AncestryChanged"] = function()
+				fires += 1
+			end,
+
+			[Children] = New "Folder" {
+				Name = "Bar"
+			}
+		}
+
+		local totalFires = fires
+		ins:Destroy()
+
+		waitForDefer()
+
+		expect(totalFires).to.equal(0)
+	end)
+end
