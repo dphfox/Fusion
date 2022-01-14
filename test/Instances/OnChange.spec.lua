@@ -48,4 +48,19 @@ return function()
 		task.wait()
 		expect(totalFires).to.equal(0)
 	end)
+
+	it("should not inhibit garbage collection", function()
+		local ref = setmetatable({}, {__mode = "v"})
+		do
+			ref[1] = New "Folder" {
+				[OnChange "Name"] = function() end
+			}
+		end
+
+		local startTime = os.clock()
+		repeat
+			task.wait()
+		until ref[1] == nil or os.clock() > startTime + 5
+		expect(ref[1]).to.equal(nil)
+	end)
 end

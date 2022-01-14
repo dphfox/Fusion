@@ -180,4 +180,25 @@ return function()
 		task.wait()
 		expect(instance.Parent).to.equal(parent2)
 	end)
+
+	it("should not inhibit garbage collection", function()
+		local ref = setmetatable({}, {__mode = "v"})
+		do
+			local instance = Instance.new("Folder")
+			applyInstanceProps(
+				{
+					Name = Value("Bob")
+				},
+				semiWeakRef(instance)
+			)
+
+			ref[1] = instance
+		end
+
+		local startTime = os.clock()
+		repeat
+			task.wait()
+		until ref[1] == nil or os.clock() > startTime + 5
+		expect(ref[1]).to.equal(nil)
+	end)
 end

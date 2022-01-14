@@ -171,4 +171,22 @@ return function()
 
 		expect(child.Parent).to.equal(nil)
 	end)
+
+	it("should not inhibit garbage collection", function()
+		local ref = setmetatable({}, {__mode = "v"})
+		do
+			ref[1] = New "Folder" {
+				[Children] = {
+					Instance.new("Folder"),
+					Value(Instance.new("Folder"))
+				}
+			}
+		end
+
+		local startTime = os.clock()
+		repeat
+			task.wait()
+		until ref[1] == nil or os.clock() > startTime + 5
+		expect(ref[1]).to.equal(nil)
+	end)
 end
