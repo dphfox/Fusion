@@ -23,8 +23,14 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 		elseif typeof(callback) ~= "function" then
 			logError("invalidChangeHandler", nil, propertyName)
 		else
-			table.insert(cleanupTasks, event:Connect(callback))
+			table.insert(cleanupTasks, event:Connect(function()
+				if applyToRef.instance ~= nil then
+					callback((applyToRef.instance :: any)[propertyName])
+				end
+			end))
 		end
+		-- don't inhibit gc!
+		instance = nil
 	end
 
 	return changeKey
