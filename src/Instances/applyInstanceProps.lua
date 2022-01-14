@@ -45,7 +45,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
+local function bindProperty(instanceRef: PubTypes.SemiWeakRef, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
 	if xtypeof(value) == "State" then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
@@ -54,16 +54,16 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 				willUpdate = true
 				task.defer(function()
 					willUpdate = false
-					setProperty(instance, property, value:get(false))
+					setProperty(instanceRef.instance :: Instance, property, value:get(false))
 				end)
 			end
 		end
 
-		setProperty(instance, property, value:get(false))
+		setProperty(instanceRef.instance :: Instance, property, value:get(false))
 		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
-		setProperty(instance, property, value)
+		setProperty(instanceRef.instance :: Instance, property, value)
 	end
 end
 
@@ -86,7 +86,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 
 		if keyType == "string" then
 			if key ~= "Parent" then
-				bindProperty(applyToRef.instance :: Instance, key :: string, value, cleanupTasks)
+				bindProperty(applyToRef, key :: string, value, cleanupTasks)
 			end
 		elseif keyType == "SpecialKey" then
 			local stage = (key :: PubTypes.SpecialKey).stage
@@ -110,7 +110,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyToRef.instance :: Instance, "Parent", props.Parent, cleanupTasks)
+		bindProperty(applyToRef, "Parent", props.Parent, cleanupTasks)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do
