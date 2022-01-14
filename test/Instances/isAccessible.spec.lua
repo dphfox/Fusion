@@ -1,5 +1,3 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local isAccessible = require(Package.Instances.isAccessible)
 

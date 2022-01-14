@@ -1,5 +1,3 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local defaultProps = require(Package.Instances.defaultProps)

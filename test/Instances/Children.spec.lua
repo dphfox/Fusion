@@ -1,15 +1,7 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
-
 local Value = require(Package.State.Value)
-
-local function waitForDefer()
-	RunService.RenderStepped:Wait()
-	RunService.RenderStepped:Wait()
-end
 
 return function()
 	it("should assign single children to instances", function()
@@ -89,16 +81,14 @@ return function()
 		expect(child1.Parent).to.equal(parent)
 
 		children:set({child2, child3})
-
-		waitForDefer()
+		task.wait()
 
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
 
 		children:set({child1, child2, child3, child4})
-
-		waitForDefer()
+		task.wait()
 
 		expect(child1.Parent).to.equal(parent)
 		expect(child2.Parent).to.equal(parent)
@@ -125,7 +115,7 @@ return function()
 		expect(child1.Parent).to.equal(parent)
 		expect(child2.Parent).to.equal(nil)
 
-		waitForDefer()
+		task.wait()
 
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
@@ -172,14 +162,12 @@ return function()
 		expect(child.Parent).to.equal(nil)
 
 		children:set(child)
-
-		waitForDefer()
+		task.wait()
 
 		expect(child.Parent).to.equal(parent)
 
 		children:set(nil)
-
-		waitForDefer()
+		task.wait()
 
 		expect(child.Parent).to.equal(nil)
 	end)

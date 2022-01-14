@@ -1,5 +1,3 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Ref = require(Package.Instances.Ref)

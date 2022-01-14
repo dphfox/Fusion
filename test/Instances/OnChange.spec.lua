@@ -1,14 +1,6 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
-local Children = require(Package.Instances.Children)
 local OnChange = require(Package.Instances.OnChange)
-
-local function waitForDefer()
-	RunService.RenderStepped:Wait()
-	RunService.RenderStepped:Wait()
-end
 
 return function()
 	it("should connect property change handlers", function()
@@ -22,9 +14,7 @@ return function()
 		}
 
 		ins.Name = "Bar"
-
-		waitForDefer()
-
+		task.wait()
 		expect(fires).never.to.equal(0)
 	end)
 
@@ -55,9 +45,7 @@ return function()
 
 		local totalFires = fires
 		ins:Destroy()
-
-		waitForDefer()
-
+		task.wait()
 		expect(totalFires).to.equal(0)
 	end)
 end

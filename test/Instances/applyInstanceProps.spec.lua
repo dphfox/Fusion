@@ -1,5 +1,3 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
