@@ -8,19 +8,19 @@
 return {
 	ScreenGui = {
 		ResetOnSpawn = false,
-		ZIndexBehavior = "Sibling"
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	},
 
 	BillboardGui = {
 		ResetOnSpawn = false,
-		ZIndexBehavior = "Sibling"
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	},
 
 	SurfaceGui = {
 		ResetOnSpawn = false,
-		ZIndexBehavior = "Sibling",
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 
-		SizingMode = "PixelsPerStud",
+		SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud,
 		PixelsPerStud = 50
 	},
 
@@ -43,7 +43,7 @@ return {
 		BorderColor3 = Color3.new(0, 0, 0),
 		BorderSizePixel = 0,
 
-		Font = "SourceSans",
+		Font = Enum.Font.SourceSans,
 		Text = "",
 		TextColor3 = Color3.new(0, 0, 0),
 		TextSize = 14
@@ -56,7 +56,7 @@ return {
 
 		AutoButtonColor = false,
 
-		Font = "SourceSans",
+		Font = Enum.Font.SourceSans,
 		Text = "",
 		TextColor3 = Color3.new(0, 0, 0),
 		TextSize = 14
@@ -69,7 +69,7 @@ return {
 
 		ClearTextOnFocus = false,
 
-		Font = "SourceSans",
+		Font = Enum.Font.SourceSans,
 		Text = "",
 		TextColor3 = Color3.new(0, 0, 0),
 		TextSize = 14
