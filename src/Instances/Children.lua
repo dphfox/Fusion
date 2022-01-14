@@ -108,6 +108,16 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 		end
 
 		processChild(propValue)
+
+		-- unparent any children that are no longer present
+		for oldInstance in pairs(oldParented) do
+			oldInstance.Parent = nil
+		end
+
+		-- disconnect observers which weren't reused
+		for oldState, disconnect in pairs(oldDisconnects) do
+			disconnect()
+		end
 	end
 
 	queueUpdate = function()
