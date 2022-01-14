@@ -29,8 +29,6 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 				end
 			end))
 		end
-		-- don't inhibit gc!
-		instance = nil
 	end
 
 	return changeKey
