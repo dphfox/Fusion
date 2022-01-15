@@ -1,3 +1,5 @@
+--!nonstrict
+
 --[[
 	Constructs a new computed state object which maps pairs of an array using
 	a `processor` function.
@@ -7,6 +9,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
@@ -24,7 +27,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Returns the current value of this ComputedPairs object.
 	The object will be registered as a dependency unless `asDependency` is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end
@@ -49,7 +52,7 @@ end
 	their values from the output table and pass them to the destructor.
 
 ]]
-function class:update()
+function class:update(): boolean
 	local inputIsState = self._inputIsState
 	local oldInput = self._oldInputTable
 	local newInput = self._inputTable
@@ -178,14 +181,14 @@ function class:update()
 	return didChange
 end
 
-local function ComputedPairs(
-	inputTable: Types.StateOrValue<{[any]: any}>,
-	processor: (any) -> any,
-	destructor: (any) -> ()?
-)
+local function ComputedPairs<K, VI, VO>(
+	inputTable: PubTypes.CanBeState<{[K]: VI}>,
+	processor: (K, VI) -> VO,
+	destructor: (VO) -> ()?
+): Types.ComputedPairs<K, VI, VO>
 	-- if destructor function is not defined, use the default cleanup function
 	if destructor == nil then
-		destructor = cleanup
+		destructor = (cleanup) :: (VO) -> ()
 	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"

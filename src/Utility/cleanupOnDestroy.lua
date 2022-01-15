@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Functions like a hypothetical 'Instance.Destroyed' event - when the instance
 	is destroyed, cleans up the given task using the default `cleanup` function.
@@ -77,15 +79,14 @@ end
 
 RunService.Heartbeat:Connect(runCleanupTasks)
 
-local function cleanupOnDestroy(instance: Instance, task: cleanup.Task): (() -> ())
+local function cleanupOnDestroy(instance: Instance?, task: cleanup.Task): (() -> ())
 	-- set up connection so we can check if the instance is alive
 	-- we don't care about the event we're connecting to, just that we can see
 	-- when it's disconnected by the garbage collector
-	local connection = instance:GetPropertyChangedSignal("ClassName"):Connect(noOp)
+	local connection = (instance :: Instance):GetPropertyChangedSignal("ClassName"):Connect(noOp)
 
 	-- store data about the task for later
 	local taskData = {
-		debugName = instance.Name,
 		connection = connection,
 		task = task,
 		cleaned = false

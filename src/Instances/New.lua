@@ -1,15 +1,18 @@
+--!nonstrict
+
 --[[
 	Constructs and returns a new instance, with options for setting properties,
 	event handlers and other attributes on the instance right away.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local cleanupOnDestroy = require(Package.Utility.cleanupOnDestroy)
 local Children = require(Package.Instances.Children)
+local Ref = require(Package.Instances.Ref)
 local Scheduler = require(Package.Instances.Scheduler)
 local defaultProps = require(Package.Instances.defaultProps)
-local Compat = require(Package.State.Compat)
+local Observer = require(Package.State.Observer)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 
@@ -18,10 +21,11 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local ENABLE_EXPERIMENTAL_GC_MODE = false
 
 -- NOTE: this needs to be weakly held so gc isn't inhibited
-local overrideParents: {[Instance]: Types.StateOrValue<Instance>} = setmetatable({}, WEAK_KEYS_METATABLE)
+local overrideParents: {[Instance]: PubTypes.CanBeState<Instance>} = {}
+setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
 local function New(className: string)
-	return function(propertyTable: {[string | Types.Symbol]: any})
+	return function(propertyTable: PubTypes.PropertyTable): Instance
 		-- things to clean up when the instance is destroyed or gc'd
 		local cleanupTasks = {}
 		-- event handlers to connect
@@ -58,7 +62,7 @@ local function New(className: string)
 		]]
 		for key, value in pairs(propertyTable) do
 			-- ignore some keys which will be processed later
-			if key == Children or key == "Parent" then
+			if key == Children or key == Ref or key == "Parent" then
 				continue
 
 			--[[
@@ -68,38 +72,56 @@ local function New(className: string)
 
 				-- Properties bound to state
 				if typeof(value) == "table" and value.type == "State" then
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						ref.instance[key] = value:get(false)
 					end)
-
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						local existingValue, attemptedValue
+						pcall(function()
+							existingValue = ref.instance[key]
+							attemptedValue = value:get(false)
+						end)
+
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
+							logError("invalidPropertyType", nil, key, typeof(attemptedValue), typeof(existingValue), className)
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 
-					table.insert(cleanupTasks,
-						Compat(value):onChange(function()
-							if ref.instance == nil then
-								if ENABLE_EXPERIMENTAL_GC_MODE then
-									if conn.Connected then
-										warn("ref is nil and instance is around!!!")
-									else
-										print("ref is nil, but instance was destroyed")
-									end
+					local disconnect = Observer(value):onChange(function()
+						if ref.instance == nil then
+							if ENABLE_EXPERIMENTAL_GC_MODE then
+								if conn.Connected then
+									warn("ref is nil and instance is around!!!")
+								else
+									print("ref is nil, but instance was destroyed")
 								end
-								return
 							end
-							Scheduler.enqueueProperty(ref.instance, key, value:get(false))
-						end)
-					)
+							return
+						end
+						Scheduler.enqueueProperty(ref.instance, key, value:get(false))
+					end)
+					table.insert(cleanupTasks, disconnect)
 
 				-- Properties with constant values
 				else
-					local assignOK = pcall(function()
+					local assignOK, errorMessage = pcall(function()
 						ref.instance[key] = value
 					end)
-
+					
 					if not assignOK then
-						logError("cannotAssignProperty", nil, className, key)
+						local existingValue
+						pcall(function()
+							existingValue = ref.instance[key]
+						end)
+
+						if existingValue ~= nil or errorMessage:find("invalid") ~= nil then
+							logError("invalidPropertyType", nil, key, typeof(value), typeof(existingValue), className)
+						else
+							logError("cannotAssignProperty", nil, className, key)
+						end
 					end
 				end
 
@@ -220,7 +242,7 @@ local function New(className: string)
 								-- FUTURE: does this need to be cleaned up when
 								-- the instance is destroyed at any point?
 								-- If so, how?
-								currentConnections[child] = Compat(child):onChange(function()
+								currentConnections[child] = Observer(child):onChange(function()
 									Scheduler.enqueueCallback(updateCurrentlyParented)
 								end)
 							end
@@ -259,7 +281,15 @@ local function New(className: string)
 		end
 
 		--[[
-			STEP 4: If provided, override the Parent of this instance
+			STEP 4: If provided, set the value of [Ref] to ref.instance
+		]]
+		local refValue = propertyTable[Ref]
+		if refValue ~= nil then
+			refValue:set(ref.instance)
+		end
+
+		--[[
+			STEP 5: If provided, override the Parent of this instance
 		]]
 		local parent = propertyTable.Parent
 		if parent ~= nil then
@@ -272,11 +302,11 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent:get(false)), "Instance", className)
 				end
 
 				table.insert(cleanupTasks,
-					Compat(parent):onChange(function()
+					Observer(parent):onChange(function()
 						if ref.instance == nil then
 							if ENABLE_EXPERIMENTAL_GC_MODE then
 								if conn.Connected then
@@ -298,20 +328,20 @@ local function New(className: string)
 				end)
 
 				if not assignOK then
-					logError("cannotAssignProperty", nil, className, "Parent")
+					logError("invalidPropertyType", nil, "Parent", typeof(parent), "Instance", className)
 				end
 			end
 		end
 
 		--[[
-			STEP 5: Connect event handlers
+			STEP 6: Connect event handlers
 		]]
 		for event, callback in pairs(toConnect) do
 			table.insert(cleanupTasks, event:Connect(callback))
 		end
 
 		--[[
-			STEP 6: Register cleanup tasks if needed
+			STEP 7: Register cleanup tasks if needed
 		]]
 		if cleanupTasks[1] ~= nil then
 			if ENABLE_EXPERIMENTAL_GC_MODE then

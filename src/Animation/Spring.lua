@@ -1,9 +1,12 @@
+--!nonstrict
+
 --[[
 	Constructs a new computed state object, which follows the value of another
 	state object using a spring simulation.
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local unpackType = require(Package.Animation.unpackType)
@@ -23,7 +26,7 @@ local ENABLE_PARAM_SETTERS = false
 	Returns the current value of this Spring object.
 	The object will be registered as a dependency unless `asDependency` is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end
@@ -51,7 +54,7 @@ end
 	then the springs will be instantly moved to the goal value. Returns true, as
 	the current value of the Spring object will jump directly to the goal.
 ]]
-function class:update()
+function class:update(): boolean
 	local goalValue = self._goalState:get(false)
 
 	-- figure out if this was a goal change or a speed/damping change
@@ -117,7 +120,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:setPosition(newValue: Types.Animatable)
+	function class:setPosition(newValue: PubTypes.Animatable)
 		local newType = typeof(newValue)
 		if newType ~= self._currentType then
 			logError("springTypeMismatch", nil, newType, self._currentType)
@@ -138,7 +141,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:setVelocity(newValue: Types.Animatable)
+	function class:setVelocity(newValue: PubTypes.Animatable)
 		local newType = typeof(newValue)
 		if newType ~= self._currentType then
 			logError("springTypeMismatch", nil, newType, self._currentType)
@@ -155,7 +158,7 @@ if ENABLE_PARAM_SETTERS then
 		If the type doesn't match the current type of the spring, an error will be
 		thrown.
 	]]
-	function class:addVelocity(deltaValue: Types.Animatable)
+	function class:addVelocity(deltaValue: PubTypes.Animatable)
 		local deltaType = typeof(deltaValue)
 		if deltaType ~= self._currentType then
 			logError("springTypeMismatch", nil, deltaType, self._currentType)
@@ -171,11 +174,11 @@ if ENABLE_PARAM_SETTERS then
 
 end
 
-local function Spring(
-	goalState: Types.State<Types.Animatable>,
-	speed: Types.StateOrValue<number>?,
-	damping: Types.StateOrValue<number>?
-)
+local function Spring<T>(
+	goalState: PubTypes.Value<T>,
+	speed: PubTypes.CanBeState<number>?,
+	damping: PubTypes.CanBeState<number>?
+): Types.Spring<T>
 	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10

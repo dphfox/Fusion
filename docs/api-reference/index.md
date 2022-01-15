@@ -41,4 +41,4 @@ Jump directly to the documentation for some common APIs:
 
 ### Animation
 - [Tween](api/tween)
-- [Spring](api/tween)
+- [Spring](api/spring)

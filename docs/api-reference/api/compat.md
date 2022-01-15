@@ -64,7 +64,7 @@ local numCoins = State(50)
 
 local compat = Compat(numCoins)
 
-local disconnect = numCoins:onChange(function()
+local disconnect = compat:onChange(function()
 	print("coins is now:", numCoins:get())
 end)
 

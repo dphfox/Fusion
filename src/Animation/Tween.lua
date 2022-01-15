@@ -1,9 +1,12 @@
+--!nonstrict
+
 --[[
 	Constructs a new computed state object, which follows the value of another
 	state object using a tween.
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
@@ -20,7 +23,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Returns the current value of this Tween object.
 	The object will be registered as a dependency unless `asDependency` is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end
@@ -31,7 +34,7 @@ end
 	Called when the goal state changes value; this will initiate a new tween.
 	Returns false as the current value doesn't change right away.
 ]]
-function class:update()
+function class:update(): boolean
 	local goalValue = self._goalState:get(false)
 
 	-- if the goal hasn't changed, then this is a TweenInfo change.
@@ -50,7 +53,7 @@ function class:update()
 		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
 		return false
 	end
-
+	
 	self._prevValue = self._currentValue
 	self._nextValue = goalValue
 
@@ -61,7 +64,7 @@ function class:update()
 	if tweenInfo.Reverses then
 		tweenDuration += tweenInfo.Time
 	end
-	tweenDuration *= math.max(tweenInfo.RepeatCount, 1)
+	tweenDuration *= self._tweenInfo.RepeatCount + 1
 	self._currentTweenDuration = tweenDuration
 
 	-- start animating this tween
@@ -70,7 +73,10 @@ function class:update()
 	return false
 end
 
-local function Tween(goalState: Types.State<Types.Animatable>, tweenInfo: Types.StateOrValue<TweenInfo>?)
+local function Tween(
+	goalState: Types.State<Types.Animatable>,
+	tweenInfo: Types.StateOrValue<TweenInfo>?
+)
 	local currentValue = goalState:get(false)
 
 	-- apply defaults for tween info

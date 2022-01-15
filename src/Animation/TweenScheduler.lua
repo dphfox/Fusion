@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Manages batch updating of tween objects.
 ]]
@@ -12,20 +14,14 @@ local updateAll = require(Package.Dependencies.updateAll)
 
 local TweenScheduler = {}
 
-type Tween = {
-	_prevValue: Types.Animatable,
-	_nextValue: Types.Animatable,
-	_currentValue: Types.Animatable,
-
-	_tweenStartTime: number,
-	_tweenDuration: number,
-	_tweenInfo: TweenInfo
-}
+type Set<T> = {[T]: any}
+type Tween = Types.Tween<any>
 
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 -- all the tweens currently being updated
-local allTweens: Types.Set<Tween> = setmetatable({}, WEAK_KEYS_METATABLE)
+local allTweens: Set<Tween> = {}
+setmetatable(allTweens, WEAK_KEYS_METATABLE)
 
 --[[
 	Adds a Tween to be updated every render step.
@@ -46,7 +42,8 @@ end
 ]]
 local function updateAllTweens()
 	local now = os.clock()
-	for tween in pairs(allTweens) do
+	-- FIXME: Typed Luau doesn't understand this loop yet
+	for tween: Tween in pairs(allTweens :: any) do
 		local currentTime = now - tween._currentTweenStartTime
 
 		if currentTime > tween._currentTweenDuration then

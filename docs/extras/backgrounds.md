@@ -5,6 +5,24 @@ All backgrounds are PNG format, and have been optimised for these resolutions:
 - 3:2 (2256 x 1504)
 - Mobile (1125 x 2436)
 
+These backgrounds are intended for personal use only! These backgrounds are, and
+remain, the copyright of Elttob. You may not use these, commercially or otherwise,
+without explicit written consent.
+
+-----
+
+## Extrusion
+
+A Fusion logo, with extruded fill lines coming out of the logo. Background is
+hex colour #0D0D0F, and so might not be ideal for OLED screens.
+
+![Sample of Extrusion background](samples/Extrusion.jpg)
+
+- [Ultrawide](Extrusion-Ultrawide.png)
+- [Widescreen](Extrusion-Widescreen.png)
+- [3:2](Extrusion-3_2.png)
+- [Mobile](Extrusion-Mobile.png)
+
 -----
 
 ## Construction

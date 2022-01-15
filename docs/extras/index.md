@@ -12,3 +12,4 @@ Fusion branding, download backgrounds and wallpapers for your devices, and more!
 ## Commonly Used
 
 - [Backgrounds](backgrounds)
+- [Brand Guidelines](brand-guidelines)

@@ -1,14 +1,24 @@
+--!strict
+
 --[[
 	Unpacks an animatable type into an array of numbers.
 	If the type is not animatable, an empty array will be returned.
+
+	FIXME: This function uses a lot of redefinitions to suppress false positives
+	from the Luau typechecker - ideally these wouldn't be required
+
+	FUTURE: When Luau supports singleton types, those could be used in
+	conjunction with intersection types to make this function fully statically
+	type checkable.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
 
-local function unpackType(value: Types.Animatable, typeString: string): {number}
+local function unpackType(value: any, typeString: string): {number}
 	if typeString == "number" then
+		local value = value :: number
 		return {value}
 
 	elseif typeString == "CFrame" then

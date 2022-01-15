@@ -1,43 +1,53 @@
+--!strict
+
 --[[
 	The entry point for the Fusion library.
 ]]
 
-local Types = require(script.Types)
+local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
 
-export type State<T> = Types.State<T>
-export type StateOrValue<T> = Types.StateOrValue<T>
-export type Symbol = Types.Symbol
-export type Computed<T> = Types.Computed<T>
-export type Compat = Types.Compat
-export type Tween<T> = Types.Tween<T>
-export type Spring<T> = Types.Spring<T>
+export type StateObject<T> = PubTypes.StateObject<T>
+export type CanBeState<T> = PubTypes.CanBeState<T>
+export type Symbol = PubTypes.Symbol
+export type Value<T> = PubTypes.Value<T>
+export type Computed<T> = PubTypes.Computed<T>
+export type ComputedPairs<K, V> = PubTypes.ComputedPairs<K, V>
+export type Observer = PubTypes.Observer
+export type Tween<T> = PubTypes.Tween<T>
+export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
-  New: (className: string) -> ((propertyTable: {[string | Types.Symbol]: any}) -> Instance | nil),
-  Children: Types.Symbol,
-  OnEvent: (eventName: string) -> Types.Symbol,
-  OnChange: (propertyName: string) -> Types.Symbol,
+	version = PubTypes.Version,
 
-  State: (initialValue: any) -> State<any>,
-  Computed: (callback: () -> any) -> Computed<any>,
-  ComputedPairs: (inputTable: Types.StateOrValue<{[any]: any}>, processor: (any) -> any, destructor: (any) -> ()?) -> Computed<any>,
-  Compat: (watchedState: Types.State<any>) -> Compat,
+	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	Ref: PubTypes.RefKey,
+	Children: PubTypes.ChildrenKey,
+	OnEvent: (eventName: string) -> PubTypes.OnEventKey,
+	OnChange: (propertyName: string) -> PubTypes.OnChangeKey,
 
-  Tween: (goalState: Types.State<Types.Animatable>, tweenInfo: TweenInfo?) -> Tween<any>,
-  Spring: (goalState: Types.State<Types.Animatable>, speed: number?, damping: number?) -> Spring<any>
+	Value: <T>(initialValue: T) -> Value<T>,
+	Computed: <T>(callback: () -> T) -> Computed<T>,
+	ComputedPairs: <K, VI, VO>(inputTable: CanBeState<{[K]: VI}>, processor: (K, VI) -> VO, destructor: (VO) -> ()?) -> ComputedPairs<K, VO>,
+	Observer: (watchedState: StateObject<any>) -> Observer,
+
+	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
+	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
 }
 
 return restrictRead("Fusion", {
+	version = {major = 0, minor = 2, isRelease = false},
+
 	New = require(script.Instances.New),
+	Ref = require(script.Instances.Ref),
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
 
-	State = require(script.State.State),
+	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
 	ComputedPairs = require(script.State.ComputedPairs),
-	Compat = require(script.State.Compat),
+	Observer = require(script.State.Observer),
 
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring)
