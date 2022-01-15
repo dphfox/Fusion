@@ -118,10 +118,7 @@
 
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-	width: 1.6rem;
-	height: 1.6rem;
-	margin-top: -0.2rem;
-	margin-left: -0.2rem;
+	transform: scale(1.3333);
 }
 
 .md-header__title {

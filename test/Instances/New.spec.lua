@@ -3,6 +3,7 @@ local RunService = game:GetService("RunService")
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
+local Ref = require(Package.Instances.Ref)
 local OnEvent = require(Package.Instances.OnEvent)
 local OnChange = require(Package.Instances.OnChange)
 
@@ -36,12 +37,78 @@ return function()
 		expect(ins.Name).to.equal("Bob")
 	end)
 
-	it("should throw for non-existent properties", function()
+	it("should throw for non-existent constant properties", function()
 		expect(function()
 			New "Folder" {
 				Frobulator = "Frobulateur"
 			}
 		end).to.throw("cannotAssignProperty")
+	end)
+
+	it("should throw for non-existent value properties", function()
+		local state = Value("Frobulateur")
+
+		expect(function()
+			New "Folder" {
+				Frobulator = Computed(function()
+					state:get()
+				end)
+			}
+		end).to.throw("cannotAssignProperty")
+	end)
+
+	it("should throw on invalid property type for non-Parent", function()
+		expect(function()
+			New "Folder" {
+				Name = UDim.new()
+			}
+		end).to.throw("invalidPropertyType")
+
+		local state = Value(true)
+
+		expect(function()
+			New "Folder" {
+				Name = Computed(function()
+					state:get()
+				end)
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
+	it("should throw on invalid property type for Parent", function()
+		expect(function()
+			New "Folder" {
+				Parent = "Foo"
+			}
+		end).to.throw("invalidPropertyType")
+
+		local state = Value(true)
+
+		expect(function()
+			New "Folder" {
+				Parent = Computed(function()
+					return state:get()
+				end)
+			}
+		end).to.throw("invalidPropertyType")
+	end)
+
+	it("should throw on invalid property type for Instances", function()
+		expect(function()
+			New "ObjectValue" {
+				Value = "Foo"
+			}
+		end).to.throw("invalidPropertyType")
+
+		local state = Value(true)
+
+		expect(function()
+			New "ObjectValue" {
+				Value = Computed(function()
+					return state:get()
+				end)
+			}
+		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for unrecognised keys", function()
@@ -297,6 +364,22 @@ return function()
 		}
 
 		expect(child.Parent).to.equal(targetParent)
+	end)
+
+	it("should set State objects passed as [Ref]", function()
+		local refValue = Value()
+
+		local child = New "Folder" {
+			[Ref] = refValue;
+		}
+		
+		local targetParent = New "Folder" {
+			[Children] = {
+				child
+			}
+		}
+
+		expect(refValue:get()).to.equal(child)
 	end)
 
 	it("should bind State objects passed as the parent", function()

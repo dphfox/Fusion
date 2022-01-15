@@ -6,7 +6,7 @@ repo_url: https://github.com/Elttob/Fusion
 theme:
   name: material
   custom_dir: docs/assets/overrides
-  logo: assets/logo-dark.svg
+  logo: assets/logo-animated.png
   favicon: assets/logo-dark.svg
   palette:
     scheme: fusion-dark

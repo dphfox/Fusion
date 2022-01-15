@@ -40,31 +40,28 @@ Before using the Fusion logo or brand assets in your project, please be mindful
 of our policy around use of our branding. The rights to the Fusion name, logo
 and brand assets remain reserved by Elttob.
 
-By default, with the sole exception of any use case explicitly cleared here, you
-must receive explicit written permission from Elttob if you are looking to use
-the Fusion name, logo or brand assets.
+We allow the following uses of the Fusion logo and branding by default:
 
-We explicitly clear one use of these assets, such that prior consent is not
-required for only this use case:
-
-- Representing the **base, unmodified** Fusion project. For example, you may use the
+- Representing the (original) Fusion project. 
+    - For example, you may use the
 the Fusion logo on-screen in a tutorial video when you're referring to the
-Fusion project, as an image in a news article or blog post where you are talking
-about the Fusion project, as an icon in a data visualisation to represent the
-Fusion project, and any other uses where it is very clear that the use of the
-assets, logo or name is representing the base, unmodified Fusion project.
+Fusion project...
+    - ...as an image in a news article or blog post where you are talking
+about the Fusion project...
+    - ...as an icon in a data visualisation to represent the
+Fusion project...
+    - ...or in general, any use where it's very clear you're referring to the Fusion project.
+    This does *not* extend to derived or inspired-by projects.
+    
+If you wish to use the Fusion logo, name or branding in your project for a use
+case which isn't listed above, you must receive explicit written permission
+from Elttob first.
+    
+Please do not use the logo or branding in a way that:
 
-We explicitly reject the following uses of these assets:
-
-- Using the Fusion logo, name or brand assets for anything which is not the base,
-unmodified Fusion project (unless prior explicit written consent was given by
-Elttob).
-In particular, without prior consent, you may *not* use the Fusion logo to
-represent your third-party library, software, plugin or game.
-- Using the Fusion logo, name or brand assets in a way which does not
-sufficiently distinguish you from the Fusion project, or using these in a way
-which may insinuate support, endorsement or other affiliation with the Fusion
+- may insinuate support, endorsement or other affiliation with the Fusion
 project.
-
-In any case, please get in contact if you would like to use the Fusion branding
-for any use case other than what we have explicitly cleared.
+    - It's okay to say you were inspired by Fusion, or are using Fusion as
+    part of your project...
+    - ...but it's not okay if your project comes off as an official part of
+    Fusion, or as something officially endorsed by the Fusion project.

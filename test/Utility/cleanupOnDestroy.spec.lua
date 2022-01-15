@@ -22,7 +22,7 @@ return function()
 		ins:Destroy()
 
 		local start = os.clock()
-		local timeout = 2
+		local timeout = 3
 
 		repeat
 			RunService.RenderStepped:Wait()
@@ -44,7 +44,7 @@ return function()
 		ins:Destroy()
 
 		local start = os.clock()
-		local timeout = 2
+		local timeout = 3
 
 		repeat
 			RunService.RenderStepped:Wait()
@@ -66,7 +66,7 @@ return function()
 		end
 
 		local start = os.clock()
-		local timeout = 2
+		local timeout = 3
 
 		repeat
 			RunService.RenderStepped:Wait()
@@ -88,7 +88,7 @@ return function()
 		end
 
 		local start = os.clock()
-		local timeout = 2
+		local timeout = 3
 
 		repeat
 			RunService.RenderStepped:Wait()
@@ -111,7 +111,7 @@ return function()
 		ins.Parent = nil
 
 		local start = os.clock()
-		local timeout = 2
+		local timeout = 3
 
 		repeat
 			RunService.RenderStepped:Wait()
