@@ -37,6 +37,12 @@ export type Animatable =
 	Vector3 |
 	Vector3int16
 
+-- Script-readable version information.
+export type Version = {
+	major: number,
+	minor: number,
+	isRelease: boolean
+}
 --[[
 	Generic reactive graph types
 ]]
