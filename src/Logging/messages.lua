@@ -15,6 +15,7 @@ return {
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
+	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
 	pairsDestructorError = "ComputedPairs destructor error: ERROR_MESSAGE",
 	pairsProcessorError = "ComputedPairs callback error: ERROR_MESSAGE",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
