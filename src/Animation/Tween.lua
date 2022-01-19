@@ -40,7 +40,7 @@ function class:update(): boolean
 	-- if the goal hasn't changed, then this is a TweenInfo change.
 	-- in that case, if we're not currently animating, we can skip everything
 	if goalValue == self._nextValue and not self._currentlyAnimating then
-		return
+		return false
 	end
 
 	local tweenInfo = self._tweenInfo
