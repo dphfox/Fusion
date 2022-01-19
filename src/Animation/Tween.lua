@@ -53,7 +53,7 @@ function class:update(): boolean
 		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
 		return false
 	end
-	
+
 	self._prevValue = self._currentValue
 	self._nextValue = goalValue
 
@@ -74,8 +74,8 @@ function class:update(): boolean
 end
 
 local function Tween(
-	goalState: Types.State<Types.Animatable>,
-	tweenInfo: Types.StateOrValue<TweenInfo>?
+	goalState: PubTypes.StateObject<PubTypes.Animatable>,
+	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 )
 	local currentValue = goalState:get(false)
 
@@ -83,7 +83,7 @@ local function Tween(
 	if tweenInfo == nil then
 		tweenInfo = TweenInfo.new()
 	end
-	
+
 	local dependencySet = {[goalState] = true}
 	local tweenInfoIsState = typeof(tweenInfo) == "table" and tweenInfo.type == "State"
 
@@ -104,7 +104,7 @@ local function Tween(
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_goalState = goalState,
 		_tweenInfo = tweenInfo,
-		_tweenInfoIsState = tweenInfoIsState
+		_tweenInfoIsState = tweenInfoIsState,
 
 		_prevValue = currentValue,
 		_nextValue = currentValue,

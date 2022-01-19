@@ -18,7 +18,7 @@ export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 
 type Fusion = {
-	version = PubTypes.Version,
+	version: PubTypes.Version,
 
 	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
 	Ref: PubTypes.SpecialKey,
