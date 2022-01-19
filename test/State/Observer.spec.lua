@@ -1,46 +1,90 @@
--- it("should fire its onChange event when it is updated", function()
--- 	local currentNumber = State(2)
--- 	local doubled = Computed(function()
--- 		return currentNumber:get() * 2
--- 	end)
+local RunService = game:GetService("RunService")
 
--- 	local fires = 0
+local Package = game:GetService("ReplicatedStorage").Fusion
+local Observer = require(Package.State.Observer)
+local Value = require(Package.State.Value)
 
--- 	doubled.onChange:Connect(function()
--- 		fires += 1
--- 	end)
-
--- 	expect(fires).to.equal(0)
-
--- 	currentNumber:set(4)
--- 	expect(fires).to.equal(1)
-
--- 	currentNumber:set(0)
--- 	expect(fires).to.equal(2)
--- end)
-
--- it("should fire change handlers, even when out of scope", function()
--- 	local state = State(1)
-
--- 	local counter = 0
-
--- 	do
--- 		local computed = Computed(function()
--- 			return state:get()
--- 		end)
-
--- 		computed.onChange:Connect(function()
--- 			counter += 1
--- 		end)
--- 	end
-
--- 	state:set(2)
--- 	waitForGC()
--- 	state:set(3)
-
--- 	expect(counter).to.equal(2)
--- end)
+local function waitForDefer()
+	RunService.RenderStepped:Wait()
+	RunService.RenderStepped:Wait()
+end
 
 return function()
-	return {}
+    it("should fire connections on change", function()
+        local state = Value(false)
+        local observer = Observer(state)
+
+        local changed = false
+        observer:onChange(function()
+            changed = true
+        end)
+
+        local start = os.clock()
+        local timeout = 2
+        
+        state:set(true)
+
+        repeat
+            RunService.RenderStepped:Wait()
+            if os.clock() - start > timeout then
+                error("Observer did not fire connections on change")
+            end
+        until changed
+        
+        expect(changed).to.equal(true)
+    end)
+
+    it("should fire connections only after the value changes", function()
+        local state = Value(false)
+        local observer = Observer(state)
+
+        local changedValue
+        local completed = false
+        observer:onChange(function(value)
+            changedValue = state:get()
+            completed = true
+        end)
+
+        local start = os.clock()
+        local timeout = 2
+        
+        state:set(true)
+        
+        repeat
+            RunService.RenderStepped:Wait()
+            if os.clock() - start > timeout then
+                error("Observer did not fire connections on change")
+            end
+        until completed
+
+        expect(changedValue).to.equal(true)
+    end)
+
+    it("should fire connections only once after the value changes", function()
+        local state = Value(false)
+        local observer = Observer(state)
+
+        local timesFired = 0
+        local completed = false
+        observer:onChange(function(value)
+            timesFired += 1
+            completed = true
+        end)
+
+        local start = os.clock()
+        local timeout = 2
+        
+        state:set(true)
+        
+        repeat
+            RunService.RenderStepped:Wait()
+            if os.clock() - start > timeout then
+                error("Observer did not fire connections on change")
+            end
+        until completed
+
+        waitForDefer()
+
+        expect(timesFired).to.equal(1)
+    end)
 end

@@ -20,6 +20,7 @@ return {
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	onDestroyNilRef = "`onDestroy` got a nil ref! (this is an internal issue, was the instance lost too early?)",
+	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
 	pairsDestructorError = "ComputedPairs destructor error: ERROR_MESSAGE",
 	pairsProcessorError = "ComputedPairs callback error: ERROR_MESSAGE",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
