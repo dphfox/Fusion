@@ -24,7 +24,7 @@ local ENABLE_EXPERIMENTAL_GC_MODE = false
 local overrideParents: {[Instance]: PubTypes.CanBeState<Instance>} = {}
 setmetatable(overrideParents, WEAK_KEYS_METATABLE)
 
-local function New(className: string)
+local function New(target: string | Instance)
 	return function(propertyTable: PubTypes.PropertyTable): Instance
 		-- things to clean up when the instance is destroyed or gc'd
 		local cleanupTasks = {}
@@ -39,9 +39,21 @@ local function New(className: string)
 		local conn
 
 		do
-			local createOK, instance = pcall(Instance.new, className)
-			if not createOK then
-				logError("cannotCreateClass", nil, className)
+			local instance
+			local className
+			local t = typeof(target)
+			if t == 'string' then -- traditional string call
+				className = target
+				local createOK
+				createOK, instance = pcall(Instance.new, className)
+				if not createOK then
+					logError("cannotCreateClass", nil, className)
+				end
+			elseif t == 'Instance' then -- support mounting
+				className = Instance.ClassName
+				instance = target
+			else
+				logError("unacceptableType", nil, t)
 			end
 
 			local defaultClassProps = defaultProps[className]
