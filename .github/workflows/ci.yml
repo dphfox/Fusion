@@ -64,4 +64,4 @@ jobs:
         
       - name: Check test status
         shell: bash
-        run: cat test-out.txt | grep "0 failed, 0 skipped" || (cat test-out.txt && exit 1)
+        run: cat test-out.txt | grep "0 failed, 0 skipped" || {cat test-out.txt && exit 1}
