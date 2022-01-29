@@ -1,7 +1,8 @@
 --!strict
 
 --[[
-	A special key for property tables, which
+	A special key for property tables, which stores a reference to the instance
+	in a user-provided Value object.
 ]]
 
 local Package = script.Parent.Parent
