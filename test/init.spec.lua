@@ -10,6 +10,7 @@ return function()
 
 			New = "function",
 			Ref = "table",
+			Cleanup = "table",
 			Children = "table",
 			OnEvent = "function",
 			OnChange = "function",
