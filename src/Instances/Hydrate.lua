@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
-local function Hydrate(instance: Instance)
+local function Hydrate(target: Instance)
 	return function(props: PubTypes.PropertyTable): Instance
 		applyInstanceProps(props, semiWeakRef(instance))
 		return instance
