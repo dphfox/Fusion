@@ -9,6 +9,7 @@ return function()
 			version = "table",
 
 			New = "function",
+			Hydrate = "function",
 			Ref = "table",
 			Children = "table",
 			OnEvent = "function",
