@@ -59,7 +59,7 @@ jobs:
 
       - name: Run tests
         shell: bash
-        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua > test-out.txt
+        run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua &> test-out.txt
         continue-on-error: true
         
       - name: Check test status
