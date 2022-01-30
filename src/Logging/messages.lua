@@ -5,7 +5,7 @@
 ]]
 
 return {
-	ambiguousParent = "The Parent of '%s%' is ambiguous - are you parenting it in multiple places?",
+	ambiguousParent = "The Parent of '%s' is ambiguous - are you parenting it in multiple places?",
 	applyPropsNilRef = "`applyInstanceProps` got a nil ref! (this is an internal issue)",
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
