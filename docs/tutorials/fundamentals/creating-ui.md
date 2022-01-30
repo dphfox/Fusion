@@ -86,18 +86,7 @@ local New = Fusion.New
 ```
 
 Now, we can use the `New` function like we did in the snippet above. We want to
-create a ScreenGui with these properties:
-
-- a name of 'MyFirstGui'
-- `ResetOnSpawn` disabled
-- the `ZIndexBehavior` set to 'Sibling'
-- parented to our PlayerGui
-
-??? question "What do these properties do?"
-	- A name makes it easier to find our UI in the Explorer.
-	- Disabling `ResetOnSpawn` stops Roblox destroying our UI after we respawn.
-	- `ZIndexBehavior` is mostly preference, but [it changes how UI is arranged by depth](https://devforum.roblox.com/t/new-zindexbehavior-property-is-now-live/76051).
-	- Parenting it to the PlayerGui makes our UI visible on-screen.
+create a ScreenGui with a name of 'MyFirstGui' parented to our PlayerGui.
 
 The following code snippet does all of this for us:
 
@@ -111,9 +100,7 @@ local New = Fusion.New
 local gui = New "ScreenGui" {
 	Parent = Players.LocalPlayer.PlayerGui,
 
-	Name = "MyFirstGui",
-	ResetOnSpawn = false,
-	ZIndexBehavior = "Sibling"
+	Name = "MyFirstGui"
 }
 ```
 
@@ -124,6 +111,12 @@ PlayerGui, with all of the properties we've set:
 
 Hopefully you're getting comfortable with this syntax - we'll expand on it in
 the next section.
+
+??? tip
+	Fusion automatically applies some 'sensible default' properties for
+	you, so you don't have to specify them. Here, `ZIndexBehavior` will
+	default to 'false' and `ResetOnSpawn` defaults to `false`.
+	[You can see a list of all default properties here.](https://elttob.github.io/Fusion/api-reference/api/new/#default-properties)
 
 -----
 

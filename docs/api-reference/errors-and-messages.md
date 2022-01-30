@@ -104,7 +104,7 @@ end)
 ## `invalidSpringDamping`
 
 ```
-The damping ratio for a spring must be >= 0. (damping was %.2f)
+The damping ratio for a spring must be >= 0. (damping was -0.50)
 ```
 
 This message shows if you try to provide a damping ratio to a [spring](../spring)
@@ -124,7 +124,7 @@ physically simulatable.
 ## `invalidSpringSpeed`
 
 ```
-The speed of a spring must be >= 0. (speed was %.2f)
+The speed of a spring must be >= 0. (speed was -2.00)
 ```
 
 This message shows if you try to provide a speed to a [spring](../spring) which
@@ -137,6 +137,55 @@ local spring = Spring(state, speed)
 
 Since a speed of 0 is equivalent to a spring that doesn't move, any slower speed
 is not simulatable or physically sensible.
+
+-----
+
+## `mistypedSpringDamping`
+
+```
+The damping ratio for a spring must be a number. (got a boolean)
+```
+
+This message shows if you try to provide a damping ratio to a [spring](../spring)
+which isn't a number:
+
+```Lua
+local speed = 10
+local damping = true
+local spring = Spring(state, speed, damping)
+```
+
+-----
+
+## `mistypedSpringSpeed`
+
+```
+The speed of a spring must be a number. (got a boolean)
+```
+
+This message shows if you try to provide a speed to a [spring](../spring) which
+isn't a number:
+
+```Lua
+local speed = true
+local spring = Spring(state, speed)
+```
+
+-----
+
+## `mistypedTweenInfo`
+
+```
+The tween info of a tween must be a TweenInfo. (got a boolean)
+```
+
+This message shows if you try to provide a tween info to a [tween](../tween)
+which isn't a TweenInfo:
+
+```Lua
+local tweenInfo = true
+local tween = Tween(state, tweenInfo)
+```
 
 -----
 

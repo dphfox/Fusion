@@ -1,9 +1,12 @@
+--!nonstrict
+
 --[[
 	Constructs and returns objects which can be used to model derived reactive
 	state.
 ]]
 
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
@@ -19,7 +22,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	The computed object will be registered as a dependency unless `asDependency`
 	is false.
 ]]
-function class:get(asDependency: boolean?)
+function class:get(asDependency: boolean?): any
 	if asDependency ~= false then
 		useDependency(self)
 	end
@@ -30,7 +33,7 @@ end
 	Recalculates this Computed's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 ]]
-function class:update()
+function class:update(): boolean
 	-- remove this object from its dependencies' dependent sets
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -72,7 +75,7 @@ function class:update()
 	end
 end
 
-local function Computed(callback: () -> any)
+local function Computed<T>(callback: () -> T): Types.Computed<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",

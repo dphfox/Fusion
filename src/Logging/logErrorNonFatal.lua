@@ -1,14 +1,19 @@
+--!strict
+
 --[[
 	Utility function to log a Fusion-specific error, without halting execution.
 ]]
+
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local messages = require(Package.Logging.messages)
 
 local function logErrorNonFatal(messageID: string, errObj: Types.Error?, ...)
-	local formatString = messages[messageID]
+	local formatString: string
 
-	if formatString == nil then
+	if messages[messageID] ~= nil then
+		formatString = messages[messageID]
+	else
 		messageID = "unknownMessage"
 		formatString = messages[messageID]
 	end

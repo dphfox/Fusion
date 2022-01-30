@@ -1,15 +1,17 @@
+--!strict
+
 --[[
 	If a target set was specified by captureDependencies(), this will add the
 	given dependency to the target set.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local PubTypes = require(Package.PubTypes)
 local sharedState = require(Package.Dependencies.sharedState)
 
 local initialisedStack = sharedState.initialisedStack
 
-local function useDependency(dependency: Types.Dependency<any>)
+local function useDependency(dependency: PubTypes.Dependency)
 	local dependencySet = sharedState.dependencySet
 
 	if dependencySet ~= nil then

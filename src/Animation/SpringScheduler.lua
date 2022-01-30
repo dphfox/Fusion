@@ -1,3 +1,5 @@
+--!strict
+
 --[[
 	Manages batch updating of spring objects.
 ]]
@@ -5,20 +7,17 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
+local logError = require(Package.Logging.logError)
+
+type Set<T> = {[T]: any}
+type Spring = Types.Spring<any>
 
 local SpringScheduler = {}
-
-type Spring = {
-	_speed: number,
-	_damping: number,
-
-	_springPositions: {number},
-	_springGoals: {number},
-	_springVelocities: {number}
-}
 
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
@@ -27,29 +26,56 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 local MOVEMENT_EPSILON = 0.0001
 
 -- organises springs by speed and damping, for batch processing
-local springBuckets: {[number]: {[number]: Types.Set<Spring>}} = {}
+local springBuckets: {[number]: {[number]: Set<Spring>}} = {}
 
 --[[
 	Adds a Spring to be updated every render step.
 ]]
 function SpringScheduler.add(spring: Spring)
-	local damping = spring._damping
-	local speed = spring._speed
+	local damping: number
+	local speed: number
+
+	if spring._dampingIsState then
+		local state: PubTypes.StateObject<number> = spring._damping
+		damping = state:get(false)
+	else
+		damping = spring._damping
+	end
+
+	if spring._speedIsState then
+		local state: PubTypes.StateObject<number> = spring._speed
+		speed = state:get(false)
+	else
+		speed = spring._speed
+	end
+
+	if typeof(damping) ~= "number" then
+		logError("mistypedSpringDamping", nil, typeof(damping))
+	elseif damping < 0 then
+		logError("invalidSpringDamping", nil, damping)
+	end
+
+	if typeof(speed) ~= "number" then
+		logError("mistypedSpringSpeed", nil, typeof(speed))
+	elseif speed < 0 then
+		logError("invalidSpringSpeed", nil, speed)
+	end
+
+	spring._lastDamping = damping
+	spring._lastSpeed = speed
 
 	local dampingBucket = springBuckets[damping]
 
 	if dampingBucket == nil then
-		springBuckets[damping] = {
-			[speed] = setmetatable({[spring] = true}, WEAK_KEYS_METATABLE)
-		}
-		return
+		dampingBucket = {}
+		springBuckets[damping] = dampingBucket
 	end
 
 	local speedBucket = dampingBucket[speed]
 
 	if speedBucket == nil then
-		dampingBucket[speed] = setmetatable({[spring] = true}, WEAK_KEYS_METATABLE)
-		return
+		speedBucket = {}
+		dampingBucket[speed] = speedBucket
 	end
 
 	speedBucket[spring] = true
@@ -59,8 +85,8 @@ end
 	Removes a Spring from the scheduler.
 ]]
 function SpringScheduler.remove(spring: Spring)
-	local damping = spring._damping
-	local speed = spring._speed
+	local damping = spring._lastDamping
+	local speed = spring._lastSpeed
 
 	local dampingBucket = springBuckets[damping]
 

@@ -6,15 +6,18 @@ return function()
 		expect(Fusion).to.be.a("table")
 
 		local api = {
+			version = "table",
+
 			New = "function",
+			Ref = "table",
 			Children = "table",
 			OnEvent = "function",
 			OnChange = "function",
 
-			State = "function",
+			Value = "function",
 			Computed = "function",
 			ComputedPairs = "function",
-			Compat = "function",
+			Observer = "function",
 
 			Tween = "function",
 			Spring = "function"

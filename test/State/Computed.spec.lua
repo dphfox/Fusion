@@ -2,7 +2,7 @@ local RunService = game:GetService("RunService")
 
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Computed = require(Package.State.Computed)
-local State = require(Package.State.State)
+local Value = require(Package.State.Value)
 
 local function waitForGC()
 	local ref = setmetatable({{}}, {__mode = "kv"})
@@ -31,7 +31,7 @@ return function()
 	end)
 
 	it("should recalculate its value in response to State objects", function()
-		local currentNumber = State(2)
+		local currentNumber = Value(2)
 		local doubled = Computed(function()
 			return currentNumber:get() * 2
 		end)
@@ -43,7 +43,7 @@ return function()
 	end)
 
 	it("should recalculate its value in response to Computed objects", function()
-		local currentNumber = State(2)
+		local currentNumber = Value(2)
 		local doubled = Computed(function()
 			return currentNumber:get() * 2
 		end)
@@ -58,7 +58,7 @@ return function()
 	end)
 
 	it("should not corrupt dependencies after an error", function()
-		local state = State(1)
+		local state = Value(1)
 		local simulateError = false
 		local computed = Computed(function()
 			if simulateError then
@@ -67,7 +67,7 @@ return function()
 				-- reactive updates from taking place
 				-- to avoid this, dependencies captured when a callback errors
 				-- have to be discarded
-				error("This is a test error from a unit test")
+				error("This is an intentional error from a unit test")
 			end
 
 			return state:get()
@@ -85,7 +85,7 @@ return function()
 	end)
 
 	it("should garbage-collect unused objects", function()
-		local state = State(2)
+		local state = Value(2)
 
 		local counter = 0
 
@@ -103,7 +103,7 @@ return function()
 	end)
 
 	it("should not garbage-collect objects in use", function()
-		local state = State(2)
+		local state = Value(2)
 		local computed2
 
 		local counter = 0
