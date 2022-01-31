@@ -38,26 +38,27 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		-- solutions to the characteristic equation
 		-- z = -ζω ± Sqrt[ζ^2 - 1] ω
 
+		local timeStepSpeed = timeStep * speed
 		local zRoot = math.sqrt(damping^2 - 1)
 
-		local z1 = (-zRoot - damping)*speed
-		local z2 = (zRoot - damping)*speed
+		local z1 = -speed * (zRoot + damping)
+		local z2 = -speed / (zRoot + damping)
 
 		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
 		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
 
-		local zDivide = 1/(z1 - z2)
+		local zDivide = -1/(2 * zRoot)
 
-		local z1Exp = math.exp(timeStep * z1)
-		local z2Exp = math.exp(timeStep * z2)
+		local z1Exp = math.exp(timeStepSpeed * z1)
+		local z2Exp = math.exp(timeStepSpeed * z2)
 
-		local posPosCoef = (z2Exp * z1 - z1Exp * z2) * zDivide
-		local posVelCoef = (z1Exp - z2Exp) * zDivide
+		local posPosCoef = (z1*z2Exp - z2*z1Exp) * zDivide
+		local posVelCoef = (z1Exp - z2Exp)/speed * zDivide
 
 		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
-		local velPosCoef = z1*z2 * (-z1Exp + z2Exp) * zDivide
+		local velPosCoef = (z1Exp - z2Exp) * speed*speed * zDivide
 		local velVelCoef = (z1*z1Exp - z2*z2Exp) * zDivide
 
 		return
