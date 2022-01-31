@@ -45,18 +45,18 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
 		local timeStepSpeed = timeStep * speed
-		local zRoot = math.sqrt(damping^2 - 1)
-		local z1 = -zRoot - damping
+		local alpha = math.sqrt(damping^2 - 1)
+		local scaledInvAlpha = -0.5 / alpha
+		local z1 = -alpha - damping
 		local z2 = 1 / z1
-		local z1Exp = math.exp(timeStepSpeed * z1)
-		local z2Exp = math.exp(timeStepSpeed * z2)
-		local zDivideSpeed = -0.5 / zRoot
+		local expZ1 = math.exp(timeStepSpeed * z1)
+		local expZ2 = math.exp(timeStepSpeed * z2)
 
-		local posPosCoef = (z2Exp*z1 - z1Exp*z2) * zDivideSpeed
-		local posVelCoef = (z1Exp - z2Exp) * zDivideSpeed / speed
+		local posPosCoef = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
+		local posVelCoef = (expZ1 - expZ2) * scaledInvAlpha / speed
 
-		local velPosCoef = (z2Exp - z1Exp) * zDivideSpeed * speed
-		local velVelCoef = (z1Exp*z1 - z2Exp*z2) * zDivideSpeed
+		local velPosCoef = (expZ2 - expZ1) * scaledInvAlpha * speed
+		local velVelCoef = (expZ1*z1 - expZ2*z2) * scaledInvAlpha
 
 		return
 			posPosCoef, posVelCoef,
@@ -69,13 +69,13 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		-- v[t] -> x0(t ω^2)(-e^-tω) + v0(1 - tω)(e^-tω)
 
 		local timeStepSpeed = timeStep * speed
-		local negSpeedExp = math.exp(-timeStepSpeed)
+		local expTerm = math.exp(-timeStepSpeed)
 
-		local posPosCoef = negSpeedExp * (1 + timeStepSpeed)
-		local posVelCoef = negSpeedExp * timeStep
+		local posPosCoef = expTerm * (1 + timeStepSpeed)
+		local posVelCoef = expTerm * timeStep
 
-		local velPosCoef = negSpeedExp * (-timeStepSpeed*speed)
-		local velVelCoef = negSpeedExp * (1 - timeStepSpeed)
+		local velPosCoef = expTerm * (-timeStepSpeed*speed)
+		local velVelCoef = expTerm * (1 - timeStepSpeed)
 
 		return
 			posPosCoef, posVelCoef,
@@ -100,13 +100,13 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		local sinTerm = expTerm * math.sin(timeStep*alpha)
 		local cosTerm = expTerm * math.cos(timeStep*alpha)
 		local sinInvAlpha = sinTerm*invAlpha
-		local sinDampInvAlpha = sinInvAlpha*damping
+		local sinInvAlphaDamp = sinInvAlpha*damping
 
-		local posPosCoef = sinDampInvAlpha + cosTerm
+		local posPosCoef = sinInvAlphaDamp + cosTerm
 		local posVelCoef = sinInvAlpha / speed
 
-		local velPosCoef = (sinDampInvAlpha*damping + sinTerm*alpha) * -speed
-		local velVelCoef = cosTerm - sinDampInvAlpha
+		local velPosCoef = (sinInvAlphaDamp*damping + sinTerm*alpha) * -speed
+		local velVelCoef = cosTerm - sinInvAlphaDamp
 
 		return
 			posPosCoef, posVelCoef,
