@@ -15,20 +15,17 @@ local function springCoefficients(time: number, damping: number, speed: number):
 	-- if time or speed is 0, then the spring won't move, so an identity
 	-- matrix can be returned early
 	if time == 0 or speed == 0 then
-		return
-			1, 0,
-			0, 1
+		return 1, 0, 0, 1
 	end
+
+	local posPos, posVel, velPos, velVel
 
 	if damping > 1 then
 		-- overdamped spring
-
 		-- solutions to the characteristic equation
 		-- z = -ζω ± Sqrt[ζ^2 - 1] ω
-
 		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
 		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
-
 		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
@@ -40,45 +37,30 @@ local function springCoefficients(time: number, damping: number, speed: number):
 		local expZ1 = math.exp(scaledTime * z1)
 		local expZ2 = math.exp(scaledTime * z2)
 
-		local posPosCoef = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
-		local posVelCoef = (expZ1 - expZ2) * scaledInvAlpha / speed
-
-		local velPosCoef = (expZ2 - expZ1) * scaledInvAlpha * speed
-		local velVelCoef = (expZ1*z1 - expZ2*z2) * scaledInvAlpha
-
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
+		posVel = (expZ1 - expZ2) * scaledInvAlpha / speed
+		velPos = (expZ2 - expZ1) * scaledInvAlpha * speed
+		velVel = (expZ1*z1 - expZ2*z2) * scaledInvAlpha
 
 	elseif damping == 1 then
 		-- critically damped spring
-
 		-- x[t] -> x0(e^-tω)(1+tω) + v0(e^-tω)t
 		-- v[t] -> x0(t ω^2)(-e^-tω) + v0(1 - tω)(e^-tω)
 
 		local scaledTime = time * speed
 		local expTerm = math.exp(-scaledTime)
 
-		local posPosCoef = expTerm * (1 + scaledTime)
-		local posVelCoef = expTerm * time
-
-		local velPosCoef = expTerm * (-scaledTime*speed)
-		local velVelCoef = expTerm * (1 - scaledTime)
-
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = expTerm * (1 + scaledTime)
+		posVel = expTerm * time
+		velPos = expTerm * (-scaledTime*speed)
+		velVel = expTerm * (1 - scaledTime)
 
 	else
 		-- underdamped spring
-
-		-- factored out of the solutions to the characteristic equation, to make
-		-- the math cleaner
+		-- factored out of the solutions to the characteristic equation:
 		-- α = Sqrt[1 - ζ^2]
-
 		-- x[t] -> x0(e^-tζω)(α Cos[tα] + ζω Sin[tα])/α
 		--       + v0(e^-tζω)(Sin[tα])/α
-
 		-- v[t] -> x0(-e^-tζω)(α^2 + ζ^2 ω^2)(Sin[tα])/α
 		--       + v0(e^-tζω)(α Cos[tα] - ζω Sin[tα])/α
 
@@ -91,16 +73,13 @@ local function springCoefficients(time: number, damping: number, speed: number):
 		local sinInvAlpha = sinTerm*invAlpha
 		local sinInvAlphaDamp = sinInvAlpha*damping
 
-		local posPosCoef = sinInvAlphaDamp + cosTerm
-		local posVelCoef = sinInvAlpha / speed
-
-		local velPosCoef = (sinInvAlphaDamp*damping + sinTerm*alpha) * -speed
-		local velVelCoef = cosTerm - sinInvAlphaDamp
-
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = sinInvAlphaDamp + cosTerm
+		posVel = sinInvAlpha / speed
+		velPos = (sinInvAlphaDamp*damping + sinTerm*alpha) * -speed
+		velVel = cosTerm - sinInvAlphaDamp
 	end
+
+	return posPos, posVel, velPos, velVel
 end
 
 return springCoefficients
