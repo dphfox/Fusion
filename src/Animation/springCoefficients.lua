@@ -23,10 +23,10 @@
 	for underdamped springs.
 ]]
 
-local function springCoefficients(timeStep: number, damping: number, speed: number): (number, number, number, number)
-	-- if time step or speed is 0, then the spring won't move, so an identity
+local function springCoefficients(time: number, damping: number, speed: number): (number, number, number, number)
+	-- if time or speed is 0, then the spring won't move, so an identity
 	-- matrix can be returned early
-	if timeStep == 0 or speed == 0 then
+	if time == 0 or speed == 0 then
 		return
 			1, 0,
 			0, 1
@@ -44,13 +44,13 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
-		local timeStepSpeed = timeStep * speed
+		local scaledTime = time * speed
 		local alpha = math.sqrt(damping^2 - 1)
 		local scaledInvAlpha = -0.5 / alpha
 		local z1 = -alpha - damping
 		local z2 = 1 / z1
-		local expZ1 = math.exp(timeStepSpeed * z1)
-		local expZ2 = math.exp(timeStepSpeed * z2)
+		local expZ1 = math.exp(scaledTime * z1)
+		local expZ2 = math.exp(scaledTime * z2)
 
 		local posPosCoef = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
 		local posVelCoef = (expZ1 - expZ2) * scaledInvAlpha / speed
@@ -68,14 +68,14 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		-- x[t] -> x0(e^-tω)(1+tω) + v0(e^-tω)t
 		-- v[t] -> x0(t ω^2)(-e^-tω) + v0(1 - tω)(e^-tω)
 
-		local timeStepSpeed = timeStep * speed
-		local expTerm = math.exp(-timeStepSpeed)
+		local scaledTime = time * speed
+		local expTerm = math.exp(-scaledTime)
 
-		local posPosCoef = expTerm * (1 + timeStepSpeed)
-		local posVelCoef = expTerm * timeStep
+		local posPosCoef = expTerm * (1 + scaledTime)
+		local posVelCoef = expTerm * time
 
-		local velPosCoef = expTerm * (-timeStepSpeed*speed)
-		local velVelCoef = expTerm * (1 - timeStepSpeed)
+		local velPosCoef = expTerm * (-scaledTime*speed)
+		local velVelCoef = expTerm * (1 - scaledTime)
 
 		return
 			posPosCoef, posVelCoef,
@@ -96,9 +96,10 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 
 		local alpha = math.sqrt(1 - damping^2)
 		local invAlpha = 1 / alpha
-		local expTerm = math.exp(-timeStep*damping*speed)
-		local sinTerm = expTerm * math.sin(timeStep*alpha)
-		local cosTerm = expTerm * math.cos(timeStep*alpha)
+		local alphaTime = alpha * time
+		local expTerm = math.exp(-time*damping*speed)
+		local sinTerm = expTerm * math.sin(alphaTime)
+		local cosTerm = expTerm * math.cos(alphaTime)
 		local sinInvAlpha = sinTerm*invAlpha
 		local sinInvAlphaDamp = sinInvAlpha*damping
 
