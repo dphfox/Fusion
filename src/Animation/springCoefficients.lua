@@ -1,23 +1,12 @@
 --!strict
 
 --[[
-	Returns a 2x2 matrix of coefficients for a given damping ratio, speed and
-	time step. These coefficients can then be multiplied with the position and
-	velocity of an existing spring to find the new position and velocity values.
-
-	Specifically, this function returns four numbers -  posPos, posVel, velPos,
-	and velVel, in that order - which can be applied to position and velocity
-	like so:
+	Returns a 2x2 matrix of coefficients for a given time, damping and speed.
+	Specifically, this returns four coefficients - posPos, posVel, velPos, and
+	velVel - which can be multiplied with position and velocity like so:
 
 	local newPosition = oldPosition * posPos + oldVelocity * posVel
 	local newVelocity = oldPosition * velPos + oldVelocity * velVel
-
-	If a large number of springs with identical damping ratios and speeds are
-	being updated with the same time step, then these coefficients can be used
-	to update all of them at once.
-
-	This function assumes the damping ratio, speed and time step are all >= 0,
-	with the expectation that these values have been verified beforehand.
 
 	Special thanks to AxisAngle for helping to improve numerical precision.
 ]]
