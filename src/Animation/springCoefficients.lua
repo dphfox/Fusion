@@ -12,17 +12,15 @@
 ]]
 
 local function springCoefficients(time: number, damping: number, speed: number): (number, number, number, number)
-	-- if time or speed is 0, then the spring won't move, so an identity
-	-- matrix can be returned early
+	-- if time or speed is 0, then the spring won't move
 	if time == 0 or speed == 0 then
 		return 1, 0, 0, 1
 	end
-
 	local posPos, posVel, velPos, velVel
 
 	if damping > 1 then
 		-- overdamped spring
-		-- solutions to the characteristic equation
+		-- solution to the characteristic equation:
 		-- z = -ζω ± Sqrt[ζ^2 - 1] ω
 		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
 		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
