@@ -41,25 +41,25 @@ local function springCoefficients(timeStep: number, damping: number, speed: numb
 		local timeStepSpeed = timeStep * speed
 		local zRoot = math.sqrt(damping^2 - 1)
 
-		local z1 = -speed * (zRoot + damping)
-		local z2 = -speed / (zRoot + damping)
+		local z1 = -zRoot - damping
+		local z2 = 1 / z1
 
 		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
 		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
 
-		local zDivide = -1/(2 * zRoot)
+		local zDivideSpeed = -0.5 / zRoot
 
 		local z1Exp = math.exp(timeStepSpeed * z1)
 		local z2Exp = math.exp(timeStepSpeed * z2)
 
-		local posPosCoef = (z1*z2Exp - z2*z1Exp) * zDivide
-		local posVelCoef = (z1Exp - z2Exp)/speed * zDivide
+		local posPosCoef = (z2Exp*z1 - z1Exp*z2) * zDivideSpeed
+		local posVelCoef = (z1Exp - z2Exp) * zDivideSpeed / speed
 
 		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
-		local velPosCoef = (z1Exp - z2Exp) * speed*speed * zDivide
-		local velVelCoef = (z1*z1Exp - z2*z2Exp) * zDivide
+		local velPosCoef = (-z1Exp + z2Exp) * zDivideSpeed * z1*z2*speed
+		local velVelCoef = (z1*z1Exp - z2*z2Exp) * zDivideSpeed
 
 		return
 			posPosCoef, posVelCoef,
