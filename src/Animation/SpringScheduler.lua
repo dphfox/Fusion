@@ -7,147 +7,79 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.Dependencies.updateAll)
-local logError = require(Package.Logging.logError)
 
 type Set<T> = {[T]: any}
 type Spring = Types.Spring<any>
 
 local SpringScheduler = {}
 
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local EPSILON = 0.0001
+local activeSprings: Set<Spring> = {}
+local lastUpdateTime = os.clock()
 
--- when a spring has displacement and velocity below +/- epsilon, the spring
--- won't send updates
-local MOVEMENT_EPSILON = 0.0001
-
--- organises springs by speed and damping, for batch processing
-local springBuckets: {[number]: {[number]: Set<Spring>}} = {}
-
---[[
-	Adds a Spring to be updated every render step.
-]]
 function SpringScheduler.add(spring: Spring)
-	local damping: number
-	local speed: number
-
-	if spring._dampingIsState then
-		local state: PubTypes.StateObject<number> = spring._damping
-		damping = state:get(false)
-	else
-		damping = spring._damping
+	-- we don't necessarily want to use the most accurate time - here we snap to
+	-- the last update time so that springs started within the same frame have
+	-- identical time steps
+	spring._lastSchedule = lastUpdateTime
+	spring._startDisplacements = {}
+	spring._startVelocities = {}
+	for index, goal in ipairs(spring._springGoals) do
+		spring._startDisplacements[index] = spring._springPositions[index] - goal
+		spring._startVelocities[index] = spring._springVelocities[index]
 	end
 
-	if spring._speedIsState then
-		local state: PubTypes.StateObject<number> = spring._speed
-		speed = state:get(false)
-	else
-		speed = spring._speed
-	end
-
-	if typeof(damping) ~= "number" then
-		logError("mistypedSpringDamping", nil, typeof(damping))
-	elseif damping < 0 then
-		logError("invalidSpringDamping", nil, damping)
-	end
-
-	if typeof(speed) ~= "number" then
-		logError("mistypedSpringSpeed", nil, typeof(speed))
-	elseif speed < 0 then
-		logError("invalidSpringSpeed", nil, speed)
-	end
-
-	spring._lastDamping = damping
-	spring._lastSpeed = speed
-
-	local dampingBucket = springBuckets[damping]
-
-	if dampingBucket == nil then
-		dampingBucket = {}
-		springBuckets[damping] = dampingBucket
-	end
-
-	local speedBucket = dampingBucket[speed]
-
-	if speedBucket == nil then
-		speedBucket = {}
-		dampingBucket[speed] = speedBucket
-	end
-
-	speedBucket[spring] = true
+	activeSprings[spring] = true
 end
 
---[[
-	Removes a Spring from the scheduler.
-]]
 function SpringScheduler.remove(spring: Spring)
-	local damping = spring._lastDamping
-	local speed = spring._lastSpeed
-
-	local dampingBucket = springBuckets[damping]
-
-	if dampingBucket == nil then
-		return
-	end
-
-	local speedBucket = dampingBucket[speed]
-
-	if speedBucket == nil then
-		return
-	end
-
-	speedBucket[spring] = nil
+	activeSprings[spring] = nil
 end
 
---[[
-	Updates all Spring objects.
-]]
-local function updateAllSprings(timeStep: number)
-	for damping, dampingBucket in pairs(springBuckets) do
-		for speed, speedBucket in pairs(dampingBucket) do
-			local posPosCoef, posVelCoef, velPosCoef, velVelCoef = springCoefficients(timeStep, damping, speed)
 
-			for spring in pairs(speedBucket) do
-				local goals = spring._springGoals
-				local positions = spring._springPositions
-				local velocities = spring._springVelocities
+local function updateAllSprings()
+	local springsToSleep: Set<Spring> = {}
+	lastUpdateTime = os.clock()
 
-				local isMoving = false
+	for spring in pairs(activeSprings) do
+		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)
 
-				for index, goal in ipairs(goals) do
-					local oldPosition = positions[index]
-					local oldVelocity = velocities[index]
+		local positions = spring._springPositions
+		local velocities = spring._springVelocities
+		local startDisplacements = spring._startDisplacements
+		local startVelocities = spring._startVelocities
+		local isMoving = false
 
-					local oldDisplacement = oldPosition - goal
+		for index, goal in ipairs(spring._springGoals) do
+			local oldDisplacement = startDisplacements[index]
+			local oldVelocity = startVelocities[index]
+			local newDisplacement = oldDisplacement * posPos + oldVelocity * posVel
+			local newVelocity = oldDisplacement * velPos + oldVelocity * velVel
 
-					local newDisplacement = oldDisplacement * posPosCoef + oldVelocity * posVelCoef
-					local newVelocity = oldDisplacement * velPosCoef + oldVelocity * velVelCoef
-
-					if
-						math.abs(newDisplacement) > MOVEMENT_EPSILON or
-						math.abs(newVelocity) > MOVEMENT_EPSILON
-					then
-						isMoving = true
-					end
-
-					positions[index] = newDisplacement + goal
-					velocities[index] = newVelocity
-				end
-
-				-- if the spring moved a significant distance, update its
-				-- current value, otherwise stop animating
-				if isMoving then
-					spring._currentValue = packType(positions, spring._currentType)
-					updateAll(spring)
-				else
-					SpringScheduler.remove(spring)
-				end
+			if math.abs(newDisplacement) > EPSILON or math.abs(newVelocity) > EPSILON then
+				isMoving = true
 			end
+
+			positions[index] = newDisplacement + goal
+			velocities[index] = newVelocity
 		end
+
+		if not isMoving then
+			springsToSleep[spring] = true
+		end
+	end
+
+	for spring in pairs(activeSprings) do
+		spring._currentValue = packType(spring._springPositions, spring._currentType)
+		updateAll(spring)
+	end
+
+	for spring in pairs(springsToSleep) do
+		activeSprings[spring] = nil
 	end
 end
 
