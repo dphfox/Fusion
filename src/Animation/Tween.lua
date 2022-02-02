@@ -11,6 +11,8 @@ local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
+local logError = require(Package.Logging.logError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local class = {}
 
@@ -33,40 +35,76 @@ end
 	Returns false as the current value doesn't change right away.
 ]]
 function class:update(): boolean
+	local goalValue = self._goalState:get(false)
+
+	-- if the goal hasn't changed, then this is a TweenInfo change.
+	-- in that case, if we're not currently animating, we can skip everything
+	if goalValue == self._nextValue and not self._currentlyAnimating then
+		return false
+	end
+
+	local tweenInfo = self._tweenInfo
+	if self._tweenInfoIsState then
+		tweenInfo = tweenInfo:get()
+	end
+
+	-- if we receive a bad TweenInfo, then error and stop the update
+	if typeof(tweenInfo) ~= "TweenInfo" then
+		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
+		return false
+	end
+
 	self._prevValue = self._currentValue
-	self._nextValue = self._goalState:get(false)
+	self._nextValue = goalValue
 
 	self._currentTweenStartTime = os.clock()
-	self._currentTweenInfo = self._tweenInfo
+	self._currentTweenInfo = tweenInfo
 
-	local tweenDuration = self._tweenInfo.DelayTime + self._tweenInfo.Time
-	if self._tweenInfo.Reverses then
-		tweenDuration += self._tweenInfo.Time
+	local tweenDuration = tweenInfo.DelayTime + tweenInfo.Time
+	if tweenInfo.Reverses then
+		tweenDuration += tweenInfo.Time
 	end
-	tweenDuration *= math.max(self._tweenInfo.RepeatCount, 1)
+	tweenDuration *= self._tweenInfo.RepeatCount + 1
 	self._currentTweenDuration = tweenDuration
 
 	-- start animating this tween
 	TweenScheduler.add(self)
+
 	return false
 end
 
-local function Tween<T>(
-	goalState: PubTypes.Value<T>,
-	tweenInfo: TweenInfo?
-): Types.Tween<T>
-
+local function Tween(
+	goalState: PubTypes.StateObject<PubTypes.Animatable>,
+	tweenInfo: PubTypes.CanBeState<TweenInfo>?
+)
 	local currentValue = goalState:get(false)
+
+	-- apply defaults for tween info
+	if tweenInfo == nil then
+		tweenInfo = TweenInfo.new()
+	end
+
+	local dependencySet = {[goalState] = true}
+	local tweenInfoIsState = typeof(tweenInfo) == "table" and tweenInfo.type == "State"
+
+	if tweenInfoIsState then
+		dependencySet[tweenInfo] = true
+	end
+
+	if typeof(tweenInfo) ~= "TweenInfo" then
+		logError("mistypedTweenInfo", nil, typeof(tweenInfo))
+	end
 
 	local self = setmetatable({
 		type = "State",
 		kind = "Tween",
-		dependencySet = {[goalState] = true},
+		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_goalState = goalState,
-		_tweenInfo = tweenInfo or TweenInfo.new(),
+		_tweenInfo = tweenInfo,
+		_tweenInfoIsState = tweenInfoIsState,
 
 		_prevValue = currentValue,
 		_nextValue = currentValue,
@@ -76,7 +114,8 @@ local function Tween<T>(
 		-- isn't affected by :setTweenInfo() until next change
 		_currentTweenInfo = tweenInfo,
 		_currentTweenDuration = 0,
-		_currentTweenStartTime = 0
+		_currentTweenStartTime = 0,
+		_currentlyAnimating = false
 	}, CLASS_METATABLE)
 
 	initDependency(self)

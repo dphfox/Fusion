@@ -11,14 +11,6 @@
 	- an array - `cleanup` will be called on each item
 ]]
 
-export type Task =
-	Instance |
-	RBXScriptConnection |
-	() -> () |
-	{destroy: (any) -> ()} |
-	{Destroy: (any) -> ()} |
-	{Task}
-
 local function cleanup(task: any)
 	local taskType = typeof(task)
 

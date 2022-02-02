@@ -50,7 +50,7 @@ end
 local function Value<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
 		type = "State",
-		kind = "State",
+		kind = "Value",
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),

@@ -24,7 +24,7 @@ local strongRefs: Set<Types.Observer> = {}
 	Called when the watched state changes value.
 ]]
 function class:update(): boolean
-	for callback in pairs(self._changeListeners) do
+	for _, callback in pairs(self._changeListeners) do
 		coroutine.wrap(callback)()
 	end
 	return false
@@ -39,8 +39,10 @@ end
 	will be held in memory, preventing GC, so disconnecting is important.
 ]]
 function class:onChange(callback: () -> ()): () -> ()
+	local uniqueIdentifier = {}
+
 	self._numChangeListeners += 1
-	self._changeListeners[callback] = true
+	self._changeListeners[uniqueIdentifier] = callback
 
 	-- disallow gc (this is important to make sure changes are received)
 	strongRefs[self] = true
@@ -51,7 +53,7 @@ function class:onChange(callback: () -> ()): () -> ()
 			return
 		end
 		disconnected = true
-		self._changeListeners[callback] = nil
+		self._changeListeners[uniqueIdentifier] = nil
 		self._numChangeListeners -= 1
 
 		if self._numChangeListeners == 0 then
@@ -68,7 +70,7 @@ local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 		dependencySet = {[watchedState] = true},
 		dependentSet = {},
 		_changeListeners = {},
-		_numChangeListeners = 0
+		_numChangeListeners = 0,
 	}, CLASS_METATABLE)
 
 	initDependency(self)
