@@ -47,7 +47,7 @@ function class:update(): boolean
   return false
 end
 
-local function Delay<T>(valueState: PubTypes.Value<T>, delayDuration: number)
+local function Delay<T>(valueState: PubTypes.StateObject<T>, delayDuration: number)
   local currentValue = valueState:get(false)
   local dependencySet = {[valueState] = true}
 
