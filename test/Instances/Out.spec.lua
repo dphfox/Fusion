@@ -13,6 +13,7 @@ return function()
 		expect(outValue:get()).to.equal("Folder")
 
 		child.Name = "Mary"
+		task.wait()
 		expect(outValue:get()).to.equal("Mary")
 	end)
 
@@ -27,6 +28,7 @@ return function()
 		expect(outValue:get()).to.equal("Gabriel")
 
 		inValue:set("Joseph")
+		task.wait()
 		expect(outValue:get()).to.equal("Joseph")
 	end)
 
@@ -40,9 +42,11 @@ return function()
 		expect(twoWayValue:get()).to.equal("Gabriel")
 
 		twoWayValue:set("Joseph")
+		task.wait()
 		expect(child.Name).to.equal("Joseph")
 
 		child.Name = "Elias"
+		task.wait()
 		expect(twoWayValue:get()).to.equal("Elias")
 	end)
 
