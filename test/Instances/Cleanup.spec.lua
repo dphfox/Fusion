@@ -12,6 +12,7 @@ return function()
 			[Cleanup] = instance
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(conn.Connected).to.equal(false)
 	end)
@@ -24,6 +25,7 @@ return function()
 			[Cleanup] = conn
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(conn.Connected).to.equal(false)
 	end)
@@ -37,6 +39,7 @@ return function()
 			end
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(didRun).to.equal(true)
 	end)
@@ -52,6 +55,7 @@ return function()
 			}
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(didRun).to.equal(true)
 	end)
@@ -67,6 +71,7 @@ return function()
 			}
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(didRun).to.equal(true)
 	end)
@@ -79,11 +84,10 @@ return function()
 		end
 
 		local child = New "Folder" {
-			[Cleanup] = {
-				Destroy = {doRun, doRun, doRun}
-			}
+			[Cleanup] = {doRun, doRun, doRun}
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(numRuns).to.equal(3)
 	end)
@@ -96,11 +100,10 @@ return function()
 		end
 
 		local child = New "Folder" {
-			[Cleanup] = {
-				Destroy = {{doRun, {doRun, {doRun}}}}
-			}
+			[Cleanup] = {{doRun, {doRun, {doRun}}}}
 		}
 		child:Destroy()
+		task.wait()
 
 		expect(numRuns).to.equal(3)
 	end)
