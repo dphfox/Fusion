@@ -24,6 +24,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 				logError("invalidOutType")
 		else
+			outState:set((applyToRef.instance :: any)[propertyName])
 			table.insert(cleanupTasks, event:Connect(function()
 				if applyToRef.instance ~= nil then
 					outState:set((applyToRef.instance :: any)[propertyName])
