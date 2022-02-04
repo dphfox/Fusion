@@ -16,6 +16,8 @@ return {
 	invalidEventHandler = "The handler for the '%s' event must be a function.",
 	invalidPropertyType = "'%s.%s' expected a '%s' type, but got a '%s' type.",
 	invalidRefType = "Instance refs must be Value objects.",
+	invalidOutType = "[Out] properties must be given Value objects.",
+	invalidOutProperty = "The %s class doesn't have a property called '%s'.",
 	invalidSpringDamping = "The damping ratio for a spring must be >= 0. (damping was %.2f)",
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
