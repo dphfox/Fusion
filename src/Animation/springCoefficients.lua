@@ -1,118 +1,83 @@
 --!strict
 
 --[[
-	Returns a 2x2 matrix of coefficients for a given damping ratio, speed and
-	time step. These coefficients can then be multiplied with the position and
-	velocity of an existing spring to find the new position and velocity values.
-
-	Specifically, this function returns four numbers -  posPos, posVel, velPos,
-	and velVel, in that order - which can be applied to position and velocity
-	like so:
+	Returns a 2x2 matrix of coefficients for a given time, damping and speed.
+	Specifically, this returns four coefficients - posPos, posVel, velPos, and
+	velVel - which can be multiplied with position and velocity like so:
 
 	local newPosition = oldPosition * posPos + oldVelocity * posVel
 	local newVelocity = oldPosition * velPos + oldVelocity * velVel
 
-	If a large number of springs with identical damping ratios and speeds are
-	being updated with the same time step, then these coefficients can be used
-	to update all of them at once.
-
-	This function assumes the damping ratio, speed and time step are all >= 0,
-	with the expectation that these values have been verified beforehand.
+	Special thanks to AxisAngle for helping to improve numerical precision.
 ]]
 
-local function springCoefficients(timeStep: number, damping: number, speed: number): (number, number, number, number)
-	-- if time step or speed is 0, then the spring won't move, so an identity
-	-- matrix can be returned early
-	if timeStep == 0 or speed == 0 then
-		return
-			1, 0,
-			0, 1
+local function springCoefficients(time: number, damping: number, speed: number): (number, number, number, number)
+	-- if time or speed is 0, then the spring won't move
+	if time == 0 or speed == 0 then
+		return 1, 0, 0, 1
 	end
+	local posPos, posVel, velPos, velVel
 
 	if damping > 1 then
 		-- overdamped spring
-
-		-- solutions to the characteristic equation
+		-- solution to the characteristic equation:
 		-- z = -ζω ± Sqrt[ζ^2 - 1] ω
-
-		local zRoot = math.sqrt(damping^2 - 1)
-
-		local z1 = (-zRoot - damping)*speed
-		local z2 = (zRoot - damping)*speed
-
 		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
 		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
-
-		local zDivide = 1/(z1 - z2)
-
-		local z1Exp = math.exp(timeStep * z1)
-		local z2Exp = math.exp(timeStep * z2)
-
-		local posPosCoef = (z2Exp * z1 - z1Exp * z2) * zDivide
-		local posVelCoef = (z1Exp - z2Exp) * zDivide
-
 		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
 		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
-		local velPosCoef = z1*z2 * (-z1Exp + z2Exp) * zDivide
-		local velVelCoef = (z1*z1Exp - z2*z2Exp) * zDivide
+		local scaledTime = time * speed
+		local alpha = math.sqrt(damping^2 - 1)
+		local scaledInvAlpha = -0.5 / alpha
+		local z1 = -alpha - damping
+		local z2 = 1 / z1
+		local expZ1 = math.exp(scaledTime * z1)
+		local expZ2 = math.exp(scaledTime * z2)
 
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
+		posVel = (expZ1 - expZ2) * scaledInvAlpha / speed
+		velPos = (expZ2 - expZ1) * scaledInvAlpha * speed
+		velVel = (expZ1*z1 - expZ2*z2) * scaledInvAlpha
 
 	elseif damping == 1 then
 		-- critically damped spring
-
 		-- x[t] -> x0(e^-tω)(1+tω) + v0(e^-tω)t
-
-		local timeStepSpeed = timeStep * speed
-		local negSpeedExp = math.exp(-timeStepSpeed)
-
-		local posPosCoef = negSpeedExp * (1 + timeStepSpeed)
-		local posVelCoef = negSpeedExp * timeStep
-
 		-- v[t] -> x0(t ω^2)(-e^-tω) + v0(1 - tω)(e^-tω)
 
-		local velPosCoef = -negSpeedExp * (timeStep * speed*speed)
-		local velVelCoef = negSpeedExp * (1 - timeStepSpeed)
+		local scaledTime = time * speed
+		local expTerm = math.exp(-scaledTime)
 
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = expTerm * (1 + scaledTime)
+		posVel = expTerm * time
+		velPos = expTerm * (-scaledTime*speed)
+		velVel = expTerm * (1 - scaledTime)
 
 	else
 		-- underdamped spring
-
-		-- factored out of the solutions to the characteristic equation, to make
-		-- the math cleaner
-
-		local alpha = math.sqrt(1 - damping^2) * speed
-
+		-- factored out of the solutions to the characteristic equation:
+		-- α = Sqrt[1 - ζ^2]
 		-- x[t] -> x0(e^-tζω)(α Cos[tα] + ζω Sin[tα])/α
 		--       + v0(e^-tζω)(Sin[tα])/α
-
-		local negDampSpeedExp = math.exp(-timeStep * damping * speed)
-
-		local sinAlpha = math.sin(timeStep*alpha)
-		local alphaCosAlpha = alpha * math.cos(timeStep*alpha)
-		local dampSpeedSinAlpha = damping*speed*sinAlpha
-
-		local invAlpha = 1 / alpha
-
-		local posPosCoef = negDampSpeedExp * (alphaCosAlpha + dampSpeedSinAlpha) * invAlpha
-		local posVelCoef = negDampSpeedExp * sinAlpha * invAlpha
-
 		-- v[t] -> x0(-e^-tζω)(α^2 + ζ^2 ω^2)(Sin[tα])/α
 		--       + v0(e^-tζω)(α Cos[tα] - ζω Sin[tα])/α
 
-		local velPosCoef = -negDampSpeedExp * (alpha*alpha + damping*damping * speed*speed) * sinAlpha * invAlpha
-		local velVelCoef = negDampSpeedExp * (alphaCosAlpha - dampSpeedSinAlpha) * invAlpha
+		local alpha = math.sqrt(1 - damping^2)
+		local invAlpha = 1 / alpha
+		local alphaTime = alpha * time
+		local expTerm = math.exp(-time*damping*speed)
+		local sinTerm = expTerm * math.sin(alphaTime)
+		local cosTerm = expTerm * math.cos(alphaTime)
+		local sinInvAlpha = sinTerm*invAlpha
+		local sinInvAlphaDamp = sinInvAlpha*damping
 
-		return
-			posPosCoef, posVelCoef,
-			velPosCoef, velVelCoef
+		posPos = sinInvAlphaDamp + cosTerm
+		posVel = sinInvAlpha / speed
+		velPos = (sinInvAlphaDamp*damping + sinTerm*alpha) * -speed
+		velVel = cosTerm - sinInvAlphaDamp
 	end
+
+	return posPos, posVel, velPos, velVel
 end
 
 return springCoefficients

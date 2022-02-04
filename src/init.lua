@@ -21,7 +21,9 @@ type Fusion = {
 	version: PubTypes.Version,
 
 	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	Hydrate: (target: Instance) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
 	Ref: PubTypes.SpecialKey,
+	Cleanup: PubTypes.SpecialKey,
 	Children: PubTypes.SpecialKey,
 	OnEvent: (eventName: string) -> PubTypes.SpecialKey,
 	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
@@ -39,7 +41,9 @@ return restrictRead("Fusion", {
 	version = {major = 0, minor = 2, isRelease = false},
 
 	New = require(script.Instances.New),
+	Hydrate = require(script.Instances.Hydrate),
 	Ref = require(script.Instances.Ref),
+	Cleanup = require(script.Instances.Cleanup),
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
