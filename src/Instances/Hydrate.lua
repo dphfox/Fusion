@@ -12,8 +12,8 @@ local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
 local function Hydrate(target: Instance)
 	return function(props: PubTypes.PropertyTable): Instance
-		applyInstanceProps(props, semiWeakRef(instance))
-		return instance
+		applyInstanceProps(props, semiWeakRef(target))
+		return target
 	end
 end
 
