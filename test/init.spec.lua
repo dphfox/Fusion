@@ -11,6 +11,7 @@ return function()
 			New = "function",
 			Hydrate = "function",
 			Ref = "table",
+			Out = "function",
 			Cleanup = "table",
 			Children = "table",
 			OnEvent = "function",
