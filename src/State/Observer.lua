@@ -25,7 +25,7 @@ local strongRefs: Set<Types.Observer> = {}
 ]]
 function class:update(): boolean
 	for _, callback in pairs(self._changeListeners) do
-		coroutine.wrap(callback)()
+		task.spawn(callback)
 	end
 	return false
 end
