@@ -250,7 +250,7 @@ to change other stuff, it's better to do in another pull request focused on that
 <details>
 <summary>We'll review your changes</summary>
 <ul>
-<li>Nobody writes perfect code first time - we're all humans. You will almost
+<li>Nobody writes flawless code first time - nobody's perfect. You will almost
 certainly be asked to make changes as part of this process, so please be
 patient with us.</li>
 <li>Feel to voice your opinion if you disagree with any suggested changes, but
