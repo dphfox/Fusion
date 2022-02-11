@@ -13,7 +13,7 @@ return function()
         expect(tween.kind).to.equal("Tween")
     end)
 
-    it("should not construct a Tween object with an invalid TweenInfo", function()
+    it("should not construct a Tween object with invalid TweenInfo", function()
         local followerState = Value(1)
 
         local incorrectTweenInfo = 5
