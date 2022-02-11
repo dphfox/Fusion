@@ -74,10 +74,10 @@ function class:update(): boolean
 	return false
 end
 
-local function Tween(
+local function Tween<T>(
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
-)
+): Types.Tween<T>
 	local currentValue = goalState:get(false)
 
 	-- apply defaults for tween info
