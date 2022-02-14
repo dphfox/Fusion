@@ -90,17 +90,17 @@ local function Tween<T>(
 
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
-    end
+	end
 
-    local startingTweenInfo = tweenInfo
-    if tweenInfoIsState then
-        startingTweenInfo = startingTweenInfo:get()
-    end
+	local startingTweenInfo = tweenInfo
+	if tweenInfoIsState then
+		startingTweenInfo = startingTweenInfo:get()
+	end
 
-    -- If we start with a bad TweenInfo, then we don't want to construct a Tween
-    if typeof(startingTweenInfo) ~= "TweenInfo" then
-        logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
-    end
+	-- If we start with a bad TweenInfo, then we don't want to construct a Tween
+	if typeof(startingTweenInfo) ~= "TweenInfo" then
+		logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
+	end
 
 	local self = setmetatable({
 		type = "State",
