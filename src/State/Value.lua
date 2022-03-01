@@ -10,6 +10,7 @@ local Types = require(Package.Types)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
+local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
 
@@ -37,7 +38,7 @@ end
 ]]
 function class:set(newValue: any, force: boolean?)
 	-- if the value hasn't changed, no need to perform extra work here
-	if self._value == newValue and not force then
+	if isSimilar(self.value, newValue) and not force then
 		return
 	end
 
