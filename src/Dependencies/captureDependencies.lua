@@ -44,12 +44,12 @@ local function captureDependencies(
 		table.clear(initialisedSet)
 	end
 
-	local ok, value = xpcall(callback, parseError, ...)
+	local data = table.pack(xpcall(callback, parseError, ...))
 
 	sharedState.dependencySet = prevDependencySet
 	sharedState.initialisedStackSize -= 1
 
-	return ok, value
+	return table.unpack(data, 1, data.n)
 end
 
 return captureDependencies
