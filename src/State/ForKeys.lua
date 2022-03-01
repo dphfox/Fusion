@@ -55,9 +55,9 @@ end
 	- a dependency used during generation of this key has changed
 
 	It will recalculate those keys, storing information about any dependencies used
-    in the processor callback during value generation, and saving the new key to the
-    output array with the same value. If it is overwriting an older value, that older
-    value will be passed to the destructor for cleanup.
+	in the processor callback during value generation, and saving the new key to the
+	output array with the same value. If it is overwriting an older value, that older
+	value will be passed to the destructor for cleanup.
 
 	Finally, this function will find keys that are no longer present, and remove
 	their output key from the output table and pass them to the destructor.
