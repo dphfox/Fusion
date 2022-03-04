@@ -79,4 +79,28 @@ return function()
 
 		expect(numRuns).to.equal(3)
 	end)
+
+	it("should clean up contents of arrays in order", function()
+		local runs = {}
+
+		local tasks = {}
+
+		tasks[3] = function()
+			table.insert(runs, 3)
+		end
+
+		tasks[1] = function()
+			table.insert(runs, 1)
+		end
+
+		tasks[2] = function()
+			table.insert(runs, 2)
+		end
+
+		cleanup(tasks)
+
+		expect(runs[1]).to.equal(1)
+		expect(runs[2]).to.equal(2)
+		expect(runs[3]).to.equal(3)
+	end)
 end
