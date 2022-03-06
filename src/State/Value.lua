@@ -37,15 +37,14 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
-	-- if the value hasn't changed, no need to perform extra work here
-	if isSimilar(self._value, newValue) and not force then
-		return
-	end
-
+	local similar = isSimilar(self._value, newValue)
 	self._value = newValue
 
-	-- update any derived state objects if necessary
-	updateAll(self)
+	-- if the value hasn't changed, no need to perform extra work here
+	if not similar or force then
+		-- update any derived state objects if necessary
+		updateAll(self)
+	end
 end
 
 local function Value<T>(initialValue: T): Types.State<T>
