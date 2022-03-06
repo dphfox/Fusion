@@ -38,7 +38,7 @@ end
 ]]
 function class:set(newValue: any, force: boolean?)
 	-- if the value hasn't changed, no need to perform extra work here
-	if isSimilar(self.value, newValue) and not force then
+	if isSimilar(self._value, newValue) and not force then
 		return
 	end
 
