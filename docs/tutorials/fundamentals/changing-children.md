@@ -43,7 +43,7 @@ local child3 = New "Folder" {}
 local children = State({child1, child2})
 
 local gui = New "TextLabel" {
-	[Children] = child
+	[Children] = children
 }
 
 children:set({child2, child3}) -- unparents child1, parents child2
