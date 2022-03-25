@@ -4,13 +4,7 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local ForPairs = require(Package.State.ForPairs)
 local Value = require(Package.State.Value)
 
-local function waitForGC()
-	local ref = setmetatable({ {} }, { __mode = "kv" })
-
-	repeat
-		RunService.Heartbeat:Wait()
-	until ref[1] == nil
-end
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForPairs object", function()

@@ -1,6 +1,10 @@
+local RunService = game:GetService("RunService")
+
 local Package = game:GetService("ReplicatedStorage").Fusion
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local onDestroy = require(Package.Instances.onDestroy)
+
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should run on explicit :Destroy()", function()
@@ -22,11 +26,7 @@ return function()
 		end)
 		instance = nil
 
-		-- do a short timeout to give the gc time to run
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until didRun or os.clock() > startTime + 5
+		waitForGC()
 
 		expect(didRun).to.equal(true)
 	end)
@@ -42,15 +42,17 @@ return function()
 		end)
 		instance = nil
 
-		-- do a short timeout to give the gc time to run
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until didRun or os.clock() > startTime + 5
+		waitForGC()
 
 		expect(didRun).to.equal(false)
 
 		game.FUSIONDELETETHIS:Destroy()
+
+		-- Wait twice in case it gets deferred
+		RunService.RenderStepped:Wait()
+		RunService.RenderStepped:Wait()
+
+		expect(didRun).to.equal(true)
 	end)
 
 	it("should forward arguments to the callback", function()

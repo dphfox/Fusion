@@ -3,6 +3,8 @@ local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local Value = require(Package.State.Value)
 
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+
 return function()
 	it("should assign single children to instances", function()
 		local ins = New "Folder" {
@@ -183,10 +185,8 @@ return function()
 			}
 		end
 
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until ref[1] == nil or os.clock() > startTime + 5
+		waitForGC()
+		
 		expect(ref[1]).to.equal(nil)
 	end)
 end

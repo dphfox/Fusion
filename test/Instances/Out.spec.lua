@@ -3,6 +3,8 @@ local New = require(Package.Instances.New)
 local Out = require(Package.Instances.Out)
 local Value = require(Package.State.Value)
 
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+
 return function()
 	it("should reflect external property changes", function()
 		local outValue = Value()
@@ -59,10 +61,8 @@ return function()
 			}
 		end
 
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until ref[1] == nil or os.clock() > startTime + 5
+		waitForGC()
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end
