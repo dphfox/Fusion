@@ -4,11 +4,6 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local Observer = require(Package.State.Observer)
 local Value = require(Package.State.Value)
 
-local function waitForDefer()
-	RunService.RenderStepped:Wait()
-	RunService.RenderStepped:Wait()
-end
-
 return function()
 	it("should fire connections on change", function()
 		local state = Value(false)
@@ -19,17 +14,11 @@ return function()
 			changed = true
 		end)
 
-		local start = os.clock()
-		local timeout = 2
-
 		state:set(true)
 
-		repeat
-			RunService.RenderStepped:Wait()
-			if os.clock() - start > timeout then
-				error("Observer did not fire connections on change")
-			end
-		until changed
+		-- Wait twice in case it gets deferred
+		RunService.RenderStepped:Wait()
+		RunService.RenderStepped:Wait()
 
 		expect(changed).to.equal(true)
 	end)
@@ -45,17 +34,11 @@ return function()
 			completed = true
 		end)
 
-		local start = os.clock()
-		local timeout = 2
-
 		state:set(true)
 
-		repeat
-			RunService.RenderStepped:Wait()
-			if os.clock() - start > timeout then
-				error("Observer did not fire connections on change")
-			end
-		until completed
+		-- Wait twice in case it gets deferred
+		RunService.RenderStepped:Wait()
+		RunService.RenderStepped:Wait()
 
 		expect(changedValue).to.equal(true)
 	end)
@@ -71,19 +54,11 @@ return function()
 			completed = true
 		end)
 
-		local start = os.clock()
-		local timeout = 2
-
 		state:set(true)
 
-		repeat
-			RunService.RenderStepped:Wait()
-			if os.clock() - start > timeout then
-				error("Observer did not fire connections on change")
-			end
-		until completed
-
-		waitForDefer()
+		-- Wait twice in case it gets deferred
+		RunService.RenderStepped:Wait()
+		RunService.RenderStepped:Wait()
 
 		expect(timesFired).to.equal(1)
 	end)
