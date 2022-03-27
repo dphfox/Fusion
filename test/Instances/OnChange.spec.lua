@@ -2,6 +2,8 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local OnChange = require(Package.Instances.OnChange)
 
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+
 return function()
 	it("should connect property change handlers", function()
 		local fires = 0
@@ -72,10 +74,8 @@ return function()
 			}
 		end
 
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until ref[1] == nil or os.clock() > startTime + 5
+		waitForGC()
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end

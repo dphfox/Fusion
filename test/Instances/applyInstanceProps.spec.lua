@@ -3,27 +3,23 @@ local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local Value = require(Package.State.Value)
 
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+
 return function()
 	it("should assign properties (constant)", function()
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Name = "Bob"
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Name = "Bob",
+		}, semiWeakRef(instance))
 		expect(instance.Name).to.equal("Bob")
 	end)
 
 	it("should assign properties (state)", function()
 		local value = Value("Bob")
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Name = value
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Name = value,
+		}, semiWeakRef(instance))
 		expect(instance.Name).to.equal("Bob")
 
 		value:set("Maya")
@@ -35,12 +31,9 @@ return function()
 	it("should assign Parent (constant)", function()
 		local parent = Instance.new("Folder")
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Parent = parent
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Parent = parent,
+		}, semiWeakRef(instance))
 		expect(instance.Parent).to.equal(parent)
 	end)
 
@@ -49,12 +42,9 @@ return function()
 		local parent2 = Instance.new("Folder")
 		local value = Value(parent1)
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Parent = value
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Parent = value,
+		}, semiWeakRef(instance))
 		expect(instance.Parent).to.equal(parent1)
 
 		value:set(parent2)
@@ -66,96 +56,72 @@ return function()
 	it("should throw for non-existent properties (constant)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					NotARealProperty = true
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				NotARealProperty = true,
+			}, semiWeakRef(instance))
 		end).to.throw("cannotAssignProperty")
 	end)
 
 	it("should throw for non-existent properties (state)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					NotARealProperty = Value(true)
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				NotARealProperty = Value(true),
+			}, semiWeakRef(instance))
 		end).to.throw("cannotAssignProperty")
 	end)
 
 	it("should throw for invalid property types (constant)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Name = Vector3.new()
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				Name = Vector3.new(),
+			}, semiWeakRef(instance))
 		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for invalid property types (state)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Name = Value(Vector3.new())
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				Name = Value(Vector3.new()),
+			}, semiWeakRef(instance))
 		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for invalid Parent types (constant)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Parent = Vector3.new()
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				Parent = Vector3.new(),
+			}, semiWeakRef(instance))
 		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for invalid Parent types (state)", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Parent = Value(Vector3.new())
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				Parent = Value(Vector3.new()),
+			}, semiWeakRef(instance))
 		end).to.throw("invalidPropertyType")
 	end)
 
 	it("should throw for unrecognised keys in the property table", function()
 		expect(function()
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					[2] = true
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				[2] = true,
+			}, semiWeakRef(instance))
 		end).to.throw("unrecognisedPropertyKey")
 	end)
 
 	it("should defer property changes", function()
 		local value = Value("Bob")
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Name = value
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Name = value,
+		}, semiWeakRef(instance))
 		value:set("Maya")
 
 		expect(instance.Name).to.equal("Bob")
@@ -168,12 +134,9 @@ return function()
 		local parent2 = Instance.new("Folder")
 		local value = Value(parent1)
 		local instance = Instance.new("Folder")
-		applyInstanceProps(
-			{
-				Parent = value
-			},
-			semiWeakRef(instance)
-		)
+		applyInstanceProps({
+			Parent = value,
+		}, semiWeakRef(instance))
 		value:set(parent2)
 
 		expect(instance.Parent).to.equal(parent1)
@@ -182,23 +145,18 @@ return function()
 	end)
 
 	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
+		local ref = setmetatable({}, { __mode = "v" })
 		do
 			local instance = Instance.new("Folder")
-			applyInstanceProps(
-				{
-					Name = Value("Bob")
-				},
-				semiWeakRef(instance)
-			)
+			applyInstanceProps({
+				Name = Value("Bob"),
+			}, semiWeakRef(instance))
 
 			ref[1] = instance
 		end
 
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until ref[1] == nil or os.clock() > startTime + 5
+		waitForGC()
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end

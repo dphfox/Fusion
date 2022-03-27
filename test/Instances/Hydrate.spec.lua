@@ -1,6 +1,8 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Hydrate = require(Package.Instances.Hydrate)
 
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+
 return function()
 	it("should return the instance it was passed", function()
 		local ins = Instance.new("Folder")
@@ -24,10 +26,8 @@ return function()
 			ref[1] = Hydrate(Instance.new("Folder")) {}
 		end
 
-		local startTime = os.clock()
-		repeat
-			task.wait()
-		until ref[1] == nil or os.clock() > startTime + 5
+		waitForGC()
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end
