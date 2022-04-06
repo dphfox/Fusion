@@ -8,6 +8,5 @@ version = "0.1.1-beta"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
-exclude = ["*"]
 include = ["src", "src/**", "default.project.json", "LICENSE"]
 [dependencies]
