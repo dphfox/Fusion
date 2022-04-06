@@ -19,12 +19,12 @@ type Set<T> = {[T]: any}
 
 -- A symbol that represents the absence of a value.
 export type None = PubTypes.Symbol & {
-	-- name: "None" (add this when Luau supports singleton types)
+	name: "None"
 }
 
 -- Stores useful information about Luau errors.
 export type Error = {
-	type: string, -- replace with "Error" when Luau supports singleton types
+	type: "Error",
 	raw: string,
 	message: string,
 	trace: string
