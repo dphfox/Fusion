@@ -40,7 +40,7 @@ local function onDestroy(instanceRef: PubTypes.SemiWeakRef, callback: (...any) -
 		end
 	end
 
-	local args = table.pack(...)
+	local args = {...}
 	local accessible: boolean
 
 	local function onAncestryChange()
