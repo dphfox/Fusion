@@ -32,6 +32,7 @@ return {
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	onDestroyNilRef = "`onDestroy` got a nil ref! (this is an internal issue, was the instance lost too early?)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
+	setPropertyNilRef = "`applyInstanceProps.setProperty` got a nil ref while setting %s to %s (this is an internal issue)",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	strictReadError = "'%s' is not a valid member of '%s'.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",

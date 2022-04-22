@@ -33,8 +33,13 @@ end
 local function setProperty(instance: Instance, property: string, value: any)
 	if not pcall(setProperty_unsafe, instance, property, value) then
 		if not pcall(testPropertyAssignable, instance, property) then
-			-- property is not assignable
-			logError("cannotAssignProperty", nil, instance.ClassName, property)
+			if instance == nil then
+				-- reference has been lost
+				logError("setPropertyNilRef", nil, property, tostring(value))
+			else
+				-- property is not assignable
+				logError("cannotAssignProperty", nil, instance.ClassName, property)
+			end
 		else
 			-- property is assignable, but this specific assignment failed
 			-- this typically implies the wrong type was received
