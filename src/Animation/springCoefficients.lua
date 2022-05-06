@@ -62,18 +62,19 @@ local function springCoefficients(time: number, damping: number, speed: number):
 		-- v[t] -> x0(-e^-tζω)(α^2 + ζ^2 ω^2)(Sin[tα])/α
 		--       + v0(e^-tζω)(α Cos[tα] - ζω Sin[tα])/α
 
+        local scaledTime = time * speed
 		local alpha = math.sqrt(1 - damping^2)
 		local invAlpha = 1 / alpha
-		local alphaTime = alpha * time
-		local expTerm = math.exp(-time*damping*speed)
+		local alphaTime = alpha * scaledTime
+		local expTerm = math.exp(-scaledTime*damping)
 		local sinTerm = expTerm * math.sin(alphaTime)
 		local cosTerm = expTerm * math.cos(alphaTime)
 		local sinInvAlpha = sinTerm*invAlpha
 		local sinInvAlphaDamp = sinInvAlpha*damping
 
 		posPos = sinInvAlphaDamp + cosTerm
-		posVel = sinInvAlpha / speed
-		velPos = (sinInvAlphaDamp*damping + sinTerm*alpha) * -speed
+		posVel = sinInvAlpha
+		velPos = -(sinInvAlphaDamp*damping + sinTerm*alpha)
 		velVel = cosTerm - sinInvAlphaDamp
 	end
 
