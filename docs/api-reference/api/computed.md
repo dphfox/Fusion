@@ -89,7 +89,7 @@ unnecessary updates:
 	print("increment state A (expect update below)")
 	stateA:set(stateA:get() + 1)
 	print("increment state B (expect no update)")
-	stateA:set(stateA:get() + 1)
+	stateB:set(stateB:get() + 1)
 
 	print("switch to select B")
 	selector:set("B")
@@ -97,7 +97,7 @@ unnecessary updates:
 	print("increment state A (expect no update)")
 	stateA:set(stateA:get() + 1)
 	print("increment state B (expect update below)")
-	stateA:set(stateA:get() + 1)
+	stateB:set(stateB:get() + 1)
 	```
 === "Expected output"
 	```
