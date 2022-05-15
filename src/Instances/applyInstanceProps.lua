@@ -14,7 +14,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Instances.PubTypes)
 local onDestroy = require(Package.Instances.onDestroy)
 local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)

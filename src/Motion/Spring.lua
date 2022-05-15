@@ -6,17 +6,17 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local Types = require(Package.Types)
+local PubTypes = require(Package.Motion.PubTypes)
+local Types = require(Package.Motion.Types)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local unpackType = require(Package.Animation.unpackType)
-local SpringScheduler = require(Package.Animation.SpringScheduler)
-local useDependency = require(Package.Dependencies.useDependency)
-local initDependency = require(Package.Dependencies.initDependency)
-local updateAll = require(Package.Dependencies.updateAll)
+local unpackType = require(Package.Motion.unpackType)
+local SpringScheduler = require(Package.Motion.SpringScheduler)
+local useDependency = require(Package.Core.Dependencies.useDependency)
+local initDependency = require(Package.Core.Dependencies.initDependency)
+local updateAll = require(Package.Core.Dependencies.updateAll)
 local xtypeof = require(Package.Utility.xtypeof)
-local unwrap = require(Package.State.unwrap)
+local unwrap = require(Package.Core.unwrap)
 
 local class = {}
 

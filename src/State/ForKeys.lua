@@ -12,11 +12,11 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local Types = require(Package.Types)
-local captureDependencies = require(Package.Dependencies.captureDependencies)
-local initDependency = require(Package.Dependencies.initDependency)
-local useDependency = require(Package.Dependencies.useDependency)
+local PubTypes = require(Package.State.PubTypes)
+local Types = require(Package.State.Types)
+local captureDependencies = require(Package.Core.Dependencies.captureDependencies)
+local initDependency = require(Package.Core.Dependencies.initDependency)
+local useDependency = require(Package.Core.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)

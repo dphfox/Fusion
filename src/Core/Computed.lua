@@ -6,12 +6,12 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
-local captureDependencies = require(Package.Dependencies.captureDependencies)
-local initDependency = require(Package.Dependencies.initDependency)
-local useDependency = require(Package.Dependencies.useDependency)
+local Types = require(Package.Core.Types)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local captureDependencies = require(Package.Core.Dependencies.captureDependencies)
+local initDependency = require(Package.Core.Dependencies.initDependency)
 local isSimilar = require(Package.Utility.isSimilar)
+local useDependency = require(Package.Core.Dependencies.useDependency)
 
 local class = {}
 

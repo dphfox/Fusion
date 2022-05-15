@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local captureDependencies = require(Package.Dependencies.captureDependencies)
+local captureDependencies = require(Package.Core.Dependencies.captureDependencies)
 
 local function callback()
 

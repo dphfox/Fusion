@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Value = require(Package.State.Value)
-local Tween = require(Package.Animation.Tween)
+local Value = require(Package.Core.Value)
+local Tween = require(Package.Motion.Tween)
 local New = require(Package.Instances.New)
 
 return function()

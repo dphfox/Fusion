@@ -13,8 +13,8 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local Oklab = require(Package.Colour.Oklab)
+local PubTypes = require(Package.Motion.PubTypes)
+local Oklab = require(Package.Motion.Colour.Oklab)
 
 local function unpackType(value: any, typeString: string): {number}
 	if typeString == "number" then

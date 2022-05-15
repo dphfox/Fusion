@@ -12,7 +12,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Instances.PubTypes)
 local isAccessible = require(Package.Instances.isAccessible)
 
 local WEAK_MODE = { __mode = "v" }

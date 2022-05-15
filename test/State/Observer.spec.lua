@@ -2,7 +2,7 @@ local RunService = game:GetService("RunService")
 
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Observer = require(Package.State.Observer)
-local Value = require(Package.State.Value)
+local Value = require(Package.Core.Value)
 
 return function()
 	it("should fire connections on change", function()

@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.Core.Dependencies.updateAll)
 
 local function update()
 	return true

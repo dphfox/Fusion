@@ -7,10 +7,10 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
-local lerpType = require(Package.Animation.lerpType)
-local getTweenRatio = require(Package.Animation.getTweenRatio)
-local updateAll = require(Package.Dependencies.updateAll)
+local Types = require(Package.Motion.Types)
+local lerpType = require(Package.Motion.lerpType)
+local getTweenRatio = require(Package.Motion.getTweenRatio)
+local updateAll = require(Package.Core.Dependencies.updateAll)
 
 local TweenScheduler = {}
 

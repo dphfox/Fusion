@@ -2,7 +2,7 @@ local RunService = game:GetService("RunService")
 
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForKeys = require(Package.State.ForKeys)
-local Value = require(Package.State.Value)
+local Value = require(Package.Core.Value)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 

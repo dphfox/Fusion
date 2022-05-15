@@ -1,7 +1,7 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
-local Value = require(Package.State.Value)
+local Value = require(Package.Core.Value)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 

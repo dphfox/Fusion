@@ -3,7 +3,7 @@ local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local OnEvent = require(Package.Instances.OnEvent)
 local OnChange = require(Package.Instances.OnChange)
-local Value = require(Package.State.Value)
+local Value = require(Package.Core.Value)
 
 local function callback()
 

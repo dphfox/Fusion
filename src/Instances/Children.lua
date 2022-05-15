@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Instances.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local xtypeof = require(Package.Utility.xtypeof)

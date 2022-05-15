@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Value = require(Package.State.Value)
-local Computed = require(Package.State.Computed)
+local Value = require(Package.Core.Value)
+local Computed = require(Package.Core.Computed)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 

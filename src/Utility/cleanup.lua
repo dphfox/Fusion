@@ -18,11 +18,11 @@ local function cleanup(task: any)
 	if taskType == "Instance" then
 		task:Destroy()
 
-	-- case 2: RBXScriptConnection
+		-- case 2: RBXScriptConnection
 	elseif taskType == "RBXScriptConnection" then
 		task:Disconnect()
 
-	-- case 3: callback
+		-- case 3: callback
 	elseif taskType == "function" then
 		task()
 
@@ -31,11 +31,11 @@ local function cleanup(task: any)
 		if typeof(task.destroy) == "function" then
 			task:destroy()
 
-		-- case 5: Destroy() function
+			-- case 5: Destroy() function
 		elseif typeof(task.Destroy) == "function" then
 			task:Destroy()
 
-		-- case 6: array of tasks
+			-- case 6: array of tasks
 		elseif task[1] ~= nil then
 			for _, subtask in ipairs(task) do
 				cleanup(subtask)

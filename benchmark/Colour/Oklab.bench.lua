@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Oklab = require(Package.Colour.Oklab)
+local Oklab = require(Package.Motion.Colour.Oklab)
 
 return {
 

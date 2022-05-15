@@ -7,10 +7,10 @@
 local RunService = game:GetService("RunService")
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
-local packType = require(Package.Animation.packType)
-local springCoefficients = require(Package.Animation.springCoefficients)
-local updateAll = require(Package.Dependencies.updateAll)
+local Types = require(Package.Motion.Types)
+local packType = require(Package.Motion.packType)
+local springCoefficients = require(Package.Motion.springCoefficients)
+local updateAll = require(Package.Core.Dependencies.updateAll)
 
 type Set<T> = {[T]: any}
 type Spring = Types.Spring<any>

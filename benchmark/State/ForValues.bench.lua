@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Value = require(Package.State.Value)
+local Value = require(Package.Core.Value)
 local ForValues = require(Package.State.ForValues)
 
 local function callback()

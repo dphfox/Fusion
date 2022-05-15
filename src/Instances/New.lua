@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Instances.PubTypes)
 local defaultProps = require(Package.Instances.defaultProps)
 local semiWeakRef = require(Package.Instances.semiWeakRef)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)

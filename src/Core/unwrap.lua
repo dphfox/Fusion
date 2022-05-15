@@ -5,7 +5,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Core.PubTypes)
 local xtypeof = require(Package.Utility.xtypeof)
 
 local function unwrap<T>(item: PubTypes.CanBeState<T>, useDependency: boolean?): T

@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local springCoefficients = require(Package.Animation.springCoefficients)
+local springCoefficients = require(Package.Motion.springCoefficients)
 
 return function()
 	it("should return the identity matrix for zero time", function()

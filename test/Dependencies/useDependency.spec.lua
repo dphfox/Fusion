@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local useDependency = require(Package.Dependencies.useDependency)
-local sharedState = require(Package.Dependencies.sharedState)
+local useDependency = require(Package.Core.Dependencies.useDependency)
+local sharedState = require(Package.Core.Dependencies.sharedState)
 
 return function()
 	it("should add to a dependency set contextually", function()

@@ -10,8 +10,8 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local Oklab = require(Package.Colour.Oklab)
+local PubTypes = require(Package.Motion.PubTypes)
+local Oklab = require(Package.Motion.Colour.Oklab)
 
 local function lerpType(from: any, to: any, ratio: number): any
 	local typeString = typeof(from)

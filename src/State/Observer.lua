@@ -8,9 +8,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local Types = require(Package.Types)
-local initDependency = require(Package.Dependencies.initDependency)
+local PubTypes = require(Package.State.PubTypes)
+local Types = require(Package.State.Types)
+local initDependency = require(Package.Core.Dependencies.initDependency)
 
 type Set<T> = {[T]: any}
 

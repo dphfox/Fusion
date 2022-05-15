@@ -6,7 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local PubTypes = require(Package.Instances.PubTypes)
 
 local Cleanup = {}
 Cleanup.type = "SpecialKey"
