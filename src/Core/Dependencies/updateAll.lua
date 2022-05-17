@@ -7,8 +7,8 @@
 	unchanged.
 ]]
 
-local Package = script.Parent.Parent.Parent
-local PubTypes = require(Package.Core.PubTypes)
+local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 
 type Set<T> = {[T]: any}
 type Descendant = (PubTypes.Dependent & PubTypes.Dependency) | PubTypes.Dependent

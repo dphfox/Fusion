@@ -5,7 +5,7 @@
 ]]
 
 local PubTypes = require(script.PubTypes)
-local restrictRead = require(script.Parent.Utility.restrictRead)
+local restrictRead = require(script.Utility.restrictRead)
 
 export type Value<T> = PubTypes.Value<T>
 export type Computed<T> = PubTypes.Computed<T>

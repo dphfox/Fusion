@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
-local cleanup = require(Package.Utility.cleanup)
+local cleanup = require(Package.Core.Utility.cleanup)
 
 return function()
 	it("should destroy instances", function()

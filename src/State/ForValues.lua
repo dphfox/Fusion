@@ -17,9 +17,9 @@ local Types = require(Package.State.Types)
 local captureDependencies = require(Package.Core.Dependencies.captureDependencies)
 local initDependency = require(Package.Core.Dependencies.initDependency)
 local useDependency = require(Package.Core.Dependencies.useDependency)
-local parseError = require(Package.Logging.parseError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local cleanup = require(Package.Utility.cleanup)
+local parseError = require(Package.Core.Logging.parseError)
+local logErrorNonFatal = require(Package.Core.Logging.logErrorNonFatal)
+local cleanup = require(Package.Core.Utility.cleanup)
 
 local class = {}
 

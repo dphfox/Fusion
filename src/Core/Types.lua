@@ -14,6 +14,23 @@ local PubTypes = require(Package.PubTypes)
 type Set<T> = {[T]: any}
 
 --[[
+	General use types
+]]
+
+-- A symbol that represents the absence of a value.
+export type None = PubTypes.Symbol & {
+	-- name: "None" (add this when Luau supports singleton types)
+}
+
+-- Stores useful information about Luau errors.
+export type Error = {
+	type: string, -- replace with "Error" when Luau supports singleton types
+	raw: string,
+	message: string,
+	trace: string
+}
+
+--[[
 	Specific reactive graph types
 ]]
 

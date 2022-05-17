@@ -7,8 +7,8 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.Instances.PubTypes)
-local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local logError = require(Package.Core.Logging.logError)
+local xtypeof = require(Package.Core.Utility.xtypeof)
 
 local function Out(propertyName: string): PubTypes.SpecialKey
 	local outKey = {}

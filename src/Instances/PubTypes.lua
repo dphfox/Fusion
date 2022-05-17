@@ -23,11 +23,8 @@ RBXScriptConnection |
 {Task}
 
 -- Script-readable version information.
-export type Version = {
-	major: number,
-	minor: number,
-	isRelease: boolean
-}
+export type Version = PubTypes.Version
+
 --[[
 	Generic reactive graph types
 ]]

@@ -16,10 +16,10 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.Instances.PubTypes)
 local onDestroy = require(Package.Instances.onDestroy)
-local cleanup = require(Package.Utility.cleanup)
-local xtypeof = require(Package.Utility.xtypeof)
-local logError = require(Package.Logging.logError)
-local logWarn = require(Package.Logging.logWarn)
+local cleanup = require(Package.Core.Utility.cleanup)
+local xtypeof = require(Package.Core.Utility.xtypeof)
+local logError = require(Package.Core.Logging.logError)
+local logWarn = require(Package.Core.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 
 local function setProperty_unsafe(instance: Instance, property: string, value: any)

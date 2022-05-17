@@ -29,7 +29,7 @@ return function()
 		waitForGC()
 		-- Wait twice in case the Value keeps the instance an extra cycle
 		waitForGC()
-		
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end

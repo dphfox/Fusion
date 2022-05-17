@@ -12,10 +12,10 @@
 	self-dependencies.
 ]]
 
-local Package = script.Parent.Parent.Parent
-local PubTypes = require(Package.Core.PubTypes)
+local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local parseError = require(Package.Logging.parseError)
-local sharedState = require(Package.Core.Dependencies.sharedState)
+local sharedState = require(Package.Dependencies.sharedState)
 
 type Set<T> = {[T]: any}
 

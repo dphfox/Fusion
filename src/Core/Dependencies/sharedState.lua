@@ -4,8 +4,8 @@
 	Stores shared state for dependency management functions.
 ]]
 
-local Package = script.Parent.Parent.Parent
-local PubTypes = require(Package.Core.PubTypes)
+local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 
 type Set<T> = {[T]: any}
 

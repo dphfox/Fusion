@@ -7,9 +7,9 @@
 	from inside of themselves.
 ]]
 
-local Package = script.Parent.Parent.Parent
-local PubTypes = require(Package.Core.PubTypes)
-local sharedState = require(Package.Core.Dependencies.sharedState)
+local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
+local sharedState = require(Package.Dependencies.sharedState)
 
 local initialisedStack = sharedState.initialisedStack
 

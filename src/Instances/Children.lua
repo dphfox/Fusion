@@ -7,9 +7,9 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.Instances.PubTypes)
-local logWarn = require(Package.Logging.logWarn)
+local logWarn = require(Package.Core.Logging.logWarn)
 local Observer = require(Package.State.Observer)
-local xtypeof = require(Package.Utility.xtypeof)
+local xtypeof = require(Package.Core.Utility.xtypeof)
 
 type Set<T> = {[T]: boolean}
 

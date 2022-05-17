@@ -11,9 +11,9 @@ local Types = require(Package.Motion.Types)
 local TweenScheduler = require(Package.Motion.TweenScheduler)
 local useDependency = require(Package.Core.Dependencies.useDependency)
 local initDependency = require(Package.Core.Dependencies.initDependency)
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local xtypeof = require(Package.Utility.xtypeof)
+local logError = require(Package.Core.Logging.logError)
+local logErrorNonFatal = require(Package.Core.Logging.logErrorNonFatal)
+local xtypeof = require(Package.Core.Utility.xtypeof)
 
 local class = {}
 

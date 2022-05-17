@@ -5,7 +5,7 @@
 ]]
 
 local PubTypes = require(script.PubTypes)
-local restrictRead = require(script.Parent.Utility.restrictRead)
+local restrictRead = require(script.Parent.Core.Utility.restrictRead)
 
 type StateObject<T> = PubTypes.StateObject<T>
 type CanBeState<T> = PubTypes.CanBeState<T>

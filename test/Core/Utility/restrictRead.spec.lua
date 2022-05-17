@@ -1,5 +1,5 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local restrictRead = require(Package.Utility.restrictRead)
+local restrictRead = require(Package.Core.Utility.restrictRead)
 
 return function()
 	it("should error for missing members", function()

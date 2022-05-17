@@ -4,13 +4,13 @@
 	The entry point for the Fusion library.
 ]]
 
-local restrictRead = require(script.Utility.restrictRead)
+local restrictRead = require(script.Core.Utility.restrictRead)
 
-local libraries = {};
+local libraries = {}
 
-for _, library in ipairs(script:GetChildren()) do
-	if (library:IsA("ModuleScript") and (library.Name ~= "PubTypes") and (library.Name ~= "Types")) then
-		libraries[library.Name] = require(library);
+for _, Library in ipairs(script:GetChildren()) do
+	if Library:IsA("ModuleScript") then
+		libraries[Library.Name] = require(Library)
 	end
 end
 

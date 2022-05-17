@@ -186,7 +186,7 @@ return function()
 		end
 
 		waitForGC()
-		
+
 		expect(ref[1]).to.equal(nil)
 	end)
 end

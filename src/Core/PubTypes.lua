@@ -1,16 +1,23 @@
 --!strict
 
-local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-
 --[[
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
 type Set<T> = {[T]: any}
 
+-- A unique symbolic value.
+export type Symbol = {
+	type: string, -- replace with "Symbol" when Luau supports singleton types
+	name: string
+}
+
 -- Script-readable version information.
-export type Version = PubTypes.Version
+export type Version = {
+	major: number,
+	minor: number,
+	isRelease: boolean
+}
 
 --[[
 	Generic reactive graph types

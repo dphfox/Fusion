@@ -1,9 +1,9 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Fusion = require(Package)
+local Instances = require(Package.Instances)
 
 return function()
 	it("should load with the correct public APIs", function()
-		expect(Fusion).to.be.a("table")
+		expect(Instances).to.be.a("table")
 
 		local api = {
 			version = "table",
@@ -15,21 +15,11 @@ return function()
 			Cleanup = "table",
 			Children = "table",
 			OnEvent = "function",
-			OnChange = "function",
-
-			Value = "function",
-			Computed = "function",
-			ForPairs = "function",
-			ForKeys = "function",
-			ForValues = "function",
-			Observer = "function",
-
-			Tween = "function",
-			Spring = "function"
+			OnChange = "function"
 		}
 
 		for apiName, apiType in pairs(api) do
-			local realValue = rawget(Fusion, apiName)
+			local realValue = rawget(Instances, apiName)
 			local realType = typeof(realValue)
 
 			if realType ~= apiType then
@@ -37,7 +27,7 @@ return function()
 			end
 		end
 
-		for realName, realValue in pairs(Fusion) do
+		for realName, realValue in pairs(Instances) do
 			local realType = typeof(realValue)
 			local apiType = api[realName] or "nil"
 
@@ -49,7 +39,7 @@ return function()
 
 	it("should error when accessing non-existent APIs", function()
 		expect(function()
-			local foo = Fusion.thisIsNotARealAPI
+			local foo = Instances.thisIsNotARealAPI
 		end).to.throw("strictReadError")
 	end)
 end
