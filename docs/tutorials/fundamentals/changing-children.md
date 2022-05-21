@@ -31,7 +31,7 @@ local gui = New "TextLabel" {
 	[Children] = child
 }
 
-child:set(New "ScreenGui") -- changes the child from the folder to the screen gui
+child:set(New "ScreenGui" {}) -- changes the child from the folder to the screen gui
 
 ```
 
