@@ -1,8 +1,9 @@
 std = "roblox+testez"
 
 [rules]
-undefined_variable = "allow"
+# Too aggressive in tests
 unused_variable = "allow"
+# Handled by formatting/StyLua
+multiple_statements = "allow"
+# Used for Luau type assertions
 shadowing = "allow"
-empty_if = "allow"
-incorrect_standard_library_use = "warn"

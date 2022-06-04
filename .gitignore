@@ -9,3 +9,6 @@
 
 # Ignore site folder
 /site/
+
+# Ignore selene auto-generated config
+roblox.toml
