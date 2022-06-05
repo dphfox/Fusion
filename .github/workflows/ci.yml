@@ -6,6 +6,9 @@ on:
   pull_request:
   push:
 
+env:
+  ROBLOSECURITY: ${{ secrets.ROBLOSECURITY || '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_F734F35D475159611FF310E1638A0AB9838B051A223C8E54AE685FAE41523FAA1567BD2C16E4C720894C0746A53DC6B241582C16CBDF200DF466987DDDBD11190BA9C539E7A3FB60D0B57930F26E77155B114D0254231A8AEB8DF494D5F9B25AA9F2A636A7571D03328B3E49D11789AB5BA978EEF3D234935C8278C15797638930ADFE5CD75E0810D2675DDF5CFDA573293A4B93C2A1DC48DF364F5D58C7D93A3B25597C14B5C0FA9E1B97485FC1DC05D1043C5863849726FC6F71D55561F11848CBC012600CEBA6D9EB2D469FFDAAF6A0F5E870265CEA4D27AE4C4F8E9E28A2849EE0B3C8A56E6A3C3C90E98638C287C648A4F183192DCBCA9B8295B9152EB44468251035A543FB48A7BAD2AB884A728AC4EE1CCD1497B7DC971EED917B935A4781FFB25C01D9FAD6323460F714F4DC19B174978C4761E21ADBCBDD272BCF5675B358889BCFF59B39C698428C1DAB914BD0CE649DF521D41EB6A73CC99A47C95A5F88587A314D22DF9527ECA30D43F97C08417A7B26478F13E641B7459FF165C099B6B1' }}
+
 jobs:
   lint:
     name: Lint
@@ -36,18 +39,10 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: windows-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
-
-      - name: Install Roblox Studio
-        uses: OrbitalOwen/roblox-win-installer-action@1.1
-        with:
-          # This cookie is intentionally public, because secrets are not available in pull request CI runs
-          # It is from an empty account and not a security vulnerability
-          cookie: ${{ secrets.ROBLOSECURITY || '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_A3AD229182BC0459872219D4D22D9D90FA3BEDE7FD97225DF5173B69D28444B60DD6A62C10A3B6439189CAD3E5FFECBF7EE68C6686FCADC2BE36FCE2A8E8FE695F83A85E5E874B8FD6FEB920BA3F3088C1F93E8B5E52EFEF623A493EC4AAD17EB7CC8748907CC617562165EA323F6E6D45EFA13518FC2945207B65E0878CC551AE966D8D86C0EFA600E00788EF9A8B6DAD33190A3D950BC76AC4F7860582732DE1EF7C80EB540D9C1F86AD01ADD54E0A654BAC28682232738353F9E66FC7E2F7E47CA3EED8C353EECA2E5296FC6F2200012379D0F9A109A984FB84369ECDA6DD1994AA22EEC8787F7391390E623663AD33F428128CFD24E4ABD1B6B3A0E7E5950366C41177A722621EE8DD3F6E7654E55F2C4191C181D10CD275FDBD7F1042F9002D7A269B1B862D57A7D5A76DC6860EF5A0210BA37FA44794B1BA45FB497F6E0BFA348F8069D9CB3D1E83128D4D92EFA3EDD142' }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Foreman
         uses: rojo-rbx/setup-foreman@v1.0.1
@@ -57,11 +52,62 @@ jobs:
       - name: Build test place
         run: rojo build test-runner.project.json -o test.rbxl
 
+      - name: Download OpenVPN
+        run: choco install openvpn
+
+      - name: Run OpenVPN
+        run: Start-Process -FilePath "C:\\Program Files\\OpenVPN\\bin\\openvpn.exe" -ArgumentList "--config $((Resolve-Path .\\fusion.ovpn).Path)"
+
+      - name: Poll for IP Change
+        run: |
+          $elapsed = 0
+          while ($true) {
+            try {
+              $response = Invoke-WebRequest -Uri 'https://httpbin.org/ip' -Method GET -UseBasicParsing
+              $content = ConvertFrom-Json $response.Content
+              if ($content.origin -eq "104.238.130.74") {
+                break
+              }
+            } catch {}
+            if ($elapsed -ge 25) {
+              Write-Error "Timeout reached!"
+              exit 1
+            }
+            Write-Output "Polling.. Elasped: $elapsed, IP: $($content.origin)"
+            Start-Sleep 5
+            $elapsed += 5
+          }
+          Write-Output "Success!"
+
+      - name: Validate Cookie
+        run: |
+          $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+          $cookie = New-Object System.Net.Cookie
+          $cookie.Name = ".ROBLOSECURITY"
+          $cookie.Value = "${{ env.ROBLOSECURITY }}"
+          $cookie.Domain = ".roblox.com"
+          $session.Cookies.Add($cookie);
+          Invoke-WebRequest "https://avatar.roblox.com/v1/avatar" -WebSession $session -UseBasicParsing
+
+      - name: Install Roblox Studio
+        uses: OrbitalOwen/roblox-win-installer-action@1.1
+        with:
+          # This cookie is intentionally public, because secrets are not available in pull request CI runs
+          # It is from an empty account and not a security vulnerability
+          cookie: ${{ env.ROBLOSECURITY }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run tests
         shell: bash
         run: run-in-roblox --place test.rbxl --script test-runner/Run.client.lua > test-out.txt
         continue-on-error: true
-        
+
+      - name: Screenshot
+        if: failure()
+        uses: OrbitalOwen/desktop-screenshot-action@0.1
+        with:
+          file-name: 'desktop.jpg'
+
       - name: Check test status
         shell: bash
         run: cat test-out.txt | grep "0 failed, 0 skipped" || (cat test-out.txt && exit 1)
