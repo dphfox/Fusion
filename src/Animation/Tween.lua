@@ -65,7 +65,8 @@ function class:update(): boolean
 	if tweenInfo.Reverses then
 		tweenDuration += tweenInfo.Time
 	end
-	tweenDuration *= tweenInfo.RepeatCount + 1
+	
+	tweenDuration *= math.sign(self._tweenInfo.RepeatCount + 1) + math.abs(self._tweenInfo.RepeatCount)
 	self._currentTweenDuration = tweenDuration
 
 	-- start animating this tween
