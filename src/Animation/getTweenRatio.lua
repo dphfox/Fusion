@@ -11,7 +11,7 @@ local function getTweenRatio(tweenInfo: TweenInfo, currentTime: number): number
 	local delay = tweenInfo.DelayTime
 	local duration = tweenInfo.Time
 	local reverses = tweenInfo.Reverses
-	local numCycles = math.sign(tweenInfo.RepeatCount + 1) + math.abs(tweenInfo.RepeatCount) 
+	local numCycles = 1 + tweenInfo.RepeatCount
 	local easeStyle = tweenInfo.EasingStyle
 	local easeDirection = tweenInfo.EasingDirection
 
