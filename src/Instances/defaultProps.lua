@@ -99,5 +99,11 @@ return {
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BorderColor3 = Color3.new(0, 0, 0),
 		BorderSizePixel = 0
+	},
+	
+	CanvasGroup = {
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderColor3 = Color3.new(0, 0, 0),
+		BorderSizePixel = 0
 	}
 }
