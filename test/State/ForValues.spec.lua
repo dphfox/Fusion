@@ -14,11 +14,11 @@ end
 
 return function()
 	it("should construct a ForValues object", function()
-		local forKeys = ForValues({}, function() end)
+		local computed = ForValues({}, function() end)
 
-		expect(forKeys).to.be.a("table")
-		expect(forKeys.type).to.equal("State")
-		expect(forKeys.kind).to.equal("ForValues")
+		expect(computed).to.be.a("table")
+		expect(computed.type).to.equal("State")
+		expect(computed.kind).to.equal("ForValues")
 	end)
 
 	it("should calculate and retrieve its value", function()
