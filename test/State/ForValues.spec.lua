@@ -54,7 +54,7 @@ return function()
 		expect(calculations).to.equal(2)
 	end)
 
-	it("should only call the processor the first time a constant output value is added", function()
+	it("should only call the processor the first time an output value is added", function()
 		local state = Value({
 			[1] = "foo",
 		})
@@ -80,25 +80,25 @@ return function()
 			[3] = "bar",
 		})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({
 			[1] = "bar",
 			[2] = "bar",
 		})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({
 			[1] = "bar",
 			[2] = "foo",
 		})
 
-		expect(processorCalls).to.equal(4)
+		expect(processorCalls).to.equal(5)
 	end)
 
 	it("should only call the destructor when a constant value gets removed from all indices", function()
@@ -130,13 +130,21 @@ return function()
 		state:set({
 			[1] = "bar",
 			[2] = "bar",
+			[3] = "foo",
+			[4] = "foo",
 		})
 
 		expect(destructions).to.equal(1)
 
+		state:set({
+			[1] = "foo",
+		})
+
+		expect(destructions).to.equal(4)
+
 		state:set({})
 
-		expect(destructions).to.equal(2)
+		expect(destructions).to.equal(5)
 	end)
 
 	it("should only call the destructor when a non-constant value gets removed from all indices", function()
@@ -248,7 +256,7 @@ return function()
 			["fiz"] = "bar",
 		})
 
-		expect(processorCalls).to.equal(3)
+		expect(processorCalls).to.equal(5)
 		expect(destructorCalls).to.equal(2)
 
 		state:set({
@@ -256,13 +264,13 @@ return function()
 			[3] = "baz",
 		})
 
-		expect(processorCalls).to.equal(4)
-		expect(destructorCalls).to.equal(2)
+		expect(processorCalls).to.equal(6)
+		expect(destructorCalls).to.equal(4)
 
 		state:set({})
 
-		expect(processorCalls).to.equal(4)
-		expect(destructorCalls).to.equal(4)
+		expect(processorCalls).to.equal(6)
+		expect(destructorCalls).to.equal(6)
 	end)
 
 	it("should recalculate its value in response to State objects", function()
