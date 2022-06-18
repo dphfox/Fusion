@@ -230,6 +230,53 @@ return function()
 		expect(computedBarBiz:get()["bazbarbiz"]).to.be.ok()
 	end)
 
+	it("should recalculate its value in response to a dependency change", function()
+		local state = Value({ 
+			[1] = true,
+			[5] = true,
+			[10] = true,
+		 })
+		local increment = Value(1)
+
+		local computed = ForKeys(state, function(key)
+			return key + increment:get()
+		end)
+
+		expect(computed:get()[1]).never.to.be.ok()
+		expect(computed:get()[5]).never.to.be.ok()
+		expect(computed:get()[10]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.be.ok()
+		expect(computed:get()[6]).to.be.ok()
+		expect(computed:get()[11]).to.be.ok()
+
+		increment:set(2)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[2]).never.to.be.ok()
+		expect(computed:get()[6]).never.to.be.ok()
+		expect(computed:get()[11]).never.to.be.ok()
+
+		expect(computed:get()[3]).to.be.ok()
+		expect(computed:get()[7]).to.be.ok()
+		expect(computed:get()[12]).to.be.ok()
+
+		increment:set(1)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[3]).never.to.be.ok()
+		expect(computed:get()[7]).never.to.be.ok()
+		expect(computed:get()[12]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.be.ok()
+		expect(computed:get()[6]).to.be.ok()
+		expect(computed:get()[11]).to.be.ok()
+	end)
+
 	it("should not corrupt dependencies after an error", function()
 		local state = Value({
 			["foo"] = "bar",
