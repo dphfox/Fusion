@@ -77,6 +77,7 @@ export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 	_oldInputTable: { [KI]: KO },
 	_outputTable: { [KO]: any },
 	_keyOIMap: { [KO]: KI },
+	_keyIOMap: { [KI]: KO },
 	_meta: { [KO]: M? },
 	_keyData: {
 		[KI]: {
@@ -88,6 +89,16 @@ export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
+export type ForValuesValueInfo<VO, M> = {
+	value: VO,
+	meta: M?,
+	valueData: {
+		dependencySet: Set<PubTypes.Dependency>,
+		oldDependencySet: Set<PubTypes.Dependency>,
+		dependencyValues: { [PubTypes.Dependency]: any },
+	}
+}
+
 export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (VI) -> (VO),
@@ -95,16 +106,9 @@ export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_inputIsState: boolean,
 	_inputTable: PubTypes.CanBeState<{ [VI]: VO }>,
 	_outputTable: { [any]: VI },
-	_valueCache: { [VO]: any },
-	_oldValueCache: { [VO]: any },
+	_valueCache: { [VI]: { ForValuesValueInfo<VO, M> } },
+	_oldValueCache: { [VI]: { ForValuesValueInfo<VO, M> } },
 	_meta: { [VO]: M? },
-	_valueData: {
-		[VI]: {
-			dependencySet: Set<PubTypes.Dependency>,
-			oldDependencySet: Set<PubTypes.Dependency>,
-			dependencyValues: { [PubTypes.Dependency]: any },
-		},
-	},
 }
 
 -- A state object which follows another state object using tweens.
