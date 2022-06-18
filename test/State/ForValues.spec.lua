@@ -307,6 +307,51 @@ return function()
 		expect(tripled:get()[2]).to.equal(12)
 	end)
 
+	it("should recalculate its value in response to a dependency change", function()
+		local state = Value({ 
+			[1] = 1,
+			[5] = 5,
+			[10] = 10,
+		 })
+		local increment = Value(1)
+
+		local computed = ForValues(state, function(value)
+			return value + increment:get()
+		end)
+
+		expect(computed:get()[1]).to.equal(2)
+		expect(computed:get()[5]).to.equal(6)
+		expect(computed:get()[10]).to.equal(11)
+
+		increment:set(2)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[1]).to.equal(3)
+		expect(computed:get()[5]).to.equal(7)
+		expect(computed:get()[10]).to.equal(12)
+
+		increment:set(1)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[1]).to.equal(2)
+		expect(computed:get()[5]).to.equal(6)
+		expect(computed:get()[10]).to.equal(11)
+
+		state:set({
+			[1] = 10,
+			[5] = 1,
+			[10] = 5,
+		})
+
+		expect(computed:get()[1]).to.equal(11)
+		expect(computed:get()[5]).to.equal(2)
+		expect(computed:get()[10]).to.equal(6)
+	end)
+
 	it("should not corrupt dependencies after an error", function()
 		local state = Value({
 			[1] = 1,
