@@ -175,7 +175,7 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local destructions = 0
+		local metaDataPassed = true
 
 		local _computed = ForPairs(state, function(key, value)
 			local newKey = key .. "biz"
@@ -183,21 +183,32 @@ return function()
 
 			return newKey, newValue, newKey .. newValue
 		end, function(key, value, meta)
-			expect(meta).to.equal(key .. value)
-			destructions += 1
+			if meta ~= key .. value then
+				metaDataPassed = false
+			end
 		end)
 
 		state:set({
 			["foo"] = "baz",
 		})
+		
+		state:set({})
 
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(1)
+		state:set({
+			["foo"] = "bar",
+			["baz"] = "biz",
+			["biz"] = "baz",
+			["buzz"] = "baz",
+			["bar"] = "buzz",
+		})
+
+		state:set({
+			["foo"] = "baz",
+		})
 
 		state:set({})
 
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(2)
+		expect(metaDataPassed).to.equal(true)
 	end)
 
 	it("should recalculate its value in response to State objects", function()
