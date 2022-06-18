@@ -1,14 +1,14 @@
 --!nonstrict
 
 --[[
-	Constructs a new ForKeys state object which maps keys of a table using
+	Constructs a new ForKeys state object which maps keys of an array using
 	a `processor` function.
 
-	Optionally, a `destructor` function can be specified for cleaning up values.
-	If omitted, the default cleanup function will be used instead.
+	Optionally, a `destructor` function can be specified for cleaning up
+	calculated keys. If omitted, the default cleanup function will be used instead.
 
-    Additionally, a `meta` table/value can optionally be returned to pass data created
-    when running the processor to the destructor when the created object is cleaned up.
+	Optionally, a `meta` value can be returned in the processor function as the
+	second value to pass data from the processor to the destructor.
 ]]
 
 local Package = script.Parent.Parent
@@ -27,13 +27,18 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
+
+--[[
+	Default cleanup function that gets used as the destructor if no function is
+	provided by the user.
+]]
 local function forKeysCleanup(keyOut: any, meta: any?)
 	cleanup(keyOut)
-
 	if meta then
 		cleanup(meta)
 	end
 end
+
 
 --[[
 	Returns the current value of this ForKeys object.
@@ -46,57 +51,60 @@ function class:get(asDependency: boolean?): any
 	return self._outputTable
 end
 
+
 --[[
 	Called when the original table is changed.
 
 	This will firstly find any keys meeting any of the following criteria:
 
 	- they were not previously present
-	- a dependency used during generation of this key has changed
+	- a dependency used during generation of this value has changed
 
-	It will recalculate those keys, storing information about any dependencies used
-	in the processor callback during value generation, and saving the new key to the
-	output array with the same value. If it is overwriting an older value, that older
-	value will be passed to the destructor for cleanup.
+	It will recalculate those key pairs, storing information about any
+	dependencies used in the processor callback during output key generation,
+	and save the new key to the output array with the same value. If it is
+	overwriting an older value, that older value will be passed to the
+	destructor for cleanup.
 
 	Finally, this function will find keys that are no longer present, and remove
-	their output key from the output table and pass them to the destructor.
+	their output keys from the output table and pass them to the destructor.
 ]]
+
 function class:update(): boolean
 	local inputIsState = self._inputIsState
-	local oldInputKeys = self._oldInputTable
-	local newInputKeys = self._inputTable
+	local newInputTable = if inputIsState then self._inputTable:get(false) else self._inputTable
+	local oldInputTable = self._oldInputTable
+	local outputTable = self._outputTable
+
 	local keyOIMap = self._keyOIMap
-	local outputKeys = self._outputTable
+	local keyIOMap = self._keyIOMap
 	local meta = self._meta
 
-	if inputIsState then
-		newInputKeys = newInputKeys:get(false)
-	end
-
 	local didChange = false
+
 
 	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
+
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	-- if the input table is a state object, add as dependency
+	-- if the input table is a state object, add it as a dependency
 	if inputIsState then
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
 	end
 
-	-- STEP 1: find keys that were not previously present
-	for newInKey, _value in pairs(newInputKeys) do
+
+	-- STEP 1: find keys that changed or were not previously present
+	for newInKey, value in pairs(newInputTable) do
 		-- get or create key data
 		local keyData = self._keyData[newInKey]
+
 		if keyData == nil then
 			keyData = {
-				-- we don't need strong references here - the main set does that
-				-- for us, so let's not introduce unnecessary leak opportunities
 				dependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
 				oldDependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
 				dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE),
@@ -104,16 +112,12 @@ function class:update(): boolean
 			self._keyData[newInKey] = keyData
 		end
 
-		-- if an input key's previous value is non-nil, then there's no need to recalculate it
-		-- this also allows it to have a non-truthy value, which is important since we don't care
-		-- about the value; if we have dependencies then we also need to check if they've changed,
-		-- since if they have then the key has "changed".
-		local shouldRecalculate = oldInputKeys[newInKey] == nil
+		-- check if the key is new
+		local shouldRecalculate = oldInputTable[newInKey] == nil
 
-		if not shouldRecalculate then
-			-- check if dependencies have changed
+		-- check if the key's dependencies have changed
+		if shouldRecalculate == false then
 			for dependency, oldValue in pairs(keyData.dependencyValues) do
-				-- if the dependency changed value, then this needs recalculating
 				if oldValue ~= dependency:get(false) then
 					shouldRecalculate = true
 					break
@@ -121,7 +125,8 @@ function class:update(): boolean
 			end
 		end
 
-		-- if we should recalculate the output by this point, do that
+
+		-- recalculate the output key if necessary
 		if shouldRecalculate then
 			keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 			table.clear(keyData.dependencySet)
@@ -134,20 +139,34 @@ function class:update(): boolean
 
 			if processOK then
 				local oldInKey = keyOIMap[newOutKey]
+				local oldOutKey = keyIOMap[newInKey]
 
-				-- if there are colliding output keys, throw an error
-				if oldInKey ~= newInKey and newInputKeys[oldInKey] ~= nil then
+				-- check for key collision
+				if oldInKey ~= newInKey and newInputTable[oldInKey] ~= nil then
 					logError("forKeysKeyCollision", nil, tostring(newOutKey), tostring(oldInKey), tostring(newOutKey))
 				end
 
-				-- make the old input match the new input value
-				oldInputKeys[newInKey] = _value
-				-- store the new meta value in the table
+				-- check for a changed output key
+				if oldOutKey ~= newOutKey and keyOIMap[oldOutKey] == newInKey then
+					-- clean up the old calculated value
+					local oldMetaValue = meta[oldOutKey]
+
+					local destructOK, err = xpcall(self._destructor, parseError, oldOutKey, oldMetaValue)
+					if not destructOK then
+						logErrorNonFatal("forKeysDestructorError", err)
+					end
+
+					keyOIMap[oldOutKey] = nil
+					outputTable[oldOutKey] = nil
+					meta[oldOutKey] = nil
+				end
+
+				-- update the stored data for this key
+				oldInputTable[newInKey] = value
 				meta[newOutKey] = newMetaValue
-				-- store the new output key for next time we run the output comparison
 				keyOIMap[newOutKey] = newInKey
-				-- store the new output key in the table with its original value, which we give to the user
-				outputKeys[newOutKey] = _value
+				keyIOMap[newInKey] = newOutKey
+				outputTable[newOutKey] = value
 
 				-- if we had to recalculate the output, then we did change
 				didChange = true
@@ -158,13 +177,21 @@ function class:update(): boolean
 				logErrorNonFatal("forKeysProcessorError", newOutKey)
 			end
 		end
+
+
+		-- save dependency values and add to main dependency set
+		for dependency in pairs(keyData.dependencySet) do
+			keyData.dependencyValues[dependency] = dependency:get(false)
+
+			self.dependencySet[dependency] = true
+			dependency.dependentSet[self] = true
+		end
 	end
 
-	-- STEP 2: find keys that were removed
 
+	-- STEP 2: find keys that were removed
 	for outputKey, inputKey in pairs(keyOIMap) do
-		-- if the output key doesn't have an equivalent input key in the new input table
-		if newInputKeys[inputKey] == nil then
+		if newInputTable[inputKey] == nil then
 			-- clean up the old calculated value
 			local oldMetaValue = meta[outputKey]
 
@@ -173,15 +200,12 @@ function class:update(): boolean
 				logErrorNonFatal("forKeysDestructorError", err)
 			end
 
-			-- remove input key
-			oldInputKeys[inputKey] = nil
-			-- remove meta data
+			-- remove data
+			oldInputTable[inputKey] = nil
 			meta[outputKey] = nil
-			-- remove key OI data
 			keyOIMap[outputKey] = nil
-			-- remove output key
-			outputKeys[outputKey] = nil
-			-- remove key data
+			keyIOMap[inputKey] = nil
+			outputTable[outputKey] = nil
 			self._keyData[inputKey] = nil
 
 			-- if we removed a key, then the table/state changed
@@ -221,6 +245,7 @@ local function ForKeys<KI, KO, M>(
 		_oldInputTable = {},
 		_outputTable = {},
 		_keyOIMap = {},
+		_keyIOMap = {},
 		_keyData = {},
 		_meta = {},
 	}, CLASS_METATABLE)
