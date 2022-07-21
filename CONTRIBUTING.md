@@ -6,7 +6,7 @@ the process can be as smooth as possible 🙂
 
 ## I have a question, or am stuck and need help using Fusion
 Don't open an issue to ask a question - see our
-[Get Started page](https://elttob.github.io/Fusion/tutorials/#where-to-get-help)
+[Get Started page](https://elttob.uk/Fusion/tutorials/#where-to-get-help)
 to find a place to get help.
 
 ## I found a security vulnerability or other sensitive issue

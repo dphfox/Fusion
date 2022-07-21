@@ -116,7 +116,7 @@ the next section.
 	Fusion automatically applies some 'sensible default' properties for
 	you, so you don't have to specify them. Here, `ZIndexBehavior` will
 	default to 'false' and `ResetOnSpawn` defaults to `false`.
-	[You can see a list of all default properties here.](https://elttob.github.io/Fusion/api-reference/api/new/#default-properties)
+	[You can see a list of all default properties here.](https://elttob.uk/Fusion/api-reference/api/new/#default-properties)
 
 -----
 
