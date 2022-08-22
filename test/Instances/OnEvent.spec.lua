@@ -3,8 +3,6 @@ local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local OnEvent = require(Package.Instances.OnEvent)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should connect event handlers", function()
 		local fires = 0
@@ -73,18 +71,5 @@ return function()
 		task.wait()
 
 		expect(totalFires).to.equal(0)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = New "Folder" {
-				[OnEvent "Changed"] = function() end
-			}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end

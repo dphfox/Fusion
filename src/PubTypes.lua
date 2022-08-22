@@ -129,18 +129,12 @@ export type Observer = Dependent & {
 	Instance related types
 ]]
 
--- A semi-weak instance reference.
-export type SemiWeakRef = {
-	type: string, -- replace with "SemiWeakRef" when Luau supports singleton types
-	instance: Instance?
-}
-
 -- Denotes children instances in an instance or component's property table.
 export type SpecialKey = {
 	type: string, -- replace with "SpecialKey" when Luau supports singleton types
 	kind: string,
 	stage: string, -- replace with "self" | "descendants" | "ancestor" | "observer" when Luau supports singleton types
-	apply: (SpecialKey, value: any, applyTo: SemiWeakRef, cleanupTasks: {Task}) -> ()
+	apply: (SpecialKey, value: any, applyTo: Instance, cleanupTasks: {Task}) -> ()
 }
 
 -- A collection of instances that may be parented to another instance.

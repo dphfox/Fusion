@@ -2,8 +2,6 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local OnChange = require(Package.Instances.OnChange)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should connect property change handlers", function()
 		local fires = 0
@@ -64,18 +62,5 @@ return function()
 		ins:Destroy()
 		task.wait()
 		expect(totalFires).to.equal(0)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = New "Folder" {
-				[OnChange "Name"] = function() end
-			}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end

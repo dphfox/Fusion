@@ -27,15 +27,4 @@ return function()
 			end
 		end
 	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = New "Folder" {}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
-	end)
 end

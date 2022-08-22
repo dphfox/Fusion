@@ -3,8 +3,6 @@ local New = require(Package.Instances.New)
 local Out = require(Package.Instances.Out)
 local Value = require(Package.State.Value)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should reflect external property changes", function()
 		local outValue = Value()
@@ -50,19 +48,5 @@ return function()
 		child.Name = "Elias"
 		task.wait()
 		expect(twoWayValue:get()).to.equal("Elias")
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			local outValue = Value()
-			ref[1] = New "Folder" {
-				[Out "Name"] = outValue
-			}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end

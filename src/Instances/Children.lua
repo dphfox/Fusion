@@ -21,7 +21,7 @@ Children.type = "SpecialKey"
 Children.kind = "Children"
 Children.stage = "descendants"
 
-function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
+function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 
@@ -54,7 +54,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 					-- wasn't previously present
 
 					-- TODO: check for ancestry conflicts here
-					child.Parent = applyToRef.instance
+					child.Parent = applyTo
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting

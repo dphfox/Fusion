@@ -19,11 +19,10 @@ local function OnEvent(eventName: string): PubTypes.SpecialKey
 	eventKey.kind = "OnEvent"
 	eventKey.stage = "observer"
 
-	function eventKey:apply(callback: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
-		local instance = applyToRef.instance :: Instance
-		local ok, event = pcall(getProperty_unsafe, instance, eventName)
+	function eventKey:apply(callback: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+		local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
 		if not ok or typeof(event) ~= "RBXScriptSignal" then
-			logError("cannotConnectEvent", nil, instance.ClassName, eventName)
+			logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
 		elseif typeof(callback) ~= "function" then
 			logError("invalidEventHandler", nil, eventName)
 		else

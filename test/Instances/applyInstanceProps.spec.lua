@@ -1,16 +1,13 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
-local semiWeakRef = require(Package.Instances.semiWeakRef)
 local Value = require(Package.State.Value)
-
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should assign properties (constant)", function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Name = "Bob",
-		}, semiWeakRef(instance))
+		}, instance)
 		expect(instance.Name).to.equal("Bob")
 	end)
 
@@ -19,7 +16,7 @@ return function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Name = value,
-		}, semiWeakRef(instance))
+		}, instance)
 		expect(instance.Name).to.equal("Bob")
 
 		value:set("Maya")
@@ -33,7 +30,7 @@ return function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Parent = parent,
-		}, semiWeakRef(instance))
+		}, instance)
 		expect(instance.Parent).to.equal(parent)
 	end)
 
@@ -44,7 +41,7 @@ return function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Parent = value,
-		}, semiWeakRef(instance))
+		}, instance)
 		expect(instance.Parent).to.equal(parent1)
 
 		value:set(parent2)
@@ -58,7 +55,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				NotARealProperty = true,
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("cannotAssignProperty")
 	end)
 
@@ -67,7 +64,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				NotARealProperty = Value(true),
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("cannotAssignProperty")
 	end)
 
@@ -76,7 +73,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				Name = Vector3.new(),
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("invalidPropertyType")
 	end)
 
@@ -85,7 +82,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				Name = Value(Vector3.new()),
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("invalidPropertyType")
 	end)
 
@@ -94,7 +91,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				Parent = Vector3.new(),
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("invalidPropertyType")
 	end)
 
@@ -103,7 +100,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				Parent = Value(Vector3.new()),
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("invalidPropertyType")
 	end)
 
@@ -112,7 +109,7 @@ return function()
 			local instance = Instance.new("Folder")
 			applyInstanceProps({
 				[2] = true,
-			}, semiWeakRef(instance))
+			}, instance)
 		end).to.throw("unrecognisedPropertyKey")
 	end)
 
@@ -121,7 +118,7 @@ return function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Name = value,
-		}, semiWeakRef(instance))
+		}, instance)
 		value:set("Maya")
 
 		expect(instance.Name).to.equal("Bob")
@@ -136,27 +133,11 @@ return function()
 		local instance = Instance.new("Folder")
 		applyInstanceProps({
 			Parent = value,
-		}, semiWeakRef(instance))
+		}, instance)
 		value:set(parent2)
 
 		expect(instance.Parent).to.equal(parent1)
 		task.wait()
 		expect(instance.Parent).to.equal(parent2)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, { __mode = "v" })
-		do
-			local instance = Instance.new("Folder")
-			applyInstanceProps({
-				Name = Value("Bob"),
-			}, semiWeakRef(instance))
-
-			ref[1] = instance
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end
