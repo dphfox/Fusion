@@ -11,7 +11,9 @@ local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -47,9 +49,13 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue = captureDependencies(self.dependencySet, self._callback)
+	local ok, newValue = captureDependencies(self.dependencySet, self._processor)
 
 	if ok then
+		if self._destructor == nil and needsDestruction(newValue) then
+			logWarn("destructorNeededComputed")
+		end
+
 		local oldValue = self._value
 		self._value = newValue
 
@@ -76,7 +82,7 @@ function class:update(): boolean
 	end
 end
 
-local function Computed<T>(callback: () -> T): Types.Computed<T>
+local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
@@ -85,7 +91,7 @@ local function Computed<T>(callback: () -> T): Types.Computed<T>
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_oldDependencySet = {},
-		_callback = callback,
+		_processor = processor,
 		_value = nil,
 	}, CLASS_METATABLE)
 

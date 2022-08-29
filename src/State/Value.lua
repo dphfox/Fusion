@@ -10,7 +10,9 @@ local Types = require(Package.Types)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
+local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -37,6 +39,10 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
+	if self._destructor == nil and needsDestruction(newValue) then
+		logWarn("destructorNeededValue")
+	end
+
 	local similar = isSimilar(self._value, newValue)
 	self._value = newValue
 
@@ -56,6 +62,10 @@ local function Value<T>(initialValue: T): Types.State<T>
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_value = initialValue
 	}, CLASS_METATABLE)
+
+	if self._destructor == nil and needsDestruction(initialValue) then
+		logWarn("destructorNeededValue")
+	end
 
 	initDependency(self)
 

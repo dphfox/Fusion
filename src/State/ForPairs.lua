@@ -20,7 +20,9 @@ local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -165,6 +167,10 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				if self._destructor == nil and (needsDestruction(newOutKey) or needsDestruction(newOutValue)) then
+					logWarn("destructorNeededForPairs")
+				end
+
 				local oldOutValue = oldOutputPairs[newOutKey]
 
 				-- if the output key/value pair has changed
@@ -176,7 +182,7 @@ function class:update(): boolean
 						local oldMetaValue = meta[newOutKey]
 
 						local destructOK, err = xpcall(
-							self._destructor,
+							self._destructor or forPairsCleanup,
 							parseError,
 							newOutKey,
 							oldOutValue,
@@ -281,7 +287,7 @@ function class:update(): boolean
 			local oldOutValue = oldOutputPairs[key]
 			local oldMetaValue = meta[key]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor, parseError, key, oldOutValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or forPairsCleanup, parseError, key, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end
@@ -315,10 +321,6 @@ local function ForPairs<KI, VI, KO, VO, M>(
 	processor: (KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forPairsCleanup :: (KO, VO, M?) -> ()
-	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 

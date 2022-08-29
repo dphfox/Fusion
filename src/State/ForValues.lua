@@ -19,7 +19,9 @@ local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -149,7 +151,7 @@ function class:update(): boolean
 				for _, outputValue in ipairs(cachedValue) do
 					-- clean up the old calculated value
 					local oldMetaValue = meta[outputValue]
-					local destructOK, err = xpcall(self._destructor, parseError, outputValue, oldMetaValue)
+					local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, outputValue, oldMetaValue)
 					if not destructOK then
 						logErrorNonFatal("forValuesDestructorError", err)
 					end
@@ -210,6 +212,10 @@ function class:update(): boolean
 			end
 
 			if processOK then
+				if self._destructor == nil and needsDestruction(newOutValue) then
+					logWarn("destructorNeededForValues")
+				end
+
 				-- prepare the value to be cached
 				cachedValue = newOutValue
 				-- store meta value, since we don't touch that when reusing values
@@ -251,7 +257,7 @@ function class:update(): boolean
 			-- clean up any remaining cached values
 			for _, cachedValue in ipairs(oldCachedValue) do
 				local oldMetaValue = meta[cachedValue]
-				local destructOK, err = xpcall(self._destructor, parseError, cachedValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, cachedValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forValuesDestructorError", err)
 				end
@@ -265,7 +271,7 @@ function class:update(): boolean
 		elseif newValueCache[oldInValue] ~= oldCachedValue then
 			-- clean up the old calculated value
 			local oldMetaValue = meta[oldCachedValue]
-			local destructOK, err = xpcall(self._destructor, parseError, oldCachedValue, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, oldCachedValue, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forValuesDestructorError", err)
 			end
@@ -288,10 +294,6 @@ local function ForValues<VI, VO, M>(
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forValuesCleanup :: (VO, M?) -> ()
-	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 

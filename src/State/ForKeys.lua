@@ -20,7 +20,9 @@ local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -133,6 +135,10 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				if self._destructor == nil and needsDestruction(newOutKey) then
+					logWarn("destructorNeededForKeys")
+				end
+
 				local oldInKey = keyOIMap[newOutKey]
 
 				-- if there are colliding output keys, throw an error
@@ -168,7 +174,7 @@ function class:update(): boolean
 			-- clean up the old calculated value
 			local oldMetaValue = meta[outputKey]
 
-			local destructOK, err = xpcall(self._destructor, parseError, outputKey, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or forKeysCleanup, parseError, outputKey, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forKeysDestructorError", err)
 			end
@@ -197,11 +203,6 @@ local function ForKeys<KI, KO, M>(
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forKeysCleanup :: (KO, M?) -> ()
-	end
-
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 
 	local self = setmetatable({
