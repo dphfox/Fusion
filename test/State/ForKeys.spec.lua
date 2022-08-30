@@ -8,22 +8,22 @@ local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForKeys object", function()
-		local forKeys = ForKeys({}, function() end)
+		local state = ForKeys({}, function() end)
 
-		expect(forKeys).to.be.a("table")
-		expect(forKeys.type).to.equal("State")
-		expect(forKeys.kind).to.equal("ForKeys")
+		expect(state).to.be.a("table")
+		expect(state.type).to.equal("State")
+		expect(state.kind).to.equal("ForKeys")
 	end)
 
 	it("should calculate and retrieve its value", function()
-		local computedPair = ForKeys({ ["foo"] = true }, function(key)
+		local state = ForKeys({ ["foo"] = true }, function(key)
 			return key .. "baz"
 		end)
 
-		local state = computedPair:get()
+		local value = state:get()
 
-		expect(state["foobaz"]).to.be.ok()
-		expect(state["foobaz"]).to.equal(true)
+		expect(value["foobaz"]).to.be.ok()
+		expect(value["foobaz"]).to.equal(true)
 	end)
 
 	it("should not recalculate its KO in response to an unchanged KI", function()
@@ -33,7 +33,7 @@ return function()
 
 		local calculations = 0
 
-		local computedPair = ForKeys(state, function(key)
+		local _computed = ForKeys(state, function(key)
 			calculations += 1
 			return key
 		end)
@@ -56,9 +56,9 @@ return function()
 
 		local destructions = 0
 
-		local computedPair = ForKeys(state, function(key)
+		local _computed = ForKeys(state, function(key)
 			return key .. "biz"
-		end, function(key)
+		end, function()
 			destructions += 1
 		end)
 
@@ -93,7 +93,7 @@ return function()
 				["baz"] = "bar",
 			})
 
-			local computed = ForKeys(state, function()
+			local _computed = ForKeys(state, function()
 				return "foo"
 			end)
 		end).to.throw("forKeysKeyCollision")
@@ -102,7 +102,7 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local computed = ForKeys(state, function()
+		local _computed = ForKeys(state, function()
 			return "foo"
 		end)
 
@@ -121,7 +121,7 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(key)
+		local _computed = ForKeys(state, function(key)
 			local newKey = key .. "biz"
 			return newKey, newKey
 		end, function(key, meta)
@@ -155,7 +155,7 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(key)
+		local _computed = ForKeys(state, function(key)
 			return map[key]
 		end, function()
 			destructions += 1
@@ -183,45 +183,92 @@ return function()
 	end)
 
 	it("should recalculate its value in response to State objects", function()
-		local baseMap = Value({
+		local state = Value({
 			["foo"] = "baz",
 		})
-		local barMap = ForKeys(baseMap, function(key)
+		local computedBar = ForKeys(state, function(key)
 			return key .. "bar"
 		end)
 
-		expect(barMap:get()["foobar"]).to.be.ok()
+		expect(computedBar:get()["foobar"]).to.be.ok()
 
-		baseMap:set({
+		state:set({
 			["baz"] = "foo",
 		})
 
-		expect(barMap:get()["bazbar"]).to.be.ok()
+		expect(computedBar:get()["bazbar"]).to.be.ok()
 	end)
 
 	it("should recalculate its value in response to ForKeys objects", function()
-		local baseMap = Value({
+		local map = Value({
 			["foo"] = "baz",
 		})
-		local barMap = ForKeys(baseMap, function(key)
+		local computedBar = ForKeys(map, function(key)
 			return key .. "bar"
 		end)
-		local bizMap = ForKeys(barMap, function(key)
+		local computedBarBiz = ForKeys(computedBar, function(key)
 			return key .. "biz"
 		end)
 
-		expect(barMap:get()["foobar"]).to.be.ok()
-		expect(bizMap:get()["foobarbiz"]).to.be.ok()
+		expect(computedBar:get()["foobar"]).to.be.ok()
+		expect(computedBarBiz:get()["foobarbiz"]).to.be.ok()
 
-		baseMap:set({
+		map:set({
 			["fiz"] = "foo",
 			["baz"] = "foo",
 		})
 
-		expect(barMap:get()["fizbar"]).to.be.ok()
-		expect(bizMap:get()["fizbarbiz"]).to.be.ok()
-		expect(barMap:get()["bazbar"]).to.be.ok()
-		expect(bizMap:get()["bazbarbiz"]).to.be.ok()
+		expect(computedBar:get()["fizbar"]).to.be.ok()
+		expect(computedBarBiz:get()["fizbarbiz"]).to.be.ok()
+		expect(computedBar:get()["bazbar"]).to.be.ok()
+		expect(computedBarBiz:get()["bazbarbiz"]).to.be.ok()
+	end)
+
+	it("should recalculate its value in response to a dependency change", function()
+		local state = Value({ 
+			[1] = true,
+			[5] = true,
+			[10] = true,
+		 })
+		local increment = Value(1)
+
+		local computed = ForKeys(state, function(key)
+			return key + increment:get()
+		end)
+
+		expect(computed:get()[1]).never.to.be.ok()
+		expect(computed:get()[5]).never.to.be.ok()
+		expect(computed:get()[10]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.be.ok()
+		expect(computed:get()[6]).to.be.ok()
+		expect(computed:get()[11]).to.be.ok()
+
+		increment:set(2)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[2]).never.to.be.ok()
+		expect(computed:get()[6]).never.to.be.ok()
+		expect(computed:get()[11]).never.to.be.ok()
+
+		expect(computed:get()[3]).to.be.ok()
+		expect(computed:get()[7]).to.be.ok()
+		expect(computed:get()[12]).to.be.ok()
+
+		increment:set(1)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[3]).never.to.be.ok()
+		expect(computed:get()[7]).never.to.be.ok()
+		expect(computed:get()[12]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.be.ok()
+		expect(computed:get()[6]).to.be.ok()
+		expect(computed:get()[11]).to.be.ok()
 	end)
 
 	it("should not corrupt dependencies after an error", function()
@@ -265,7 +312,7 @@ return function()
 		local counter = 0
 
 		do
-			local computedKeys = ForKeys(state, function(key)
+			local _computed = ForKeys(state, function(key)
 				counter += 1
 				return key
 			end)

@@ -30,7 +30,6 @@ local WEAK_KEYS_METATABLE = { __mode = "k" }
 local function forPairsCleanup(keyOut: any, valueOut: any, meta: any?)
 	cleanup(keyOut)
 	cleanup(valueOut)
-
 	if meta then
 		cleanup(meta)
 	end
@@ -67,70 +66,44 @@ end
 ]]
 function class:update(): boolean
 	local inputIsState = self._inputIsState
-	local oldInputPairs = self._oldInputTable
-	local newInputPairs = self._inputTable
+	local newInputTable = if inputIsState then self._inputTable:get(false) else self._inputTable
+	local oldInputTable = self._oldInputTable
+
 	local keyIOMap = self._keyIOMap
 	local meta = self._meta
 
-	if inputIsState then
-		newInputPairs = newInputPairs:get(false)
-	end
-
 	local didChange = false
+
 
 	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
+
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	-- if the input table is a state object, add as dependency
+	-- if the input table is a state object, add it as a dependency
 	if inputIsState then
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
 	end
 
-	-- clean out new output pairs
+	-- clean out output table
 	self._oldOutputTable, self._outputTable = self._outputTable, self._oldOutputTable
 
-	local oldOutputPairs = self._oldOutputTable
-	local newOutputPairs = self._outputTable
-	table.clear(newOutputPairs)
+	local oldOutputTable = self._oldOutputTable
+	local newOutputTable = self._outputTable
+	table.clear(newOutputTable)
 
-	-- STEP 1: find key/value pairs that changed value or were not previously present
+	-- Step 1: find key/value pairs that changed or were not previously present
 
-	--[[
-		- if a key/value input pair doesn't change, it will have the same key/value output pair
-		- if only a value changes, (KI) -> (OVI) is replaced by (KI) -> (NVI)
-		- if only a key changes, (NKI) -> (VI) is added on to (OKI) -> (VI), and may replace (NKI) -> (OVI)
-
-		- when just a key or a value changes, it is not guaranteed for (KO) -> (VO) to be replaced
-			- we intend for keys and values to rely on both key and value, as such we cannot reliably check
-				for a previous (KO, VO), given a KI and a VI that *might* have changed
-			- as such, we don't need to check for changes in the input table, instead we need to check for
-				changes in the output table
-
-		- when both a key and value change, it is still not guaranteed for (KO) -> (VO) to be replaced
-			- what if (KIA) -> (VIA) gives us (KO) -> (VO), but (KIB) -> (VIB) also gives us (KO) -> (VO)
-				- in this case, (KO) -> (VO) has not been replaced
-
-		maybe?:
-			- Let f: (KI, VI) -> (KO, VO)
-				- f is not one to one
-				- but we want g: (KO) -> (KI, VI) to be a function on any given set of inputs
-					- otherwise we can have conflicting inputs
-				- we do not care if h: (VO) -> (KI, VI) is a function
-					- it is expected for differing (KI, VI) to give the same VO
-	]]
-
-	for newInKey, newInValue in pairs(newInputPairs) do
+	for newInKey, newInValue in pairs(newInputTable) do
 		-- get or create key data
 		local keyData = self._keyData[newInKey]
+
 		if keyData == nil then
 			keyData = {
-				-- we don't need strong references here - the main set does that
-				-- for us, so let's not introduce unnecessary leak opportunities
 				dependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
 				oldDependencySet = setmetatable({}, WEAK_KEYS_METATABLE),
 				dependencyValues = setmetatable({}, WEAK_KEYS_METATABLE),
@@ -138,13 +111,13 @@ function class:update(): boolean
 			self._keyData[newInKey] = keyData
 		end
 
-		-- if an inputKey's inputValue hasn't changed, neither will its outputKey or outputValue
-		local shouldRecalculate = oldInputPairs[newInKey] ~= newInValue
 
-		if not shouldRecalculate then
-			-- check if dependencies have changed
+		-- check if the pair is new or changed
+		local shouldRecalculate = oldInputTable[newInKey] ~= newInValue
+
+		-- check if the pair's dependencies have changed
+		if shouldRecalculate == false then
 			for dependency, oldValue in pairs(keyData.dependencyValues) do
-				-- if the dependency changed value, then this needs recalculating
 				if oldValue ~= dependency:get(false) then
 					shouldRecalculate = true
 					break
@@ -152,7 +125,8 @@ function class:update(): boolean
 			end
 		end
 
-		-- if we should recalculate the output by this point, do that
+
+		-- recalculate the output pair if necessary
 		if shouldRecalculate then
 			keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 			table.clear(keyData.dependencySet)
@@ -165,42 +139,13 @@ function class:update(): boolean
 			)
 
 			if processOK then
-				local oldOutValue = oldOutputPairs[newOutKey]
-
-				-- if the output key/value pair has changed
-				if oldOutValue ~= newOutValue then
-					didChange = true
-
-					-- clean up the old calculated value
-					if oldOutValue ~= nil then
-						local oldMetaValue = meta[newOutKey]
-
-						local destructOK, err = xpcall(
-							self._destructor,
-							parseError,
-							newOutKey,
-							oldOutValue,
-							oldMetaValue
-						)
-						if not destructOK then
-							logErrorNonFatal("forPairsDestructorError", err)
-						end
-					end
-				end
-
 				-- if this key was already written to on this run-through, throw a fatal error.
-				-- when this occurs, (KIA, VIA) -> (KO, VOA) exists; but (KIB, VIB) -> (KO, VOB) also exists
-				-- with no guarantee that VIB == VOB. And because ForPairs is meant to output a key and a value
-				-- based on an input key and value, it means that there is a fatal error! Someone might expect
-				-- two things to be output with separate values, but because (KO) is being written to twice,
-				-- it will only output one thing!
-				if newOutputPairs[newOutKey] ~= nil then
+				if newOutputTable[newOutKey] ~= nil then
 					-- figure out which key/value pair previously wrote to this key
 					local previousNewKey, previousNewValue
 					for inKey, outKey in pairs(keyIOMap) do
 						if outKey == newOutKey then
-							previousNewValue = newInputPairs[inKey]
-
+							previousNewValue = newInputTable[inKey]
 							if previousNewValue ~= nil then
 								previousNewKey = inKey
 								break
@@ -221,16 +166,28 @@ function class:update(): boolean
 					end
 				end
 
-				-- make the old input match the new input
-				oldInputPairs[newInKey] = newInValue
-				-- store the key IO map for key removal detection
+				local oldOutValue = oldOutputTable[newOutKey]
+
+				if oldOutValue ~= newOutValue then
+					local oldMetaValue = meta[newOutKey]
+					if oldOutValue ~= nil then
+						local destructOK, err = xpcall(self._destructor, parseError, newOutKey, oldOutValue, oldMetaValue)
+						if not destructOK then
+							logErrorNonFatal("forPairsDestructorError", err)
+						end
+					end
+
+					oldOutputTable[newOutKey] = nil
+				end
+
+				-- update the stored data for this key/value pair
+				oldInputTable[newInKey] = newInValue
 				keyIOMap[newInKey] = newOutKey
-				-- store the new meta value in the table
 				meta[newOutKey] = newMetaValue
-				-- store the new output value for next time we run the output comparison
-				oldOutputPairs[newOutKey] = newOutValue
-				-- store the new output value in the table we give to the user
-				newOutputPairs[newOutKey] = newOutValue
+				newOutputTable[newOutKey] = newOutValue
+
+				-- if we had to recalculate the output, then we did change
+				didChange = true
 			else
 				-- restore old dependencies, because the new dependencies may be corrupt
 				keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
@@ -238,14 +195,15 @@ function class:update(): boolean
 				logErrorNonFatal("forPairsProcessorError", newOutKey)
 			end
 		else
-			local newOutKey = keyIOMap[newInKey]
+			local storedOutKey = keyIOMap[newInKey]
 
-			if newOutputPairs[newOutKey] ~= nil then
+			-- check for key collision
+			if newOutputTable[storedOutKey] ~= nil then
 				-- figure out which key/value pair previously wrote to this key
 				local previousNewKey, previousNewValue
 				for inKey, outKey in pairs(keyIOMap) do
-					if newOutKey == outKey then
-						previousNewValue = newInputPairs[inKey]
+					if storedOutKey == outKey then
+						previousNewValue = newInputTable[inKey]
 
 						if previousNewValue ~= nil then
 							previousNewKey = inKey
@@ -258,7 +216,7 @@ function class:update(): boolean
 					logError(
 						"forPairsKeyCollision",
 						nil,
-						tostring(newOutKey),
+						tostring(storedOutKey),
 						tostring(previousNewKey),
 						tostring(previousNewValue),
 						tostring(newInKey),
@@ -267,42 +225,46 @@ function class:update(): boolean
 				end
 			end
 
-			-- store the old output value in the new table we give to the user
-			newOutputPairs[newOutKey] = oldOutputPairs[newOutKey]
+			-- copy the stored key/value pair into the new output table
+			newOutputTable[storedOutKey] = oldOutputTable[storedOutKey]
+		end
+
+
+		-- save dependency values and add to main dependency set
+		for dependency in pairs(keyData.dependencySet) do
+			keyData.dependencyValues[dependency] = dependency:get(false)
+
+			self.dependencySet[dependency] = true
+			dependency.dependentSet[self] = true
 		end
 	end
 
 	-- STEP 2: find keys that were removed
-
-	for key in pairs(oldOutputPairs) do
-		-- if this key doesn't have an equivalent in the new output table
-		if newOutputPairs[key] == nil then
-			-- clean up the old calculated value
-			local oldOutValue = oldOutputPairs[key]
-			local oldMetaValue = meta[key]
+	for oldOutKey, oldOutValue in pairs(oldOutputTable) do
+		-- check if this key/value pair is in the new output table
+		if newOutputTable[oldOutKey] ~= oldOutValue then
+			-- clean up the old output pair
+			local oldMetaValue = meta[oldOutKey]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor, parseError, key, oldOutValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor, parseError, oldOutKey, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end
 			end
 
-			-- remove meta data
-			meta[key] = nil
-			-- remove key data
-			self._keyData[key] = nil
+			-- check if the key was completely removed from the output table
+			if newOutputTable[oldOutKey] == nil then
+				meta[oldOutKey] = nil
+				self._keyData[oldOutKey] = nil
+			end
 
-			-- if we removed a key, then the table/state changed
 			didChange = true
 		end
 	end
 
-	for key in pairs(oldInputPairs) do
-		if newInputPairs[key] == nil then
-			-- remove key/value pair in old input table
-			oldInputPairs[key] = nil
-
-			-- remove old key map
+	for key in pairs(oldInputTable) do
+		if newInputTable[key] == nil then
+			oldInputTable[key] = nil
 			keyIOMap[key] = nil
 		end
 	end

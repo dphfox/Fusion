@@ -8,22 +8,22 @@ local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForPairs object", function()
-		local forPairs = ForPairs({}, function() end)
+		local state = ForPairs({}, function() end)
 
-		expect(forPairs).to.be.a("table")
-		expect(forPairs.type).to.equal("State")
-		expect(forPairs.kind).to.equal("ForPairs")
+		expect(state).to.be.a("table")
+		expect(state.type).to.equal("State")
+		expect(state.kind).to.equal("ForPairs")
 	end)
 
 	it("should calculate and retrieve its value", function()
-		local computedPair = ForPairs({ ["foo"] = "bar" }, function(key, value)
+		local state = ForPairs({ ["foo"] = "bar" }, function(key, value)
 			return key .. "baz", value .. "biz"
 		end)
 
-		local state = computedPair:get()
+		local value = state:get()
 
-		expect(state["foobaz"]).to.be.ok()
-		expect(state["foobaz"]).to.equal("barbiz")
+		expect(value["foobaz"]).to.be.ok()
+		expect(value["foobaz"]).to.equal("barbiz")
 	end)
 
 	it("should not recalculate its KO/VO in response to an unchanged KI/VI", function()
@@ -31,18 +31,18 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local computedPair = ForPairs(state, function(key, value)
+		local computed = ForPairs(state, function(key, value)
 			return key .. "biz", { value }
 		end)
 
-		local foobiz = computedPair:get()["foobiz"]
+		local foobiz = computed:get()["foobiz"]
 
 		state:set({
 			["foo"] = "bar",
 			["baz"] = "bar",
 		})
 
-		expect(computedPair:get()["foobiz"]).to.equal(foobiz)
+		expect(computed:get()["foobiz"]).to.equal(foobiz)
 	end)
 
 	it("should call the destructor when a key/value pair gets changed", function()
@@ -53,9 +53,9 @@ return function()
 
 		local destructions = 0
 
-		local computedPair = ForPairs(state, function(key, value)
+		local _computed = ForPairs(state, function(key, value)
 			return key .. "biz", value .. "biz"
-		end, function(key, value)
+		end, function()
 			destructions += 1
 		end)
 
@@ -92,9 +92,9 @@ return function()
 
 			local destructions = 0
 
-			local computedPair = ForPairs(state, function(key, value)
+			local _computed = ForPairs(state, function(_key, value)
 				return value, value
-			end, function(key, value)
+			end, function()
 				destructions += 1
 			end)
 
@@ -143,7 +143,7 @@ return function()
 				["baz"] = "bar",
 			})
 
-			local computed = ForPairs(state, function(key, value)
+			local _computed = ForPairs(state, function(key, value)
 				return value, key
 			end)
 		end).to.throw("forPairsKeyCollision")
@@ -152,7 +152,7 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local computed = ForPairs(state, function(key, value)
+		local _computed = ForPairs(state, function(key, value)
 			return value, key
 		end)
 
@@ -169,58 +169,116 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local destructions = 0
+		local metaDataPassed = true
 
-		local computedPair = ForPairs(state, function(key, value)
+		local _computed = ForPairs(state, function(key, value)
 			local newKey = key .. "biz"
 			local newValue = value .. "biz"
 
 			return newKey, newValue, newKey .. newValue
 		end, function(key, value, meta)
-			expect(meta).to.equal(key .. value)
-			destructions += 1
+			if meta ~= key .. value then
+				metaDataPassed = false
+			end
 		end)
 
 		state:set({
 			["foo"] = "baz",
 		})
+		
+		state:set({})
 
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(1)
+		state:set({
+			["foo"] = "bar",
+			["baz"] = "biz",
+			["biz"] = "baz",
+			["buzz"] = "baz",
+			["bar"] = "buzz",
+		})
+
+		state:set({
+			["foo"] = "baz",
+		})
 
 		state:set({})
 
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(2)
+		expect(metaDataPassed).to.equal(true)
 	end)
 
 	it("should recalculate its value in response to State objects", function()
-		local currentNumber = Value({ ["foo"] = 2 })
-		local doubled = ForPairs(currentNumber, function(key, value)
+		local single = Value({ ["foo"] = 2 })
+		local doubled = ForPairs(single, function(key, value)
 			return key .. "bar", value * 2
 		end)
 
 		expect(doubled:get()["foobar"]).to.equal(4)
 
-		currentNumber:set({ ["foo"] = 4 })
+		single:set({ ["foo"] = 4 })
 		expect(doubled:get()["foobar"]).to.equal(8)
 	end)
 
 	it("should recalculate its value in response to ForPairs objects", function()
-		local currentNumbers = Value({ 1, 2 })
-		local doubled = ForPairs(currentNumbers, function(key, value)
+		local single = Value({ 1, 2 })
+		local doubled = ForPairs(single, function(key, value)
 			return key * 2, value * 2
 		end)
-		local tripled = ForPairs(doubled, function(key, value)
+		local quadrupled = ForPairs(doubled, function(key, value)
 			return key * 2, value * 2
 		end)
 
-		expect(tripled:get()[4]).to.equal(4)
-		expect(tripled:get()[8]).to.equal(8)
+		expect(quadrupled:get()[4]).to.equal(4)
+		expect(quadrupled:get()[8]).to.equal(8)
 
-		currentNumbers:set({ 2, 4 })
-		expect(tripled:get()[4]).to.equal(8)
-		expect(tripled:get()[8]).to.equal(16)
+		single:set({ 2, 4 })
+		expect(quadrupled:get()[4]).to.equal(8)
+		expect(quadrupled:get()[8]).to.equal(16)
+	end)
+
+	it("should recalculate its value in response to a dependency change", function()
+		local state = Value({ 
+			[1] = 1,
+			[5] = 5,
+			[10] = 10,
+		 })
+		local increment = Value(1)
+
+		local computed = ForPairs(state, function(key, value)
+			return key + increment:get(), value + increment:get()
+		end)
+
+		expect(computed:get()[1]).never.to.be.ok()
+		expect(computed:get()[5]).never.to.be.ok()
+		expect(computed:get()[10]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.equal(2)
+		expect(computed:get()[6]).to.equal(6)
+		expect(computed:get()[11]).to.equal(11)
+
+		increment:set(2)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[2]).never.to.be.ok()
+		expect(computed:get()[6]).never.to.be.ok()
+		expect(computed:get()[11]).never.to.be.ok()
+
+		expect(computed:get()[3]).to.equal(3)
+		expect(computed:get()[7]).to.equal(7)
+		expect(computed:get()[12]).to.equal(12)
+
+		increment:set(1)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[3]).never.to.be.ok()
+		expect(computed:get()[7]).never.to.be.ok()
+		expect(computed:get()[12]).never.to.be.ok()
+
+		expect(computed:get()[2]).to.equal(2)
+		expect(computed:get()[6]).to.equal(6)
+		expect(computed:get()[11]).to.equal(11)
 	end)
 
 	it("should not corrupt dependencies after an error", function()
@@ -256,7 +314,7 @@ return function()
 		local counter = 0
 
 		do
-			local computedPairs = ForPairs(state, function(key, value)
+			local _computed = ForPairs(state, function(key, value)
 				counter += 1
 				return key, value
 			end)

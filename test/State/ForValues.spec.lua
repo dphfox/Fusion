@@ -8,11 +8,11 @@ local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForValues object", function()
-		local forKeys = ForValues({}, function() end)
+		local computed = ForValues({}, function() end)
 
-		expect(forKeys).to.be.a("table")
-		expect(forKeys.type).to.equal("State")
-		expect(forKeys.kind).to.equal("ForValues")
+		expect(computed).to.be.a("table")
+		expect(computed.type).to.equal("State")
+		expect(computed.kind).to.equal("ForValues")
 	end)
 
 	it("should calculate and retrieve its value", function()
@@ -48,7 +48,7 @@ return function()
 		expect(calculations).to.equal(2)
 	end)
 
-	it("should only call the processor the first time a constant output value is added", function()
+	it("should only call the processor the first time an output value is added", function()
 		local state = Value({
 			[1] = "foo",
 		})
@@ -74,25 +74,25 @@ return function()
 			[3] = "bar",
 		})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({
 			[1] = "bar",
 			[2] = "bar",
 		})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({})
 
-		expect(processorCalls).to.equal(2)
+		expect(processorCalls).to.equal(3)
 
 		state:set({
 			[1] = "bar",
 			[2] = "foo",
 		})
 
-		expect(processorCalls).to.equal(4)
+		expect(processorCalls).to.equal(5)
 	end)
 
 	it("should only call the destructor when a constant value gets removed from all indices", function()
@@ -124,13 +124,21 @@ return function()
 		state:set({
 			[1] = "bar",
 			[2] = "bar",
+			[3] = "foo",
+			[4] = "foo",
 		})
 
 		expect(destructions).to.equal(1)
 
+		state:set({
+			[1] = "foo",
+		})
+
+		expect(destructions).to.equal(4)
+
 		state:set({})
 
-		expect(destructions).to.equal(2)
+		expect(destructions).to.equal(5)
 	end)
 
 	it("should only call the destructor when a non-constant value gets removed from all indices", function()
@@ -242,7 +250,7 @@ return function()
 			["fiz"] = "bar",
 		})
 
-		expect(processorCalls).to.equal(3)
+		expect(processorCalls).to.equal(5)
 		expect(destructorCalls).to.equal(2)
 
 		state:set({
@@ -250,13 +258,13 @@ return function()
 			[3] = "baz",
 		})
 
-		expect(processorCalls).to.equal(4)
-		expect(destructorCalls).to.equal(2)
+		expect(processorCalls).to.equal(6)
+		expect(destructorCalls).to.equal(4)
 
 		state:set({})
 
-		expect(processorCalls).to.equal(4)
-		expect(destructorCalls).to.equal(4)
+		expect(processorCalls).to.equal(6)
+		expect(destructorCalls).to.equal(6)
 	end)
 
 	it("should recalculate its value in response to State objects", function()
@@ -299,6 +307,51 @@ return function()
 		expect(tripled:get()[1]).to.equal(8)
 		expect(doubled:get()[2]).to.equal(6)
 		expect(tripled:get()[2]).to.equal(12)
+	end)
+
+	it("should recalculate its value in response to a dependency change", function()
+		local state = Value({ 
+			[1] = 1,
+			[5] = 5,
+			[10] = 10,
+		 })
+		local increment = Value(1)
+
+		local computed = ForValues(state, function(value)
+			return value + increment:get()
+		end)
+
+		expect(computed:get()[1]).to.equal(2)
+		expect(computed:get()[5]).to.equal(6)
+		expect(computed:get()[10]).to.equal(11)
+
+		increment:set(2)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[1]).to.equal(3)
+		expect(computed:get()[5]).to.equal(7)
+		expect(computed:get()[10]).to.equal(12)
+
+		increment:set(1)
+
+		task.wait()
+		task.wait()
+
+		expect(computed:get()[1]).to.equal(2)
+		expect(computed:get()[5]).to.equal(6)
+		expect(computed:get()[10]).to.equal(11)
+
+		state:set({
+			[1] = 10,
+			[5] = 1,
+			[10] = 5,
+		})
+
+		expect(computed:get()[1]).to.equal(11)
+		expect(computed:get()[5]).to.equal(2)
+		expect(computed:get()[10]).to.equal(6)
 	end)
 
 	it("should not corrupt dependencies after an error", function()
