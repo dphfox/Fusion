@@ -46,7 +46,7 @@ local function updateAllTweens()
 	for tween: Tween in pairs(allTweens :: any) do
 		local currentTime = now - tween._currentTweenStartTime
 
-		if currentTime > tween._currentTweenDuration then
+		if currentTime > tween._currentTweenDuration and tween._currentTweenInfo.RepeatCount > -1 then
 			if tween._currentTweenInfo.Reverses then
 				tween._currentValue = tween._prevValue
 			else
