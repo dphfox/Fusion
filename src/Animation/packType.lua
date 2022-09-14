@@ -40,6 +40,20 @@ local function packType(numbers: {number}, typeString: string): PubTypes.Animata
 			)
 		)
 
+	elseif typeString == "ColorSequence" then
+		local keypoints, idx = table.create(#numbers / 4), 0
+		for i=1, #numbers, 4 do
+			idx += 1
+			keypoints[idx] = ColorSequenceKeypoint.new(
+				numbers[i+3],
+				Oklab.from(
+					Vector3.new(numbers[i], numbers[i+1], numbers[i+2]),
+					false
+				)
+			)
+		end
+		return ColorSequence.new(keypoints)
+
 	elseif typeString == "DateTime" then
 		return DateTime.fromUnixTimestampMillis(numbers[1])
 

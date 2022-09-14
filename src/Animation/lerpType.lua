@@ -47,6 +47,28 @@ local function lerpType(from: any, to: any, ratio: number): any
 				)
 			)
 
+		elseif typeString == "ColorSequence" then
+			local toKeypoints, fromKeypoints = to.Keypoints :: {[number]: ColorSequenceKeypoint}, from.Keypoints :: {[number]: ColorSequenceKeypoint}
+			local lerpedKeypoints = {}
+
+			for idx, toKeypoint in toKeypoints do
+				local fromKeypoint = fromKeypoints[idx]
+				if fromKeypoint == nil then
+					lerpedKeypoints[idx] = toKeypoint
+					continue
+				end
+				local fromLab = Oklab.to(fromKeypoint.Value)
+				local toLab = Oklab.to(toKeypoint.Value)
+				lerpedKeypoints[idx] = ColorSequenceKeypoint.new(
+					(toKeypoint.Time - fromKeypoint.Time) * ratio + fromKeypoint.Time,
+					Oklab.from(
+						fromLab:Lerp(toLab, ratio),
+						false
+					)
+				)
+			end
+			return ColorSequence.new(lerpedKeypoints)
+
 		elseif typeString == "DateTime" then
 			local to, from = to :: DateTime, from :: DateTime
 			return DateTime.fromUnixTimestampMillis(
