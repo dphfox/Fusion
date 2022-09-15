@@ -154,6 +154,12 @@ function class:update(): boolean
 			self._currentValue = self._goalValue
 			return true
 
+		elseif string.find(newType, "Sequence$") and #self._currentValue.Keypoints ~= #goalValue.Keypoints  then
+			-- sequences of different lengths violate our fixed-size type packing contract
+			-- it is therefore not animatable, so snap to the new value
+			self._currentValue = self._goalValue
+			return true
+
 		else
 			-- if it's animatable, let it animate to the goal
 			SpringScheduler.add(self)
