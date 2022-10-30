@@ -117,4 +117,21 @@ return function()
 
 		expect(counter).to.equal(2)
 	end)
+
+	it("should call destructors when old values are replaced", function()
+		local didRun = false
+		local function destructor(x)
+			if x == "old" then
+				didRun = true
+			end
+		end
+
+		local value = Value("old")
+		local computed = Computed(function()
+			return value:get()
+		end, destructor)
+		value:set("new")
+
+		expect(didRun).to.equal(true)
+	end)
 end
