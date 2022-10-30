@@ -43,24 +43,25 @@ function class:set(newValue: any, force: boolean?)
 		logWarn("destructorNeededValue")
 	end
 
-	local similar = isSimilar(self._value, newValue)
-	self._value = newValue
-
-	-- if the value hasn't changed, no need to perform extra work here
-	if not similar or force then
-		-- update any derived state objects if necessary
+	local oldValue = self._value
+	if force or not isSimilar(oldValue, newValue) then
+		self._value = newValue
+		if self._destructor ~= nil then
+			self._destructor(oldValue)
+		end
 		updateAll(self)
 	end
 end
 
-local function Value<T>(initialValue: T): Types.State<T>
+local function Value<T>(initialValue: T, destructor: (T) -> ()?): Types.State<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_value = initialValue
+		_value = initialValue,
+		_destructor = destructor
 	}, CLASS_METATABLE)
 
 	if self._destructor == nil and needsDestruction(initialValue) then
