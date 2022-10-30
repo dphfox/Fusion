@@ -49,14 +49,14 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue, extraData = captureDependencies(self.dependencySet, self._processor)
+	local ok, newValue, newMetaValue = captureDependencies(self.dependencySet, self._processor)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
 			logWarn("destructorNeededComputed")
 		end
 
-		if self._extraData ~= nil then
+		if newMetaValue ~= nil then
 			logWarn("multiReturnComputed")
 		end
 
