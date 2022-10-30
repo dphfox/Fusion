@@ -39,7 +39,10 @@ type Fusion = {
 	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
-	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
+	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>,
+
+	cleanup: (task: any) -> (),
+	doNothing: (...any) -> ()
 }
 
 return restrictRead("Fusion", {
@@ -62,5 +65,8 @@ return restrictRead("Fusion", {
 	Observer = require(script.State.Observer),
 
 	Tween = require(script.Animation.Tween),
-	Spring = require(script.Animation.Spring)
+	Spring = require(script.Animation.Spring),
+
+	cleanup = require(script.Utility.cleanup),
+	doNothing = require(script.Utility.doNothing)
 }) :: Fusion

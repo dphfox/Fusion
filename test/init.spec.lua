@@ -25,7 +25,10 @@ return function()
 			Observer = "function",
 
 			Tween = "function",
-			Spring = "function"
+			Spring = "function",
+
+			cleanup = "function",
+			doNothing = "function"
 		}
 
 		for apiName, apiType in pairs(api) do
