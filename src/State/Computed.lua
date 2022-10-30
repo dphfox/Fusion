@@ -49,14 +49,22 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue = captureDependencies(self.dependencySet, self._processor)
+	local ok, newValue, extraData = captureDependencies(self.dependencySet, self._processor)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
 			logWarn("destructorNeededComputed")
 		end
 
+		if self._extraData ~= nil then
+			logWarn("multiReturnComputed")
+		end
+
 		local oldValue = self._value
+		local similar = isSimilar(oldValue, newValue)
+		if self._destructor ~= nil then
+			self._destructor(oldValue)
+		end
 		self._value = newValue
 
 		-- add this object to the dependencies' dependent sets
@@ -64,7 +72,7 @@ function class:update(): boolean
 			dependency.dependentSet[self] = true
 		end
 
-		return not isSimilar(oldValue, newValue)
+		return not similar
 	else
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
@@ -92,6 +100,7 @@ local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_oldDependencySet = {},
 		_processor = processor,
+		_destructor = destructor,
 		_value = nil,
 	}, CLASS_METATABLE)
 
