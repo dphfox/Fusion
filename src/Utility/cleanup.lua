@@ -1,7 +1,7 @@
 --!strict
 
 --[[
-	Cleans up the task passed in as the argument.
+	Cleans up the tasks passed in as the arguments.
 	A task can be any of the following:
 
 	- an Instance - will be destroyed
@@ -11,7 +11,7 @@
 	- an array - `cleanup` will be called on each item
 ]]
 
-local function cleanup(task: any)
+local function cleanupOne(task: any)
 	local taskType = typeof(task)
 
 	-- case 1: Instance
@@ -38,9 +38,15 @@ local function cleanup(task: any)
 		-- case 6: array of tasks
 		elseif task[1] ~= nil then
 			for _, subtask in ipairs(task) do
-				cleanup(subtask)
+				cleanupOne(subtask)
 			end
 		end
+	end
+end
+
+local function cleanup(...: any)
+	for index = 1, select("#", ...) do
+		cleanupOne(select(index, ...))
 	end
 end
 

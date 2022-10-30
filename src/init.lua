@@ -41,7 +41,7 @@ type Fusion = {
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>,
 
-	cleanup: (task: any) -> (),
+	cleanup: (...any) -> (),
 	doNothing: (...any) -> ()
 }
 
