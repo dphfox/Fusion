@@ -31,8 +31,8 @@ type Fusion = {
 	OnEvent: (eventName: string) -> PubTypes.SpecialKey,
 	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
 
-	Value: <T>(initialValue: T, destructor: (T) -> ()?) -> Value<T>,
-	Computed: <T>(callback: () -> T) -> Computed<T>,
+	Value: <T>(initialValue: T) -> Value<T>,
+	Computed: <T>(callback: () -> T, destructor: (T) -> ()?) -> Computed<T>,
 	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
 	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
 	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,

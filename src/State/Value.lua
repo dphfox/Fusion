@@ -10,9 +10,7 @@ local Types = require(Package.Types)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
-local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
-local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
@@ -39,34 +37,22 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
-	if self._destructor == nil and needsDestruction(newValue) then
-		logWarn("destructorNeededValue")
-	end
-
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
-		if self._destructor ~= nil then
-			self._destructor(oldValue)
-		end
 		updateAll(self)
 	end
 end
 
-local function Value<T>(initialValue: T, destructor: (T) -> ()?): Types.State<T>
+local function Value<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_value = initialValue,
-		_destructor = destructor
+		_value = initialValue
 	}, CLASS_METATABLE)
-
-	if self._destructor == nil and needsDestruction(initialValue) then
-		logWarn("destructorNeededValue")
-	end
 
 	initDependency(self)
 

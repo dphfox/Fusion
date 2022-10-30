@@ -43,18 +43,4 @@ return function()
 
 		expect(value[1]).never.to.equal(nil)
 	end)
-
-	it("should call destructors when old values are replaced", function()
-		local didRun = false
-		local function destructor(x)
-			if x == "old" then
-				didRun = true
-			end
-		end
-
-		local value = Value("old", destructor)
-		value:set("new")
-
-		expect(didRun).to.equal(true)
-	end)
 end
