@@ -29,14 +29,6 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
-local function forKeysCleanup(keyOut: any, meta: any?)
-	cleanup(keyOut)
-
-	if meta then
-		cleanup(meta)
-	end
-end
-
 --[[
 	Returns the current value of this ForKeys object.
 	The object will be registered as a dependency unless `asDependency` is false.
@@ -174,7 +166,7 @@ function class:update(): boolean
 			-- clean up the old calculated value
 			local oldMetaValue = meta[outputKey]
 
-			local destructOK, err = xpcall(self._destructor or forKeysCleanup, parseError, outputKey, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or cleanup, parseError, outputKey, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forKeysDestructorError", err)
 			end

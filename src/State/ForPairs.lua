@@ -29,15 +29,6 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
-local function forPairsCleanup(keyOut: any, valueOut: any, meta: any?)
-	cleanup(keyOut)
-	cleanup(valueOut)
-
-	if meta then
-		cleanup(meta)
-	end
-end
-
 --[[
 	Returns the current value of this ForPairs object.
 	The object will be registered as a dependency unless `asDependency` is false.
@@ -182,7 +173,7 @@ function class:update(): boolean
 						local oldMetaValue = meta[newOutKey]
 
 						local destructOK, err = xpcall(
-							self._destructor or forPairsCleanup,
+							self._destructor or cleanup,
 							parseError,
 							newOutKey,
 							oldOutValue,
@@ -287,7 +278,7 @@ function class:update(): boolean
 			local oldOutValue = oldOutputPairs[key]
 			local oldMetaValue = meta[key]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor or forPairsCleanup, parseError, key, oldOutValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or cleanup, parseError, key, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end

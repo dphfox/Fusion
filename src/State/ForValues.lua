@@ -28,14 +28,6 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
-local function forValuesCleanup(keyOut: any, meta: any?)
-	cleanup(keyOut)
-
-	if meta then
-		cleanup(meta)
-	end
-end
-
 --[[
 	Returns the current value of this ForValues object.
 	The object will be registered as a dependency unless `asDependency` is false.
@@ -151,7 +143,7 @@ function class:update(): boolean
 				for _, outputValue in ipairs(cachedValue) do
 					-- clean up the old calculated value
 					local oldMetaValue = meta[outputValue]
-					local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, outputValue, oldMetaValue)
+					local destructOK, err = xpcall(self._destructor or cleanup, parseError, outputValue, oldMetaValue)
 					if not destructOK then
 						logErrorNonFatal("forValuesDestructorError", err)
 					end
@@ -257,7 +249,7 @@ function class:update(): boolean
 			-- clean up any remaining cached values
 			for _, cachedValue in ipairs(oldCachedValue) do
 				local oldMetaValue = meta[cachedValue]
-				local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, cachedValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or cleanup, parseError, cachedValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forValuesDestructorError", err)
 				end
@@ -271,7 +263,7 @@ function class:update(): boolean
 		elseif newValueCache[oldInValue] ~= oldCachedValue then
 			-- clean up the old calculated value
 			local oldMetaValue = meta[oldCachedValue]
-			local destructOK, err = xpcall(self._destructor or forValuesCleanup, parseError, oldCachedValue, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldCachedValue, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forValuesDestructorError", err)
 			end
