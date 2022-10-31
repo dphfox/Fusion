@@ -136,7 +136,7 @@ function class:update(): boolean
 			)
 
 			if processOK then
-				if needsDestruction(newOutValue) or needsDestruction(newMetaValue) then
+				if self._destructor == nil and (needsDestruction(newOutValue) or needsDestruction(newMetaValue)) then
 					logWarn("destructorNeededForValues")
 				end
 
