@@ -103,4 +103,16 @@ return function()
 		expect(runs[2]).to.equal(2)
 		expect(runs[3]).to.equal(3)
 	end)
+
+	it("should clean up variadic arguments", function()
+		local numRuns = 0
+
+		local function doRun()
+			numRuns += 1
+		end
+
+		cleanup(doRun, doRun, doRun)
+
+		expect(numRuns).to.equal(3)
+	end)
 end

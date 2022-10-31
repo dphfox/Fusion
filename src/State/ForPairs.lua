@@ -20,20 +20,14 @@ local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
-
-local function forPairsCleanup(keyOut: any, valueOut: any, meta: any?)
-	cleanup(keyOut)
-	cleanup(valueOut)
-	if meta then
-		cleanup(meta)
-	end
-end
 
 --[[
 	Returns the current value of this ForPairs object.
@@ -139,6 +133,10 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				if needsDestruction(newOutKey) or needsDestruction(newOutValue) or needsDestruction(newMetaValue) then
+					logWarn("destructorNeededForPairs")
+				end
+
 				-- if this key was already written to on this run-through, throw a fatal error.
 				if newOutputTable[newOutKey] ~= nil then
 					-- figure out which key/value pair previously wrote to this key
@@ -171,7 +169,7 @@ function class:update(): boolean
 				if oldOutValue ~= newOutValue then
 					local oldMetaValue = meta[newOutKey]
 					if oldOutValue ~= nil then
-						local destructOK, err = xpcall(self._destructor, parseError, newOutKey, oldOutValue, oldMetaValue)
+						local destructOK, err = xpcall(self._destructor or cleanup, parseError, newOutKey, oldOutValue, oldMetaValue)
 						if not destructOK then
 							logErrorNonFatal("forPairsDestructorError", err)
 						end
@@ -246,7 +244,7 @@ function class:update(): boolean
 			-- clean up the old output pair
 			local oldMetaValue = meta[oldOutKey]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor, parseError, oldOutKey, oldOutValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldOutKey, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end
@@ -277,10 +275,6 @@ local function ForPairs<KI, VI, KO, VO, M>(
 	processor: (KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forPairsCleanup :: (KO, VO, M?) -> ()
-	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 

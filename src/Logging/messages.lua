@@ -5,12 +5,17 @@
 ]]
 
 return {
-	applyPropsNilRef = "`applyInstanceProps` got a nil ref! (this is an internal issue)",
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
+	destructorNeededValue = "To save instances into Values, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
+	destructorNeededComputed = "To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
+	multiReturnComputed = "Returning multiple values from Computeds is discouraged, as behaviour will change soon - see discussion #189 on GitHub.",
+	destructorNeededForKeys = "To return instances from ForKeys, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
+	destructorNeededForValues = "To return instances from ForValues, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
+	destructorNeededForPairs = "To return instances from ForPairs, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
 	duplicatePropertyKey = "",
 	forKeysProcessorError = "ForKeys callback error: ERROR_MESSAGE",
 	forKeysKeyCollision = "ForKeys should only write to output key '%s' once when processing key changes, but it wrote to it twice. Previously input key: '%s'; New input key: '%s'",
@@ -30,9 +35,7 @@ return {
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
-	onDestroyNilRef = "`onDestroy` got a nil ref! (this is an internal issue, was the instance lost too early?)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
-	setPropertyNilRef = "`applyInstanceProps.setProperty` got a nil ref while setting %s to %s (this is an internal issue)",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	strictReadError = "'%s' is not a valid member of '%s'.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",

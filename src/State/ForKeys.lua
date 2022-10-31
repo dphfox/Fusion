@@ -20,25 +20,14 @@ local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
-
-
---[[
-	Default cleanup function that gets used as the destructor if no function is
-	provided by the user.
-]]
-local function forKeysCleanup(keyOut: any, meta: any?)
-	cleanup(keyOut)
-	if meta then
-		cleanup(meta)
-	end
-end
-
 
 --[[
 	Returns the current value of this ForKeys object.
@@ -138,6 +127,10 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				if needsDestruction(newOutKey) or needsDestruction(newMetaValue) then
+					logWarn("destructorNeededForKeys")
+				end
+
 				local oldInKey = keyOIMap[newOutKey]
 				local oldOutKey = keyIOMap[newInKey]
 
@@ -151,7 +144,7 @@ function class:update(): boolean
 					-- clean up the old calculated value
 					local oldMetaValue = meta[oldOutKey]
 
-					local destructOK, err = xpcall(self._destructor, parseError, oldOutKey, oldMetaValue)
+					local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldOutKey, oldMetaValue)
 					if not destructOK then
 						logErrorNonFatal("forKeysDestructorError", err)
 					end
@@ -195,7 +188,7 @@ function class:update(): boolean
 			-- clean up the old calculated value
 			local oldMetaValue = meta[outputKey]
 
-			local destructOK, err = xpcall(self._destructor, parseError, outputKey, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or cleanup, parseError, outputKey, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forKeysDestructorError", err)
 			end
@@ -221,10 +214,6 @@ local function ForKeys<KI, KO, M>(
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forKeysCleanup :: (KO, M?) -> ()
-	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 

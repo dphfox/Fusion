@@ -37,12 +37,9 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
-	local similar = isSimilar(self._value, newValue)
-	self._value = newValue
-
-	-- if the value hasn't changed, no need to perform extra work here
-	if not similar or force then
-		-- update any derived state objects if necessary
+	local oldValue = self._value
+	if force or not isSimilar(oldValue, newValue) then
+		self._value = newValue
 		updateAll(self)
 	end
 end

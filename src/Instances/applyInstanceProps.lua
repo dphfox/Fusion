@@ -15,11 +15,9 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local onDestroy = require(Package.Instances.onDestroy)
 local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
-local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 
 local function setProperty_unsafe(instance: Instance, property: string, value: any)
@@ -50,7 +48,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instanceRef: PubTypes.SemiWeakRef, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
+local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
 	if xtypeof(value) == "State" then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
@@ -59,25 +57,20 @@ local function bindProperty(instanceRef: PubTypes.SemiWeakRef, property: string,
 				willUpdate = true
 				task.defer(function()
 					willUpdate = false
-					setProperty(instanceRef.instance :: Instance, property, value:get(false))
+					setProperty(instance, property, value:get(false))
 				end)
 			end
 		end
 
-		setProperty(instanceRef.instance :: Instance, property, value:get(false))
+		setProperty(instance, property, value:get(false))
 		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
-		setProperty(instanceRef.instance :: Instance, property, value)
+		setProperty(instance, property, value)
 	end
 end
 
-local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: PubTypes.SemiWeakRef)
-	if applyToRef.instance == nil then
-		-- this is possible, but not useful, so probably indicates an issue!
-		return logWarn("applyPropsNilRef")
-	end
-
+local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)
 	local specialKeys = {
 		self = {} :: {[PubTypes.SpecialKey]: any},
 		descendants = {} :: {[PubTypes.SpecialKey]: any},
@@ -91,7 +84,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 
 		if keyType == "string" then
 			if key ~= "Parent" then
-				bindProperty(applyToRef, key :: string, value, cleanupTasks)
+				bindProperty(applyTo, key :: string, value, cleanupTasks)
 			end
 		elseif keyType == "SpecialKey" then
 			local stage = (key :: PubTypes.SpecialKey).stage
@@ -108,24 +101,26 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyToRef: Pub
 	end
 
 	for key, value in pairs(specialKeys.self) do
-		key:apply(value, applyToRef, cleanupTasks)
+		key:apply(value, applyTo, cleanupTasks)
 	end
 	for key, value in pairs(specialKeys.descendants) do
-		key:apply(value, applyToRef, cleanupTasks)
+		key:apply(value, applyTo, cleanupTasks)
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyToRef, "Parent", props.Parent, cleanupTasks)
+		bindProperty(applyTo, "Parent", props.Parent, cleanupTasks)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do
-		key:apply(value, applyToRef, cleanupTasks)
+		key:apply(value, applyTo, cleanupTasks)
 	end
 	for key, value in pairs(specialKeys.observer) do
-		key:apply(value, applyToRef, cleanupTasks)
+		key:apply(value, applyTo, cleanupTasks)
 	end
 
-	onDestroy(applyToRef, cleanup, cleanupTasks)
+	applyTo.Destroying:Connect(function()
+		cleanup(cleanupTasks)
+	end)
 end
 
 return applyInstanceProps

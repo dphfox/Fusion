@@ -32,14 +32,17 @@ type Fusion = {
 	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
-	Computed: <T>(callback: () -> T) -> Computed<T>,
+	Computed: <T>(callback: () -> T, destructor: (T) -> ()?) -> Computed<T>,
 	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
 	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
 	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
-	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>
+	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>,
+
+	cleanup: (...any) -> (),
+	doNothing: (...any) -> ()
 }
 
 return restrictRead("Fusion", {
@@ -62,5 +65,8 @@ return restrictRead("Fusion", {
 	Observer = require(script.State.Observer),
 
 	Tween = require(script.Animation.Tween),
-	Spring = require(script.Animation.Spring)
+	Spring = require(script.Animation.Spring),
+
+	cleanup = require(script.Utility.cleanup),
+	doNothing = require(script.Utility.doNothing)
 }) :: Fusion

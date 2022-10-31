@@ -3,8 +3,6 @@ local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local Value = require(Package.State.Value)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should assign single children to instances", function()
 		local ins = New "Folder" {
@@ -172,21 +170,5 @@ return function()
 		task.wait()
 
 		expect(child.Parent).to.equal(nil)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = New "Folder" {
-				[Children] = {
-					Instance.new("Folder"),
-					Value(Instance.new("Folder"))
-				}
-			}
-		end
-
-		waitForGC()
-		
-		expect(ref[1]).to.equal(nil)
 	end)
 end

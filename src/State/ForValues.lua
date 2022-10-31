@@ -18,20 +18,14 @@ local initDependency = require(Package.Dependencies.initDependency)
 local useDependency = require(Package.Dependencies.useDependency)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
+local needsDestruction = require(Package.Utility.needsDestruction)
 
 local class = {}
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
-
-local function forValuesCleanup(keyOut: any, meta: any?)
-	cleanup(keyOut)
-
-	if meta then
-		cleanup(meta)
-	end
-end
 
 --[[
 	Returns the current value of this ForValues object.
@@ -142,9 +136,13 @@ function class:update(): boolean
 			)
 
 			if processOK then
+				if needsDestruction(newOutValue) or needsDestruction(newMetaValue) then
+					logWarn("destructorNeededForValues")
+				end
+
 				-- pass the old value to the destructor if it exists
 				if value ~= nil then
-					local destructOK, err = xpcall(self._destructor, parseError, value, meta)
+					local destructOK, err = xpcall(self._destructor or cleanup, parseError, value, meta)
 					if not destructOK then
 						logErrorNonFatal("forValuesDestructorError", err)
 					end
@@ -196,7 +194,7 @@ function class:update(): boolean
 			local oldValue = valueInfo.value
 			local oldMetaValue = valueInfo.meta
 
-			local destructOK, err = xpcall(self._destructor, parseError, oldValue, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldValue, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forValuesDestructorError", err)
 			end
@@ -217,10 +215,6 @@ local function ForValues<VI, VO, M>(
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>
-	-- if destructor function is not defined, use the default cleanup function
-	if destructor == nil then
-		destructor = forValuesCleanup :: (VO, M?) -> ()
-	end
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 

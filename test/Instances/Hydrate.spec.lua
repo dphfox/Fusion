@@ -1,8 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Hydrate = require(Package.Instances.Hydrate)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should return the instance it was passed", function()
 		local ins = Instance.new("Folder")
@@ -18,16 +16,5 @@ return function()
 		}
 
 		expect(ins.Name).to.equal("Jeremy")
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = Hydrate(Instance.new("Folder")) {}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end

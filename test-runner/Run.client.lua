@@ -4,7 +4,7 @@ local StarterPlayerScripts = game:GetService("StarterPlayer").StarterPlayerScrip
 local TestEZ = require(StarterPlayerScripts.TestEZ)
 
 local RUN_TESTS = true
-local RUN_BENCHMARKS = true
+local RUN_BENCHMARKS = false
 
 -- run unit tests
 if RUN_TESTS then
