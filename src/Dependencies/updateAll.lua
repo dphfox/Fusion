@@ -15,9 +15,9 @@ type Descendant = (PubTypes.Dependent & PubTypes.Dependency) | PubTypes.Dependen
 
 -- Credit: https://blog.elttob.uk/2022/11/07/sets-efficient-topological-search.html
 local function updateAll(root: PubTypes.Dependency)
-	local counters = {}
-	local flags = {}
-	local queue = {}
+	local counters: {[Descendant]: number} = {}
+	local flags: {[Descendant]: boolean} = {}
+	local queue: {Descendant} = {}
 	local queueSize = 0
 	local queuePos = 1
 
@@ -32,9 +32,11 @@ local function updateAll(root: PubTypes.Dependency)
 		local next = queue[queuePos]
 		local counter = counters[next]
 		counters[next] = if counter == nil then 1 else counter + 1
-		for object in next.dependentSet do
-			queueSize += 1
-			queue[queueSize] = object
+		if (next :: any).dependentSet ~= nil then
+			for object in (next :: any).dependentSet do
+				queueSize += 1
+				queue[queueSize] = object
+			end
 		end
 		queuePos += 1
 	end
@@ -45,9 +47,10 @@ local function updateAll(root: PubTypes.Dependency)
 		local next = queue[queuePos]
 		local counter = counters[next] - 1
 		counters[next] = counter
-		if counter == 0 and flags[next] and next:update() then
-			for object in next.dependentSet do
-				flags[object] = true
+		if counter == 0 and flags[next] and next:update() and (next :: any).dependentSet ~= nil then
+			for object in (next :: any).dependentSet do
+				queueSize += 1
+				queue[queueSize] = object
 			end
 		end
 		queuePos += 1
