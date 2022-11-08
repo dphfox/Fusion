@@ -13,6 +13,7 @@ local PubTypes = require(Package.PubTypes)
 type Set<T> = {[T]: any}
 type Descendant = (PubTypes.Dependent & PubTypes.Dependency) | PubTypes.Dependent
 
+-- Credit: https://blog.elttob.uk/2022/11/07/sets-efficient-topological-search.html
 local function updateAll(root: PubTypes.Dependency)
 	local counters = {}
 	local flags = {}
