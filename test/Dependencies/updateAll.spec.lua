@@ -98,7 +98,7 @@ return function()
 			edge("A", "B"), edge("A", "D"),
 			edge("B", "C"),
 			edge("C", "E"),
-			edge("D", "F"),
+			edge("D", "E"),
 			edge("E", "F"),
 		}, function(self)
 			self.updates += 1
