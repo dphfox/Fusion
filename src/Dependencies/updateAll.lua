@@ -49,8 +49,7 @@ local function updateAll(root: PubTypes.Dependency)
 		counters[next] = counter
 		if counter == 0 and flags[next] and next:update() and (next :: any).dependentSet ~= nil then
 			for object in (next :: any).dependentSet do
-				queueSize += 1
-				queue[queueSize] = object
+				flags[next] = true
 			end
 		end
 		queuePos += 1
