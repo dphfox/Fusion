@@ -152,6 +152,4 @@ return function()
 		expect(objects.I.updates).to.equal(1)
 		expect(objects.J.updates).to.equal(1)
 	end)
-
-	-- TODO: test in conjunction with initDependency
 end
