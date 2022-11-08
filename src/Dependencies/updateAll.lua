@@ -17,37 +17,39 @@ local function updateAll(root: PubTypes.Dependency)
 	local counters = {}
 	local flags = {}
 	local queue = {}
+	local queueSize = 0
+	local queuePos = 1
+
+	for object in root.dependentSet do
+		queueSize += 1
+		queue[queueSize] = object
+		flags[object] = true
+	end
 
 	-- Pass 1: counting up
-	for object in root.dependentSet do
-		table.insert(queue, object)
-	end
-	while #queue > 0 do
-		local next = table.remove(queue, 1)
-		counters[next] = (counters[next] or 0) + 1
+	while queuePos <= queueSize do
+		local next = queue[queuePos]
+		local counter = counters[next]
+		counters[next] = if counter == nil then 1 else counter + 1
 		for object in next.dependentSet do
-			table.insert(queue, object)
+			queueSize += 1
+			queue[queueSize] = object
 		end
+		queuePos += 1
 	end
 
 	-- Pass 2: counting down + processing
-	for object in root.dependentSet do
-		table.insert(queue, object)
-		flags[object] = true
-	end
-	while #queue > 0 do
-		local next = table.remove(queue, 1)
-		counters[next] -= 1
-		local setFlag = false
-		if counters[next] == 0 and flags[next] then
-			setFlag = next:update()
-		end
-		for object in next.dependentSet do
-			table.insert(queue, object)
-			if setFlag then
+	queuePos = 1
+	while queuePos <= queueSize do
+		local next = queue[queuePos]
+		local counter = counters[next] - 1
+		counters[next] = counter
+		if counter == 0 and flags[next] and next:update() then
+			for object in next.dependentSet do
 				flags[object] = true
 			end
 		end
+		queuePos += 1
 	end
 end
 
