@@ -36,6 +36,9 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 	-- to observe for changes; then unparents instances no longer found and
 	-- disconnects observers for state objects no longer present.
 	local function updateChildren()
+		if not updateQueued then
+			return -- this update may have been canceled by destruction, etc.
+		end
 		updateQueued = false
 
 		oldParented, newParented = newParented, oldParented
@@ -133,10 +136,12 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 
 	table.insert(cleanupTasks, function()
 		propValue = nil
+		updateQueued = true
 		updateChildren()
 	end)
 
 	-- perform initial child parenting
+	updateQueued = true
 	updateChildren()
 end
 
