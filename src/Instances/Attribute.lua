@@ -17,10 +17,19 @@ end
 
 local function bindAttribute(instance: Instance, attribute: string, value: any, cleanupTasks: {PubTypes.Task})
     if xtypeof(value) == "State" then
+        local didDefer = false
+        local function update()
+            if not didDefer then
+				didDefer = true
+				task.defer(function()
+					didDefer = false
+					setAttribute(instance, attribute, value:get(false))
+				end)
+			end
+        end
+
 		setAttribute(instance, attribute, value:get(false))
-		table.insert(cleanupTasks, Observer(value :: any):onChange(function()
-            setAttribute(instance, attribute, value:get(false))
-        end))
+		table.insert(cleanupTasks, Observer(value :: any):onChange(update))
     else
         setAttribute(instance, attribute, value)
     end
@@ -33,6 +42,9 @@ local function Attribute(attributeName: string)
     AttributeKey.stage = "self"
 
     function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+        if attributeName == nil then
+            logError("attributeNameNil")
+        end
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
     return AttributeKey

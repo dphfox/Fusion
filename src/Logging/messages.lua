@@ -5,6 +5,7 @@
 ]]
 
 return {
+	attributeNameNil = "Attribute name cannot be nil",
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectAttributeChange = "The %s class doesn't have an attribute called '%s'.",
