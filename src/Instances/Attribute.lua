@@ -33,14 +33,6 @@ local function Attribute(attributeName: string)
     AttributeKey.stage = "self"
 
     function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
-        --[[
-            [Attribute "Test"] = "Hi",
-            [Attribute "Test"] = ammo,
-            [Attribute "Test"] = Computed(function()
-                return loaded:get() and 50 or 75
-            end)
-        ]]
-        
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
     return AttributeKey
