@@ -7,6 +7,7 @@
 return {
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
+	cannotConnectAttributeChange = "The %s class doesn't have an attribute called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
@@ -26,6 +27,7 @@ return {
 	forValuesProcessorError = "ForValues callback error: ERROR_MESSAGE",
 	forValuesDestructorError = "ForValues destructor error: ERROR_MESSAGE",
 	invalidChangeHandler = "The change handler for the '%s' property must be a function.",
+	invalidAttributeChangeHandler = "The attribute change handler for the '%s' property must be a function.",
 	invalidEventHandler = "The handler for the '%s' event must be a function.",
 	invalidPropertyType = "'%s.%s' expected a '%s' type, but got a '%s' type.",
 	invalidRefType = "Instance refs must be Value objects.",

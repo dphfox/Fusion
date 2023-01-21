@@ -46,6 +46,23 @@ export type Task =
 	{Destroy: (any) -> ()} |
 	{Task}
 
+-- Types that can be used as attributes
+
+export type Attribute = 
+	string |
+	boolean |
+	number |
+	UDim |
+	UDim2 |
+	BrickColor |
+	Color3 |
+	Vector2 |
+	Vector3 |
+	NumberSequence |
+	ColorSequence |
+	NumberRange |
+	Rect
+
 -- Script-readable version information.
 export type Version = {
 	major: number,
