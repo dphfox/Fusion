@@ -35,6 +35,7 @@ return {
 	invalidOutType = "[Out] properties must be given Value objects.",
 	invalidAttributeOutType = "[AttributeOut] properties must be given Value objects.",
 	invalidOutProperty = "The %s class doesn't have a property called '%s'.",
+	invalidOutAttributeName = "The %s class doesn't have an attribute called '%s'.",
 	invalidSpringDamping = "The damping ratio for a spring must be >= 0. (damping was %.2f)",
 	invalidSpringSpeed = "The speed of a spring must be >= 0. (speed was %.2f)",
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",

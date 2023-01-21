@@ -27,7 +27,7 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 
         local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
-			logError("unknownMessage", "Major error occurred while calling GetAttributeChangedSignal.")
+			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			table.insert(cleanupTasks, event:Connect(function()
