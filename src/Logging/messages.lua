@@ -28,7 +28,7 @@ return {
 	forValuesProcessorError = "ForValues callback error: ERROR_MESSAGE",
 	forValuesDestructorError = "ForValues destructor error: ERROR_MESSAGE",
 	invalidChangeHandler = "The change handler for the '%s' property must be a function.",
-	invalidAttributeChangeHandler = "The attribute change handler for the '%s' property must be a function.",
+	invalidAttributeChangeHandler = "The change handler for the '%s' attribute must be a function.",
 	invalidEventHandler = "The handler for the '%s' event must be a function.",
 	invalidPropertyType = "'%s.%s' expected a '%s' type, but got a '%s' type.",
 	invalidRefType = "Instance refs must be Value objects.",

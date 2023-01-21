@@ -16,12 +16,18 @@ local function AttributeChanged(attributeName: string): PubTypes.SpecialKey
 	attributeKey.kind = "AttributeChange"
 	attributeKey.stage = "observer"
 
-    function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
-        local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
+	if attributeName == nil then
+        logError("attributeNameNil")
+    end
+
+	function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+		if typeof(callback) ~= "function" then
+			logError("invalidAttributeChangeHandler", nil, attributeName)
+		end
+
+    	local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
-		elseif typeof(callback) ~= "function" then
-			logError("invalidAttributeChangeHandler", nil, attributeName)
 		else
 			callback((applyTo :: any):GetAttribute(attributeName))
 			table.insert(cleanupTasks, event:Connect(function()

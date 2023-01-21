@@ -41,10 +41,11 @@ local function Attribute(attributeName: string)
     AttributeKey.kind = "Attribute"
     AttributeKey.stage = "self"
 
+    if attributeName == nil then
+        logError("attributeNameNil")
+    end
+    
     function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
-        if attributeName == nil then
-            logError("attributeNameNil")
-        end
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
     return AttributeKey
