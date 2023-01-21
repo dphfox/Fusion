@@ -20,12 +20,12 @@ local function bindAttribute(instance: Instance, attribute: string, value: any, 
         local didDefer = false
         local function update()
             if not didDefer then
-				didDefer = true
-				task.defer(function()
-					didDefer = false
-					setAttribute(instance, attribute, value:get(false))
-				end)
-			end
+                didDefer = true
+                    task.defer(function()
+                    didDefer = false
+                    setAttribute(instance, attribute, value:get(false))
+                end)
+            end
         end
 
 		setAttribute(instance, attribute, value:get(false))
@@ -48,6 +48,7 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
     function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
+
     return AttributeKey
 end
 

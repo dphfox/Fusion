@@ -8,7 +8,7 @@ return function()
 	it("should connect attribute change handlers", function()
 		local changeCount = 0
 		local child = New "Folder" {
-            [Attribute "Foo"] = "Bar",
+        	[Attribute "Foo"] = "Bar",
 			[AttributeChange "Foo"] = function()
 				changeCount += 1
 			end
@@ -19,8 +19,8 @@ return function()
 		expect(changeCount).never.to.equal(0)
 	end)
 
-    it("should pass the updated value as an argument", function()
-        local updatedValue = ""
+	it("should pass the updated value as an argument", function()
+    	local updatedValue = ""
 		local child = New "Folder" {
 			[AttributeChange "Foo"] = function(newValue)
 				updatedValue = newValue
@@ -30,13 +30,13 @@ return function()
 		child:SetAttribute("Foo", "Baz")
 		task.wait()
 		expect(updatedValue).to.equal("Baz")
-    end)
+	end)
 
     it("should error when given an invalid handler", function()
-        expect(function()
-            local child = New "Folder" {
-                [AttributeChange "Foo"] = 0
-            }
+    	expect(function()
+        	local child = New "Folder" {
+            	[AttributeChange "Foo"] = 0
+        	}
         end).to.throw("invalidAttributeChangeHandler")
     end)
 end

@@ -17,15 +17,15 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 	attributeKey.stage = "observer"
 
 	if attributeName == nil then
-        logError("attributeNameNil")
-    end
+    	logError("attributeNameNil")
+	end
 
 	function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
 		if typeof(callback) ~= "function" then
 			logError("invalidAttributeChangeHandler", nil, attributeName)
 		end
 
-    	local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
+		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
 		else
@@ -34,7 +34,7 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 				callback((applyTo :: any):GetAttribute(attributeName))
 			end))
 		end
-    end
+	end
 
 	return attributeKey
 end

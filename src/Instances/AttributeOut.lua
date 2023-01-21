@@ -19,18 +19,18 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, cleanupTasks: { PubTypes.Task })
 		if xtypeof(stateObject) ~= "State" or stateObject.kind ~= "Value" then
 			logError("invalidAttributeOutType")
-        end
+		end
 
-        if attributeName == nil then
-            logError("attributeNameNil")
-        end
+		if attributeName == nil then
+			logError("attributeNameNil")
+		end
 
-        local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
+		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
-			table.insert(cleanupTasks, event:Connect(function()
+			table.insert(cleanupTasks, event:Connect(function()	
 				stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			end))
 			table.insert(cleanupTasks, function()

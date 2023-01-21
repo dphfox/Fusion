@@ -5,25 +5,24 @@ local Attribute = require(Package.Instances.Attribute)
 local Value = require(Package.State.Value)
 
 return function()
-	it("should create attributes (constant)", function()
-		local child = New "Folder" {
+    it("should create attributes (constant)", function()
+        local child = New "Folder" {
             [Attribute "Foo"] = "Bar"
         }
         expect(child:GetAttribute("Foo")).to.equal("Bar")
-	end)
+    end)
 
     it("should create attributes (state)", function()
         local attributeValue = Value("Bar")
-		local child = New "Folder" {
+	    local child = New "Folder" {
             [Attribute "Foo"] = attributeValue
         }
-
         expect(child:GetAttribute("Foo")).to.equal("Bar")
-	end)
+    end)
 
     it("should update attributes when state objects are updated", function()
         local attributeValue = Value("Bar")
-		local child = New "Folder" {
+	    local child = New "Folder" {
             [Attribute "Foo"] = attributeValue
         }
 
@@ -50,16 +49,15 @@ return function()
         end).to.throw("attributeNameNil")
     end)
 
-
     it("should defer attribute changes", function()
-		local value = Value("Bar")
-		local child = New "Folder" {
+	    local value = Value("Bar")
+	    local child = New "Folder" {
             [Attribute "Foo"] = value
         }
 		value:set("Baz")
 
-		expect(child:GetAttribute("Foo")).to.equal("Bar")
-		task.wait()
-		expect(child:GetAttribute("Foo")).to.equal("Baz")
+	    expect(child:GetAttribute("Foo")).to.equal("Bar")
+	    task.wait()
+	    expect(child:GetAttribute("Foo")).to.equal("Baz")
 	end)
 end
