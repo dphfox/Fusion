@@ -60,7 +60,7 @@ return restrictRead("Fusion", {
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
 	Attribute = require(script.Instances.Attribute),
-	AttributeChanged = require(script.Instances.AttributeChanged),
+	AttributeChange = require(script.Instances.AttributeChange),
 	AttributeOut = require(script.Instances.AttributeOut),
 
 	Value = require(script.State.Value),

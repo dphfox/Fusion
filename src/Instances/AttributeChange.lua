@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 local xtypeof = require(Package.Utility.xtypeof)
 
-local function AttributeChanged(attributeName: string): PubTypes.SpecialKey
+local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 	local attributeKey = {}
 	attributeKey.type = "SpecialKey"
 	attributeKey.kind = "AttributeChange"
@@ -39,4 +39,4 @@ local function AttributeChanged(attributeName: string): PubTypes.SpecialKey
 	return attributeKey
 end
 
-return AttributeChanged
+return AttributeChange
