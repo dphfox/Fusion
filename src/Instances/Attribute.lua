@@ -35,7 +35,7 @@ local function bindAttribute(instance: Instance, attribute: string, value: any, 
     end
 end
 
-local function Attribute(attributeName: string)
+local function Attribute(attributeName: string): PubTypes.SpecialKey
     local AttributeKey = {}
     AttributeKey.type = "SpecialKey"
     AttributeKey.kind = "Attribute"
