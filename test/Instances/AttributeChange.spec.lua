@@ -14,7 +14,7 @@ return function()
 			end
 		}
 
-		ins:SetAttribute("Foo", "Baz")
+		child:SetAttribute("Foo", "Baz")
 		task.wait()
 		expect(changeCount).never.to.equal(0)
 	end)
@@ -27,7 +27,7 @@ return function()
 			end
 		}
 
-		ins:SetAttribute("Foo", "Baz")
+		child:SetAttribute("Foo", "Baz")
 		task.wait()
 		expect(updatedValue).to.equal("Baz")
     end)
