@@ -24,7 +24,6 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 		if typeof(callback) ~= "function" then
 			logError("invalidAttributeChangeHandler", nil, attributeName)
 		end
-
 		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
@@ -35,7 +34,6 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 			end))
 		end
 	end
-
 	return attributeKey
 end
 

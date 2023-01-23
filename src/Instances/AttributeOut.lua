@@ -20,11 +20,9 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 		if xtypeof(stateObject) ~= "State" or stateObject.kind ~= "Value" then
 			logError("invalidAttributeOutType")
 		end
-
 		if attributeName == nil then
 			logError("attributeNameNil")
 		end
-
 		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)

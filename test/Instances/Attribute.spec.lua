@@ -25,7 +25,6 @@ return function()
 	    local child = New "Folder" {
             [Attribute "Foo"] = attributeValue
         }
-
         expect(child:GetAttribute("Foo")).to.equal("Bar")
         attributeValue:set("Baz")
         task.wait()
@@ -54,10 +53,9 @@ return function()
 	    local child = New "Folder" {
             [Attribute "Foo"] = value
         }
-		value:set("Baz")
-
+	    value:set("Baz")
 	    expect(child:GetAttribute("Foo")).to.equal("Bar")
 	    task.wait()
 	    expect(child:GetAttribute("Foo")).to.equal("Baz")
-	end)
+    end)
 end

@@ -32,11 +32,11 @@ return function()
 		expect(updatedValue).to.equal("Baz")
 	end)
 
-    it("should error when given an invalid handler", function()
+	it("should error when given an invalid handler", function()
     	expect(function()
         	local child = New "Folder" {
             	[AttributeChange "Foo"] = 0
         	}
-        end).to.throw("invalidAttributeChangeHandler")
+    	end).to.throw("invalidAttributeChangeHandler")
     end)
 end

@@ -27,9 +27,8 @@ local function bindAttribute(instance: Instance, attribute: string, value: any, 
                 end)
             end
         end
-
-		setAttribute(instance, attribute, value:get(false))
-		table.insert(cleanupTasks, Observer(value :: any):onChange(update))
+	    setAttribute(instance, attribute, value:get(false))
+	    table.insert(cleanupTasks, Observer(value :: any):onChange(update))
     else
         setAttribute(instance, attribute, value)
     end
@@ -44,11 +43,10 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
     if attributeName == nil then
         logError("attributeNameNil")
     end
-    
+
     function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
-
     return AttributeKey
 end
 
