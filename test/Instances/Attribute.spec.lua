@@ -4,7 +4,7 @@ local New = require(Package.Instances.New)
 local Attribute = require(Package.Instances.Attribute)
 local Value = require(Package.State.Value)
 
-return function()
+return function ()
     it("should create attributes (constant)", function()
         local child = New "Folder" {
             [Attribute "Foo"] = "Bar"
@@ -14,15 +14,15 @@ return function()
 
     it("should create attributes (state)", function()
         local attributeValue = Value("Bar")
-	    local child = New "Folder" {
+        local child = New "Folder" {
             [Attribute "Foo"] = attributeValue
         }
         expect(child:GetAttribute("Foo")).to.equal("Bar")
     end)
-
+    
     it("should update attributes when state objects are updated", function()
         local attributeValue = Value("Bar")
-	    local child = New "Folder" {
+        local child = New "Folder" {
             [Attribute "Foo"] = attributeValue
         }
         expect(child:GetAttribute("Foo")).to.equal("Bar")
