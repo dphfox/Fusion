@@ -19,7 +19,7 @@ return function ()
 
 	it("should update when state objects linked update", function()
 		local attributeValue = Value("Foo")
-    	local attributeOutValue = Value()
+		local attributeOutValue = Value()
 		local child = New "Folder" {
 			[Attribute "Foo"] = attributeValue,
 			[AttributeOut "Foo"] = attributeOutValue

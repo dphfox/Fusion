@@ -20,7 +20,7 @@ return function()
 	end)
 
 	it("should pass the updated value as an argument", function()
-    	local updatedValue = ""
+		local updatedValue = ""
 		local child = New "Folder" {
 			[AttributeChange "Foo"] = function(newValue)
 				updatedValue = newValue
@@ -33,10 +33,10 @@ return function()
 	end)
 
 	it("should error when given an invalid handler", function()
-    	expect(function()
-        	local child = New "Folder" {
-            	[AttributeChange "Foo"] = 0
-        	}
-    	end).to.throw("invalidAttributeChangeHandler")
+		expect(function()
+			local child = New "Folder" {
+				[AttributeChange "Foo"] = 0
+			}
+		end).to.throw("invalidAttributeChangeHandler")
     end)
 end
