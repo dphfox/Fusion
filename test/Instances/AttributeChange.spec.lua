@@ -8,7 +8,7 @@ return function()
 	it("should connect attribute change handlers", function()
 		local changeCount = 0
 		local child = New "Folder" {
-        	[Attribute "Foo"] = "Bar",
+			[Attribute "Foo"] = "Bar",
 			[AttributeChange "Foo"] = function()
 				changeCount += 1
 			end
@@ -38,5 +38,5 @@ return function()
 				[AttributeChange "Foo"] = 0
 			}
 		end).to.throw("invalidAttributeChangeHandler")
-    end)
+	end)
 end

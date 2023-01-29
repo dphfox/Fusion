@@ -49,13 +49,13 @@ return function ()
     end)
 
     it("should defer attribute changes", function()
-	    local value = Value("Bar")
-	    local child = New "Folder" {
+        local value = Value("Bar")
+        local child = New "Folder" {
             [Attribute "Foo"] = value
         }
-	    value:set("Baz")
-	    expect(child:GetAttribute("Foo")).to.equal("Bar")
-	    task.wait()
-	    expect(child:GetAttribute("Foo")).to.equal("Baz")
+        value:set("Baz")
+        expect(child:GetAttribute("Foo")).to.equal("Bar")
+        task.wait()
+        expect(child:GetAttribute("Foo")).to.equal("Baz")
     end)
 end
