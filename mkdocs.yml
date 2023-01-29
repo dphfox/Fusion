@@ -3,6 +3,10 @@ site_url: https://elttob.uk/Fusion/
 repo_name: Elttob/Fusion
 repo_url: https://github.com/Elttob/Fusion
 
+extra:
+  version:
+    provider: mike
+
 theme:
   name: material
   custom_dir: docs/assets/overrides

@@ -33,9 +33,6 @@ jobs:
       - name: Fetch gh-pages branch
         run: git fetch origin gh-pages --depth=1
 
-      - name: Delete old docs
-        run: mike delete --all
-
       - name: Deploy documentation
         run: mike deploy $FUSION_VERSION latest -u -b gh-pages
 
