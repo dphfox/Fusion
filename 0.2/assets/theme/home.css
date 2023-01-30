@@ -1,0 +1,146 @@
+.md-content {
+	max-width: none;
+	--distance-to-top-of-page: 4.8rem;
+}
+
+@media screen and (max-width: 76.25rem) {
+	.md-content {
+		--distance-to-top-of-page: 2.4rem;
+	}
+}
+
+.md-content__inner {
+	padding-top: 0;
+}
+
+.md-main__inner {
+	margin-top: 0;
+}
+
+#fusiondoc-home-main {
+	background: url(../home/hero-pattern.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center bottom;
+	border-bottom: 1px solid var(--fusiondoc-stroke);
+
+	min-height: calc(100vh - 5rem - var(--distance-to-top-of-page));
+	padding-bottom: var(--distance-to-top-of-page);
+	font-size: 1.2em;
+	margin-left: auto;
+	margin-right: auto;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+#fusiondoc-home-main-inner {
+	max-width: 50rem;
+	background-color: var(--fusiondoc-bg-1-a80);
+	border: 1em solid transparent;
+}
+
+#fusiondoc-home-main-inner > h1 {
+	margin-bottom: 1rem;
+}
+
+#fusiondoc-home-main-inner > nav > a {
+	display: inline-flex;
+	min-width: 15em;
+	padding: 0.75em 1em;
+	background-color: var(--fusiondoc-fg-1);
+	color: var(--fusiondoc-bg-1);
+	font-weight: 600;
+	font-size: 0.8em;
+	transition: color 0s;
+}
+
+#fusiondoc-home-main-inner > nav > a::after {
+	content: "→";
+	margin-left: auto;
+	margin-right: 0.2em;
+	transition: transform 0.2s ease;
+}
+
+#fusiondoc-home-main-inner > nav > a:hover::after {
+	transform: translateX(0.5em);
+}
+
+#fusiondoc-home-scroll {
+	margin-left: auto;
+	margin-right: auto;
+
+	min-height: 4.75rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: max-content;
+	padding: 0.5em;
+
+	background-color: var(--fusiondoc-bg-1);
+}
+
+#fusiondoc-home-scroll::before {
+	content: "↓";
+	display: inline-block;
+	margin-right: 0.5em;
+
+	animation: home-scroll-move 1.5s ease infinite;
+}
+
+@keyframes home-scroll-move {
+	0% {
+		transform: translateY(-0.4rem);
+		opacity: 0;
+	}
+	50% {
+		transform: translateY(0rem);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(0.4rem);
+		opacity: 0;
+	}
+}
+
+#fusiondoc-home-belowfold {
+	max-width: 50rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+}
+
+#fusiondoc-home-belowfold > h2.first::before {
+	content: "➀";
+	margin-right: 0.75rem;
+}
+
+#fusiondoc-home-belowfold > h2.second::before {
+	content: "➁";
+	margin-right: 0.75rem;
+}
+
+#fusiondoc-home-belowfold > h2.third::before {
+	content: "➂";
+	margin-right: 0.75rem;
+}
+
+#fusiondoc-home {
+	animation: home-fade-in 0.5s ease 0.5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes home-fade-in {
+	0% {
+		transform: translateY(1rem);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0rem);
+		opacity: 1;
+	}
+}

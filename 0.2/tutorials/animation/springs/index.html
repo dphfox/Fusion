@@ -24,24 +24,43 @@
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
-          
-          
-          <meta name="theme-color" content="#000000">
-        
       
     
     
     
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
-      
+	<!-- Load fonts from Google -->
+	
+		
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=JetBrains+Mono&display=fallback"
+		/>
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+		<style>
+			:root {
+				--md-text-font: "Inter";
+				--md-code-font: "JetBrains Mono";
+			}
+		</style>
+	
+
     
+      <link rel="stylesheet" href="../../../assets/theme/fusiondoc.css">
     
-      <link rel="stylesheet" href="../../../assets/fusion.css">
+      <link rel="stylesheet" href="../../../assets/theme/colours.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/code.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/paragraph.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/page.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/admonition.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/404.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/api-reference.css">
     
     <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -54,17 +73,26 @@
   
     
     
+      
     
     
     
-    <body dir="ltr" data-md-color-scheme="fusion-dark" data-md-color-primary="black" data-md-color-accent="">
+    
+    <body dir="ltr" data-md-color-scheme="fusiondoc-dark" data-md-color-primary="" data-md-color-accent="">
   
     
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#usage" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -78,18 +106,38 @@
       </div>
     
     
-      
+      <!-- Determine class according to configuration -->
 
+
+
+<!-- Header -->
 <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Fusion" class="md-header__button md-logo" aria-label="Fusion" data-md-component="logo">
-      
-  <img src="../../../assets/logo-animated.png" alt="logo">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="Header"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../../.."
+      title="Fusion"
+      class="md-header__button md-logo"
+      aria-label="Fusion"
+      data-md-component="logo"
+    >
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
+
+    <!-- Button to open drawer -->
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4.75-1.5a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zM5 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
     </label>
+
+    <!-- Header title -->
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
@@ -106,48 +154,134 @@
         </div>
       </div>
     </div>
+
+    <!-- Color palette -->
     
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: dark)"
+            data-md-color-scheme="fusiondoc-dark"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_1"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_2"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 24 12zM4 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 4 12zm16.485-8.485a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 0 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM6.343 17.657a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 1 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM12 0a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 12 0zm0 20a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 12 20zM3.515 3.515a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 1 1-1.06 1.06L3.515 4.575a.75.75 0 0 1 0-1.06zm14.142 14.142a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 0 1-1.06 1.06l-1.768-1.767a.75.75 0 0 1 0-1.061z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: light)"
+            data-md-color-scheme="fusiondoc-light"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_2"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_1"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16.5 6c0 5.799-4.701 10.5-10.5 10.5-.426 0-.847-.026-1.26-.075A8.5 8.5 0 1 0 16.425 4.74c.05.413.075.833.075 1.259zm-1.732-2.04A9.08 9.08 0 0 1 14.999 6a9 9 0 0 1-11.04 8.768l-.004-.002a9.367 9.367 0 0 1-.78-.218c-.393-.13-.8.21-.67.602a9.938 9.938 0 0 0 .329.855l.004.01A10.002 10.002 0 0 0 12 22a10.002 10.002 0 0 0 4.015-19.16l-.01-.005a9.745 9.745 0 0 0-.855-.328c-.392-.13-.732.276-.602.67a8.934 8.934 0 0 1 .218.779l.002.005z"/></svg>
+            </label>
+          
+        
+      </form>
     
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
       </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+
+      <!-- Search interface -->
+      <!-- Search interface -->
+<div class="md-search" data-md-component="search" role="dialog">
+	<label class="md-search__overlay" for="__search"></label>
+	<div class="md-search__inner" role="search">
+		<form class="md-search__form" name="search">
+
+			<!-- Search input -->
+			<input type="text" class="md-search__input" name="query" aria-label="Search"
+				placeholder="Search" autocapitalize="off" autocorrect="off"
+				autocomplete="off" spellcheck="false" data-md-component="search-query" required />
+
+			<!-- Button to open search -->
+			<label class="md-search__icon md-icon" for="__search">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</label>
+
+			<!-- Search options -->
+			<nav class="md-search__options" aria-label="Search">
+
+				<!-- Button to share search -->
+				
+
+				<!-- Button to reset search -->
+				<button type="reset" class="md-search__icon md-icon" aria-label="Clear"
+					tabindex="-1">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 0 1 1.06 0L12 10.94l5.22-5.22a.75.75 0 1 1 1.06 1.06L13.06 12l5.22 5.22a.75.75 0 1 1-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 0 1-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 0 1 0-1.06z"/></svg>
+				</button>
+			</nav>
+
+			<!-- Search suggestions -->
+			
+			<div class="md-search__suggest" data-md-component="search-suggest"></div>
+			
+		</form>
+		<div class="md-search__output">
+			<div class="md-search__scrollwrap" data-md-scrollfix>
+
+				<!-- Search results -->
+				<div class="md-search-result" data-md-component="search-result">
+					<div class="md-search-result__meta">
+						Initializing search
+					</div>
+					<ol class="md-search-result__list"></ol>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
     
+
+    <!-- Repository information -->
     
       <div class="md-header__source">
         <a href="https://github.com/Elttob/Fusion" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
   </div>
   <div class="md-source__repository">
     Elttob/Fusion
@@ -156,6 +290,8 @@
       </div>
     
   </nav>
+
+  <!-- Navigation tabs (sticky) -->
   
 </header>
     
@@ -269,8 +405,10 @@
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
-      
-  <img src="../../../assets/logo-animated.png" alt="logo">
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
     Fusion
@@ -280,7 +418,7 @@
       <a href="https://github.com/Elttob/Fusion" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
   </div>
   <div class="md-source__repository">
     Elttob/Fusion
@@ -322,11 +460,33 @@
       
       
       
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_2">
-          Tutorials
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Tutorials</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
@@ -336,18 +496,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
-        Get Started
-      </a>
-    </li>
-  
-
-            
           
             
               
@@ -355,23 +503,35 @@
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
       
       
       
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
       
         <label class="md-nav__link" for="__nav_2_2">
-          Fundamentals
+          State Objects
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Fundamentals" data-md-level="2">
+      <nav class="md-nav" aria-label="State Objects" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_2">
           <span class="md-nav__icon md-icon"></span>
-          Fundamentals
+          State Objects
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -381,8 +541,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fundamentals/creating-ui/" class="md-nav__link">
-        Creating UI
+      <a href="../../fundamentals/values/" class="md-nav__link">
+        Values
       </a>
     </li>
   
@@ -395,8 +555,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fundamentals/handling-events/" class="md-nav__link">
-        Handling Events
+      <a href="../../fundamentals/observers/" class="md-nav__link">
+        Observers
       </a>
     </li>
   
@@ -409,8 +569,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fundamentals/storing-state/" class="md-nav__link">
-        Storing State
+      <a href="../../fundamentals/computeds/" class="md-nav__link">
+        Computeds
       </a>
     </li>
   
@@ -423,50 +583,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fundamentals/computations/" class="md-nav__link">
-        Computations
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../fundamentals/changing-properties/" class="md-nav__link">
-        Changing Properties
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../fundamentals/changing-children/" class="md-nav__link">
-        Changing Children
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../fundamentals/project-1/" class="md-nav__link">
-        Project 1: Counting Clicks
+      <a href="../../fundamentals/destructors/" class="md-nav__link">
+        Destructors
       </a>
     </li>
   
@@ -486,23 +604,43 @@
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
       
       
       
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
       
         <label class="md-nav__link" for="__nav_2_3">
-          Further Basics
+          Instances
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Further Basics" data-md-level="2">
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_3">
           <span class="md-nav__icon md-icon"></span>
-          Further Basics
+          Instances
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -512,8 +650,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../further-basics/components/" class="md-nav__link">
-        Components
+      <a href="../../instances/hydration/" class="md-nav__link">
+        Hydration
       </a>
     </li>
   
@@ -526,8 +664,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../further-basics/arrays-and-lists/" class="md-nav__link">
-        Arrays and Lists
+      <a href="../../instances/new-instances/" class="md-nav__link">
+        New Instances
       </a>
     </li>
   
@@ -540,8 +678,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../further-basics/compatibility/" class="md-nav__link">
-        Compatibility
+      <a href="../../instances/parenting/" class="md-nav__link">
+        Parenting
       </a>
     </li>
   
@@ -554,8 +692,266 @@
   
   
     <li class="md-nav__item">
-      <a href="../../further-basics/project-2/" class="md-nav__link">
-        Project 2: To-Do List
+      <a href="../../instances/events/" class="md-nav__link">
+        Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../instances/change-events/" class="md-nav__link">
+        Change Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../instances/outputs/" class="md-nav__link">
+        Outputs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../instances/cleanup/" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../instances/references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Lists & Tables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lists & Tables" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Lists & Tables
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lists-and-tables/the-for-objects/" class="md-nav__link">
+        The For Objects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lists-and-tables/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lists-and-tables/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lists-and-tables/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Components" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/reusing-ui/" class="md-nav__link">
+        Reusing UI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/children/" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/callbacks/" class="md-nav__link">
+        Callbacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/state/" class="md-nav__link">
+        State
       </a>
     </li>
   
@@ -577,21 +973,29 @@
   
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" checked>
       
       
       
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_2_4">
+      
+        <label class="md-nav__link" for="__nav_2_6">
           Animation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Animation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_4">
+        <label class="md-nav__title" for="__nav_2_6">
           <span class="md-nav__icon md-icon"></span>
           Animation
         </label>
@@ -624,24 +1028,94 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Springs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Springs
       </a>
       
-    </li>
-  
+        
 
-            
-          
-            
-              
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
-    <li class="md-nav__item">
-      <a href="../project-3/" class="md-nav__link">
-        Project 3: Switches
-      </a>
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#damping-ratio" class="md-nav__link">
+    Damping Ratio
+  </a>
+  
+    <nav class="md-nav" aria-label="Damping Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-damping" class="md-nav__link">
+    Zero damping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underdamping" class="md-nav__link">
+    Underdamping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critical-damping" class="md-nav__link">
+    Critical damping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overdamping" class="md-nav__link">
+    Overdamping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed" class="md-nav__link">
+    Speed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interruption" class="md-nav__link">
+    Interruption
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -675,11 +1149,25 @@
       
       
       
+        
+          
+            
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_3">
-          Examples
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../examples/">Examples</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" aria-label="Examples" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
@@ -689,14 +1177,163 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../examples/cookbook/">Cookbook</a>
+          
+            <label for="__nav_3_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Cookbook" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cookbook
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
               
   
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/" class="md-nav__link">
-        Home
+      <a href="../../../examples/cookbook/player-list/" class="md-nav__link">
+        Player List
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/animated-computed/" class="md-nav__link">
+        Animated Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/fetch-data-from-server/" class="md-nav__link">
+        Fetch Data From Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/light-and-dark-theme/" class="md-nav__link">
+        Light & Dark Theme
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/button-component/" class="md-nav__link">
+        Button Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/loading-spinner/" class="md-nav__link">
+        Loading Spinner
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/cookbook/drag-and-drop/" class="md-nav__link">
+        Drag & Drop
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -723,11 +1360,31 @@
       
       
       
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_4">
-          API Reference
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/">API Reference</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
@@ -737,32 +1394,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/" class="md-nav__link">
-        Home
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/errors-and-messages/" class="md-nav__link">
-        Errors & Messages
-      </a>
-    </li>
-  
-
-            
           
             
               
@@ -770,80 +1401,36 @@
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
       
       
       
+        
+          
+            
+          
+        
       
-        <label class="md-nav__link" for="__nav_4_3">
-          Instances
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/errors/">Errors</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Errors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Instances" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
-          <span class="md-nav__icon md-icon"></span>
-          Instances
+          Errors
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/api/new/" class="md-nav__link">
-        New
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/api/children/" class="md-nav__link">
-        Children
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/api/onevent/" class="md-nav__link">
-        OnEvent
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/api/onchange/" class="md-nav__link">
-        OnChange
-      </a>
-    </li>
-  
-
             
           
         </ul>
@@ -859,25 +1446,61 @@
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
       
       
       
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_4_4">
-          State Management
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/state/">State</a>
+          
+            <label for="__nav_4_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="State" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="State Management" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_4">
-          <span class="md-nav__icon md-icon"></span>
-          State Management
+          State
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
           
             
               
@@ -885,8 +1508,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/state/" class="md-nav__link">
-        State
+      <a href="../../../api-reference/state/canbestate/" class="md-nav__link">
+        CanBeState
       </a>
     </li>
   
@@ -899,7 +1522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/computed/" class="md-nav__link">
+      <a href="../../../api-reference/state/computed/" class="md-nav__link">
         Computed
       </a>
     </li>
@@ -913,8 +1536,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/computedpairs/" class="md-nav__link">
-        ComputedPairs
+      <a href="../../../api-reference/state/dependency/" class="md-nav__link">
+        Dependency
       </a>
     </li>
   
@@ -927,8 +1550,92 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/compat/" class="md-nav__link">
-        Compat
+      <a href="../../../api-reference/state/dependent/" class="md-nav__link">
+        Dependent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/observer/" class="md-nav__link">
+        Observer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
+        StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/value/" class="md-nav__link">
+        Value
       </a>
     </li>
   
@@ -948,18 +1655,263 @@
   
   
     
-    <li class="md-nav__item md-nav__item--nested">
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/instances/">Instances</a>
+          
+            <label for="__nav_4_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Instances
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/child/" class="md-nav__link">
+        Child
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/children/" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/cleanup.md" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/component/" class="md-nav__link">
+        Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/hydrate/" class="md-nav__link">
+        Hydrate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/new/" class="md-nav__link">
+        New
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/onchange/" class="md-nav__link">
+        OnChange
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/onevent/" class="md-nav__link">
+        OnEvent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/out/" class="md-nav__link">
+        Out
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/ref/" class="md-nav__link">
+        Ref
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/specialkey/" class="md-nav__link">
+        SpecialKey
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
       
       
       
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_4_5">
-          Animation
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/animation/">Animation</a>
+          
+            <label for="__nav_4_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" aria-label="Animation" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_5">
@@ -969,12 +1921,28 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+          
+            
               
   
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/tween/" class="md-nav__link">
+      <a href="../../../api-reference/animation/animatable/" class="md-nav__link">
+        Animatable
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/tween/" class="md-nav__link">
         Tween
       </a>
     </li>
@@ -988,7 +1956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/api/spring/" class="md-nav__link">
+      <a href="../../../api-reference/animation/spring/" class="md-nav__link">
         Spring
       </a>
     </li>
@@ -1024,11 +1992,27 @@
       
       
       
+        
+          
+            
+          
+        
+          
+        
+          
+        
       
-        <label class="md-nav__link" for="__nav_5">
-          Extras
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../extras/">Extras</a>
+          
+            <label for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
       
       <nav class="md-nav" aria-label="Extras" data-md-level="1">
         <label class="md-nav__title" for="__nav_5">
@@ -1037,18 +2021,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../extras/" class="md-nav__link">
-        Home
-      </a>
-    </li>
-  
-
             
           
             
@@ -1103,6 +2075,76 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#damping-ratio" class="md-nav__link">
+    Damping Ratio
+  </a>
+  
+    <nav class="md-nav" aria-label="Damping Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-damping" class="md-nav__link">
+    Zero damping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underdamping" class="md-nav__link">
+    Underdamping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critical-damping" class="md-nav__link">
+    Critical damping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overdamping" class="md-nav__link">
+    Overdamping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speed" class="md-nav__link">
+    Speed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interruption" class="md-nav__link">
+    Interruption
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1112,67 +2154,176 @@
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-                
-  <a href="https://github.com/Elttob/Fusion/edit/master/docs/tutorials/animation/springs.md" title="Edit this page" class="md-content__button md-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+                <!-- Edit button -->
 
 
+<!--
+  Hack: check whether the content contains a h1 headline. If it
+  doesn't, the page title (or respectively site name) is used
+  as the main headline.
+-->
 
   <h1>Springs</h1>
 
-<div class="admonition warning">
-<p class="admonition-title">Under construction</p>
-<p>This page is under construction - information may be incomplete or missing.</p>
-</div>
+
+<!-- Markdown content -->
+<p><img alt="Animation and graph showing basic spring response." src="Step-Basic-Dark.png#only-dark" />
+<img alt="Animation and graph showing basic spring response." src="Step-Basic-Light.png#only-light" /></p>
+<p>Springs follow the value of other state objects using a physical spring
+simulation. This can be used for 'springy' effects, or for smoothing out
+movement naturally without abrupt changes in direction.</p>
+<hr />
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>To use <code>Spring</code> in your code, you first need to import it from the Fusion
+module, so that you can refer to it by name:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span> <span class="n">Spring</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Spring</span>
+</span></code></pre></div></td></tr></table></div>
+<p>To create a new spring object, call the <code>Spring</code> function and pass it a state
+object to move towards:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">goal</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">animated</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+</code></pre></div>
+<p>The spring will smoothly follow the 'goal' state object over time. As with other
+state objects, you can <code>:get()</code> its value at any time:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">animated</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 0.26425...</span>
+</code></pre></div>
+<p>To configure how the spring moves, you can provide a speed and damping ratio to
+use. Both are optional, and both can be state objects if desired:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">goal</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="kd">local</span> <span class="n">damping</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">animated</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">damping</span><span class="p">)</span>
+</code></pre></div>
+<p>You can use many different kinds of values with springs, not just numbers.
+Vectors, CFrames, Color3s, UDim2s and other number-based types are supported;
+each number inside the type is animated individually.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">goalPosition</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="kd">local</span> <span class="n">animated</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="damping-ratio">Damping Ratio<a class="headerlink" href="#damping-ratio" title="Permanent link">&para;</a></h2>
+<p>The damping ratio (a.k.a damping) of the spring changes the friction in the
+physics simulation. Lower values allow the spring to move freely and oscillate
+up and down, while higher values restrict movement.</p>
+<h3 id="zero-damping">Zero damping<a class="headerlink" href="#zero-damping" title="Permanent link">&para;</a></h3>
+<p><img alt="Animation and graph showing zero damping." src="Damping-Zero-Dark.png#only-dark" />
+<img alt="Animation and graph showing zero damping." src="Damping-Zero-Light.png#only-light" /></p>
+<p>Zero damping means no friction is applied, so the spring will oscillate forever
+without losing energy. This is generally not useful.</p>
+<h3 id="underdamping">Underdamping<a class="headerlink" href="#underdamping" title="Permanent link">&para;</a></h3>
+<p><img alt="Animation and graph showing underdamping." src="Damping-Under-Dark.png#only-dark" />
+<img alt="Animation and graph showing underdamping." src="Damping-Under-Light.png#only-light" /></p>
+<p>A damping between 0 and 1 means some friction is applied. The spring will still
+oscillate, but it will lose energy and eventually settle at the goal.</p>
+<h3 id="critical-damping">Critical damping<a class="headerlink" href="#critical-damping" title="Permanent link">&para;</a></h3>
+<p><img alt="Animation and graph showing critical damping." src="Damping-Critical-Dark.png#only-dark" />
+<img alt="Animation and graph showing critical damping." src="Damping-Critical-Light.png#only-light" /></p>
+<p>A damping of exactly 1 means just enough friction is applied to stop the spring
+from oscillating. It reaches its goal as quickly as possible without going past.</p>
+<p>This is also commonly known as critical damping.</p>
+<h3 id="overdamping">Overdamping<a class="headerlink" href="#overdamping" title="Permanent link">&para;</a></h3>
+<p><img alt="Animation and graph showing overdamping." src="Damping-Over-Dark.png#only-dark" />
+<img alt="Animation and graph showing overdamping." src="Damping-Over-Light.png#only-light" /></p>
+<p>A damping above 1 applies excessive friction to the spring. The spring behaves
+like it's moving through honey, glue or some other viscous fluid.</p>
+<p>Overdamping reduces the effect of velocity changes, and makes movement more
+rigid.</p>
+<hr />
+<h2 id="speed">Speed<a class="headerlink" href="#speed" title="Permanent link">&para;</a></h2>
+<p>The speed of the spring scales how much time it takes for the spring to move.
+Doubling the speed makes it move twice as fast; halving the speed makes it move
+twice as slow.</p>
+<p><img alt="Animation and graph showing speed changes." src="Speed-Dark.png#only-dark" />
+<img alt="Animation and graph showing speed changes." src="Speed-Light.png#only-light" /></p>
+<hr />
+<h2 id="interruption">Interruption<a class="headerlink" href="#interruption" title="Permanent link">&para;</a></h2>
+<p>Springs do not share the same interruption problems as tweens. When the goal
+changes, springs are guaranteed to preserve both position and velocity, reducing
+jank:</p>
+<p><img alt="Animation and graph showing a spring getting interrupted." src="Interrupted-Dark.png#only-dark" />
+<img alt="Animation and graph showing a spring getting interrupted." src="Interrupted-Light.png#only-light" /></p>
+<p>This also means springs are suitable for following rapidly changing values:</p>
+<p><img alt="Animation and graph showing a spring following a moving target." src="Following-Dark.png#only-dark" />
+<img alt="Animation and graph showing a spring following a moving target." src="Following-Light.png#only-light" /></p>
+
+<!-- Source file information -->
 
               
             </article>
           </div>
         </div>
         
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
       </main>
       
-        <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../tweens/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Tweens" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Tweens
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../project-3/" class="md-footer__link md-footer__link--next" aria-label="Next: Project 3: Switches" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Project 3: Switches
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
+        <!-- Footer -->
+<footer class="md-footer">
+
+	<!-- Link to previous and/or next page -->
+	
+	  <nav
+		class="md-footer__inner md-grid"
+		aria-label="Footer"
+	  >
+
+		<!-- Link to previous page -->
+		
+		  
+		  <a
+			href="../tweens/"
+			class="md-footer__link md-footer__link--prev"
+			aria-label="Previous: Tweens"
+			rel="prev"
+		  >
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</div>
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Previous
+				</span>
+				Tweens
+			  </div>
+			</div>
+		  </a>
+		
+
+		<!-- Link to next page -->
+		
+		  
+		  <a
+			href="../../../examples/"
+			class="md-footer__link md-footer__link--next"
+			aria-label="Next: Home"
+			rel="next"
+		  >
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Next
+				</span>
+				Home
+			  </div>
+			</div>
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.72 18.78a.75.75 0 0 0 1.06 0l6.25-6.25a.75.75 0 0 0 0-1.06L9.78 5.22a.75.75 0 0 0-1.06 1.06L14.44 12l-5.72 5.72a.75.75 0 0 0 0 1.06z"/></svg>
+			</div>
+		  </a>
+		
+	  </nav>
+	
+
+	<!-- Further information -->
+	<div class="md-footer-meta md-typeset">
+	  <div class="md-footer-meta__inner md-grid">
+		<div class="md-copyright">
   
   
     Made with
@@ -1181,19 +2332,23 @@
     </a>
   
 </div>
-      
-    </div>
-  </div>
-</footer>
+
+		<!-- Social links -->
+		
+	  </div>
+	</div>
+  </footer>
       
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      
+        <script src="../../../assets/scripts/smooth-scroll.js"></script>
       
     
   </body>

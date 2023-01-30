@@ -1,0 +1,2972 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.2/examples/cookbook/drag-and-drop/">
+      
+      <link rel="icon" href="../../../assets/logo-dark.svg">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.2.13">
+    
+    
+      
+        <title>Drag & Drop - Fusion</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e411adfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+	<!-- Load fonts from Google -->
+	
+		
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=JetBrains+Mono&display=fallback"
+		/>
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+		<style>
+			:root {
+				--md-text-font: "Inter";
+				--md-code-font: "JetBrains Mono";
+			}
+		</style>
+	
+
+    
+      <link rel="stylesheet" href="../../../assets/theme/fusiondoc.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/colours.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/code.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/paragraph.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/page.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/admonition.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/404.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/api-reference.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="fusiondoc-dark" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      <!-- Determine class according to configuration -->
+
+
+
+<!-- Header -->
+<header class="md-header" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="Header"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../../.."
+      title="Fusion"
+      class="md-header__button md-logo"
+      aria-label="Fusion"
+      data-md-component="logo"
+    >
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4.75-1.5a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zM5 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fusion
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Drag & Drop
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette -->
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: dark)"
+            data-md-color-scheme="fusiondoc-dark"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_1"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_2"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 24 12zM4 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 4 12zm16.485-8.485a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 0 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM6.343 17.657a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 1 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM12 0a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 12 0zm0 20a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 12 20zM3.515 3.515a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 1 1-1.06 1.06L3.515 4.575a.75.75 0 0 1 0-1.06zm14.142 14.142a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 0 1-1.06 1.06l-1.768-1.767a.75.75 0 0 1 0-1.061z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: light)"
+            data-md-color-scheme="fusiondoc-light"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_2"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_1"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16.5 6c0 5.799-4.701 10.5-10.5 10.5-.426 0-.847-.026-1.26-.075A8.5 8.5 0 1 0 16.425 4.74c.05.413.075.833.075 1.259zm-1.732-2.04A9.08 9.08 0 0 1 14.999 6a9 9 0 0 1-11.04 8.768l-.004-.002a9.367 9.367 0 0 1-.78-.218c-.393-.13-.8.21-.67.602a9.938 9.938 0 0 0 .329.855l.004.01A10.002 10.002 0 0 0 12 22a10.002 10.002 0 0 0 4.015-19.16l-.01-.005a9.745 9.745 0 0 0-.855-.328c-.392-.13-.732.276-.602.67a8.934 8.934 0 0 1 .218.779l.002.005z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <!-- Search interface -->
+<div class="md-search" data-md-component="search" role="dialog">
+	<label class="md-search__overlay" for="__search"></label>
+	<div class="md-search__inner" role="search">
+		<form class="md-search__form" name="search">
+
+			<!-- Search input -->
+			<input type="text" class="md-search__input" name="query" aria-label="Search"
+				placeholder="Search" autocapitalize="off" autocorrect="off"
+				autocomplete="off" spellcheck="false" data-md-component="search-query" required />
+
+			<!-- Button to open search -->
+			<label class="md-search__icon md-icon" for="__search">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</label>
+
+			<!-- Search options -->
+			<nav class="md-search__options" aria-label="Search">
+
+				<!-- Button to share search -->
+				
+
+				<!-- Button to reset search -->
+				<button type="reset" class="md-search__icon md-icon" aria-label="Clear"
+					tabindex="-1">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 0 1 1.06 0L12 10.94l5.22-5.22a.75.75 0 1 1 1.06 1.06L13.06 12l5.22 5.22a.75.75 0 1 1-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 0 1-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 0 1 0-1.06z"/></svg>
+				</button>
+			</nav>
+
+			<!-- Search suggestions -->
+			
+			<div class="md-search__suggest" data-md-component="search-suggest"></div>
+			
+		</form>
+		<div class="md-search__output">
+			<div class="md-search__scrollwrap" data-md-scrollfix>
+
+				<!-- Search results -->
+				<div class="md-search-result" data-md-component="search-result">
+					<div class="md-search-result__meta">
+						Initializing search
+					</div>
+					<ol class="md-search-result__list"></ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Elttob/Fusion" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Elttob/Fusion
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Examples
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../api-reference/" class="md-tabs__link">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../extras/" class="md-tabs__link">
+        Extras
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+
+    </a>
+    Fusion
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Elttob/Fusion" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Elttob/Fusion
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          State Objects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="State Objects" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          State Objects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/values/" class="md-nav__link">
+        Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/observers/" class="md-nav__link">
+        Observers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/computeds/" class="md-nav__link">
+        Computeds
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/destructors/" class="md-nav__link">
+        Destructors
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Instances
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Instances
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/hydration/" class="md-nav__link">
+        Hydration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/new-instances/" class="md-nav__link">
+        New Instances
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/parenting/" class="md-nav__link">
+        Parenting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/events/" class="md-nav__link">
+        Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/change-events/" class="md-nav__link">
+        Change Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/outputs/" class="md-nav__link">
+        Outputs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/cleanup/" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/instances/references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Lists & Tables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lists & Tables" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Lists & Tables
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/lists-and-tables/the-for-objects/" class="md-nav__link">
+        The For Objects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/lists-and-tables/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/lists-and-tables/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/lists-and-tables/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Components" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Components
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/components/reusing-ui/" class="md-nav__link">
+        Reusing UI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/components/children/" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/components/callbacks/" class="md-nav__link">
+        Callbacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/components/state/" class="md-nav__link">
+        State
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Animation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/animation/tweens/" class="md-nav__link">
+        Tweens
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/animation/springs/" class="md-nav__link">
+        Springs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Examples</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Cookbook</a>
+          
+            <label for="__nav_3_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Cookbook" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cookbook
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../player-list/" class="md-nav__link">
+        Player List
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../animated-computed/" class="md-nav__link">
+        Animated Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fetch-data-from-server/" class="md-nav__link">
+        Fetch Data From Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../light-and-dark-theme/" class="md-nav__link">
+        Light & Dark Theme
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../button-component/" class="md-nav__link">
+        Button Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../loading-spinner/" class="md-nav__link">
+        Loading Spinner
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Drag & Drop
+      </a>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/">API Reference</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/errors/">Errors</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Errors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Errors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/state/">State</a>
+          
+            <label for="__nav_4_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="State" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          State
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/canbestate/" class="md-nav__link">
+        CanBeState
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/computed/" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/dependency/" class="md-nav__link">
+        Dependency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/dependent/" class="md-nav__link">
+        Dependent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/observer/" class="md-nav__link">
+        Observer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
+        StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/value/" class="md-nav__link">
+        Value
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/instances/">Instances</a>
+          
+            <label for="__nav_4_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Instances" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Instances
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/child/" class="md-nav__link">
+        Child
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/children/" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/cleanup.md" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/component/" class="md-nav__link">
+        Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/hydrate/" class="md-nav__link">
+        Hydrate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/new/" class="md-nav__link">
+        New
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/onchange/" class="md-nav__link">
+        OnChange
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/onevent/" class="md-nav__link">
+        OnEvent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/out/" class="md-nav__link">
+        Out
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/ref/" class="md-nav__link">
+        Ref
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/instances/specialkey/" class="md-nav__link">
+        SpecialKey
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/animation/">Animation</a>
+          
+            <label for="__nav_4_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/animatable/" class="md-nav__link">
+        Animatable
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/tween/" class="md-nav__link">
+        Tween
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/spring/" class="md-nav__link">
+        Spring
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../extras/">Extras</a>
+          
+            <label for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Extras" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Extras
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extras/backgrounds/" class="md-nav__link">
+        Backgrounds
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../extras/brand-guidelines/" class="md-nav__link">
+        Brand Guidelines
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                <!-- Edit button -->
+
+
+<!--
+  Hack: check whether the content contains a h1 headline. If it
+  doesn't, the page title (or respectively site name) is used
+  as the main headline.
+-->
+
+  <h1>Drag & Drop</h1>
+
+
+<!-- Markdown content -->
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">GuiService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;GuiService&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">HttpService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;HttpService&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">UserInputService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;UserInputService&quot;</span><span class="p">)</span>
+<span class="c1">-- [Fusion imports omitted for clarity]</span>
+
+<span class="c1">-- This example shows a full drag-and-drop implementation for mouse input only.</span>
+<span class="c1">-- Extending this system to generically work with other input types, such as</span>
+<span class="c1">-- touch gestures or gamepads, is left as an exercise to the reader. However, it</span>
+<span class="c1">-- should robustly support dragging many types of UI around flexibly.</span>
+
+<span class="c1">-- To ensure best accessibility, any interactions you implement shouldn&#39;t force</span>
+<span class="c1">-- the player to hold the mouse button down. Either allow drag-and-drop using</span>
+<span class="c1">-- single inputs, or provide a non-dragging alternative; this will ensure that</span>
+<span class="c1">-- players with reduced motor ability aren&#39;t locked out of UI functions.</span>
+
+<span class="c1">-- We&#39;re going to need to account for the UI inset sometimes. We cache it here.</span>
+<span class="kd">local</span> <span class="n">TOP_LEFT_INSET</span> <span class="o">=</span> <span class="n">GuiService</span><span class="p">:</span><span class="n">GetGuiInset</span><span class="p">()</span>
+
+<span class="c1">-- To reflect the current position of the cursor on-screen, we&#39;ll use a state</span>
+<span class="c1">-- object that&#39;s updated using UserInputService.</span>
+<span class="kd">local</span> <span class="n">mousePos</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">UserInputService</span><span class="p">:</span><span class="n">GetMouseLocation</span><span class="p">()</span> <span class="o">-</span> <span class="n">TOP_LEFT_INSET</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">mousePosConn</span> <span class="o">=</span> <span class="n">UserInputService</span><span class="p">.</span><span class="n">InputChanged</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">inputObject</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">UserInputType</span> <span class="o">==</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseMovement</span> <span class="kr">then</span>
+        <span class="n">mousePos</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">inputObject</span><span class="p">.</span><span class="n">Position</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">Position</span><span class="p">.</span><span class="n">Y</span><span class="p">))</span>
+    <span class="kr">end</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="c1">-- We need to keep drag of which item is currently being dragged. Only one item</span>
+<span class="c1">-- can be dragged at a time. This type stores all the information needed:</span>
+<span class="n">export</span> <span class="nb">type</span> <span class="n">CurrentlyDragging</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">-- Each draggable item will have a unique ID; the ID stored here represents</span>
+    <span class="c1">-- which item is being dragged right now. We&#39;ll use strings for this, but</span>
+    <span class="c1">-- you could use numbers if that&#39;s more convenient for you.</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="c1">-- When a drag is started, we store the mouse&#39;s offset relative to the item</span>
+    <span class="c1">-- being dragged. When the mouse moves, we can then apply the same offset to</span>
+    <span class="c1">-- make it look like the item is &#39;pinned&#39; to the cursor.</span>
+    <span class="n">offset</span><span class="p">:</span> <span class="n">Vector2</span>
+<span class="p">}</span>
+<span class="c1">-- This state object stores the above during a drag, or `nil` when not dragging.</span>
+<span class="kd">local</span> <span class="n">currentlyDragging</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">nil</span> <span class="p">::</span> <span class="nl">CurrentlyDragging</span><span class="err">?)</span>
+
+<span class="c1">-- Now we need a component to encapsulate all of our dragging behaviour, such</span>
+<span class="c1">-- as moving our UI between different parents, placing it at the mouse cursor,</span>
+<span class="c1">-- managing sizing, and so on.</span>
+
+<span class="nl">export</span> <span class="nl">type</span> <span class="nl">DraggableProps</span> <span class="err">=</span> <span class="err">{</span>
+    <span class="c1">-- This should uniquely identify the draggable item apart from all other</span>
+    <span class="c1">-- draggable items. This is constant and so shouldn&#39;t be a state object.</span>
+    <span class="nl">ID</span><span class="err">:</span> <span class="nl">string</span><span class="err">,</span>
+    <span class="c1">-- It doesn&#39;t make sense for a draggable item to have a constant parent. You</span>
+    <span class="c1">-- wouldn&#39;t be able to drop it anywhere else, so we enforce that Parent is a</span>
+    <span class="c1">-- state object for our own convenience.</span>
+    <span class="nl">Parent</span><span class="err">:</span> <span class="nl">StateObject</span><span class="err">&lt;</span><span class="nl">Instance</span><span class="err">?&gt;,</span>
+    <span class="c1">-- When an item is being dragged, it needs to appear above all other UI. We</span>
+    <span class="c1">-- will create an overlay frame that fills the screen to achieve this.</span>
+    <span class="nl">OverlayFrame</span><span class="err">:</span> <span class="nl">Instance</span><span class="err">,</span>
+    <span class="c1">-- To start a drag, we&#39;ll need to know where the top-left corner of the item</span>
+    <span class="c1">-- is, so we can calculate `currentlyDragging.offset`. We&#39;ll allow the</span>
+    <span class="c1">-- calling code to pass through a Value object to [Out &quot;AbsolutePosition&quot;].</span>
+    <span class="nl">OutAbsolutePosition</span><span class="err">:</span> <span class="nl">Value</span><span class="err">&lt;</span><span class="nl">Vector2</span><span class="err">?&gt;?,</span>
+
+    <span class="nl">Name</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">string</span><span class="err">&gt;?,</span>
+    <span class="nl">LayoutOrder</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">number</span><span class="err">&gt;?,</span>
+    <span class="nl">Position</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">UDim2</span><span class="err">&gt;?,</span>
+    <span class="nl">AnchorPoint</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">Vector2</span><span class="err">&gt;?,</span>
+    <span class="nl">Size</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">UDim2</span><span class="err">&gt;?,</span>
+    <span class="nl">AutomaticSize</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">Enum</span><span class="err">.</span><span class="nl">AutomaticSize</span><span class="err">&gt;?,</span>
+    <span class="nl">ZIndex</span><span class="err">:</span> <span class="nl">CanBeState</span><span class="err">&lt;</span><span class="nl">number</span><span class="err">&gt;?,</span>
+    <span class="err">[</span><span class="nl">Children</span><span class="err">]:</span> <span class="nl">Child</span>
+<span class="err">}</span>
+
+<span class="nl">local</span> <span class="nl">function</span> <span class="nl">Draggable</span><span class="err">(</span><span class="nl">props</span><span class="err">:</span> <span class="nl">DraggableProps</span><span class="err">):</span> <span class="nl">Child</span>
+    <span class="c1">-- If we need something to be cleaned up when our item is destroyed, we can</span>
+    <span class="c1">-- add it to this array. It&#39;ll be passed to `[Cleanup]` later.</span>
+    <span class="nl">local</span> <span class="nl">cleanupTasks</span> <span class="err">=</span> <span class="err">{}</span>
+
+    <span class="c1">-- This acts like `currentlyDragging`, but filters out anything without a</span>
+    <span class="c1">-- matching ID, so it&#39;ll only exist when this specific item is dragged.</span>
+    <span class="nl">local</span> <span class="nl">thisDragging</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">dragInfo</span> <span class="err">=</span> <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+        <span class="nl">return</span> <span class="nl">if</span> <span class="nl">dragInfo</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">and</span> <span class="nl">dragInfo</span><span class="err">.</span><span class="nl">id</span> <span class="err">==</span> <span class="nl">props</span><span class="err">.</span><span class="nl">ID</span> <span class="nl">then</span> <span class="nl">dragInfo</span> <span class="nl">else</span> <span class="nl">nil</span>
+    <span class="nl">end</span><span class="err">)</span>
+
+    <span class="c1">-- Our item controls its own parent - one of the few times you&#39;ll see this</span>
+    <span class="c1">-- done in Fusion. This means we don&#39;t have to destroy and re-build the item</span>
+    <span class="c1">-- when it moves to a new location.</span>
+    <span class="nl">local</span> <span class="nl">itemParent</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+        <span class="nl">return</span> <span class="nl">if</span> <span class="nl">thisDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">then</span> <span class="nl">props</span><span class="err">.</span><span class="nl">OverlayFrame</span> <span class="nl">else</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Parent</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+    <span class="nl">end</span><span class="err">,</span> <span class="nl">Fusion</span><span class="err">.</span><span class="nl">doNothing</span><span class="err">)</span>
+
+    <span class="c1">-- If we move a scaled UI into the `overlayBox`, by default it will stretch</span>
+    <span class="c1">-- to the screen size. Ideally we want it to preserve its current size while</span>
+    <span class="c1">-- it&#39;s being dragged, so we need to track the parent&#39;s size and calculate</span>
+    <span class="c1">-- the item size ourselves.</span>
+
+    <span class="c1">-- To start with, we&#39;ll store the parent&#39;s absolute size. This takes a bit</span>
+    <span class="c1">-- of legwork to get right, and we need to remember the UI might not have a</span>
+    <span class="c1">-- parent which we can measure the size of - we&#39;ll represent that as `nil`.</span>
+    <span class="c1">-- Feel free to extract this into a separate function if you want to.</span>
+    <span class="nl">local</span> <span class="nl">parentSize</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span>
+    <span class="nl">do</span>
+        <span class="c1">-- We&#39;ll call this whenever the parent&#39;s AbsoluteSize changes, or when</span>
+        <span class="c1">-- the parent changes (because different parents might have different</span>
+        <span class="c1">-- absolute sizes, if any)</span>
+        <span class="nl">local</span> <span class="nl">function</span> <span class="nl">recalculateParentSize</span><span class="err">()</span>
+            <span class="c1">-- We&#39;re not in a Computed, so we want to pass `false` to `:get()`</span>
+            <span class="c1">-- to avoid adding dependencies.</span>
+            <span class="nl">local</span> <span class="nl">parent</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Parent</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+            <span class="nl">local</span> <span class="nl">parentHasSize</span> <span class="err">=</span> <span class="nl">parent</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">and</span> <span class="nl">parent</span><span class="err">:</span><span class="nl">IsA</span><span class="err">(&quot;</span><span class="nl">GuiObject</span><span class="err">&quot;)</span>
+            <span class="nl">parentSize</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">if</span> <span class="nl">parentHasSize</span> <span class="nl">then</span> <span class="nl">parent</span><span class="err">.</span><span class="nl">AbsoluteSize</span> <span class="nl">else</span> <span class="nl">nil</span><span class="err">)</span>
+        <span class="nl">end</span>
+
+        <span class="c1">-- We don&#39;t just need to connect to the AbsoluteSize changed event of</span>
+        <span class="c1">-- the parent we have *right now*! If the parent changes, we need to</span>
+        <span class="c1">-- disconnect the old event and re-connect on the new parent, which we</span>
+        <span class="c1">-- do here.</span>
+        <span class="nl">local</span> <span class="nl">parentSizeConn</span> <span class="err">=</span> <span class="nl">nil</span>
+        <span class="nl">local</span> <span class="nl">function</span> <span class="nl">rebindToParentSize</span><span class="err">()</span>
+            <span class="nl">if</span> <span class="nl">parentSizeConn</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">then</span>
+                <span class="nl">parentSizeConn</span><span class="err">:</span><span class="nl">Disconnect</span><span class="err">()</span>
+                <span class="nl">parentSizeConn</span> <span class="err">=</span> <span class="nl">nil</span>
+            <span class="nl">end</span>
+            <span class="nl">local</span> <span class="nl">parent</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Parent</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+            <span class="nl">local</span> <span class="nl">parentHasSize</span> <span class="err">=</span> <span class="nl">parent</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">and</span> <span class="nl">parent</span><span class="err">:</span><span class="nl">IsA</span><span class="err">(&quot;</span><span class="nl">GuiObject</span><span class="err">&quot;)</span>
+            <span class="nl">if</span> <span class="nl">parentHasSize</span> <span class="nl">then</span>
+                <span class="nl">parentSizeConn</span> <span class="err">=</span> <span class="nl">parent</span><span class="err">:</span><span class="nl">GetPropertyChangedSignal</span><span class="err">(&quot;</span><span class="nl">AbsoluteSize</span><span class="err">&quot;):</span><span class="nl">Connect</span><span class="err">(</span><span class="nl">recalculateParentSize</span><span class="err">)</span>
+            <span class="nl">end</span>
+            <span class="nl">recalculateParentSize</span><span class="err">()</span>
+        <span class="nl">end</span>
+        <span class="nl">rebindToParentSize</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">disconnect</span> <span class="err">=</span> <span class="nl">Observer</span><span class="err">(</span><span class="nl">props</span><span class="err">.</span><span class="nl">Parent</span><span class="err">):</span><span class="nl">onChange</span><span class="err">(</span><span class="nl">rebindToParentSize</span><span class="err">)</span>
+
+        <span class="c1">-- When the item gets destroyed, we need to disconnect that observer and</span>
+        <span class="c1">-- our AbsoluteSize change event (if any is active right now)</span>
+        <span class="nl">table</span><span class="err">.</span><span class="nl">insert</span><span class="err">(</span><span class="nl">cleanupTasks</span><span class="err">,</span> <span class="nl">function</span><span class="err">()</span>
+            <span class="nl">disconnect</span><span class="err">()</span>
+            <span class="nl">if</span> <span class="nl">parentSizeConn</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">then</span>
+                <span class="nl">parentSizeConn</span><span class="err">:</span><span class="nl">Disconnect</span><span class="err">()</span>
+                <span class="nl">parentSizeConn</span> <span class="err">=</span> <span class="nl">nil</span>
+            <span class="nl">end</span>
+        <span class="nl">end</span><span class="err">)</span>
+    <span class="nl">end</span>
+
+    <span class="c1">-- Now that we have a reliable parent size, we can calculate the item&#39;s size</span>
+    <span class="c1">-- without worrying about all of those event connections.</span>
+    <span class="nl">if</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Size</span> <span class="err">==</span> <span class="nl">nil</span> <span class="nl">then</span>
+        <span class="nl">props</span><span class="err">.</span><span class="nl">Size</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromOffset</span><span class="err">(0,</span> <span class="err">0))</span>
+    <span class="nl">elseif</span> <span class="nl">typeof</span><span class="err">(</span><span class="nl">props</span><span class="err">.</span><span class="nl">Size</span><span class="err">)</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">UDim2</span><span class="err">&quot;</span> <span class="nl">then</span>
+        <span class="nl">props</span><span class="err">.</span><span class="nl">Size</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">props</span><span class="err">.</span><span class="nl">Size</span><span class="err">)</span>
+    <span class="nl">end</span>
+    <span class="nl">local</span> <span class="nl">itemSize</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">udim2</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Size</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">scaleSize</span> <span class="err">=</span> <span class="nl">parentSize</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="nl">or</span> <span class="nl">Vector2</span><span class="err">.</span><span class="nl">zero</span> <span class="c1">-- might be nil!</span>
+        <span class="nl">return</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromOffset</span><span class="err">(</span>
+            <span class="nl">udim2</span><span class="err">.</span><span class="nl">X</span><span class="err">.</span><span class="nl">Scale</span> <span class="err">*</span> <span class="nl">scaleSize</span><span class="err">.</span><span class="nl">X</span> <span class="err">+</span> <span class="nl">udim2</span><span class="err">.</span><span class="nl">X</span><span class="err">.</span><span class="nl">Offset</span><span class="err">,</span>
+            <span class="nl">udim2</span><span class="err">.</span><span class="nl">Y</span><span class="err">.</span><span class="nl">Scale</span> <span class="err">*</span> <span class="nl">scaleSize</span><span class="err">.</span><span class="nl">Y</span> <span class="err">+</span> <span class="nl">udim2</span><span class="err">.</span><span class="nl">Y</span><span class="err">.</span><span class="nl">Offset</span>
+        <span class="err">)</span>
+    <span class="nl">end</span><span class="err">)</span>
+
+    <span class="c1">-- Similarly, we&#39;ll need to override the item&#39;s position while it&#39;s being</span>
+    <span class="c1">-- dragged. Happily, this is simpler to do :)</span>
+    <span class="nl">if</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Position</span> <span class="err">==</span> <span class="nl">nil</span> <span class="nl">then</span>
+        <span class="nl">props</span><span class="err">.</span><span class="nl">Position</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromOffset</span><span class="err">(0,</span> <span class="err">0))</span>
+    <span class="nl">elseif</span> <span class="nl">typeof</span><span class="err">(</span><span class="nl">props</span><span class="err">.</span><span class="nl">Position</span><span class="err">)</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">UDim2</span><span class="err">&quot;</span> <span class="nl">then</span>
+        <span class="nl">props</span><span class="err">.</span><span class="nl">Position</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">props</span><span class="err">.</span><span class="nl">Position</span><span class="err">)</span>
+    <span class="nl">end</span>
+    <span class="nl">local</span> <span class="nl">itemPosition</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">dragInfo</span> <span class="err">=</span> <span class="nl">thisDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+        <span class="nl">if</span> <span class="nl">dragInfo</span> <span class="err">==</span> <span class="nl">nil</span> <span class="nl">then</span>
+            <span class="nl">return</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Position</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+        <span class="nl">else</span>
+            <span class="c1">-- `dragInfo.offset` stores the distance from the top-left corner</span>
+            <span class="c1">-- of the item to the mouse position. Subtracting the offset from</span>
+            <span class="c1">-- the mouse position therefore gives us the item&#39;s position.</span>
+            <span class="nl">local</span> <span class="nl">position</span> <span class="err">=</span> <span class="nl">mousePos</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="err">-</span> <span class="nl">dragInfo</span><span class="err">.</span><span class="nl">offset</span>
+            <span class="nl">return</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromOffset</span><span class="err">(</span><span class="nl">position</span><span class="err">.</span><span class="nl">X</span><span class="err">,</span> <span class="nl">position</span><span class="err">.</span><span class="nl">Y</span><span class="err">)</span>
+        <span class="nl">end</span>
+    <span class="nl">end</span><span class="err">)</span>
+
+    <span class="nl">return</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">Frame</span><span class="err">&quot;</span> <span class="err">{</span>
+        <span class="nl">Name</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Name</span> <span class="nl">or</span> <span class="err">&quot;</span><span class="nl">Draggable</span><span class="err">&quot;,</span>
+        <span class="nl">LayoutOrder</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">LayoutOrder</span><span class="err">,</span>
+        <span class="nl">AnchorPoint</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">AnchorPoint</span><span class="err">,</span>
+        <span class="nl">AutomaticSize</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">AutomaticSize</span><span class="err">,</span>
+        <span class="nl">ZIndex</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">ZIndex</span><span class="err">,</span>
+
+        <span class="nl">Parent</span> <span class="err">=</span> <span class="nl">itemParent</span><span class="err">,</span>
+        <span class="nl">Position</span> <span class="err">=</span> <span class="nl">itemPosition</span><span class="err">,</span>
+        <span class="nl">Size</span> <span class="err">=</span> <span class="nl">itemSize</span><span class="err">,</span>
+
+        <span class="nl">BackgroundTransparency</span> <span class="err">=</span> <span class="err">1,</span>
+
+        <span class="err">[</span><span class="nl">Out</span> <span class="err">&quot;</span><span class="nl">AbsolutePosition</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">OutAbsolutePosition</span><span class="err">,</span>
+
+        <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="nl">props</span><span class="err">[</span><span class="nl">Children</span><span class="err">]</span>
+    <span class="err">}</span>
+<span class="nl">end</span>
+
+<span class="c1">-- The hard part is over! Now we just need to create some draggable items and</span>
+<span class="c1">-- start/stop drags in response to mouse events. We&#39;ll use a very basic example.</span>
+
+<span class="c1">-- Let&#39;s make some to-do items. They&#39;ll show up in two lists - one for</span>
+<span class="c1">-- incomplete tasks, and another for complete tasks. You&#39;ll be able to drag</span>
+<span class="c1">-- items between the lists to mark them as complete. The lists will be sorted</span>
+<span class="c1">-- alphabetically so we don&#39;t have to deal with calculating where the items</span>
+<span class="c1">-- should be placed when they&#39;re dropped.</span>
+
+<span class="nl">export</span> <span class="nl">type</span> <span class="nl">TodoItem</span> <span class="err">=</span> <span class="err">{</span>
+    <span class="nl">id</span><span class="err">:</span> <span class="nl">string</span><span class="err">,</span>
+    <span class="nl">text</span><span class="err">:</span> <span class="nl">string</span><span class="err">,</span>
+    <span class="nl">completed</span><span class="err">:</span> <span class="nl">Value</span><span class="err">&lt;</span><span class="nl">boolean</span><span class="err">&gt;</span>
+<span class="err">}</span>
+<span class="nl">local</span> <span class="nl">todoItems</span><span class="err">:</span> <span class="nl">Value</span><span class="err">&lt;</span><span class="nl">TodoItem</span><span class="err">&gt;</span> <span class="err">=</span> <span class="err">{</span>
+    <span class="err">{</span>
+        <span class="c1">-- You can use HttpService to easily generate unique IDs statelessly.</span>
+        <span class="nl">id</span> <span class="err">=</span> <span class="nl">HttpService</span><span class="err">:</span><span class="nl">GenerateGUID</span><span class="err">(),</span>
+        <span class="nl">text</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Wake</span> <span class="nl">up</span> <span class="nl">today</span><span class="err">&quot;,</span>
+        <span class="nl">completed</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">true</span><span class="err">)</span>
+    <span class="err">},</span>
+    <span class="err">{</span>
+        <span class="nl">id</span> <span class="err">=</span> <span class="nl">HttpService</span><span class="err">:</span><span class="nl">GenerateGUID</span><span class="err">(),</span>
+        <span class="nl">text</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Read</span> <span class="nl">the</span> <span class="nl">Fusion</span> <span class="nl">docs</span><span class="err">&quot;,</span>
+        <span class="nl">completed</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">true</span><span class="err">)</span>
+    <span class="err">},</span>
+    <span class="err">{</span>
+        <span class="nl">id</span> <span class="err">=</span> <span class="nl">HttpService</span><span class="err">:</span><span class="nl">GenerateGUID</span><span class="err">(),</span>
+        <span class="nl">text</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Take</span> <span class="nl">over</span> <span class="nl">the</span> <span class="nl">universe</span><span class="err">&quot;,</span>
+        <span class="nl">completed</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+<span class="nl">local</span> <span class="nl">function</span> <span class="nl">getTodoItemForID</span><span class="err">(</span><span class="nl">id</span><span class="err">:</span> <span class="nl">string</span><span class="err">):</span> <span class="nl">TodoItem</span><span class="err">?</span>
+    <span class="nl">for</span> <span class="nl">_</span><span class="err">,</span> <span class="nl">item</span> <span class="nl">in</span> <span class="nl">todoItems</span> <span class="nl">do</span>
+        <span class="nl">if</span> <span class="nl">item</span><span class="err">.</span><span class="nl">id</span> <span class="err">==</span> <span class="nl">id</span> <span class="nl">then</span>
+            <span class="nl">return</span> <span class="nl">item</span>
+        <span class="nl">end</span>
+    <span class="nl">end</span>
+    <span class="nl">return</span> <span class="nl">nil</span>
+<span class="nl">end</span>
+
+<span class="c1">-- These represent the individual draggable to-do item entries in the lists.</span>
+<span class="c1">-- This is where we&#39;ll use our `Draggable` component!</span>
+<span class="nl">export</span> <span class="nl">type</span> <span class="nl">TodoEntryProps</span> <span class="err">=</span> <span class="err">{</span>
+    <span class="nl">Item</span><span class="err">:</span> <span class="nl">TodoItem</span><span class="err">,</span>
+    <span class="nl">Parent</span><span class="err">:</span> <span class="nl">StateObject</span><span class="err">&lt;</span><span class="nl">Instance</span><span class="err">?&gt;,</span>
+    <span class="nl">OverlayFrame</span><span class="err">:</span> <span class="nl">Instance</span><span class="err">,</span>
+<span class="err">}</span>
+<span class="nl">local</span> <span class="nl">function</span> <span class="nl">TodoEntry</span><span class="err">(</span><span class="nl">props</span><span class="err">:</span> <span class="nl">TodoEntryProps</span><span class="err">):</span> <span class="nl">Child</span>
+    <span class="nl">local</span> <span class="nl">absolutePosition</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span>
+
+    <span class="c1">-- Using our item&#39;s ID, we can figure out if we&#39;re being dragged to apply</span>
+    <span class="c1">-- some styling for dragged items only!</span>
+    <span class="nl">local</span> <span class="nl">isDragging</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+        <span class="nl">local</span> <span class="nl">dragInfo</span> <span class="err">=</span> <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span>
+        <span class="nl">return</span> <span class="nl">dragInfo</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">and</span> <span class="nl">dragInfo</span><span class="err">.</span><span class="nl">id</span> <span class="err">==</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">id</span>
+    <span class="nl">end</span><span class="err">)</span>
+
+    <span class="nl">return</span> <span class="nl">Draggable</span> <span class="err">{</span>
+        <span class="nl">ID</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">id</span><span class="err">,</span>
+        <span class="nl">Parent</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Parent</span><span class="err">,</span>
+        <span class="nl">OverlayFrame</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">OverlayFrame</span><span class="err">,</span>
+        <span class="nl">OutAbsolutePosition</span> <span class="err">=</span> <span class="nl">absolutePosition</span><span class="err">,</span>
+
+        <span class="nl">Name</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">text</span><span class="err">,</span>
+        <span class="nl">Size</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">new</span><span class="err">(1,</span> <span class="err">0,</span> <span class="err">0,</span> <span class="err">50),</span>
+
+        <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">TextButton</span><span class="err">&quot;</span> <span class="err">{</span>
+            <span class="nl">Name</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">TodoEntry</span><span class="err">&quot;,</span>
+
+            <span class="nl">Size</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(1,</span> <span class="err">1),</span>
+            <span class="nl">BackgroundColor3</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+                <span class="nl">if</span> <span class="nl">isDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="nl">then</span>
+                    <span class="nl">return</span> <span class="nl">Color3</span><span class="err">.</span><span class="nl">new</span><span class="err">(1,</span> <span class="err">1,</span> <span class="err">1)</span>
+                <span class="nl">elseif</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">completed</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="nl">then</span>
+                    <span class="nl">return</span> <span class="nl">Color3</span><span class="err">.</span><span class="nl">new</span><span class="err">(0,</span> <span class="err">1,</span> <span class="err">0)</span>
+                <span class="nl">else</span>
+                    <span class="nl">return</span> <span class="nl">Color3</span><span class="err">.</span><span class="nl">new</span><span class="err">(1,</span> <span class="err">0,</span> <span class="err">0)</span>
+                <span class="nl">end</span>
+            <span class="nl">end</span><span class="err">),</span>
+            <span class="nl">Text</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">text</span><span class="err">,</span>
+            <span class="nl">TextSize</span> <span class="err">=</span> <span class="err">28,</span>
+
+            <span class="c1">-- This is where we&#39;ll detect mouse down. When the mouse is pressed</span>
+            <span class="c1">-- over this item, we should pick it up.</span>
+            <span class="err">[</span><span class="nl">OnEvent</span> <span class="err">&quot;</span><span class="nl">MouseButton1Down</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">function</span><span class="err">()</span>
+                <span class="c1">-- only start a drag if we&#39;re not already dragging</span>
+                <span class="nl">if</span> <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span> <span class="err">==</span> <span class="nl">nil</span> <span class="nl">then</span>
+                    <span class="nl">local</span> <span class="nl">itemPos</span> <span class="err">=</span> <span class="nl">absolutePosition</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span> <span class="nl">or</span> <span class="nl">Vector2</span><span class="err">.</span><span class="nl">zero</span>
+                    <span class="nl">local</span> <span class="nl">offset</span> <span class="err">=</span> <span class="nl">mousePos</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span> <span class="err">-</span> <span class="nl">itemPos</span>
+                    <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">set</span><span class="err">({</span>
+                        <span class="nl">id</span> <span class="err">=</span> <span class="nl">props</span><span class="err">.</span><span class="nl">Item</span><span class="err">.</span><span class="nl">id</span><span class="err">,</span>
+                        <span class="nl">offset</span> <span class="err">=</span> <span class="nl">offset</span>
+                    <span class="err">})</span>
+                <span class="nl">end</span>
+            <span class="nl">end</span>
+
+            <span class="c1">-- We&#39;re not going to detect mouse up here, because in some rare</span>
+            <span class="c1">-- cases the event could be dropped due to lag between the item&#39;s</span>
+            <span class="c1">-- position and the cursor position. We&#39;ll deal with this at a</span>
+            <span class="c1">-- global level instead.</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+<span class="nl">end</span>
+
+<span class="c1">-- Now we should construct our two task lists for housing our to-do entries.</span>
+<span class="c1">-- Notice that they don&#39;t manage the entries themselves! The entries don&#39;t</span>
+<span class="c1">-- belong to these lists after all, so that&#39;d be nonsense :)</span>
+
+<span class="c1">-- When we release our mouse, we need to know where to drop any dragged item we</span>
+<span class="c1">-- have. This will tell us if we&#39;re hovering over either list.</span>
+<span class="nl">local</span> <span class="nl">dropAction</span> <span class="err">=</span> <span class="nl">Value</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span>
+
+<span class="nl">local</span> <span class="nl">incompleteList</span> <span class="err">=</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">ScrollingFrame</span><span class="err">&quot;</span> <span class="err">{</span>
+    <span class="nl">Name</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">IncompleteTasks</span><span class="err">&quot;,</span>
+    <span class="nl">Position</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(0.1,</span> <span class="err">0.1),</span>
+    <span class="nl">Size</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(0.35,</span> <span class="err">0.9),</span>
+
+    <span class="nl">BackgroundTransparency</span> <span class="err">=</span> <span class="err">0.75,</span>
+    <span class="nl">BackgroundColor3</span> <span class="err">=</span> <span class="nl">Color3</span><span class="err">.</span><span class="nl">new</span><span class="err">(1,</span> <span class="err">0,</span> <span class="err">0),</span>
+
+    <span class="err">[</span><span class="nl">OnEvent</span> <span class="err">&quot;</span><span class="nl">MouseEnter</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">function</span><span class="err">()</span>
+        <span class="nl">dropAction</span><span class="err">:</span><span class="nl">set</span><span class="err">(&quot;</span><span class="nl">incomplete</span><span class="err">&quot;)</span>
+    <span class="nl">end</span><span class="err">,</span>
+
+    <span class="err">[</span><span class="nl">OnEvent</span> <span class="err">&quot;</span><span class="nl">MouseLeave</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">function</span><span class="err">()</span>
+        <span class="nl">if</span> <span class="nl">dropAction</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">incomplete</span><span class="err">&quot;</span> <span class="nl">then</span>
+            <span class="nl">dropAction</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span> <span class="c1">-- only clear this if it&#39;s not overwritten yet</span>
+        <span class="nl">end</span>
+    <span class="nl">end</span><span class="err">,</span>
+
+    <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="err">{</span>
+        <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">UIListLayout</span><span class="err">&quot;</span> <span class="err">{</span>
+            <span class="nl">SortOrder</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Name</span><span class="err">&quot;,</span>
+            <span class="nl">Padding</span> <span class="err">=</span> <span class="nl">UDim</span><span class="err">.</span><span class="nl">new</span><span class="err">(0,</span> <span class="err">5)</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="nl">local</span> <span class="nl">completedList</span> <span class="err">=</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">ScrollingFrame</span><span class="err">&quot;</span> <span class="err">{</span>
+    <span class="nl">Name</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">CompletedTasks</span><span class="err">&quot;,</span>
+    <span class="nl">Position</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(0.55,</span> <span class="err">0.1),</span>
+    <span class="nl">Size</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(0.35,</span> <span class="err">0.9),</span>
+
+    <span class="nl">BackgroundTransparency</span> <span class="err">=</span> <span class="err">0.75,</span>
+    <span class="nl">BackgroundColor3</span> <span class="err">=</span> <span class="nl">Color3</span><span class="err">.</span><span class="nl">new</span><span class="err">(0,</span> <span class="err">1,</span> <span class="err">0),</span>
+
+    <span class="err">[</span><span class="nl">OnEvent</span> <span class="err">&quot;</span><span class="nl">MouseEnter</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">function</span><span class="err">()</span>
+        <span class="nl">dropAction</span><span class="err">:</span><span class="nl">set</span><span class="err">(&quot;</span><span class="nl">completed</span><span class="err">&quot;)</span>
+    <span class="nl">end</span><span class="err">,</span>
+
+    <span class="err">[</span><span class="nl">OnEvent</span> <span class="err">&quot;</span><span class="nl">MouseLeave</span><span class="err">&quot;]</span> <span class="err">=</span> <span class="nl">function</span><span class="err">()</span>
+        <span class="nl">if</span> <span class="nl">dropAction</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">completed</span><span class="err">&quot;</span> <span class="nl">then</span>
+            <span class="nl">dropAction</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span> <span class="c1">-- only clear this if it&#39;s not overwritten yet</span>
+        <span class="nl">end</span>
+    <span class="nl">end</span><span class="err">,</span>
+
+    <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="err">{</span>
+        <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">UIListLayout</span><span class="err">&quot;</span> <span class="err">{</span>
+            <span class="nl">SortOrder</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Name</span><span class="err">&quot;,</span>
+            <span class="nl">Padding</span> <span class="err">=</span> <span class="nl">UDim</span><span class="err">.</span><span class="nl">new</span><span class="err">(0,</span> <span class="err">5)</span>
+        <span class="err">}</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+
+<span class="c1">-- Now we can write a mouse up handler to drop our items.</span>
+
+<span class="nl">local</span> <span class="nl">mouseUpConn</span> <span class="err">=</span> <span class="nl">UserInputService</span><span class="err">.</span><span class="nl">InputEnded</span><span class="err">:</span><span class="nl">Connect</span><span class="err">(</span><span class="nl">function</span><span class="err">(</span><span class="nl">inputObject</span><span class="err">)</span>
+    <span class="nl">if</span> <span class="nl">inputObject</span><span class="err">.</span><span class="nl">UserInputType</span> <span class="err">~=</span> <span class="nl">Enum</span><span class="err">.</span><span class="nl">UserInputType</span><span class="err">.</span><span class="nl">MouseButton1</span> <span class="nl">then</span>
+        <span class="nl">return</span>
+    <span class="nl">end</span>
+    <span class="nl">local</span> <span class="nl">dragInfo</span> <span class="err">=</span> <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+    <span class="nl">if</span> <span class="nl">dragInfo</span> <span class="err">==</span> <span class="nl">nil</span> <span class="nl">then</span>
+        <span class="nl">return</span>
+    <span class="nl">end</span>
+    <span class="nl">local</span> <span class="nl">item</span> <span class="err">=</span> <span class="nl">getTodoItemForID</span><span class="err">(</span><span class="nl">dragInfo</span><span class="err">.</span><span class="nl">id</span><span class="err">)</span>
+    <span class="nl">local</span> <span class="nl">action</span> <span class="err">=</span> <span class="nl">dropAction</span><span class="err">:</span><span class="nl">get</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+    <span class="nl">if</span> <span class="nl">item</span> <span class="err">~=</span> <span class="nl">nil</span> <span class="nl">then</span>
+        <span class="nl">if</span> <span class="nl">action</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">incomplete</span><span class="err">&quot;</span> <span class="nl">then</span>
+            <span class="nl">item</span><span class="err">.</span><span class="nl">completed</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">false</span><span class="err">)</span>
+        <span class="nl">elseif</span> <span class="nl">action</span> <span class="err">==</span> <span class="err">&quot;</span><span class="nl">completed</span><span class="err">&quot;</span> <span class="nl">then</span>
+            <span class="nl">item</span><span class="err">.</span><span class="nl">completed</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">true</span><span class="err">)</span>
+        <span class="nl">end</span>
+    <span class="nl">end</span>
+    <span class="nl">currentlyDragging</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span><span class="nl">nil</span><span class="err">)</span>
+<span class="nl">end</span><span class="err">)</span>
+
+<span class="c1">-- We&#39;ll need to construct an overlay frame for our items to live in while they</span>
+<span class="c1">-- get dragged around.</span>
+
+<span class="nl">local</span> <span class="nl">overlayFrame</span> <span class="err">=</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">Frame</span><span class="err">&quot;</span> <span class="err">{</span>
+    <span class="nl">Size</span> <span class="err">=</span> <span class="nl">UDim2</span><span class="err">.</span><span class="nl">fromScale</span><span class="err">(1,</span> <span class="err">1),</span>
+    <span class="nl">ZIndex</span> <span class="err">=</span> <span class="err">10,</span>
+    <span class="nl">BackgroundTransparency</span> <span class="err">=</span> <span class="err">1</span>
+<span class="err">}</span>
+
+<span class="c1">-- Let&#39;s construct the items themselves! Because we&#39;re constructing them at the</span>
+<span class="c1">-- global level like this, they&#39;re only created and destroyed when they&#39;re added</span>
+<span class="c1">-- and removed from the list.</span>
+
+<span class="nl">local</span> <span class="nl">allEntries</span> <span class="err">=</span> <span class="nl">ForValues</span><span class="err">(</span><span class="nl">todoItems</span><span class="err">,</span> <span class="nl">function</span><span class="err">(</span><span class="nl">item</span><span class="err">)</span>
+    <span class="nl">return</span> <span class="nl">TodoEntry</span> <span class="err">{</span>
+        <span class="nl">Item</span> <span class="err">=</span> <span class="nl">item</span><span class="err">,</span>
+        <span class="nl">Parent</span> <span class="err">=</span> <span class="nl">Computed</span><span class="err">(</span><span class="nl">function</span><span class="err">()</span>
+            <span class="nl">return</span> <span class="nl">if</span> <span class="nl">item</span><span class="err">.</span><span class="nl">completed</span><span class="err">:</span><span class="nl">get</span><span class="err">()</span> <span class="nl">then</span> <span class="nl">completedList</span> <span class="nl">else</span> <span class="nl">incompleteList</span>
+        <span class="nl">end</span><span class="err">,</span> <span class="nl">Fusion</span><span class="err">.</span><span class="nl">doNothing</span><span class="err">),</span>
+        <span class="nl">OverlayFrame</span> <span class="err">=</span> <span class="nl">overlayFrame</span>
+    <span class="err">}</span>
+<span class="nl">end</span><span class="err">,</span> <span class="nl">Fusion</span><span class="err">.</span><span class="nl">cleanup</span><span class="err">)</span>
+
+<span class="c1">-- Finally, construct the whole UI :)</span>
+
+<span class="nl">local</span> <span class="nl">ui</span> <span class="err">=</span> <span class="nl">New</span> <span class="err">&quot;</span><span class="nl">ScreenGui</span><span class="err">&quot;</span> <span class="err">{</span>
+    <span class="nl">Parent</span> <span class="err">=</span> <span class="nl">game</span><span class="err">:</span><span class="nl">GetService</span><span class="err">(&quot;</span><span class="nl">Players</span><span class="err">&quot;).</span><span class="nl">LocalPlayer</span><span class="err">.</span><span class="nl">PlayerGui</span><span class="err">,</span>
+
+    <span class="err">[</span><span class="nl">Cleanup</span><span class="err">]</span> <span class="err">=</span> <span class="err">{</span>
+        <span class="nl">mousePosConn</span><span class="err">,</span>
+        <span class="nl">mouseUpConn</span>
+    <span class="err">},</span>
+
+    <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="err">{</span>
+        <span class="nl">overlayFrame</span><span class="err">,</span>
+        <span class="nl">incompleteList</span><span class="err">,</span>
+        <span class="nl">completedList</span>
+
+        <span class="c1">-- We don&#39;t have to pass `allEntries` in here - they manage their own</span>
+        <span class="c1">-- parenting thanks to `Draggable` :)</span>
+    <span class="err">}</span>
+<span class="err">}</span>
+</code></pre></div></td></tr></table></div>
+
+<!-- Source file information -->
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!-- Footer -->
+<footer class="md-footer">
+
+	<!-- Link to previous and/or next page -->
+	
+	  <nav
+		class="md-footer__inner md-grid"
+		aria-label="Footer"
+	  >
+
+		<!-- Link to previous page -->
+		
+		  
+		  <a
+			href="../loading-spinner/"
+			class="md-footer__link md-footer__link--prev"
+			aria-label="Previous: Loading Spinner"
+			rel="prev"
+		  >
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</div>
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Previous
+				</span>
+				Loading Spinner
+			  </div>
+			</div>
+		  </a>
+		
+
+		<!-- Link to next page -->
+		
+		  
+		  <a
+			href="../../../api-reference/"
+			class="md-footer__link md-footer__link--next"
+			aria-label="Next: Home"
+			rel="next"
+		  >
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Next
+				</span>
+				Home
+			  </div>
+			</div>
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.72 18.78a.75.75 0 0 0 1.06 0l6.25-6.25a.75.75 0 0 0 0-1.06L9.78 5.22a.75.75 0 0 0-1.06 1.06L14.44 12l-5.72 5.72a.75.75 0 0 0 0 1.06z"/></svg>
+			</div>
+		  </a>
+		
+	  </nav>
+	
+
+	<!-- Further information -->
+	<div class="md-footer-meta md-typeset">
+	  <div class="md-footer-meta__inner md-grid">
+		<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+
+		<!-- Social links -->
+		
+	  </div>
+	</div>
+  </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      
+        <script src="../../../assets/scripts/smooth-scroll.js"></script>
+      
+    
+  </body>
+</html>
