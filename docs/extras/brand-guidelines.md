@@ -1,67 +1,95 @@
-!!! warning "Under construction"
-	This page is under construction - information may be incomplete or missing.
-
-Fusion is a modern, lightweight library built to make UI development faster and
-accessible to more people.
-
-The Fusion brand is designed to reflect these themes.
-
-(TODO: add brand asset download link here)
+The Fusion branding is designed to be simplistic, modern, easy to recognise and
+distinctive.
 
 -----
 
-## Elements
+## Colours
 
-!!! note "Stub"
-	This section is a stub - it may require more detail added to it in future.
+### Primaries
 
-### The Fusion logo
+These colours are used in the Fusion logo and most illustrations. They might not
+be suitable for text or all backgrounds.
 
-Our logo is constructed from two perpendicular intersecting planes, viewed from
-an almost-isometric angle. 
+![Showing previews of each primary colour and their hex code.](Hex-Codes-Dark.svg#only-dark)
+![Showing previews of each primary colour and their hex code.](Hex-Codes-Light.svg#only-light)
 
-This represents how Fusion brings together two different data structures into
-one unified whole; Fusion connects the hierachy of instances to the hierachy of state objects.
+### FusionDoc greys
 
-The logo is designed on an 8x8 pixel grid, making it highly legible and
-recognisable at almost any size.
+These colours are used by the FusionDoc theme on this website for all grey tones
+used on pages.
 
-The colours chosen are energetic and warm, giving Fusion a uniquely hot colour
-palette compared to the cool blues of most other libraries and frameworks.
+![Showing previews of each grey colour and their hex code.](FusionDoc-Grey-Hex-Dark.svg#only-dark)
+![Showing previews of each grey colour and their hex code.](FusionDoc-Grey-Hex-Light.svg#only-light)
 
-It’s a simple, abstract design, but stands out among many other Roblox libraries
-by not depending on the Roblox brand.
+### FusionDoc accents
+
+These colours are used by the FusionDoc theme on this website for accent colours
+on links and interactive elements.
+
+![Showing previews of each accent colour and their hex code.](FusionDoc-Accent-Hex-Dark.svg#only-dark)
+![Showing previews of each accent colour and their hex code.](FusionDoc-Accent-Hex-Light.svg#only-light)
 
 -----
 
-## Using Fusion brand assets
+## Best Practices
 
-Before using the Fusion logo or brand assets in your project, please be mindful
-of our policy around use of our branding. The rights to the Fusion name, logo
-and brand assets remain reserved by Elttob.
+We would love you to use the Fusion branding in your own work, but please be
+mindful that you use it appropriately. If you're not sure, feel free to reach
+out over Discord or Twitter - it's always better to ask first to be secure!
 
-We allow the following uses of the Fusion logo and branding by default:
+These aren't hard and fast rules, and we can't and don't want to police how
+people use our stuff. Instead, these are provided as best practices to follow.
+We'll add any common examples or questions to this list over time.
 
-- Representing the (original) Fusion project. 
-    - For example, you may use the
-the Fusion logo on-screen in a tutorial video when you're referring to the
-Fusion project...
-    - ...as an image in a news article or blog post where you are talking
-about the Fusion project...
-    - ...as an icon in a data visualisation to represent the
-Fusion project...
-    - ...or in general, any use where it's very clear you're referring to the Fusion project.
-    This does *not* extend to derived or inspired-by projects.
-    
-If you wish to use the Fusion logo, name or branding in your project for a use
-case which isn't listed above, you must receive explicit written permission
-from Elttob first.
-    
-Please do not use the logo or branding in a way that:
+### Brand Confusion
 
-- may insinuate support, endorsement or other affiliation with the Fusion
-project.
-    - It's okay to say you were inspired by Fusion, or are using Fusion as
-    part of your project...
-    - ...but it's not okay if your project comes off as an official part of
-    Fusion, or as something officially endorsed by the Fusion project.
+Fusion's logo and name are designed to represent Fusion's official projects.
+Please don't use them to represent things that are not Fusion; for example, if
+you build your own UI library, it's better to design a new logo.
+
+In general, prefer to keep some distance between your project branding and
+Fusion's branding, enough distance that people don't get confused about who
+makes what, or whether a project is officially supported or not.
+
+It's a good litmus test to imagine a first-time user who knows nothing about
+Fusion, and how they will perceive your project.
+
+!!! fail "Don't do this"
+    ![A recoloured Fusion logo with the text: Fusion 2 - Build your best UI, but bestier.](Fusion-2-Dark.svg#only-dark)
+    ![A recoloured Fusion logo with the text: Fusion 2 - Build your best UI, but bestier.](Fusion-2-Light.svg#only-light)
+
+    In this example, someone made their own UI library and named it Fusion 2.
+    Note that this is an extreme example for demonstration purposes - most
+    violations of this principle are probably more subtle.
+
+    This is bad because people might mistakenly think the official Fusion
+    project approves or provides support for this unrelated project, which would
+    cause many headaches and is dishonest about the relationship between the
+    two libraries. Plus, in this example, we reserve the right to update Fusion
+    to version 2 at any time, which would immediately cause a naming conflict.
+
+
+
+!!! success "Instead, do this"
+    ![A distinct logo with the text: InfuseTS - A Fusion-like library for TypeScript](InfuseTS-Dark.svg#only-dark)
+    ![A distinct logo with the text: InfuseTS - A Fusion-like library for TypeScript](InfuseTS-Light.svg#only-light)
+
+    This logo makes it more clear that the project is not a port of, update to
+    or bindings for the Fusion library. Instead, it's a completely distinct
+    project which only takes inspiration from Fusion, but is otherwise unrelated.
+
+    It's okay for the logo to remind people of Fusion's design. Remember - you
+    don't have to be completely original, just distinct enough that it isn't
+    confusing for people.
+
+!!! warning "Acceptable, but be careful"
+    ![A plugin using the Fusion logo to represent a 'Convert to Fusion' action.](Fusion-Plugin-Toolbar-Dark.png#only-dark)
+    ![A plugin using the Fusion logo to represent a 'Convert to Fusion' action.](Fusion-Plugin-Toolbar-Light.png#only-light)
+
+    Here, this plugin is using the Fusion logo to represent a 'Convert to
+    Fusion' action. This is fine, because users will understand the Fusion logo
+    represents the thing being converted to.
+
+    However, be careful, as free-standing uses of the Fusion icon like this can
+    easily become confusing. Make sure people understand the logo represents
+    Fusion, and not the plugin, so confusion between the two is minimised.

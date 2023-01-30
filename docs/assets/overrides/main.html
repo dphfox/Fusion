@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block fonts %}
+	<!-- Load fonts from Google -->
+	{% if config.theme.font != false %}
+		{% set font = config.theme.font %}
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family={{
+				font.code | replace(' ', '+')
+				}}&display=fallback"
+		/>
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+		<style>
+			:root {
+				--md-text-font: "{{ font.text }}";
+				--md-code-font: "{{ font.code }}";
+			}
+		</style>
+	{% endif %}
+{% endblock %}

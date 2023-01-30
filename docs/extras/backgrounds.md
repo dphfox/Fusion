@@ -11,6 +11,21 @@ without explicit written consent.
 
 -----
 
+## Isosceles
+
+A pattern of isosceles triangles distributed along the bottom, with the Fusion
+gradient. Background is hex colour #1D1D1F, and so might not be ideal for OLED
+screens.
+
+![Sample of Isosceles background](samples/Isosceles.jpg)
+
+- [Ultrawide](Isosceles-Ultrawide.png)
+- [Widescreen](Isosceles-Widescreen.png)
+- [3:2](Isosceles-3_2.png)
+- [Mobile](Isosceles-Mobile.png)
+
+-----
+
 ## Extrusion
 
 A Fusion logo, with extruded fill lines coming out of the logo. Background is
