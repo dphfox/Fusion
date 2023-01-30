@@ -124,6 +124,10 @@ body {
 	font-size: 0.8em;
 }
 
+.md-header__topic .md-version {
+	font-size: inherit;
+}
+
 [dir=ltr] .md-header__title {
 	margin-left: 0rem;
 }
