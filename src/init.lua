@@ -31,7 +31,7 @@ type Fusion = {
 	OnEvent: (eventName: string) -> PubTypes.SpecialKey,
 	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
 	Attribute: (attributeName: string) -> PubTypes.SpecialKey,
-	AttributeChanged: (attributeName: string) -> PubTypes.SpecialKey,
+	AttributeChange: (attributeName: string) -> PubTypes.SpecialKey,
 	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
