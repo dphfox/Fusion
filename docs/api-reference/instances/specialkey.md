@@ -24,7 +24,7 @@ instance processing. Compatible with the [New](./new.md) and
     apply: (
         self: SpecialKey, 
         value: any, 
-        applyTo: SemiWeakRef, 
+        applyTo: Instance, 
         cleanupTasks: {Task}
     ) -> ()
 }
@@ -52,7 +52,7 @@ Example.kind = "Example"
 Example.stage = "observer"
 
 function Example:apply(value, applyTo, cleanupTasks)
-	local conn = applyTo.instance:GetAttributeChangedSignal("Foo"):Connect(function()
+	local conn = applyTo:GetAttributeChangedSignal("Foo"):Connect(function()
         print("My value is", value)
     end)
     table.insert(cleanupTasks, conn)
