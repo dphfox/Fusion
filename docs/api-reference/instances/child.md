@@ -18,7 +18,7 @@ to parent multiple instances at once and state objects can be used to make the
 children dynamic.
 
 ```Lua
-Instance | {Child} | StateObject<Child>
+Instance | {[any]: Child} | StateObject<Child>
 ```
 
 -----

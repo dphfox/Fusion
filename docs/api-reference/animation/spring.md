@@ -71,8 +71,8 @@ captured.
 Instantaneously moves the spring to a new position. This does not affect the
 velocity of the spring.
 
-If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.
+If the given value doesn't have the same type as the spring's current value,
+the position will snap instantly to the new value.
 
 ```Lua
 (newPosition: T) -> ()
@@ -93,8 +93,8 @@ error will be thrown.
 Overwrites the velocity of this spring. This does not have an immediate effect
 on the position of the spring.
 
-If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.
+If the given value doesn't have the same type as the spring's current value,
+the velocity will snap instantly to the new value.
 
 ```Lua
 (newVelocity: T) -> ()
@@ -115,8 +115,8 @@ error will be thrown.
 Adds to the velocity of this spring. This does not have an immediate effect
 on the position of the spring.
 
-If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.
+If the given value doesn't have the same type as the spring's current value,
+the velocity will snap instantly to the new value.
 
 ```Lua
 (deltaVelocity: T) -> ()
