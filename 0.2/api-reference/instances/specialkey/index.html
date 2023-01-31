@@ -1386,6 +1386,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1442,6 +1446,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/cleanup/" class="md-nav__link">
+        cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/dependency/" class="md-nav__link">
         Dependency
       </a>
@@ -1458,6 +1476,20 @@
     <li class="md-nav__item">
       <a href="../../state/dependent/" class="md-nav__link">
         Dependent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/doNothing/" class="md-nav__link">
+        doNothing
       </a>
     </li>
   
@@ -1655,7 +1687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cleanup.md" class="md-nav__link">
+      <a href="../cleanup/" class="md-nav__link">
         Cleanup
       </a>
     </li>
@@ -2180,7 +2212,7 @@ instance processing. Compatible with the <a href="../new/">New</a> and
     <span class="n">apply</span><span class="p">:</span> <span class="p">(</span>
         <span class="n">self</span><span class="p">:</span> <span class="n">SpecialKey</span><span class="p">,</span> 
         <span class="n">value</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> 
-        <span class="n">applyTo</span><span class="p">:</span> <span class="n">SemiWeakRef</span><span class="p">,</span> 
+        <span class="n">applyTo</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> 
         <span class="n">cleanupTasks</span><span class="p">:</span> <span class="p">{</span><span class="n">Task</span><span class="p">}</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 <span class="p">}</span>
@@ -2203,7 +2235,7 @@ instance</li>
 <span class="n">Example</span><span class="p">.</span><span class="n">stage</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>
 
 <span class="kr">function</span> <span class="nc">Example</span><span class="p">:</span><span class="nf">apply</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">applyTo</span><span class="p">,</span> <span class="n">cleanupTasks</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">applyTo</span><span class="p">.</span><span class="n">instance</span><span class="p">:</span><span class="n">GetAttributeChangedSignal</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">):</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">applyTo</span><span class="p">:</span><span class="n">GetAttributeChangedSignal</span><span class="p">(</span><span class="s2">&quot;Foo&quot;</span><span class="p">):</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My value is&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="kr">end</span><span class="p">)</span>
     <span class="nb">table.insert</span><span class="p">(</span><span class="n">cleanupTasks</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>

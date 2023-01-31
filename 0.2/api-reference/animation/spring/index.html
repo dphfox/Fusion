@@ -1386,6 +1386,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1442,6 +1446,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/cleanup/" class="md-nav__link">
+        cleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/dependency/" class="md-nav__link">
         Dependency
       </a>
@@ -1458,6 +1476,20 @@
     <li class="md-nav__item">
       <a href="../../state/dependent/" class="md-nav__link">
         Dependent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/doNothing/" class="md-nav__link">
+        doNothing
       </a>
     </li>
   
@@ -1653,7 +1685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../instances/cleanup.md" class="md-nav__link">
+      <a href="../../instances/cleanup/" class="md-nav__link">
         Cleanup
       </a>
     </li>
@@ -2318,8 +2350,8 @@ captured.</li>
 <h3 id="springsetposition"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Spring:setPosition()<a class="headerlink" href="#springsetposition" title="Permanent link">&para;</a></h3>
 <p>Instantaneously moves the spring to a new position. This does not affect the
 velocity of the spring.</p>
-<p>If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.</p>
+<p>If the given value doesn't have the same type as the spring's current value,
+the position will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">newPosition</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
 <h4 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h4>
@@ -2334,8 +2366,8 @@ error will be thrown.</p>
 <h3 id="springsetvelocity"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Spring:setVelocity()<a class="headerlink" href="#springsetvelocity" title="Permanent link">&para;</a></h3>
 <p>Overwrites the velocity of this spring. This does not have an immediate effect
 on the position of the spring.</p>
-<p>If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.</p>
+<p>If the given value doesn't have the same type as the spring's current value,
+the velocity will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">newVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
 <h4 id="parameters_3">Parameters<a class="headerlink" href="#parameters_3" title="Permanent link">&para;</a></h4>
@@ -2350,8 +2382,8 @@ error will be thrown.</p>
 <h3 id="springaddvelocity"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Spring:addVelocity()<a class="headerlink" href="#springaddvelocity" title="Permanent link">&para;</a></h3>
 <p>Adds to the velocity of this spring. This does not have an immediate effect
 on the position of the spring.</p>
-<p>If the given value doesn't have the same type as the spring's current value, an
-error will be thrown.</p>
+<p>If the given value doesn't have the same type as the spring's current value,
+the velocity will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">deltaVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
 <h4 id="parameters_4">Parameters<a class="headerlink" href="#parameters_4" title="Permanent link">&para;</a></h4>

@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.2/api-reference/instances/cleanup/</loc>
+         <lastmod>2023-01-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.2/api-reference/instances/component/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
@@ -101,6 +106,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.2/api-reference/state/cleanup/</loc>
+         <lastmod>2023-01-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.2/api-reference/state/computed/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
@@ -112,6 +122,11 @@
     </url>
     <url>
          <loc>https://elttob.uk/Fusion/0.2/api-reference/state/dependent/</loc>
+         <lastmod>2023-01-31</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://elttob.uk/Fusion/0.2/api-reference/state/doNothing/</loc>
          <lastmod>2023-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
