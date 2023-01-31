@@ -46,7 +46,7 @@ type Fusion = {
 }
 
 return restrictRead("Fusion", {
-	version = {major = 0, minor = 2, isRelease = false},
+	version = {major = 0, minor = 2, isRelease = true},
 
 	New = require(script.Instances.New),
 	Hydrate = require(script.Instances.Hydrate),
