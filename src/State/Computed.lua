@@ -90,7 +90,7 @@ function class:update(): boolean
 	end
 end
 
-local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+local function Computed<T, M>(processor: () -> (T, M?), destructor: ((T, M?) -> ())?): Types.Computed<T, M>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",

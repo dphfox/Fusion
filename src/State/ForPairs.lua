@@ -23,6 +23,7 @@ local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
+local xtypeof = require(Package.Utility.xtypeof)
 
 local class = {}
 
@@ -276,8 +277,6 @@ local function ForPairs<KI, VI, KO, VO, M>(
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
 
-	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
-
 	local self = setmetatable({
 		type = "State",
 		kind = "ForPairs",
@@ -289,7 +288,7 @@ local function ForPairs<KI, VI, KO, VO, M>(
 
 		_processor = processor,
 		_destructor = destructor,
-		_inputIsState = inputIsState,
+		_inputIsState = xtypeof(inputTable) == "State",
 
 		_inputTable = inputTable,
 		_oldInputTable = {},

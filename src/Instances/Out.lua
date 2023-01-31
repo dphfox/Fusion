@@ -16,7 +16,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 	outKey.kind = "Out"
 	outKey.stage = "observer"
 
-	function outKey:apply(outState: any, applyTo: Instance, cleanupTasks: { PubTypes.Task })
+	function outKey:apply(outState: any, applyTo: Instance, cleanupTasks: {PubTypes.Destructible})
 		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
 			logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
@@ -36,7 +36,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		end
 	end
 
-	return outKey
+	return (outKey :: any) :: PubTypes.SpecialKey
 end
 
 return Out

@@ -12,7 +12,6 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
 local initDependency = require(Package.Dependencies.initDependency)
@@ -23,6 +22,7 @@ local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
+local xtypeof= require(Package.Utility.xtypeof)
 
 local class = {}
 
@@ -209,13 +209,11 @@ function class:update(): boolean
 	return didChange
 end
 
-local function ForKeys<KI, KO, M>(
-	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
+local function ForKeys<KI, KO, V, M>(
+	inputTable: Types.CanBeState<{ [KI]: V }>,
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
-): Types.ForKeys<KI, KO, M>
-
-	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
+): Types.ForKeys<KI, KO, V, M>
 
 	local self = setmetatable({
 		type = "State",
@@ -228,7 +226,7 @@ local function ForKeys<KI, KO, M>(
 
 		_processor = processor,
 		_destructor = destructor,
-		_inputIsState = inputIsState,
+		_inputIsState = xtypeof(inputTable) == "State",
 
 		_inputTable = inputTable,
 		_oldInputTable = {},

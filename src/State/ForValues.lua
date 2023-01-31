@@ -210,11 +210,11 @@ function class:update(): boolean
 	return didChange
 end
 
-local function ForValues<VI, VO, M>(
-	inputTable: PubTypes.CanBeState<{ [any]: VI }>,
+local function ForValues<K, VI, VO, M>(
+	inputTable: PubTypes.CanBeState<{ [K]: VI }>,
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
-): Types.ForValues<VI, VO, M>
+): Types.ForValues<K, VI, VO, M>
 
 	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
 
