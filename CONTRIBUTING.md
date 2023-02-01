@@ -21,8 +21,8 @@ discussion instead :)
 ### Are you the first person to report it?
 
 - Make sure to search for open issues *and* closed issues - it's possible
-the behaviour you're reporting is not actually a bug, that someone else
-opened an issue about it and then that issue was subsequently closed.
+someone else opened an issue about it and then that issue was subsequently
+closed.
 
 - If an issue is found to be a duplicate, it is closed right away. We don't
 want to split discussion about an issue across multiple locations.
@@ -47,7 +47,7 @@ can include a .rbxl file to help us see the bug in action.
 - The issue will be closed when a fix has been implemented, verified to work
 and is merged into a main branch of Fusion.
 
-- Please be patient - all project maintainers are voluteers, so it will likely
+- Please be patient - all project maintainers are volunteers, so it will likely
 take some time to respond.
 
 - Don't bump or chase up your issue - commenting 'Any updates on this?' does
