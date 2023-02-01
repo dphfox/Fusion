@@ -15,7 +15,7 @@
 Given an attribute name, returns a [special key](./specialkey.md) which connects
 to that attribute's change events.
 
-This function must be used with the [attribute](./attribute.md) otherwise the callback will never run.
+This function must be used with the [attribute](./attribute.md) special key otherwise the callback will never run.
 
 ```Lua
 (attributeName: string) -> SpecialKey
@@ -33,7 +33,7 @@ This function must be used with the [attribute](./attribute.md) otherwise the ca
 
 A special key which runs at the `observer` stage. When applied to an instance,
 it connects to the attribute change signal on the instance for the given property.
-The handler is run with the property's value after every change.
+The handler is run with the attributes's value after every change.
 
 -----
 
