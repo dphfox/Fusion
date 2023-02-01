@@ -1,0 +1,73 @@
+[data-md-color-scheme="fusiondoc-light"] {
+	--md-code-fg-color:                var(--fusiondoc-grey-9);
+	--md-code-bg-color:                var(--fusiondoc-grey-2);
+
+	--md-code-hl-color:                var(--fusiondoc-accent-a20);
+	--md-code-hl-number-color:         hsl(290, 60%, 70%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-7);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 60%);
+	--md-code-hl-string-color:         hsl(330, 80%, 70%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-8);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-6);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-6);
+	--md-code-hl-comment-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
+}
+
+[data-md-color-scheme="fusiondoc-dark"] {
+	--md-code-fg-color:                var(--fusiondoc-grey-8);
+	--md-code-bg-color:                var(--fusiondoc-grey-0);
+
+	--md-code-hl-color:                var(--fusiondoc-accent-a20);
+	--md-code-hl-number-color:         hsl(290, 60%, 70%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-7);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 60%);
+	--md-code-hl-string-color:         hsl(330, 80%, 70%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-8);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-6);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-6);
+	--md-code-hl-comment-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
+}
+
+.highlighttable .linenodiv {
+	box-shadow: none;
+}
+
+.highlighttable .linenos {
+	box-shadow: inset -.05rem 0 var(--fusiondoc-grey-3);
+}
+
+.highlight .hll {
+	box-shadow:
+		inset 0.125rem 0 var(--fusiondoc-accent),
+		320px 0 var(--md-code-hl-color);
+
+}
+
+.highlighttable .linenodiv pre {
+	color: var(--fusiondoc-grey-6);
+}
+
+.highlight .md-clipboard {
+	color: transparent;
+}
+
+.highlight:hover .md-clipboard {
+	color: var(--fusiondoc-grey-5);
+}
+
+.highlight .md-clipboard:hover {
+	color: var(--fusiondoc-grey-10);
+}
+
+code:not(pre code, .highlight) {
+	background-color: var(--fusiondoc-bg-2) !important;
+	color: inherit !important;
+}

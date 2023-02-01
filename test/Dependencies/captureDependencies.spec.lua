@@ -42,10 +42,11 @@ return function()
 	end)
 
 	it("should return values from the callback", function()
-		local _, value = captureDependencies({}, function(...)
-			return "foo"
+		local _, value, value2 = captureDependencies({}, function(...)
+			return "foo", "bar"
 		end)
 
 		expect(value).to.equal("foo")
+		expect(value2).to.equal("bar")
 	end)
 end

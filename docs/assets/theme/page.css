@@ -1,0 +1,222 @@
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		scroll-behavior: smooth;
+	}
+
+	:root.fusiondoc-inhibit-smooth-scrolling {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	letter-spacing: -0.02em;
+}
+
+.md-header,
+.md-tabs {
+	color: var(--md-default-fg-color);
+	background-color: var(--md-default-bg-color);
+}
+
+.md-header[data-md-state=shadow] {
+	box-shadow: none !important;
+	background-color: var(--fusiondoc-bg-1-a80);
+	border-bottom: 1px solid var(--fusiondoc-stroke);
+	backdrop-filter: saturate(200%) blur(1rem);
+	transform: translateY(0.00000001px); /* fix weird blur darkening issue */
+}
+
+.md-tabs .md-tabs__link--active {
+	font-weight: 600;
+}
+
+@media screen and (min-width: 80rem) {
+	.md-grid {
+		margin-left: 2rem;
+		margin-right: 2rem;
+		max-width: none;
+	}
+
+	.md-content {
+		max-width: 40rem;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.md-sidebar:not([hidden]) + .md-content {
+		transform: translateX(-6.05rem);
+	}
+
+	.md-sidebar:not([hidden]) + .md-sidebar:not([hidden]) + .md-content {
+		transform: unset;
+	}
+
+	.md-footer__inner {
+		max-width: calc(40rem - 1rem);
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+.md-top {
+	box-shadow: none !important;
+	background-color: var(--fusiondoc-bg-1-a80);
+	border: 1px solid var(--fusiondoc-stroke);
+	backdrop-filter: saturate(200%) blur(1rem);
+}
+
+.md-top[data-md-state=hidden] {
+	transform: translate(-50%,-.2rem);
+	transition-duration: 125ms;
+}
+
+.md-top > svg {
+	transform: scale(75%);
+	margin-left: -0.25rem;
+}
+
+
+.md-banner {
+	background-color: var(--fusiondoc-accent-a20);
+	text-align: center;
+}
+
+.md-footer__inner {
+	font-weight: 600;
+}
+
+.md-footer__title,
+.md-footer__direction {
+	padding: 0;
+}
+
+.md-footer__button.md-icon {
+	margin-top: -0.25rem;
+	transform: translateX(0rem);
+	transition: transform 0.2s ease;
+}
+
+.md-footer__link--next:hover .md-footer__button.md-icon {
+	transform: translateX(0.5rem);
+}
+
+.md-footer__link--prev:hover .md-footer__button.md-icon {
+	transform: translateX(-0.5rem);
+}
+
+.md-search__overlay,
+.md-overlay {
+    background-color: var(--fusiondoc-smoke);
+}
+
+.md-search__form {
+	background-color: transparent;
+}
+
+.md-search__input::placeholder,
+.md-search__input+.md-search__icon {
+	color: var(--md-default-fg-color);
+}
+
+.md-header__topic {
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	font-size: 0.8em;
+}
+
+.md-header__topic .md-version {
+	font-size: inherit;
+}
+
+[dir=ltr] .md-header__title {
+	margin-left: 0rem;
+}
+
+[dir=rtl] .md-header__title {
+	margin-right: 0rem;
+}
+
+.md-header__title[data-md-state=active] .md-header__topic {
+    transform: translateY(0.5rem);
+}
+
+.md-header__title .md-header__topic+.md-header__topic {
+    transform: translateY(-0.5rem);
+}
+
+.md-search-result__meta {
+	background-color: var(--fusiondoc-bg-1);
+}
+
+.md-search-result__item {
+	box-shadow: none;
+}
+
+.md-search-result__teaser {
+	color: var(--fusiondoc-fg-3);
+}
+
+.md-search-result__title {
+	font-weight: 600 !important;
+}
+
+.md-copyright {
+	opacity: 0.5;
+}
+
+.md-copyright::after {
+	content: "∙ Theme by Elttob";
+}
+
+@media screen and (max-width: 76.1875em) {
+	.md-nav--primary .md-nav__item {
+		border-top: none;
+	}
+
+	.md-nav__source,
+	.md-nav--primary .md-nav__title[for=__drawer],
+	.md-nav__title {
+		background-color: transparent !important;
+		color: inherit !important;
+	}
+
+	.md-nav__title {
+		font-weight: 600 !important;
+	}
+
+	.md-nav--primary .md-nav__title~.md-nav__list {
+		box-shadow: none;
+	}
+}
+
+.md-input {
+	background: var(--fusiondoc-bg-2);
+}
+
+.md-input:not(:hover, :focus) {
+	border-bottom-color: var(--fusiondoc-grey-a10) !important;
+}
+
+.md-input:focus {
+	--md-accent-fg-color: var(--fusiondoc-accent);
+}
+
+.md-input::placeholder {
+	opacity: 1;
+	transform: translateX(0rem);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.md-input:focus::placeholder {
+	opacity: 0;
+	transform: translateX(1rem);
+}
+
+::selection {
+	background-color: var(--fusiondoc-orange-n1);
+	color: var(--fusiondoc-grey-10);
+}
+
+#fusiondoc-home {
+	opacity: 0;
+}

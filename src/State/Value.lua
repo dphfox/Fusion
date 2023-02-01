@@ -10,6 +10,7 @@ local Types = require(Package.Types)
 local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
+local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
 
@@ -36,21 +37,17 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
-	-- if the value hasn't changed, no need to perform extra work here
-	if self._value == newValue and not force then
-		return
+	local oldValue = self._value
+	if force or not isSimilar(oldValue, newValue) then
+		self._value = newValue
+		updateAll(self)
 	end
-
-	self._value = newValue
-
-	-- update any derived state objects if necessary
-	updateAll(self)
 end
 
 local function Value<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
 		type = "State",
-		kind = "State",
+		kind = "Value",
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),

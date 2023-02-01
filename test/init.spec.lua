@@ -6,18 +6,32 @@ return function()
 		expect(Fusion).to.be.a("table")
 
 		local api = {
+			version = "table",
+
 			New = "function",
+			Hydrate = "function",
+			Ref = "table",
+			Out = "function",
+			Cleanup = "table",
 			Children = "table",
 			OnEvent = "function",
 			OnChange = "function",
+			Attribute = "function",
+			AttributeChange = "function",
+			AttributeOut = "function",
 
 			Value = "function",
 			Computed = "function",
-			ComputedPairs = "function",
+			ForPairs = "function",
+			ForKeys = "function",
+			ForValues = "function",
 			Observer = "function",
 
 			Tween = "function",
-			Spring = "function"
+			Spring = "function",
+
+			cleanup = "function",
+			doNothing = "function"
 		}
 
 		for apiName, apiType in pairs(api) do

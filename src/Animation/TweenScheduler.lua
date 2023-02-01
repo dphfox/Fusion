@@ -52,12 +52,14 @@ local function updateAllTweens()
 			else
 				tween._currentValue = tween._nextValue
 			end
+			tween._currentlyAnimating = false
 			updateAll(tween)
 			TweenScheduler.remove(tween)
 		else
 			local ratio = getTweenRatio(tween._currentTweenInfo, currentTime)
 			local currentValue = lerpType(tween._prevValue, tween._nextValue, ratio)
 			tween._currentValue = currentValue
+			tween._currentlyAnimating = true
 			updateAll(tween)
 		end
 	end

@@ -1,0 +1,4 @@
+.md-typeset .admonition-title,
+.md-typeset summary {
+	background: none !important;
+}

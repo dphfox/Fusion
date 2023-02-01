@@ -60,7 +60,7 @@ not add value to the conversation, and only clutters the issue.
 ### Are you the first person to suggest it?
 
 - Make sure to search for open issues *and* closed issues - it's possible
-your idea was already suggested and rejected. 
+your idea was already suggested and rejected.
 
 - If you have a substantial case for why it should not have been rejected,
 feel free to add to the existing issue with your thoughts.

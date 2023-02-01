@@ -3,13 +3,45 @@ on:
   push:
     branches:
       - main
+
+env:
+  FUSION_VERSION: 0.3
+  FUSION_DEPLOY_TYPE: 'dev'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Python 3.x
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+
+      - name: Install MkDocs
+        run: pip install mkdocs-material==8.2.13
+
+      - name: Install mike
+        run: pip install mike==1.1.2
+
+      - name: Configure FusionDoc Git user
+        run: |
+          git config user.name fusiondoc
+          git config user.email fusiondoc@example.com
+
+      - name: Fetch gh-pages branch
+        run: git fetch origin gh-pages --depth=1
+
+      - name: Deploy latest documentation
+        if: env.FUSION_DEPLOY_TYPE == 'release'
+        run: mike deploy $FUSION_VERSION latest -u -b gh-pages
+
+      - name: Set default version to latest
+        if: env.FUSION_DEPLOY_TYPE == 'release'
+        run: mike set-default latest -b gh-pages -p
+
+      - name: Deploy developer documentation
+        if: env.FUSION_DEPLOY_TYPE == 'dev'
+        run: mike deploy $FUSION_VERSION -u -b gh-pages -p

@@ -4,18 +4,11 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local Computed = require(Package.State.Computed)
 local Value = require(Package.State.Value)
 
-local function waitForGC()
-	local ref = setmetatable({{}}, {__mode = "kv"})
-
-	repeat
-		RunService.Heartbeat:Wait()
-	until ref[1] == nil
-end
+local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a Computed object", function()
-		local computed = Computed(function()
-		end)
+		local computed = Computed(function() end)
 
 		expect(computed).to.be.a("table")
 		expect(computed.type).to.equal("State")
@@ -123,5 +116,22 @@ return function()
 		state:set(5)
 
 		expect(counter).to.equal(2)
+	end)
+
+	it("should call destructors when old values are replaced", function()
+		local didRun = false
+		local function destructor(x)
+			if x == "old" then
+				didRun = true
+			end
+		end
+
+		local value = Value("old")
+		local computed = Computed(function()
+			return value:get()
+		end, destructor)
+		value:set("new")
+
+		expect(didRun).to.equal(true)
 	end)
 end
