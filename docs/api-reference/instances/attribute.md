@@ -12,22 +12,32 @@
 	</span>
 </h1>
 
-Description
+A [special key](./specialkey.md) which allows you to connect UI objects
+to roblox's attribute system.
 
 -----
 
 ## Parameters
 
------
-
-## Returns
-
+```lua
+(attributeName: string) -> SpecialKey
+```
 -----
 
 ## Example Usage
+
+```lua
+local ammoValue = Value(10)
+local label = New "TextLabel" {
+	[Attribute "Ammo"] = ammoValue
+}
+
+print(label:GetAttribute("Ammo")) -- 10
+```
 
 -----
 
 ## Technical Details
 
+This special key runs at the `self` stage. Due to the fact that it operates on the instance itself.
 -----
