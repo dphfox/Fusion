@@ -42,7 +42,7 @@ issue if we don't know anything about it.
 - Please include simple, clear and easy-to-follow reproduction steps. You
 can include a .rbxl file to help us see the bug in action.
 
-## We'll work with you to solve it
+### We'll work with you to solve it
 
 - The issue will be closed when a fix has been implemented, verified to work
 and is merged into a main branch of Fusion.
