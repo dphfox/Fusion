@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Value = require(Package.State.Value)
-local Computed = require(Package.State.Computed)
+local ForValues = require(Package.State.ForValues)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
@@ -35,12 +35,13 @@ return function()
 
 	it("should not garbage-collect objects in use", function()
 		local value = setmetatable({ { 2 } }, { __mode = "kv" })
-		local computed = Computed(Value(value[1]), function(innerValue)
+		local transformed = ForValues(Value(value[1]), function(innerValue)
 			return innerValue[1] + 1
 		end)
 
 		waitForGC()
 
 		expect(value[1]).never.to.equal(nil)
+		expect(transformed:get()[1]).to.equal(3)
 	end)
 end
