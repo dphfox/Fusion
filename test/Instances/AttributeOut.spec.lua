@@ -4,7 +4,7 @@ local Attribute = require(Package.Instances.Attribute)
 local AttributeOut = require(Package.Instances.AttributeOut)
 local Value = require(Package.State.Value)
 
-return function ()
+return function()
 	it("should update when attributes are changed externally", function()
 		local attributeValue = Value()
 		local child = New "Folder" {

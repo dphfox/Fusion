@@ -4,7 +4,7 @@ local New = require(Package.Instances.New)
 local Attribute = require(Package.Instances.Attribute)
 local Value = require(Package.State.Value)
 
-return function ()
+return function()
     it("should create attributes (constant)", function()
         local child = New "Folder" {
             [Attribute "Foo"] = "Bar"
