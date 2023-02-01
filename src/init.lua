@@ -30,6 +30,9 @@ type Fusion = {
 	Out: (propertyName: string) -> PubTypes.SpecialKey,
 	OnEvent: (eventName: string) -> PubTypes.SpecialKey,
 	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
+	Attribute: (attributeName: string) -> PubTypes.SpecialKey,
+	AttributeChange: (attributeName: string) -> PubTypes.SpecialKey,
+	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
 	Computed: <T>(callback: () -> T, destructor: (T) -> ()?) -> Computed<T>,
@@ -56,6 +59,9 @@ return restrictRead("Fusion", {
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
+	Attribute = require(script.Instances.Attribute),
+	AttributeChange = require(script.Instances.AttributeChange),
+	AttributeOut = require(script.Instances.AttributeOut),
 
 	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),

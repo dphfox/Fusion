@@ -16,6 +16,9 @@ return function()
 			Children = "table",
 			OnEvent = "function",
 			OnChange = "function",
+			Attribute = "function",
+			AttributeChange = "function",
+			AttributeOut = "function",
 
 			Value = "function",
 			Computed = "function",
