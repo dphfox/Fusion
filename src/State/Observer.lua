@@ -69,7 +69,7 @@ end
 ]]
 function class:onBind(callback: () -> ()): () -> ()
 	task.spawn(callback)
-	self:onChange(callback)
+	return self:onChange(callback)
 end
 
 local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
