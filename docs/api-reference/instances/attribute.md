@@ -22,6 +22,7 @@ to roblox's attribute system.
 ```lua
 (attributeName: string) -> SpecialKey
 ```
+
 -----
 
 ## Example Usage
@@ -40,4 +41,5 @@ print(label:GetAttribute("Ammo")) -- 10
 ## Technical Details
 
 This special key runs at the `self` stage. Due to the fact that it operates on the instance itself.
+
 -----
