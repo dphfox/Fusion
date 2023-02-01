@@ -75,6 +75,8 @@ numCoins:set(25) -- prints 'coins is now: 25'
 disconnect()
 ```
 
+-----
+
 <p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.3</span>
 </p>
@@ -93,6 +95,7 @@ observer and to watch changes for it.
 #### Parameters
 
 - `callback` - The function to call when a change is observed **and** when the observer is created
+
 -----
 
 ## Example Usage
