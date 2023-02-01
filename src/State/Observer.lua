@@ -63,6 +63,15 @@ function class:onChange(callback: () -> ()): () -> ()
 	end
 end
 
+--[[
+	Similar to `class:onChange()`, however it runs the provided callback
+	immediately.
+]]
+function class:onBind(callback: () -> ()): () -> ()
+	task.spawn(callback)
+	self:onChange(callback)
+end
+
 local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 	local self = setmetatable({
 		type = "State",
