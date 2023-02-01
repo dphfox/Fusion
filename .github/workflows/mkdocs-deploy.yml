@@ -35,13 +35,13 @@ jobs:
         run: git fetch origin gh-pages --depth=1
 
       - name: Deploy latest documentation
-        if: $FUSION_IS_RELEASE
+        if: env.FUSION_IS_RELEASE
         run: mike deploy $FUSION_VERSION latest -u -b gh-pages
 
       - name: Set default version to latest
-        if: $FUSION_IS_RELEASE
+        if: env.FUSION_IS_RELEASE
         run: mike set-default latest -b gh-pages -p
 
       - name: Deploy developer documentation
-        if: !$FUSION_IS_RELEASE
+        if: !env.FUSION_IS_RELEASE
         run: mike deploy $FUSION_VERSION -u -b gh-pages -p
