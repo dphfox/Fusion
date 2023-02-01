@@ -112,6 +112,9 @@ nav:
       - Value: api-reference/state/value.md
     - Instances:
       - api-reference/instances/index.md
+      - Attribute: api-reference/instances/attribute.md
+      - AttributeChange: api-reference/instances/attributeChange.md
+      - AttributeOut: api-reference/instances/attributeOut.md
       - Child: api-reference/instances/child.md
       - Children: api-reference/instances/children.md
       - Cleanup: api-reference/instances/cleanup.md
