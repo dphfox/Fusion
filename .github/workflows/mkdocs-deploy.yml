@@ -5,7 +5,8 @@ on:
       - main
 
 env:
-  FUSION_VERSION: 0.2
+  FUSION_VERSION: 0.3
+  FUSION_IS_RELEASE: false
 
 jobs:
   deploy:
@@ -33,8 +34,14 @@ jobs:
       - name: Fetch gh-pages branch
         run: git fetch origin gh-pages --depth=1
 
-      - name: Deploy documentation
+      - name: Deploy latest documentation
+        if: FUSION_IS_RELEASE
         run: mike deploy $FUSION_VERSION latest -u -b gh-pages
 
       - name: Set default version to latest
+        if: FUSION_IS_RELEASE
         run: mike set-default latest -b gh-pages -p
+
+      - name: Deploy developer documentation
+        if: !FUSION_IS_RELEASE
+        run: mike deploy $FUSION_VERSION -u -b gh-pages -p
