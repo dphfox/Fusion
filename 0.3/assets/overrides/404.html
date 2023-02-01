@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+
+<!-- Content -->
+{% block content %}
+  <div class="fusion-404">
+	<h1>
+		<img src="/Fusion/assets/404.svg" alt="404">
+		404
+	</h1>
+	<p>
+		We couldn't find that page - it might have been moved or deleted.
+	</p>
+	<p>
+		Here's some ideas on how to find it:
+		<ul>
+			<li>
+				Make sure there's no typos in the URL.
+			</li>
+			<li>
+				Use the search box above to try and find the page.
+			</li>
+			<li>
+				The page might not exist yet!
+			</li>
+		</ul>
+		Alternatively, <a href="/">return to the main page instead.</a>
+	</p>
+  </div>
+{% endblock %}
+
+<!-- Disqus integration -->
+{% block disqus %}{% endblock %}

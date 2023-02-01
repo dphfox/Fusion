@@ -1,0 +1,36 @@
+* {
+	--md-default-fg-color:               var(--fusiondoc-fg-1);
+	--md-default-fg-color--light:        var(--fusiondoc-fg-2);
+	--md-default-fg-color--lighter:      var(--fusiondoc-fg-3);
+	--md-default-fg-color--lightest:     var(--fusiondoc-fg-3);
+	--md-default-bg-color:               var(--fusiondoc-bg-1);
+	--md-default-bg-color--light:        var(--fusiondoc-bg-2);
+	--md-default-bg-color--lighter:      var(--fusiondoc-bg-3);
+	--md-default-bg-color--lightest:     var(--fusiondoc-bg-3);
+
+	--md-primary-fg-color:               var(--fusiondoc-accent);
+	--md-primary-fg-color--light:        var(--fusiondoc-accent-light);
+	--md-primary-fg-color--dark:         var(--fusiondoc-accent-dark);
+
+	--md-accent-fg-color:                var(--fusiondoc-accent-hover);
+	--md-accent-fg-color--transparent:   var(--fusiondoc-accent-hover-a10);
+
+	--md-typeset-color:                var(--md-default-fg-color);
+	--md-typeset-a-color:              var(--md-primary-fg-color);
+	--md-typeset-mark-color:           var(--fusiondoc-orange-alpha50);
+	--md-typeset-del-color:            hsla(6, 90%, 60%, 0.15);
+	--md-typeset-ins-color:            hsla(150, 90%, 44%, 0.15);
+	--md-typeset-kbd-color:            hsla(0, 0%, 98%, 1);
+	--md-typeset-kbd-accent-color:     hsla(0, 100%, 100%, 1);
+	--md-typeset-kbd-border-color:     hsla(0, 0%, 72%, 1);
+	--md-typeset-table-color:          hsla(0, 0%, 0%, 0.12);
+
+	--md-admonition-fg-color:          var(--fusiondoc-fg-1);
+	--md-admonition-bg-color:          var(--fusiondoc-bg-2);
+
+	--md-footer-fg-color:              var(--fusiondoc-fg-2);
+	--md-footer-fg-color--light:       var(--fusiondoc-fg-2);
+	--md-footer-fg-color--lighter:     var(--fusiondoc-fg-2);
+	--md-footer-bg-color:              var(--fusiondoc-bg-1);
+	--md-footer-bg-color--dark:        var(--fusiondoc-bg-1);
+  }
