@@ -74,3 +74,41 @@ numCoins:set(25) -- prints 'coins is now: 25'
 -- always clean up your connections!
 disconnect()
 ```
+
+<p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+### :octicons-code-24: Observer:onBind()
+
+Works the same as `:onChange()`, however it run's the specified callback
+immediately.
+
+This modified method is better to be used when using the same function to initialise an
+observer and to watch changes for it.
+
+```Lua
+(callback: () -> ()) -> (() -> ())
+```
+#### Parameters
+
+- `callback` - The function to call when a change is observed **and** when the observer is created
+-----
+
+## Example Usage
+
+```Lua
+local someValue = Value("")
+
+function update()
+	someObject.Text = someValue:get()
+end
+
+Observer(someValue):onBind(update)
+
+--[[
+	Instead of:
+	update()
+	Observer(someValue):onChange(update)
+]]
+```
