@@ -36,3 +36,9 @@ print(label:GetAttribute("Ammo")) -- 10
 ```
 
 -----
+
+## Technical Details
+
+This special key runs at the `self` stage.
+
+-----
