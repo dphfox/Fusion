@@ -13,7 +13,8 @@ return {
 
 	BillboardGui = {
 		ResetOnSpawn = false,
-		ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		Active = true
 	},
 
 	SurfaceGui = {
