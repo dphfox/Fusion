@@ -16,8 +16,6 @@ Given an attribute name, returns a [special key](./specialkey.md) which outputs 
 attribute's with that name. It should be used with a [value](../state/value.md) otherwise an error
 will be thrown.
 
-This function must be used with the [attribute](./attribute.md) special key otherwise the callback will never run.
-
 ```Lua
 (attributeName: string) -> SpecialKey
 ```
