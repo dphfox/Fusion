@@ -12,8 +12,7 @@
 	</span>
 </h1>
 
-A [special key](./specialkey.md) which allows you to connect UI objects
-to roblox's attribute system.
+A [special key](./specialkey.md) for adding attributes to instances.
 
 -----
 
@@ -35,11 +34,5 @@ local label = New "TextLabel" {
 
 print(label:GetAttribute("Ammo")) -- 10
 ```
-
------
-
-## Technical Details
-
-This special key runs at the `self` stage. Due to the fact that it operates on the instance itself.
 
 -----

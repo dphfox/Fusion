@@ -43,13 +43,13 @@ Utilities for connecting state objects to instances via code.
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 
-<a class="fusiondoc-api-index-link" href="attributeChange" markdown>
+<a class="fusiondoc-api-index-link" href="attributechange" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
 	<span class="fusiondoc-api-name">AttributeChange</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 
-<a class="fusiondoc-api-index-link" href="attributeOut" markdown>
+<a class="fusiondoc-api-index-link" href="attributeout" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
 	<span class="fusiondoc-api-name">AttributeOut</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>

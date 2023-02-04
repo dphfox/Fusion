@@ -83,11 +83,7 @@ disconnect()
 
 ### :octicons-code-24: Observer:onBind()
 
-Works the same as `:onChange()`, however it run's the specified callback
-immediately.
-
-This modified method is better to be used when using the same function to initialise an
-observer and to watch changes for it.
+Connects the given callback as a change handler, and returns a function which will disconnect the callback. The callback is run immediately, and re-run whenever the observed dependency is updated.
 
 ```Lua
 (callback: () -> ()) -> (() -> ())
@@ -95,6 +91,15 @@ observer and to watch changes for it.
 #### Parameters
 
 - `callback` - The function to call when a change is observed **and** when the observer is created
+
+!!! caution "Connection memory leaks"
+	Make sure to disconnect any change handlers made using this function once
+	you're done using them.
+
+	As long as a change handler is connected, this observer and the dependency
+	it observes will be held in memory in case further changes occur. This means,
+	if you don't call the disconnect function, you may end up accidentally
+	holding your state objects in memory forever after you're done using them.
 
 -----
 
@@ -108,10 +113,4 @@ function update()
 end
 
 Observer(someValue):onBind(update)
-
---[[
-	Instead of:
-	update()
-	Observer(someValue):onChange(update)
-]]
 ```

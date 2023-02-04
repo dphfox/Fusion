@@ -15,8 +15,6 @@
 Given an attribute name, returns a [special key](./specialkey.md) which connects
 to that attribute's change events.
 
-This function must be used with the [attribute](./attribute.md) special key otherwise the callback will never run.
-
 ```Lua
 (attributeName: string) -> SpecialKey
 ```
@@ -40,12 +38,9 @@ The handler is run with the attributes's value after every change.
 ## Example Usage
 
 ```Lua
-local currentBoxState = Value("enabled")
-
 New "TextBox" {
-	[Attribute "State"] = currentBoxState,
     [AttributeChange "State"] = function(newValue)
-        print("State:", newValue)
+        print("The state attribute changed to:", newValue)
     end
 }
 ```
