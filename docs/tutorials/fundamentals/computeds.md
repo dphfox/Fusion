@@ -1,20 +1,20 @@
 Computeds are state objects that can process values from other state objects.
-You pass in a callback which calculates the final value. Then, you can use
-`:get()` to retrieve that value at any time.
+You pass in a callback to define a calculation. Then, you can use
+`peek()` to read the result of the calculation at any time.
 
 ```Lua
 local numCoins = Value(50)
 local itemPrice = Value(10)
 
-local finalCoins = Computed(function()
-    return numCoins:get() - itemPrice:get()
+local finalCoins = Computed(function(use)
+    return use(numCoins) - use(itemPrice)
 end)
 
-print(finalCoins:get()) --> 40
+print(peek(finalCoins)) --> 40
 
 numCoins:set(25)
 itemPrice:set(15)
-print(finalCoins:get()) --> 10
+print(peek(finalCoins)) --> 10
 ```
 
 -----
@@ -29,39 +29,64 @@ local Fusion = require(ReplicatedStorage.Fusion)
 local Computed = Fusion.Computed
 ```
 
-To create a new computed object, call the `Computed` function and pass it a
-callback returning a single value:
+To create a new computed object, call the `Computed` function. You need to give
+it a callback representing the calculation - for now, we'll add two numbers:
 
 ```Lua
-local hardMaths = Computed(function()
+local hardMaths = Computed(function(use)
     return 1 + 1
 end)
 ```
 
-The value your callback returns will be stored as the computed's value. You can
-get the computed's current value using `:get()`:
+The value the callback returns will be stored as the computed's value. You can
+get the computed's current value using `peek()`:
 
 ```Lua
-print(hardMaths:get()) --> 2
+print(peek(hardMaths)) --> 2
 ```
 
-By default, a computed only runs its callback once. However, Fusion can detect
-any time you call `:get()` on a state object inside the callback. If any of them
-change value, the callback will be re-run and the value will update:
+The calculation is only run once by default. Using `peek()` might not work how
+you expect it to!
 
 ```Lua
 local number = Value(2)
-local double = Computed(function()
-    return number:get() * 2
+local double = Computed(function(use)
+    return peek(number) * 2
 end)
 
-print(number:get(), "* 2 =", double:get()) --> 2 * 2 = 4
+-- The calculation runs once by default.
+print(peek(number), peek(double)) --> 2 4
 
+-- The calculation won't re-run! Oh no!
 number:set(10)
-print(number:get(), "* 2 =", double:get()) --> 10 * 2 = 20
+print(peek(number), peek(double)) --> 10 4
+```
 
-number:set(-5)
-print(number:get(), "* 2 =", double:get()) --> -5 * 2 = -10
+This is where the `use` parameter comes in (see line 2 above). If you want your
+calculation to re-run when your objects change value, pass the object to `use()`:
+
+```Lua
+local number = Value(2)
+local double = Computed(function(use)
+	use(number) -- the calculation will re-run when `number` changes value
+    return peek(number) * 2
+end)
+
+print(peek(number), peek(double)) --> 2 4
+
+-- Now it re-runs!
+number:set(10)
+print(peek(number), peek(double)) --> 10 20
+```
+
+For convenience, `use()` will also read the value, just like `peek()`, so you
+can easily replace `peek()` calls with `use()` calls:
+
+```Lua
+local number = Value(2)
+local double = Computed(function(use)
+    return use(number) * 2 -- works identically to before
+end)
 ```
 
 -----
@@ -88,9 +113,9 @@ a derived value, `finalCoins`, which equals `numCoins - itemPrice` at all times:
 local numCoins = Value(50)
 local itemPrice = Value(10)
 
-local finalCoins = Value(numCoins:get() - itemPrice:get())
+local finalCoins = Value(peek(numCoins) - peek(itemPrice))
 local function updateFinalCoins()
-    finalCoins:set(numCoins:get() - itemPrice:get())
+    finalCoins:set(peek(numCoins) - peek(itemPrice))
 end
 Observer(numCoins):onChange(updateFinalCoins)
 Observer(itemPrice):onChange(updateFinalCoins)
@@ -112,14 +137,14 @@ When written with computeds, the above problems are largely solved:
 local numCoins = Value(50)
 local itemPrice = Value(10)
 
-local finalCoins = Computed(function()
-    return numCoins:get() - itemPrice:get()
+local finalCoins = Computed(function(use)
+    return use(numCoins) - use(itemPrice)
 end)
 ```
 
 - The intent is immediately clear - this is a derived value.
 - The logic is only specified once, in one callback.
-- The computed updates itself when a state object you `:get()` changes value.
+- The computed updates itself when a state object you `use()` changes value.
 - The callback is the only thing that can change the value - there is no `:set()`
 method.
 
@@ -135,21 +160,21 @@ method.
 
     ```Lua
     local numCoins = Value(50)
-    local isEnoughCoins = Computed(function()
-        return numCoins:get() > 25
+    local isEnoughCoins = Computed(function(use)
+        return use(numCoins) > 25
     end)
 
-    local message = Computed(function()
-        if isEnoughCoins:get() then
-            return numCoins:get() .. " is enough coins."
+    local message = Computed(function(use)
+        if use(isEnoughCoins) then
+            return use(numCoins) .. " is enough coins."
         else
-            return numCoins:get() .. " is NOT enough coins."
+            return use(numCoins) .. " is NOT enough coins."
         end
     end)
 
-    print(message:get()) --> 50 is enough coins.
+    print(peek(message)) --> 50 is enough coins.
     numCoins:set(2)
-    print(message:get()) --> 2 is NOT enough coins.
+    print(peek(message)) --> 2 is NOT enough coins.
     ```
 
     If a delay is introduced, then inconsistencies and nonsense values could
@@ -157,22 +182,22 @@ method.
 
     ```Lua hl_lines="3 17"
     local numCoins = Value(50)
-    local isEnoughCoins = Computed(function()
-        wait(5) -- Don't do this! This is just for the example
-        return numCoins:get() > 25
+    local isEnoughCoins = Computed(function(use)
+        task.wait(5) -- Don't do this! This is just for the example
+        return use(numCoins) > 25
     end)
 
-    local message = Computed(function()
-        if isEnoughCoins:get() then
-            return numCoins:get() .. " is enough coins."
+    local message = Computed(function(use)
+        if use(isEnoughCoins) then
+            return use(numCoins) .. " is enough coins."
         else
-            return numCoins:get() .. " is NOT enough coins."
+            return use(numCoins) .. " is NOT enough coins."
         end
     end)
 
-    print(message:get()) --> 50 is enough coins.
+    print(peek(message)) --> 50 is enough coins.
     numCoins:set(2)
-    print(message:get()) --> 2 is enough coins.
+    print(peek(message)) --> 2 is enough coins.
     ```
 
     For this reason, yielding in computed callbacks is disallowed.
@@ -186,25 +211,25 @@ method.
     local isEnoughCoins = Value(nil)
     local function updateIsEnoughCoins()
         isEnoughCoins:set(nil) -- indicate that we're calculating the value
-        wait(5) -- this is now ok
-        isEnoughCoins:set(numCoins:get() > 25)
+        task.wait(5) -- this is now ok
+        isEnoughCoins:set(peek(numCoins) > 25)
     end
     task.spawn(updateIsEnoughCoins)
     Observer(numCoins):onChange(updateIsEnoughCoins)
 
     local message = Computed(function()
-        if isEnoughCoins:get() == nil then
+        if peek(isEnoughCoins) == nil then
             return "Loading..."
-        elseif isEnoughCoins:get() then
-            return numCoins:get() .. " is enough coins."
+        elseif peek(isEnoughCoins) then
+            return peek(numCoins) .. " is enough coins."
         else
-            return numCoins:get() .. " is NOT enough coins."
+            return peek(numCoins) .. " is NOT enough coins."
         end
     end)
 
-    print(message:get()) --> 50 is enough coins.
+    print(peek(message)) --> 50 is enough coins.
     numCoins:set(2)
-    print(message:get()) --> Loading...
-    wait(5)
-    print(message:get()) --> 2 is NOT enough coins.
+    print(peek(message)) --> Loading...
+    task.wait(5)
+    print(peek(message)) --> 2 is NOT enough coins.
     ```
