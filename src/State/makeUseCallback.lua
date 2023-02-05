@@ -9,10 +9,12 @@ local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local xtypeof = require(Package.Utility.xtypeof)
 
-local function makeUseCallback(owner: PubTypes.Dependent)
+type Set<T> = {[T]: any}
+
+local function makeUseCallback(dependencySet: Set<PubTypes.Dependency>)
 	local function use<T>(target: PubTypes.CanBeState<T>): T
 		if xtypeof(target) == "State" then
-			owner.dependencySet[target] = true
+			dependencySet[target] = true
 			return (target :: Types.StateObject<T>):_peek()
 		else
 			return target

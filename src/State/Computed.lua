@@ -13,6 +13,7 @@ local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
 local makeUseCallback = require(Package.State.makeUseCallback)
+local parseError = require(Package.Logging.parseError)
 
 local class = {}
 
@@ -36,7 +37,7 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue, newMetaValue = pcall(self._processor, self._use)
+	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, self._use)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
@@ -85,19 +86,20 @@ function class:_peek(): any
 end
 
 local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+	local dependencySet = {}
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
-		dependencySet = {},
+		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_value = nil
+		_value = nil,
+		_use = makeUseCallback(dependencySet)
 	}, CLASS_METATABLE)
-	self._use = makeUseCallback(self)
 
 	self:update()
 
