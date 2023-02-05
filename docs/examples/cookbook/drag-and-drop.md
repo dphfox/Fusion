@@ -39,7 +39,7 @@ export type CurrentlyDragging = {
 	offset: Vector2
 }
 -- This state object stores the above during a drag, or `nil` when not dragging.
-local currentlyDragging = Value(nil :: CurrentlyDragging?)
+local currentlyDragging: Value<CurrentlyDragging?> = Value(nil)
 
 -- Now we need a component to encapsulate all of our dragging behaviour, such
 -- as moving our UI between different parents, placing it at the mouse cursor,
