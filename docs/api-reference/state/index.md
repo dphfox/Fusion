@@ -39,6 +39,12 @@ Fundamental state objects and utilities for working with reactive graphs.
 	<span class="fusiondoc-api-name">StateObject</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
+
+<a class="fusiondoc-api-index-link" href="use" markdown>
+	<span class="fusiondoc-api-icon" markdown>:octicons-checklist-24:</span>
+	<span class="fusiondoc-api-name">Use</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
 </div>
 
 <div class="fusiondoc-index-multicol-section" markdown>
@@ -53,6 +59,12 @@ Fundamental state objects and utilities for working with reactive graphs.
 <a class="fusiondoc-api-index-link" href="donothing" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
 	<span class="fusiondoc-api-name">doNothing</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
+
+<a class="fusiondoc-api-index-link" href="peek" markdown>
+	<span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
+	<span class="fusiondoc-api-name">peek</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 </div>
