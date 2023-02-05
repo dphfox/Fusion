@@ -13,8 +13,7 @@
 </h1>
 
 Given an attribute name, returns a [special key](./specialkey.md) which outputs the value of
-attribute's with that name. It should be used with a [value](../state/value.md) otherwise an error
-will be thrown.
+attribute's with that name. It should be used with a [value](../state/value.md) object.
 
 ```Lua
 (attributeName: string) -> SpecialKey
@@ -41,8 +40,8 @@ listens for further changes and updates the value object accordingly.
 ```Lua
 local ammo = Value()
 
-New "TextBox" {
-	[Attribute "Ammo"] = 50,
+New "Configuration" {
+    [Attribute "Ammo"] = ammo,
     [AttributeOut "Ammo"] = ammo
 }
 

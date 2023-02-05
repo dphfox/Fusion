@@ -31,7 +31,7 @@ to that attribute's change events.
 
 A special key which runs at the `observer` stage. When applied to an instance,
 it connects to the attribute change signal on the instance for the given property.
-The handler is run with the attributes's value after every change.
+The handler is run with the attribute's value after every change.
 
 -----
 
