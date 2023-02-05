@@ -82,7 +82,7 @@ export type CanBeState<T> = StateObject<T> | T
 
 -- A state object whose value can be set at any time by the user.
 export type Value<T> = StateObject<T> & {
-	kind: "State"
+	kind: "State",
  	set: (Value<T>, newValue: any, force: boolean?) -> ()
 }
 
