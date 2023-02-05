@@ -7,14 +7,14 @@ The input table can be a state object, and the output keys can use state objects
 local data = {Red = "foo", Blue = "bar"}
 local prefix = Value("Key_")
 
-local renamed = ForKeys(data, function(key)
-	return prefix:get() .. key
+local renamed = ForKeys(data, function(use, key)
+	return use(prefix) .. key
 end)
 
-print(renamed:get()) --> {Key_Red = "foo", Key_Blue = "bar"}
+print(peek(renamed)) --> {Key_Red = "foo", Key_Blue = "bar"}
 
 prefix:set("colour")
-print(renamed:get()) --> {colourRed = "foo", colourBlue = "bar"}
+print(peek(renamed)) --> {colourRed = "foo", colourBlue = "bar"}
 ```
 
 -----
@@ -36,21 +36,24 @@ a processor function:
 
 ```Lua
 local data = {red = "foo", blue = "bar"}
-local renamed = ForKeys(data, function(key)
+local renamed = ForKeys(data, function(use, key)
 	return string.upper(key)
 end)
 ```
 
 This will generate a new table, where each key is replaced using the processor
-function. You can get the table using the `:get()` method:
+function. The first argument is `use`, similar to a computed, and the
+second argument is one of the keys from the input table.
+
+You can read the processed table using `peek()`:
 
 ```Lua hl_lines="6"
 local data = {red = "foo", blue = "bar"}
-local renamed = ForKeys(data, function(key)
+local renamed = ForKeys(data, function(use, key)
 	return string.upper(key)
 end)
 
-print(renamed:get()) --> {RED = "foo", BLUE = "bar"}
+print(peek(renamed)) --> {RED = "foo", BLUE = "bar"}
 ```
 
 ### State Objects
@@ -60,31 +63,31 @@ will update as the input table is changed:
 
 ```Lua
 local playerSet = Value({})
-local userIdSet = ForKeys(playerSet, function(player)
+local userIdSet = ForKeys(playerSet, function(use, player)
 	return player.UserId
 end)
 
 playerSet:set({ [Players.Elttob] = true })
-print(userIdSet:get()) --> {[1670764] = true}
+print(peek(userIdSet)) --> {[1670764] = true}
 
 playerSet:set({ [Players.boatbomber] = true, [Players.EgoMoose] = true })
-print(userIdSet:get()) --> {[33655127] = true, [2155311] = true}
+print(peek(userIdSet)) --> {[33655127] = true, [2155311] = true}
 ```
 
-Additionally, you can use state objects in your calculations, just like a
+Additionally, you can `use()` state objects in your calculations, just like a
 computed:
 
 ```Lua
 local playerSet = { [Players.boatbomber] = true, [Players.EgoMoose] = true }
 local prefix = Value("User_")
-local userIdSet = ForKeys(playerSet, function(player)
-	return prefix .. player.UserId
+local userIdSet = ForKeys(playerSet, function(use, player)
+	return use(prefix) .. player.UserId
 end)
 
-print(userIdSet:get()) --> {User_33655127 = true, User_2155311 = true}
+print(peek(userIdSet)) --> {User_33655127 = true, User_2155311 = true}
 
 prefix:set("player")
-print(userIdSet:get()) --> {player33655127 = true, player2155311 = true}
+print(peek(userIdSet)) --> {player33655127 = true, player2155311 = true}
 ```
 
 ### Cleanup Behaviour
@@ -98,9 +101,9 @@ local eventSet = Value({
 	[RunService.Heartbeat] = true
 })
 
-local connectionSet = ForKeys(eventSet, 
+local connectionSet = ForKeys(eventSet,
 	-- processor
-	function(event)
+	function(use, event)
 		local eventName = tostring(event)
 		local connection = event:Connect(function(...)
 			print(eventName, "fired with arguments:", ...)
@@ -128,9 +131,9 @@ local eventSet = Value({
 	[RunService.Heartbeat] = true
 })
 
-local connectionSet = ForKeys(eventSet, 
+local connectionSet = ForKeys(eventSet,
 	-- processor
-	function(event)
+	function(use, event)
 		local eventName = tostring(event)
 		local connection = event:Connect(function(...)
 			print(eventName, "fired with arguments:", ...)
@@ -163,11 +166,11 @@ For example, let's say we're converting an array to a dictionary:
 
 ```Lua
 local array = Value({"Fusion", "Knit", "Matter"})
-local dict = ForKeys(array, function(index)
+local dict = ForKeys(array, function(use, index)
 	return "Value" .. index
 end)
 
-print(dict:get()) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
 ```
 
 Because `ForKeys` only operates on the keys, changing the values in the array
@@ -175,14 +178,14 @@ doesn't affect the keys. Keys are only added or removed as needed:
 
 ```Lua
 local array = Value({"Fusion", "Knit", "Matter"})
-local dict = ForKeys(array, function(index)
+local dict = ForKeys(array, function(use, index)
 	return "Value" .. index
 end)
 
-print(dict:get()) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
 
 array:set({"Roact", "Rodux"})
-print(dict:get()) --> {Value1 = "Roact", Value2 = "Rodux"}
+print(peek(dict)) --> {Value1 = "Roact", Value2 = "Rodux"}
 ```
 
 `ForKeys` takes advantage of this - when a value changes, it's copied into the
