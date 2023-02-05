@@ -8,29 +8,16 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local captureDependencies = require(Package.Dependencies.captureDependencies)
-local initDependency = require(Package.Dependencies.initDependency)
-local useDependency = require(Package.Dependencies.useDependency)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
+local makeUseCallback = require(Package.State.makeUseCallback)
 
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
-
---[[
-	Returns the last cached value calculated by this Computed object.
-	The computed object will be registered as a dependency unless `asDependency`
-	is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._value
-end
 
 --[[
 	Recalculates this Computed's cached value and dependencies.
@@ -49,7 +36,7 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue, newMetaValue = captureDependencies(self.dependencySet, self._processor)
+	local ok, newValue, newMetaValue = pcall(self._processor, self._use)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
@@ -90,6 +77,13 @@ function class:update(): boolean
 	end
 end
 
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._value
+end
+
 local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
 	local self = setmetatable({
 		type = "State",
@@ -101,10 +95,10 @@ local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_value = nil,
+		_value = nil
 	}, CLASS_METATABLE)
+	self._use = makeUseCallback(self)
 
-	initDependency(self)
 	self:update()
 
 	return self
