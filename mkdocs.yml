@@ -103,7 +103,7 @@ nav:
       - cleanup: api-reference/state/cleanup.md
       - Dependency: api-reference/state/dependency.md
       - Dependent: api-reference/state/dependent.md
-      - doNothing: api-reference/state/doNothing.md
+      - doNothing: api-reference/state/donothing.md
       - ForKeys: api-reference/state/forkeys.md
       - ForPairs: api-reference/state/forpairs.md
       - ForValues: api-reference/state/forvalues.md
@@ -112,6 +112,9 @@ nav:
       - Value: api-reference/state/value.md
     - Instances:
       - api-reference/instances/index.md
+      - Attribute: api-reference/instances/attribute.md
+      - AttributeChange: api-reference/instances/attributechange.md
+      - AttributeOut: api-reference/instances/attributeout.md
       - Child: api-reference/instances/child.md
       - Children: api-reference/instances/children.md
       - Cleanup: api-reference/instances/cleanup.md
