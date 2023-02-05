@@ -110,7 +110,7 @@ nav:
       - Observer: api-reference/state/observer.md
       - peek: api-reference/state/peek.md
       - StateObject: api-reference/state/stateobject.md
-      - use: api-reference/state/use.md
+      - Use: api-reference/state/use.md
       - Value: api-reference/state/value.md
     - Instances:
       - api-reference/instances/index.md
