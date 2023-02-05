@@ -82,7 +82,7 @@ end
 	changed.
 ]]
 function class:update(): boolean
-	local goalValue = self._goalState:get(false)
+	local goalValue = peek(self._goalState)
 
 	-- figure out if this was a goal change or a speed/damping change
 	if goalValue == self._goalValue then
