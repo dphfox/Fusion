@@ -53,9 +53,9 @@ Now, let's make a `Computed` which generates that list of text labels for us:
 ```Lua linenums="1" hl_lines="3-13"
 local playerNames = Value({"Elttob", "boatbomber", "thisfall", "AxisAngles"})
 
-local textLabels = Computed(function()
+local textLabels = Computed(function(use)
     local out = {}
-    for index, playerName in playerNames:get() do
+    for index, playerName in use(playerNames) do
         out[index] = New "TextLabel" {
             Name = playerName,
             Size = UDim2.new(1, 0, 0, 50),
