@@ -58,25 +58,6 @@ dependency is updated.
 
 -----
 
-## Example Usage
-
-```Lua
-local numCoins = Value(50)
-
-local coinObserver = Observer(numCoins)
-
-local disconnect = coinObserver:onChange(function()
-	print("coins is now:", numCoins:get())
-end)
-
-numCoins:set(25) -- prints 'coins is now: 25'
-
--- always clean up your connections!
-disconnect()
-```
-
------
-
 <p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.3</span>
 </p>
@@ -106,11 +87,29 @@ Connects the given callback as a change handler, and returns a function which wi
 ## Example Usage
 
 ```Lua
+local numCoins = Value(50)
+
+local coinObserver = Observer(numCoins)
+
+local disconnect = coinObserver:onChange(function()
+	print("coins is now:", peek(numCoins))
+end)
+
+numCoins:set(25) -- prints 'coins is now: 25'
+
+-- always clean up your connections!
+disconnect()
+```
+
+```Lua
 local someValue = Value("")
 
 function update()
-	someObject.Text = someValue:get()
+	someObject.Text = peek(someValue)
 end
 
-Observer(someValue):onBind(update)
+local disconnect = Observer(someValue):onBind(update)
+
+-- always clean up your connections!
+disconnect()
 ```
