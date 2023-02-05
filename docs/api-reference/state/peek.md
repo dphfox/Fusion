@@ -16,7 +16,7 @@ The most basic [use callback](./use.md), which returns the interior value of
 state objects without adding any dependencies.
 
 ```Lua
-(target: CanBeState<T>) -> T
+<T>(target: CanBeState<T>) -> T
 ```
 
 -----
