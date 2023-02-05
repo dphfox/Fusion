@@ -65,7 +65,7 @@ local function Button(props: Props): Child
 		end), 20),
 
 		[OnEvent "Activated"] = function()
-			if props.OnClick ~= nil and not use(props.Disabled) then
+			if props.OnClick ~= nil and not peek(props.Disabled) then
 				-- We're explicitly calling this function with no arguments to
 				-- match the types we specified above. If we just passed it
 				-- straight into the event, the function would receive arguments
