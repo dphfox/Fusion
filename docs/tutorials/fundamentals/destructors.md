@@ -129,6 +129,6 @@ It makes it clear that your code is supposed to leave the values alone:
 
 ```Lua
 local instance = Computed(function(use)
-    return workspace:FindFirstChild(use(name))
+    return workspace:FindFirstChild(use(className))
 end, Fusion.doNothing)
 ```
