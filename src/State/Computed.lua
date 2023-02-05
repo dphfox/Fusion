@@ -37,7 +37,8 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, self._use)
+	local use = makeUseCallback(self.dependencySet)
+	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, use)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
@@ -97,8 +98,7 @@ local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_value = nil,
-		_use = makeUseCallback(dependencySet)
+		_value = nil
 	}, CLASS_METATABLE)
 
 	self:update()
