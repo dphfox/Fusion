@@ -19,7 +19,7 @@ just snap to the goal value.
 
 ```Lua
 (
-	goal: StateObject<T>, 
+	goal: StateObject<T>,
 	tweenInfo: CanBeState<TweenInfo>?
 ) -> Tween<T>
 ```
@@ -34,35 +34,11 @@ to `TweenInfo.new()`.
 
 -----
 
-## Methods
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-### :octicons-code-24: Tween:get()
-
-Returns the current value stored in the state object.
-
-If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.
-
-```Lua
-(asDependency: boolean?) -> T
-```
-
-#### Parameters
-
-- `asDependency` - If this is explicitly set to false, no dependencies will be
-captured.
-
------
-
 ## Example Usage
 
 ```Lua
 local position = Value(UDim2.fromOffset(25, 50))
-local smoothPosition = Spring(position, 25, 0.6)
+local smoothPosition = Tween(position, TweenInfo.new(2))
 
 local ui = New "Frame" {
 	Parent = PlayerGui.ScreenGui,
@@ -71,7 +47,6 @@ local ui = New "Frame" {
 
 while true do
 	task.wait(5)
-	-- apply an impulse
-	smoothPosition:addVelocity(UDim2.fromOffset(-10, 10))
+	position:set(peek(position) + UDim2.fromOffset(100, 100))
 end
 ```
