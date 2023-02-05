@@ -6,10 +6,15 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local xtypeof = require(Package.Utility.xtypeof)
 
-local function unwrap<T>(item: PubTypes.CanBeState<T>, useDependency: boolean?): T
-	return if xtypeof(item) == "State" then (item :: PubTypes.StateObject<T>):get(useDependency) else (item :: T)
+local function peek<T>(target: PubTypes.CanBeState<T>): T
+	if xtypeof(target) == "State" then
+		return (target :: Types.StateObject<T>):_peek()
+	else
+		return target
+	end
 end
 
-return unwrap
+return peek
