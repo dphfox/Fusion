@@ -9,8 +9,6 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
-local useDependency = require(Package.Dependencies.useDependency)
-local initDependency = require(Package.Dependencies.initDependency)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local xtypeof = require(Package.Utility.xtypeof)
@@ -121,7 +119,6 @@ local function Tween<T>(
 		_currentlyAnimating = false
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
 
