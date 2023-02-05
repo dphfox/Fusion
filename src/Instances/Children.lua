@@ -10,6 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
 
 type Set<T> = {[T]: boolean}
 
@@ -71,7 +72,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 			elseif kind == "State" then
 				-- case 2; state object
 
-				local value = child:get(false)
+				local value = peek(child)
 				-- allow nil to represent the absence of a child
 				if value ~= nil then
 					processChild(value, autoName)
