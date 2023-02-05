@@ -12,6 +12,7 @@ local TweenScheduler = require(Package.Animation.TweenScheduler)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
 
 local class = {}
 
@@ -23,7 +24,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Returns false as the current value doesn't change right away.
 ]]
 function class:update(): boolean
-	local goalValue = self._goalState:get(false)
+	local goalValue = peek(self._goalState)
 
 	-- if the goal hasn't changed, then this is a TweenInfo change.
 	-- in that case, if we're not currently animating, we can skip everything
@@ -31,10 +32,7 @@ function class:update(): boolean
 		return false
 	end
 
-	local tweenInfo = self._tweenInfo
-	if self._tweenInfoIsState then
-		tweenInfo = tweenInfo:get()
-	end
+	local tweenInfo = peek(self._tweenInfo)
 
 	-- if we receive a bad TweenInfo, then error and stop the update
 	if typeof(tweenInfo) ~= "TweenInfo" then
@@ -72,7 +70,7 @@ local function Tween<T>(
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>
-	local currentValue = goalState:get(false)
+	local currentValue = peek(goalState)
 
 	-- apply defaults for tween info
 	if tweenInfo == nil then
@@ -81,16 +79,11 @@ local function Tween<T>(
 
 	local dependencySet = {[goalState] = true}
 	local tweenInfoIsState = xtypeof(tweenInfo) == "State"
-
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
 	end
 
-	local startingTweenInfo = tweenInfo
-	if tweenInfoIsState then
-		startingTweenInfo = startingTweenInfo:get()
-	end
-
+	local startingTweenInfo = peek(tweenInfo)
 	-- If we start with a bad TweenInfo, then we don't want to construct a Tween
 	if typeof(startingTweenInfo) ~= "TweenInfo" then
 		logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
