@@ -27,6 +27,28 @@ the details for you.
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## attributeNameNil
+
+```
+Attribute name cannot be nil.
+```
+
+This message occurs when you try to set an attribute with a 'nil' name.
+This error shouldn't occur, however it is a failsafe incase something goes wrong.
+
+```Lua
+local folder = New "Configuration" {
+	[Attribute(nil)] = "Foo"
+}
+```
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.1</span>
 </p>
 
@@ -83,6 +105,28 @@ local textBox = New "TextBox" {
 }
 ```
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## cannotConnectAttributeChange
+
+```
+The Configuration class doesn't have an attribute called 'Foo'.
+```
+
+This message means you tried to connect to an attribute change event, however
+the connection failed to register.
+
+```Lua
+-- How does an example for this work?
+-- An attribute change shouldn't fail, as GetAttributeChangedSignal
+-- doesn't error if the attribute doesn't exist.
+```
 
 -----
 
@@ -509,6 +553,29 @@ local input = New "TextBox" {
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## invalidAttributeChangeHandler
+
+```
+The change handler for the 'Ammo' attribute must be a function.
+```
+
+This message means you tried to use [AttributeChange](../instances/attributechange) on an
+instance's attribute, but instead of passing a function callback, you passed
+something else.
+
+```Lua
+local config = New "Configuration" {
+	[AttributeChange "Ammo"] = "guns"
+}
+```
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
@@ -608,6 +675,29 @@ local thing = New "Part" {
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## invalidAttributeOutType
+
+```
+[AttributeOut] properties must be given Value objects.
+```
+
+This message means you tried to use [AttributeOut](../instances/attributeout), but you didn't also
+give it a [value object](../state/value) to store the attributes's value inside
+of.
+
+```Lua
+local config = New "Configuration" {
+	[AttributeChange "Ammo"] = "guns"
+}
+```
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
@@ -629,6 +719,27 @@ local thing = New "Part" {
 }
 ```
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## invalidAttributeOutName
+
+```
+The Configuration class doesn't have an attribute called 'Ammo'
+```
+
+This message means you tried to read an attribute of an instance using
+[AttributeOut](../instances/attributeout), but the attribute can't be read. This error
+shouldn't occur, however it is here for a failsafe.
+
+```Lua
+-- Once again, how does an example for this work?
+```
 
 -----
 
