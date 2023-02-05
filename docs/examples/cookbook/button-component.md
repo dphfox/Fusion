@@ -31,13 +31,6 @@ export type Props = {
 -- use cases, and offers the greatest encapsulation as you're able to swap out
 -- your return type for an array or state object if you want to.
 local function Button(props: Props): Child
-	-- To simplify our code later (because we're going to operate on this value)
-	if props.Disabled == nil then
-		props.Disabled = Value(false)
-	elseif typeof(props.Disabled) == "boolean" then
-		props.Disabled = Value(props.Disabled)
-	end
-
 	-- We should generally be careful about storing state in widely reused
 	-- components, as the Tutorials explain, but for contained use cases such as
 	-- hover states, it should be perfectly fine.
@@ -56,15 +49,15 @@ local function Button(props: Props): Child
 		Text = props.Text,
 		TextColor3 = Color3.fromHex("FFFFFF"),
 
-		BackgroundColor3 = Spring(Computed(function()
-			if props.Disabled:get() then
+		BackgroundColor3 = Spring(Computed(function(use)
+			if use(props.Disabled) then
 				return Color3.fromHex("CCCCCC")
 			else
 				local baseColour = Color3.fromHex("0085FF")
 				-- darken/lighten when hovered or held down
-				if isHeldDown:get() then
+				if use(isHeldDown) then
 					baseColour = baseColour:Lerp(Color3.new(0, 0, 0), 0.25)
-				elseif isHovering:get() then
+				elseif use(isHovering) then
 					baseColour = baseColour:Lerp(Color3.new(1, 1, 1), 0.25)
 				end
 				return baseColour
@@ -72,10 +65,7 @@ local function Button(props: Props): Child
 		end), 20),
 
 		[OnEvent "Activated"] = function()
-			-- Because we're not in a Computed callback (or similar), it's a
-			-- good idea to :get(false) so we're not adding any dependencies
-			-- anywhere.
-			if props.OnClick ~= nil and not props.Disabled:get(false) then
+			if props.OnClick ~= nil and not use(props.Disabled) then
 				-- We're explicitly calling this function with no arguments to
 				-- match the types we specified above. If we just passed it
 				-- straight into the event, the function would receive arguments
