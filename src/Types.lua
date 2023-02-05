@@ -31,6 +31,14 @@ export type Error = {
 }
 
 --[[
+	Generic reactive graph types
+]]
+
+export type StateObject<T> = PubTypes.StateObject<T> & {
+	_peek: (StateObject<T>) -> T
+}
+
+--[[
 	Specific reactive graph types
 ]]
 
