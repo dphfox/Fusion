@@ -5,6 +5,22 @@
 	the New function.
 ]]
 
+local superclassProps = {
+	["HandleAdornment"] = {
+		ZIndex = 0
+	},
+	["BasePart"] = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	}
+}
+
 return {
 	ScreenGui = {
 		ResetOnSpawn = false,
@@ -108,7 +124,21 @@ return {
 		BorderSizePixel = 0
 	},
 
-	HandleAdornment = {},
-	BasePart = {},
-	SpawnLocation = {}
+	SpawnLocation = {
+		Duration = 0
+	},
+
+	BoxHandleAdornment = superclassProps.HandleAdornment,
+	ConeHandleAdornment = superclassProps.HandleAdornment,
+	CylinderHandleAdornment = superclassProps.HandleAdornment,
+	ImageHandleAdornment = superclassProps.HandleAdornment,
+	LineHandleAdornment = superclassProps.HandleAdornment,
+	SphereHandleAdornment = superclassProps.HandleAdornment,
+	WireframeHandleAdornment = superclassProps.HandleAdornment,
+	
+	Part = superclassProps.BasePart,
+	TrussPart = superclassProps.BasePart,
+	MeshPart = superclassProps.BasePart,
+	CornerWedgePart = superclassProps.BasePart,
+	VehicleSeat = superclassProps.BasePart,
 }
