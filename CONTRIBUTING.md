@@ -27,13 +27,13 @@ closed.
 - If an issue is found to be a duplicate, it is closed right away. We don't
 want to split discussion about an issue across multiple locations.
 
-- If an issue was closed after a bug fix, but the bug has come back, feel
-free to open a new issue describing the new variant of the bug.
+- If an issue was closed after a bug fix, but the bug has come back, it's
+best to open a new issue describing the new variant of the bug.
 
 
 ### Open a new issue, describing the bug
 
-- Your title should be clear, concise, and adequately summarise the issue.
+- Your title should be clear and concise; summarise the issue adequately.
 Titles like 'Why is this broken?' and 'my code doesn't work' aren't helpful.
 
 - Include as much relevant information as possible. We can't diagnose the
@@ -96,29 +96,25 @@ procedural solutions that depend on execution order.
 - Guide users towards writing code that's more optimal, but not at the expense
 of maintainability.
 
-- Aim to make errors impossible to represent, or at least very easy to spot.
+- Features should be designed so mistakes by the developer are easy to spot.
 
-### Tips for bad feature requests
+### Things to avoid in feature requests
 
 - Overly specific solutions. Niche features often would be better served as
 part of third party libraries; Fusion deals with concerns that everyone has an
 interest in.
 
-- Code is read many times, but written very few times. 'Saving keystrokes' is
-not a strong enough reason to include a feature, and can actually harm
-readability and maintainability quite seriously.
+- 'Saving keystrokes'. Code is read many times, but written very few times.
+Shortening code is not a strong enough reason to include a feature, and can
+actually harm readability and maintainability quite seriously.
 
-- It's almost always possible to express an idea with simple function and table
-primitives; simpler implementations are less buggy, easier to understand for
-maintainers and users, and often more performant.
+- Overengineering. It's almost always possible to express an idea with simple
+function and table primitives. Simpler implementations are less buggy, easier
+to understand for maintainers and users, and often more performant.
 
 -----
 
 ## I want to contribute code
-
-While we do accept community pull requests, please observe that Fusion has a
-very high bar for code and API quality. We're used by a lot of important people
-and projects!
 
 ### Respect the issues
 
@@ -134,15 +130,15 @@ the bug must be provided, like a regular bug report would contain.
 
 ### Create a new branch and draft a pull request
 
+- Create a pull request as soon as possible and mark it as a draft while you
+are working on it. This means we can see what you're working on and guide you
+as you work, rather than lumping all feedback at the end of the process.
+
 - Ensure it's clear what you're working on, why you're working on it and what
 you aim to achieve with the pull request.
 
 - Keep your pull requests small and specifically targeted; for example, by
 separating different features into different pull requests.
-
-- Doing this as early as possible means we can observe and comment on your
-work as you go, enabling us to help you or to point out potential
-shortcomings while it's still early on and easy to rectify.
 
 ### Write your code
 
