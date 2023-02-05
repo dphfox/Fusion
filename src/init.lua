@@ -1,3 +1,4 @@
+local SoundService = game:GetService("SoundService")
 --!strict
 
 --[[
@@ -40,6 +41,7 @@ type Fusion = {
 	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
 	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
+	Freeze: <T>(source: Value<T>, isFrozen: Value<T>) -> Frozen<T>,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>,
@@ -69,6 +71,7 @@ return restrictRead("Fusion", {
 	ForKeys = require(script.State.ForKeys),
 	ForValues = require(script.State.ForValues),
 	Observer = require(script.State.Observer),
+	Freeze = require(script.State.Freeze),
 
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring),
