@@ -89,7 +89,7 @@ same thing, except with less boilerplate and leaving unchanged values alone:
 ```Lua linenums="1" hl_lines="3-9"
 local playerNames = Value({"Elttob", "boatbomber", "thisfall", "AxisAngles"})
 
-local textLabels = ForValues(playerNames, function()
+local textLabels = ForValues(playerNames, function(use, playerName)
     return New "TextLabel" {
         Name = playerName,
         Size = UDim2.new(1, 0, 0, 50),
