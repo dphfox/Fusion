@@ -26,7 +26,7 @@ New "Part" {
     [Ref] = myRef
 }
 
-print(myRef:get()) --> Part
+print(peek(ref)) --> Part
 ```
 
 -----
