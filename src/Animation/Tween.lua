@@ -21,17 +21,6 @@ local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
-	Returns the current value of this Tween object.
-	The object will be registered as a dependency unless `asDependency` is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._currentValue
-end
-
---[[
 	Called when the goal state changes value; this will initiate a new tween.
 	Returns false as the current value doesn't change right away.
 ]]
@@ -72,6 +61,13 @@ function class:update(): boolean
 	TweenScheduler.add(self)
 
 	return false
+end
+
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._currentValue
 end
 
 local function Tween<T>(
