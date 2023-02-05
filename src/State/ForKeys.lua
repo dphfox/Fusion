@@ -22,6 +22,7 @@ local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
 local peek = require(Package.State.peek)
 local makeUseCallback = require(Package.State.makeUseCallback)
+local isState = require(Package.State.isState)
 
 local class = {}
 
@@ -207,7 +208,7 @@ local function ForKeys<KI, KO, M>(
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
 
-	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
+	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
 		type = "State",

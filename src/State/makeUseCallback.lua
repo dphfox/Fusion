@@ -7,13 +7,13 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 
 type Set<T> = {[T]: any}
 
 local function makeUseCallback(dependencySet: Set<PubTypes.Dependency>)
 	local function use<T>(target: PubTypes.CanBeState<T>): T
-		if xtypeof(target) == "State" then
+		if isState(target) then
 			dependencySet[target] = true
 			return (target :: Types.StateObject<T>):_peek()
 		else
