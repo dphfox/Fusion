@@ -38,7 +38,7 @@ This should be familiar from parenting instances using `[Children]`. To recap:
     ```Lua
     -- returns *one* state object
     local function Component()
-        return ForValues({1, 2, 3}, function()
+        return ForValues({1, 2, 3}, function(use, number)
             return New "Frame" {}
         end)
     end
@@ -113,8 +113,8 @@ local ui = New "ScreenGui" {
 local ui = New "ScreenGui" {
     [Children] = {
         New "UIListLayout" {},
-        
-        ForValues({"Hello", "world", "from", "Fusion"}, function(text)
+
+        ForValues({"Hello", "world", "from", "Fusion"}, function(use, text)
             return Button {
                 Text = text
             }
