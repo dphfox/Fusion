@@ -12,7 +12,7 @@ local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.State.updateAll)
 local xtypeof = require(Package.Utility.xtypeof)
 local peek = require(Package.State.peek)
 

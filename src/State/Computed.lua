@@ -7,13 +7,16 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+-- Logging
+local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
+local parseError = require(Package.Logging.parseError)
+-- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
+-- State
 local makeUseCallback = require(Package.State.makeUseCallback)
-local parseError = require(Package.Logging.parseError)
-local logError = require(Package.Logging.logError)
 
 local class = {}
 

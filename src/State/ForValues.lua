@@ -13,15 +13,18 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+-- Logging
 local parseError = require(Package.Logging.parseError)
+local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
+-- Utility
 local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
+-- State
 local peek = require(Package.State.peek)
 local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
-local logError = require(Package.Logging.logError)
 
 local class = {}
 

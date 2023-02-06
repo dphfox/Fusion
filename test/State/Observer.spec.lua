@@ -3,6 +3,7 @@ local RunService = game:GetService("RunService")
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Observer = require(Package.State.Observer)
 local Value = require(Package.State.Value)
+local peek = require(Package.State.peek)
 
 return function()
 	it("should fire connections on change", function()
@@ -30,7 +31,7 @@ return function()
 		local changedValue
 		local completed = false
 		observer:onChange(function(value)
-			changedValue = state:get()
+			changedValue = peek(state)
 			completed = true
 		end)
 

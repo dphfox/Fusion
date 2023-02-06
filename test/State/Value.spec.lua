@@ -1,6 +1,7 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Value = require(Package.State.Value)
 local ForValues = require(Package.State.ForValues)
+local peek = require(Package.State.peek)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
@@ -15,13 +16,13 @@ return function()
 
 	it("should be able to store arbitrary values", function()
 		local value = Value(0)
-		expect(value:get()).to.equal(0)
+		expect(peek(value)).to.equal(0)
 
 		value:set(10)
-		expect(value:get()).to.equal(10)
+		expect(peek(value)).to.equal(10)
 
 		value:set(Value)
-		expect(value:get()).to.equal(Value)
+		expect(peek(value)).to.equal(Value)
 	end)
 
 	it("should garbage-collect unused objects", function()
@@ -42,6 +43,6 @@ return function()
 		waitForGC()
 
 		expect(value[1]).never.to.equal(nil)
-		expect(transformed:get()[1]).to.equal(3)
+		expect(peek(transformed)[1]).to.equal(3)
 	end)
 end

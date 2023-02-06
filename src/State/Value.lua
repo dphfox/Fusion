@@ -7,9 +7,12 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local updateAll = require(Package.Dependencies.updateAll)
-local isSimilar = require(Package.Utility.isSimilar)
+-- Logging
 local logError = require(Package.Logging.logError)
+-- State
+local updateAll = require(Package.State.updateAll)
+-- Utility
+local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
 

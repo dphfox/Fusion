@@ -7,6 +7,7 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+-- State
 local isState = require(Package.State.isState)
 
 type Set<T> = {[T]: any}
