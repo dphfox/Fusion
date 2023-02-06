@@ -12,7 +12,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Install Python 3.x
@@ -23,10 +23,10 @@ jobs:
       - name: Install MkDocs
         run: pip install mkdocs-material==8.2.13
 
-      - name: Install Mike
+      - name: Install mike
         run: pip install mike==1.1.2
 
-      - name: Configure FusionDoc User
+      - name: Configure FusionDoc Git user
         run: |
           git config user.name fusiondoc
           git config user.email fusiondoc@example.com
@@ -38,7 +38,7 @@ jobs:
         if: env.FUSION_DEPLOY_TYPE == 'release'
         run: mike deploy $FUSION_VERSION latest -u -b gh-pages
 
-      - name: Set default version
+      - name: Set default version to latest
         if: env.FUSION_DEPLOY_TYPE == 'release'
         run: mike set-default latest -b gh-pages -p
 
