@@ -45,8 +45,7 @@ type Fusion = {
 	Spring: <T>(goalState: StateObject<T>, speed: number?, damping: number?) -> Spring<T>,
 
 	cleanup: (...any) -> (),
-	doNothing: (...any) -> (),
-	makeReadOnly: (value: CanBeState<T>): T
+	doNothing: (...any) -> ()
 }
 
 return restrictRead("Fusion", {
@@ -75,6 +74,5 @@ return restrictRead("Fusion", {
 	Spring = require(script.Animation.Spring),
 
 	cleanup = require(script.Utility.cleanup),
-	doNothing = require(script.Utility.doNothing),
-	makeReadOnly = require(script.State.makeReadOnly)
+	doNothing = require(script.Utility.doNothing)
 }) :: Fusion
