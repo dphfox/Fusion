@@ -7,7 +7,6 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local captureDependencies = require(Package.Dependencies.captureDependencies)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 local isSimilar = require(Package.Utility.isSimilar)
