@@ -10,7 +10,6 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
-local initDependency = require(Package.Dependencies.initDependency)
 
 type Set<T> = {[T]: any}
 
@@ -82,7 +81,6 @@ local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 		_numChangeListeners = 0,
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	-- add this object to the watched state's dependent set
 	watchedState.dependentSet[self] = true
 

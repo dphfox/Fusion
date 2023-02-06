@@ -920,6 +920,32 @@ colourSpring:addVelocity(Vector2.new(2, 3))
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## stateGetWasRemoved
+
+```
+`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.
+```
+
+This message means you attempted to call the now-removed `:get()` method on a
+[state object](../state/stateobject.md). Starting with Fusion 0.3, this method
+has been removed in favour of the [peek function](../state/peek.md) and
+[use callbacks](../state/use.md).
+
+[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/217)
+
+```Lua
+local value = Value(5)
+print(value:get()) -- should be print(peek(value))
+```
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.1</span>
 </p>
 

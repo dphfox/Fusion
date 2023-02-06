@@ -6,7 +6,7 @@ disconnect it later.
 local observer = Observer(health)
 
 local disconnect = observer:onChange(function()
-	print("The new value is: ", health:get())
+	print("The new value is: ", peek(health))
 end)
 
 task.wait(5)
@@ -39,7 +39,7 @@ To add a handler, you can use `:onChange()`:
 
 ```Lua
 local disconnect = observer:onChange(function()
-	print("The new value is: ", health:get())
+	print("The new value is: ", peek(health))
 end)
 ```
 
@@ -48,7 +48,7 @@ When you're done with the handler, it's very important to disconnect it. The
 
 ```Lua
 local disconnect = observer:onChange(function()
-	print("The new value is: ", health:get())
+	print("The new value is: ", peek(health))
 end)
 
 -- disconnect the above handler after 5 seconds
@@ -77,7 +77,7 @@ run:
 	local thing = Value("Hello")
 
 	Observer(thing):onChange(function()
-		print("=> Thing changed to", thing:get())
+		print("=> Thing changed to", peek(thing))
 	end)
 
 	print("Setting thing once...")
@@ -114,7 +114,7 @@ second argument - if you set it to `true`, an update will be forced:
 	local thing = Value("Hello")
 
 	Observer(thing):onChange(function()
-		print("=> Thing changed to", thing:get())
+		print("=> Thing changed to", peek(thing))
 	end)
 
 	print("Setting thing once...")

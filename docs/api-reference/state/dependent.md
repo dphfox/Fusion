@@ -59,23 +59,8 @@ this method should return false.
 
 ```Lua
 -- these are examples of objects which are dependents
-local computed: Dependent = Computed(function()
+local computed: Dependent = Computed(function(use)
 	return "foo"
 end)
 local observer: Dependent = Observer(computed)
 ```
-
------
-
-## Automatic Dependency Manager
-
-Fusion includes an automatic dependency manager which can detect when graph
-objects are used in certain contexts and automatically form reactive graphs.
-
-If a dependent wants to automatically capture uses of dependencies inside of
-certain contexts (for example, a processor callback) then the
-`captureDependencies()` function may be invoked, with the callback and the
-object's dependency set as arguments.
-
-This will detect all `useDependency()` calls from inside the callback, and save
-any passed dependencies into the set.

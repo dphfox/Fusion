@@ -32,7 +32,7 @@ local function printItem(item: CanBeState<string>)
         print("Got constant: ", item)
     else
         -- state object
-        print("Got state object: ", item:get())
+        print("Got state object: ", peek(item))
     end
 end
 

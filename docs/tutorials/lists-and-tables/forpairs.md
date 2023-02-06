@@ -8,16 +8,16 @@ objects.
 local itemColours = { shoes = "red", socks = "blue" }
 local owner = Value("Elttob")
 
-local manipulated = ForPairs(itemColours, function(thing, colour)
+local manipulated = ForPairs(itemColours, function(use, thing, colour)
 	local newKey = colour
-	local newValue = owner:get() .. "'s " .. thing
+	local newValue = use(owner) .. "'s " .. thing
 	return newKey, newValue
 end)
 
-print(manipulated:get()) --> {red = "Elttob's shoes", blue = "Elttob's socks"}
+print(peek(manipulated)) --> {red = "Elttob's shoes", blue = "Elttob's socks"}
 
 owner:set("Quenty")
-print(manipulated:get()) --> {red = "Quenty's shoes", blue = "Quenty's socks"}
+print(peek(manipulated)) --> {red = "Quenty's shoes", blue = "Quenty's socks"}
 ```
 
 -----
@@ -39,27 +39,30 @@ a processor function:
 
 ```Lua
 local itemColours = { shoes = "red", socks = "blue" }
-local swapped = ForPairs(data, function(key, value)
+local swapped = ForPairs(data, function(use, key, value)
 	return value, key
 end)
 ```
 
 This will generate a new table, where each key-value pair is replaced using the
-processor function. You can get the table using the `:get()` method:
+processor function. The first argument is `use`, similar to a computed, and the
+second/third arguments are a key/value pair from the input table.
+
+You can read the processed table using `peek()`:
 
 ```Lua hl_lines="6"
 local itemColours = { shoes = "red", socks = "blue" }
-local swapped = ForPairs(data, function(key, value)
+local swapped = ForPairs(data, function(use, key, value)
 	return value, key
 end)
 
-print(swapped:get()) --> {red = "shoes", blue = "socks"}
+print(peek(swapped)) --> {red = "shoes", blue = "socks"}
 ```
 
 ### State Objects
 
 As with `ForKeys` and `ForValues`, the input table can be provided as a state
-object, and the processor function can use other state objects in its
+object, and the processor function can `use()` other state objects in its
 calculations. [See the ForValues page for examples.](./forvalues.md#state-objects)
 
 ### Cleanup Behaviour
@@ -74,9 +77,9 @@ local watchedInstances = Value({
 	[workspace.Part3] = "Three"
 })
 
-local connectionSet = ForPairs(eventSet, 
+local connectionSet = ForPairs(eventSet,
 	-- processor
-	function(instance, displayName)
+	function(use, instance, displayName)
 		local metadata = { displayName = displayName, numChanges = 0 }
 		local connection = instance.Changed:Connect(function()
 			print("Instance", displayName, "was changed!")

@@ -45,6 +45,6 @@ New "TextBox" {
 }
 
 Observer(userText):onChange(function()
-    print("The user typed:", userText:get())
+    print("The user typed:", peek(userText))
 end)
 ```

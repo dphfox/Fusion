@@ -5,8 +5,8 @@
 -- a single UI element. These values are often calculated inline, like this:
 
 local menuBar = New "Frame" {
-	AnchorPoint = Computed(function()
-		return if menuIsOpen:get() then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
+	AnchorPoint = Computed(function(use)
+		return if use(menuIsOpen) then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
 	end)
 }
 
@@ -15,20 +15,20 @@ local menuBar = New "Frame" {
 
 local menuBar = New "Frame" {
 	-- Use tweens for highly controllable animations:
-	AnchorPoint = Tween(Computed(function()
-		return if menuIsOpen:get() then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
+	AnchorPoint = Tween(Computed(function(use)
+		return if use(menuIsOpen) then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
 	end), TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)),
 
 	-- Or use springs for more natural and responsive movement:
-	AnchorPoint = Spring(Computed(function()
-		return if menuIsOpen:get() then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
+	AnchorPoint = Spring(Computed(function(use)
+		return if use(menuIsOpen) then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
 	end), 20, 0.5)
 }
 
 -- The equivalent 'expanded' code looks like this:
 
-local anchorPoint = Computed(function()
-	return if menuIsOpen:get() then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
+local anchorPoint = Computed(function(use)
+	return if use(menuIsOpen) then Vector2.new(0.5, 0) else Vector2.new(0.5, -1)
 end)
 
 local smoothAnchorPoint = Spring(anchorPoint, 20, 0.5) -- or equivalent Tween

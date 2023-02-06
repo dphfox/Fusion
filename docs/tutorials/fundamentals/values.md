@@ -1,12 +1,12 @@
-Values are objects which store single values. You can read from them with
-`:get()`, and write to them with `:set()`.
+Values are objects which store single values. You can write to them with
+their `:set()` method, and read from them with the `peek()` function.
 
 ```Lua
 local health = Value(100)
 
-print(health:get()) --> 100
+print(peek(health)) --> 100
 health:set(25)
-print(health:get()) --> 25
+print(peek(health)) --> 25
 ```
 
 -----
@@ -14,11 +14,12 @@ print(health:get()) --> 25
 ## Usage
 
 To use `Value` in your code, you first need to import it from the Fusion module,
-so that you can refer to it by name:
+so that you can refer to it by name. You should also import `peek` for later:
 
-```Lua linenums="1" hl_lines="2"
+```Lua linenums="1" hl_lines="2-3"
 local Fusion = require(ReplicatedStorage.Fusion)
 local Value = Fusion.Value
+local peek = Fusion.peek
 ```
 
 To create a new value, call the `Value` function:
@@ -34,17 +35,18 @@ start with a different value, you can provide one:
 local health = Value(100) -- the Value will initially store a value of 100
 ```
 
-You can retrieve the currently stored value at any time with `:get()`:
+Fusion provides a global `peek()` function which returns the value of whatever
+you give it. For example, it will read the value of our `health` object:
 
 ```Lua
-print(health:get()) --> 100
+print(peek(health)) --> 100
 ```
 
-You can also set the stored value at any time with `:set()`:
+We can change the value using the `:set()` method on the object itself:
 
 ```Lua
 health:set(25)
-print(health:get()) --> 25
+print(peek(health)) --> 25
 ```
 
 -----
@@ -103,7 +105,7 @@ variable. This is so we know who to notify when the value changes.
 do that, then we can go through the list and notify everyone.
 
 To solve this, Fusion introduces the idea of a 'state object'. These are objects
-that represent a single value, which you can `:get()` at any time. They also
+that represent a single value, which you can `peek()` at any time. They also
 keep a list of dependents; when the object's value changes, it can notify
 everyone so they can respond to the change.
 
@@ -124,7 +126,7 @@ same underlying value:
 ```Lua
 -- someObject is a `Value` object
 local function printValue(someObject)
-	print(someObject:get())
+	print(peek(someObject))
 end
 
 local health = Value(100)

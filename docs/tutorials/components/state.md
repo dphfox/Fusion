@@ -15,8 +15,8 @@ local function Button(props)
     local isHovering = Value(false)
 
     return New "TextButton" {
-        BackgroundColor3 = Computed(function()
-            return if isHovering:get() then HOVER_COLOUR else REST_COLOUR
+        BackgroundColor3 = Computed(function(use)
+            return if use(isHovering) then HOVER_COLOUR else REST_COLOUR
         end),
 
         [OnEvent "MouseEnter"] = function()
@@ -84,14 +84,14 @@ local checkBox = CheckBox {
     Text = "Play music",
     IsChecked = playMusic,
     OnClick = function()
-        playMusic:set(not playMusic:get())
+        playMusic:set(not peek(playMusic))
     end
 }
 ```
 
 The control is always top-down here; the check box's appearance is fully
 controlled by the creator. The creator of the check box *decides* to switch the
-setting when the check box is clicked. 
+setting when the check box is clicked.
 
 The check box itself is an inert, visual element; it just shows a graphic and
 reports clicks.
@@ -116,9 +116,9 @@ local playNarration = Value(true)
 
 local checkBox = CheckBox {
     Text = "Play sounds",
-    Appearance = Computed(function()
-        local anyChecked = playMusic:get() or playSFX:get() or playNarration:get()
-        local allChecked = playMusic:get() and playSFX:get() and playNarration:get()
+    Appearance = Computed(function(use)
+        local anyChecked = use(playMusic) or use(playSFX) or use(playNarration)
+        local allChecked = use(playMusic) and use(playSFX) and use(playNarration)
 
         if not anyChecked then
             return "unchecked"
@@ -141,7 +141,7 @@ local playNarration = Value(true)
 local checkBox = CheckBox {
     -- ... same properties as before ...
     OnClick = function()
-        local allChecked = playMusic:get() and playSFX:get() and playNarration:get()
+        local allChecked = peek(playMusic) and peek(playSFX) and peek(playNarration)
 
         playMusic:set(not allChecked)
         playSFX:set(not allChecked)

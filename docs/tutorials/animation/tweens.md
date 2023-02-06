@@ -25,10 +25,10 @@ local animated = Tween(target)
 ```
 
 The tween will smoothly follow the 'goal' state object over time. As with other
-state objects, you can `:get()` its value at any time:
+state objects, you can `peek()` at its value at any time:
 
 ```Lua
-print(animated:get()) --> 0.26425...
+print(peek(animated)) --> 0.26425...
 ```
 
 To configure how the tween moves, you can provide a TweenInfo to change the

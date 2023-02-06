@@ -10,7 +10,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.State.updateAll)
 
 type Set<T> = {[T]: any}
 type Spring = Types.Spring<any>

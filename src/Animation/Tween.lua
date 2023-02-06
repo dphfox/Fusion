@@ -9,11 +9,10 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
-local useDependency = require(Package.Dependencies.useDependency)
-local initDependency = require(Package.Dependencies.initDependency)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
 
 local class = {}
 
@@ -21,22 +20,11 @@ local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
-	Returns the current value of this Tween object.
-	The object will be registered as a dependency unless `asDependency` is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._currentValue
-end
-
---[[
 	Called when the goal state changes value; this will initiate a new tween.
 	Returns false as the current value doesn't change right away.
 ]]
 function class:update(): boolean
-	local goalValue = self._goalState:get(false)
+	local goalValue = peek(self._goalState)
 
 	-- if the goal hasn't changed, then this is a TweenInfo change.
 	-- in that case, if we're not currently animating, we can skip everything
@@ -44,10 +32,7 @@ function class:update(): boolean
 		return false
 	end
 
-	local tweenInfo = self._tweenInfo
-	if self._tweenInfoIsState then
-		tweenInfo = tweenInfo:get()
-	end
+	local tweenInfo = peek(self._tweenInfo)
 
 	-- if we receive a bad TweenInfo, then error and stop the update
 	if typeof(tweenInfo) ~= "TweenInfo" then
@@ -74,11 +59,22 @@ function class:update(): boolean
 	return false
 end
 
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._currentValue
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function Tween<T>(
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>
-	local currentValue = goalState:get(false)
+	local currentValue = peek(goalState)
 
 	-- apply defaults for tween info
 	if tweenInfo == nil then
@@ -87,16 +83,11 @@ local function Tween<T>(
 
 	local dependencySet = {[goalState] = true}
 	local tweenInfoIsState = xtypeof(tweenInfo) == "State"
-
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
 	end
 
-	local startingTweenInfo = tweenInfo
-	if tweenInfoIsState then
-		startingTweenInfo = startingTweenInfo:get()
-	end
-
+	local startingTweenInfo = peek(tweenInfo)
 	-- If we start with a bad TweenInfo, then we don't want to construct a Tween
 	if typeof(startingTweenInfo) ~= "TweenInfo" then
 		logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
@@ -125,7 +116,6 @@ local function Tween<T>(
 		_currentlyAnimating = false
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
 

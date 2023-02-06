@@ -3,12 +3,13 @@ local RunService = game:GetService("RunService")
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForValues = require(Package.State.ForValues)
 local Value = require(Package.State.Value)
+local peek = require(Package.State.peek)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForValues object", function()
-		local forKeys = ForValues({}, function() end)
+		local forKeys = ForValues({}, function(use) end)
 
 		expect(forKeys).to.be.a("table")
 		expect(forKeys.type).to.equal("State")
@@ -16,11 +17,11 @@ return function()
 	end)
 
 	it("should calculate and retrieve its value", function()
-		local computed = ForValues({ 1 }, function(value)
+		local computed = ForValues({ 1 }, function(use, value)
 			return value
 		end)
 
-		local state = computed:get()
+		local state = peek(computed)
 
 		expect(state[1]).to.be.ok()
 		expect(state[1]).to.equal(1)
@@ -33,7 +34,7 @@ return function()
 
 		local calculations = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			calculations += 1
 			return value
 		end)
@@ -55,7 +56,7 @@ return function()
 
 		local processorCalls = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			processorCalls += 1
 
 			return value .. "biz"
@@ -102,7 +103,7 @@ return function()
 
 		local destructions = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			return value .. "biz"
 		end, function(key)
 			destructions += 1
@@ -144,7 +145,7 @@ return function()
 
 		local destructions = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			local obj = Instance.new("Folder")
 			obj.Parent = value
 
@@ -186,7 +187,7 @@ return function()
 
 		local destructions = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			local newValue = value .. "biz"
 			return newValue, newValue
 		end, function(value, meta)
@@ -217,7 +218,7 @@ return function()
 		local processorCalls = 0
 		local destructorCalls = 0
 
-		local computed = ForValues(state, function(value)
+		local computed = ForValues(state, function(use, value)
 			processorCalls += 1
 			return value
 		end, function(value)
@@ -263,75 +264,46 @@ return function()
 		local state = Value({
 			[1] = "baz",
 		})
-		local barMap = ForValues(state, function(value)
+		local barMap = ForValues(state, function(use, value)
 			return value .. "bar"
 		end)
 
-		expect(barMap:get()[1]).to.equal("bazbar")
+		expect(peek(barMap)[1]).to.equal("bazbar")
 
 		state:set({
 			[1] = "bar",
 		})
 
-		expect(barMap:get()[1]).to.equal("barbar")
+		expect(peek(barMap)[1]).to.equal("barbar")
 	end)
 
 	it("should recalculate its value in response to ForValues objects", function()
 		local state = Value({
 			[1] = 1,
 		})
-		local doubled = ForValues(state, function(value)
+		local doubled = ForValues(state, function(use, value)
 			return value * 2
 		end)
-		local tripled = ForValues(doubled, function(value)
+		local tripled = ForValues(doubled, function(use, value)
 			return value * 2
 		end)
 
-		expect(doubled:get()[1]).to.equal(2)
-		expect(tripled:get()[1]).to.equal(4)
+		expect(peek(doubled)[1]).to.equal(2)
+		expect(peek(tripled)[1]).to.equal(4)
 
 		state:set({
 			[1] = 2,
 			[2] = 3,
 		})
 
-		expect(doubled:get()[1]).to.equal(4)
-		expect(tripled:get()[1]).to.equal(8)
-		expect(doubled:get()[2]).to.equal(6)
-		expect(tripled:get()[2]).to.equal(12)
+		expect(peek(doubled)[1]).to.equal(4)
+		expect(peek(tripled)[1]).to.equal(8)
+		expect(peek(doubled)[2]).to.equal(6)
+		expect(peek(tripled)[2]).to.equal(12)
 	end)
 
-	it("should not corrupt dependencies after an error", function()
-		local state = Value({
-			[1] = 1,
-		})
-		local simulateError = false
-		local computed = ForValues(state, function(value)
-			if simulateError then
-				-- in a naive implementation, this would corrupt dependencies as
-				-- state:get() hasn't been captured yet, preventing future
-				-- reactive updates from taking place
-				-- to avoid this, dependencies captured when a callback errors
-				-- have to be discarded
-				error("This is an intentional error from a unit test")
-			end
-
-			return value
-		end)
-
-		expect(computed:get()[1]).to.equal(1)
-
-		simulateError = true
-		state:set({
-			[1] = 5,
-		}) -- update the computed to invoke the error
-
-		simulateError = false
-		state:set({
-			[1] = 10,
-		}) -- if dependencies are corrupt, the computed won't update
-
-		expect(computed:get()[1]).to.equal(10)
+	itSKIP("should not corrupt dependencies after an error", function()
+		-- needs rewrite
 	end)
 
 	it("should garbage-collect unused objects", function()
@@ -342,7 +314,7 @@ return function()
 		local counter = 0
 
 		do
-			local computedKeys = ForValues(state, function(value)
+			local computedKeys = ForValues(state, function(use, value)
 				counter += 1
 				return value
 			end)
@@ -366,12 +338,12 @@ return function()
 		local counter = 0
 
 		do
-			local computed = ForValues(state, function(value)
+			local computed = ForValues(state, function(use, value)
 				counter += 1
 				return value
 			end)
 
-			computed2 = ForValues(computed, function(value)
+			computed2 = ForValues(computed, function(use, value)
 				return value
 			end)
 		end

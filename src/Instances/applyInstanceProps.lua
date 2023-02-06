@@ -19,6 +19,7 @@ local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)
+local peek = require(Package.State.peek)
 
 local function setProperty_unsafe(instance: Instance, property: string, value: any)
 	(instance :: any)[property] = value
@@ -57,12 +58,12 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 				willUpdate = true
 				task.defer(function()
 					willUpdate = false
-					setProperty(instance, property, value:get(false))
+					setProperty(instance, property, peek(value))
 				end)
 			end
 		end
 
-		setProperty(instance, property, value:get(false))
+		setProperty(instance, property, peek(value))
 		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only

@@ -30,7 +30,7 @@ use as a destructor when no destruction is needed.
 ## Example Usage
 
 ```Lua
-local foo = Computed(function()
+local foo = Computed(function(use)
 	return workspace.Part
 end, Fusion.doNothing)
 ```
