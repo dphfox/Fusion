@@ -41,6 +41,7 @@ return {
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
+	readOnlyError = "State object is read only!",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	strictReadError = "'%s' is not a valid member of '%s'.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",

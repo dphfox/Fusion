@@ -11,6 +11,7 @@ local useDependency = require(Package.Dependencies.useDependency)
 local initDependency = require(Package.Dependencies.initDependency)
 local updateAll = require(Package.Dependencies.updateAll)
 local isSimilar = require(Package.Utility.isSimilar)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local class = {}
 
@@ -37,6 +38,11 @@ end
 	unnecessary updates.
 ]]
 function class:set(newValue: any, force: boolean?)
+	if self._readOnly then
+		logErrorNonFatal("readOnlyError")
+		return
+	end
+
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
@@ -51,7 +57,8 @@ local function Value<T>(initialValue: T): Types.State<T>
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_value = initialValue
+		_value = initialValue,
+		_readOnly = false
 	}, CLASS_METATABLE)
 
 	initDependency(self)
