@@ -9,7 +9,8 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
-local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
+local isState = require(Package.State.isState)
 
 type Set<T> = {[T]: boolean}
 
@@ -47,9 +48,9 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 		table.clear(newDisconnects)
 
 		local function processChild(child: any, autoName: string?)
-			local kind = xtypeof(child)
+			local childType = typeof(child)
 
-			if kind == "Instance" then
+			if childType == "Instance" then
 				-- case 1; single instance
 
 				newParented[child] = true
@@ -68,10 +69,10 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 					child.Name = autoName
 				end
 
-			elseif kind == "State" then
+			elseif isState(child) then
 				-- case 2; state object
 
-				local value = child:get(false)
+				local value = peek(child)
 				-- allow nil to represent the absence of a child
 				if value ~= nil then
 					processChild(value, autoName)
@@ -89,7 +90,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 
 				newDisconnects[child] = disconnect
 
-			elseif kind == "table" then
+			elseif childType == "table" then
 				-- case 3; table of objects
 
 				for key, subChild in pairs(child) do
@@ -106,7 +107,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 				end
 
 			else
-				logWarn("unrecognisedChildType", kind)
+				logWarn("unrecognisedChildType", childType)
 			end
 		end
 

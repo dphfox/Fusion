@@ -23,7 +23,7 @@ do
 		lastFetchTime = fetchTime
 		currentUserBio:set(nil) -- set to a default value to indicate loading
 		task.spawn(function()
-			local bio = FetchUserBio:InvokeServer(currentUserID:get(false))
+			local bio = FetchUserBio:InvokeServer(peek(currentUserID))
 			-- If these two are not equal, then that means another fetch was
 			-- started while we were waiting for the server to return a value.
 			-- In that case, the more recent call will be more up-to-date, so we
@@ -49,8 +49,8 @@ end
 -- handle that case before passing it into any code that expects a solid value.
 
 local bioLabel = New "TextLabel" {
-	Text = Computed(function()
-		return currentUserBio:get() or "Loading user bio..."
+	Text = Computed(function(use)
+		return use(currentUserBio) or "Loading user bio..."
 	end)
 }
 ```

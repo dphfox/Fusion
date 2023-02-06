@@ -14,31 +14,23 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
-local captureDependencies = require(Package.Dependencies.captureDependencies)
-local initDependency = require(Package.Dependencies.initDependency)
-local useDependency = require(Package.Dependencies.useDependency)
+-- Logging
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
+-- Utility
 local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
+-- State
+local peek = require(Package.State.peek)
+local makeUseCallback = require(Package.State.makeUseCallback)
+local isState = require(Package.State.isState)
 
 local class = {}
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
-
---[[
-	Returns the current value of this ForKeys object.
-	The object will be registered as a dependency unless `asDependency` is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._outputTable
-end
 
 
 --[[
@@ -61,7 +53,7 @@ end
 
 function class:update(): boolean
 	local inputIsState = self._inputIsState
-	local newInputTable = if inputIsState then self._inputTable:get(false) else self._inputTable
+	local newInputTable = peek(self._inputTable)
 	local oldInputTable = self._oldInputTable
 	local outputTable = self._outputTable
 
@@ -107,7 +99,7 @@ function class:update(): boolean
 		-- check if the key's dependencies have changed
 		if shouldRecalculate == false then
 			for dependency, oldValue in pairs(keyData.dependencyValues) do
-				if oldValue ~= dependency:get(false) then
+				if oldValue ~= peek(dependency) then
 					shouldRecalculate = true
 					break
 				end
@@ -120,11 +112,8 @@ function class:update(): boolean
 			keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 			table.clear(keyData.dependencySet)
 
-			local processOK, newOutKey, newMetaValue = captureDependencies(
-				keyData.dependencySet,
-				self._processor,
-				newInKey
-			)
+			local use = makeUseCallback(keyData.dependencySet)
+			local processOK, newOutKey, newMetaValue = xpcall(self._processor, parseError, use, newInKey)
 
 			if processOK then
 				if self._destructor == nil and (needsDestruction(newOutKey) or needsDestruction(newMetaValue)) then
@@ -174,7 +163,7 @@ function class:update(): boolean
 
 		-- save dependency values and add to main dependency set
 		for dependency in pairs(keyData.dependencySet) do
-			keyData.dependencyValues[dependency] = dependency:get(false)
+			keyData.dependencyValues[dependency] = peek(dependency)
 
 			self.dependencySet[dependency] = true
 			dependency.dependentSet[self] = true
@@ -209,13 +198,24 @@ function class:update(): boolean
 	return didChange
 end
 
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._outputTable
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function ForKeys<KI, KO, M>(
 	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
 
-	local inputIsState = inputTable.type == "State" and typeof(inputTable.get) == "function"
+	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
 		type = "State",
@@ -239,7 +239,6 @@ local function ForKeys<KI, KO, M>(
 		_meta = {},
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	self:update()
 
 	return self

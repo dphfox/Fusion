@@ -81,7 +81,7 @@ value of the object changes, the property will update to match on the next
 resumption step:
 
 ```Lua
-local myName = State("Bob")
+local myName = Value("Bob")
 
 local example = Hydrate(workspace.Part) {
 	-- initially, the Name will be set to Bob
@@ -93,6 +93,6 @@ local example = Hydrate(workspace.Part) {
 myName:set("John")
 ```
 
-Special keys, such as [Children](../children) or [OnEvent](../onevent), may also
-be used as keys in the property table. For more information about how special
-keys work, [see the SpecialKey page.](../../types/specialkey)
+Special keys, such as [Children](./children.md) or [OnEvent](./onevent.md), may
+also be used as keys in the property table. For more information about how
+special keys work, [see the SpecialKey page.](./specialkey.md)

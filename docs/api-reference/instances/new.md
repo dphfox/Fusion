@@ -96,9 +96,9 @@ local example = New "Part" {
 myName:set("John")
 ```
 
-Special keys, such as [Children](../children) or [OnEvent](../onevent), may also
-be used as keys in the property table. For more information about how special
-keys work, [see the SpecialKey page.](../../types/specialkey)
+Special keys, such as [Children](./children.md) or [OnEvent](./onevent.md), may
+also be used as keys in the property table. For more information about how
+special keys work, [see the SpecialKey page.](./specialkey.md)
 
 -----
 

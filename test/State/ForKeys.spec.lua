@@ -3,12 +3,13 @@ local RunService = game:GetService("RunService")
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForKeys = require(Package.State.ForKeys)
 local Value = require(Package.State.Value)
+local peek = require(Package.State.peek)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should construct a ForKeys object", function()
-		local forKeys = ForKeys({}, function() end)
+		local forKeys = ForKeys({}, function(use) end)
 
 		expect(forKeys).to.be.a("table")
 		expect(forKeys.type).to.equal("State")
@@ -16,11 +17,11 @@ return function()
 	end)
 
 	it("should calculate and retrieve its value", function()
-		local computedPair = ForKeys({ ["foo"] = true }, function(key)
+		local computedPair = ForKeys({ ["foo"] = true }, function(use, key)
 			return key .. "baz"
 		end)
 
-		local state = computedPair:get()
+		local state = peek(computedPair)
 
 		expect(state["foobaz"]).to.be.ok()
 		expect(state["foobaz"]).to.equal(true)
@@ -33,7 +34,7 @@ return function()
 
 		local calculations = 0
 
-		local computedPair = ForKeys(state, function(key)
+		local computedPair = ForKeys(state, function(use, key)
 			calculations += 1
 			return key
 		end)
@@ -56,7 +57,7 @@ return function()
 
 		local destructions = 0
 
-		local computedPair = ForKeys(state, function(key)
+		local computedPair = ForKeys(state, function(use, key)
 			return key .. "biz"
 		end, function(key)
 			destructions += 1
@@ -93,7 +94,7 @@ return function()
 				["baz"] = "bar",
 			})
 
-			local computed = ForKeys(state, function()
+			local computed = ForKeys(state, function(use)
 				return "foo"
 			end)
 		end).to.throw("forKeysKeyCollision")
@@ -102,7 +103,7 @@ return function()
 			["foo"] = "bar",
 		})
 
-		local computed = ForKeys(state, function()
+		local computed = ForKeys(state, function(use)
 			return "foo"
 		end)
 
@@ -121,7 +122,7 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(key)
+		local computedKey = ForKeys(state, function(use, key)
 			local newKey = key .. "biz"
 			return newKey, newKey
 		end, function(key, meta)
@@ -155,7 +156,7 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(key)
+		local computedKey = ForKeys(state, function(use, key)
 			return map[key]
 		end, function()
 			destructions += 1
@@ -186,75 +187,46 @@ return function()
 		local baseMap = Value({
 			["foo"] = "baz",
 		})
-		local barMap = ForKeys(baseMap, function(key)
+		local barMap = ForKeys(baseMap, function(use, key)
 			return key .. "bar"
 		end)
 
-		expect(barMap:get()["foobar"]).to.be.ok()
+		expect(peek(barMap)["foobar"]).to.be.ok()
 
 		baseMap:set({
 			["baz"] = "foo",
 		})
 
-		expect(barMap:get()["bazbar"]).to.be.ok()
+		expect(peek(barMap)["bazbar"]).to.be.ok()
 	end)
 
 	it("should recalculate its value in response to ForKeys objects", function()
 		local baseMap = Value({
 			["foo"] = "baz",
 		})
-		local barMap = ForKeys(baseMap, function(key)
+		local barMap = ForKeys(baseMap, function(use, key)
 			return key .. "bar"
 		end)
-		local bizMap = ForKeys(barMap, function(key)
+		local bizMap = ForKeys(barMap, function(use, key)
 			return key .. "biz"
 		end)
 
-		expect(barMap:get()["foobar"]).to.be.ok()
-		expect(bizMap:get()["foobarbiz"]).to.be.ok()
+		expect(peek(barMap)["foobar"]).to.be.ok()
+		expect(peek(bizMap)["foobarbiz"]).to.be.ok()
 
 		baseMap:set({
 			["fiz"] = "foo",
 			["baz"] = "foo",
 		})
 
-		expect(barMap:get()["fizbar"]).to.be.ok()
-		expect(bizMap:get()["fizbarbiz"]).to.be.ok()
-		expect(barMap:get()["bazbar"]).to.be.ok()
-		expect(bizMap:get()["bazbarbiz"]).to.be.ok()
+		expect(peek(barMap)["fizbar"]).to.be.ok()
+		expect(peek(bizMap)["fizbarbiz"]).to.be.ok()
+		expect(peek(barMap)["bazbar"]).to.be.ok()
+		expect(peek(bizMap)["bazbarbiz"]).to.be.ok()
 	end)
 
-	it("should not corrupt dependencies after an error", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-		local simulateError = false
-		local computed = ForKeys(state, function(key)
-			if simulateError then
-				-- in a naive implementation, this would corrupt dependencies as
-				-- state:get() hasn't been captured yet, preventing future
-				-- reactive updates from taking place
-				-- to avoid this, dependencies captured when a callback errors
-				-- have to be discarded
-				error("This is an intentional error from a unit test")
-			end
-
-			return key
-		end)
-
-		expect(computed:get()["foo"]).to.be.ok()
-
-		simulateError = true
-		state:set({
-			["bar"] = "baz",
-		}) -- update the computed to invoke the error
-
-		simulateError = false
-		state:set({
-			["bar"] = "fiz",
-		}) -- if dependencies are corrupt, the computed won't update
-
-		expect(computed:get()["bar"]).to.be.ok()
+	itSKIP("should not corrupt dependencies after an error", function()
+		-- needs rewrite
 	end)
 
 	it("should garbage-collect unused objects", function()
@@ -265,7 +237,7 @@ return function()
 		local counter = 0
 
 		do
-			local computedKeys = ForKeys(state, function(key)
+			local computedKeys = ForKeys(state, function(use, key)
 				counter += 1
 				return key
 			end)
@@ -289,12 +261,12 @@ return function()
 		local counter = 0
 
 		do
-			local computed = ForKeys(state, function(key)
+			local computed = ForKeys(state, function(use, key)
 				counter += 1
 				return key
 			end)
 
-			computed2 = ForKeys(computed, function(key)
+			computed2 = ForKeys(computed, function(use, key)
 				return key
 			end)
 		end

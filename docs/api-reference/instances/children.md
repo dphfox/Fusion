@@ -99,7 +99,7 @@ local child2 = New "Folder" {
 	Name = "Child two"
 }
 
-local childState = State(child1)
+local childState = Value(child1)
 
 local parent = New "Folder" {
 	[Children] = childState
@@ -116,9 +116,6 @@ print(parent:GetChildren()) -- { Child two }
 !!! warning
 	When using state objects, note that old children *won't* be destroyed, only
 	unparented - it's up to you to decide if/when children need to be destroyed.
-
-	If you're using a helper like [ForValues](../../state/forvalues), instance
-	cleanup is handled for you by default (though this is configurable).
 
 -----
 

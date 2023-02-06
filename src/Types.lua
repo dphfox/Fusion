@@ -31,6 +31,14 @@ export type Error = {
 }
 
 --[[
+	Generic reactive graph types
+]]
+
+export type StateObject<T> = PubTypes.StateObject<T> & {
+	_peek: (StateObject<T>) -> T
+}
+
+--[[
 	Specific reactive graph types
 ]]
 
@@ -42,14 +50,14 @@ export type State<T> = PubTypes.Value<T> & {
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = PubTypes.Computed<T> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
-	_callback: () -> T,
+	_callback: (PubTypes.Use) -> T,
 	_value: T
 }
 
 -- A state object whose value is derived from other objects using a callback.
 export type ForPairs<KI, VI, KO, VO, M> = PubTypes.ForPairs<KO, VO> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
-	_processor: (KI, VI) -> (KO, VO),
+	_processor: (PubTypes.Use, KI, VI) -> (KO, VO),
 	_destructor: (VO, M?) -> (),
 	_inputIsState: boolean,
 	_inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
@@ -70,7 +78,7 @@ export type ForPairs<KI, VI, KO, VO, M> = PubTypes.ForPairs<KO, VO> & {
 -- A state object whose value is derived from other objects using a callback.
 export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
-	_processor: (KI) -> (KO),
+	_processor: (PubTypes.Use, KI) -> (KO),
 	_destructor: (KO, M?) -> (),
 	_inputIsState: boolean,
 	_inputTable: PubTypes.CanBeState<{ [KI]: KO }>,
@@ -90,7 +98,7 @@ export type ForKeys<KI, KO, M> = PubTypes.ForKeys<KO, any> & {
 -- A state object whose value is derived from other objects using a callback.
 export type ForValues<VI, VO, M> = PubTypes.ForValues<any, VO> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
-	_processor: (VI) -> (VO),
+	_processor: (PubTypes.Use, VI) -> (VO),
 	_destructor: (VO, M?) -> (),
 	_inputIsState: boolean,
 	_inputTable: PubTypes.CanBeState<{ [VI]: VO }>,

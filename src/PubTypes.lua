@@ -70,12 +70,14 @@ export type Dependent = {
 -- An object which stores a piece of reactive state.
 export type StateObject<T> = Dependency & {
 	type: "State",
-	kind: string,
-	get: (StateObject<T>, asDependency: boolean?) -> T
+	kind: string
 }
 
 -- Either a constant value of type T, or a state object containing type T.
 export type CanBeState<T> = StateObject<T> | T
+
+-- Function signature for use callbacks.
+export type Use = <T>(target: CanBeState<T>) -> T
 
 --[[
 	Specific reactive graph types
@@ -83,7 +85,7 @@ export type CanBeState<T> = StateObject<T> | T
 
 -- A state object whose value can be set at any time by the user.
 export type Value<T> = StateObject<T> & {
-	kind: "State"
+	kind: "State",
  	set: (Value<T>, newValue: any, force: boolean?) -> ()
 }
 

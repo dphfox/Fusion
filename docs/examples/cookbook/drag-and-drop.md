@@ -39,7 +39,7 @@ export type CurrentlyDragging = {
 	offset: Vector2
 }
 -- This state object stores the above during a drag, or `nil` when not dragging.
-local currentlyDragging = Value(nil :: CurrentlyDragging?)
+local currentlyDragging: Value<CurrentlyDragging?> = Value(nil)
 
 -- Now we need a component to encapsulate all of our dragging behaviour, such
 -- as moving our UI between different parents, placing it at the mouse cursor,
@@ -78,16 +78,16 @@ local function Draggable(props: DraggableProps): Child
 
 	-- This acts like `currentlyDragging`, but filters out anything without a
 	-- matching ID, so it'll only exist when this specific item is dragged.
-	local thisDragging = Computed(function()
-		local dragInfo = currentlyDragging:get()
+	local thisDragging = Computed(function(use)
+		local dragInfo = use(currentlyDragging)
 		return if dragInfo ~= nil and dragInfo.id == props.ID then dragInfo else nil
 	end)
 
 	-- Our item controls its own parent - one of the few times you'll see this
 	-- done in Fusion. This means we don't have to destroy and re-build the item
 	-- when it moves to a new location.
-	local itemParent = Computed(function()
-		return if thisDragging:get() ~= nil then props.OverlayFrame else props.Parent:get()
+	local itemParent = Computed(function(use)
+		return if use(thisDragging) ~= nil then props.OverlayFrame else use(props.Parent)
 	end, Fusion.doNothing)
 
 	-- If we move a scaled UI into the `overlayBox`, by default it will stretch
@@ -105,9 +105,7 @@ local function Draggable(props: DraggableProps): Child
 		-- the parent changes (because different parents might have different
 		-- absolute sizes, if any)
 		local function recalculateParentSize()
-			-- We're not in a Computed, so we want to pass `false` to `:get()`
-			-- to avoid adding dependencies.
-			local parent = props.Parent:get(false)
+			local parent = peek(props.Parent)
 			local parentHasSize = parent ~= nil and parent:IsA("GuiObject")
 			parentSize:set(if parentHasSize then parent.AbsoluteSize else nil)
 		end
@@ -122,15 +120,14 @@ local function Draggable(props: DraggableProps): Child
 				parentSizeConn:Disconnect()
 				parentSizeConn = nil
 			end
-			local parent = props.Parent:get(false)
+			local parent = peek(props.Parent)
 			local parentHasSize = parent ~= nil and parent:IsA("GuiObject")
 			if parentHasSize then
 				parentSizeConn = parent:GetPropertyChangedSignal("AbsoluteSize"):Connect(recalculateParentSize)
 			end
 			recalculateParentSize()
 		end
-		rebindToParentSize()
-		local disconnect = Observer(props.Parent):onChange(rebindToParentSize)
+		local disconnect = Observer(props.Parent):onBind(rebindToParentSize)
 
 		-- When the item gets destroyed, we need to disconnect that observer and
 		-- our AbsoluteSize change event (if any is active right now)
@@ -145,14 +142,9 @@ local function Draggable(props: DraggableProps): Child
 
 	-- Now that we have a reliable parent size, we can calculate the item's size
 	-- without worrying about all of those event connections.
-	if props.Size == nil then
-		props.Size = Value(UDim2.fromOffset(0, 0))
-	elseif typeof(props.Size) == "UDim2" then
-		props.Size = Value(props.Size)
-	end
-	local itemSize = Computed(function()
-		local udim2 = props.Size:get()
-		local scaleSize = parentSize:get() or Vector2.zero -- might be nil!
+	local itemSize = Computed(function(use)
+		local udim2 = use(props.Size) or UDim2.fromOffset(0, 0)
+		local scaleSize = use(parentSize) or Vector2.zero -- might be nil!
 		return UDim2.fromOffset(
 			udim2.X.Scale * scaleSize.X + udim2.X.Offset,
 			udim2.Y.Scale * scaleSize.Y + udim2.Y.Offset
@@ -161,20 +153,15 @@ local function Draggable(props: DraggableProps): Child
 
 	-- Similarly, we'll need to override the item's position while it's being
 	-- dragged. Happily, this is simpler to do :)
-	if props.Position == nil then
-		props.Position = Value(UDim2.fromOffset(0, 0))
-	elseif typeof(props.Position) == "UDim2" then
-		props.Position = Value(props.Position)
-	end
-	local itemPosition = Computed(function()
-		local dragInfo = thisDragging:get()
+	local itemPosition = Computed(function(use)
+		local dragInfo = use(thisDragging)
 		if dragInfo == nil then
-			return props.Position:get()
+			return use(props.Position) or UDim2.fromOffset(0, 0)
 		else
 			-- `dragInfo.offset` stores the distance from the top-left corner
 			-- of the item to the mouse position. Subtracting the offset from
 			-- the mouse position therefore gives us the item's position.
-			local position = mousePos:get() - dragInfo.offset
+			local position = use(mousePos) - dragInfo.offset
 			return UDim2.fromOffset(position.X, position.Y)
 		end
 	end)
@@ -251,8 +238,8 @@ local function TodoEntry(props: TodoEntryProps): Child
 
 	-- Using our item's ID, we can figure out if we're being dragged to apply
 	-- some styling for dragged items only!
-	local isDragging = Computed(function()
-		local dragInfo = currentlyDragging:get()
+	local isDragging = Computed(function(use)
+		local dragInfo = use(currentlyDragging)
 		return dragInfo ~= nil and dragInfo.id == props.Item.id
 	end)
 
@@ -269,10 +256,10 @@ local function TodoEntry(props: TodoEntryProps): Child
 			Name = "TodoEntry",
 
 			Size = UDim2.fromScale(1, 1),
-			BackgroundColor3 = Computed(function()
-				if isDragging:get() then
+			BackgroundColor3 = Computed(function(use)
+				if use(isDragging) then
 					return Color3.new(1, 1, 1)
-				elseif props.Item.completed:get() then
+				elseif use(props.Item.completed) then
 					return Color3.new(0, 1, 0)
 				else
 					return Color3.new(1, 0, 0)
@@ -285,9 +272,9 @@ local function TodoEntry(props: TodoEntryProps): Child
 			-- over this item, we should pick it up.
 			[OnEvent "MouseButton1Down"] = function()
 				-- only start a drag if we're not already dragging
-				if currentlyDragging:get(false) == nil then
-					local itemPos = absolutePosition:get(false) or Vector2.zero
-					local offset = mousePos:get(false) - itemPos
+				if peek(currentlyDragging) == nil then
+					local itemPos = peek(absolutePosition) or Vector2.zero
+					local offset = peek(mousePos) - itemPos
 					currentlyDragging:set({
 						id = props.Item.id,
 						offset = offset
@@ -324,7 +311,7 @@ local incompleteList = New "ScrollingFrame" {
 	end,
 
 	[OnEvent "MouseLeave"] = function()
-		if dropAction:get(false) == "incomplete" then
+		if peek(dropAction) == "incomplete" then
 			dropAction:set(nil) -- only clear this if it's not overwritten yet
 		end
 	end,
@@ -350,7 +337,7 @@ local completedList = New "ScrollingFrame" {
 	end,
 
 	[OnEvent "MouseLeave"] = function()
-		if dropAction:get(false) == "completed" then
+		if peek(dropAction) == "completed" then
 			dropAction:set(nil) -- only clear this if it's not overwritten yet
 		end
 	end,
@@ -369,12 +356,12 @@ local mouseUpConn = UserInputService.InputEnded:Connect(function(inputObject)
 	if inputObject.UserInputType ~= Enum.UserInputType.MouseButton1 then
 		return
 	end
-	local dragInfo = currentlyDragging:get(false)
+	local dragInfo = peek(currentlyDragging)
 	if dragInfo == nil then
 		return
 	end
 	local item = getTodoItemForID(dragInfo.id)
-	local action = dropAction:get(false)
+	local action = peek(dropAction)
 	if item ~= nil then
 		if action == "incomplete" then
 			item.completed:set(false)
@@ -398,11 +385,11 @@ local overlayFrame = New "Frame" {
 -- global level like this, they're only created and destroyed when they're added
 -- and removed from the list.
 
-local allEntries = ForValues(todoItems, function(item)
+local allEntries = ForValues(todoItems, function(use, item)
 	return TodoEntry {
 		Item = item,
 		Parent = Computed(function()
-			return if item.completed:get() then completedList else incompleteList
+			return if use(item.completed) then completedList else incompleteList
 		end, Fusion.doNothing),
 		OverlayFrame = overlayFrame
 	}

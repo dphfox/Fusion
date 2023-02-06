@@ -108,7 +108,9 @@ nav:
       - ForPairs: api-reference/state/forpairs.md
       - ForValues: api-reference/state/forvalues.md
       - Observer: api-reference/state/observer.md
+      - peek: api-reference/state/peek.md
       - StateObject: api-reference/state/stateobject.md
+      - Use: api-reference/state/use.md
       - Value: api-reference/state/value.md
     - Instances:
       - api-reference/instances/index.md

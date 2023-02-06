@@ -7,30 +7,21 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local captureDependencies = require(Package.Dependencies.captureDependencies)
-local initDependency = require(Package.Dependencies.initDependency)
-local useDependency = require(Package.Dependencies.useDependency)
+-- Logging
+local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
+local parseError = require(Package.Logging.parseError)
+-- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
+-- State
+local makeUseCallback = require(Package.State.makeUseCallback)
 
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
-
---[[
-	Returns the last cached value calculated by this Computed object.
-	The computed object will be registered as a dependency unless `asDependency`
-	is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._value
-end
 
 --[[
 	Recalculates this Computed's cached value and dependencies.
@@ -49,7 +40,8 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local ok, newValue, newMetaValue = captureDependencies(self.dependencySet, self._processor)
+	local use = makeUseCallback(self.dependencySet)
+	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, use)
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
@@ -90,21 +82,32 @@ function class:update(): boolean
 	end
 end
 
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._value
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+	local dependencySet = {}
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
-		dependencySet = {},
+		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_value = nil,
+		_value = nil
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	self:update()
 
 	return self

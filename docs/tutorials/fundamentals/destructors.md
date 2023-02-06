@@ -6,7 +6,7 @@ local function callDestroy(x)
     x:Destroy()
 end
 
-local brick = Computed(function()
+local brick = Computed(function(use)
     return Instance.new("Part")
 end, callDestroy)
 ```
@@ -58,8 +58,8 @@ generate fresh instances, they need to destroy those instances too:
 ```Lua
 local className = Value("Frame")
 -- `instance` will generate a Frame at first
-local instance = Computed(function()
-    return Instance.new(className:get())
+local instance = Computed(function(use)
+    return Instance.new(use(className))
 end)
 -- This will cause it to generate a TextLabel - but we didn't destroy the Frame!
 className:set("TextLabel")
@@ -73,8 +73,8 @@ local function callDestroy(x)
     x:Destroy()
 end
 
-local instance = Computed(function()
-    return Instance.new(className:get())
+local instance = Computed(function(use)
+    return Instance.new(use(className))
 end, callDestroy)
 ```
 
@@ -115,9 +115,9 @@ Fusion provides default destructors for both of these situations.
 You can use this when generating unmanaged values:
 
 ```Lua
-local instance = Computed(function()
-    return Instance.new(className:get())
-end, Fusion.cleanup) 
+local instance = Computed(function(use)
+    return Instance.new(use(className))
+end, Fusion.cleanup)
 ```
 
 ### Do Nothing
@@ -128,7 +128,7 @@ You can use this when passing 'through' unmanaged values that you don't control.
 It makes it clear that your code is supposed to leave the values alone:
 
 ```Lua
-local instance = Computed(function()
-    return workspace:FindFirstChild(name:get())
+local instance = Computed(function(use)
+    return workspace:FindFirstChild(use(className))
 end, Fusion.doNothing)
 ```

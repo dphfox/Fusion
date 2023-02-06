@@ -24,8 +24,8 @@ local spinner = New "ImageLabel" {
 	Image = "rbxassetid://your-loading-spinner-image", -- replace this!
 
 	-- As the timer runs, this will automatically update and rotate our image.
-	Rotation = Computed(function()
-		local time = timer:get()
+	Rotation = Computed(function(use)
+		local time = use(timer)
 		local angle = time * 180 -- Spin at a rate of 180 degrees per second
 		angle %= 360 -- Don't need to go beyond 360 degrees; wrap instead
 		return angle

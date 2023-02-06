@@ -10,7 +10,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local lerpType = require(Package.Animation.lerpType)
 local getTweenRatio = require(Package.Animation.getTweenRatio)
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.State.updateAll)
 
 local TweenScheduler = {}
 

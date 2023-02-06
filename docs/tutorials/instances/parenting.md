@@ -1,5 +1,5 @@
 The `[Children]` key allows you to add children when hydrating or creating an
-instance. 
+instance.
 
 It accepts instances, arrays of children and state objects containing children.
 
@@ -121,11 +121,11 @@ local folder = New "Folder" {
             Color = Color3.new(1, 0, 0)
         },
         -- state object containing children (or nil)
-        Computed(function()
-            return if includeModel:get()
+        Computed(function(use)
+            return if use(includeModel)
                 then modelChildren:GetChildren() -- array of children
                 else nil
-        end)
+        end, Fusion.doNothing)
     }
 }
 ```

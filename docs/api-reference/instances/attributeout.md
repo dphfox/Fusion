@@ -46,6 +46,6 @@ New "Configuration" {
 }
 
 Observer(ammo):onChange(function()
-    print("Current ammo:", ammo:get())
+    print("Current ammo:", peek(ammo))
 end)
 ```
