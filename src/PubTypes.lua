@@ -68,7 +68,7 @@ export type Dependent = {
 }
 
 -- An object which stores a piece of reactive state.
-export type StateObject<T> = Dependency & {
+export type StateObject<T> = {
 	type: "State",
 	kind: string
 }
@@ -90,30 +90,30 @@ export type Value<T> = StateObject<T> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type Computed<T> = StateObject<T> & Dependent & {
+export type Computed<T> = StateObject<T> & {
 	kind: "Computed"
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type ForPairs<KO, VO> = StateObject<{ [KO]: VO }> & Dependent & {
+export type ForPairs<KO, VO> = StateObject<{ [KO]: VO }> & {
 	kind: "ForPairs"
 }
 -- A state object whose value is derived from other objects using a callback.
-export type ForKeys<KO, V> = StateObject<{ [KO]: V }> & Dependent & {
+export type ForKeys<KO, V> = StateObject<{ [KO]: V }> & {
 	kind: "ForKeys"
 }
 -- A state object whose value is derived from other objects using a callback.
-export type ForValues<K, VO> = StateObject<{ [K]: VO }> & Dependent & {
+export type ForValues<K, VO> = StateObject<{ [K]: VO }> & {
 	kind: "ForKeys"
 }
 
 -- A state object which follows another state object using tweens.
-export type Tween<T> = StateObject<T> & Dependent & {
+export type Tween<T> = StateObject<T> & {
 	kind: "Tween"
 }
 
 -- A state object which follows another state object using spring simulation.
-export type Spring<T> = StateObject<T> & Dependent & {
+export type Spring<T> = StateObject<T> & {
 	kind: "Spring",
 	setPosition: (Spring<T>, newPosition: Animatable) -> (),
 	setVelocity: (Spring<T>, newVelocity: Animatable) -> (),
@@ -121,7 +121,7 @@ export type Spring<T> = StateObject<T> & Dependent & {
 }
 
 -- An object which can listen for updates on another state object.
-export type Observer = Dependent & {
+export type Observer = {
 	kind: "Observer",
   	onChange: (Observer, callback: () -> ()) -> (() -> ())
 }
