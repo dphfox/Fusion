@@ -5,22 +5,6 @@
 	the New function.
 ]]
 
-local superclassProps = {
-	["HandleAdornment"] = {
-		ZIndex = 0
-	},
-	["BasePart"] = {
-		Anchored = true,
-		Size = Vector3.one,
-		FrontSurface = Enum.SurfaceType.Smooth,
-		BackSurface = Enum.SurfaceType.Smooth,
-		LeftSurface = Enum.SurfaceType.Smooth,
-		RightSurface = Enum.SurfaceType.Smooth,
-		TopSurface = Enum.SurfaceType.Smooth,
-		BottomSurface = Enum.SurfaceType.Smooth,
-	}
-}
-
 return {
 	ScreenGui = {
 		ResetOnSpawn = false,
@@ -128,17 +112,80 @@ return {
 		Duration = 0
 	},
 
-	BoxHandleAdornment = superclassProps.HandleAdornment,
-	ConeHandleAdornment = superclassProps.HandleAdornment,
-	CylinderHandleAdornment = superclassProps.HandleAdornment,
-	ImageHandleAdornment = superclassProps.HandleAdornment,
-	LineHandleAdornment = superclassProps.HandleAdornment,
-	SphereHandleAdornment = superclassProps.HandleAdornment,
-	WireframeHandleAdornment = superclassProps.HandleAdornment,
+	BoxHandleAdornment = {
+		ZIndex = 0
+	},
+	ConeHandleAdornment = {
+		ZIndex = 0
+	},
+	CylinderHandleAdornment = {
+		ZIndex = 0
+	},
+	ImageHandleAdornment = {
+		ZIndex = 0
+	},
+	LineHandleAdornment = {
+		ZIndex = 0
+	},
+	SphereHandleAdornment = {
+		ZIndex = 0
+	},
+	WireframeHandleAdornment = {
+		ZIndex = 0
+	},
 	
-	Part = superclassProps.BasePart,
-	TrussPart = superclassProps.BasePart,
-	MeshPart = superclassProps.BasePart,
-	CornerWedgePart = superclassProps.BasePart,
-	VehicleSeat = superclassProps.BasePart,
+	Part = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	},
+	
+	TrussPart = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	},
+
+	MeshPart = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	},
+
+	CornerWedgePart = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	},
+
+	VehicleSeat = {
+		Anchored = true,
+		Size = Vector3.one,
+		FrontSurface = Enum.SurfaceType.Smooth,
+		BackSurface = Enum.SurfaceType.Smooth,
+		LeftSurface = Enum.SurfaceType.Smooth,
+		RightSurface = Enum.SurfaceType.Smooth,
+		TopSurface = Enum.SurfaceType.Smooth,
+		BottomSurface = Enum.SurfaceType.Smooth,
+	},
 }
