@@ -2217,8 +2217,8 @@ it a callback representing the calculation - for now, we'll add two numbers:</p>
 get the computed's current value using <code>peek()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">hardMaths</span><span class="p">))</span> <span class="c1">--&gt; 2</span>
 </code></pre></div>
-<p>The calculation is only run once by default. If you try and use <code>peek()</code>,
-your code won't work:</p>
+<p>The calculation is only run once by default. If you try and use <code>peek()</code> inside
+the calculation, your code won't work:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
