@@ -1443,6 +1443,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1611,8 +1615,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2198,7 +2230,7 @@ from a component should be supported by <code>[Children]</code>.</p>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="c1">-- returns *one* state object</span>
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Component</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">ForValues</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="kr">function</span><span class="p">()</span>
+    <span class="kr">return</span> <span class="n">ForValues</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
         <span class="kr">return</span> <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="kr">end</span>
@@ -2265,7 +2297,7 @@ insert an instance.</p>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{},</span>
 
-        <span class="n">ForValues</span><span class="p">({</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;Fusion&quot;</span><span class="p">},</span> <span class="kr">function</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">ForValues</span><span class="p">({</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;Fusion&quot;</span><span class="p">},</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
             <span class="kr">return</span> <span class="n">Button</span> <span class="p">{</span>
                 <span class="n">Text</span> <span class="o">=</span> <span class="n">text</span>
             <span class="p">}</span>

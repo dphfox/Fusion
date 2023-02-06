@@ -1478,6 +1478,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1646,8 +1650,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2253,8 +2285,8 @@ object to move towards:</p>
 <span class="kd">local</span> <span class="n">animated</span> <span class="o">=</span> <span class="n">Tween</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 </code></pre></div>
 <p>The tween will smoothly follow the 'goal' state object over time. As with other
-state objects, you can <code>:get()</code> its value at any time:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">animated</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 0.26425...</span>
+state objects, you can <code>peek()</code> at its value at any time:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">animated</span><span class="p">))</span> <span class="c1">--&gt; 0.26425...</span>
 </code></pre></div>
 <p>To configure how the tween moves, you can provide a TweenInfo to change the
 shape of the animation curve. It's optional, and it can be a state object if

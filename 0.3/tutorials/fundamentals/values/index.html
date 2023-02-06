@@ -1463,6 +1463,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1631,8 +1635,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2205,21 +2237,23 @@
 
 
 <!-- Markdown content -->
-<p>Values are objects which store single values. You can read from them with
-<code>:get()</code>, and write to them with <code>:set()</code>.</p>
+<p>Values are objects which store single values. You can write to them with
+their <code>:set()</code> method, and read from them with the <code>peek()</code> function.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 100</span>
 <span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 25</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 25</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>To use <code>Value</code> in your code, you first need to import it from the Fusion module,
-so that you can refer to it by name:</p>
+so that you can refer to it by name. You should also import <code>peek</code> for later:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
 <span class="hll"><span class="kd">local</span> <span class="n">Value</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span>
+</span><span class="hll"><span class="kd">local</span> <span class="n">peek</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">peek</span>
 </span></code></pre></div></td></tr></table></div>
 <p>To create a new value, call the <code>Value</code> function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">Value</span><span class="p">()</span> <span class="c1">-- this will create and return a new Value object</span>
@@ -2228,12 +2262,13 @@ so that you can refer to it by name:</p>
 start with a different value, you can provide one:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1">-- the Value will initially store a value of 100</span>
 </code></pre></div>
-<p>You can retrieve the currently stored value at any time with <code>:get()</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 100</span>
+<p>Fusion provides a global <code>peek()</code> function which returns the value of whatever
+you give it. For example, it will read the value of our <code>health</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 100</span>
 </code></pre></div>
-<p>You can also set the stored value at any time with <code>:set()</code>:</p>
+<p>We can change the value using the <code>:set()</code> method on the object itself:</p>
 <div class="highlight"><pre><span></span><code><span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 25</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 25</span>
 </code></pre></div>
 <hr />
 <h2 id="why-objects">Why Objects?<a class="headerlink" href="#why-objects" title="Permanent link">&para;</a></h2>
@@ -2278,7 +2313,7 @@ variable. This is so we know who to notify when the value changes.</li>
 do that, then we can go through the list and notify everyone.</li>
 </ul>
 <p>To solve this, Fusion introduces the idea of a 'state object'. These are objects
-that represent a single value, which you can <code>:get()</code> at any time. They also
+that represent a single value, which you can <code>peek()</code> at any time. They also
 keep a list of dependents; when the object's value changes, it can notify
 everyone so they can respond to the change.</p>
 <p><code>Value</code> is one such state object. It's specifically designed to act like a
@@ -2293,7 +2328,7 @@ directly with other code. Every usage of that object will refer to the
 same underlying value:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- someObject is a `Value` object</span>
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">printValue</span><span class="p">(</span><span class="n">someObject</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">someObject</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">someObject</span><span class="p">))</span>
 <span class="kr">end</span>
 
 <span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>

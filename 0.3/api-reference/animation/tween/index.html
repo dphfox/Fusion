@@ -1390,6 +1390,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1558,8 +1562,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -1971,39 +2003,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tweenget" class="md-nav__link">
-     Tween:get()
-  </a>
-  
-    <nav class="md-nav" aria-label=" Tween:get()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#example-usage" class="md-nav__link">
     Example Usage
   </a>
@@ -2160,39 +2159,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tweenget" class="md-nav__link">
-     Tween:get()
-  </a>
-  
-    <nav class="md-nav" aria-label=" Tween:get()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#example-usage" class="md-nav__link">
     Example Usage
   </a>
@@ -2238,7 +2204,7 @@
 <p>If the state object is not <a href="../animatable/">animatable</a>, the tween will
 just snap to the goal value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span>
-    <span class="n">goal</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> 
+    <span class="n">goal</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">tweenInfo</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">TweenInfo</span><span class="o">&gt;</span><span class="err">?</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tween</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 </code></pre></div>
@@ -2250,26 +2216,9 @@ just snap to the goal value.</p>
 to <code>TweenInfo.new()</code>.</li>
 </ul>
 <hr />
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<p class="fusiondoc-api-pills">
-    <span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-<h3 id="tweenget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Tween:get()<a class="headerlink" href="#tweenget" title="Permanent link">&para;</a></h3>
-<p>Returns the current value stored in the state object.</p>
-<p>If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">asDependency</span><span class="p">:</span> <span class="n">boolean</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
-</code></pre></div>
-<h4 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>asDependency</code> - If this is explicitly set to false, no dependencies will be
-captured.</li>
-</ul>
-<hr />
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">position</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
-<span class="kd">local</span> <span class="n">smoothPosition</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">smoothPosition</span> <span class="o">=</span> <span class="n">Tween</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
     <span class="n">Parent</span> <span class="o">=</span> <span class="n">PlayerGui</span><span class="p">.</span><span class="n">ScreenGui</span><span class="p">,</span>
@@ -2278,8 +2227,7 @@ captured.</li>
 
 <span class="kr">while</span> <span class="kc">true</span> <span class="kr">do</span>
     <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="c1">-- apply an impulse</span>
-    <span class="n">smoothPosition</span><span class="p">:</span><span class="n">addVelocity</span><span class="p">(</span><span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">position</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
 <span class="kr">end</span>
 </code></pre></div>
 

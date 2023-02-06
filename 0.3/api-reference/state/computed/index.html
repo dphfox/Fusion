@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1471,26 +1475,6 @@
   <a href="#parameters" class="md-nav__link">
     Parameters
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#object-methods" class="md-nav__link">
-    Object Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Object Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#computedget" class="md-nav__link">
-     Computed:get()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1642,8 +1626,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2161,26 +2173,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#object-methods" class="md-nav__link">
-    Object Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Object Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#computedget" class="md-nav__link">
-     Computed:get()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#example-usage" class="md-nav__link">
     Example Usage
   </a>
@@ -2238,7 +2230,7 @@
 <a class="headerlink" href="#computed-state-object-since-v01" title="Permanent link">&para;</a></h1>
 <p>Calculates a single value based on the returned values from other state objects.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span>
-    <span class="n">processor</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">M</span><span class="p">),</span>
+    <span class="n">processor</span><span class="p">:</span> <span class="p">(</span><span class="n">Use</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">M</span><span class="p">),</span>
     <span class="n">destructor</span><span class="p">:</span> <span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Computed</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">M</span><span class="o">&gt;</span>
 </code></pre></div>
@@ -2246,7 +2238,7 @@
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><code>processor: () -&gt; (T, M)</code> - computes and returns values to be returned from
+<p><code>processor: (Use) -&gt; (T, M)</code> - computes and returns values to be returned from
 the computed object, optionally returning extra values for the destructor alone</p>
 </li>
 <li>
@@ -2255,127 +2247,26 @@ when they are no longer in use</p>
 </li>
 </ul>
 <hr />
-<h2 id="object-methods">Object Methods<a class="headerlink" href="#object-methods" title="Permanent link">&para;</a></h2>
-<p class="fusiondoc-api-pills">
-    <span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-<h3 id="computedget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Computed:get()<a class="headerlink" href="#computedget" title="Permanent link">&para;</a></h3>
-<p>Returns the current value stored in the state object.</p>
-<p>If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">asDependency</span><span class="p">:</span> <span class="n">boolean</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
-</code></pre></div>
-<hr />
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">doubleCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="kd">local</span> <span class="n">doubleCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">doubleCoins</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">doubleCoins</span><span class="p">))</span> <span class="c1">--&gt; 100</span>
 
 <span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">doubleCoins</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">doubleCoins</span><span class="p">))</span> <span class="c1">--&gt; 4</span>
 </code></pre></div>
 <hr />
 <h2 id="dependency-management">Dependency Management<a class="headerlink" href="#dependency-management" title="Permanent link">&para;</a></h2>
-<p>Computed objects automatically detect dependencies used inside their callback
-each time their callback runs. This means, when you use a function like <code>:get()</code>
-on a state object, it will register that state object as a dependency:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">doubleCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="c1">-- Fusion detects you called :get() on `numCoins`, and so adds `numCoins` as</span>
-    <span class="c1">-- a dependency of this computed object.</span>
-    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
-<span class="kr">end</span><span class="p">)</span>
-</code></pre></div>
-<p>When a dependency changes value, the computed object will re-run its callback to
-generate and cache the current value internally. This value is later exposed via
-the <code>:get()</code> method.</p>
-<p>Something to note is that dependencies are dynamic; you can change what values
-your computed object depends on, and the dependencies will be updated to reduce
-unnecessary updates:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Lua</label><label for="__tabbed_1_2">Expected output</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">stateA</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">stateB</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">selector</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">computed</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt; updating computed!&quot;</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">selected</span> <span class="o">=</span> <span class="n">selector</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">selected</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span> <span class="kr">then</span>
-        <span class="kr">return</span> <span class="n">stateA</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
-    <span class="kr">elseif</span> <span class="n">selected</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span> <span class="kr">then</span>
-        <span class="kr">return</span> <span class="n">stateB</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
-    <span class="kr">end</span>
-<span class="kr">end</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;increment state A (expect update below)&quot;</span><span class="p">)</span>
-<span class="n">stateA</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">stateA</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;increment state B (expect no update)&quot;</span><span class="p">)</span>
-<span class="n">stateA</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">stateA</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;switch to select B&quot;</span><span class="p">)</span>
-<span class="n">selector</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;increment state A (expect no update)&quot;</span><span class="p">)</span>
-<span class="n">stateA</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">stateA</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;increment state B (expect update below)&quot;</span><span class="p">)</span>
-<span class="n">stateA</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">stateA</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>&gt; updating computed!
-increment state A (expect update below)
-&gt; updating computed!
-increment state B (expect no update)
-switch to select B
-&gt; updating computed!
-increment state A (expect no update)
-increment state B (expect update below)
-&gt; updating computed!
-</code></pre></div>
-</div>
-</div>
-</div>
-<div class="admonition caution">
-<p class="admonition-title">Pitfall: using non-state values</p>
-<p>Stick to using state objects and computed objects inside your computations.
-Fusion can detect when you use these objects and listen for changes.</p>
-<p>Fusion <em>can't</em> automatically detect changes when you use 'normal' variables:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">theVariable</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
-<span class="kd">local</span> <span class="n">badValue</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="c1">-- don&#39;t do this! use state objects or computed objects in here</span>
-    <span class="kr">return</span> <span class="s2">&quot;Say &quot;</span> <span class="o">..</span> <span class="n">theVariable</span>
-<span class="kr">end</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">badValue</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">-- prints &#39;Say Hello&#39;</span>
-
-<span class="n">theVariable</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">badValue</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">-- still prints &#39;Say Hello&#39; - that&#39;s a problem!</span>
-</code></pre></div>
-<p>By using a state object here, Fusion can correctly update the computed
-object, because it knows you used the state object:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">theVariable</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">goodValue</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="c1">-- this is much better - Fusion can detect you used this state object!</span>
-    <span class="kr">return</span> <span class="s2">&quot;Say &quot;</span> <span class="o">..</span> <span class="n">theVariable</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
-<span class="kr">end</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">goodValue</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">-- prints &#39;Say Hello&#39;</span>
-
-<span class="n">theVariable</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">goodValue</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">-- prints &#39;Say World&#39;</span>
-</code></pre></div>
-<p>This also applies to any functions that change on their own, like
-<code>os.clock()</code>. If you need to use them, store values from the function in a
-state object, and update the value of that object as often as required.</p>
-</div>
+<p>By default, computed objects run their processor function once during
+construction, then cache the result indefinitely. To specify the calculation
+should re-run when a state object changes value, the objects can be passed
+to the <a href="../use/">use callback</a> passed to the processor function. The use
+callback will unwrap the value as normal, but any state objects will become
+dependencies of the computed object.</p>
 <hr />
 <h2 id="destructors">Destructors<a class="headerlink" href="#destructors" title="Permanent link">&para;</a></h2>
 <p>The <code>destructor</code> callback, if provided, is called when the computed object swaps

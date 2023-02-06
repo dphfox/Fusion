@@ -1390,6 +1390,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1558,8 +1562,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2246,7 +2278,7 @@ upon the instance:</p>
 <p>Passing a state object to a string key will bind the property value; when the
 value of the object changes, the property will update to match on the next
 resumption step:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myName</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myName</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">example</span> <span class="o">=</span> <span class="n">Hydrate</span><span class="p">(</span><span class="n">workspace</span><span class="p">.</span><span class="n">Part</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">-- initially, the Name will be set to Bob</span>
@@ -2257,9 +2289,9 @@ resumption step:</p>
 <span class="c1">-- on the next resumption step, the part&#39;s Name will change to John</span>
 <span class="n">myName</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>Special keys, such as <a href="../children">Children</a> or <a href="../onevent">OnEvent</a>, may also
-be used as keys in the property table. For more information about how special
-keys work, <a href="../../types/specialkey">see the SpecialKey page.</a></p>
+<p>Special keys, such as <a href="../children/">Children</a> or <a href="../onevent/">OnEvent</a>, may
+also be used as keys in the property table. For more information about how
+special keys work, <a href="../specialkey/">see the SpecialKey page.</a></p>
 
 <!-- Source file information -->
 

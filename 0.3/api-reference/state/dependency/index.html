@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1502,13 +1506,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1608,8 +1605,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2126,13 +2151,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2180,26 +2198,13 @@ does not require objects to store state.</p>
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1">-- these are examples of objects which are dependencies</span>
 <span class="kd">local</span> <span class="n">value</span><span class="p">:</span> <span class="n">Dependency</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">Dependency</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">value</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">Dependency</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- dependencies can be used with some internal functions such as updateAll()</span>
 <span class="n">updateAll</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<h2 id="automatic-dependency-manager">Automatic Dependency Manager<a class="headerlink" href="#automatic-dependency-manager" title="Permanent link">&para;</a></h2>
-<p>Fusion includes an automatic dependency manager which can detect when graph
-objects are used in certain contexts and automatically form reactive graphs.</p>
-<p>In order to do this, dependencies should signal to the system when they are
-being used (for example, during a call to a <code>:get()</code> method). This can be done
-via the <code>useDependency()</code> function internally, which should be called with the
-dependency object.</p>
-<p>Furthermore, to help assist the dependency manager prevent cycles in the
-reactive graph, dependencies should register themselves with the system as soon
-as they are created via the <code>initDependency()</code> function internally. This is
-primarily used to prevent dependencies from being captured when they originate
-from within the object which is doing the capturing.</p>
 
 <!-- Source file information -->
 

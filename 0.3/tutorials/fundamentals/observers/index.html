@@ -1436,6 +1436,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1604,8 +1608,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2157,7 +2189,7 @@ disconnect it later.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -2180,13 +2212,13 @@ module, so that you can refer to it by name:</p>
 <p>When the watched object changes value, the observer will run all of its handlers.
 To add a handler, you can use <code>:onChange()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>When you're done with the handler, it's very important to disconnect it. The
 <code>:onChange()</code> method returns a function you can call to disconnect your handler:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- disconnect the above handler after 5 seconds</span>
@@ -2211,7 +2243,7 @@ run:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
 
 <span class="n">Observer</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Thing changed to&quot;</span><span class="p">,</span> <span class="n">thing</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Thing changed to&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">thing</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Setting thing once...&quot;</span><span class="p">)</span>
@@ -2245,7 +2277,7 @@ second argument - if you set it to <code>true</code>, an update will be forced:<
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
 
 <span class="n">Observer</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Thing changed to&quot;</span><span class="p">,</span> <span class="n">thing</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&gt; Thing changed to&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">thing</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Setting thing once...&quot;</span><span class="p">)</span>

@@ -166,7 +166,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.3/api-reference/state/peek/</loc>
+         <lastmod>2023-02-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.3/api-reference/state/stateobject/</loc>
+         <lastmod>2023-02-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://elttob.uk/Fusion/0.3/api-reference/state/use/</loc>
          <lastmod>2023-02-06</lastmod>
          <changefreq>daily</changefreq>
     </url>

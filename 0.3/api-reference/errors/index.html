@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1560,8 +1564,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2282,6 +2314,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stategetwasremoved" class="md-nav__link">
+    stateGetWasRemoved
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#strictreaderror" class="md-nav__link">
     strictReadError
   </a>
@@ -2888,6 +2927,23 @@ same type as the type of the spring.</p>
 <span class="kd">local</span> <span class="n">colourSpring</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">colour</span><span class="p">)</span>
 
 <span class="n">colourSpring</span><span class="p">:</span><span class="n">addVelocity</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<hr />
+<div class="fusiondoc-error-api-section">
+<p class="fusiondoc-api-pills">
+    <span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+<h2 id="stategetwasremoved">stateGetWasRemoved<a class="headerlink" href="#stategetwasremoved" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.
+</code></pre></div>
+<p>This message means you attempted to call the now-removed <code>:get()</code> method on a
+<a href="../state/stateobject/">state object</a>. Starting with Fusion 0.3, this method
+has been removed in favour of the <a href="../state/peek/">peek function</a> and
+<a href="../state/use/">use callbacks</a>.</p>
+<p><a href="https://github.com/Elttob/Fusion/discussions/217">Learn more by visiting this discussion on GitHub.</a></p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">value</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">-- should be print(peek(value))</span>
 </code></pre></div>
 </div>
 <hr />

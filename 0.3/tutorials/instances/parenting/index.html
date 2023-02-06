@@ -1429,6 +1429,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1597,8 +1601,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2138,7 +2170,7 @@
 
 <!-- Markdown content -->
 <p>The <code>[Children]</code> key allows you to add children when hydrating or creating an
-instance. </p>
+instance.</p>
 <p>It accepts instances, arrays of children and state objects containing children.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -2235,11 +2267,11 @@ table. Any instance you pass in will be parented:</p>
             <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">},</span>
         <span class="c1">-- state object containing children (or nil)</span>
-        <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-            <span class="kr">return</span> <span class="kr">if</span> <span class="n">includeModel</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">includeModel</span><span class="p">)</span>
                 <span class="kr">then</span> <span class="n">modelChildren</span><span class="p">:</span><span class="n">GetChildren</span><span class="p">()</span> <span class="c1">-- array of children</span>
                 <span class="kr">else</span> <span class="kc">nil</span>
-        <span class="kr">end</span><span class="p">)</span>
+        <span class="kr">end</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doNothing</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>

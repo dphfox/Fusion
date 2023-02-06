@@ -1463,6 +1463,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1631,8 +1635,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2211,7 +2243,7 @@ use them to clean up old values when they're no longer needed.</p>
     <span class="n">x</span><span class="p">:</span><span class="n">Destroy</span><span class="p">()</span>
 <span class="kr">end</span>
 
-<span class="kd">local</span> <span class="n">brick</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">brick</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">,</span> <span class="n">callDestroy</span><span class="p">)</span>
 </code></pre></div>
@@ -2250,8 +2282,8 @@ up, they could stick around forever:</p>
 generate fresh instances, they need to destroy those instances too:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">className</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Frame&quot;</span><span class="p">)</span>
 <span class="c1">-- `instance` will generate a Frame at first</span>
-<span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">className</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+<span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">className</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 <span class="c1">-- This will cause it to generate a TextLabel - but we didn&#39;t destroy the Frame!</span>
 <span class="n">className</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;TextLabel&quot;</span><span class="p">)</span>
@@ -2262,8 +2294,8 @@ Fusion will call to destroy the values we generate:</p>
     <span class="n">x</span><span class="p">:</span><span class="n">Destroy</span><span class="p">()</span>
 <span class="kr">end</span>
 
-<span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">className</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+<span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">className</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">,</span> <span class="n">callDestroy</span><span class="p">)</span>
 </code></pre></div>
 <p>Destructors aren't limited to typical cleanup behaviour! You can customise what
@@ -2294,16 +2326,16 @@ happens during cleanup, or do no cleanup at all:</p>
 <li>given an array, it cleans up everything inside</li>
 </ul>
 <p>You can use this when generating unmanaged values:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">className</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
-<span class="kr">end</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">cleanup</span><span class="p">)</span> 
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">className</span><span class="p">))</span>
+<span class="kr">end</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">cleanup</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="do-nothing">Do Nothing<a class="headerlink" href="#do-nothing" title="Permanent link">&para;</a></h3>
 <p><code>Fusion.doNothing</code> is an empty function. It does nothing.</p>
 <p>You can use this when passing 'through' unmanaged values that you don't control.
 It makes it clear that your code is supposed to leave the values alone:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">workspace</span><span class="p">:</span><span class="n">FindFirstChild</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">workspace</span><span class="p">:</span><span class="n">FindFirstChild</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">className</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doNothing</span><span class="p">)</span>
 </code></pre></div>
 

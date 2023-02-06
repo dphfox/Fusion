@@ -1390,6 +1390,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1558,8 +1562,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2255,7 +2287,7 @@ so parenting won't occur right away.</p>
     <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Child two&quot;</span>
 <span class="p">}</span>
 
-<span class="kd">local</span> <span class="n">childState</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">childState</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">childState</span>
@@ -2272,8 +2304,6 @@ so parenting won't occur right away.</p>
 <p class="admonition-title">Warning</p>
 <p>When using state objects, note that old children <em>won't</em> be destroyed, only
 unparented - it's up to you to decide if/when children need to be destroyed.</p>
-<p>If you're using a helper like <a href="../../state/forvalues">ForValues</a>, instance
-cleanup is handled for you by default (though this is configurable).</p>
 </div>
 <hr />
 <h2 id="technical-details">Technical Details<a class="headerlink" href="#technical-details" title="Permanent link">&para;</a></h2>

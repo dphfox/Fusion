@@ -1395,6 +1395,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1563,8 +1567,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2134,8 +2166,8 @@
 <span class="c1">-- a single UI element. These values are often calculated inline, like this:</span>
 
 <span class="kd">local</span> <span class="n">menuBar</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="kr">if</span> <span class="n">menuIsOpen</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">menuIsOpen</span><span class="p">)</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -2144,20 +2176,20 @@
 
 <span class="kd">local</span> <span class="n">menuBar</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
     <span class="c1">-- Use tweens for highly controllable animations:</span>
-    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Tween</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="kr">if</span> <span class="n">menuIsOpen</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Tween</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">menuIsOpen</span><span class="p">)</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="kr">end</span><span class="p">),</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingStyle</span><span class="p">.</span><span class="n">Sine</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingDirection</span><span class="p">.</span><span class="n">InOut</span><span class="p">)),</span>
 
     <span class="c1">-- Or use springs for more natural and responsive movement:</span>
-    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="kr">if</span> <span class="n">menuIsOpen</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">menuIsOpen</span><span class="p">)</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="kr">end</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="c1">-- The equivalent &#39;expanded&#39; code looks like this:</span>
 
-<span class="kd">local</span> <span class="n">anchorPoint</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="kr">if</span> <span class="n">menuIsOpen</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">anchorPoint</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">menuIsOpen</span><span class="p">)</span> <span class="kr">then</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="kr">else</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">smoothAnchorPoint</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">anchorPoint</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="c1">-- or equivalent Tween</span>

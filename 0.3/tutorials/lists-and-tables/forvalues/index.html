@@ -1463,6 +1463,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1631,8 +1635,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2212,8 +2244,8 @@ objects.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
 <span class="kd">local</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">multiplier</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">use</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">multiplied</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
@@ -2233,45 +2265,47 @@ module, so that you can refer to it by name:</p>
 <p>To create a new <code>ForValues</code> object, call the constructor with an input table and
 a processor function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>This will generate a new table of values, where each value is passed through the
-processor function. You can get the table using the <code>:get()</code> method:</p>
+processor function. The first argument is <code>use</code>, similar to a computed, and the
+second argument is one of the values from the input table.</p>
+<p>You can read the processed table using <code>peek()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">doubled</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">doubled</span><span class="p">))</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
 </span></code></pre></div>
 <h3 id="state-objects">State Objects<a class="headerlink" href="#state-objects" title="Permanent link">&para;</a></h3>
 <p>The input table can be provided as a state object instead, and the output table
 will update as the input table is changed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({})</span>
-<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">doubled</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="n">numbers</span><span class="p">:</span><span class="n">set</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">doubled</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">doubled</span><span class="p">))</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
 
 <span class="n">numbers</span><span class="p">:</span><span class="n">set</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">25</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">doubled</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {10, 30, 50}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">doubled</span><span class="p">))</span> <span class="c1">--&gt; {10, 30, 50}</span>
 </code></pre></div>
-<p>Additionally, you can use state objects in your calculations, just like a
+<p>Additionally, you can <code>use()</code> state objects in your calculations, just like a
 computed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
 <span class="kd">local</span> <span class="n">factor</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">factor</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">use</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">multiplied</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">multiplied</span><span class="p">))</span> <span class="c1">--&gt; {2, 4, 6, 8, 10}</span>
 
 <span class="n">factor</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">multiplied</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {10, 20, 30, 40, 50}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">multiplied</span><span class="p">))</span> <span class="c1">--&gt; {10, 20, 30, 40, 50}</span>
 </code></pre></div>
 <h3 id="cleanup-behaviour">Cleanup Behaviour<a class="headerlink" href="#cleanup-behaviour" title="Permanent link">&para;</a></h3>
 <p>Similar to computeds, if you want to run your own code when values are removed,
@@ -2279,7 +2313,7 @@ you can pass in a second 'destructor' function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">names</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Jodi&quot;</span><span class="p">,</span> <span class="s2">&quot;Amber&quot;</span><span class="p">,</span> <span class="s2">&quot;Umair&quot;</span><span class="p">})</span>
 <span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">names</span><span class="p">,</span>
     <span class="c1">-- processor</span>
-    <span class="kr">function</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="kr">return</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
             <span class="n">Text</span> <span class="o">=</span> <span class="n">name</span>
         <span class="p">}</span>
@@ -2300,7 +2334,7 @@ destructor without including it in the output table:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">names</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Jodi&quot;</span><span class="p">,</span> <span class="s2">&quot;Amber&quot;</span><span class="p">,</span> <span class="s2">&quot;Umair&quot;</span><span class="p">})</span>
 <span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">names</span><span class="p">,</span>
     <span class="c1">-- processor</span>
-    <span class="kr">function</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">textLabel</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
             <span class="n">Text</span> <span class="o">=</span> <span class="n">name</span>
         <span class="p">}</span>
@@ -2330,11 +2364,11 @@ is changed, <code>ForValues</code> will try and reuse as much as possible to imp
 performance.</p>
 <p>For example, let's say we're measuring the lengths of an array of words:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">words</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Orange&quot;</span><span class="p">,</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;Magenta&quot;</span><span class="p">})</span>
-<span class="kd">local</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
     <span class="kr">return</span> <span class="o">#</span><span class="n">word</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">lengths</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {6, 3, 7}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">lengths</span><span class="p">))</span> <span class="c1">--&gt; {6, 3, 7}</span>
 </code></pre></div>
 <p>The word lengths don't depend on the position of the word in the array. This
 means that rearranging the words in the input array will just rearrange the

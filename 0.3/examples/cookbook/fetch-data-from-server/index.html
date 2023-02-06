@@ -1395,6 +1395,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1563,8 +1567,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2165,7 +2197,7 @@
         <span class="n">lastFetchTime</span> <span class="o">=</span> <span class="n">fetchTime</span>
         <span class="n">currentUserBio</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span> <span class="c1">-- set to a default value to indicate loading</span>
         <span class="n">task</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-            <span class="kd">local</span> <span class="n">bio</span> <span class="o">=</span> <span class="n">FetchUserBio</span><span class="p">:</span><span class="n">InvokeServer</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">:</span><span class="n">get</span><span class="p">(</span><span class="kc">false</span><span class="p">))</span>
+            <span class="kd">local</span> <span class="n">bio</span> <span class="o">=</span> <span class="n">FetchUserBio</span><span class="p">:</span><span class="n">InvokeServer</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">))</span>
             <span class="c1">-- If these two are not equal, then that means another fetch was</span>
             <span class="c1">-- started while we were waiting for the server to return a value.</span>
             <span class="c1">-- In that case, the more recent call will be more up-to-date, so we</span>
@@ -2191,8 +2223,8 @@
 <span class="c1">-- handle that case before passing it into any code that expects a solid value.</span>
 
 <span class="kd">local</span> <span class="n">bioLabel</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="n">currentUserBio</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;Loading user bio...&quot;</span>
+    <span class="n">Text</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">currentUserBio</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;Loading user bio...&quot;</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>

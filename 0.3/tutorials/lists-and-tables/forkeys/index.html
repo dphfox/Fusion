@@ -1463,6 +1463,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1631,8 +1635,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2211,14 +2243,14 @@ another table.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">Red</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">Blue</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">}</span>
 <span class="kd">local</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Key_&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">prefix</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="n">key</span>
+<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">..</span> <span class="n">key</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">renamed</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {Key_Red = &quot;foo&quot;, Key_Blue = &quot;bar&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">renamed</span><span class="p">))</span> <span class="c1">--&gt; {Key_Red = &quot;foo&quot;, Key_Blue = &quot;bar&quot;}</span>
 
 <span class="n">prefix</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;colour&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">renamed</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {colourRed = &quot;foo&quot;, colourBlue = &quot;bar&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">renamed</span><span class="p">))</span> <span class="c1">--&gt; {colourRed = &quot;foo&quot;, colourBlue = &quot;bar&quot;}</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2232,45 +2264,47 @@ module, so that you can refer to it by name:</p>
 <p>To create a new <code>ForKeys</code> object, call the constructor with an input table and
 a processor function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">red</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">blue</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     <span class="kr">return</span> <span class="nb">string.upper</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>This will generate a new table, where each key is replaced using the processor
-function. You can get the table using the <code>:get()</code> method:</p>
+function. The first argument is <code>use</code>, similar to a computed, and the
+second argument is one of the keys from the input table.</p>
+<p>You can read the processed table using <code>peek()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">red</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">blue</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">renamed</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     <span class="kr">return</span> <span class="nb">string.upper</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">renamed</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {RED = &quot;foo&quot;, BLUE = &quot;bar&quot;}</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">renamed</span><span class="p">))</span> <span class="c1">--&gt; {RED = &quot;foo&quot;, BLUE = &quot;bar&quot;}</span>
 </span></code></pre></div>
 <h3 id="state-objects">State Objects<a class="headerlink" href="#state-objects" title="Permanent link">&para;</a></h3>
 <p>The input table can be provided as a state object instead, and the output table
 will update as the input table is changed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">playerSet</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({})</span>
-<span class="kd">local</span> <span class="n">userIdSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">playerSet</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">userIdSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">playerSet</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">player</span><span class="p">.</span><span class="n">UserId</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="n">playerSet</span><span class="p">:</span><span class="n">set</span><span class="p">({</span> <span class="p">[</span><span class="n">Players</span><span class="p">.</span><span class="n">Elttob</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {[1670764] = true}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">))</span> <span class="c1">--&gt; {[1670764] = true}</span>
 
 <span class="n">playerSet</span><span class="p">:</span><span class="n">set</span><span class="p">({</span> <span class="p">[</span><span class="n">Players</span><span class="p">.</span><span class="n">boatbomber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="n">Players</span><span class="p">.</span><span class="n">EgoMoose</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {[33655127] = true, [2155311] = true}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">))</span> <span class="c1">--&gt; {[33655127] = true, [2155311] = true}</span>
 </code></pre></div>
-<p>Additionally, you can use state objects in your calculations, just like a
+<p>Additionally, you can <code>use()</code> state objects in your calculations, just like a
 computed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">playerSet</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="n">Players</span><span class="p">.</span><span class="n">boatbomber</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="p">[</span><span class="n">Players</span><span class="p">.</span><span class="n">EgoMoose</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}</span>
 <span class="kd">local</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;User_&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">userIdSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">playerSet</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">prefix</span> <span class="o">..</span> <span class="n">player</span><span class="p">.</span><span class="n">UserId</span>
+<span class="kd">local</span> <span class="n">userIdSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">playerSet</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">..</span> <span class="n">player</span><span class="p">.</span><span class="n">UserId</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {User_33655127 = true, User_2155311 = true}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">))</span> <span class="c1">--&gt; {User_33655127 = true, User_2155311 = true}</span>
 
 <span class="n">prefix</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;player&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {player33655127 = true, player2155311 = true}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">userIdSet</span><span class="p">))</span> <span class="c1">--&gt; {player33655127 = true, player2155311 = true}</span>
 </code></pre></div>
 <h3 id="cleanup-behaviour">Cleanup Behaviour<a class="headerlink" href="#cleanup-behaviour" title="Permanent link">&para;</a></h3>
 <p>Similar to computeds, if you want to run your own code when values are removed,
@@ -2280,9 +2314,9 @@ you can pass in a second 'destructor' function:</p>
     <span class="p">[</span><span class="n">RunService</span><span class="p">.</span><span class="n">Heartbeat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span> 
+<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span>
     <span class="c1">-- processor</span>
-    <span class="kr">function</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">eventName</span> <span class="o">=</span> <span class="nb">tostring</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">event</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(...)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">eventName</span><span class="p">,</span> <span class="s2">&quot;fired with arguments:&quot;</span><span class="p">,</span> <span class="p">...)</span>
@@ -2307,9 +2341,9 @@ destructor without including it in the output table:</p>
     <span class="p">[</span><span class="n">RunService</span><span class="p">.</span><span class="n">Heartbeat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span> 
+<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span>
     <span class="c1">-- processor</span>
-    <span class="kr">function</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">eventName</span> <span class="o">=</span> <span class="nb">tostring</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">event</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(...)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">eventName</span><span class="p">,</span> <span class="s2">&quot;fired with arguments:&quot;</span><span class="p">,</span> <span class="p">...)</span>
@@ -2337,23 +2371,23 @@ is changed, <code>ForKeys</code> will try and reuse as much as possible to impro
 performance.</p>
 <p>For example, let's say we're converting an array to a dictionary:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Fusion&quot;</span><span class="p">,</span> <span class="s2">&quot;Knit&quot;</span><span class="p">,</span> <span class="s2">&quot;Matter&quot;</span><span class="p">})</span>
-<span class="kd">local</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
     <span class="kr">return</span> <span class="s2">&quot;Value&quot;</span> <span class="o">..</span> <span class="n">index</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">dict</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {Value1 = &quot;Fusion&quot;, Value2 = &quot;Knit&quot;, Value3 = &quot;Matter&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">dict</span><span class="p">))</span> <span class="c1">--&gt; {Value1 = &quot;Fusion&quot;, Value2 = &quot;Knit&quot;, Value3 = &quot;Matter&quot;}</span>
 </code></pre></div>
 <p>Because <code>ForKeys</code> only operates on the keys, changing the values in the array
 doesn't affect the keys. Keys are only added or removed as needed:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Fusion&quot;</span><span class="p">,</span> <span class="s2">&quot;Knit&quot;</span><span class="p">,</span> <span class="s2">&quot;Matter&quot;</span><span class="p">})</span>
-<span class="kd">local</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">ForKeys</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
     <span class="kr">return</span> <span class="s2">&quot;Value&quot;</span> <span class="o">..</span> <span class="n">index</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">dict</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {Value1 = &quot;Fusion&quot;, Value2 = &quot;Knit&quot;, Value3 = &quot;Matter&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">dict</span><span class="p">))</span> <span class="c1">--&gt; {Value1 = &quot;Fusion&quot;, Value2 = &quot;Knit&quot;, Value3 = &quot;Matter&quot;}</span>
 
 <span class="n">array</span><span class="p">:</span><span class="n">set</span><span class="p">({</span><span class="s2">&quot;Roact&quot;</span><span class="p">,</span> <span class="s2">&quot;Rodux&quot;</span><span class="p">})</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dict</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {Value1 = &quot;Roact&quot;, Value2 = &quot;Rodux&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">dict</span><span class="p">))</span> <span class="c1">--&gt; {Value1 = &quot;Roact&quot;, Value2 = &quot;Rodux&quot;}</span>
 </code></pre></div>
 <p><code>ForKeys</code> takes advantage of this - when a value changes, it's copied into the
 output table without recalculating the key. Keys are only calculated when a

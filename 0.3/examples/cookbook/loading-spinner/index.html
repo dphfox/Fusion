@@ -1395,6 +1395,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1563,8 +1567,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2149,8 +2181,8 @@
     <span class="n">Image</span> <span class="o">=</span> <span class="s2">&quot;rbxassetid://your-loading-spinner-image&quot;</span><span class="p">,</span> <span class="c1">-- replace this!</span>
 
     <span class="c1">-- As the timer runs, this will automatically update and rotate our image.</span>
-    <span class="n">Rotation</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kd">local</span> <span class="n">time</span> <span class="o">=</span> <span class="n">timer</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">Rotation</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">time</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">time</span> <span class="o">*</span> <span class="mi">180</span> <span class="c1">-- Spin at a rate of 180 degrees per second</span>
         <span class="n">angle</span> <span class="o">%=</span> <span class="mi">360</span> <span class="c1">-- Don&#39;t need to go beyond 360 degrees; wrap instead</span>
         <span class="kr">return</span> <span class="n">angle</span>

@@ -1429,6 +1429,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1597,8 +1601,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2221,9 +2253,9 @@ before. Let's define a changeable list of player names and some basic UI:</p>
 <span class="normal">15</span>
 <span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">playerNames</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Elttob&quot;</span><span class="p">,</span> <span class="s2">&quot;boatbomber&quot;</span><span class="p">,</span> <span class="s2">&quot;thisfall&quot;</span><span class="p">,</span> <span class="s2">&quot;AxisAngles&quot;</span><span class="p">})</span>
 
-<span class="hll"><span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="hll"><span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
 </span><span class="hll">    <span class="kd">local</span> <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class="hll">    <span class="kr">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">playerName</span> <span class="kr">in</span> <span class="n">playerNames</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">do</span>
+</span><span class="hll">    <span class="kr">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">playerName</span> <span class="kr">in</span> <span class="n">use</span><span class="p">(</span><span class="n">playerNames</span><span class="p">)</span> <span class="kr">do</span>
 </span><span class="hll">        <span class="n">out</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
 </span><span class="hll">            <span class="n">Name</span> <span class="o">=</span> <span class="n">playerName</span><span class="p">,</span>
 </span><span class="hll">            <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
@@ -2269,7 +2301,7 @@ same thing, except with less boilerplate and leaving unchanged values alone:</p>
 <span class="normal">11</span>
 <span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">playerNames</span> <span class="o">=</span> <span class="n">Value</span><span class="p">({</span><span class="s2">&quot;Elttob&quot;</span><span class="p">,</span> <span class="s2">&quot;boatbomber&quot;</span><span class="p">,</span> <span class="s2">&quot;thisfall&quot;</span><span class="p">,</span> <span class="s2">&quot;AxisAngles&quot;</span><span class="p">})</span>
 
-<span class="hll"><span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">playerNames</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+<span class="hll"><span class="kd">local</span> <span class="n">textLabels</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">playerNames</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">playerName</span><span class="p">)</span>
 </span><span class="hll">    <span class="kr">return</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
 </span><span class="hll">        <span class="n">Name</span> <span class="o">=</span> <span class="n">playerName</span><span class="p">,</span>
 </span><span class="hll">        <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>

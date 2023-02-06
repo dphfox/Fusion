@@ -1395,6 +1395,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1563,8 +1567,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2156,8 +2188,8 @@
 <span class="c1">-- from `THEME_COLS` based on our `currentTheme`.</span>
 <span class="kd">local</span> <span class="n">currentColours</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="kr">for</span> <span class="n">colourName</span><span class="p">,</span> <span class="n">colourOptions</span> <span class="kr">in</span> <span class="n">THEME_COLOURS</span> <span class="kr">do</span>
-    <span class="n">currentColours</span><span class="p">[</span><span class="n">colourName</span><span class="p">]</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="n">colourOptions</span><span class="p">[</span><span class="n">currentTheme</span><span class="p">:</span><span class="n">get</span><span class="p">()]</span>
+    <span class="n">currentColours</span><span class="p">[</span><span class="n">colourName</span><span class="p">]</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">colourOptions</span><span class="p">[</span><span class="n">use</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">)]</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="kr">end</span>
 

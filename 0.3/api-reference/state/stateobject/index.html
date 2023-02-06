@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1558,6 +1562,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -1601,35 +1619,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stateobjectget" class="md-nav__link">
-     StateObject:get()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#example-usage" class="md-nav__link">
     Example Usage
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
   </a>
   
 </li>
@@ -1638,6 +1629,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use/" class="md-nav__link">
+        Use
+      </a>
     </li>
   
 
@@ -2154,35 +2159,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#stateobjectget" class="md-nav__link">
-     StateObject:get()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#example-usage" class="md-nav__link">
     Example Usage
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
   </a>
   
 </li>
@@ -2224,10 +2202,12 @@
 <a class="headerlink" href="#stateobject-type-since-v02" title="Permanent link">&para;</a></h1>
 <p>A dependency that provides a single stateful value; the dependency updates when
 the value changes state.</p>
+<p>Note that state objects do not expose a public interface for accessing their
+interior value - the standard way of doing this is by using a
+<a href="../use/">use callback</a> such as the <a href="../peek/">peek function</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">Dependency</span> <span class="o">&amp;</span> <span class="p">{</span>
     <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;State&quot;</span><span class="p">,</span>
-    <span class="n">kind</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-    <span class="n">get</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">asDependency</span><span class="p">:</span> <span class="n">boolean</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">string</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
@@ -2237,38 +2217,13 @@ the value changes state.</p>
 <li><code>kind</code> - holds a more specific type name for different kinds of state object</li>
 </ul>
 <hr />
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<p class="fusiondoc-api-pills">
-    <span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-<h3 id="stateobjectget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> StateObject:get()<a class="headerlink" href="#stateobjectget" title="Permanent link">&para;</a></h3>
-<p>Returns the current value stored in the state object.</p>
-<p>If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">asDependency</span><span class="p">:</span> <span class="n">boolean</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
-</code></pre></div>
-<hr />
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1">-- these are examples of objects which are state objects</span>
-<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">StateObject</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">value</span><span class="p">:</span> <span class="n">StateObject</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">StateObject</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="s2">&quot;foo&quot;</span>
 <span class="kr">end</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">observer</span><span class="p">:</span> <span class="n">StateObject</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">computed</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<h2 id="automatic-dependency-manager">Automatic Dependency Manager<a class="headerlink" href="#automatic-dependency-manager" title="Permanent link">&para;</a></h2>
-<p>Fusion includes an automatic dependency manager which can detect when graph
-objects are used in certain contexts and automatically form reactive graphs.</p>
-<p>In order to do this, state objects should signal to the system when they are
-being used. This can be done via the <code>useDependency()</code> function internally,
-which should be called with the state object as the argument during execution of
-the <code>:get()</code> method.</p>
-<p>Furthermore, to help assist the dependency manager prevent cycles in the
-reactive graph, state objects should register themselves with the system as soon
-as they are created via the <code>initDependency()</code> function internally. This is
-primarily used to prevent dependencies from being captured when they originate
-from within the object which is doing the capturing.</p>
 
 <!-- Source file information -->
 
@@ -2298,9 +2253,9 @@ from within the object which is doing the capturing.</p>
 		
 		  
 		  <a
-			href="../observer/"
+			href="../peek/"
 			class="md-footer__link md-footer__link--prev"
-			aria-label="Previous: Observer"
+			aria-label="Previous: peek"
 			rel="prev"
 		  >
 			<div class="md-footer__button md-icon">
@@ -2311,7 +2266,7 @@ from within the object which is doing the capturing.</p>
 				<span class="md-footer__direction">
 				  Previous
 				</span>
-				Observer
+				peek
 			  </div>
 			</div>
 		  </a>
@@ -2321,9 +2276,9 @@ from within the object which is doing the capturing.</p>
 		
 		  
 		  <a
-			href="../value/"
+			href="../use/"
 			class="md-footer__link md-footer__link--next"
-			aria-label="Next: Value"
+			aria-label="Next: Use"
 			rel="next"
 		  >
 			<div class="md-footer__title">
@@ -2331,7 +2286,7 @@ from within the object which is doing the capturing.</p>
 				<span class="md-footer__direction">
 				  Next
 				</span>
-				Value
+				Use
 			  </div>
 			</div>
 			<div class="md-footer__button md-icon">

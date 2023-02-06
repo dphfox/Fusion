@@ -1436,6 +1436,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1604,8 +1608,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2159,10 +2191,10 @@ instance. Those keys let you output a property's value to a <code>Value</code> o
     <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
 
 <span class="n">thing</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Jimmy&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Jimmy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Jimmy</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2184,10 +2216,10 @@ the new value:</p>
     <span class="p">[</span><span class="n">Out</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">name</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
 
 <span class="n">thing</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Jimmy&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Jimmy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Jimmy</span>
 </code></pre></div>
 <p>If you're using quotes <code>'' ""</code> for the event name, the extra parentheses <code>()</code>
 are optional:</p>
@@ -2205,10 +2237,10 @@ to something else, the property remains the same:</p>
     <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">-- When `thing.Name` changes, set `name`</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part Part</span>
 <span class="n">name</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
 <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part NewName</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part NewName</span>
 </code></pre></div>
 <p>If you want the value to both <em>change</em> and <em>be changed</em> by the property, you
 need to explicitly say so:</p>
@@ -2219,10 +2251,10 @@ need to explicitly say so:</p>
 </span>    <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">-- When `thing.Name` changes, set `name`</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part Part</span>
 <span class="n">name</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
 <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; NewName NewName</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; NewName NewName</span>
 </span></code></pre></div>
 <p>This is known as two-way binding. Most of the time you won't need it, but it can
 come in handy when working with some kinds of UI - for example, a text box that

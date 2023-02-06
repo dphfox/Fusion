@@ -1463,6 +1463,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1631,8 +1635,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2212,16 +2244,16 @@ objects.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">itemColours</span> <span class="o">=</span> <span class="p">{</span> <span class="n">shoes</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">socks</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span> <span class="p">}</span>
 <span class="kd">local</span> <span class="n">owner</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Elttob&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">manipulated</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">itemColours</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">thing</span><span class="p">,</span> <span class="n">colour</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">manipulated</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">itemColours</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">thing</span><span class="p">,</span> <span class="n">colour</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">newKey</span> <span class="o">=</span> <span class="n">colour</span>
-    <span class="kd">local</span> <span class="n">newValue</span> <span class="o">=</span> <span class="n">owner</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot;&#39;s &quot;</span> <span class="o">..</span> <span class="n">thing</span>
+    <span class="kd">local</span> <span class="n">newValue</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">owner</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot;&#39;s &quot;</span> <span class="o">..</span> <span class="n">thing</span>
     <span class="kr">return</span> <span class="n">newKey</span><span class="p">,</span> <span class="n">newValue</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">manipulated</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {red = &quot;Elttob&#39;s shoes&quot;, blue = &quot;Elttob&#39;s socks&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">manipulated</span><span class="p">))</span> <span class="c1">--&gt; {red = &quot;Elttob&#39;s shoes&quot;, blue = &quot;Elttob&#39;s socks&quot;}</span>
 
 <span class="n">owner</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Quenty&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">manipulated</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {red = &quot;Quenty&#39;s shoes&quot;, blue = &quot;Quenty&#39;s socks&quot;}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">manipulated</span><span class="p">))</span> <span class="c1">--&gt; {red = &quot;Quenty&#39;s shoes&quot;, blue = &quot;Quenty&#39;s socks&quot;}</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2235,22 +2267,24 @@ module, so that you can refer to it by name:</p>
 <p>To create a new <code>ForPairs</code> object, call the constructor with an input table and
 a processor function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">itemColours</span> <span class="o">=</span> <span class="p">{</span> <span class="n">shoes</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">socks</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span> <span class="p">}</span>
-<span class="kd">local</span> <span class="n">swapped</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">swapped</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">key</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>This will generate a new table, where each key-value pair is replaced using the
-processor function. You can get the table using the <code>:get()</code> method:</p>
+processor function. The first argument is <code>use</code>, similar to a computed, and the
+second/third arguments are a key/value pair from the input table.</p>
+<p>You can read the processed table using <code>peek()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">itemColours</span> <span class="o">=</span> <span class="p">{</span> <span class="n">shoes</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">socks</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span> <span class="p">}</span>
-<span class="kd">local</span> <span class="n">swapped</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">swapped</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">value</span><span class="p">,</span> <span class="n">key</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">swapped</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; {red = &quot;shoes&quot;, blue = &quot;socks&quot;}</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">swapped</span><span class="p">))</span> <span class="c1">--&gt; {red = &quot;shoes&quot;, blue = &quot;socks&quot;}</span>
 </span></code></pre></div>
 <h3 id="state-objects">State Objects<a class="headerlink" href="#state-objects" title="Permanent link">&para;</a></h3>
 <p>As with <code>ForKeys</code> and <code>ForValues</code>, the input table can be provided as a state
-object, and the processor function can use other state objects in its
+object, and the processor function can <code>use()</code> other state objects in its
 calculations. <a href="../forvalues/#state-objects">See the ForValues page for examples.</a></p>
 <h3 id="cleanup-behaviour">Cleanup Behaviour<a class="headerlink" href="#cleanup-behaviour" title="Permanent link">&para;</a></h3>
 <p>Similar to <code>ForValues</code> and <code>ForKeys</code>, you may pass in a 'destructor' function to
@@ -2261,9 +2295,9 @@ add cleanup behaviour, and send your own metadata to it:</p>
     <span class="p">[</span><span class="n">workspace</span><span class="p">.</span><span class="n">Part3</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Three&quot;</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span> 
+<span class="kd">local</span> <span class="n">connectionSet</span> <span class="o">=</span> <span class="n">ForPairs</span><span class="p">(</span><span class="n">eventSet</span><span class="p">,</span>
     <span class="c1">-- processor</span>
-    <span class="kr">function</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">displayName</span><span class="p">)</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">displayName</span><span class="p">)</span>
         <span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span> <span class="n">displayName</span> <span class="o">=</span> <span class="n">displayName</span><span class="p">,</span> <span class="n">numChanges</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">}</span>
         <span class="kd">local</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">instance</span><span class="p">.</span><span class="n">Changed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Instance&quot;</span><span class="p">,</span> <span class="n">displayName</span><span class="p">,</span> <span class="s2">&quot;was changed!&quot;</span><span class="p">)</span>

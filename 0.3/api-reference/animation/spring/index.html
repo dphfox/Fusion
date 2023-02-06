@@ -1390,6 +1390,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1558,8 +1562,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -1993,26 +2025,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#springget" class="md-nav__link">
-     Spring:get()
-  </a>
-  
-    <nav class="md-nav" aria-label=" Spring:get()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#springsetposition" class="md-nav__link">
      Spring:setPosition()
   </a>
@@ -2021,7 +2033,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+  <a href="#parameters_1" class="md-nav__link">
     Parameters
   </a>
   
@@ -2041,7 +2053,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_3" class="md-nav__link">
+  <a href="#parameters_2" class="md-nav__link">
     Parameters
   </a>
   
@@ -2061,7 +2073,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_4" class="md-nav__link">
+  <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
   
@@ -2228,26 +2240,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#springget" class="md-nav__link">
-     Spring:get()
-  </a>
-  
-    <nav class="md-nav" aria-label=" Spring:get()">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
-    Parameters
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#springsetposition" class="md-nav__link">
      Spring:setPosition()
   </a>
@@ -2256,7 +2248,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+  <a href="#parameters_1" class="md-nav__link">
     Parameters
   </a>
   
@@ -2276,7 +2268,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_3" class="md-nav__link">
+  <a href="#parameters_2" class="md-nav__link">
     Parameters
   </a>
   
@@ -2296,7 +2288,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#parameters_4" class="md-nav__link">
+  <a href="#parameters_3" class="md-nav__link">
     Parameters
   </a>
   
@@ -2358,8 +2350,8 @@
 <p>If the state object is not <a href="../animatable/">animatable</a>, the spring will
 just snap to the goal value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span>
-    <span class="n">goal</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> 
-    <span class="n">speed</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span> 
+    <span class="n">goal</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
     <span class="n">damping</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 </code></pre></div>
@@ -2376,22 +2368,6 @@ without overshooting or oscillating. Defaults to <code>1</code>.</li>
 <hr />
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
 <p class="fusiondoc-api-pills">
-    <span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-<h3 id="springget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.78 4.97a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.75.75 0 1 1-1.06 1.06l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0zm6.44 0a.75.75 0 0 0 0 1.06L21.19 12l-5.97 5.97a.75.75 0 1 0 1.06 1.06l6.5-6.5a.75.75 0 0 0 0-1.06l-6.5-6.5a.75.75 0 0 0-1.06 0z"/></svg></span> Spring:get()<a class="headerlink" href="#springget" title="Permanent link">&para;</a></h3>
-<p>Returns the current value stored in the state object.</p>
-<p>If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">asDependency</span><span class="p">:</span> <span class="n">boolean</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
-</code></pre></div>
-<h4 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>asDependency</code> - If this is explicitly set to false, no dependencies will be
-captured.</li>
-</ul>
-<hr />
-<p class="fusiondoc-api-pills">
     <span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
@@ -2402,7 +2378,7 @@ velocity of the spring.</p>
 the position will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">newPosition</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
-<h4 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h4>
+<h4 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>newPosition</code> - The value the spring's position should jump to.</li>
 </ul>
@@ -2418,7 +2394,7 @@ on the position of the spring.</p>
 the velocity will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">newVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
-<h4 id="parameters_3">Parameters<a class="headerlink" href="#parameters_3" title="Permanent link">&para;</a></h4>
+<h4 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>newVelocity</code> - The value the spring's velocity should jump to.</li>
 </ul>
@@ -2434,7 +2410,7 @@ on the position of the spring.</p>
 the velocity will snap instantly to the new value.</p>
 <div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">deltaVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </code></pre></div>
-<h4 id="parameters_4">Parameters<a class="headerlink" href="#parameters_4" title="Permanent link">&para;</a></h4>
+<h4 id="parameters_3">Parameters<a class="headerlink" href="#parameters_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>deltaVelocity</code> - The velocity to add to the spring.</li>
 </ul>

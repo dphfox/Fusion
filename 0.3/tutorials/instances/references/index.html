@@ -1436,6 +1436,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1604,8 +1608,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2159,8 +2191,8 @@ or creating.</p>
     <span class="p">[</span><span class="n">Ref</span><span class="p">]</span> <span class="o">=</span> <span class="n">myRef</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">myRef</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myRef</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="n">thing</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">)</span> <span class="o">==</span> <span class="n">thing</span><span class="p">)</span> <span class="c1">--&gt; true</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2179,7 +2211,7 @@ to the instance in that object:</p>
     <span class="p">[</span><span class="n">Ref</span><span class="p">]</span> <span class="o">=</span> <span class="n">myRef</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">myRef</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
 </code></pre></div>
 <p>When the instance is cleaned up, the value object is set to nil to avoid memory
 leaks:</p>
@@ -2189,11 +2221,11 @@ leaks:</p>
     <span class="p">[</span><span class="n">Ref</span><span class="p">]</span> <span class="o">=</span> <span class="n">myPart</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">myPart</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
 
-<span class="n">myPart</span><span class="p">:</span><span class="n">get</span><span class="p">():</span><span class="n">Destroy</span><span class="p">()</span>
+<span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">):</span><span class="n">Destroy</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">myPart</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; nil</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myRef</span><span class="p">))</span> <span class="c1">--&gt; nil</span>
 </code></pre></div>
 <hr />
 <h2 id="when-to-use-this">When To Use This<a class="headerlink" href="#when-to-use-this" title="Permanent link">&para;</a></h2>
@@ -2205,9 +2237,9 @@ You might wonder why there's two ways to get the same instance reference:</p>
 <span class="p">}</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">returned</span><span class="p">)</span> <span class="c1">--&gt; Part</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fromRef</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">fromRef</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">returned</span> <span class="o">==</span> <span class="n">fromRef</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; true</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">returned</span> <span class="o">==</span> <span class="n">peek</span><span class="p">(</span><span class="n">fromRef</span><span class="p">))</span> <span class="c1">--&gt; true</span>
 </code></pre></div>
 <p>There are two main use cases. Firstly, when you're using <code>[Children]</code> to nest
 instances inside each other, it's hard to access the instance reference:</p>

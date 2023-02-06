@@ -1395,6 +1395,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1563,8 +1567,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2201,17 +2233,7 @@
 <span class="normal">111</span>
 <span class="normal">112</span>
 <span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1">-- [Fusion imports omitted for clarity]</span>
+<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1">-- [Fusion imports omitted for clarity]</span>
 
 <span class="c1">-- This is a relatively complete example of a button component.</span>
 <span class="c1">-- It handles many common interactions such as hovering and clicking.</span>
@@ -2243,13 +2265,6 @@
 <span class="c1">-- use cases, and offers the greatest encapsulation as you&#39;re able to swap out</span>
 <span class="c1">-- your return type for an array or state object if you want to.</span>
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span><span class="n">props</span><span class="p">:</span> <span class="n">Props</span><span class="p">):</span> <span class="n">Child</span>
-    <span class="c1">-- To simplify our code later (because we&#39;re going to operate on this value)</span>
-    <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-        <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-    <span class="kr">elseif</span> <span class="n">typeof</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;boolean&quot;</span> <span class="kr">then</span>
-        <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span>
-    <span class="kr">end</span>
-
     <span class="c1">-- We should generally be careful about storing state in widely reused</span>
     <span class="c1">-- components, as the Tutorials explain, but for contained use cases such as</span>
     <span class="c1">-- hover states, it should be perfectly fine.</span>
@@ -2268,15 +2283,15 @@
         <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span>
         <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
 
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-            <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
+        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Spring</span><span class="p">(</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span>
                 <span class="kr">return</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;CCCCCC&quot;</span><span class="p">)</span>
             <span class="kr">else</span>
                 <span class="kd">local</span> <span class="n">baseColour</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;0085FF&quot;</span><span class="p">)</span>
                 <span class="c1">-- darken/lighten when hovered or held down</span>
-                <span class="kr">if</span> <span class="n">isHeldDown</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
+                <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">isHeldDown</span><span class="p">)</span> <span class="kr">then</span>
                     <span class="n">baseColour</span> <span class="o">=</span> <span class="n">baseColour</span><span class="p">:</span><span class="n">Lerp</span><span class="p">(</span><span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">)</span>
-                <span class="kr">elseif</span> <span class="n">isHovering</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
+                <span class="kr">elseif</span> <span class="n">use</span><span class="p">(</span><span class="n">isHovering</span><span class="p">)</span> <span class="kr">then</span>
                     <span class="n">baseColour</span> <span class="o">=</span> <span class="n">baseColour</span><span class="p">:</span><span class="n">Lerp</span><span class="p">(</span><span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">)</span>
                 <span class="kr">end</span>
                 <span class="kr">return</span> <span class="n">baseColour</span>
@@ -2284,10 +2299,7 @@
         <span class="kr">end</span><span class="p">),</span> <span class="mi">20</span><span class="p">),</span>
 
         <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="c1">-- Because we&#39;re not in a Computed callback (or similar), it&#39;s a</span>
-            <span class="c1">-- good idea to :get(false) so we&#39;re not adding any dependencies</span>
-            <span class="c1">-- anywhere.</span>
-            <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">:</span><span class="n">get</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="kr">then</span>
+            <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span>
                 <span class="c1">-- We&#39;re explicitly calling this function with no arguments to</span>
                 <span class="c1">-- match the types we specified above. If we just passed it</span>
                 <span class="c1">-- straight into the event, the function would receive arguments</span>

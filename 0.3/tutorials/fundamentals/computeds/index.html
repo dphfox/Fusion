@@ -1436,6 +1436,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1604,8 +1608,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2152,20 +2184,20 @@
 
 <!-- Markdown content -->
 <p>Computeds are state objects that can process values from other state objects.
-You pass in a callback which calculates the final value. Then, you can use
-<code>:get()</code> to retrieve that value at any time.</p>
+You pass in a callback to define a calculation. Then, you can use
+<code>peek()</code> to read the result of the calculation at any time.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">itemPrice</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="n">itemPrice</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">-</span> <span class="n">use</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 40</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">))</span> <span class="c1">--&gt; 40</span>
 
 <span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">itemPrice</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 10</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">))</span> <span class="c1">--&gt; 10</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2175,31 +2207,50 @@ module, so that you can refer to it by name:</p>
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
 <span class="hll"><span class="kd">local</span> <span class="n">Computed</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Computed</span>
 </span></code></pre></div></td></tr></table></div>
-<p>To create a new computed object, call the <code>Computed</code> function and pass it a
-callback returning a single value:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">hardMaths</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<p>To create a new computed object, call the <code>Computed</code> function. You need to give
+it a callback representing the calculation - for now, we'll add two numbers:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">hardMaths</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
-<p>The value your callback returns will be stored as the computed's value. You can
-get the computed's current value using <code>:get()</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">hardMaths</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 2</span>
+<p>The value the callback returns will be stored as the computed's value. You can
+get the computed's current value using <code>peek()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">hardMaths</span><span class="p">))</span> <span class="c1">--&gt; 2</span>
 </code></pre></div>
-<p>By default, a computed only runs its callback once. However, Fusion can detect
-any time you call <code>:get()</code> on a state object inside the callback. If any of them
-change value, the callback will be re-run and the value will update:</p>
+<p>The calculation is only run once by default. If you try and use <code>peek()</code>,
+your code won't work:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">number</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">:</span><span class="n">get</span><span class="p">(),</span> <span class="s2">&quot;* 2 =&quot;</span><span class="p">,</span> <span class="n">double</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 2 * 2 = 4</span>
+<span class="c1">-- The calculation runs once by default.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 2 4</span>
 
+<span class="c1">-- The calculation won&#39;t re-run! Oh no!</span>
 <span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">:</span><span class="n">get</span><span class="p">(),</span> <span class="s2">&quot;* 2 =&quot;</span><span class="p">,</span> <span class="n">double</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 10 * 2 = 20</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 10 4</span>
+</code></pre></div>
+<p>This is where the <code>use</code> parameter comes in (see line 2 above). If you want your
+calculation to re-run when your objects change value, pass the object to <code>use()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="c1">-- the calculation will re-run when `number` changes value</span>
+    <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="kr">end</span><span class="p">)</span>
 
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">:</span><span class="n">get</span><span class="p">(),</span> <span class="s2">&quot;* 2 =&quot;</span><span class="p">,</span> <span class="n">double</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; -5 * 2 = -10</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 2 4</span>
+
+<span class="c1">-- Now it re-runs!</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 10 20</span>
+</code></pre></div>
+<p>For convenience, <code>use()</code> will also read the value, just like <code>peek()</code>, so you
+can easily replace <code>peek()</code> calls with <code>use()</code> calls:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="c1">-- works identically to before</span>
+<span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="when-to-use-this">When To Use This<a class="headerlink" href="#when-to-use-this" title="Permanent link">&para;</a></h2>
@@ -2225,9 +2276,9 @@ a derived value, <code>finalCoins</code>, which equals <code>numCoins - itemPric
 <span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">itemPrice</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="n">itemPrice</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">-</span> <span class="n">peek</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">))</span>
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">updateFinalCoins</span><span class="p">()</span>
-    <span class="n">finalCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="n">itemPrice</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="n">finalCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">-</span> <span class="n">peek</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">))</span>
 <span class="kr">end</span>
 <span class="n">Observer</span><span class="p">(</span><span class="n">numCoins</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="n">updateFinalCoins</span><span class="p">)</span>
 <span class="n">Observer</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="n">updateFinalCoins</span><span class="p">)</span>
@@ -2251,14 +2302,14 @@ value.</li>
 <span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">itemPrice</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">-</span> <span class="n">itemPrice</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">-</span> <span class="n">use</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>The intent is immediately clear - this is a derived value.</li>
 <li>The logic is only specified once, in one callback.</li>
-<li>The computed updates itself when a state object you <code>:get()</code> changes value.</li>
+<li>The computed updates itself when a state object you <code>use()</code> changes value.</li>
 <li>The callback is the only thing that can change the value - there is no <code>:set()</code>
 method.</li>
 </ul>
@@ -2271,41 +2322,41 @@ calculation, you shouldn't use computeds.</p>
 immediately (i.e. without yielding), all of your variables will behave
 consistently:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">isEnoughCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">25</span>
+<span class="kd">local</span> <span class="n">isEnoughCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">25</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
+<span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">isEnoughCoins</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
     <span class="kr">else</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
+        <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
     <span class="kr">end</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 50 is enough coins.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 50 is enough coins.</span>
 <span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 2 is NOT enough coins.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 2 is NOT enough coins.</span>
 </code></pre></div>
 <p>If a delay is introduced, then inconsistencies and nonsense values could
 quickly appear:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">isEnoughCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-<span class="hll">    <span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">-- Don&#39;t do this! This is just for the example</span>
-</span>    <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">25</span>
+<span class="kd">local</span> <span class="n">isEnoughCoins</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+<span class="hll">    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">-- Don&#39;t do this! This is just for the example</span>
+</span>    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">25</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">if</span> <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
+<span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">isEnoughCoins</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
     <span class="kr">else</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
+        <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
     <span class="kr">end</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 50 is enough coins.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 50 is enough coins.</span>
 <span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 2 is enough coins.</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 2 is enough coins.</span>
 </span></code></pre></div>
 <p>For this reason, yielding in computed callbacks is disallowed.</p>
 <p>If you have to introduce a delay, for example when invoking a
@@ -2315,27 +2366,27 @@ RemoteFunction, consider using values and observers.</p>
 <span class="hll"><span class="kd">local</span> <span class="n">isEnoughCoins</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 </span><span class="hll"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">updateIsEnoughCoins</span><span class="p">()</span>
 </span><span class="hll">    <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span> <span class="c1">-- indicate that we&#39;re calculating the value</span>
-</span><span class="hll">    <span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">-- this is now ok</span>
-</span><span class="hll">    <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">-- this is now ok</span>
+</span><span class="hll">    <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">)</span>
 </span><span class="hll"><span class="kr">end</span>
 </span><span class="hll"><span class="n">task</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">updateIsEnoughCoins</span><span class="p">)</span>
 </span><span class="hll"><span class="n">Observer</span><span class="p">(</span><span class="n">numCoins</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="n">updateIsEnoughCoins</span><span class="p">)</span>
 </span>
 <span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-<span class="hll">    <span class="kr">if</span> <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+<span class="hll">    <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">isEnoughCoins</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
 </span><span class="hll">        <span class="kr">return</span> <span class="s2">&quot;Loading...&quot;</span>
-</span>    <span class="kr">elseif</span> <span class="n">isEnoughCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
+</span>    <span class="kr">elseif</span> <span class="n">peek</span><span class="p">(</span><span class="n">isEnoughCoins</span><span class="p">)</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is enough coins.&quot;</span>
     <span class="kr">else</span>
-        <span class="kr">return</span> <span class="n">numCoins</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
+        <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&quot; is NOT enough coins.&quot;</span>
     <span class="kr">end</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 50 is enough coins.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 50 is enough coins.</span>
 <span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; Loading...</span>
-</span><span class="hll"><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 2 is NOT enough coins.</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; Loading...</span>
+</span><span class="hll"><span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">message</span><span class="p">))</span> <span class="c1">--&gt; 2 is NOT enough coins.</span>
 </span></code></pre></div>
 </details>
 

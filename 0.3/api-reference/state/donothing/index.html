@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1608,8 +1612,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2179,7 +2211,7 @@ use as a destructor when no destruction is needed.</p>
 </ul>
 <hr />
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">workspace</span><span class="p">.</span><span class="n">Part</span>
 <span class="kr">end</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doNothing</span><span class="p">)</span>
 </code></pre></div>

@@ -1436,6 +1436,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1604,8 +1608,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api-reference/state/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api-reference/state/stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2255,7 +2287,7 @@ to do your own processing first:</p>
 
 <span class="hll">        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
 </span><span class="hll">            <span class="c1">-- don&#39;t send clicks if the button is disabled</span>
-</span><span class="hll">            <span class="kr">if</span> <span class="ow">not</span> <span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="kr">then</span>
+</span><span class="hll">            <span class="kr">if</span> <span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span>
 </span><span class="hll">                <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span><span class="p">()</span>
 </span><span class="hll">            <span class="kr">end</span>
 </span><span class="hll">        <span class="kr">end</span>

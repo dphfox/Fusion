@@ -1392,6 +1392,10 @@
         
           
         
+          
+        
+          
+        
       
       
         
@@ -1543,13 +1547,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1635,8 +1632,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../stateobject/" class="md-nav__link">
         StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../use/" class="md-nav__link">
+        Use
       </a>
     </li>
   
@@ -2180,13 +2205,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#automatic-dependency-manager" class="md-nav__link">
-    Automatic Dependency Manager
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2254,21 +2272,11 @@ this method should return false.</p>
 <hr />
 <h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1">-- these are examples of objects which are dependents</span>
-<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">Dependent</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">computed</span><span class="p">:</span> <span class="n">Dependent</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="s2">&quot;foo&quot;</span>
 <span class="kr">end</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">observer</span><span class="p">:</span> <span class="n">Dependent</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">computed</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<h2 id="automatic-dependency-manager">Automatic Dependency Manager<a class="headerlink" href="#automatic-dependency-manager" title="Permanent link">&para;</a></h2>
-<p>Fusion includes an automatic dependency manager which can detect when graph
-objects are used in certain contexts and automatically form reactive graphs.</p>
-<p>If a dependent wants to automatically capture uses of dependencies inside of
-certain contexts (for example, a processor callback) then the
-<code>captureDependencies()</code> function may be invoked, with the callback and the
-object's dependency set as arguments.</p>
-<p>This will detect all <code>useDependency()</code> calls from inside the callback, and save
-any passed dependencies into the set.</p>
 
 <!-- Source file information -->
 
