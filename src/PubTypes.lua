@@ -76,6 +76,9 @@ export type StateObject<T> = Dependency & {
 -- Either a constant value of type T, or a state object containing type T.
 export type CanBeState<T> = StateObject<T> | T
 
+-- Function signature for use callbacks.
+export type Use = <T>(target: CanBeState<T>) -> T
+
 --[[
 	Specific reactive graph types
 ]]
