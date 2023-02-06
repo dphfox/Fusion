@@ -45,8 +45,8 @@ get the computed's current value using `peek()`:
 print(peek(hardMaths)) --> 2
 ```
 
-The calculation is only run once by default. If you try and use `peek()`,
-your code won't work:
+The calculation is only run once by default. If you try and use `peek()` inside
+the calculation, your code won't work:
 
 ```Lua
 local number = Value(2)
