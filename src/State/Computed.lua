@@ -13,6 +13,7 @@ local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
 local makeUseCallback = require(Package.State.makeUseCallback)
 local parseError = require(Package.Logging.parseError)
+local logError = require(Package.Logging.logError)
 
 local class = {}
 
@@ -83,6 +84,10 @@ end
 ]]
 function class:_peek(): any
 	return self._value
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
 end
 
 local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>

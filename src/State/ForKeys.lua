@@ -202,6 +202,10 @@ function class:_peek(): any
 	return self._outputTable
 end
 
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function ForKeys<KI, KO, M>(
 	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
 	processor: (KI) -> (KO, M?),

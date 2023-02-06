@@ -21,6 +21,7 @@ local needsDestruction = require(Package.Utility.needsDestruction)
 local peek = require(Package.State.peek)
 local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
+local logError = require(Package.Logging.logError)
 
 local class = {}
 
@@ -201,6 +202,10 @@ end
 ]]
 function class:_peek(): any
 	return self._outputTable
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
 end
 
 local function ForValues<VI, VO, M>(

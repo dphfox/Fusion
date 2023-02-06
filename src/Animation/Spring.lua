@@ -156,6 +156,10 @@ function class:_peek(): any
 	return self._currentValue
 end
 
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function Spring<T>(
 	goalState: PubTypes.Value<T>,
 	speed: PubTypes.CanBeState<number>?,

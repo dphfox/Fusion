@@ -66,6 +66,10 @@ function class:_peek(): any
 	return self._currentValue
 end
 
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function Tween<T>(
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?

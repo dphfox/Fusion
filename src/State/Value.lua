@@ -9,6 +9,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local updateAll = require(Package.Dependencies.updateAll)
 local isSimilar = require(Package.Utility.isSimilar)
+local logError = require(Package.Logging.logError)
 
 local class = {}
 
@@ -35,6 +36,10 @@ end
 ]]
 function class:_peek(): any
 	return self._value
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
 end
 
 local function Value<T>(initialValue: T): Types.State<T>
