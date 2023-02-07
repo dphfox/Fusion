@@ -8,6 +8,8 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
+local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
 
 local function OnChange(propertyName: string): PubTypes.SpecialKey
 	local changeKey = {}
@@ -19,11 +21,17 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
 			logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
-		elseif typeof(callback) ~= "function" then
+			return
+		end
+		if typeof(callback) ~= "function" and xtypeof(callback) ~= "state" then
 			logError("invalidChangeHandler", nil, propertyName)
 		else
 			table.insert(cleanupTasks, event:Connect(function()
-				callback((applyTo :: any)[propertyName])
+				local newValue = (applyTo :: any)[propertyName]
+				if xtypeof(callback) == "state" then
+					callback = peek(callback)
+				end
+				callback(newValue)
 			end))
 		end
 	end
