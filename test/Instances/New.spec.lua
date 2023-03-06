@@ -27,4 +27,14 @@ return function()
 			end
 		end
 	end)
+	
+	it("should create a copy of the instance", function()
+		local ins = Instance.new("Folder")
+		ins.Name = "test"
+		
+		local copy = New (ins) {}
+		
+		expect(copy.Name).to.equal(ins.Name)
+	end)
+	
 end

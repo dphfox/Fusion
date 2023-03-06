@@ -23,8 +23,11 @@ export type Use = PubTypes.Use
 type Fusion = {
 	version: PubTypes.Version,
 
-	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
-	Hydrate: (target: Instance) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	New: (classNameOrTemplate: string | Instance) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
+	BindProperty: (applyTo: Instance, property: string, value: any) -> () -> (),
+	ChildOf: (of: Instance, name: string) -> Instance,
+	ChildOfClass: (of: Instance, className: string) -> Instance,
+	PropertyOf: (of: Instance, property: string) -> Computed<any>,
 	Ref: PubTypes.SpecialKey,
 	Cleanup: PubTypes.SpecialKey,
 	Children: PubTypes.SpecialKey,
@@ -54,7 +57,10 @@ return restrictRead("Fusion", {
 	version = {major = 0, minor = 3, isRelease = false},
 
 	New = require(script.Instances.New),
-	Hydrate = require(script.Instances.Hydrate),
+	BindProperty = require(script.Instances.BindProperty),
+	ChildOf = require(script.Instances.ChildOf),
+	ChildOfClass = require(script.Instances.ChildOfClass),
+	PropertyOf = require(script.Instances.PropertyOf),
 	Ref = require(script.Instances.Ref),
 	Out = require(script.Instances.Out),
 	Cleanup = require(script.Instances.Cleanup),
