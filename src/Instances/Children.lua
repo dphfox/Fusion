@@ -6,11 +6,15 @@
 ]]
 
 local Package = script.Parent.Parent
+local ChildOf = require(Package.Instances.ChildOf)
+local New = require(Package.Instances.New)
 local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
+local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local peek = require(Package.State.peek)
 local isState = require(Package.State.isState)
+local xtypeof = require(Package.Utility.xtypeof)
 
 type Set<T> = {[T]: boolean}
 
@@ -48,7 +52,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 		table.clear(newDisconnects)
 
 		local function processChild(child: any, autoName: string?)
-			local childType = typeof(child)
+			local childType = xtypeof(child)
 
 			if childType == "Instance" then
 				-- case 1; single instance
@@ -89,9 +93,16 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 				end
 
 				newDisconnects[child] = disconnect
-
+			elseif childType == "SpecialChild" then
+				-- case 3; withChild object
+				
+				local value = ChildOf(applyTo, child.name)
+				applyInstanceProps(child.properties, value)
+				
+				processChild(value, nil)
+				
 			elseif childType == "table" then
-				-- case 3; table of objects
+				-- case 4; table of objects
 
 				for key, subChild in pairs(child) do
 					local keyType = typeof(key)

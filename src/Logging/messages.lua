@@ -11,6 +11,7 @@ return {
 	cannotConnectAttributeChange = "The %s class doesn't have an attribute called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
+	cannotCreateOrHydrate = "Can't create or hydrate '%s'.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
 	destructorNeededValue = "To save instances into Values, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
 	destructorNeededComputed = "To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
@@ -44,6 +45,7 @@ return {
 	stateGetWasRemoved = "`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.",
 	strictReadError = "'%s' is not a valid member of '%s'.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",
+	unknownChild = "Unknown child with the name '%s'.",
 	unrecognisedChildType = "'%s' type children aren't accepted by `[Children]`.",
 	unrecognisedPropertyKey = "'%s' keys aren't accepted in property tables.",
 	unrecognisedPropertyStage = "'%s' isn't a valid stage for a special key to be applied at."
