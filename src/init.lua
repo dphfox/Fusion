@@ -29,8 +29,8 @@ local Fusion = restrictRead("Fusion", {
 	ForValues = require(script.State.ForValues),
 	Observer = require(script.State.Observer),
 
-	Tween = require(script.Animation.Tween),
-	Spring = require(script.Animation.Spring),
+	Tween = require(script.AnimationOld.Tween),
+	Spring = require(script.AnimationOld.Spring),
 
 	cleanup = require(script.Utility.cleanup),
 	doNothing = require(script.Utility.doNothing),
