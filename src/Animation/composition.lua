@@ -2,6 +2,8 @@
 	Defines how to extract and work with components of different data types.
 ]]
 
+-- TODO: type annotate this file
+
 local Package = script.Parent.Parent
 local spaces = require(Package.Animation.spaces)
 
