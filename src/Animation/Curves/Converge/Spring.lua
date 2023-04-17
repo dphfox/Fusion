@@ -1,4 +1,8 @@
---!strict
+--[[
+	Returns to zero displacement based on a spring simulation.
+]]
+
+-- TODO: type annotate this file
 
 --[[
 	Returns a 2x2 matrix of coefficients for a given time, damping and speed.
@@ -10,7 +14,6 @@
 
 	Special thanks to AxisAngle for helping to improve numerical precision.
 ]]
-
 local function springCoefficients(time: number, damping: number, speed: number): (number, number, number, number)
 	-- if time or speed is 0, then the spring won't move
 	if time == 0 or speed == 0 then
@@ -81,4 +84,36 @@ local function springCoefficients(time: number, damping: number, speed: number):
 	return posPos, posVel, velPos, velVel
 end
 
-return springCoefficients
+local function Spring(speed, damping)
+	speed = speed or 10
+	damping = damping or 1
+	return function(initialValues)
+		local dimension = #initialValues[1]
+		local zero = table.create(dimension, 0)
+		local initialDisplacement = initialValues[1]
+		local initialVelocity = initialValues[2] or zero
+		return {
+			-- displacement
+			function(time)
+				local posPos, posVel, _, _ = springCoefficients(time, speed, damping)
+				local displacement = table.create(dimension, 0)
+				for index in displacement do
+					displacement[index] = initialDisplacement[index] * posPos - initialVelocity[index] / speed * posVel
+				end
+				return displacement
+			end,
+			-- velocity
+			function(time)
+				local _, _, velPos, velVel = springCoefficients(time, speed, damping)
+				local velocity = table.create(dimension, 0)
+				for index in velocity do
+					velocity[index] = initialDisplacement[index] * velPos - initialVelocity[index] / speed * velVel
+					velocity[index] = -velocity[index] * speed
+				end
+				return velocity
+			end
+		}
+	end
+end
+
+return Spring

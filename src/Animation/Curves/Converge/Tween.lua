@@ -1,12 +1,10 @@
 --[[
-	The standard tween easing curves, and their first (up to) 6 derivatives.
-	Note that these curves only ease out - to ease in, or both in and out, you
-	can apply transformations to the inputs and outputs.
+	Returns to zero displacement based on a TweenInfo.
 ]]
 
 -- TODO: type annotate this file
 
-return {
+local easingStyles = {
 	[Enum.EasingStyle.Linear] = {
 		function(time)
 			return time
@@ -257,3 +255,108 @@ return {
 		end
 	},
 }
+
+local function sample(curves, derivative, curveX, x, y, width, height)
+	local sample = height * (1/width)^(derivative - 1) * curves[derivative]((curveX - x)/width)
+	if derivative == 1 then
+		sample += y
+	end
+	return sample
+end
+
+local function sampleDirection(curves, derivative, easeDirection, curveX, x, y, width, height)
+	if easeDirection == Enum.EasingDirection.In then
+		x += width
+		y += height
+		width *= -1
+		height *= -1
+	elseif easeDirection == Enum.EasingDirection.InOut then
+		local localX = (curveX - x) / width
+		width /= 2
+		height /= 2
+		x += width
+		y += height
+		if localX <= 0.5 then
+			width *= -1
+			height *= -1
+		end
+	end
+	return sample(curves, derivative, curveX, x, y, width, height)
+end
+
+local function sampleDirectionReversing(curves, derivative, easeDirection, withReverse, curveX, x, y, width, height)
+	if withReverse then
+		local localX = (curveX - x) / width
+		if localX > 0.5 then
+			x += width
+			width *= -1
+		end
+		width /= 2
+	end
+	return sampleDirection(curves, derivative, easeDirection, curveX, x, y, width, height)
+end
+
+local function Tween(tweenInfo)
+	local delay = tweenInfo.DelayTime
+	local duration = tweenInfo.Time
+	local reverses = tweenInfo.Reverses
+	local repeatCount = tweenInfo.RepeatCount
+	local easeStyle = tweenInfo.EasingStyle
+	local easeDirection = tweenInfo.EasingDirection
+
+	local repeatDuration = duration
+	if reverses then
+		repeatDuration *= 2
+	end
+	repeatDuration += delay
+
+	return function(initialValues)
+		local dimension = #initialValues[1]
+		local zero = table.create(dimension, 0)
+		local initialDisplacement = initialValues[1]
+
+		local easingStyle = easingStyles[easeStyle]
+		local curves = table.create(#easingStyle)
+		for derivativeNum, derivativeCurve in easingStyle do
+			curves[derivativeNum] = function(time)
+				local repeatsElapsed = math.ceil(time / repeatDuration) - 1
+				if repeatsElapsed < 0 then -- before tween started
+					return
+						if derivativeNum == 1
+						then initialDisplacement
+						else zero
+				elseif repeatCount >= 0 and repeatsElapsed > 1 + repeatCount then -- after tween ended
+					return
+						if derivativeNum == 1 and reverses
+						then initialDisplacement
+						else zero
+				elseif time - (repeatsElapsed * repeatDuration) < delay then -- waiting during delay period
+					return
+						if derivativeNum == 1 and (reverses or repeatsElapsed == 0)
+						then initialDisplacement
+						else zero
+				else -- during tween motion
+					local output = table.create(dimension, 0)
+					for index in output do
+						output[index] = sampleDirectionReversing(
+							derivativeCurve,
+							derivativeNum,
+							easeDirection,
+							reverses,
+							time,
+							repeatsElapsed * repeatDuration + delay,
+							initialDisplacement[index],
+							repeatDuration - delay,
+							-initialDisplacement[index]
+						)
+					end
+					return output
+				end
+			end
+		end
+
+		return curves
+	end
+end
+
+return Tween
