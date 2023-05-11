@@ -11,7 +11,7 @@ local defaultProps = require(Package.Instances.defaultProps)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local logError= require(Package.Logging.logError)
 
-local function New(className: string)
+local function New(className: PubTypes.InstanceClass)
 	return function(props: PubTypes.PropertyTable): Instance
 		local ok, instance = pcall(Instance.new, className)
 
