@@ -20,8 +20,8 @@ local makeUseCallback = require(Package.State.makeUseCallback)
 
 local class = {}
 
-local CLASS_METATABLE = { __index = class }
-local WEAK_KEYS_METATABLE = { __mode = "k" }
+local CLASS_METATABLE = {__index = class}
+local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
 	Recalculates this Eager's cached value and dependencies.
