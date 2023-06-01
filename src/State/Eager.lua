@@ -9,14 +9,8 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local logWarn = require(Package.Logging.logWarn)
-local parseError = require(Package.Logging.parseError)
--- Utility
-local isSimilar = require(Package.Utility.isSimilar)
-local needsDestruction = require(Package.Utility.needsDestruction)
 -- State
-local makeUseCallback = require(Package.State.makeUseCallback)
+local calculate = require(Package.State.calculate)
 
 local class = {}
 
@@ -28,58 +22,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Returns true if it changed, or false if it's identical.
 ]]
 function class:update(): boolean
-	-- remove this object from its dependencies' dependent sets
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-
-	-- we need to create a new, empty dependency set to capture dependencies
-	-- into, but in case there's an error, we want to restore our old set of
-	-- dependencies. by using this table-swapping solution, we can avoid the
-	-- overhead of allocating new tables each update.
-	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
-	table.clear(self.dependencySet)
-
-	local use = makeUseCallback(self.dependencySet)
-	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, use)
-
-	if ok then
-		if self._destructor == nil and needsDestruction(newValue) then
-			logWarn("destructorNeededEager")
-		end
-
-		if newMetaValue ~= nil then
-			logWarn("multiReturnEager")
-		end
-
-		local oldValue = self._value
-		local similar = isSimilar(oldValue, newValue)
-		if self._destructor ~= nil then
-			self._destructor(oldValue)
-		end
-		self._value = newValue
-
-		-- add this object to the dependencies' dependent sets
-		for dependency in pairs(self.dependencySet) do
-			dependency.dependentSet[self] = true
-		end
-
-		return not similar
-	else
-		-- this needs to be non-fatal, because otherwise it'd disrupt the
-		-- update process
-		logErrorNonFatal("computedCallbackError", newValue)
-
-		-- restore old dependencies, because the new dependencies may be corrupt
-		self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
-
-		-- restore this object in the dependencies' dependent sets
-		for dependency in pairs(self.dependencySet) do
-			dependency.dependentSet[self] = true
-		end
-
-		return false
-	end
+	return calculate(self)
 end
 
 --[[

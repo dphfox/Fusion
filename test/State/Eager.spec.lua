@@ -1,30 +1,30 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
-local Computed = require(Package.State.Computed)
+local Eager = require(Package.State.Eager)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
 local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
-	it("should construct a Computed object", function()
-		local computed = Computed(function(use) end)
+	it("should construct a Eager object", function()
+		local eager = Eager(function(use) end)
 
-		expect(computed).to.be.a("table")
-		expect(computed.type).to.equal("State")
-		expect(computed.kind).to.equal("Computed")
+		expect(eager).to.be.a("table")
+		expect(eager.type).to.equal("State")
+		expect(eager.kind).to.equal("Eager")
 	end)
 
 	it("should calculate and retrieve its value", function()
-		local computed = Computed(function(use)
+		local eager = Eager(function(use)
 			return "foo"
 		end)
 
-		expect(peek(computed)).to.equal("foo")
+		expect(peek(eager)).to.equal("foo")
 	end)
 
 	it("should recalculate its value in response to State objects", function()
 		local currentNumber = Value(2)
-		local doubled = Computed(function(use)
+		local doubled = Eager(function(use)
 			return use(currentNumber) * 2
 		end)
 
@@ -34,12 +34,12 @@ return function()
 		expect(peek(doubled)).to.equal(8)
 	end)
 
-	it("should recalculate its value in response to Computed objects", function()
+	it("should recalculate its value in response to Eager objects", function()
 		local currentNumber = Value(2)
-		local doubled = Computed(function(use)
+		local doubled = Eager(function(use)
 			return use(currentNumber) * 2
 		end)
-		local tripled = Computed(function(use)
+		local tripled = Eager(function(use)
 			return use(doubled) * 1.5
 		end)
 
@@ -49,23 +49,10 @@ return function()
 		expect(peek(tripled)).to.equal(12)
 	end)
 
-	it("should never calculate its value if it has no dependents", function()
-		local state = Value(2)
-		local computed = Computed(function(use)
-			return use(state)
-		end)
-
-		expect(computed._value).never.to.be.ok()
-
-		state:set(4)
-
-		expect(computed._value).never.to.be.ok()
-	end)
-
 	it("should not corrupt dependencies after an error", function()
 		local state = Value(1)
 		local simulateError = false
-		local computed = Computed(function(use)
+		local eager = Eager(function(use)
 			if simulateError then
 				-- in a naive implementation, this would corrupt dependencies as
 				-- use(state) hasn't been captured yet, preventing future
@@ -77,27 +64,25 @@ return function()
 
 			return use(state)
 		end)
-		computed.dependentSet[{ update = function() end }] = true -- fake dependent to allow for updating
 
-		expect(peek(computed)).to.equal(1)
+		expect(peek(eager)).to.equal(1)
 
 		simulateError = true
-		state:set(5) -- update the computed to invoke the error
+		state:set(5) -- update the eager to invoke the error
 
 		simulateError = false
-		state:set(10) -- if dependencies are corrupt, the computed won't update
+		state:set(10) -- if dependencies are corrupt, the eager won't update
 
-		expect(peek(computed)).to.equal(10)
+		expect(peek(eager)).to.equal(10)
 	end)
 
-	itFIXME("should garbage-collect unused objects", function()
-		--FIXME: This test dosen't work with lazy state calculation.
-
+	it("should garbage-collect unused objects", function()
 		local state = Value(2)
+
 		local counter = 0
 
 		do
-			local computed = Computed(function(use)
+			local eager = Eager(function(use)
 				counter += 1
 				return use(state)
 			end)
@@ -111,25 +96,25 @@ return function()
 
 	it("should not garbage-collect objects in use", function()
 		local state = Value(2)
-		local computed2
+		local eager2
 
 		local counter = 0
 
 		do
-			local computed = Computed(function(use)
+			local eager = Eager(function(use)
 				counter += 1
 				return use(state)
 			end)
-			computed2 = Computed(function(use)
-				return use(computed)
+
+			eager2 = Eager(function(use)
+				return use(eager)
 			end)
 		end
 
 		waitForGC()
 		state:set(5)
 
-		peek(computed2) -- force update
-		expect(counter).to.equal(1)
+		expect(counter).to.equal(2)
 	end)
 
 	it("should call destructors when old values are replaced", function()
@@ -141,12 +126,9 @@ return function()
 		end
 
 		local value = Value("old")
-		local computed = Computed(function(use)
+		local eager = Eager(function(use)
 			return use(value)
 		end, destructor)
-
-		peek(computed) -- force update
-
 		value:set("new")
 
 		expect(didRun).to.equal(true)

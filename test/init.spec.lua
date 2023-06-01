@@ -21,6 +21,7 @@ return function()
 			AttributeOut = "function",
 
 			Value = "function",
+			Eager = "function",
 			Computed = "function",
 			ForPairs = "function",
 			ForKeys = "function",
