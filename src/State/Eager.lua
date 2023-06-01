@@ -13,7 +13,6 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 -- Utility
-local lengthOf = require(Package.Utility.lengthOf)
 local isSimilar = require(Package.Utility.isSimilar)
 local needsDestruction = require(Package.Utility.needsDestruction)
 -- State
@@ -25,16 +24,10 @@ local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 --[[
-	Recalculates this Computed's cached value and dependencies.
+	Recalculates this Eager's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 ]]
-function class:update(force: boolean?): boolean
-	if not force and lengthOf(self.dependentSet) == 0 then
-		self._didChange = true
-		return false
-	end
-	self._didChange = false
-
+function class:update(): boolean
 	-- remove this object from its dependencies' dependent sets
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -52,11 +45,11 @@ function class:update(force: boolean?): boolean
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
-			logWarn("destructorNeededComputed")
+			logWarn("destructorNeededEager")
 		end
 
 		if newMetaValue ~= nil then
-			logWarn("multiReturnComputed")
+			logWarn("multiReturnEager")
 		end
 
 		local oldValue = self._value
@@ -93,9 +86,6 @@ end
 	Returns the interior value of this state object.
 ]]
 function class:_peek(): any
-	if self._didChange then
-		self:update(true)
-	end
 	return self._value
 end
 
@@ -103,11 +93,11 @@ function class:get()
 	logError("stateGetWasRemoved")
 end
 
-local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+local function Eager<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Eager<T>
 	local dependencySet = {}
 	local self = setmetatable({
 		type = "State",
-		kind = "Computed",
+		kind = "Eager",
 		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
@@ -115,11 +105,12 @@ local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_didChange = true,
 		_value = nil,
 	}, CLASS_METATABLE)
+
+	self:update()
 
 	return self
 end
 
-return Computed
+return Eager
