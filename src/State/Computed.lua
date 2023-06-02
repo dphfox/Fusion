@@ -31,14 +31,6 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 function class:update(force: boolean?): boolean
 	if not force and lengthOf(self.dependentSet) == 0 then
 		self._didChange = true
-		local oldValue = self._value
-
-		if self._destructor ~= nil then
-			self._destructor(oldValue)
-			self._value = nil
-		elseif needsDestruction(oldValue) then
-			logWarn("destructorNeededComputed")
-		end
 		return false
 	end
 	self._didChange = false
