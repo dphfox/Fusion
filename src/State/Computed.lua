@@ -8,13 +8,11 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
-local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
--- Utility
-local lengthOf = require(Package.Utility.lengthOf)
 -- State
 local calculate = require(Package.State.calculate)
-local needsDestruction = require(Package.Utility.needsDestruction)
+-- Utility
+local lengthOf = require(Package.Utility.lengthOf)
 
 local class = {}
 
@@ -25,8 +23,9 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Recalculates this Computed's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 
-	If `force` is enabled, this will skip `dependentSet` checks and will always update 
-	the state object - use this with care as this can lead to unnecessary updates.
+	If `force` is enabled, this will skip `dependentSet` checks and will
+	always update the state object - use this with care as this can lead to
+	unnecessary updates.
 ]]
 function class:update(force: boolean?): boolean
 	if not force and lengthOf(self.dependentSet) == 0 then

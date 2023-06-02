@@ -77,7 +77,11 @@ return function()
 
 			return use(state)
 		end)
-		computed.dependentSet[{ update = function() end }] = true -- fake dependent to allow for updating
+		-- fake dependent to allow for updating
+		computed.dependentSet[{
+			update = function() end,
+			dependencySet = {}
+		}] = true 
 
 		expect(peek(computed)).to.equal(1)
 
@@ -91,7 +95,7 @@ return function()
 	end)
 
 	itFIXME("should garbage-collect unused objects", function()
-		--FIXME: This test dosen't work with lazy state calculation.
+		--FIXME: This test doesn't work with lazy state calculation.
 
 		local state = Value(2)
 		local counter = 0
@@ -148,6 +152,8 @@ return function()
 		peek(computed) -- force update
 
 		value:set("new")
+
+		peek(computed) -- force update
 
 		expect(didRun).to.equal(true)
 	end)
