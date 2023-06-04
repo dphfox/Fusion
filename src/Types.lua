@@ -59,6 +59,7 @@ export type Eager<T> = PubTypes.Eager<T> & {
 export type Computed<T> = PubTypes.Computed<T> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (PubTypes.Use) -> T,
+	_change: (Computed<T>) -> (),
 	_destructor: (T) -> (),
 	_didChange: boolean,
 	_value: T

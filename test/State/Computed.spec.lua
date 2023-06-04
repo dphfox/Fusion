@@ -46,6 +46,7 @@ return function()
 		expect(peek(tripled)).to.equal(6)
 
 		currentNumber:set(4)
+		expect(peek(doubled)).to.equal(8)
 		expect(peek(tripled)).to.equal(12)
 	end)
 
@@ -77,11 +78,14 @@ return function()
 
 			return use(state)
 		end)
-		-- fake dependent to allow for updating
+		-- fake Observer dependent to allow for updating
 		computed.dependentSet[{
+			type = "State",
+			kind = "Observer",
+			dependentSet = {},
+			dependencySet = {},
 			update = function() end,
-			dependencySet = {}
-		}] = true 
+		}] = true
 
 		expect(peek(computed)).to.equal(1)
 

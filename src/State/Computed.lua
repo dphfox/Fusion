@@ -11,8 +11,9 @@ local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 -- State
 local calculate = require(Package.State.calculate)
+local shouldCalculate = require(Package.State.shouldCalculate)
 -- Utility
-local lengthOf = require(Package.Utility.lengthOf)
+local xtypeof = require(Package.Utility.xtypeof)
 
 local class = {}
 
@@ -23,13 +24,13 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	Recalculates this Computed's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 
-	If `force` is enabled, this will skip `dependentSet` checks and will
+	If `force` is enabled, this will skip `shouldCalculate()` checks and will
 	always update the state object - use this with care as this can lead to
 	unnecessary updates.
 ]]
 function class:update(force: boolean?): boolean
-	if not force and lengthOf(self.dependentSet) == 0 then
-		self._didChange = true
+	if not force and not shouldCalculate(self) then
+		self:_change()
 		return false
 	end
 	self._didChange = false
@@ -45,6 +46,19 @@ function class:_peek(): any
 		self:update(true)
 	end
 	return self._value
+end
+
+--[[
+	Sets _didChange value to true for this Computed and all its dependent
+	Computeds.
+]]
+function class:_change()
+	self._didChange = true
+	for subDependentState: Types.Computed<any> in self.dependentSet do
+		if xtypeof(subDependentState) == "State" and subDependentState.kind == "Computed" then
+			subDependentState:_change()
+		end
+	end
 end
 
 function class:get()
