@@ -30,7 +30,9 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 ]]
 function class:update(force: boolean?): boolean
 	if not force and not shouldCalculate(self) then
-		self:_change()
+		-- if we didn't call `:_changed()` here then when the user tries to
+		-- `peek()` any of the Computed dependents they won't update.
+		self:_changed()
 		return false
 	end
 	self._didChange = false
@@ -49,14 +51,14 @@ function class:_peek(): any
 end
 
 --[[
-	Sets _didChange value to true for this Computed and all its dependent
+	Sets `_didChange` value to `true` for this Computed and all its dependent
 	Computeds.
 ]]
-function class:_change()
+function class:_changed()
 	self._didChange = true
 	for subDependentState: Types.Computed<any> in self.dependentSet do
 		if xtypeof(subDependentState) == "State" and subDependentState.kind == "Computed" then
-			subDependentState:_change()
+			subDependentState:_changed()
 		end
 	end
 end
