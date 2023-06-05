@@ -14,10 +14,8 @@ local xtypeof = require(Package.Utility.xtypeof)
 local function shouldCalculate<T>(dependentState: Types.StateObject<T> & PubTypes.Dependent): boolean
 	for subDependentState: Types.StateObject<any> & PubTypes.Dependent in dependentState.dependentSet :: any do
 		if xtypeof(subDependentState) == "State" then
-			if subDependentState.kind == "Observer" then
+			if subDependentState.kind == "Observer" or shouldCalculate(subDependentState) then
 				return true
-			else
-				return shouldCalculate(subDependentState)
 			end
 		end
 	end

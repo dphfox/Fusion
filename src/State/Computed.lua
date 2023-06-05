@@ -8,6 +8,7 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
+local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 -- State
 local calculate = require(Package.State.calculate)
@@ -31,7 +32,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 function class:update(force: boolean?): boolean
 	if not force and not shouldCalculate(self) then
 		-- if we didn't call `:_changed()` here then when the user tries to
-		-- `peek()` any of the Computed dependents they won't update.
+		-- `peek()` at any of the Computed's dependents they won't update.
 		self:_changed()
 		return false
 	end
@@ -45,6 +46,7 @@ end
 ]]
 function class:_peek(): any
 	if self._didChange then
+		logWarn("computedNoCachedValue")
 		self:update(true)
 	end
 	return self._value

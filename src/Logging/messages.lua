@@ -13,6 +13,7 @@ return {
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
 	eagerCallbackError = "Eager callback error: ERROR_MESSAGE",
+	computedNoCachedValue = "Computed has not yet cached its value meaning this could be an expensive call.",
 	destructorNeededValue = "To save instances into Values, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
 	destructorNeededComputed = "To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
 	destructorNeededEager = "To return instances from Eagers, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
