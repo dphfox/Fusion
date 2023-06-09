@@ -6,6 +6,7 @@
 
 local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
+local bindScheduler = require(script.bindScheduler)
 
 local Fusion = restrictRead("Fusion", {
 	version = {major = 0, minor = 3, isRelease = false},
@@ -79,5 +80,7 @@ type Fusion = {
 	doNothing: (...any) -> (),
 	peek: Use
 }
+
+bindScheduler()
 
 return Fusion

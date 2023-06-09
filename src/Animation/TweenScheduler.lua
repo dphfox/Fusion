@@ -4,8 +4,6 @@
 	Manages batch updating of tween objects.
 ]]
 
-local RunService = game:GetService("RunService")
-
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local lerpType = require(Package.Animation.lerpType)
@@ -40,7 +38,7 @@ end
 --[[
 	Updates all Tween objects.
 ]]
-local function updateAllTweens()
+function TweenScheduler.updateAllTweens()
 	local now = os.clock()
 	-- FIXME: Typed Luau doesn't understand this loop yet
 	for tween: Tween in pairs(allTweens :: any) do
@@ -64,16 +62,5 @@ local function updateAllTweens()
 		end
 	end
 end
-
-if RunService:IsClient() then
-	RunService:BindToRenderStep(
-		"__FusionTweenScheduler",
-		Enum.RenderPriority.First.Value,
-		updateAllTweens
-	)
-else
-	RunService.Heartbeat:Connect(updateAllTweens)
-end
-
 
 return TweenScheduler
