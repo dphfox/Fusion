@@ -83,10 +83,16 @@ local function updateAllSprings()
 	end
 end
 
-RunService:BindToRenderStep(
-	"__FusionSpringScheduler",
-	Enum.RenderPriority.First.Value,
-	updateAllSprings
-)
+if RunService:IsClient() then
+	RunService:BindToRenderStep(
+		"__FusionSpringScheduler",
+		Enum.RenderPriority.First.Value,
+		updateAllSprings
+	)
+else
+	RunService.Heartbeat:Connect(updateAllSprings)
+end
+
+
 
 return SpringScheduler

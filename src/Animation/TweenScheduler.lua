@@ -65,10 +65,15 @@ local function updateAllTweens()
 	end
 end
 
-RunService:BindToRenderStep(
-	"__FusionTweenScheduler",
-	Enum.RenderPriority.First.Value,
-	updateAllTweens
-)
+if RunService:IsClient() then
+	RunService:BindToRenderStep(
+		"__FusionTweenScheduler",
+		Enum.RenderPriority.First.Value,
+		updateAllTweens
+	)
+else
+	RunService.Heartbeat:Connect(updateAllTweens)
+end
+
 
 return TweenScheduler
