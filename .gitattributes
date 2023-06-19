@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Add .luau files to be highlighted as .lua files
+*.luau linguist-language=Lua
