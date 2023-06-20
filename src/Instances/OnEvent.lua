@@ -9,11 +9,17 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 
+local memoizeTbl = setmetatable({}, {__mode = "k"})
+
 local function getProperty_unsafe(instance: Instance, property: string)
 	return (instance :: any)[property]
 end
 
 local function OnEvent(eventName: string): PubTypes.SpecialKey
+	if memoizeTbl[eventName] then
+		return memoizeTbl[eventName]
+	end
+	
 	local eventKey = {}
 	eventKey.type = "SpecialKey"
 	eventKey.kind = "OnEvent"
@@ -29,6 +35,8 @@ local function OnEvent(eventName: string): PubTypes.SpecialKey
 			table.insert(cleanupTasks, event:Connect(callback))
 		end
 	end
+
+	memoizeTbl[eventName] = eventKey
 
 	return eventKey
 end
