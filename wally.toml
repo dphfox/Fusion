@@ -1,8 +1,8 @@
 [package]
-name = "elttob/fusion"
-description = "A modern reactive UI library, built specifically for Roblox and Luau"
+name = "sour/lemon"
+description = "A modern reactive UI library, built specifically for Roblox and Luau --dev"
 license = "MIT"
-authors = ["Elttob"]
+authors = ["sour"]
 version = "0.3.0-dev.1"
 
 registry = "https://github.com/UpliftGames/wally-index"
