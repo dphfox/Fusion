@@ -84,9 +84,7 @@ end
 function class:update(): boolean
 	local goalValue = peek(self._goalState)
 
-	-- figure out if this was a goal change or a speed/damping change
-	if goalValue == self._goalValue then
-		-- speed/damping change
+	local function speedDampingUpdate()
 		local damping = peek(self._damping)
 		if typeof(damping) ~= "number" then
 			logErrorNonFatal("mistypedSpringDamping", nil, typeof(damping))
@@ -104,9 +102,17 @@ function class:update(): boolean
 		else
 			self._currentSpeed = speed
 		end
+	end
 
+	-- figure out if this was a goal change or a speed/damping change
+	if goalValue == self._goalValue then
+		-- speed/damping change
+		speedDampingUpdate()
 		return false
 	else
+		-- speed/damping change
+		speedDampingUpdate()
+
 		-- goal change - reconfigure spring to target new goal
 		self._goalValue = goalValue
 
