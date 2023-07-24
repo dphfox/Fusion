@@ -6,6 +6,37 @@
 
 local PubTypes = require(script.PubTypes)
 local restrictRead = require(script.Utility.restrictRead)
+local bindScheduler = require(script.bindScheduler)
+
+local Fusion = restrictRead("Fusion", {
+	version = {major = 0, minor = 3, isRelease = false},
+
+	New = require(script.Instances.New),
+	Hydrate = require(script.Instances.Hydrate),
+	Ref = require(script.Instances.Ref),
+	Out = require(script.Instances.Out),
+	Cleanup = require(script.Instances.Cleanup),
+	Children = require(script.Instances.Children),
+	OnEvent = require(script.Instances.OnEvent),
+	OnChange = require(script.Instances.OnChange),
+	Attribute = require(script.Instances.Attribute),
+	AttributeChange = require(script.Instances.AttributeChange),
+	AttributeOut = require(script.Instances.AttributeOut),
+
+	Value = require(script.State.Value),
+	Computed = require(script.State.Computed),
+	ForPairs = require(script.State.ForPairs),
+	ForKeys = require(script.State.ForKeys),
+	ForValues = require(script.State.ForValues),
+	Observer = require(script.State.Observer),
+
+	Tween = require(script.Animation.Tween),
+	Spring = require(script.Animation.Spring),
+
+	cleanup = require(script.Utility.cleanup),
+	doNothing = require(script.Utility.doNothing),
+	peek = require(script.State.peek)
+}) :: Fusion
 
 export type StateObject<T> = PubTypes.StateObject<T>
 export type CanBeState<T> = PubTypes.CanBeState<T>
@@ -50,32 +81,6 @@ type Fusion = {
 	peek: Use
 }
 
-return restrictRead("Fusion", {
-	version = {major = 0, minor = 3, isRelease = false},
+bindScheduler()
 
-	New = require(script.Instances.New),
-	Hydrate = require(script.Instances.Hydrate),
-	Ref = require(script.Instances.Ref),
-	Out = require(script.Instances.Out),
-	Cleanup = require(script.Instances.Cleanup),
-	Children = require(script.Instances.Children),
-	OnEvent = require(script.Instances.OnEvent),
-	OnChange = require(script.Instances.OnChange),
-	Attribute = require(script.Instances.Attribute),
-	AttributeChange = require(script.Instances.AttributeChange),
-	AttributeOut = require(script.Instances.AttributeOut),
-
-	Value = require(script.State.Value),
-	Computed = require(script.State.Computed),
-	ForPairs = require(script.State.ForPairs),
-	ForKeys = require(script.State.ForKeys),
-	ForValues = require(script.State.ForValues),
-	Observer = require(script.State.Observer),
-
-	Tween = require(script.Animation.Tween),
-	Spring = require(script.Animation.Spring),
-
-	cleanup = require(script.Utility.cleanup),
-	doNothing = require(script.Utility.doNothing),
-	peek = require(script.State.peek)
-}) :: Fusion
+return Fusion

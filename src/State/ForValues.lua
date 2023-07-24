@@ -123,7 +123,7 @@ function class:update(): boolean
 			table.clear(valueData.dependencySet)
 
 			local use = makeUseCallback(valueData.dependencySet)
-			local processOK, newOutValue, newMetaValue = xpcall(self._processor, use, inValue)
+			local processOK, newOutValue, newMetaValue = xpcall(self._processor, parseError, use, inValue)
 
 			if processOK then
 				if self._destructor == nil and (needsDestruction(newOutValue) or needsDestruction(newMetaValue)) then
@@ -145,7 +145,6 @@ function class:update(): boolean
 			else
 				-- restore old dependencies, because the new dependencies may be corrupt
 				valueData.oldDependencySet, valueData.dependencySet = valueData.dependencySet, valueData.oldDependencySet
-
 				logErrorNonFatal("forValuesProcessorError", newOutValue)
 			end
 		end
