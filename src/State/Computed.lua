@@ -59,11 +59,11 @@ function class:update(force: boolean?): boolean
 
 	if ok then
 		if self._destructor == nil and needsDestruction(newValue) then
-			logWarn(`destructorNeededComputed`)
+			logWarn("destructorNeededComputed")
 		end
 
 		if newMetaValue ~= nil then
-			logWarn(`multiReturnComputed`)
+			logWarn("multiReturnComputed")
 		end
 
 		local oldValue = self._value
@@ -82,7 +82,7 @@ function class:update(force: boolean?): boolean
 	else
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
-		logErrorNonFatal(`computedCallbackError`, newValue)
+		logErrorNonFatal("computedCallbackError", newValue)
 
 		-- restore old dependencies, because the new dependencies may be corrupt
 		self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
