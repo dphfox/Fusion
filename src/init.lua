@@ -42,7 +42,6 @@ export type StateObject<T> = PubTypes.StateObject<T>
 export type CanBeState<T> = PubTypes.CanBeState<T>
 export type Symbol = PubTypes.Symbol
 export type Value<T> = PubTypes.Value<T>
-export type Eager<T> = PubTypes.Eager<T>
 export type Computed<T> = PubTypes.Computed<T>
 export type ForPairs<KO, VO> = PubTypes.ForPairs<KO, VO>
 export type ForKeys<KI, KO> = PubTypes.ForKeys<KI, KO>
@@ -68,7 +67,7 @@ type Fusion = {
 	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
-	Eager: <T>(callback: (Use) -> T, destructor: (T) -> ()?) -> Eager<T>,
+	Eager: <T>(dependentState: StateObject<T> & PubTypes.Dependent) -> StateObject<T> & PubTypes.Dependent,
 	Computed: <T>(callback: (Use) -> T, destructor: (T) -> ()?) -> Computed<T>,
 	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
 	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,

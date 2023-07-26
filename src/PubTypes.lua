@@ -63,8 +63,9 @@ export type Dependency = {
 
 -- A graph object which can have dependencies.
 export type Dependent = {
-	update: (Dependent) -> boolean,
-	dependencySet: Set<Dependency>
+	update: (Dependent, boolean?) -> boolean,
+	dependencySet: Set<Dependency>,
+	didChange: boolean
 }
 
 -- An object which stores a piece of reactive state.

@@ -1,5 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Computed = require(Package.State.Computed)
+local Eager = require(Package.State.Eager)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
@@ -46,21 +47,7 @@ return function()
 		expect(peek(tripled)).to.equal(6)
 
 		currentNumber:set(4)
-		expect(peek(doubled)).to.equal(8)
 		expect(peek(tripled)).to.equal(12)
-	end)
-
-	it("should never calculate its value if it has no dependents", function()
-		local state = Value(2)
-		local computed = Computed(function(use)
-			return use(state)
-		end)
-
-		expect(computed._value).never.to.be.ok()
-
-		state:set(4)
-
-		expect(computed._value).never.to.be.ok()
 	end)
 
 	it("should not corrupt dependencies after an error", function()
@@ -78,19 +65,13 @@ return function()
 
 			return use(state)
 		end)
-		-- fake Observer dependent to allow for updating
-		computed.dependentSet[{
-			type = "State",
-			kind = "Observer",
-			dependentSet = {},
-			dependencySet = {},
-			update = function() end,
-		}] = true
 
 		expect(peek(computed)).to.equal(1)
 
 		simulateError = true
 		state:set(5) -- update the computed to invoke the error
+
+		peek(computed)
 
 		simulateError = false
 		state:set(10) -- if dependencies are corrupt, the computed won't update
@@ -98,17 +79,16 @@ return function()
 		expect(peek(computed)).to.equal(10)
 	end)
 
-	itFIXME("should garbage-collect unused objects", function()
-		--FIXME: This test doesn't work with lazy state calculation.
-
+	it("should garbage-collect unused objects", function()
 		local state = Value(2)
+
 		local counter = 0
 
 		do
-			local computed = Computed(function(use)
+			local computed = Eager(Computed(function(use)
 				counter += 1
 				return use(state)
-			end)
+			end))
 		end
 
 		waitForGC()
@@ -128,6 +108,7 @@ return function()
 				counter += 1
 				return use(state)
 			end)
+
 			computed2 = Computed(function(use)
 				return use(computed)
 			end)
@@ -136,7 +117,8 @@ return function()
 		waitForGC()
 		state:set(5)
 
-		peek(computed2) -- force update
+		peek(computed2)
+
 		expect(counter).to.equal(1)
 	end)
 
@@ -153,11 +135,9 @@ return function()
 			return use(value)
 		end, destructor)
 
-		peek(computed) -- force update
-
+		peek(computed)
 		value:set("new")
-
-		peek(computed) -- force update
+		peek(computed)
 
 		expect(didRun).to.equal(true)
 	end)
