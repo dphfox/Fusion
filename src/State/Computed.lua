@@ -13,7 +13,6 @@ local logError = require(Package.Logging.logError)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 -- State
---local updateAll = require(Package.State.updateAll)
 local setChanged = require(Package.State.setChanged)
 local shouldUpdate = require(Package.State.shouldUpdate)
 local makeUseCallback = require(Package.State.makeUseCallback)
