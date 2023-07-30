@@ -5,9 +5,6 @@ local ForPairs = require(Package.State.ForPairs)
 local ForKeys = require(Package.State.ForKeys)
 local Eager = require(Package.State.Eager)
 local Value = require(Package.State.Value)
-local peek = require(Package.State.peek)
-
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
 
 return function()
 	it("should force Computed objects to be eager", function()

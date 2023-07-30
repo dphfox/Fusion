@@ -63,7 +63,7 @@ export type Dependency = {
 
 -- A graph object which can have dependencies.
 export type Dependent = {
-	update: (Dependent, boolean?) -> boolean,
+	update: (Dependent, force: boolean?) -> boolean,
 	dependencySet: Set<Dependency>,
 	didChange: boolean
 }
@@ -88,11 +88,6 @@ export type Use = <T>(target: CanBeState<T>) -> T
 export type Value<T> = StateObject<T> & {
 	kind: "State",
  	set: (Value<T>, newValue: any, force: boolean?) -> ()
-}
-
--- A state object whose value is derived from other objects using a callback.
-export type Eager<T> = StateObject<T> & Dependent & {
-	kind: "Eager"
 }
 
 -- A state object whose value is derived from other objects using a callback.

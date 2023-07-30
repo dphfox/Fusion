@@ -1,3 +1,5 @@
+local RunService = game:GetService("RunService")
+
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Computed = require(Package.State.Computed)
 local Eager = require(Package.State.Eager)

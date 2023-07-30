@@ -13,8 +13,9 @@ local logError = require(Package.Logging.logError)
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 -- State
+--local updateAll = require(Package.State.updateAll)
 local setChanged = require(Package.State.setChanged)
-local shouldCalculate = require(Package.State.shouldCalculate)
+local shouldUpdate = require(Package.State.shouldUpdate)
 local makeUseCallback = require(Package.State.makeUseCallback)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
@@ -34,8 +35,8 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	unnecessary updates.
 ]]
 function class:update(force: boolean?): boolean
-	if not force and not shouldCalculate(self) then
-		-- if we didn't call `setChanged()` here then when the user tries to
+	if not force and not shouldUpdate(self) then
+		-- if we didn't call `setChanged()` here then when a user tries to
 		-- `peek()` at any of the Computed's dependents they won't update.
 		setChanged(self)
 		return false

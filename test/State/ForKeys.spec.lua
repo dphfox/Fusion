@@ -2,6 +2,7 @@ local RunService = game:GetService("RunService")
 
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForKeys = require(Package.State.ForKeys)
+local Eager = require(Package.State.Eager)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
@@ -39,12 +40,16 @@ return function()
 			return key
 		end)
 
+		peek(computedPair)
+
 		expect(calculations).to.equal(1)
 
 		state:set({
 			["foo"] = "biz",
 			["baz"] = "bar",
 		})
+		
+		peek(computedPair)
 
 		expect(calculations).to.equal(2)
 	end)
@@ -57,11 +62,11 @@ return function()
 
 		local destructions = 0
 
-		local computedPair = ForKeys(state, function(use, key)
+		local computedPair = Eager(ForKeys(state, function(use, key)
 			return key .. "biz"
 		end, function(key)
 			destructions += 1
-		end)
+		end))
 
 		state:set({
 			["foo"] = "bar",
@@ -97,6 +102,7 @@ return function()
 			local computed = ForKeys(state, function(use)
 				return "foo"
 			end)
+			peek(computed)
 		end).to.throw("forKeysKeyCollision")
 
 		local state = Value({
@@ -112,6 +118,7 @@ return function()
 				["foo"] = "bar",
 				["baz"] = "bar",
 			})
+			peek(computed)
 		end).to.throw("forKeysKeyCollision")
 	end)
 
@@ -122,13 +129,13 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(use, key)
+		local computedKey = Eager(ForKeys(state, function(use, key)
 			local newKey = key .. "biz"
 			return newKey, newKey
 		end, function(key, meta)
 			expect(meta).to.equal(key)
 			destructions += 1
-		end)
+		end))
 
 		state:set({
 			["baz"] = "bar",
@@ -156,11 +163,11 @@ return function()
 
 		local destructions = 0
 
-		local computedKey = ForKeys(state, function(use, key)
+		local computedKey = Eager(ForKeys(state, function(use, key)
 			return map[key]
 		end, function()
 			destructions += 1
-		end)
+		end))
 
 		state:set({
 			["bar"] = true,
@@ -241,6 +248,7 @@ return function()
 				counter += 1
 				return key
 			end)
+			peek(computedKeys)
 		end
 
 		waitForGC()
@@ -276,6 +284,8 @@ return function()
 			["bar"] = "baz",
 		})
 
-		expect(counter).to.equal(2)
+		peek(computed2)
+
+		expect(counter).to.equal(1)
 	end)
 end

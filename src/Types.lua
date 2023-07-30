@@ -48,12 +48,6 @@ export type State<T> = PubTypes.Value<T> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type Eager<T> = PubTypes.Eager<T> & {
-	_dependentState: State<T> & PubTypes.Dependent,
-	_value: T
-}
-
--- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = PubTypes.Computed<T> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (PubTypes.Use) -> T,

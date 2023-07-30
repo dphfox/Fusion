@@ -1,7 +1,7 @@
 --!nonstrict
 
 --[[
-	Returns a boolean suggesting whether or not to calculate the given dependent
+	Returns a boolean suggesting whether or not to update the given dependent
 	state's value.
 ]]
 
@@ -11,14 +11,14 @@ local PubTypes = require(Package.PubTypes)
 -- Utility
 local xtypeof = require(Package.Utility.xtypeof)
 
-local NEEDS_CALCULATION = {
+local REQUIRES_UPDATE = {
 	Observer = true,
 }
 
-local function shouldCalculate<T>(dependentState: Types.StateObject<T> & PubTypes.Dependent): boolean
+local function shouldUpdate<T>(dependentState: Types.StateObject<T> & PubTypes.Dependent): boolean
 	for subDependentState: Types.StateObject<any> & PubTypes.Dependent in dependentState.dependentSet :: any do
 		if xtypeof(subDependentState) == "State" then
-			if NEEDS_CALCULATION[subDependentState.kind] or shouldCalculate(subDependentState) then
+			if REQUIRES_UPDATE[subDependentState.kind] or shouldUpdate(subDependentState) then
 				return true
 			end
 		end
@@ -26,4 +26,4 @@ local function shouldCalculate<T>(dependentState: Types.StateObject<T> & PubType
 	return false
 end
 
-return shouldCalculate
+return shouldUpdate

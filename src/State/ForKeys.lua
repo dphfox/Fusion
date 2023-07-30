@@ -24,6 +24,8 @@ local cleanup = require(Package.Utility.cleanup)
 local needsDestruction = require(Package.Utility.needsDestruction)
 -- State
 local peek = require(Package.State.peek)
+local setChanged = require(Package.State.setChanged)
+local shouldUpdate = require(Package.State.shouldUpdate)
 local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
 
@@ -51,7 +53,15 @@ local WEAK_KEYS_METATABLE = { __mode = "k" }
 	their output keys from the output table and pass them to the destructor.
 ]]
 
-function class:update(): boolean
+function class:update(force: boolean?): boolean
+	if not force and not shouldUpdate(self) then
+		-- if we didn't call `setChanged()` here then when a user tries to
+		-- `peek()` at any of the Computed's dependents they won't update.
+		setChanged(self)
+		return false
+	end
+	self.didChange = false
+
 	local inputIsState = self._inputIsState
 	local newInputTable = peek(self._inputTable)
 	local oldInputTable = self._oldInputTable
@@ -202,6 +212,10 @@ end
 	Returns the interior value of this state object.
 ]]
 function class:_peek(): any
+	if self.didChange then
+		logWarn("forKeysNoCachedValue")
+		self:update(true)
+	end
 	return self._outputTable
 end
 
