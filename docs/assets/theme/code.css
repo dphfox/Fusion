@@ -19,7 +19,7 @@
 
 [data-md-color-scheme="fusiondoc-dark"] {
 	--md-code-fg-color:                var(--fusiondoc-grey-8);
-	--md-code-bg-color:                var(--fusiondoc-grey-0);
+	--md-code-bg-color:                var(--fusiondoc-grey-2);
 
 	--md-code-hl-color:                var(--fusiondoc-accent-a20);
 	--md-code-hl-number-color:         hsl(290, 60%, 70%);
@@ -36,6 +36,15 @@
 	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
 }
 
+.md-typeset code {
+	border-radius: 0.25rem;
+}
+
+.highlighttable .linenos {
+	border-bottom-left-radius: 0.25rem;
+	border-top-left-radius: 0.25rem;
+  }
+
 .highlighttable .linenodiv {
 	box-shadow: none;
 }
@@ -47,8 +56,8 @@
 .highlight .hll {
 	box-shadow:
 		inset 0.125rem 0 var(--fusiondoc-accent),
-		320px 0 var(--md-code-hl-color);
-
+		320px 0 var(--md-code-hl-color);	
+	background: linear-gradient(to left, var(--fusiondoc-accent-a20) 0%, var(--fusiondoc-accent-a10) 100%);
 }
 
 .highlighttable .linenodiv pre {
