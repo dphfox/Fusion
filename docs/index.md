@@ -31,8 +31,8 @@ learning curve. At every stage, you can robustly guarantee what your code will
 do, and when you come back in six months, your code is easy to pick back up.
 </p>
 <nav>
-<a href="./tutorials">Get started</a>
-<a href="https://github.com/Elttob/Fusion/releases">Download Fusion</a>
+<a href="./tutorials">Getting started guide</a>
+<a href="https://github.com/Elttob/Fusion/releases">Download</a>
 </nav>
 </section>
 </section>

@@ -45,6 +45,7 @@
 }
 
 [data-md-color-scheme="fusiondoc-light"] {
+	--fusiondoc-bg-0: var(--fusiondoc-grey-8);
 	--fusiondoc-bg-1: var(--fusiondoc-grey-9);
 	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-9-a80);
 	--fusiondoc-bg-2: var(--fusiondoc-grey-10);
@@ -71,6 +72,7 @@
 }
 
 [data-md-color-scheme="fusiondoc-dark"] {
+	--fusiondoc-bg-0: var(--fusiondoc-grey-2);
 	--fusiondoc-bg-1: var(--fusiondoc-grey-1);
 	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-1-a80);
 	--fusiondoc-bg-2: var(--fusiondoc-grey-2);
