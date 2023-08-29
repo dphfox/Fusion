@@ -8,10 +8,15 @@
 		<link
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css?family={{
+				font.text | replace(' ', '+')
+				}}&display=fallback"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family={{
 				font.code | replace(' ', '+')
 				}}&display=fallback"
 		/>
-		<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
 		<style>
 			:root {
 				--md-text-font: "{{ font.text }}";
