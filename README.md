@@ -1,14 +1,20 @@
-<img align="left" src="./gh-assets/logo-dark-theme.svg#gh-dark-mode-only" alt="Fusion"><img align="left" src="./gh-assets/logo-light-theme.svg#gh-light-mode-only" alt="Fusion"><a href="https://elttob.uk/Fusion/"><img align="right" src="./gh-assets/link-docs.svg" alt="Docs"></a><a href="https://github.com/Elttob/Fusion/releases"><img align="right" src="./gh-assets/link-download.svg" alt="Download"></a><img src="./gh-assets/clearfloat.svg">
+<img align="left" src="./gh-assets/logo-dark-theme.svg#gh-dark-mode-only" alt="Fusion"><img align="left" src="./gh-assets/logo-light-theme.svg#gh-light-mode-only" alt="Fusion"><a href="https://elttob.uk/Fusion/latest"><img align="right" src="./gh-assets/link-docs.svg" alt="Docs"></a><a href="https://github.com/Elttob/Fusion/releases"><img align="right" src="./gh-assets/link-download.svg" alt="Download"></a><img src="./gh-assets/clearfloat.svg">
 
-Fusion is a modern reactive UI library, built specifically for [Roblox](https://developer.roblox.com/) and [Luau](https://luau-lang.org/).
+*Rediscover the joy of coding.* 
 
-Build your UI with a declarative syntax that's easy to read and write.<br>
-Plug in live data with simple, flexible, truly reactive state management.<br>
-Deliver a fast, smooth experience to everyone - on mobile, console, PC or in VR.<br>
+Code is more dynamic, complex and intertwined than ever before. Errors cascade
+out of control, things update in the wrong order, and it's all connected by
+difficult, unreadable spaghetti.
 
-<a href="https://elttob.uk/Fusion/">
-Visit the Fusion documentation to learn more <img valign="middle" src="./gh-assets/icon-link-extern.svg" alt="(external link)" title="(external link)">
-</a>
+No longer. Fusion introduces modern 'reactive' concepts for managing code, so
+you can spend more time getting your logic right, and less time implementing
+buggy boilerplate code connections.
+
+Starting from simple roots, concepts neatly combine and build up with very little
+learning curve. At every state, you can robustly guarantee what your code will
+do, and when you come back in six months, it'll be easy to pick up right away.
+
+Piqued your interest? [Get going in minutes with our on-rails tutorial.](https://elttob.uk/Fusion/latest/tutorials)
 
 -----
 
