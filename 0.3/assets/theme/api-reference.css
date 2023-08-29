@@ -49,19 +49,19 @@
 
 .fusiondoc-api-pills > * {
 	padding: 0.25em 0.75em;
-	border-radius: 1em;
+	border-radius: 0.25rem;
 	height: 2em;
 	flex-shrink: 0;
 }
 
 .fusiondoc-api-pills .fusiondoc-api-pill-type {
-	background-color: var(--fusiondoc-accent-a20);
+	background-color: var(--fusiondoc-orange-a20);
 	color: var(--fusiondoc-accent-text);
 }
 
 .fusiondoc-api-pills .fusiondoc-api-pill-since {
-	background-color: var(--fusiondoc-accent-hover-a20);
-	color: var(--fusiondoc-accent-hover-text);
+	background-color: var(--fusiondoc-grey-a20);
+	color: var(--fusiondoc-fg-1);
 }
 
 .fusiondoc-api-breadcrumbs {
