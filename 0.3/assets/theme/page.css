@@ -149,11 +149,7 @@
 	margin-right: 0rem;
 }
 
-.md-header__title .md-header__topic:first-child {
-	font-size: 0;
-}
-
-.md-header__title .md-header__topic:first-child::after {
+.md-header__title .md-header__topic:first-child::before {
 	content: "";
 	display: inline-block;
 	background-size: contain;
