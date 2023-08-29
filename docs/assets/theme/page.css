@@ -160,11 +160,11 @@
 }
 
 
-[data-md-color-scheme="fusiondoc-light"] .md-header__title .md-header__topic:first-child::after {
+[data-md-color-scheme="fusiondoc-light"] .md-header__title .md-header__topic:first-child::before {
 	background-image: url(../wordmark-tiny-light.svg);
 }
 
-[data-md-color-scheme="fusiondoc-dark"] .md-header__title .md-header__topic:first-child::after {
+[data-md-color-scheme="fusiondoc-dark"] .md-header__title .md-header__topic:first-child::before {
 	background-image: url(../wordmark-tiny-dark.svg);
 }
 
