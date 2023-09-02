@@ -21,7 +21,6 @@ local makeUseCallback = require(Package.State.makeUseCallback)
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
 	Recalculates this Computed's cached value and dependencies.
@@ -93,15 +92,22 @@ function class:get()
 	logError("stateGetWasRemoved")
 end
 
+function class:destroy()
+	for dependency in pairs(self.dependencySet) do
+		dependency.dependentSet[self] = nil
+	end
+	if self._destructor ~= nil then
+		self._destructor(self._value)
+	end
+	table.clear(self)
+end
+
 local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
-	local dependencySet = {}
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
-		dependencySet = dependencySet,
-		-- if we held strong references to the dependents, then they wouldn't be
-		-- able to get garbage collected when they fall out of scope
-		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		dependencySet = {},
+		dependentSet = {},
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
