@@ -20,7 +20,7 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 -- Utility
-local cleanup = require(Package.Memory.cleanup)
+local doCleanup = require(Package.Memory.doCleanup)
 local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local peek = require(Package.State.peek)
@@ -159,7 +159,7 @@ function class:update(): boolean
 				if oldOutValue ~= newOutValue then
 					local oldMetaValue = meta[newOutKey]
 					if oldOutValue ~= nil then
-						local destructOK, err = xpcall(self._destructor or cleanup, parseError, newOutKey, oldOutValue, oldMetaValue)
+						local destructOK, err = xpcall(self._destructor or doCleanup, parseError, newOutKey, oldOutValue, oldMetaValue)
 						if not destructOK then
 							logErrorNonFatal("forPairsDestructorError", err)
 						end
@@ -234,7 +234,7 @@ function class:update(): boolean
 			-- clean up the old output pair
 			local oldMetaValue = meta[oldOutKey]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldOutKey, oldOutValue, oldMetaValue)
+				local destructOK, err = xpcall(self._destructor or doCleanup, parseError, oldOutKey, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end

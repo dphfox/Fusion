@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
-local cleanup = require(Package.Memory.cleanup)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
 	it("should destroy instances", function()
@@ -8,7 +8,7 @@ return function()
 		-- one of the only reliable ways to test for proper destruction
 		local conn = instance.AncestryChanged:Connect(function() end)
 
-		cleanup(instance)
+		doCleanup(instance)
 
 		expect(conn.Connected).to.equal(false)
 	end)
@@ -17,7 +17,7 @@ return function()
 		local instance = New "Folder" {}
 		local conn = instance.AncestryChanged:Connect(function() end)
 
-		cleanup(conn)
+		doCleanup(conn)
 
 		expect(conn.Connected).to.equal(false)
 	end)
@@ -25,7 +25,7 @@ return function()
 	it("should invoke callbacks", function()
 		local didRun = false
 
-		cleanup(function()
+		doCleanup(function()
 			didRun = true
 		end)
 
@@ -35,7 +35,7 @@ return function()
 	it("should invoke :destroy() methods", function()
 		local didRun = false
 
-		cleanup({
+		doCleanup({
 			destroy = function()
 				didRun = true
 			end
@@ -47,7 +47,7 @@ return function()
 	it("should invoke :Destroy() methods", function()
 		local didRun = false
 
-		cleanup({
+		doCleanup({
 			Destroy = function()
 				didRun = true
 			end
@@ -63,7 +63,7 @@ return function()
 			numRuns += 1
 		end
 
-		cleanup({doRun, doRun, doRun})
+		doCleanup({doRun, doRun, doRun})
 
 		expect(numRuns).to.equal(3)
 	end)
@@ -75,7 +75,7 @@ return function()
 			numRuns += 1
 		end
 
-		cleanup({{doRun, {doRun, {doRun}}}})
+		doCleanup({{doRun, {doRun, {doRun}}}})
 
 		expect(numRuns).to.equal(3)
 	end)
@@ -97,7 +97,7 @@ return function()
 			table.insert(runs, 2)
 		end
 
-		cleanup(tasks)
+		doCleanup(tasks)
 
 		expect(runs[1]).to.equal(1)
 		expect(runs[2]).to.equal(2)
@@ -111,7 +111,7 @@ return function()
 			numRuns += 1
 		end
 
-		cleanup(doRun, doRun, doRun)
+		doCleanup(doRun, doRun, doRun)
 
 		expect(numRuns).to.equal(3)
 	end)

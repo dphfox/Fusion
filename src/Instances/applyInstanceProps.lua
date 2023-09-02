@@ -15,7 +15,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local cleanup = require(Package.Memory.cleanup)
+local doCleanup = require(Package.Memory.doCleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)
@@ -120,7 +120,7 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instan
 	end
 
 	applyTo.Destroying:Connect(function()
-		cleanup(cleanupTasks)
+		doCleanup(cleanupTasks)
 	end)
 end
 

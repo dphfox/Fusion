@@ -20,7 +20,7 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 -- Utility
-local cleanup = require(Package.Memory.cleanup)
+local doCleanup = require(Package.Memory.doCleanup)
 local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local peek = require(Package.State.peek)
@@ -133,7 +133,7 @@ function class:update(): boolean
 					-- clean up the old calculated value
 					local oldMetaValue = meta[oldOutKey]
 
-					local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldOutKey, oldMetaValue)
+					local destructOK, err = xpcall(self._destructor or doCleanup, parseError, oldOutKey, oldMetaValue)
 					if not destructOK then
 						logErrorNonFatal("forKeysDestructorError", err)
 					end
@@ -177,7 +177,7 @@ function class:update(): boolean
 			-- clean up the old calculated value
 			local oldMetaValue = meta[outputKey]
 
-			local destructOK, err = xpcall(self._destructor or cleanup, parseError, outputKey, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or doCleanup, parseError, outputKey, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forKeysDestructorError", err)
 			end

@@ -11,7 +11,7 @@
 	- an array - `cleanup` will be called on each item
 ]]
 
-local function cleanupOne(task: any)
+local function doCleanupOne(task: any)
 	local taskType = typeof(task)
 
 	-- case 1: Instance
@@ -38,16 +38,16 @@ local function cleanupOne(task: any)
 		-- case 6: array of tasks
 		elseif task[1] ~= nil then
 			for _, subtask in ipairs(task) do
-				cleanupOne(subtask)
+				doCleanupOne(subtask)
 			end
 		end
 	end
 end
 
-local function cleanup(...: any)
+local function doCleanup(...: any)
 	for index = 1, select("#", ...) do
-		cleanupOne(select(index, ...))
+		doCleanupOne(select(index, ...))
 	end
 end
 
-return cleanup
+return doCleanup

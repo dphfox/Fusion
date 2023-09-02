@@ -19,7 +19,7 @@ local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 -- Utility
-local cleanup = require(Package.Memory.cleanup)
+local doCleanup = require(Package.Memory.doCleanup)
 local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local peek = require(Package.State.peek)
@@ -132,7 +132,7 @@ function class:update(): boolean
 
 				-- pass the old value to the destructor if it exists
 				if value ~= nil then
-					local destructOK, err = xpcall(self._destructor or cleanup, parseError, value, meta)
+					local destructOK, err = xpcall(self._destructor or doCleanup, parseError, value, meta)
 					if not destructOK then
 						logErrorNonFatal("forValuesDestructorError", err)
 					end
@@ -183,7 +183,7 @@ function class:update(): boolean
 			local oldValue = valueInfo.value
 			local oldMetaValue = valueInfo.meta
 
-			local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldValue, oldMetaValue)
+			local destructOK, err = xpcall(self._destructor or doCleanup, parseError, oldValue, oldMetaValue)
 			if not destructOK then
 				logErrorNonFatal("forValuesDestructorError", err)
 			end

@@ -30,7 +30,7 @@ return function()
 			Tween = "function",
 			Spring = "function",
 
-			cleanup = "function",
+			doCleanup = "function",
 			doNothing = "function",
 			peek = "function"
 		}
