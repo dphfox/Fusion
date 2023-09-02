@@ -272,12 +272,11 @@ function class:get()
 end
 
 local function ForPairs<KI, VI, KO, VO, M>(
+	cleanupTable: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
-
-	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
 		type = "State",
@@ -290,7 +289,7 @@ local function ForPairs<KI, VI, KO, VO, M>(
 
 		_processor = processor,
 		_destructor = destructor,
-		_inputIsState = inputIsState,
+		_inputIsState = isState(inputTable),
 
 		_inputTable = inputTable,
 		_oldInputTable = {},
@@ -302,6 +301,7 @@ local function ForPairs<KI, VI, KO, VO, M>(
 	}, CLASS_METATABLE)
 
 	self:update()
+	table.insert(cleanupTable, self)
 
 	return self
 end

@@ -211,12 +211,11 @@ function class:get()
 end
 
 local function ForValues<VI, VO, M>(
+	cleanupTable: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [any]: VI }>,
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>
-
-	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
 		type = "State",
@@ -229,7 +228,7 @@ local function ForValues<VI, VO, M>(
 
 		_processor = processor,
 		_destructor = destructor,
-		_inputIsState = inputIsState,
+		_inputIsState = isState(inputTable),
 
 		_inputTable = inputTable,
 		_outputTable = {},
@@ -238,6 +237,7 @@ local function ForValues<VI, VO, M>(
 	}, CLASS_METATABLE)
 
 	self:update()
+	table.insert(cleanupTable, self)
 
 	return self
 end

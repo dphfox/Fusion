@@ -210,12 +210,11 @@ function class:get()
 end
 
 local function ForKeys<KI, KO, M>(
+	cleanupTable: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
-
-	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
 		type = "State",
@@ -228,7 +227,7 @@ local function ForKeys<KI, KO, M>(
 
 		_processor = processor,
 		_destructor = destructor,
-		_inputIsState = inputIsState,
+		_inputIsState = isState(inputTable),
 
 		_inputTable = inputTable,
 		_oldInputTable = {},
@@ -240,6 +239,7 @@ local function ForKeys<KI, KO, M>(
 	}, CLASS_METATABLE)
 
 	self:update()
+	table.insert(cleanupTable, self)
 
 	return self
 end

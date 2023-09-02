@@ -6,6 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
@@ -52,7 +53,10 @@ function class:destroy()
 	table.clear(self)
 end
 
-local function Value<T>(initialValue: T): Types.State<T>
+local function Value<T>(
+	cleanupTable: {PubTypes.Task},
+	initialValue: T
+): Types.State<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",
@@ -61,6 +65,8 @@ local function Value<T>(initialValue: T): Types.State<T>
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
 		_value = initialValue
 	}, CLASS_METATABLE)
+
+	table.insert(cleanupTable, self)
 
 	return self
 end

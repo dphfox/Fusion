@@ -6,6 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
@@ -102,7 +103,11 @@ function class:destroy()
 	table.clear(self)
 end
 
-local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+local function Computed<T>(
+	cleanupTable: {PubTypes.Task},
+	processor: () -> T,
+	destructor: ((T) -> ())?
+): Types.Computed<T>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
@@ -115,6 +120,7 @@ local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.
 	}, CLASS_METATABLE)
 
 	self:update()
+	table.insert(cleanupTable, self)
 
 	return self
 end
