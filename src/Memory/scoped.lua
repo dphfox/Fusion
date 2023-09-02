@@ -4,12 +4,10 @@
 	Creates cleanup tables with access to constructors as methods.
 ]]
 
-local function scoped(...)
-	local merged = {}
-	for name, func in {...} do
-		merged[name] = func
-	end
-	return setmetatable({}, {__index = merged}) :: any
+-- This return type is technically a lie, but it's required for useful type
+-- checking behaviour.
+local function scoped<T>(constructors: T): T
+	return setmetatable({}, {__index = constructors}) :: any
 end
 
 return scoped

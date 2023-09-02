@@ -15,7 +15,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local cleanup = require(Package.Utility.cleanup)
+local cleanup = require(Package.Memory.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)

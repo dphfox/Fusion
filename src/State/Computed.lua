@@ -14,7 +14,7 @@ local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
-local needsDestruction = require(Package.Utility.needsDestruction)
+local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local makeUseCallback = require(Package.State.makeUseCallback)
 

@@ -33,8 +33,8 @@ local Fusion = restrictRead("Fusion", {
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring),
 
-	cleanup = require(script.Utility.cleanup),
-	doNothing = require(script.Utility.doNothing),
+	cleanup = require(script.Memory.cleanup),
+	doNothing = require(script.Memory.doNothing),
 	peek = require(script.State.peek)
 }) :: Fusion
 

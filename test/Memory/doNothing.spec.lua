@@ -1,6 +1,6 @@
 local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
-local doNothing = require(Package.Utility.doNothing)
+local doNothing = require(Package.Memory.doNothing)
 
 return function()
 	it("should not destroy instances", function()

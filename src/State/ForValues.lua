@@ -19,8 +19,8 @@ local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 -- Utility
-local cleanup = require(Package.Utility.cleanup)
-local needsDestruction = require(Package.Utility.needsDestruction)
+local cleanup = require(Package.Memory.cleanup)
+local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local peek = require(Package.State.peek)
 local makeUseCallback = require(Package.State.makeUseCallback)
