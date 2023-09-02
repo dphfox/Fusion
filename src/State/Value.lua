@@ -18,7 +18,6 @@ local isSimilar = require(Package.Utility.isSimilar)
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
 	Updates the value stored in this State object.
@@ -47,10 +46,6 @@ function class:get()
 end
 
 function class:destroy()
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	table.clear(self)
 end
 
 local function Value<T>(
@@ -60,9 +55,7 @@ local function Value<T>(
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",
-		-- if we held strong references to the dependents, then they wouldn't be
-		-- able to get garbage collected when they fall out of scope
-		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		dependentSet = {},
 		_value = initialValue
 	}, CLASS_METATABLE)
 
