@@ -5,8 +5,6 @@ local ForKeys = require(Package.State.ForKeys)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should construct a ForKeys object", function()
 		local forKeys = ForKeys({}, function(use) end)
@@ -243,8 +241,6 @@ return function()
 			end)
 		end
 
-		waitForGC()
-
 		state:set({
 			["bar"] = "baz",
 		})
@@ -271,7 +267,6 @@ return function()
 			end)
 		end
 
-		waitForGC()
 		state:set({
 			["bar"] = "baz",
 		})

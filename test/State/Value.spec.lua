@@ -3,8 +3,6 @@ local Value = require(Package.State.Value)
 local ForValues = require(Package.State.ForValues)
 local peek = require(Package.State.peek)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should construct a Value object", function()
 		local value = Value()
@@ -29,8 +27,6 @@ return function()
 		local value = setmetatable({ { 2 } }, { __mode = "kv" })
 		Value(value[1])
 
-		waitForGC()
-
 		expect(value[1]).to.equal(nil)
 	end)
 
@@ -39,8 +35,6 @@ return function()
 		local transformed = ForValues(Value(value[1]), function(innerValue)
 			return innerValue[1] + 1
 		end)
-
-		waitForGC()
 
 		expect(value[1]).never.to.equal(nil)
 		expect(peek(transformed)[1]).to.equal(3)

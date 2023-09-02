@@ -5,8 +5,6 @@ local ForValues = require(Package.State.ForValues)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should construct a ForValues object", function()
 		local forKeys = ForValues({}, function(use) end)
@@ -320,8 +318,6 @@ return function()
 			end)
 		end
 
-		waitForGC()
-
 		state:set({
 			[1] = "biz",
 		})
@@ -347,8 +343,7 @@ return function()
 				return value
 			end)
 		end
-
-		waitForGC()
+		
 		state:set({
 			[1] = 2,
 		})

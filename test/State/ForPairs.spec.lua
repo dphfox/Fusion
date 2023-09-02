@@ -5,8 +5,6 @@ local ForPairs = require(Package.State.ForPairs)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should construct a ForPairs object", function()
 		local forPairs = ForPairs({}, function(use) end)
@@ -240,7 +238,6 @@ return function()
 			end)
 		end
 
-		waitForGC()
 		state:set({ 5 })
 
 		expect(counter).to.equal(1)
@@ -263,7 +260,6 @@ return function()
 			end)
 		end
 
-		waitForGC()
 		state:set({ 5 })
 
 		expect(counter).to.equal(2)
