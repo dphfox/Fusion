@@ -24,10 +24,20 @@ local class = {}
 local CLASS_METATABLE = {__index = class}
 
 --[[
+	Called when a dependency changes value.
+	Returns true if this object changed value.
+]]
+function class:update(): boolean
+	return self:_recalculate(false)
+end
+
+--[[
 	Recalculates this Computed's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 ]]
-function class:update(): boolean
+function class:_recalculate(
+	firstTime: boolean
+): boolean
 	-- remove this object from its dependencies' dependent sets
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -54,7 +64,7 @@ function class:update(): boolean
 
 		local oldValue = self._value
 		local similar = isSimilar(oldValue, newValue)
-		if self._destructor ~= nil then
+		if self._destructor ~= nil and not firstTime then
 			self._destructor(oldValue)
 		end
 		self._value = newValue
@@ -118,7 +128,7 @@ local function Computed<T>(
 		_value = nil
 	}, CLASS_METATABLE)
 
-	self:update()
+	self:_recalculate(true)
 	table.insert(cleanupTable, self)
 
 	return self

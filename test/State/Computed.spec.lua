@@ -48,10 +48,10 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("preserves value on error", function()
+	it("preserves value on error", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
-		local computed = Computed(function(use)
+		local computed = Computed(scope, function(use)
 			assert(use(dependency) ~= 13, "This is an intentional error from a unit test")
 			return use(dependency)
 		end)
@@ -63,7 +63,20 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("calls destructor on update", function()
+	it("doesn't call destructor on creation", function()
+		local scope = {}
+		local destructed = false
+		local _ = Computed(scope, function()
+			-- intentionally blank
+		end, function()
+			destructed = true
+		end)
+		expect(destructed).to.equal(false)
+
+		doCleanup(scope)
+	end)
+
+	it("calls destructor on update", function()
 		local scope = {}
 		local destructed = {}
 		local dependency = Value(scope, 1)
@@ -82,7 +95,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("calls destructor on destroy", function()
+	it("calls destructor on destroy", function()
 		local scope = {}
 		local destructed = {}
 		local dependency = Value(scope, 1)
