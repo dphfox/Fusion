@@ -40,10 +40,10 @@ function SpringScheduler.remove(spring: Spring)
 end
 
 local function updateAllSprings(
-	currentTime: number
+	now: number
 )
 	local springsToSleep: Set<Spring> = {}
-	lastUpdateTime = currentTime
+	lastUpdateTime = now
 
 	for spring in pairs(activeSprings) do
 		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)

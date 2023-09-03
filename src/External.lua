@@ -70,10 +70,13 @@ end
 --[[
     Registers a callback to the update step of the external scheduler.
     Returns a function that can be used to disconnect later.
+
+    Callbacks are given the current number of seconds since an arbitrary epoch.
+    This epoch may change between schedulers.
 ]]
 function External.bindToUpdateStep(
     callback: (
-        currentTime: number
+        now: number
     ) -> ()
 ): () -> ()
     local uniqueIdentifier = {}
@@ -84,14 +87,15 @@ function External.bindToUpdateStep(
 end
 
 --[[
-    Steps time-dependent systems. This should be called as early as possible in
-    the external scheduler's update cycle.
+    Steps time-dependent systems with the current number of seconds since an
+    arbitrary epoch. This should be called as early as possible in the external
+    scheduler's update cycle.
 ]]
 function External.performUpdateStep(
-    currentTime: number
+    now: number
 )
     for _, callback in updateStepCallbacks do
-        callback(currentTime)
+        callback(now)
     end
 end
 
