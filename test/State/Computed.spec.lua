@@ -21,7 +21,9 @@ return function()
 
 	it("is destroyable", function()
 		local scope = {}
-		local computed = Computed(scope)
+		local computed = Computed(scope, function()
+			-- intentionally blank
+		end)
 		expect(function()
 			computed:destroy()
 		end).to.never.throw()
