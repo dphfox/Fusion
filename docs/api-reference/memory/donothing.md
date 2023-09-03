@@ -1,6 +1,6 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<a href="../..">Fusion</a>
-	<a href="..">State</a>
+	<a href="..">Memory</a>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
@@ -8,7 +8,7 @@
 	<span class="fusiondoc-api-name">doNothing</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">function</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
+		<span class="fusiondoc-api-pill-since">since v0.3</span>
 	</span>
 </h1>
 

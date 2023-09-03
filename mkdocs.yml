@@ -96,14 +96,18 @@ nav:
     - Home: api-reference/index.md
     - Errors:
       - api-reference/errors/index.md
+    - Memory:
+      - api-reference/memory/index.md
+      - doCleanup: api-reference/memory/docleanup.md
+      - doNothing: api-reference/memory/donothing.md
+      - Task: api-reference/memory/task.md
+      - scoped: api-reference/memory/scoped.md
     - State:
       - api-reference/state/index.md
       - CanBeState: api-reference/state/canbestate.md
       - Computed: api-reference/state/computed.md
-      - cleanup: api-reference/state/cleanup.md
       - Dependency: api-reference/state/dependency.md
       - Dependent: api-reference/state/dependent.md
-      - doNothing: api-reference/state/donothing.md
       - ForKeys: api-reference/state/forkeys.md
       - ForPairs: api-reference/state/forpairs.md
       - ForValues: api-reference/state/forvalues.md

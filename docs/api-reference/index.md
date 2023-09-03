@@ -30,28 +30,31 @@ page.
     <span class="fusiondoc-api-name">Errors</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
+</div>
 
-<a class="fusiondoc-api-index-link" href="state" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-list-unordered-24:</span>
-    <span class="fusiondoc-api-name">State</span>
+<div class="fusiondoc-index-multicol-section" markdown>
+### <a class="fusiondoc-api-index-header" href="memory">Memory</a>
+<a class="fusiondoc-api-index-link" href="memory/docleanup" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
+    <span class="fusiondoc-api-name">doCleanup</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 
-<a class="fusiondoc-api-index-link" href="instances" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-list-unordered-24:</span>
-    <span class="fusiondoc-api-name">Instances</span>
+<a class="fusiondoc-api-index-link" href="memory/donothing" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
+    <span class="fusiondoc-api-name">doNothing</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 
-<a class="fusiondoc-api-index-link" href="animation" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-list-unordered-24:</span>
-    <span class="fusiondoc-api-name">Animation</span>
+<a class="fusiondoc-api-index-link" href="memory/scoped" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
+    <span class="fusiondoc-api-name">scoped</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 </div>
 
 <div class="fusiondoc-index-multicol-section" markdown>
-### State
+### <a class="fusiondoc-api-index-header" href="state">State</a>
 <a class="fusiondoc-api-index-link" href="state/computed" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-package-24:</span>
     <span class="fusiondoc-api-name">Computed</span>
@@ -90,7 +93,7 @@ page.
 </div>
 
 <div class="fusiondoc-index-multicol-section" markdown>
-### Instances
+### <a class="fusiondoc-api-index-header" href="instances">Instances</a>
 <a class="fusiondoc-api-index-link" href="instances/hydrate" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-code-24:</span>
     <span class="fusiondoc-api-name">Hydrate</span>
@@ -105,7 +108,7 @@ page.
 </div>
 
 <div class="fusiondoc-index-multicol-section" markdown>
-### Animation
+### <a class="fusiondoc-api-index-header" href="animation">Animation</a>
 <a class="fusiondoc-api-index-link" href="animation/spring" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-package-24:</span>
     <span class="fusiondoc-api-name">Spring</span>

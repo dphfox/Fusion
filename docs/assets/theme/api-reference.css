@@ -85,6 +85,14 @@
 	color: var(--fusiondoc-fg-3);
 }
 
+.fusiondoc-api-index-header {
+	color: var(--fusiondoc-fg-1) !important;
+}
+
+.fusiondoc-api-index-header:hover {
+	color: var(--fusiondoc-accent-hover) !important;
+}
+
 .fusiondoc-api-index-link {
 	display: flex;
 	align-items: center;
