@@ -6,6 +6,7 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.State.updateAll)
@@ -17,7 +18,7 @@ local SpringScheduler = {}
 
 local EPSILON = 0.0001
 local activeSprings: Set<Spring> = {}
-local lastUpdateTime = os.clock()
+local lastUpdateTime = 0
 
 function SpringScheduler.add(spring: Spring)
 	-- we don't necessarily want to use the most accurate time - here we snap to
@@ -38,9 +39,11 @@ function SpringScheduler.remove(spring: Spring)
 	activeSprings[spring] = nil
 end
 
-function SpringScheduler.updateAllSprings()
+local function updateAllSprings(
+	currentTime: number
+)
 	local springsToSleep: Set<Spring> = {}
-	lastUpdateTime = os.clock()
+	lastUpdateTime = currentTime
 
 	for spring in pairs(activeSprings) do
 		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)
@@ -81,5 +84,7 @@ function SpringScheduler.updateAllSprings()
 		spring._currentValue = packType(spring._springGoals, spring._currentType)
 	end
 end
+
+External.bindToUpdateStep(updateAllSprings)
 
 return SpringScheduler

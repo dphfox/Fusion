@@ -6,6 +6,7 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
 local lerpType = require(Package.Animation.lerpType)
 local getTweenRatio = require(Package.Animation.getTweenRatio)
 local updateAll = require(Package.State.updateAll)
@@ -38,7 +39,7 @@ end
 --[[
 	Updates all Tween objects.
 ]]
-function TweenScheduler.updateAllTweens()
+local function updateAllTweens()
 	local now = os.clock()
 	-- FIXME: Typed Luau doesn't understand this loop yet
 	for tween: Tween in pairs(allTweens :: any) do
@@ -62,5 +63,7 @@ function TweenScheduler.updateAllTweens()
 		end
 	end
 end
+
+External.bindToUpdateStep(updateAllTweens)
 
 return TweenScheduler
