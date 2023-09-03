@@ -24,6 +24,13 @@ return function()
 		end).to.never.throw()
 	end)
 
+	it("accepts a default value", function()
+		local scope = {}
+		local value = Value(scope, 5)
+		expect(peek(value)).to.equal(5)
+		doCleanup(scope)
+	end)
+
 	it("is settable", function()
 		local scope = {}
 		local value = Value(scope, 0)
