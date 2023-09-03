@@ -8,8 +8,8 @@ local thing = New "Part" {
     [Ref] = myRef
 }
 
-print(myRef:get()) --> Part
-print(myRef:get() == thing) --> true
+print(peek(myRef)) --> Part
+print(peek(myRef) == thing) --> true
 ```
 
 -----
@@ -35,7 +35,7 @@ New "Part" {
     [Ref] = myRef
 }
 
-print(myRef:get()) --> Part
+print(peek(myRef)) --> Part
 ```
 
 When the instance is cleaned up, the value object is set to nil to avoid memory
@@ -48,11 +48,11 @@ New "Part" {
     [Ref] = myPart
 }
 
-print(myPart:get()) --> Part
+print(peek(myRef)) --> Part
 
-myPart:get():Destroy()
+peek(myRef):Destroy()
 
-print(myPart:get()) --> nil
+print(peek(myRef)) --> nil
 ```
 
 -----
@@ -69,9 +69,9 @@ local returned = New "Part" {
 }
 
 print(returned) --> Part
-print(fromRef:get()) --> Part
+print(peek(fromRef)) --> Part
 
-print(returned == fromRef:get()) --> true
+print(returned == peek(fromRef)) --> true
 ```
 
 There are two main use cases. Firstly, when you're using `[Children]` to nest

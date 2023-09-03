@@ -1,5 +1,5 @@
 Welcome to the Fusion tutorial section! Here, you'll learn how to build great
-interfaces with Fusion, even if you're a complete newcomer to the library.
+things with Fusion, even if you're a complete newcomer to the library.
 
 !!! caution "But first, something important..."
 	**<span style="font-size: 1.5em; color: var(--fusiondoc-accent);">
@@ -7,7 +7,7 @@ interfaces with Fusion, even if you're a complete newcomer to the library.
 	willing and able to withstand large breaking changes.
 	</span>**
 
-	Fusion is in very early beta right now! You *will* encounter:
+	Fusion is in beta right now! You *will* encounter:
 
 	- bugs in core features
 	- updates that completely remove existing features

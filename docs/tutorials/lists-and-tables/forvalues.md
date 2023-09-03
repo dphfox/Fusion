@@ -8,8 +8,8 @@ objects.
 local numbers = {1, 2, 3, 4, 5}
 local multiplier = Value(2)
 
-local multiplied = ForValues(numbers, function(num)
-	return num * multiplier:get()
+local multiplied = ForValues(numbers, function(use, num)
+	return num * use(multiplier)
 end)
 
 print(multiplied:get()) --> {2, 4, 6, 8, 10}
@@ -37,21 +37,24 @@ a processor function:
 
 ```Lua
 local numbers = {1, 2, 3, 4, 5}
-local doubled = ForValues(numbers, function(num)
+local doubled = ForValues(numbers, function(use, num)
 	return num * 2
 end)
 ```
 
 This will generate a new table of values, where each value is passed through the
-processor function. You can get the table using the `:get()` method:
+processor function. The first argument is `use`, similar to a computed, and the
+second argument is one of the values from the input table.
+
+You can read the processed table using `peek()`:
 
 ```Lua hl_lines="6"
 local numbers = {1, 2, 3, 4, 5}
-local doubled = ForValues(numbers, function(num)
+local doubled = ForValues(numbers, function(use, num)
 	return num * 2
 end)
 
-print(doubled:get()) --> {2, 4, 6, 8, 10}
+print(peek(doubled)) --> {2, 4, 6, 8, 10}
 ```
 
 ### State Objects
@@ -61,31 +64,31 @@ will update as the input table is changed:
 
 ```Lua
 local numbers = Value({})
-local doubled = ForValues(numbers, function(num)
+local doubled = ForValues(numbers, function(use, num)
 	return num * 2
 end)
 
 numbers:set({1, 2, 3, 4, 5})
-print(doubled:get()) --> {2, 4, 6, 8, 10}
+print(peek(doubled)) --> {2, 4, 6, 8, 10}
 
 numbers:set({5, 15, 25})
-print(doubled:get()) --> {10, 30, 50}
+print(peek(doubled)) --> {10, 30, 50}
 ```
 
-Additionally, you can use state objects in your calculations, just like a
+Additionally, you can `use()` state objects in your calculations, just like a
 computed:
 
 ```Lua
 local numbers = {1, 2, 3, 4, 5}
 local factor = Value(2)
-local multiplied = ForValues(numbers, function(num)
-	return num * factor:get()
+local multiplied = ForValues(numbers, function(use, num)
+	return num * use(factor)
 end)
 
-print(multiplied:get()) --> {2, 4, 6, 8, 10}
+print(peek(multiplied)) --> {2, 4, 6, 8, 10}
 
 factor:set(10)
-print(multiplied:get()) --> {10, 20, 30, 40, 50}
+print(peek(multiplied)) --> {10, 20, 30, 40, 50}
 ```
 
 ### Cleanup Behaviour
@@ -97,7 +100,7 @@ you can pass in a second 'destructor' function:
 local names = Value({"Jodi", "Amber", "Umair"})
 local textLabels = ForValues(names,
 	-- processor
-	function(name)
+	function(use, name)
 		return New "TextLabel" {
 			Text = name
 		}
@@ -121,7 +124,7 @@ destructor without including it in the output table:
 local names = Value({"Jodi", "Amber", "Umair"})
 local textLabels = ForValues(names,
 	-- processor
-	function(name)
+	function(use, name)
 		local textLabel = New "TextLabel" {
 			Text = name
 		}
@@ -156,11 +159,11 @@ For example, let's say we're measuring the lengths of an array of words:
 
 ```Lua
 local words = Value({"Orange", "Red", "Magenta"})
-local lengths = ForValues(words, function(word)
+local lengths = ForValues(words, function(use, word)
 	return #word
 end)
 
-print(lengths:get()) --> {6, 3, 7}
+print(peek(lengths)) --> {6, 3, 7}
 ```
 
 The word lengths don't depend on the position of the word in the array. This

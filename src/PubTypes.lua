@@ -12,7 +12,7 @@ type Set<T> = {[T]: any}
 
 -- A unique symbolic value.
 export type Symbol = {
-	type: string, -- replace with "Symbol" when Luau supports singleton types
+	type: "Symbol",
 	name: string
 }
 
@@ -69,13 +69,15 @@ export type Dependent = {
 
 -- An object which stores a piece of reactive state.
 export type StateObject<T> = Dependency & {
-	type: string, -- replace with "State" when Luau supports singleton types
-	kind: string,
-	get: (StateObject<T>, asDependency: boolean?) -> T
+	type: "State",
+	kind: string
 }
 
 -- Either a constant value of type T, or a state object containing type T.
 export type CanBeState<T> = StateObject<T> | T
+
+-- Function signature for use callbacks.
+export type Use = <T>(target: CanBeState<T>) -> T
 
 --[[
 	Specific reactive graph types
@@ -83,45 +85,44 @@ export type CanBeState<T> = StateObject<T> | T
 
 -- A state object whose value can be set at any time by the user.
 export type Value<T> = StateObject<T> & {
-	-- kind: "State" (add this when Luau supports singleton types)
+	kind: "State",
  	set: (Value<T>, newValue: any, force: boolean?) -> ()
 }
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & Dependent & {
-	-- kind: "Computed" (add this when Luau supports singleton types)
+	kind: "Computed"
 }
 
 -- A state object whose value is derived from other objects using a callback.
 export type ForPairs<KO, VO> = StateObject<{ [KO]: VO }> & Dependent & {
-	-- kind: "ForPairs" (add this when Luau supports singleton types)
+	kind: "ForPairs"
 }
 -- A state object whose value is derived from other objects using a callback.
 export type ForKeys<KO, V> = StateObject<{ [KO]: V }> & Dependent & {
-	-- kind: "ForKeys" (add this when Luau supports singleton types)
+	kind: "ForKeys"
 }
 -- A state object whose value is derived from other objects using a callback.
 export type ForValues<K, VO> = StateObject<{ [K]: VO }> & Dependent & {
-	-- kind: "ForKeys" (add this when Luau supports singleton types)
+	kind: "ForKeys"
 }
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
-	-- kind: "Tween" (add this when Luau supports singleton types)
+	kind: "Tween"
 }
 
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = StateObject<T> & Dependent & {
-	-- kind: "Spring" (add this when Luau supports singleton types)
-	-- Uncomment when ENABLE_PARAM_SETTERS is enabled
-	-- setPosition: (Spring<T>, newValue: Animatable) -> (),
-	-- setVelocity: (Spring<T>, newValue: Animatable) -> (),
-	-- addVelocity: (Spring<T>, deltaValue: Animatable) -> ()
+	kind: "Spring",
+	setPosition: (Spring<T>, newPosition: Animatable) -> (),
+	setVelocity: (Spring<T>, newVelocity: Animatable) -> (),
+	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> ()
 }
 
 -- An object which can listen for updates on another state object.
 export type Observer = Dependent & {
-	-- kind: "Observer" (add this when Luau supports singleton types)
+	kind: "Observer",
   	onChange: (Observer, callback: () -> ()) -> (() -> ())
 }
 
@@ -131,9 +132,9 @@ export type Observer = Dependent & {
 
 -- Denotes children instances in an instance or component's property table.
 export type SpecialKey = {
-	type: string, -- replace with "SpecialKey" when Luau supports singleton types
+	type: "SpecialKey",
 	kind: string,
-	stage: string, -- replace with "self" | "descendants" | "ancestor" | "observer" when Luau supports singleton types
+	stage: "self" | "descendants" | "ancestor" | "observer",
 	apply: (SpecialKey, value: any, applyTo: Instance, cleanupTasks: {Task}) -> ()
 }
 

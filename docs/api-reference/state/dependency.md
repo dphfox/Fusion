@@ -31,28 +31,10 @@ does not require objects to store state.
 ```Lua
 -- these are examples of objects which are dependencies
 local value: Dependency = Value(2)
-local computed: Dependency = Computed(function()
-	return value:get() * 2
+local computed: Dependency = Computed(function(use)
+	return use(value) * 2
 end)
 
 -- dependencies can be used with some internal functions such as updateAll()
 updateAll(value)
 ```
-
------
-
-## Automatic Dependency Manager
-
-Fusion includes an automatic dependency manager which can detect when graph
-objects are used in certain contexts and automatically form reactive graphs.
-
-In order to do this, dependencies should signal to the system when they are
-being used (for example, during a call to a `:get()` method). This can be done
-via the `useDependency()` function internally, which should be called with the
-dependency object.
-
-Furthermore, to help assist the dependency manager prevent cycles in the
-reactive graph, dependencies should register themselves with the system as soon
-as they are created via the `initDependency()` function internally. This is
-primarily used to prevent dependencies from being captured when they originate
-from within the object which is doing the capturing.

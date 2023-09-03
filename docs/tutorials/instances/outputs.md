@@ -8,10 +8,10 @@ local thing = New "Part" {
     [Out "Name"] = name
 }
 
-print(name:get()) --> Part
+print(peek(name)) --> Part
 
 thing.Name = "Jimmy"
-print(name:get()) --> Jimmy
+print(peek(name)) --> Jimmy
 ```
 
 -----
@@ -43,10 +43,10 @@ local thing = New "Part" {
     [Out("Name")] = name
 }
 
-print(name:get()) --> Part
+print(peek(name)) --> Part
 
 thing.Name = "Jimmy"
-print(name:get()) --> Jimmy
+print(peek(name)) --> Jimmy
 ```
 
 If you're using quotes `'' ""` for the event name, the extra parentheses `()`
@@ -72,10 +72,10 @@ local thing = New "Part" {
     [Out "Name"] = name -- When `thing.Name` changes, set `name`
 }
 
-print(thing.Name, name:get()) --> Part Part
+print(thing.Name, peek(name)) --> Part Part
 name:set("NewName")
 task.wait()
-print(thing.Name, name:get()) --> Part NewName
+print(thing.Name, peek(name)) --> Part NewName
 ```
 
 If you want the value to both *change* and *be changed* by the property, you
@@ -89,10 +89,10 @@ local thing = New "Part" {
     [Out "Name"] = name -- When `thing.Name` changes, set `name`
 }
 
-print(thing.Name, name:get()) --> Part Part
+print(thing.Name, peek(name)) --> Part Part
 name:set("NewName")
 task.wait()
-print(thing.Name, name:get()) --> NewName NewName
+print(thing.Name, peek(name)) --> NewName NewName
 ```
 
 This is known as two-way binding. Most of the time you won't need it, but it can

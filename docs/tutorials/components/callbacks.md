@@ -128,7 +128,7 @@ local function Button(props)
 
         [OnEvent "Activated"] = function()
             -- don't send clicks if the button is disabled
-            if not props.Disabled:get() then
+            if not peek(props.Disabled) then
                 props.OnClick()
             end
         end

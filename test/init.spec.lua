@@ -31,7 +31,8 @@ return function()
 			Spring = "function",
 
 			cleanup = "function",
-			doNothing = "function"
+			doNothing = "function",
+			peek = "function"
 		}
 
 		for apiName, apiType in pairs(api) do

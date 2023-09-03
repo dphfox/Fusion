@@ -1,7 +1,7 @@
 site_name: Fusion
 site_url: https://elttob.uk/Fusion/
-repo_name: Elttob/Fusion
-repo_url: https://github.com/Elttob/Fusion
+repo_name: dphfox/Fusion
+repo_url: https://github.com/dphfox/Fusion
 
 extra:
   version:
@@ -24,7 +24,7 @@ theme:
         icon: octicons/moon-24
         title: Switch to dark theme
   font:
-    text: Inter
+    text: Plus Jakarta Sans
     code: JetBrains Mono
   features:
     - navigation.tabs
@@ -103,15 +103,20 @@ nav:
       - cleanup: api-reference/state/cleanup.md
       - Dependency: api-reference/state/dependency.md
       - Dependent: api-reference/state/dependent.md
-      - doNothing: api-reference/state/doNothing.md
+      - doNothing: api-reference/state/donothing.md
       - ForKeys: api-reference/state/forkeys.md
       - ForPairs: api-reference/state/forpairs.md
       - ForValues: api-reference/state/forvalues.md
       - Observer: api-reference/state/observer.md
+      - peek: api-reference/state/peek.md
       - StateObject: api-reference/state/stateobject.md
+      - Use: api-reference/state/use.md
       - Value: api-reference/state/value.md
     - Instances:
       - api-reference/instances/index.md
+      - Attribute: api-reference/instances/attribute.md
+      - AttributeChange: api-reference/instances/attributechange.md
+      - AttributeOut: api-reference/instances/attributeout.md
       - Child: api-reference/instances/child.md
       - Children: api-reference/instances/children.md
       - Cleanup: api-reference/instances/cleanup.md

@@ -34,28 +34,6 @@ Stores a single value which can be updated at any time.
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
-### :octicons-code-24: Value:get()
-
-Returns the current value stored in the state object.
-
-If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.
-
-```Lua
-(asDependency: boolean?) -> T
-```
-
-#### Parameters
-
-- `asDependency` - If this is explicitly set to false, no dependencies will be
-captured.
-
------
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
 ### :octicons-code-24: Value:set()
 
 Replaces the currently stored value, updating any other state objects that
@@ -84,8 +62,8 @@ updated.
 	updates could forcibly be sent out, even when the new value was the same as
 	the old value. This is because Fusion 0.1 used equality to evaluate sameness
 	for all data types, including tables. This was problematic as many users
-	attempted to `:get()` the table value, modify it, and `:set()` it back into
-	the object, which would not cause an update as the table reference did not
+	attempted to get the table value, modify it, and `:set()` it back into the
+	object, which would not cause an update as the table reference did not
 	change.
 
 	Fusion 0.2 uses a different sameness definition for tables to alleviate this
@@ -99,8 +77,8 @@ updated.
 
 ```Lua
 local numCoins = Value(50) -- start off with 50 coins
-print(numCoins:get()) --> 50
+print(peek(numCoins)) --> 50
 
 numCoins:set(10)
-print(numCoins:get()) --> 10
+print(peek(numCoins)) --> 10
 ```

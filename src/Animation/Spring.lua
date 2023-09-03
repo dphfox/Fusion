@@ -12,27 +12,14 @@ local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
-local useDependency = require(Package.Dependencies.useDependency)
-local initDependency = require(Package.Dependencies.initDependency)
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.State.updateAll)
 local xtypeof = require(Package.Utility.xtypeof)
-local unwrap = require(Package.State.unwrap)
+local peek = require(Package.State.peek)
 
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
-
---[[
-	Returns the current value of this Spring object.
-	The object will be registered as a dependency unless `asDependency` is false.
-]]
-function class:get(asDependency: boolean?): any
-	if asDependency ~= false then
-		useDependency(self)
-	end
-	return self._currentValue
-end
 
 --[[
 	Sets the position of the internal springs, meaning the value of this
@@ -95,12 +82,12 @@ end
 	changed.
 ]]
 function class:update(): boolean
-	local goalValue = self._goalState:get(false)
+	local goalValue = peek(self._goalState)
 
 	-- figure out if this was a goal change or a speed/damping change
 	if goalValue == self._goalValue then
 		-- speed/damping change
-		local damping = unwrap(self._damping)
+		local damping = peek(self._damping)
 		if typeof(damping) ~= "number" then
 			logErrorNonFatal("mistypedSpringDamping", nil, typeof(damping))
 		elseif damping < 0 then
@@ -109,7 +96,7 @@ function class:update(): boolean
 			self._currentDamping = damping
 		end
 
-		local speed = unwrap(self._speed)
+		local speed = peek(self._speed)
 		if typeof(speed) ~= "number" then
 			logErrorNonFatal("mistypedSpringSpeed", nil, typeof(speed))
 		elseif speed < 0 then
@@ -162,6 +149,17 @@ function class:update(): boolean
 	end
 end
 
+--[[
+	Returns the interior value of this state object.
+]]
+function class:_peek(): any
+	return self._currentValue
+end
+
+function class:get()
+	logError("stateGetWasRemoved")
+end
+
 local function Spring<T>(
 	goalState: PubTypes.Value<T>,
 	speed: PubTypes.CanBeState<number>?,
@@ -198,15 +196,14 @@ local function Spring<T>(
 
 		_currentType = nil,
 		_currentValue = nil,
-		_currentSpeed = unwrap(speed),
-		_currentDamping = unwrap(damping),
+		_currentSpeed = peek(speed),
+		_currentDamping = peek(damping),
 
 		_springPositions = nil,
 		_springGoals = nil,
 		_springVelocities = nil
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
 	self:update()

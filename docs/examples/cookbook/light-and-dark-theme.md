@@ -28,8 +28,8 @@ local currentTheme = Value("light")
 -- from `THEME_COLS` based on our `currentTheme`.
 local currentColours = {}
 for colourName, colourOptions in THEME_COLOURS do
-	currentColours[colourName] = Computed(function()
-		return colourOptions[currentTheme:get()]
+	currentColours[colourName] = Computed(function(use)
+		return colourOptions[use(currentTheme)]
 	end)
 end
 

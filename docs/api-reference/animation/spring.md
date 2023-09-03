@@ -19,8 +19,8 @@ just snap to the goal value.
 
 ```Lua
 (
-	goal: StateObject<T>, 
-	speed: CanBeState<number>?, 
+	goal: StateObject<T>,
+	speed: CanBeState<number>?,
 	damping: CanBeState<number>?
 ) -> Spring<T>
 ```
@@ -39,28 +39,6 @@ without overshooting or oscillating. Defaults to `1`.
 -----
 
 ## Methods
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-### :octicons-code-24: Spring:get()
-
-Returns the current value stored in the state object.
-
-If dependencies are being captured (e.g. inside a computed callback), this state
-object will also be added as a dependency.
-
-```Lua
-(asDependency: boolean?) -> T
-```
-
-#### Parameters
-
-- `asDependency` - If this is explicitly set to false, no dependencies will be
-captured.
-
------
 
 <p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
