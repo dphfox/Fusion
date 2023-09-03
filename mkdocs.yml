@@ -1,7 +1,7 @@
 site_name: Fusion
 site_url: https://elttob.uk/Fusion/
-repo_name: Elttob/Fusion
-repo_url: https://github.com/Elttob/Fusion
+repo_name: dphfox/Fusion
+repo_url: https://github.com/dphfox/Fusion
 
 extra:
   version:
@@ -24,7 +24,7 @@ theme:
         icon: octicons/moon-24
         title: Switch to dark theme
   font:
-    text: Inter
+    text: Plus Jakarta Sans
     code: JetBrains Mono
   features:
     - navigation.tabs

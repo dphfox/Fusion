@@ -4,8 +4,6 @@
 	Manages batch updating of tween objects.
 ]]
 
-local RunService = game:GetService("RunService")
-
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local lerpType = require(Package.Animation.lerpType)
@@ -40,13 +38,13 @@ end
 --[[
 	Updates all Tween objects.
 ]]
-local function updateAllTweens()
+function TweenScheduler.updateAllTweens()
 	local now = os.clock()
 	-- FIXME: Typed Luau doesn't understand this loop yet
 	for tween: Tween in pairs(allTweens :: any) do
 		local currentTime = now - tween._currentTweenStartTime
 
-		if currentTime > tween._currentTweenDuration then
+		if currentTime > tween._currentTweenDuration and tween._currentTweenInfo.RepeatCount > -1 then
 			if tween._currentTweenInfo.Reverses then
 				tween._currentValue = tween._prevValue
 			else
@@ -64,11 +62,5 @@ local function updateAllTweens()
 		end
 	end
 end
-
-RunService:BindToRenderStep(
-	"__FusionTweenScheduler",
-	Enum.RenderPriority.First.Value,
-	updateAllTweens
-)
 
 return TweenScheduler
