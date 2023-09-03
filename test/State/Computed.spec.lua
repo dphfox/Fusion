@@ -50,7 +50,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("preserves value on error", function()
+	it("preserves value on error", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local computed = Computed(scope, function(use)
