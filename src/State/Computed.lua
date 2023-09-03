@@ -100,7 +100,6 @@ function class:destroy()
 	if self._destructor ~= nil then
 		self._destructor(self._value)
 	end
-	table.clear(self)
 end
 
 local function Computed<T>(

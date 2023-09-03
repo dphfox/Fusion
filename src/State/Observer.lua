@@ -55,7 +55,6 @@ function class:destroy()
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
-	table.clear(self)
 end
 
 local function Observer(
