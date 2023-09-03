@@ -18,7 +18,7 @@ local SpringScheduler = {}
 
 local EPSILON = 0.0001
 local activeSprings: Set<Spring> = {}
-local lastUpdateTime = 0
+local lastUpdateTime = External.lastUpdateStep()
 
 function SpringScheduler.add(spring: Spring)
 	-- we don't necessarily want to use the most accurate time - here we snap to

@@ -22,6 +22,7 @@ export type Scheduler = {
 
 local updateStepCallbacks = {}
 local currentScheduler: Scheduler? = nil
+local lastUpdateStep = 0
 
 --[[
     Sets the external scheduler that Fusion will use for queuing async tasks.
@@ -97,9 +98,17 @@ end
 function External.performUpdateStep(
     now: number
 )
+    lastUpdateStep = now
     for _, callback in updateStepCallbacks do
         callback(now)
     end
+end
+
+--[[
+    Returns the timestamp of the last update step.
+]]
+function External.lastUpdateStep()
+    return lastUpdateStep
 end
 
 return External
