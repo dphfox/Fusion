@@ -209,6 +209,23 @@ function class:get()
 	logError("stateGetWasRemoved")
 end
 
+function class:destroy()
+	for dependency in pairs(self.dependencySet) do
+		dependency.dependentSet[self] = nil
+	end
+
+	local keyOIMap = self._keyOIMap
+	local meta = self._meta
+	for outputKey, _ in pairs(keyOIMap) do
+		-- clean up the old calculated value
+		local oldMetaValue = meta[outputKey]
+		local destructOK, err = xpcall(self._destructor or doCleanup, parseError, outputKey, oldMetaValue)
+		if not destructOK then
+			logErrorNonFatal("forKeysDestructorError", err)
+		end
+	end
+end
+
 local function ForKeys<KI, KO, M>(
 	cleanupTable: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [KI]: any }>,
