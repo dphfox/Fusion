@@ -22,7 +22,6 @@ local Fusion = restrictRead("Fusion", {
 	Attribute = require(script.Instances.Attribute),
 	AttributeChange = require(script.Instances.AttributeChange),
 	AttributeOut = require(script.Instances.AttributeOut),
-	Tags = require(script.Instances.Tags),
 
 	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
