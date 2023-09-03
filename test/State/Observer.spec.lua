@@ -75,7 +75,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("disconnects properly", function()
+	it("disconnects manually", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
