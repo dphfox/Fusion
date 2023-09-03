@@ -4,7 +4,7 @@ local peek = require(Package.State.peek)
 local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	it("should construct in scopes", function()
+	it("constructs in scopes", function()
 		local scope = {}
 		local value = Value(scope)
 
@@ -16,7 +16,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should be destroyable", function()
+	it("is destroyable", function()
 		local value = Value({})
 		expect(value.destroy).to.be.a("function")
 		expect(function()
@@ -24,7 +24,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	it("should be settable", function()
+	it("is settable", function()
 		local scope = {}
 		local value = Value(scope, 0)
 		expect(peek(value)).to.equal(0)
