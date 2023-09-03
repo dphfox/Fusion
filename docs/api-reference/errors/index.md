@@ -893,6 +893,27 @@ end, nil)
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
+	<span class="fusiondoc-api-pill-since">since v0.3</span>
+</p>
+
+## noTaskScheduler
+
+```
+Fusion is not connected to an external task scheduler.
+```
+
+This message shows when Fusion attempts to schedule something for execution
+without first setting a task scheduler for the library to use.
+
+For users of Fusion on Roblox, this generally shouldn't occur as Fusion should
+automatically be bound to Roblox's task scheduler. However, when using Fusion
+in other environments, the fix is to provide Fusion with all the task scheduler
+callbacks necessary to schedule tasks for execution in the future.
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 

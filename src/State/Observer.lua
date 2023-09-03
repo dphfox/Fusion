@@ -10,6 +10,7 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+local External = require(Package.External)
 
 type Set<T> = {[T]: any}
 
@@ -21,7 +22,7 @@ local CLASS_METATABLE = {__index = class}
 ]]
 function class:update(): boolean
 	for _, callback in pairs(self._changeListeners) do
-		task.spawn(callback)
+		External.doTaskImmediate(callback)
 	end
 	return false
 end
@@ -47,7 +48,7 @@ end
 	immediately.
 ]]
 function class:onBind(callback: () -> ()): () -> ()
-	task.spawn(callback)
+	External.doTaskImmediate(callback)
 	return self:onChange(callback)
 end
 

@@ -5,8 +5,15 @@
 ]]
 
 local PubTypes = require(script.PubTypes)
+local External = require(script.External)
 local restrictRead = require(script.Utility.restrictRead)
-local bindScheduler = require(script.bindScheduler)
+
+-- Down the line, this will be conditional based on whether Fusion is being
+-- compiled for Roblox.
+do
+	local RobloxExternal = require(script.RobloxExternal)
+	External.setExternalScheduler(RobloxExternal)
+end
 
 local Fusion = restrictRead("Fusion", {
 	version = {major = 0, minor = 3, isRelease = false},
@@ -80,7 +87,5 @@ type Fusion = {
 	doNothing: (...any) -> (),
 	peek: Use
 }
-
-bindScheduler()
 
 return Fusion
