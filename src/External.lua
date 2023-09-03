@@ -9,6 +9,10 @@ local logError = require(Package.Logging.logError)
 
 local External = {}
 
+-- Silences non-fatal error logging, used in unit tests for cleaning up output
+-- and removing false negatives when checking how systems respond to errors.
+External.unitTestSilenceNonFatal = false
+
 export type Scheduler = {
     doTaskImmediate: (
         resume: () -> ()

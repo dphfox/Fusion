@@ -9,9 +9,12 @@ local RUN_BENCHMARKS = false
 -- run unit tests
 if RUN_TESTS then
 	print("Running unit tests...")
+	local External = require(ReplicatedStorage.Fusion.External)
+	External.unitTestSilenceNonFatal = true
 	local data = TestEZ.TestBootstrap:run({
 		ReplicatedStorage.FusionTest
 	})
+	External.unitTestSilenceNonFatal = false
 
 	if data.failureCount > 0 then
 		return

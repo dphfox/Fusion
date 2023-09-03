@@ -1,276 +1,175 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForKeys = require(Package.State.ForKeys)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	it("should construct a ForKeys object", function()
-		local forKeys = ForKeys({}, function(use) end)
-
-		expect(forKeys).to.be.a("table")
-		expect(forKeys.type).to.equal("State")
-		expect(forKeys.kind).to.equal("ForKeys")
-	end)
-
-	it("should calculate and retrieve its value", function()
-		local computedPair = ForKeys({ ["foo"] = true }, function(use, key)
-			return key .. "baz"
+	it("constructs in scopes", function()
+		local scope = {}
+		local forkeys = ForKeys(scope, {}, function()
+			-- intentionally blank
 		end)
 
-		local state = peek(computedPair)
+		expect(forkeys).to.be.a("table")
+		expect(forkeys.type).to.equal("State")
+		expect(forkeys.kind).to.equal("ForKeys")
+		expect(scope[1]).to.equal(forkeys)
 
-		expect(state["foobaz"]).to.be.ok()
-		expect(state["foobaz"]).to.equal(true)
+		doCleanup(scope)
 	end)
 
-	it("should not recalculate its KO in response to an unchanged KI", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local calculations = 0
-
-		local computedPair = ForKeys(state, function(use, key)
-			calculations += 1
-			return key
+	it("is destroyable", function()
+		local scope = {}
+		local forkeys = ForKeys(scope, {}, function()
+			-- intentionally blank
 		end)
-
-		expect(calculations).to.equal(1)
-
-		state:set({
-			["foo"] = "biz",
-			["baz"] = "bar",
-		})
-
-		expect(calculations).to.equal(2)
-	end)
-
-	it("should call the destructor when a key gets removed", function()
-		local state = Value({
-			["foo"] = "bar",
-			["baz"] = "bar",
-		})
-
-		local destructions = 0
-
-		local computedPair = ForKeys(state, function(use, key)
-			return key .. "biz"
-		end, function(key)
-			destructions += 1
-		end)
-
-		state:set({
-			["foo"] = "bar",
-		})
-
-		expect(destructions).to.equal(1)
-
-		state:set({
-			["baz"] = "bar",
-		})
-
-		expect(destructions).to.equal(2)
-
-		state:set({
-			["foo"] = "bar",
-			["baz"] = "bar",
-		})
-
-		expect(destructions).to.equal(2)
-
-		state:set({})
-
-		expect(destructions).to.equal(4)
-	end)
-
-	it("should throw if there is a key collision", function()
 		expect(function()
-			local state = Value({
-				["foo"] = "bar",
-				["baz"] = "bar",
-			})
+			forkeys:destroy()
+		end).to.never.throw()
+	end)
 
-			local computed = ForKeys(state, function(use)
-				return "foo"
+	it("iterates on constants", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local forkeys = ForKeys(scope, data, function(_, key)
+			return key:upper()
+		end)
+		expect(peek(forkeys)).to.be.a("table")
+		expect(peek(forkeys).FOO).to.equal(1)
+		expect(peek(forkeys).BAR).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("iterates on state objects", function()
+		local scope = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local forkeys = ForKeys(scope, data, function(_, key)
+			return key:upper()
+		end)
+		expect(peek(forkeys)).to.be.a("table")
+		expect(peek(forkeys).FOO).to.equal(1)
+		expect(peek(forkeys).BAR).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("computes with constants", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local forkeys = ForKeys(scope, data, function(use, key)
+			return key .. use("baz")
+		end)
+		expect(peek(forkeys).foobaz).to.equal(1)
+		expect(peek(forkeys).barbaz).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("computes with state objects", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local suffix = Value(scope, "first")
+		local forkeys = ForKeys(scope, data, function(use, key)
+			return key .. use(suffix)
+		end)
+		expect(peek(forkeys).foofirst).to.equal(1)
+		expect(peek(forkeys).barfirst).to.equal(2)
+		suffix:set("second")
+		expect(peek(forkeys).foofirst).to.equal(nil)
+		expect(peek(forkeys).barfirst).to.equal(nil)
+		expect(peek(forkeys).foosecond).to.equal(1)
+		expect(peek(forkeys).barsecond).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("rejects key collisions", function()
+		expect(function()
+			local scope = {}
+			local data = {foo = 1, bar = 2}
+			local _ = ForKeys(scope, data, function(use, key)
+				return "samuel"
 			end)
-		end).to.throw("forKeysKeyCollision")
-
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local computed = ForKeys(state, function(use)
-			return "foo"
-		end)
-
-		expect(function()
-			state:set({
-				["foo"] = "bar",
-				["baz"] = "bar",
-			})
+			doCleanup(scope)
 		end).to.throw("forKeysKeyCollision")
 	end)
 
-	it("should call the destructor with meta data", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
+	it("preserves value on error", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local suffix = Value(scope, "first")
+		local forkeys = ForKeys(scope, data, function(use, key)
+			assert(use(suffix) ~= "second", "This is an intentional error from a unit test")
+			return key .. use(suffix)
+		end)
+		expect(peek(forkeys).foofirst).to.equal(1)
+		expect(peek(forkeys).barfirst).to.equal(2)
+		suffix:set("second") -- will invoke the error
+		expect(peek(forkeys).foofirst).to.equal(1)
+		expect(peek(forkeys).barfirst).to.equal(2)
+		expect(peek(forkeys).foosecond).to.equal(nil)
+		expect(peek(forkeys).barsecond).to.equal(nil)
+		suffix:set("third")
+		expect(peek(forkeys).foofirst).to.equal(nil)
+		expect(peek(forkeys).barfirst).to.equal(nil)
+		expect(peek(forkeys).foosecond).to.equal(nil)
+		expect(peek(forkeys).barsecond).to.equal(nil)
+		expect(peek(forkeys).foothird).to.equal(1)
+		expect(peek(forkeys).barthird).to.equal(2)
+		doCleanup(scope)
+	end)
 
-		local destructions = 0
-
-		local computedKey = ForKeys(state, function(use, key)
-			local newKey = key .. "biz"
-			return newKey, newKey
+	it("doesn't call destructor on creation", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(use, key)
+			return key, "meta" .. key
 		end, function(key, meta)
-			expect(meta).to.equal(key)
-			destructions += 1
+			destructed[key] = true
+			destructed[meta] = true
 		end)
-
-		state:set({
-			["baz"] = "bar",
-		})
-
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(1)
-
-		state:set({})
-
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(2)
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.foometa).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		expect(destructed.barmeta).to.equal(nil)
+		doCleanup(scope)
 	end)
 
-	it("should only destruct an output key when it has no associated input key", function()
-		local map = {
-			["foo"] = "fiz",
-			["bar"] = "fiz",
-			["baz"] = "fuzz",
-		}
-
-		local state = Value({
-			["foo"] = true,
-		})
-
-		local destructions = 0
-
-		local computedKey = ForKeys(state, function(use, key)
-			return map[key]
-		end, function()
-			destructions += 1
+	it("calls destructor on update", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(use, key)
+			return key, "meta" .. key
+		end, function(key, meta)
+			destructed[key] = true
+			destructed[meta] = true
 		end)
-
-		state:set({
-			["bar"] = true,
-		})
-
-		expect(destructions).to.equal(0)
-
-		state:set({
-			["foo"] = true,
-			["bar"] = true,
-			["baz"] = true,
-		})
-
-		expect(destructions).to.equal(0)
-
-		state:set({
-			["baz"] = true,
-		})
-
-		expect(destructions).to.equal(1)
+		data:set({foo = 100, baz = 3})
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.foometa).to.equal(nil)
+		expect(destructed.bar).to.equal(true)
+		expect(destructed.barmeta).to.equal(true)
+		doCleanup(scope)
 	end)
 
-	it("should recalculate its value in response to State objects", function()
-		local baseMap = Value({
-			["foo"] = "baz",
-		})
-		local barMap = ForKeys(baseMap, function(use, key)
-			return key .. "bar"
+	it("calls destructor on destroy", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(use, key)
+			return key, "meta" .. key
+		end, function(key, meta)
+			destructed[key] = true
+			destructed[meta] = true
 		end)
-
-		expect(peek(barMap)["foobar"]).to.be.ok()
-
-		baseMap:set({
-			["baz"] = "foo",
-		})
-
-		expect(peek(barMap)["bazbar"]).to.be.ok()
-	end)
-
-	it("should recalculate its value in response to ForKeys objects", function()
-		local baseMap = Value({
-			["foo"] = "baz",
-		})
-		local barMap = ForKeys(baseMap, function(use, key)
-			return key .. "bar"
-		end)
-		local bizMap = ForKeys(barMap, function(use, key)
-			return key .. "biz"
-		end)
-
-		expect(peek(barMap)["foobar"]).to.be.ok()
-		expect(peek(bizMap)["foobarbiz"]).to.be.ok()
-
-		baseMap:set({
-			["fiz"] = "foo",
-			["baz"] = "foo",
-		})
-
-		expect(peek(barMap)["fizbar"]).to.be.ok()
-		expect(peek(bizMap)["fizbarbiz"]).to.be.ok()
-		expect(peek(barMap)["bazbar"]).to.be.ok()
-		expect(peek(bizMap)["bazbarbiz"]).to.be.ok()
-	end)
-
-	itSKIP("should not corrupt dependencies after an error", function()
-		-- needs rewrite
-	end)
-
-	it("should garbage-collect unused objects", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local counter = 0
-
-		do
-			local computedKeys = ForKeys(state, function(use, key)
-				counter += 1
-				return key
-			end)
-		end
-
-		state:set({
-			["bar"] = "baz",
-		})
-
-		expect(counter).to.equal(1)
-	end)
-
-	it("should not garbage-collect objects in use", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-		local computed2
-
-		local counter = 0
-
-		do
-			local computed = ForKeys(state, function(use, key)
-				counter += 1
-				return key
-			end)
-
-			computed2 = ForKeys(computed, function(use, key)
-				return key
-			end)
-		end
-
-		state:set({
-			["bar"] = "baz",
-		})
-
-		expect(counter).to.equal(2)
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.foometa).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		expect(destructed.barmeta).to.equal(nil)
+		doCleanup(scope)
+		expect(destructed.foo).to.equal(true)
+		expect(destructed.foometa).to.equal(true)
+		expect(destructed.bar).to.equal(true)
+		expect(destructed.barmeta).to.equal(true)
 	end)
 end

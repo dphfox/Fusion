@@ -6,9 +6,14 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
 local messages = require(Package.Logging.messages)
 
 local function logErrorNonFatal(messageID: string, errObj: Types.Error?, ...)
+	if External.unitTestSilenceNonFatal then
+		return
+	end
+	
 	local formatString: string
 
 	if messages[messageID] ~= nil then
