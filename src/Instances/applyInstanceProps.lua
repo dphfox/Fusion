@@ -15,6 +15,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local External = require(Package.External)
 local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
@@ -56,7 +57,7 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 		local function updateLater()
 			if not willUpdate then
 				willUpdate = true
-				task.defer(function()
+				External.doTaskDeferred(function()
 					willUpdate = false
 					setProperty(instance, property, peek(value))
 				end)

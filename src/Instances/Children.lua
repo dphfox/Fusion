@@ -7,6 +7,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local External = require(Package.External)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
@@ -131,7 +132,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 	queueUpdate = function()
 		if not updateQueued then
 			updateQueued = true
-			task.defer(updateChildren)
+			External.doTaskDeferred(updateChildren)
 		end
 	end
 

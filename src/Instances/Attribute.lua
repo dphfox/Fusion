@@ -7,6 +7,7 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local External = require(Package.External)
 local logError = require(Package.Logging.logError)
 local xtypeof = require(Package.Utility.xtypeof)
 local Observer = require(Package.State.Observer)
@@ -22,7 +23,7 @@ local function bindAttribute(instance: Instance, attribute: string, value: any, 
         local function update()
             if not didDefer then
                 didDefer = true
-                    task.defer(function()
+                External.doTaskDeferred(function()
                     didDefer = false
                     setAttribute(instance, attribute, peek(value))
                 end)

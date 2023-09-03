@@ -26,9 +26,9 @@ local function logErrorNonFatal(messageID: string, errObj: Types.Error?, ...)
 		errorString = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")\n---- Stack trace ----\n" .. errObj.trace, ...)
 	end
 
-	task.spawn(function(...)
+	coroutine.wrap(function()
 		error(errorString:gsub("\n", "\n    "), 0)
-	end, ...)
+	end)()
 end
 
 return logErrorNonFatal
