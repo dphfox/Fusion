@@ -27,7 +27,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	it("uses constants", function()
+	it("computes with constants", function()
 		local scope = {}
 		local computed = Computed(scope, function(use)
 			return use(5)
@@ -36,7 +36,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("uses state objects", function()
+	it("computes with state objects", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local computed = Computed(scope, function(use)
