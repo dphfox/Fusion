@@ -5,7 +5,7 @@
     an instance.
 ]]
 
-local Package = script.Parent.Parent.Lib
+local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 

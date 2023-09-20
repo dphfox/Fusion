@@ -22,6 +22,7 @@ local Fusion = restrictRead("Fusion", {
 	Attribute = require(script.Instances.Attribute),
 	AttributeChange = require(script.Instances.AttributeChange),
 	AttributeOut = require(script.Instances.AttributeOut),
+	OnTick = require(script.Instances.OnTick),
 
 	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
@@ -65,6 +66,7 @@ type Fusion = {
 	Attribute: (attributeName: string) -> PubTypes.SpecialKey,
 	AttributeChange: (attributeName: string) -> PubTypes.SpecialKey,
 	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
+	OnTick: (hourglass: table) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
 	Computed: <T>(callback: (Use) -> T, destructor: (T) -> ()?) -> Computed<T>,
