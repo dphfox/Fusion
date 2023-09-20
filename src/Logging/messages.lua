@@ -46,5 +46,6 @@ return {
 	unknownMessage = "Unknown error: ERROR_MESSAGE",
 	unrecognisedChildType = "'%s' type children aren't accepted by `[Children]`.",
 	unrecognisedPropertyKey = "'%s' keys aren't accepted in property tables.",
-	unrecognisedPropertyStage = "'%s' isn't a valid stage for a special key to be applied at."
+	unrecognisedPropertyStage = "'%s' isn't a valid stage for a special key to be applied at.",
+	missingOrInvalidHourglass = "OnTick recieved an invalid Hourglass, '%s'.",
 }
