@@ -7,10 +7,14 @@
 	See: https://bottosson.github.io/posts/oklab/
 ]]
 
+local sRGB = require(script.Parent.sRGB)
+
 local Oklab = {}
 
 -- Converts a Color3 in RGB space to a Vector3 in Oklab space.
-function Oklab.to(rgb: Color3): Vector3
+function Oklab.to(srgb: Color3): Vector3
+	local rgb = sRGB.toLinear(srgb)
+
 	local l = rgb.R * 0.4122214708 + rgb.G * 0.5363325363 + rgb.B * 0.0514459929
 	local m = rgb.R * 0.2119034982 + rgb.G * 0.6806995451 + rgb.B * 0.1073969566
 	local s = rgb.R * 0.0883024619 + rgb.G * 0.2817188376 + rgb.B * 0.6299787005
@@ -47,7 +51,7 @@ function Oklab.from(lab: Vector3, unclamped: boolean?): Color3
 		blue = math.clamp(blue, 0, 1)
 	end
 
-	return Color3.new(red, green, blue)
+	return sRGB.fromLinear(Color3.new(red, green, blue))
 end
 
 return Oklab
