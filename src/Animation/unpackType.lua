@@ -28,11 +28,11 @@ local function unpackType(value: any, typeString: string): {number}
 		return {value.X, value.Y, value.Z, axis.X, axis.Y, axis.Z, angle}
 
 	elseif typeString == "Color3" then
-		local lab = Oklab.to(value)
+		local lab = Oklab.fromSRGB(value)
 		return {lab.X, lab.Y, lab.Z}
 
 	elseif typeString == "ColorSequenceKeypoint" then
-		local lab = Oklab.to(value.Value)
+		local lab = Oklab.fromSRGB(value.Value)
 		return {lab.X, lab.Y, lab.Z, value.Time}
 
 	elseif typeString == "DateTime" then

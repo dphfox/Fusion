@@ -26,7 +26,7 @@ local function packType(numbers: {number}, typeString: string): PubTypes.Animata
 			)
 
 	elseif typeString == "Color3" then
-		return Oklab.from(
+		return Oklab.toSRGB(
 			Vector3.new(numbers[1], numbers[2], numbers[3]),
 			false
 		)
@@ -34,7 +34,7 @@ local function packType(numbers: {number}, typeString: string): PubTypes.Animata
 	elseif typeString == "ColorSequenceKeypoint" then
 		return ColorSequenceKeypoint.new(
 			numbers[4],
-			Oklab.from(
+			Oklab.toSRGB(
 				Vector3.new(numbers[1], numbers[2], numbers[3]),
 				false
 			)
