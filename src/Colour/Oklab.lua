@@ -59,6 +59,7 @@ function Oklab.toLinear(lab: Vector3, unclamped: boolean?): Color3
 end
 
 -- Converts a Vector3 in Oklab space to a Color3 in sRGB space.
+-- The Color3 will be clamped by default unless specified otherwise.
 function Oklab.toSRGB(lab: Vector3, unclamped: boolean?): Color3
 	return sRGB.fromLinear(Oklab.toLinear(lab, unclamped))
 end

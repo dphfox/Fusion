@@ -30,7 +30,7 @@ local function inverse(channel: number): number
     end
 end
 
--- Uses a simple tranformation of x -> x^gamma to convert linear RGB into sRGB.
+-- Uses a tranformation to convert linear RGB into sRGB.
 function sRGB.fromLinear(rgb: Color3): Color3
     return Color3.new(
         transform(rgb.R),
@@ -39,7 +39,7 @@ function sRGB.fromLinear(rgb: Color3): Color3
     )
 end
 
--- Converts an sRGB into linear RGB using a simple power transformation
+-- Converts an sRGB into linear RGB using a
 -- (The inverse of sRGB.fromLinear).
 function sRGB.toLinear(srgb: Color3): Color3
     return Color3.new(
