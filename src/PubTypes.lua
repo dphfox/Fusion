@@ -16,6 +16,16 @@ export type Symbol = {
 	name: string
 }
 
+export type Oklab = {
+	type: "Oklab",
+	l: number,
+	a: number,
+	b: number,
+	Lerp: (self: Oklab, goal: Oklab, alpha: number) -> Oklab,
+	toLinear: (self: Oklab, unclamped: boolean?) -> Color3,
+	toSRGB: (self: Oklab, unclamped: boolean?) -> Color3,
+}
+
 -- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
 	number |

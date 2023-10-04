@@ -29,7 +29,7 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	thrown.
 ]]
 function class:setPosition(newValue: PubTypes.Animatable)
-	local newType = typeof(newValue)
+	local newType = xtypeof(newValue)
 	if newType ~= self._currentType then
 		logError("springTypeMismatch", nil, newType, self._currentType)
 	end
@@ -48,7 +48,7 @@ end
 	thrown.
 ]]
 function class:setVelocity(newValue: PubTypes.Animatable)
-	local newType = typeof(newValue)
+	local newType = xtypeof(newValue)
 	if newType ~= self._currentType then
 		logError("springTypeMismatch", nil, newType, self._currentType)
 	end
@@ -65,7 +65,7 @@ end
 	thrown.
 ]]
 function class:addVelocity(deltaValue: PubTypes.Animatable)
-	local deltaType = typeof(deltaValue)
+	local deltaType = xtypeof(deltaValue)
 	if deltaType ~= self._currentType then
 		logError("springTypeMismatch", nil, deltaType, self._currentType)
 	end
@@ -111,7 +111,7 @@ function class:update(): boolean
 		self._goalValue = goalValue
 
 		local oldType = self._currentType
-		local newType = typeof(goalValue)
+		local newType = xtypeof(goalValue)
 		self._currentType = newType
 
 		local springGoals = unpackType(goalValue, newType)

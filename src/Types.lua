@@ -31,6 +31,14 @@ export type Error = {
 }
 
 --[[
+	Custom Colours
+]]
+
+export type Oklab = PubTypes.Oklab & {
+	_vector: Vector3
+}
+
+--[[
 	Generic reactive graph types
 ]]
 
