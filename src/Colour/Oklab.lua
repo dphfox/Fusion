@@ -17,7 +17,7 @@ local class = {}
 local CLASS_METATABLE = {__index = class}
 
 function class:Lerp(goal: Types.Oklab, alpha: number)
-	local newVector = self._vector:Lerp(goal, alpha)
+	local newVector = self._vector:Lerp(goal._vector, alpha)
 	return Oklab.new(newVector.X, newVector.Y, newVector.Z)
 end
 
