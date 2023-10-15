@@ -29,10 +29,7 @@ local function unpackType(value: any, typeString: string): {number}
 
 	elseif typeString == "Color3" then
 		local lab = Oklab.fromSRGB(value)
-		return {lab.l, lab.a, lab.b}
-
-	elseif typeString == "Oklab" then
-		return {value.l, value.a, value.b}
+		return {lab.X, lab.Y, lab.Z}
 
 	elseif typeString == "ColorSequenceKeypoint" then
 		local lab = Oklab.fromSRGB(value.Value)

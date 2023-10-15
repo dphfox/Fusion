@@ -12,12 +12,11 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
-local xtypeof = require(Package.Utility.xtypeof)
 
 local function lerpType(from: any, to: any, ratio: number): any
-	local typeString = xtypeof(from)
+	local typeString = typeof(from)
 
-	if xtypeof(to) == typeString then
+	if typeof(to) == typeString then
 		-- both types must match for interpolation to make sense
 		if typeString == "number" then
 			local to, from = to :: number, from :: number
@@ -31,15 +30,10 @@ local function lerpType(from: any, to: any, ratio: number): any
 			local to, from = to :: Color3, from :: Color3
 			local fromLab = Oklab.fromSRGB(from)
 			local toLab = Oklab.fromSRGB(to)
-			return (
-				fromLab
-				:Lerp(toLab, ratio)
-				:toSRGB(false)
+			return Oklab.toSRGB(
+				fromLab:Lerp(toLab, ratio),
+				false
 			)
-
-		elseif typeString == "Oklab" then
-			local to, from = to :: PubTypes.Oklab, from :: PubTypes.Oklab
-			return from:Lerp(to, ratio)
 
 		elseif typeString == "ColorSequenceKeypoint" then
 			local to, from = to :: ColorSequenceKeypoint, from :: ColorSequenceKeypoint

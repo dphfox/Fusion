@@ -37,8 +37,6 @@ local Fusion = restrictRead("Fusion", {
 	ForValues = require(script.State.ForValues),
 	Observer = require(script.State.Observer),
 
-	Oklab = require(script.Colour.Oklab),
-
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring),
 
@@ -56,7 +54,6 @@ export type ForPairs<KO, VO> = PubTypes.ForPairs<KO, VO>
 export type ForKeys<KI, KO> = PubTypes.ForKeys<KI, KO>
 export type ForValues<VI, VO> = PubTypes.ForKeys<VI, VO>
 export type Observer = PubTypes.Observer
-export type Oklab = PubTypes.Oklab
 export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 export type Use = PubTypes.Use
@@ -82,14 +79,6 @@ type Fusion = {
 	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
 	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
-
-	Oklab: {
-		new: (l: number, a: number, b: number) -> Oklab,
-		fromLinear: (rgb: Color3) -> Oklab,
-		fromSRGB: (srgb: Color3) -> Oklab,
-		toLinear: (lab: Oklab, unclamped: boolean?) -> Color3,
-		toSRGB: (lab: Oklab, unclamped: boolean?) -> Color3
-	},
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: CanBeState<number>?, damping: CanBeState<number>?) -> Spring<T>,

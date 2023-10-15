@@ -26,10 +26,10 @@ local function packType(numbers: {number}, typeString: string): PubTypes.Animata
 			)
 
 	elseif typeString == "Color3" then
-		return Oklab.new(numbers[1], numbers[2], numbers[3]):toSRGB(false)
-
-	elseif typeString == "Oklab" then
-		return Oklab.new(numbers[1], numbers[2], numbers[3])
+		return Oklab.toSRGB(
+			Vector3.new(numbers[1], numbers[2], numbers[3]),
+			false
+		)
 
 	elseif typeString == "ColorSequenceKeypoint" then
 		return ColorSequenceKeypoint.new(
