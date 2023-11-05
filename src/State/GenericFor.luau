@@ -38,7 +38,9 @@ type ComputedEntry = {
 	value: any,
 	intermediateKey: Types.Computed<any>,
 	intermediateValue: Types.Computed<any>,
-	final: Types.Computed<{any}>,
+	final: Types.Computed<{any}?>,
+
+	isRemoved: boolean,
 
 	newDependencies: {[Types.StateObject<any>]: true},
 	oldDependencies: {[Types.StateObject<any>]: true},
@@ -115,6 +117,9 @@ function class:update(): boolean
 		end
 	end
 
+	-- a list of entries that were changed during the computedTable iteration
+	local changedEntries = {}
+
 	-- next check all computed entries for matches with old values
 	for key, computedEntry in pairs(computedTable) do
 		if alreadyUsedKeys[key] then
@@ -125,6 +130,10 @@ function class:update(): boolean
 		local keyList = keysForOldValues[computedEntry.value]
 		if keyList then
 			computedEntry.key = table.remove(keyList)
+
+			computedTable[key] = nil
+			-- we must add a new key to computedTable, but it is not safe to do so during a pairs iteration
+			table.insert(changedEntries, computedEntry)
 
 			-- remove it from the dictionary if it is empty
 			if keyList[1] == nil then
@@ -138,10 +147,17 @@ function class:update(): boolean
 				logErrorNonFatal("forPairsDestructorError", err)
 			end
 
+			-- mark it as removed so that the Computeds no longer run
+			computedEntry.isRemoved = true
 			computedTable[key] = nil
 		end
 
 		didChange = true
+	end
+
+	-- add new computedTable keys
+	for _, computedEntry in ipairs(changedEntries) do
+		computedTable[computedEntry.key] = computedEntry
 	end
 
 	-- finally, add the brand new key-value pairs in
@@ -151,21 +167,32 @@ function class:update(): boolean
 				key = key,
 				value = value,
 
+				isRemoved = false,
+
 				newDependencies = {},
 				oldDependencies = {},
 				oldResult = {},
 			}
 			-- the intermediates use self to ensure they update after this update function runs
 			entry.intermediateKey = Computed(function(use: PubTypes.Use): any
-				use(self)
+				if not entry.isRemoved then
+					use(self)
+				end
 				return entry.key
 			end, doNothing)
 			entry.intermediateValue = Computed(function(use: PubTypes.Use): any
-				use(self)
+				if not entry.isRemoved then
+					use(self)
+				end
 				return entry.value
 			end, doNothing)
 
-			entry.final = Computed(function(use: PubTypes.Use): {any}
+			entry.final = Computed(function(use: PubTypes.Use): {any}?
+				-- do not run the processor if the entry is no longer in use
+				if entry.isRemoved then
+					return nil
+				end
+
 				-- we cannot directly pass in use in case it errors
 				local function useLogger<T>(target: PubTypes.CanBeState<T>): T
 					if isState(target) then
@@ -237,7 +264,7 @@ end
 
 local function ForPairs<KI, VI, KO, VO, M>(
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
-	processor: (PubTypes.Use, PubTypes.StateObject<KI>, VI) -> (KO, VO, M?),
+	processor: (PubTypes.Use, PubTypes.StateObject<KI>, PubTypes.StateObject<VI>) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.Computed<{[KO]: VO}>
 
@@ -268,6 +295,9 @@ local function ForPairs<KI, VI, KO, VO, M>(
 		local result = {}
 		for _, computedEntry in pairs(computedTable) do
 			local entryFinal = use(computedEntry.final)
+			if entryFinal == nil then
+				continue
+			end
 
 			local newKey = entryFinal[1]
 			local newValue = entryFinal[2]
@@ -292,7 +322,9 @@ local function ForPairs<KI, VI, KO, VO, M>(
 				--TODO: Should this warn/error here? It somehow detected a key collision but couldn't find the key that collided with it.
 			end
 
-			result[newKey] = newValue
+			if newKey ~= nil then
+				result[newKey] = newValue
+			end
 		end
 
 		return result
