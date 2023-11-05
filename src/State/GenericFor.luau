@@ -299,8 +299,8 @@ local function ForPairs<KI, VI, KO, VO, M>(
 				continue
 			end
 
-			local newKey = entryFinal[1]
-			local newValue = entryFinal[2]
+			local newKey = use(entryFinal[1])
+			local newValue = use(entryFinal[2])
 
 			-- check for key collision
 			if result[newKey] ~= nil then
