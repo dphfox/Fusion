@@ -40,6 +40,7 @@ local Fusion = restrictRead("Fusion", {
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring),
 
+	cleanup = require(script.Memory.legacyCleanup),
 	doCleanup = require(script.Memory.doCleanup),
 	doNothing = require(script.Memory.doNothing),
 	peek = require(script.State.peek)
@@ -83,7 +84,7 @@ type Fusion = {
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
 	Spring: <T>(goalState: StateObject<T>, speed: CanBeState<number>?, damping: CanBeState<number>?) -> Spring<T>,
 
-	cleanup: (...any) -> (),
+	doCleanup: (...any) -> (),
 	doNothing: (...any) -> (),
 	peek: Use
 }
