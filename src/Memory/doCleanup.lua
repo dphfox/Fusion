@@ -37,8 +37,10 @@ local function doCleanupOne(task: any)
 
 		-- case 6: array of tasks
 		elseif task[1] ~= nil then
-			for _, subtask in ipairs(task) do
-				doCleanupOne(subtask)
+			-- It is important to iterate backwards through the table, since
+			-- objects are added in order of construction.
+			for index = #task, 1, -1 do
+				doCleanupOne(task[index])
 			end
 		end
 	end
