@@ -86,30 +86,36 @@ export type Use = <T>(target: CanBeState<T>) -> T
 -- A state object whose value can be set at any time by the user.
 export type Value<T> = StateObject<T> & {
 	kind: "State",
- 	set: (Value<T>, newValue: any, force: boolean?) -> ()
+ 	set: (Value<T>, newValue: any, force: boolean?) -> (),
+	destroy: () -> ()
 }
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & Dependent & {
-	kind: "Computed"
+	kind: "Computed",
+	destroy: () -> ()
 }
 
 -- A state object whose value is derived from other objects using a callback.
 export type ForPairs<KO, VO> = StateObject<{ [KO]: VO }> & Dependent & {
-	kind: "ForPairs"
+	kind: "ForPairs",
+	destroy: () -> ()
 }
 -- A state object whose value is derived from other objects using a callback.
 export type ForKeys<KO, V> = StateObject<{ [KO]: V }> & Dependent & {
-	kind: "ForKeys"
+	kind: "ForKeys",
+	destroy: () -> ()
 }
 -- A state object whose value is derived from other objects using a callback.
 export type ForValues<K, VO> = StateObject<{ [K]: VO }> & Dependent & {
-	kind: "ForKeys"
+	kind: "ForKeys",
+	destroy: () -> ()
 }
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
-	kind: "Tween"
+	kind: "Tween",
+	destroy: () -> ()
 }
 
 -- A state object which follows another state object using spring simulation.
@@ -117,13 +123,15 @@ export type Spring<T> = StateObject<T> & Dependent & {
 	kind: "Spring",
 	setPosition: (Spring<T>, newPosition: Animatable) -> (),
 	setVelocity: (Spring<T>, newVelocity: Animatable) -> (),
-	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> ()
+	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> (),
+	destroy: () -> ()
 }
 
 -- An object which can listen for updates on another state object.
 export type Observer = Dependent & {
 	kind: "Observer",
-  	onChange: (Observer, callback: () -> ()) -> (() -> ())
+	onChange: (Observer, callback: () -> ()) -> (() -> ()),
+	destroy: () -> ()
 }
 
 --[[
