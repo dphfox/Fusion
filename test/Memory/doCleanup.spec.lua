@@ -80,7 +80,7 @@ return function()
 		expect(numRuns).to.equal(3)
 	end)
 
-	it("should clean up contents of arrays in order", function()
+	it("should clean up contents of arrays in reverse order", function()
 		local runs = {}
 
 		local tasks = {}
@@ -99,9 +99,9 @@ return function()
 
 		doCleanup(tasks)
 
-		expect(runs[1]).to.equal(1)
+		expect(runs[1]).to.equal(3)
 		expect(runs[2]).to.equal(2)
-		expect(runs[3]).to.equal(3)
+		expect(runs[3]).to.equal(1)
 	end)
 
 	it("should clean up variadic arguments", function()
