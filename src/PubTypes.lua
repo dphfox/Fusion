@@ -96,19 +96,9 @@ export type Computed<T> = StateObject<T> & Dependent & {
 	destroy: () -> ()
 }
 
--- A state object whose value is derived from other objects using a callback.
-export type ForPairs<KO, VO> = StateObject<{ [KO]: VO }> & Dependent & {
-	kind: "ForPairs",
-	destroy: () -> ()
-}
--- A state object whose value is derived from other objects using a callback.
-export type ForKeys<KO, V> = StateObject<{ [KO]: V }> & Dependent & {
-	kind: "ForKeys",
-	destroy: () -> ()
-}
--- A state object whose value is derived from other objects using a callback.
-export type ForValues<K, VO> = StateObject<{ [K]: VO }> & Dependent & {
-	kind: "ForKeys",
+-- A state object which maps over keys and/or values in another table.
+export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
+	kind: "For",
 	destroy: () -> ()
 }
 

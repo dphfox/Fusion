@@ -23,17 +23,6 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
-local NAMES = {"Alice", "Bob", "Charlie", "Dennis", "Edward", "Fanta", "Graham", "Iliza", "James", "Katy", "Liam", "Mason", "Nora"}
-
-type Processor = {
-	name: string,
-	inputKey: PubTypes.Value<any>,
-	inputValue: PubTypes.Value<any>,
-	outputKey: PubTypes.StateObject<any>,
-	outputValue: PubTypes.StateObject<any>,
-	cleanupTask: any
-}
-
 --[[
 	Called when the original table is changed.
 ]]
@@ -140,7 +129,6 @@ function class:update(): boolean
 				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, scope, inputKey, inputValue)
 				if processOK then
 					local processor = {
-						name = table.remove(NAMES, 1),
 						inputKey = inputKey,
 						inputValue = inputValue,
 						outputKey = outputKey,
