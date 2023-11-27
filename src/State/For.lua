@@ -129,7 +129,8 @@ function class:update(): boolean
 					inputKey = inputKey,
 					inputValue = inputValue,
 					outputKey = outputKey,
-					outputValue = outputValue
+					outputValue = outputValue,
+					cleanupTask = scope
 				}
 				newProcessors[processor] = true
 			else
