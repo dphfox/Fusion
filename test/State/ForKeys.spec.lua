@@ -90,7 +90,7 @@ return function()
 		local forObject = ForKeys(scope, data, function(use, key)
 			assert(key ~= "bar", "This is an intentional error from a unit test")
 			if use(omitThird) then
-				assert(key ~= "bar", "This is an intentional error from a unit test")
+				assert(key ~= "baz", "This is an intentional error from a unit test")
 			end
 			return key
 		end)
