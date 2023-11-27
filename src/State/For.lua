@@ -145,7 +145,11 @@ function class:update(): boolean
 
 	for processor in newProcessors do
 		local key, value = processor.outputKey, processor.outputValue
-		key.dependentSet[self], self.dependencySet[key] = true, true
+		if key == nil then
+			key = #newOutputTable + 1
+		else
+			key.dependentSet[self], self.dependencySet[key] = true, true
+		end
 		value.dependentSet[self], self.dependencySet[value] = true, true
 		local keyValue, valueValue = peek(key), peek(value)
 		if keyValue == nil or valueValue == nil then
@@ -195,7 +199,7 @@ local function For<KI, VI, KO, VO>(
 		{any},
 		PubTypes.StateObject<KI>,
 		PubTypes.StateObject<VI>
-	) -> (PubTypes.StateObject<KO>, PubTypes.StateObject<VO>)
+	) -> (PubTypes.StateObject<KO>?, PubTypes.StateObject<VO>)
 ): Types.For<KI, KO, VI, VO>
 
 	local self = setmetatable({

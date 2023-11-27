@@ -28,8 +28,8 @@ local function ForValues<K, VI, VO, M>(
 	return For(
 		cleanupTable,
 		inputTable,
-		function(scope, inputKey, inputValue)
-			return inputKey, Computed(scope, function(use)
+		function(scope, _, inputValue)
+			return nil, Computed(scope, function(use)
 				return processor(use, use(inputValue))
 			end, destructor)
 		end

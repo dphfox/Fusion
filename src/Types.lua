@@ -61,7 +61,7 @@ export type For<KI, KO, VI, VO> = PubTypes.For<KO, VO> & {
 		{any},
 		PubTypes.StateObject<KI>,
 		PubTypes.StateObject<VI>
-	) -> (PubTypes.StateObject<KO>, PubTypes.StateObject<VO>),
+	) -> (PubTypes.StateObject<KO>?, PubTypes.StateObject<VO>),
 	_inputTable: PubTypes.CanBeState<{[KI]: VI}>,
 	_existingInputTable: {[KI]: VI}?,
 	_existingOutputTable: {[KO]: VO},
