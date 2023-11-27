@@ -8,26 +8,26 @@ local doCleanup = require(Package.Memory.doCleanup)
 return function()
 	it("constructs in scopes", function()
 		local scope = {}
-		local genericFor = For(scope, {}, function()
+		local forObject = For(scope, {}, function()
 			-- intentionally blank
 		end)
 
-		expect(genericFor).to.be.a("table")
-		expect(genericFor.type).to.equal("State")
-		expect(genericFor.kind).to.equal("For")
-		expect(scope[1]).to.equal(genericFor)
+		expect(forObject).to.be.a("table")
+		expect(forObject.type).to.equal("State")
+		expect(forObject.kind).to.equal("For")
+		expect(scope[1]).to.equal(forObject)
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local scope = {}
-		local genericFor = For(scope, {}, function()
+		local forObject = For(scope, {}, function()
 			-- intentionally blank
 		end)
 		
 		expect(function()
-			genericFor:destroy()
+			forObject:destroy()
 		end).to.never.throw()
 	end)
 
@@ -36,7 +36,7 @@ return function()
 		local data = {foo = 1, bar = 2}
 		local seen = {}
 		local numCalls = 0
-		local genericFor = For(scope, data, function(scope, inputKey, inputValue)
+		local forObject = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
 			local k, v = peek(inputKey), peek(inputValue)
 			seen[k] = v
@@ -52,9 +52,9 @@ return function()
 		expect(seen.foo).to.equal(1)
 		expect(seen.bar).to.equal(2)
 
-		expect(peek(genericFor)).to.be.a("table")
-		expect(peek(genericFor).FOO).to.equal(10)
-		expect(peek(genericFor).BAR).to.equal(20)
+		expect(peek(forObject)).to.be.a("table")
+		expect(peek(forObject).FOO).to.equal(10)
+		expect(peek(forObject).BAR).to.equal(20)
 		doCleanup(scope)
 	end)
 
@@ -62,7 +62,7 @@ return function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
 		local numCalls = 0
-		local genericFor = For(scope, data, function(scope, inputKey, inputValue)
+		local forObject = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
 			local outputKey = Computed(scope, function(use)
 				return string.upper(use(inputKey))
@@ -74,130 +74,100 @@ return function()
 		end)
 		expect(numCalls).to.equal(2)
 
-		expect(peek(genericFor)).to.be.a("table")
-		expect(peek(genericFor).FOO).to.equal(10)
-		expect(peek(genericFor).BAR).to.equal(20)
+		expect(peek(forObject)).to.be.a("table")
+		expect(peek(forObject).FOO).to.equal(10)
+		expect(peek(forObject).BAR).to.equal(20)
 
 		data:set({frob = 3, garb = 4})
 
 		expect(numCalls).to.equal(2)
-		expect(peek(genericFor).FOO).to.equal(nil)
-		expect(peek(genericFor).BAR).to.equal(nil)
-		expect(peek(genericFor).FROB).to.equal(30)
-		expect(peek(genericFor).GARB).to.equal(40)
+		expect(peek(forObject).FOO).to.equal(nil)
+		expect(peek(forObject).BAR).to.equal(nil)
+		expect(peek(forObject).FROB).to.equal(30)
+		expect(peek(forObject).GARB).to.equal(40)
 
 		data:set({frob = 5, garb = 6, baz = 7})
 
 		expect(numCalls).to.equal(3)
-		expect(peek(genericFor).FROB).to.equal(50)
-		expect(peek(genericFor).GARB).to.equal(60)
-		expect(peek(genericFor).BAZ).to.equal(70)
+		expect(peek(forObject).FROB).to.equal(50)
+		expect(peek(forObject).GARB).to.equal(60)
+		expect(peek(forObject).BAZ).to.equal(70)
 
 		data:set({garb = 6, baz = 7})
 
 		expect(numCalls).to.equal(3)
-		expect(peek(genericFor).FROB).to.equal(nil)
-		expect(peek(genericFor).GARB).to.equal(60)
-		expect(peek(genericFor).BAZ).to.equal(70)
+		expect(peek(forObject).FROB).to.equal(nil)
+		expect(peek(forObject).GARB).to.equal(60)
+		expect(peek(forObject).BAZ).to.equal(70)
 
 		data:set({})
 
 		expect(numCalls).to.equal(3)
-		expect(peek(genericFor).GARB).to.equal(nil)
-		expect(peek(genericFor).BAZ).to.equal(nil)
+		expect(peek(forObject).GARB).to.equal(nil)
+		expect(peek(forObject).BAZ).to.equal(nil)
 		
 		doCleanup(scope)
 	end)
 
-	-- itSKIP("rejects key collisions", function()
-	-- 	expect(function()
-	-- 		local scope = {}
-	-- 		local data = {foo = 1, bar = 2}
-	-- 		local _ = ForKeys(scope, data, function(use, key)
-	-- 			return "samuel"
-	-- 		end)
-	-- 		doCleanup(scope)
-	-- 	end).to.throw("forKeysKeyCollision")
-	-- end)
+	it("omits pairs that error", function()
+		local scope = {}
+		local data = {first = 1, second = 2, third = 3}
+		local forObject = For(scope, data, function(scope, inputKey, inputValue)
+			assert(peek(inputKey) ~= "second", "This is an intentional error from a unit test")
+			return inputKey, inputValue
+		end)
+		expect(peek(forObject).first).to.equal(1)
+		expect(peek(forObject).second).to.equal(nil)
+		expect(peek(forObject).third).to.equal(3)
+		doCleanup(scope)
+	end)
 
-	-- itSKIP("preserves value on error", function()
-	-- 	local scope = {}
-	-- 	local data = {foo = 1, bar = 2}
-	-- 	local suffix = Value(scope, "first")
-	-- 	local forkeys = ForKeys(scope, data, function(use, key)
-	-- 		assert(use(suffix) ~= "second", "This is an intentional error from a unit test")
-	-- 		return key .. use(suffix)
-	-- 	end)
-	-- 	expect(peek(forkeys).foofirst).to.equal(1)
-	-- 	expect(peek(forkeys).barfirst).to.equal(2)
-	-- 	suffix:set("second") -- will invoke the error
-	-- 	expect(peek(forkeys).foofirst).to.equal(1)
-	-- 	expect(peek(forkeys).barfirst).to.equal(2)
-	-- 	expect(peek(forkeys).foosecond).to.equal(nil)
-	-- 	expect(peek(forkeys).barsecond).to.equal(nil)
-	-- 	suffix:set("third")
-	-- 	expect(peek(forkeys).foofirst).to.equal(nil)
-	-- 	expect(peek(forkeys).barfirst).to.equal(nil)
-	-- 	expect(peek(forkeys).foosecond).to.equal(nil)
-	-- 	expect(peek(forkeys).barsecond).to.equal(nil)
-	-- 	expect(peek(forkeys).foothird).to.equal(1)
-	-- 	expect(peek(forkeys).barthird).to.equal(2)
-	-- 	doCleanup(scope)
-	-- end)
-
-	-- itSKIP("doesn't call destructor on creation", function()
-	-- 	local scope = {}
-	-- 	local destructed = {}
-	-- 	local data = Value(scope, {foo = 1, bar = 2})
-	-- 	local _ = ForKeys(scope, data, function(use, key)
-	-- 		return key, "meta" .. key
-	-- 	end, function(key, meta)
-	-- 		destructed[key] = true
-	-- 		destructed[meta] = true
-	-- 	end)
-	-- 	expect(destructed.foo).to.equal(nil)
-	-- 	expect(destructed.metafoo).to.equal(nil)
-	-- 	expect(destructed.bar).to.equal(nil)
-	-- 	expect(destructed.metabar).to.equal(nil)
-	-- 	doCleanup(scope)
-	-- end)
-
-	-- itSKIP("calls destructor on update", function()
-	-- 	local scope = {}
-	-- 	local destructed = {}
-	-- 	local data = Value(scope, {foo = 1, bar = 2})
-	-- 	local _ = ForKeys(scope, data, function(use, key)
-	-- 		return key, "meta" .. key
-	-- 	end, function(key, meta)
-	-- 		destructed[key] = true
-	-- 		destructed[meta] = true
-	-- 	end)
-	-- 	data:set({foo = 100, baz = 3})
-	-- 	expect(destructed.foo).to.equal(nil)
-	-- 	expect(destructed.metafoo).to.equal(nil)
-	-- 	expect(destructed.bar).to.equal(true)
-	-- 	expect(destructed.metabar).to.equal(true)
-	-- 	doCleanup(scope)
-	-- end)
-
-	-- itSKIP("calls destructor on destroy", function()
-	-- 	local scope = {}
-	-- 	local destructed = {}
-	-- 	local data = Value(scope, {foo = 1, bar = 2})
-	-- 	local _ = ForKeys(scope, data, function(use, key)
-	-- 		return key, "meta" .. key
-	-- 	end, function(key, meta)
-	-- 		destructed[key] = true
-	-- 		destructed[meta] = true
-	-- 	end)
-	-- 	expect(destructed.foo).to.equal(nil)
-	-- 	expect(destructed.metafoo).to.equal(nil)
-	-- 	expect(destructed.bar).to.equal(nil)
-	-- 	expect(destructed.metabar).to.equal(nil)
-	-- 	doCleanup(scope)
-	-- 	expect(destructed.foo).to.equal(true)
-	-- 	expect(destructed.metafoo).to.equal(true)
-	-- 	expect(destructed.bar).to.equal(true)
-	-- 	expect(destructed.metabar).to.equal(true)
-	-- end)
+	it("omits pairs when their key or value is nil", function()
+		local scope = {}
+		local data = {first = 1, second = 2, third = 3}
+		local omitThird = Value(scope, false)
+		local forObject1 = For(scope, data, function(scope, inputKey, inputValue)
+			return inputKey, Computed(scope, function(use)
+				if use(inputKey) == "second" then
+					return nil
+				elseif use(inputKey) == "third" and use(omitThird) then
+					return nil
+				else
+					return use(inputValue)
+				end
+			end)
+		end)
+		local forObject2 = For(scope, data, function(scope, inputKey, inputValue)
+			return Computed(scope, function(use)
+				if use(inputKey) == "second" then
+					return nil
+				elseif use(inputKey) == "third" and use(omitThird) then
+					return nil
+				else
+					return use(inputKey)
+				end
+			end), inputValue
+		end)
+		expect(peek(forObject1).first).to.equal(1)
+		expect(peek(forObject1).second).to.equal(nil)
+		expect(peek(forObject1).third).to.equal(3)
+		expect(peek(forObject2).first).to.equal(1)
+		expect(peek(forObject2).second).to.equal(nil)
+		expect(peek(forObject2).third).to.equal(3)
+		omitThird:set(true)
+		expect(peek(forObject1).first).to.equal(1)
+		expect(peek(forObject1).second).to.equal(nil)
+		expect(peek(forObject1).third).to.equal(nil)
+		expect(peek(forObject2).first).to.equal(1)
+		expect(peek(forObject2).second).to.equal(nil)
+		expect(peek(forObject2).third).to.equal(nil)
+		omitThird:set(false)
+		expect(peek(forObject1).first).to.equal(1)
+		expect(peek(forObject1).second).to.equal(nil)
+		expect(peek(forObject1).third).to.equal(3)
+		expect(peek(forObject2).first).to.equal(1)
+		expect(peek(forObject2).second).to.equal(nil)
+		expect(peek(forObject2).third).to.equal(3)
+		doCleanup(scope)
+	end)
 end

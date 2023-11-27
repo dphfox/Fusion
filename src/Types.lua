@@ -48,10 +48,11 @@ export type State<T> = PubTypes.Value<T> & {
 }
 
 -- A state object whose value is derived from other objects using a callback.
-export type Computed<T> = PubTypes.Computed<T> & {
+export type Computed<T, M> = PubTypes.Computed<T> & {
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_callback: (PubTypes.Use) -> T,
-	_value: T
+	_value: T,
+	_meta: M
 }
 
 -- A state object which maps over keys and/or values in another table.

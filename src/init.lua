@@ -51,9 +51,7 @@ export type CanBeState<T> = PubTypes.CanBeState<T>
 export type Symbol = PubTypes.Symbol
 export type Value<T> = PubTypes.Value<T>
 export type Computed<T> = PubTypes.Computed<T>
-export type ForPairs<KO, VO> = PubTypes.ForPairs<KO, VO>
-export type ForKeys<KI, KO> = PubTypes.ForKeys<KI, KO>
-export type ForValues<VI, VO> = PubTypes.ForKeys<VI, VO>
+export type For<KO, VO> = PubTypes.For<KO, VO>
 export type Observer = PubTypes.Observer
 export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
@@ -75,10 +73,10 @@ type Fusion = {
 	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
 
 	Value: <T>(initialValue: T) -> Value<T>,
-	Computed: <T>(callback: (Use) -> T, destructor: (T) -> ()?) -> Computed<T>,
-	ForPairs: <KI, VI, KO, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> ForPairs<KO, VO>,
-	ForKeys: <KI, KO, M>(inputTable: CanBeState<{[KI]: any}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> ForKeys<KO, any>,
-	ForValues: <VI, VO, M>(inputTable: CanBeState<{[any]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> ForValues<any, VO>,
+	Computed: <T, M>(callback: (Use) -> (T, M?), destructor: (T, M?) -> ()?) -> Computed<T>,
+	ForPairs: <KI, KO, VI, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> For<KO, VO>,
+	ForKeys: <KI, KO, V, M>(inputTable: CanBeState<{[KI]: V}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> For<KO, V>,
+	ForValues: <K, VI, VO, M>(inputTable: CanBeState<{[K]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> For<K, VO>,
 	Observer: (watchedState: StateObject<any>) -> Observer,
 
 	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,

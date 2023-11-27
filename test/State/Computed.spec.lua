@@ -97,6 +97,25 @@ return function()
 		doCleanup(scope)
 	end)
 
+	it("calls destructor with metadata", function()
+		local scope = {}
+		local destructed = {}
+		local dependency = Value(scope, 1)
+		local _ = Computed(scope, function(use)
+			return 1, use(dependency)
+		end, function(_, meta)
+			destructed[meta] = true
+		end)
+		expect(destructed[1]).to.equal(nil)
+		dependency:set(2)
+		expect(destructed[1]).to.equal(true)
+		expect(destructed[2]).to.equal(nil)
+		dependency:set(3)
+		expect(destructed[2]).to.equal(true)
+
+		doCleanup(scope)
+	end)
+
 	it("calls destructor on destroy", function()
 		local scope = {}
 		local destructed = {}

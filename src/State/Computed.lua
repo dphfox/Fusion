@@ -58,16 +58,13 @@ function class:_recalculate(
 			logWarn("destructorNeededComputed")
 		end
 
-		if newMetaValue ~= nil then
-			logWarn("multiReturnComputed")
-		end
-
 		local oldValue = self._value
 		local similar = isSimilar(oldValue, newValue)
 		if self._destructor ~= nil and not firstTime then
-			self._destructor(oldValue)
+			self._destructor(oldValue, self._meta)
 		end
 		self._value = newValue
+		self._meta = newMetaValue
 
 		-- add this object to the dependencies' dependent sets
 		for dependency in pairs(self.dependencySet) do
@@ -108,15 +105,15 @@ function class:destroy()
 		dependency.dependentSet[self] = nil
 	end
 	if self._destructor ~= nil then
-		self._destructor(self._value)
+		self._destructor(self._value, self._meta)
 	end
 end
 
-local function Computed<T>(
+local function Computed<T, M>(
 	cleanupTable: {PubTypes.Task},
-	processor: () -> T,
-	destructor: ((T) -> ())?
-): Types.Computed<T>
+	processor: () -> (T, M?),
+	destructor: ((T, M?) -> ())?
+): Types.Computed<T, M>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
@@ -125,7 +122,8 @@ local function Computed<T>(
 		_oldDependencySet = {},
 		_processor = processor,
 		_destructor = destructor,
-		_value = nil
+		_value = nil,
+		_meta = nil
 	}, CLASS_METATABLE)
 
 	self:_recalculate(true)

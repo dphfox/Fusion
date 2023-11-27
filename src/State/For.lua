@@ -147,7 +147,14 @@ function class:update(): boolean
 		local key, value = processor.outputKey, processor.outputValue
 		key.dependentSet[self], self.dependencySet[key] = true, true
 		value.dependentSet[self], self.dependencySet[value] = true, true
-		newOutputTable[peek(key)] = peek(value)
+		local keyValue, valueValue = peek(key), peek(value)
+		if keyValue == nil or valueValue == nil then
+			continue
+		elseif newOutputTable[keyValue] == nil then
+			newOutputTable[keyValue] = valueValue
+		else
+			logErrorNonFatal("forKeyCollision", keyValue)
+		end
 	end
 
 	self._existingProcessors = newProcessors
