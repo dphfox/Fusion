@@ -17,6 +17,9 @@ local Types = require(Package.Types)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
+-- Logging
+local parseError = require(Package.Logging.parseError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local function ForValues<K, VI, VO, M>(
 	cleanupTable: {PubTypes.Task},
@@ -30,7 +33,13 @@ local function ForValues<K, VI, VO, M>(
 		inputTable,
 		function(scope, _, inputValue)
 			return nil, Computed(scope, function(use)
-				return processor(use, use(inputValue))
+				local ok, value, meta = xpcall(processor, parseError, use, use(inputValue))
+				if ok then
+					return value, meta
+				else
+					logErrorNonFatal("forProcessorError", parseError)
+					return nil
+				end
 			end, destructor)
 		end
 	)
