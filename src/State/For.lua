@@ -43,9 +43,7 @@ function class:update(): boolean
 	end
 
 	local remainingPairs = {}
-	local numPairs = 0
 	for key, value in newInputTable do
-		numPairs += 1
 		if remainingPairs[key] == nil then
 			remainingPairs[key] = {[value] = true}
 		else
@@ -57,46 +55,59 @@ function class:update(): boolean
 	-- First, try and reuse processors who match both the key and value of a
 	-- remaining pair. This can be done with no recomputation.
 	for tryReuseProcessor in existingProcessors do
-		if numPairs <= 0 then
-			break
-		end
 		local key = peek(tryReuseProcessor.key)
 		local value = peek(tryReuseProcessor.value)
-		if remainingPairs[key] ~= nil and remainingPairs[key][value] ~= nil then
-			remainingPairs[key][value] = nil
-			numPairs -= 1
+		local remainingValues = remainingPairs[key]
+		if remainingValues ~= nil and remainingValues[value] ~= nil then
+			remainingValues[value] = nil
 			error("TODO: bring forward key from old table")
 			newProcessors[tryReuseProcessor] = true
+			existingProcessors[tryReuseProcessor] = nil
 		end
 	end
 	-- Next, try and reuse processors who match the key of a remaining pair.
 	-- The value will change but the key will stay stable.
 	for tryReuseProcessor in existingProcessors do
-		if numPairs <= 0 then
-			break
-		elseif newProcessors[tryReuseProcessor] == nil then
-			local key = peek(tryReuseProcessor.key)
-			if remainingPairs[key] ~= nil then
-				local value = next(remainingPairs[key])
-				if value ~= nil then
-					remainingPairs[key][value] = nil
-					numPairs -= 1
-					tryReuseProcessor.value:set(value)
-					error("TODO: bring forward key from old table")
-					newProcessors[tryReuseProcessor] = true
-				end
+		local key = peek(tryReuseProcessor.key)
+		local remainingValues = remainingPairs[key]
+		if remainingValues ~= nil then
+			local value = next(remainingValues)
+			if value ~= nil then
+				remainingValues[value] = nil
+				tryReuseProcessor.value:set(value)
+				error("TODO: bring forward key from old table")
+				newProcessors[tryReuseProcessor] = true
+				existingProcessors[tryReuseProcessor] = nil
 			end
 		end
 	end
 	-- Next, try and reuse processors who match the value of a remaining pair.
 	-- The key will change but the value will stay stable.
 	for tryReuseProcessor in existingProcessors do
-		error("TODO")
+		local value = peek(tryReuseProcessor.value)
+		for key, remainingValues in remainingPairs do
+			if remainingValues[value] ~= nil then
+				remainingValues[value] = nil
+				tryReuseProcessor.key:set(key)
+				error("TODO: bring forward key from old table")
+				newProcessors[tryReuseProcessor] = true
+				existingProcessors[tryReuseProcessor] = nil
+			end
+		end
 	end
 	-- Finally, try and reuse any remaining processors, even if they do not
 	-- match a pair. Both key and value will be changed.
 	for tryReuseProcessor in existingProcessors do
-		error("TODO")
+		for key, remainingValues in remainingPairs do
+			local value = next(remainingValues)
+			if value ~= nil then
+				remainingValues[value] = nil
+				tryReuseProcessor.value:set(value)
+				error("TODO: bring forward key from old table")
+				newProcessors[tryReuseProcessor] = true
+				existingProcessors[tryReuseProcessor] = nil
+			end
+		end
 	end
 	-- By this point, we can be in one of three cases:
 	-- 1) some existing processors are left over; no remaining pairs (shrunk)
@@ -104,7 +115,15 @@ function class:update(): boolean
 	-- 3) no existing processors are left over; some remaining pairs (grew)
 	-- So, existing processors should be destroyed, and remaining pairs should
 	-- be created. This accomodates for table growth and shrinking.
+	for unusedProcessor in existingProcessors do
+		error("TOOD: cleanup unused processor")
+	end
 
+	for key, remainingValues in remainingPairs do
+		for value in remainingValues do
+			error("TOOD: create new processor")
+		end
+	end
 
 	return error("TODO")
 end
