@@ -27,6 +27,7 @@ return {
 	forPairsProcessorError = "ForPairs callback error: ERROR_MESSAGE",
 	forValuesProcessorError = "ForValues callback error: ERROR_MESSAGE",
 	forValuesDestructorError = "ForValues destructor error: ERROR_MESSAGE",
+	forProcessorError = "For (internal) callback error: ERROR_MESSAGE",
 	invalidChangeHandler = "The change handler for the '%s' property must be a function.",
 	invalidAttributeChangeHandler = "The change handler for the '%s' attribute must be a function.",
 	invalidEventHandler = "The handler for the '%s' event must be a function.",
