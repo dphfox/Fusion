@@ -31,7 +31,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	itFOCUS("processes pairs for constant tables", function()
+	it("processes pairs for constant tables", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
 		local seen = {}
@@ -58,9 +58,9 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("processes pairs for state tables", function()
+	itFOCUS("processes pairs for state tables", function()
 		local scope = {}
-		local data = Value({foo = 1, bar = 2})
+		local data = Value(scope, {foo = 1, bar = 2})
 		local numCalls = 0
 		local genericFor = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
@@ -78,6 +78,7 @@ return function()
 		expect(peek(genericFor).FOO).to.equal(10)
 		expect(peek(genericFor).BAR).to.equal(20)
 
+		print("\ndata:set {frob = 3, garb = 4}")
 		data:set({frob = 3, garb = 4})
 
 		expect(numCalls).to.equal(2)
@@ -86,6 +87,7 @@ return function()
 		expect(peek(genericFor).FROB).to.equal(30)
 		expect(peek(genericFor).GARB).to.equal(40)
 
+		print("\ndata:set {frob = 5, garb = 6, baz = 7}")
 		data:set({frob = 5, garb = 6, baz = 7})
 
 		expect(numCalls).to.equal(3)
@@ -93,6 +95,7 @@ return function()
 		expect(peek(genericFor).GARB).to.equal(60)
 		expect(peek(genericFor).BAZ).to.equal(70)
 
+		print("\ndata:set {garb = 6, baz = 7}")
 		data:set({garb = 6, baz = 7})
 
 		expect(numCalls).to.equal(3)
@@ -100,6 +103,7 @@ return function()
 		expect(peek(genericFor).GARB).to.equal(60)
 		expect(peek(genericFor).BAZ).to.equal(70)
 
+		print("\ndata:set {}")
 		data:set({})
 
 		expect(numCalls).to.equal(3)

@@ -23,7 +23,10 @@ local class = {}
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
 
+local NAMES = {"Alice", "Bob", "Charlie", "Dennis", "Edward", "Fanta", "Graham", "Iliza", "James", "Katy", "Liam", "Mason", "Nora"}
+
 type Processor = {
+	name: string,
 	inputKey: PubTypes.Value<any>,
 	inputValue: PubTypes.Value<any>,
 	outputKey: PubTypes.StateObject<any>,
@@ -100,19 +103,22 @@ function class:update(): boolean
 					tryReuseProcessor.inputKey:set(key)
 					newProcessors[tryReuseProcessor] = true
 					existingProcessors[tryReuseProcessor] = nil
+					break
 				end
 			end
 		end
 		-- Finally, try and reuse any remaining processors, even if they do not
 		-- match a pair. Both key and value will be changed.
 		for tryReuseProcessor in existingProcessors do
-			for _, remainingValues in remainingPairs do
+			for key, remainingValues in remainingPairs do
 				local value = next(remainingValues)
 				if value ~= nil then
 					remainingValues[value] = nil
+					tryReuseProcessor.inputKey:set(key)
 					tryReuseProcessor.inputValue:set(value)
 					newProcessors[tryReuseProcessor] = true
 					existingProcessors[tryReuseProcessor] = nil
+					break
 				end
 			end
 		end
@@ -134,6 +140,7 @@ function class:update(): boolean
 				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, scope, inputKey, inputValue)
 				if processOK then
 					local processor = {
+						name = table.remove(NAMES, 1),
 						inputKey = inputKey,
 						inputValue = inputValue,
 						outputKey = outputKey,
