@@ -39,7 +39,7 @@ function class:update(): boolean
 	local existingInputTable = self._existingInputTable
 	local existingOutputTable = self._existingOutputTable
 	local existingProcessors = self._existingProcessors
-	local newInputTable = peek(self._newInputTable)
+	local newInputTable = peek(self._inputTable)
 	local newOutputTable = self._newOutputTable
 	local newProcessors = self._newProcessors
 	local remainingPairs = self._remainingPairs
@@ -131,7 +131,7 @@ function class:update(): boolean
 				local scope = {}
 				local inputKey = Value(scope, key)
 				local inputValue = Value(scope, value)
-				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, inputKey, inputValue)
+				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, scope, inputKey, inputValue)
 				if processOK then
 					local processor = {
 						inputKey = inputKey,
@@ -149,11 +149,10 @@ function class:update(): boolean
 	end
 
 	for processor in newProcessors do
-		local key = peek(processor.outputKey)
-		local value = peek(processor.outputValue)
+		local key, value = processor.outputKey, processor.outputValue
 		key.dependentSet[self], self.dependencySet[key] = true, true
 		value.dependentSet[self], self.dependencySet[value] = true, true
-		newOutputTable[processor.outputKey] = processor.outputValue
+		newOutputTable[peek(key)] = peek(value)
 	end
 
 	self._existingProcessors = newProcessors
@@ -191,6 +190,7 @@ local function For<KI, VI, KO, VO>(
 	cleanupTable: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (
+		{any},
 		PubTypes.StateObject<KI>,
 		PubTypes.StateObject<VI>
 	) -> (PubTypes.StateObject<KO>, PubTypes.StateObject<VO>)

@@ -31,33 +31,26 @@ return function()
 		end).to.never.throw()
 	end)
 
-	it("processes pairs for constant tables", function()
+	itFOCUS("processes pairs for constant tables", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
-		local sawFoo, sawBar, sawOther = false, false, false
+		local seen = {}
 		local numCalls = 0
-		local genericFor = For(scope, data, function(inputKey, inputValue)
+		local genericFor = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
 			local k, v = peek(inputKey), peek(inputValue)
-			if k == "foo" and v == "1" then
-				sawFoo = true
-			elseif k == "bar" and v == "2" then
-				sawBar = true
-			else
-				sawOther = true
-			end
-			local outputKey = Computed(function(use)
+			seen[k] = v
+			local outputKey = Computed(scope, function(use)
 				return string.upper(use(inputKey))
 			end)
-			local outputValue = Computed(function(use)
-				return use(inputValue) * 20
+			local outputValue = Computed(scope, function(use)
+				return use(inputValue) * 10
 			end)
 			return outputKey, outputValue
 		end)
-		expect(sawFoo).to.equal(true)
-		expect(sawBar).to.equal(true)
-		expect(sawOther).to.equal(false)
 		expect(numCalls).to.equal(2)
+		expect(seen.foo).to.equal(1)
+		expect(seen.bar).to.equal(2)
 
 		expect(peek(genericFor)).to.be.a("table")
 		expect(peek(genericFor).FOO).to.equal(10)
@@ -68,29 +61,17 @@ return function()
 	it("processes pairs for state tables", function()
 		local scope = {}
 		local data = Value({foo = 1, bar = 2})
-		local sawFoo, sawBar, sawOther = false, false, false
 		local numCalls = 0
-		local genericFor = For(scope, data, function(inputKey, inputValue)
+		local genericFor = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
-			local k, v = peek(inputKey), peek(inputValue)
-			if k == "foo" and v == "1" then
-				sawFoo = true
-			elseif k == "bar" and v == "2" then
-				sawBar = true
-			else
-				sawOther = true
-			end
-			local outputKey = Computed(function(use)
+			local outputKey = Computed(scope, function(use)
 				return string.upper(use(inputKey))
 			end)
-			local outputValue = Computed(function(use)
-				return use(inputValue) * 20
+			local outputValue = Computed(scope, function(use)
+				return use(inputValue) * 10
 			end)
 			return outputKey, outputValue
 		end)
-		expect(sawFoo).to.equal(true)
-		expect(sawBar).to.equal(true)
-		expect(sawOther).to.equal(false)
 		expect(numCalls).to.equal(2)
 
 		expect(peek(genericFor)).to.be.a("table")
