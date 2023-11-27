@@ -182,8 +182,9 @@ function class:destroy()
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
-	
-	error("TODO")
+	for unusedProcessor in self._existingProcessors do
+		doCleanup(unusedProcessor.cleanupTask)
+	end
 end
 
 local function For<KI, VI, KO, VO>(
