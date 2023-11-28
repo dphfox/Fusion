@@ -199,15 +199,17 @@ export type Fusion = {
 
 	doCleanup: (...any) -> (),
 	doNothing: (...any) -> (),
-	peek: Use,
+	scoped: <T>(constructors: T) -> Scope<T>,
+	deriveScope: <S>(scope: Scope<S>) -> Scope<S>,
 
+	peek: Use,
 	Value: ValueConstructor,
 	Computed: ComputedConstructor,
 	ForPairs: ForPairsConstructor,
 	ForKeys: ForKeysConstructor,
 	ForValues: ForValuesConstructor,
 	Observer: ObserverConstructor,
-	
+
 	Tween: TweenConstructor,
 	Spring: SpringConstructor,
 

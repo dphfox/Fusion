@@ -41,8 +41,10 @@ local Fusion = restrictRead("Fusion", {
 	cleanup = require(script.Memory.legacyCleanup),
 	doCleanup = require(script.Memory.doCleanup),
 	doNothing = require(script.Memory.doNothing),
+	scoped = require(script.Memory.scoped),
+	deriveScope = require(script.Memory.deriveScope),
+	
 	peek = require(script.State.peek),
-
 	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
 	ForPairs = require(script.State.ForPairs),

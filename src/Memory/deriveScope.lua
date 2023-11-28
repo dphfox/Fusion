@@ -9,7 +9,7 @@ local PubTypes = require(Package.PubTypes)
 
 -- This return type is technically a lie, but it's required for useful type
 -- checking behaviour.
-local function deriveScope<S>(scope: S & {PubTypes.Task}): S
+local function deriveScope<S>(scope: PubTypes.Scope<S>): PubTypes.Scope<S>
 	return setmetatable({}, getmetatable(scope)) :: any
 end
 
