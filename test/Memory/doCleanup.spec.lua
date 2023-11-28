@@ -4,7 +4,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
 	it("should destroy instances", function()
-		local instance = New "Folder" {}
+		local instance = New({}, "Folder") {}
 		-- one of the only reliable ways to test for proper destruction
 		local conn = instance.AncestryChanged:Connect(function() end)
 
@@ -14,7 +14,7 @@ return function()
 	end)
 
 	it("should disconnect connections", function()
-		local instance = New "Folder" {}
+		local instance = New({}, "Folder") {}
 		local conn = instance.AncestryChanged:Connect(function() end)
 
 		doCleanup(conn)
