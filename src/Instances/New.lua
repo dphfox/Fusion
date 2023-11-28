@@ -11,10 +11,14 @@ local defaultProps = require(Package.Instances.defaultProps)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local logError= require(Package.Logging.logError)
 
-local function New(className: string)
-	return function(props: PubTypes.PropertyTable): Instance
+local function New(
+	scope: PubTypes.Scope<any>,
+	className: string
+)
+	return function(
+		props: PubTypes.PropertyTable
+	): Instance
 		local ok, instance = pcall(Instance.new, className)
-
 		if not ok then
 			logError("cannotCreateClass", nil, className)
 		end
@@ -26,7 +30,7 @@ local function New(className: string)
 			end
 		end
 
-		applyInstanceProps(props, instance)
+		applyInstanceProps(scope, props, instance)
 
 		return instance
 	end

@@ -65,28 +65,31 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 		end
 
 		setProperty(instance, property, peek(value))
-		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
+		table.insert(cleanupTasks, Observer(cleanupTasks, value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
 		setProperty(instance, property, value)
 	end
 end
 
-local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)
+local function applyInstanceProps(
+	scope: PubTypes.Scope<any>,
+	props: PubTypes.PropertyTable,
+	applyTo: Instance
+)
 	local specialKeys = {
 		self = {} :: {[PubTypes.SpecialKey]: any},
 		descendants = {} :: {[PubTypes.SpecialKey]: any},
 		ancestor = {} :: {[PubTypes.SpecialKey]: any},
 		observer = {} :: {[PubTypes.SpecialKey]: any}
 	}
-	local cleanupTasks = {}
 
 	for key, value in pairs(props) do
 		local keyType = xtypeof(key)
 
 		if keyType == "string" then
 			if key ~= "Parent" then
-				bindProperty(applyTo, key :: string, value, cleanupTasks)
+				bindProperty(applyTo, key :: string, value, scope)
 			end
 		elseif keyType == "SpecialKey" then
 			local stage = (key :: PubTypes.SpecialKey).stage
@@ -103,25 +106,25 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instan
 	end
 
 	for key, value in pairs(specialKeys.self) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(value, applyTo, scope)
 	end
 	for key, value in pairs(specialKeys.descendants) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(value, applyTo, scope)
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyTo, "Parent", props.Parent, cleanupTasks)
+		bindProperty(applyTo, "Parent", props.Parent, scope)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(value, applyTo, scope)
 	end
 	for key, value in pairs(specialKeys.observer) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(value, applyTo, scope)
 	end
 
 	applyTo.Destroying:Connect(function()
-		doCleanup(cleanupTasks)
+		doCleanup(scope)
 	end)
 end
 
