@@ -17,33 +17,38 @@ local Types = require(Package.Types)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
+-- Logging
+local parseError = require(Package.Logging.parseError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 -- Memory
-local doNothing = require(Package.Memory.doNothing)
+local doCleanup = require(Package.Memory.doCleanup)
 
-local function ForPairs<KI, KO, VI, VO, M>(
-	scope: {PubTypes.Task},
+local function ForPairs<KI, KO, VI, VO, S>(
+	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
-	processor: (PubTypes.Use, KI, VI) -> (KO, VO, M?),
-	destructor: (KO, VO, M?) -> ()?
+	processor: (PubTypes.Scope<S>, PubTypes.Use, KI, VI) -> (KO, VO)
 ): Types.For<KI, KO, VI, VO>
 
 	return For(
 		scope,
 		inputTable,
 		function(scope, inputKey, inputValue)
-			local pair = Computed(scope, function(use)
-				-- TODO: error checking
-				local key, value, meta = processor(use, use(inputKey), use(inputValue))
-				return {key = key, value = value}, meta
-			end, function(data, meta)
-				-- TODO: error checking
-				destructor(data.key, meta)
+			local pair = Computed(scope, function(scope, use)
+				local ok, key, value = xpcall(processor, parseError, scope, use, use(inputKey), use(inputValue))
+				if ok then
+					return {key = key, value = value}
+				else
+					logErrorNonFatal("forProcessorError", parseError)
+					doCleanup(scope)
+					table.clear(scope)
+					return nil
+				end
 			end)
-			return Computed(function(use)
+			return Computed(function(_, use)
 				return use(pair).key
-			end, doNothing), Computed(function(use)
+			end), Computed(function(_, use)
 				return use(pair).value
-			end, doNothing)
+			end)
 		end
 	)
 end
