@@ -214,4 +214,22 @@ return function()
 		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
 	end)
+
+	it("doesn't recompute when values chaneg", function()
+		local scope = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local computations = 0
+		local _ = ForKeys(scope, data, function(innerScope, _, key)
+			computations += 1
+			return string.upper(key)
+		end)
+		expect(computations).to.equal(2)
+		data:set({foo = 3, bar = 4})
+		expect(computations).to.equal(2)
+		data:set({foo = 3, bar = 4, baz = 5})
+		expect(computations).to.equal(3)
+		data:set({foo = 4, bar = 5, baz = 6})
+		expect(computations).to.equal(3)
+		doCleanup(scope)
+	end)
 end

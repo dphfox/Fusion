@@ -33,8 +33,11 @@ local function ForValues<K, VI, VO, S>(
 		scope,
 		inputTable,
 		function(scope, inputPair)
+			local inputValue = Computed(scope, function(scope, use)
+				return use(inputPair).value
+			end)
 			return Computed(scope, function(scope, use)
-				local ok, value = xpcall(processor, parseError, scope, use, use(inputPair).value)
+				local ok, value = xpcall(processor, parseError, scope, use, use(inputValue))
 				if ok then
 					return {key = nil, value = value}
 				else

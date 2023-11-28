@@ -216,7 +216,7 @@ return function()
 		expect(destructed.bar).to.equal(true)
 	end)
 
-	it("doesn't recompute when values are preserved", function()
+	it("doesn't recompute when values roam between keys", function()
 		local scope = {}
 		local data = Value(scope, {"foo", "bar"})
 		local computations = 0
