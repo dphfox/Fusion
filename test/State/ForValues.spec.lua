@@ -225,7 +225,9 @@ return function()
 			return string.upper(value)
 		end)
 		expect(computations).to.equal(2)
+		_G.VERBOSE = true
 		data:set({"bar", "foo"})
+		_G.VERBOSE = false
 		expect(computations).to.equal(2)
 		data:set({"baz", "bar", "foo"})
 		expect(computations).to.equal(3)

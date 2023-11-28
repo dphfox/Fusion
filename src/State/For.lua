@@ -63,11 +63,11 @@ function class:update(): boolean
 		for tryReuseProcessor in existingProcessors do
 			local key = peek(tryReuseProcessor.inputPair).key
 			local value = peek(tryReuseProcessor.inputPair).value
-			if key == nil then
+			if peek(tryReuseProcessor.outputPair).key == nil then
 				for key, remainingValues in remainingPairs do
 					if remainingValues[value] ~= nil then
 						remainingValues[value] = nil
-						tryReuseProcessor.inputKey:set(key)
+						tryReuseProcessor.inputPair:set({key = key, value = value})
 						newProcessors[tryReuseProcessor] = true
 						existingProcessors[tryReuseProcessor] = nil
 						break
