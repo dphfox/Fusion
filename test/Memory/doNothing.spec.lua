@@ -4,7 +4,7 @@ local doNothing = require(Package.Memory.doNothing)
 
 return function()
 	it("should not destroy instances", function()
-		local instance = New "Folder" {}
+		local instance = New({}, "Folder") {}
 		-- one of the only reliable ways to test for proper destruction
 		local conn = instance.AncestryChanged:Connect(function() end)
 
@@ -14,7 +14,7 @@ return function()
 	end)
 
 	it("should not disconnect connections", function()
-		local instance = New "Folder" {}
+		local instance = New({}, "Folder") {}
 		local conn = instance.AncestryChanged:Connect(function() end)
 
 		doNothing(conn)
