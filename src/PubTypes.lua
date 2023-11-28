@@ -73,7 +73,8 @@ export type Dependent = {
 -- An object which stores a piece of reactive state.
 export type StateObject<T> = Dependency & {
 	type: "State",
-	kind: string
+	kind: string,
+	_typeIdentifier: T
 }
 
 -- Either a constant value of type T, or a state object containing type T.
