@@ -34,9 +34,9 @@ local function ForValues<K, VI, VO, S>(
 		inputTable,
 		function(scope, _, inputValue)
 			return nil, Computed(scope, function(scope, use)
-				local ok, value, meta = xpcall(processor, parseError, scope, use, use(inputValue))
+				local ok, value = xpcall(processor, parseError, scope, use, use(inputValue))
 				if ok then
-					return value, meta
+					return value
 				else
 					logErrorNonFatal("forProcessorError", parseError)
 					doCleanup(scope)

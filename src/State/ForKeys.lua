@@ -34,9 +34,9 @@ local function ForKeys<KI, KO, V, S>(
 		inputTable,
 		function(scope, inputKey, inputValue)
 			return Computed(scope, function(scope, use)
-				local ok, key, meta = xpcall(processor, parseError, scope, use, use(inputKey))
+				local ok, key = xpcall(processor, parseError, scope, use, use(inputKey))
 				if ok then
-					return key, meta
+					return key
 				else
 					logErrorNonFatal("forProcessorError", parseError)
 					doCleanup(scope)
