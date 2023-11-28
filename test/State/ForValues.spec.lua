@@ -131,7 +131,7 @@ return function()
 		local scope = {}
 		local data = {"foo", "bar", "baz"}
 		local omitThird = Value(scope, false)
-		local forObject = ForValues(scope, data, function(use, value)
+		local forObject = ForValues(scope, data, function(_, use, value)
 			if value == "bar" then
 				return nil
 			end
@@ -156,67 +156,66 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("doesn't call destructor on creation", function()
+	it("doesn't destroy inner scope on creation", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(use, value)
-			return value, "meta" .. value
-		end, function(value, meta)
-			destructed[value] = true
-			destructed[meta] = true
+		local _ = ForValues(scope, data, function(innerScope, _, value)
+			table.insert(innerScope, function()
+				destructed[value] = true
+			end)
+			return value
 		end)
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
-		expect(destructed.metabar).to.equal(nil)
+		data:set({"foo", "bar", "baz"})
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		expect(destructed.baz).to.equal(nil)
 		doCleanup(scope)
 	end)
 
-	it("calls destructor on update", function()
+	it("destroys inner scope on update", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(use, value)
-			return value, "meta" .. value
-		end, function(value, meta)
-			destructed[value] = true
-			destructed[meta] = true
+		local _ = ForValues(scope, data, function(innerScope, _, value)
+			table.insert(innerScope, function()
+				destructed[value] = true
+			end)
+			return value
 		end)
-		data:set({"foo", "baz"})
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		data:set({"baz"})
+		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
-		expect(destructed.metabar).to.equal(true)
+		expect(destructed.baz).to.equal(nil)
 		doCleanup(scope)
 	end)
 
-	it("calls destructor on destroy", function()
+	it("destroys inner scope on destroy", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(use, value)
-			return value, "meta" .. value
-		end, function(value, meta)
-			destructed[value] = true
-			destructed[meta] = true
+		local _ = ForValues(scope, data, function(innerScope, _, value)
+			table.insert(innerScope, function()
+				destructed[value] = true
+			end)
+			return value
 		end)
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
-		expect(destructed.metabar).to.equal(nil)
 		doCleanup(scope)
 		expect(destructed.foo).to.equal(true)
-		expect(destructed.metafoo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
-		expect(destructed.metabar).to.equal(true)
 	end)
 
 	it("doesn't recompute when values are preserved", function()
 		local scope = {}
 		local data = Value(scope, {"foo", "bar"})
 		local computations = 0
-		local forObject = ForValues(scope, data, function(_, value)
+		local forObject = ForValues(scope, data, function(_, _, value)
 			computations += 1
 			return string.upper(value)
 		end)
@@ -236,7 +235,7 @@ return function()
 		local scope = {}
 		local data = Value(scope, {"foo", "foo", "foo"})
 		local computations = 0
-		local forObject = ForValues(scope, data, function(_, value)
+		local forObject = ForValues(scope, data, function(_, _, value)
 			computations += 1
 			return string.upper(value)
 		end)
