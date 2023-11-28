@@ -20,27 +20,30 @@ local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+-- Memory
+local doCleanup = require(Package.Memory.doCleanup)
 
-local function ForValues<K, VI, VO, M>(
-	scope: {PubTypes.Task},
+local function ForValues<K, VI, VO, S>(
+	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[K]: VI}>,
-	processor: (PubTypes.Use, VI) -> (VO, M?),
-	destructor: (VO, M?) -> ()?
+	processor: (PubTypes.Scope<S>, PubTypes.Use, VI) -> VO
 ): Types.For<K, K, VI, VO>
 
 	return For(
 		scope,
 		inputTable,
 		function(scope, _, inputValue)
-			return nil, Computed(scope, function(use)
-				local ok, value, meta = xpcall(processor, parseError, use, use(inputValue))
+			return nil, Computed(scope, function(scope, use)
+				local ok, value, meta = xpcall(processor, parseError, scope, use, use(inputValue))
 				if ok then
 					return value, meta
 				else
 					logErrorNonFatal("forProcessorError", parseError)
+					doCleanup(scope)
+					table.clear(scope)
 					return nil
 				end
-			end, destructor)
+			end)
 		end
 	)
 end

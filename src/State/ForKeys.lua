@@ -20,11 +20,13 @@ local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+-- Memory
+local doCleanup = require(Package.Memory.doCleanup)
 
-local function ForKeys<KI, KO, V, M>(
-	scope: {PubTypes.Task},
+local function ForKeys<KI, KO, V, S>(
+	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[KI]: V}>,
-	processor: (PubTypes.Use, KI) -> (KO, M?)
+	processor: (PubTypes.Scope<S>, PubTypes.Use, KI) -> KO
 ): Types.For<KI, KO, V, V>
 
 	return For(
@@ -37,6 +39,8 @@ local function ForKeys<KI, KO, V, M>(
 					return key, meta
 				else
 					logErrorNonFatal("forProcessorError", parseError)
+					doCleanup(scope)
+					table.clear(scope)
 					return nil
 				end
 			end), inputValue

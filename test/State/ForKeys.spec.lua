@@ -86,11 +86,16 @@ return function()
 		local scope = {}
 		local data = {foo = 1, bar = 2, baz = 3}
 		local suffix = Value(scope, "first")
-		local forObject = ForKeys(scope, data, function(_, use, key)
+		local destroyed = {}
+		local forObject = ForKeys(scope, data, function(innerScope, use, key)
+			local value = key .. use(suffix)
+			table.insert(innerScope, function()
+				destroyed[value] = true
+			end)
 			if key == "bar" and use(suffix) == "second" then
 				error("This is an intentional error from a unit test")
 			end
-			return key .. use(suffix)
+			return value
 		end)
 		expect(peek(forObject).foofirst).to.equal(1)
 		expect(peek(forObject).barfirst).to.equal(2)
@@ -102,6 +107,12 @@ return function()
 		expect(peek(forObject).foosecond).to.equal(1)
 		expect(peek(forObject).barsecond).to.equal(nil)
 		expect(peek(forObject).bazsecond).to.equal(3)
+		expect(destroyed.foofirst).to.equal(true)
+		expect(destroyed.barfirst).to.equal(true)
+		expect(destroyed.bazfirst).to.equal(true)
+		expect(destroyed.foosecond).to.equal(nil)
+		expect(destroyed.barsecond).to.equal(true)
+		expect(destroyed.bazsecond).to.equal(nil)
 		suffix:set("third")
 		expect(peek(forObject).foofirst).to.equal(nil)
 		expect(peek(forObject).barfirst).to.equal(nil)
@@ -198,6 +209,4 @@ return function()
 		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
 	end)
-
-	
 end
