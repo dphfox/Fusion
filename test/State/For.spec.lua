@@ -42,10 +42,10 @@ return function()
 			numCalls += 1
 			local k, v = peek(inputKey), peek(inputValue)
 			seen[k] = v
-			local outputKey = Computed(scope, function(use)
+			local outputKey = Computed(scope, function(_, use)
 				return string.upper(use(inputKey))
 			end)
-			local outputValue = Computed(scope, function(use)
+			local outputValue = Computed(scope, function(_, use)
 				return use(inputValue) * 10
 			end)
 			return outputKey, outputValue
@@ -66,10 +66,10 @@ return function()
 		local numCalls = 0
 		local forObject = For(scope, data, function(scope, inputKey, inputValue)
 			numCalls += 1
-			local outputKey = Computed(scope, function(use)
+			local outputKey = Computed(scope, function(_, use)
 				return string.upper(use(inputKey))
 			end)
-			local outputValue = Computed(scope, function(use)
+			local outputValue = Computed(scope, function(_, use)
 				return use(inputValue) * 10
 			end)
 			return outputKey, outputValue
@@ -129,7 +129,7 @@ return function()
 		local data = {first = 1, second = 2, third = 3}
 		local omitThird = Value(scope, false)
 		local forObject1 = For(scope, data, function(scope, inputKey, inputValue)
-			return inputKey, Computed(scope, function(use)
+			return inputKey, Computed(scope, function(_, use)
 				if use(inputKey) == "second" then
 					return nil
 				elseif use(inputKey) == "third" and use(omitThird) then
@@ -140,7 +140,7 @@ return function()
 			end)
 		end)
 		local forObject2 = For(scope, data, function(scope, inputKey, inputValue)
-			return Computed(scope, function(use)
+			return Computed(scope, function(_, use)
 				if use(inputKey) == "second" then
 					return nil
 				elseif use(inputKey) == "third" and use(omitThird) then

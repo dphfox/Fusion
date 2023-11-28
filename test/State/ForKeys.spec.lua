@@ -34,7 +34,7 @@ return function()
 	it("iterates on constants", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
-		local forObject = ForKeys(scope, data, function(_, key)
+		local forObject = ForKeys(scope, data, function(_, _, key)
 			return key:upper()
 		end)
 		expect(peek(forObject)).to.be.a("table")
@@ -46,7 +46,7 @@ return function()
 	it("iterates on state objects", function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local forObject = ForKeys(scope, data, function(_, key)
+		local forObject = ForKeys(scope, data, function(_, _, key)
 			return key:upper()
 		end)
 		expect(peek(forObject)).to.be.a("table")
@@ -58,7 +58,7 @@ return function()
 	it("computes with constants", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
-		local forObject = ForKeys(scope, data, function(use, key)
+		local forObject = ForKeys(scope, data, function(_, use, key)
 			return key .. use("baz")
 		end)
 		expect(peek(forObject).foobaz).to.equal(1)
@@ -70,7 +70,7 @@ return function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
 		local suffix = Value(scope, "first")
-		local forObject = ForKeys(scope, data, function(use, key)
+		local forObject = ForKeys(scope, data, function(_, use, key)
 			return key .. use(suffix)
 		end)
 		expect(peek(forObject).foofirst).to.equal(1)
@@ -83,36 +83,15 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("omits keys that error", function()
-		local scope = {}
-		local data = {foo = 1, bar = 2, baz = 3}
-		local omitThird = Value(scope, false)
-		local forObject = ForKeys(scope, data, function(use, key)
-			assert(key ~= "bar", "This is an intentional error from a unit test")
-			if use(omitThird) then
-				assert(key ~= "baz", "This is an intentional error from a unit test")
-			end
-			return key
-		end)
-		expect(peek(forObject).foo).to.equal(1)
-		expect(peek(forObject).bar).to.equal(nil)
-		expect(peek(forObject).baz).to.equal(3)
-		omitThird:set(true)
-		expect(peek(forObject).foo).to.equal(1)
-		expect(peek(forObject).bar).to.equal(nil)
-		expect(peek(forObject).baz).to.equal(nil)
-		omitThird:set(false)
-		expect(peek(forObject).foo).to.equal(1)
-		expect(peek(forObject).bar).to.equal(nil)
-		expect(peek(forObject).baz).to.equal(3)
-		doCleanup(scope)
+	it("destroys and reverts keys that error during processing", function()
+		error("TODO")
 	end)
 
 	it("omits keys that return nil", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2, baz = 3}
 		local omitThird = Value(scope, false)
-		local forObject = ForKeys(scope, data, function(use, key)
+		local forObject = ForKeys(scope, data, function(_, use, key)
 			if key == "bar" then
 				return nil
 			end
@@ -137,79 +116,60 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("doesn't call destructor on creation", function()
+	it("doesn't destroy inner scope on creation", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(use, key)
-			return key, "meta" .. key
-		end, function(key, meta)
-			destructed[key] = true
-			destructed[meta] = true
+		local _ = ForKeys(scope, data, function(innerScope, _, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
+			end)
+			return key
 		end)
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
-		expect(destructed.metabar).to.equal(nil)
+		data:set({foo = 1, bar = 2, baz = 3})
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		expect(destructed.baz).to.equal(nil)
 		doCleanup(scope)
 	end)
 
-	it("calls destructor on update", function()
+	it("destroys inner scope on update", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(use, key)
-			return key, "meta" .. key
-		end, function(key, meta)
-			destructed[key] = true
-			destructed[meta] = true
+		local _ = ForKeys(scope, data, function(innerScope, _, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
+			end)
+			return key
 		end)
-		data:set({foo = 100, baz = 3})
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		data:set({baz = 3})
+		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
-		expect(destructed.metabar).to.equal(true)
+		expect(destructed.baz).to.equal(nil)
 		doCleanup(scope)
 	end)
 
-	it("calls destructor on destroy", function()
+	it("destroys inner scope on destroy", function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(use, key)
-			return key, "meta" .. key
-		end, function(key, meta)
-			destructed[key] = true
-			destructed[meta] = true
+		local _ = ForKeys(scope, data, function(innerScope, _, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
+			end)
+			return key
 		end)
 		expect(destructed.foo).to.equal(nil)
-		expect(destructed.metafoo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
-		expect(destructed.metabar).to.equal(nil)
 		doCleanup(scope)
 		expect(destructed.foo).to.equal(true)
-		expect(destructed.metafoo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
-		expect(destructed.metabar).to.equal(true)
 	end)
 
-	it("doesn't recompute when keys are preserved", function()
-		local scope = {}
-		local data = Value(scope, {foo = 1, bar = 2})
-		local computations = 0
-		local forObject = ForKeys(scope, data, function(_, key)
-			computations += 1
-			return string.upper(key)
-		end)
-		expect(computations).to.equal(2)
-		data:set({foo = 3, bar = 4})
-		expect(computations).to.equal(2)
-		data:set({foo = 3, bar = 4, baz = 5})
-		expect(computations).to.equal(3)
-		data:set({foo = 3, bar = 4, baz = 5})
-		expect(computations).to.equal(3)
-		data:set({garb = 6})
-		expect(computations).to.equal(4)
-		doCleanup(scope)
-	end)
+	
 end
