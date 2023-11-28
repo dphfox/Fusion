@@ -61,8 +61,9 @@ function class:update(): boolean
 		-- NOTE: we also reuse processors with nil output keys here, so long as
 		-- they match values. This ensures they don't get recomputed either.
 		for tryReuseProcessor in existingProcessors do
-			if tryReuseProcessor.outputKey == nil then
-				local value = peek(tryReuseProcessor.inputValue)
+			local key = peek(tryReuseProcessor.inputPair).key
+			local value = peek(tryReuseProcessor.inputPair).value
+			if key == nil then
 				for key, remainingValues in remainingPairs do
 					if remainingValues[value] ~= nil then
 						remainingValues[value] = nil
@@ -73,8 +74,6 @@ function class:update(): boolean
 					end
 				end
 			else
-				local key = peek(tryReuseProcessor.inputKey)
-				local value = peek(tryReuseProcessor.inputValue)
 				local remainingValues = remainingPairs[key]
 				if remainingValues ~= nil and remainingValues[value] ~= nil then
 					remainingValues[value] = nil
@@ -87,13 +86,13 @@ function class:update(): boolean
 		-- Next, try and reuse processors who match the key of a remaining pair.
 		-- The value will change but the key will stay stable.
 		for tryReuseProcessor in existingProcessors do
-			local key = peek(tryReuseProcessor.inputKey)
+			local key = peek(tryReuseProcessor.inputPair).key
 			local remainingValues = remainingPairs[key]
 			if remainingValues ~= nil then
 				local value = next(remainingValues)
 				if value ~= nil then
 					remainingValues[value] = nil
-					tryReuseProcessor.inputValue:set(value)
+					tryReuseProcessor.inputPair:set({key = key, value = value})
 					newProcessors[tryReuseProcessor] = true
 					existingProcessors[tryReuseProcessor] = nil
 				end
@@ -102,11 +101,11 @@ function class:update(): boolean
 		-- Next, try and reuse processors who match the value of a remaining pair.
 		-- The key will change but the value will stay stable.
 		for tryReuseProcessor in existingProcessors do
-			local value = peek(tryReuseProcessor.inputValue)
+			local value = peek(tryReuseProcessor.inputPair).value
 			for key, remainingValues in remainingPairs do
 				if remainingValues[value] ~= nil then
 					remainingValues[value] = nil
-					tryReuseProcessor.inputKey:set(key)
+					tryReuseProcessor.inputPair:set({key = key, value = value})
 					newProcessors[tryReuseProcessor] = true
 					existingProcessors[tryReuseProcessor] = nil
 					break
@@ -120,8 +119,7 @@ function class:update(): boolean
 				local value = next(remainingValues)
 				if value ~= nil then
 					remainingValues[value] = nil
-					tryReuseProcessor.inputKey:set(key)
-					tryReuseProcessor.inputValue:set(value)
+					tryReuseProcessor.inputPair:set({key = key, value = value})
 					newProcessors[tryReuseProcessor] = true
 					existingProcessors[tryReuseProcessor] = nil
 					break
@@ -141,44 +139,36 @@ function class:update(): boolean
 		for key, remainingValues in remainingPairs do
 			for value in remainingValues do
 				local scope = {}
-				local inputKey = Value(scope, key)
-				local inputValue = Value(scope, value)
-				
-				if _G.VERBOSE then print("MAKING", key, value) end
-				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, scope, inputKey, inputValue)
+				local inputPair = Value(scope, {key = key, value = value})
+				local processOK, outputPair = xpcall(self._processor, parseError, scope, inputPair)
 				if processOK then
 					local processor = {
-						inputKey = inputKey,
-						inputValue = inputValue,
-						outputKey = outputKey,
-						outputValue = outputValue,
+						inputPair = inputPair,
+						outputPair = outputPair,
 						cleanupTask = scope
 					}
 					newProcessors[processor] = true
 				else
-					if _G.VERBOSE then print("PROCESS NOT OK", outputKey) end
-					logErrorNonFatal("forProcessorError", outputKey)
+					logErrorNonFatal("forProcessorError", outputPair)
 				end
 			end
 		end
 	end
 
 	for processor in newProcessors do
-		local key, value = processor.outputKey, processor.outputValue
+		local pair = processor.outputPair
+		pair.dependentSet[self], self.dependencySet[pair] = true, true
+		local key, value = peek(pair).key, peek(pair).value
+		if value == nil then
+			continue
+		end
 		if key == nil then
 			key = #newOutputTable + 1
-		else
-			key.dependentSet[self], self.dependencySet[key] = true, true
 		end
-		value.dependentSet[self], self.dependencySet[value] = true, true
-		local keyValue, valueValue = peek(key), peek(value)
-		if keyValue == nil or valueValue == nil then
-			continue
-		elseif newOutputTable[keyValue] == nil then
-			newOutputTable[keyValue] = valueValue
-			if _G.VERBOSE then print(keyValue, valueValue) end
+		if newOutputTable[key] == nil then
+			newOutputTable[key] = value
 		else
-			logErrorNonFatal("forKeyCollision", keyValue)
+			logErrorNonFatal("forKeyCollision", key)
 		end
 	end
 
@@ -218,9 +208,8 @@ local function For<KI, VI, KO, VO>(
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (
 		{any},
-		PubTypes.StateObject<KI>,
-		PubTypes.StateObject<VI>
-	) -> (PubTypes.StateObject<KO>?, PubTypes.StateObject<VO>)
+		PubTypes.StateObject<{key: KI, value: VI}>
+	) -> (PubTypes.StateObject<{key: KO?, value: VO}>)
 ): Types.For<KI, KO, VI, VO>
 
 	local self = setmetatable({

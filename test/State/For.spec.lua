@@ -37,17 +37,13 @@ return function()
 		local data = {foo = 1, bar = 2}
 		local seen = {}
 		local numCalls = 0
-		local forObject = For(scope, data, function(scope, inputKey, inputValue)
+		local forObject = For(scope, data, function(scope, inputPair)
 			numCalls += 1
-			local k, v = peek(inputKey), peek(inputValue)
+			local k, v = peek(inputPair).key, peek(inputPair).value
 			seen[k] = v
-			local outputKey = Computed(scope, function(_, use)
-				return string.upper(use(inputKey))
+			return Computed(scope, function(_, use)
+				return {key = string.upper(use(inputPair).key), value = use(inputPair).value * 10}
 			end)
-			local outputValue = Computed(scope, function(_, use)
-				return use(inputValue) * 10
-			end)
-			return outputKey, outputValue
 		end)
 		expect(numCalls).to.equal(2)
 		expect(seen.foo).to.equal(1)
@@ -63,15 +59,11 @@ return function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
 		local numCalls = 0
-		local forObject = For(scope, data, function(scope, inputKey, inputValue)
+		local forObject = For(scope, data, function(scope, inputPair)
 			numCalls += 1
-			local outputKey = Computed(scope, function(_, use)
-				return string.upper(use(inputKey))
+			return Computed(scope, function(_, use)
+				return {key = string.upper(use(inputPair).key), value = use(inputPair).value * 10}
 			end)
-			local outputValue = Computed(scope, function(_, use)
-				return use(inputValue) * 10
-			end)
-			return outputKey, outputValue
 		end)
 		expect(numCalls).to.equal(2)
 
@@ -113,9 +105,9 @@ return function()
 	it("omits pairs that error", function()
 		local scope = {}
 		local data = {first = 1, second = 2, third = 3}
-		local forObject = For(scope, data, function(scope, inputKey, inputValue)
-			assert(peek(inputKey) ~= "second", "This is an intentional error from a unit test")
-			return inputKey, inputValue
+		local forObject = For(scope, data, function(scope, inputPair)
+			assert(peek(inputPair).key ~= "second", "This is an intentional error from a unit test")
+			return inputPair
 		end)
 		expect(peek(forObject).first).to.equal(1)
 		expect(peek(forObject).second).to.equal(nil)
@@ -123,52 +115,56 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("omits pairs when their key or value is nil", function()
+	it("omits pairs when their value is nil", function()
 		local scope = {}
 		local data = {first = 1, second = 2, third = 3}
 		local omitThird = Value(scope, false)
-		local forObject1 = For(scope, data, function(scope, inputKey, inputValue)
-			return inputKey, Computed(scope, function(_, use)
-				if use(inputKey) == "second" then
-					return nil
-				elseif use(inputKey) == "third" and use(omitThird) then
-					return nil
+		local forObject = For(scope, data, function(scope, inputPair)
+			return Computed(scope, function(_, use)
+				if use(inputPair).key == "second" then
+					return {key = use(inputPair).key, value = nil}
+				elseif use(inputPair).key == "third" and use(omitThird) then
+					return {key = use(inputPair).key, value = nil}
 				else
-					return use(inputValue)
+					return use(inputPair)
 				end
 			end)
 		end)
-		local forObject2 = For(scope, data, function(scope, inputKey, inputValue)
-			return Computed(scope, function(_, use)
-				if use(inputKey) == "second" then
-					return nil
-				elseif use(inputKey) == "third" and use(omitThird) then
-					return nil
-				else
-					return use(inputKey)
-				end
-			end), inputValue
-		end)
-		expect(peek(forObject1).first).to.equal(1)
-		expect(peek(forObject1).second).to.equal(nil)
-		expect(peek(forObject1).third).to.equal(3)
-		expect(peek(forObject2).first).to.equal(1)
-		expect(peek(forObject2).second).to.equal(nil)
-		expect(peek(forObject2).third).to.equal(3)
+		expect(peek(forObject).first).to.equal(1)
+		expect(peek(forObject).second).to.equal(nil)
+		expect(peek(forObject).third).to.equal(3)
 		omitThird:set(true)
-		expect(peek(forObject1).first).to.equal(1)
-		expect(peek(forObject1).second).to.equal(nil)
-		expect(peek(forObject1).third).to.equal(nil)
-		expect(peek(forObject2).first).to.equal(1)
-		expect(peek(forObject2).second).to.equal(nil)
-		expect(peek(forObject2).third).to.equal(nil)
+		expect(peek(forObject).first).to.equal(1)
+		expect(peek(forObject).second).to.equal(nil)
+		expect(peek(forObject).third).to.equal(nil)
 		omitThird:set(false)
-		expect(peek(forObject1).first).to.equal(1)
-		expect(peek(forObject1).second).to.equal(nil)
-		expect(peek(forObject1).third).to.equal(3)
-		expect(peek(forObject2).first).to.equal(1)
-		expect(peek(forObject2).second).to.equal(nil)
-		expect(peek(forObject2).third).to.equal(3)
+		expect(peek(forObject).first).to.equal(1)
+		expect(peek(forObject).second).to.equal(nil)
+		expect(peek(forObject).third).to.equal(3)
 		doCleanup(scope)
+	end)
+
+	it("allows values to roam when their key is nil", function()
+		error("TODO")
+		-- local scope = {}
+		-- local data = {first = 1, second = 2, third = 3}
+		-- local omitThird = Value(scope, false)
+		-- local forObject = For(scope, data, function(scope, inputPair)
+		-- 	return Computed(scope, function(_, use)
+		-- 		return {key = nil, value = use(inputPair).value}
+		-- 	end)
+		-- end)
+		-- expect(peek(forObject).first).to.equal(1)
+		-- expect(peek(forObject).second).to.equal(nil)
+		-- expect(peek(forObject).third).to.equal(3)
+		-- omitThird:set(true)
+		-- expect(peek(forObject).first).to.equal(1)
+		-- expect(peek(forObject).second).to.equal(nil)
+		-- expect(peek(forObject).third).to.equal(nil)
+		-- omitThird:set(false)
+		-- expect(peek(forObject).first).to.equal(1)
+		-- expect(peek(forObject).second).to.equal(nil)
+		-- expect(peek(forObject).third).to.equal(3)
+		-- doCleanup(scope)
 	end)
 end

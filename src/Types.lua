@@ -60,22 +60,19 @@ export type Computed<T, S> = PubTypes.Computed<T> & {
 export type For<KI, KO, VI, VO> = PubTypes.For<KO, VO> & {
 	_processor: (
 		{any},
-		PubTypes.StateObject<KI>,
-		PubTypes.StateObject<VI>
-	) -> (PubTypes.StateObject<KO>?, PubTypes.StateObject<VO>),
+		PubTypes.StateObject<{key: KI, value: VI}>
+	) -> (PubTypes.StateObject<{key: KO?, value: VO}>),
 	_inputTable: PubTypes.CanBeState<{[KI]: VI}>,
 	_existingInputTable: {[KI]: VI}?,
 	_existingOutputTable: {[KO]: VO},
-	_existingProcessors: {[For_Processor]: true},
+	_existingProcessors: {[ForProcessor]: true},
 	_newOutputTable: {[KO]: VO},
-	_newProcessors: {[For_Processor]: true},
+	_newProcessors: {[ForProcessor]: true},
 	_remainingPairs: {[KI]: {[VI]: true}}
 }
-type For_Processor = {
-	inputKey: PubTypes.Value<any>,
-	inputValue: PubTypes.Value<any>,
-	outputKey: PubTypes.StateObject<any>,
-	outputValue: PubTypes.StateObject<any>,
+type ForProcessor = {
+	inputPair: PubTypes.Value<{key: any, value: any}>,
+	outputPair: PubTypes.StateObject<{key: any, value: any}>,
 	cleanupTask: any
 }
 

@@ -32,16 +32,16 @@ local function ForValues<K, VI, VO, S>(
 	return For(
 		scope,
 		inputTable,
-		function(scope, _, inputValue)
-			return nil, Computed(scope, function(scope, use)
-				local ok, value = xpcall(processor, parseError, scope, use, use(inputValue))
+		function(scope, inputPair)
+			return Computed(scope, function(scope, use)
+				local ok, value = xpcall(processor, parseError, scope, use, use(inputPair).value)
 				if ok then
-					return value
+					return {key = nil, value = value}
 				else
 					logErrorNonFatal("forProcessorError", parseError)
 					doCleanup(scope)
 					table.clear(scope)
-					return nil
+					return {key = nil, value = nil}
 				end
 			end)
 		end

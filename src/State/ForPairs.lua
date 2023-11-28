@@ -32,9 +32,9 @@ local function ForPairs<KI, KO, VI, VO, S>(
 	return For(
 		scope,
 		inputTable,
-		function(scope, inputKey, inputValue)
-			local pair = Computed(scope, function(scope, use)
-				local ok, key, value = xpcall(processor, parseError, scope, use, use(inputKey), use(inputValue))
+		function(scope, inputPair)
+			return Computed(scope, function(scope, use)
+				local ok, key, value = xpcall(processor, parseError, scope, use, use(inputPair).key, use(inputPair).value)
 				if ok then
 					return {key = key, value = value}
 				else
@@ -43,11 +43,6 @@ local function ForPairs<KI, KO, VI, VO, S>(
 					table.clear(scope)
 					return {key = nil, value = nil}
 				end
-			end)
-			return Computed(scope, function(_, use)
-				return use(pair).key
-			end), Computed(scope, function(_, use)
-				return use(pair).value
 			end)
 		end
 	)
