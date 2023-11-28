@@ -44,9 +44,9 @@ local function ForPairs<KI, KO, VI, VO, S>(
 					return {key = nil, value = nil}
 				end
 			end)
-			return Computed(function(_, use)
+			return Computed(scope, function(_, use)
 				return use(pair).key
-			end), Computed(function(_, use)
+			end), Computed(scope, function(_, use)
 				return use(pair).value
 			end)
 		end
