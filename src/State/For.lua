@@ -143,6 +143,8 @@ function class:update(): boolean
 				local scope = {}
 				local inputKey = Value(scope, key)
 				local inputValue = Value(scope, value)
+				
+				if _G.VERBOSE then print("MAKING", key, value) end
 				local processOK, outputKey, outputValue = xpcall(self._processor, parseError, scope, inputKey, inputValue)
 				if processOK then
 					local processor = {
@@ -154,6 +156,7 @@ function class:update(): boolean
 					}
 					newProcessors[processor] = true
 				else
+					if _G.VERBOSE then print("PROCESS NOT OK", outputKey) end
 					logErrorNonFatal("forProcessorError", outputKey)
 				end
 			end
@@ -173,6 +176,7 @@ function class:update(): boolean
 			continue
 		elseif newOutputTable[keyValue] == nil then
 			newOutputTable[keyValue] = valueValue
+			if _G.VERBOSE then print(keyValue, valueValue) end
 		else
 			logErrorNonFatal("forKeyCollision", keyValue)
 		end
