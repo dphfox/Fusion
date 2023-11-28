@@ -23,7 +23,7 @@ Children.type = "SpecialKey"
 Children.kind = "Children"
 Children.stage = "descendants"
 
-function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
+function Children:apply(propValue: any, applyTo: Instance, scope: PubTypes.Scope<any>)
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 
@@ -136,7 +136,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: PubType
 		end
 	end
 
-	table.insert(cleanupTasks, function()
+	table.insert(scope, function()
 		propValue = nil
 		updateQueued = true
 		updateChildren()

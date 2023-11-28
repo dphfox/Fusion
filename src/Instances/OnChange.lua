@@ -15,14 +15,14 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 	changeKey.kind = "OnChange"
 	changeKey.stage = "observer"
 
-	function changeKey:apply(callback: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
+	function changeKey:apply(callback: any, applyTo: Instance, scope: PubTypes.Scope<any>)
 		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
 			logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
 		elseif typeof(callback) ~= "function" then
 			logError("invalidChangeHandler", nil, propertyName)
 		else
-			table.insert(cleanupTasks, event:Connect(function()
+			table.insert(scope, event:Connect(function()
 				callback((applyTo :: any)[propertyName])
 			end))
 		end

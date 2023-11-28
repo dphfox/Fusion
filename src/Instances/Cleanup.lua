@@ -13,8 +13,8 @@ Cleanup.type = "SpecialKey"
 Cleanup.kind = "Cleanup"
 Cleanup.stage = "observer"
 
-function Cleanup:apply(userTask: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
-	table.insert(cleanupTasks, userTask)
+function Cleanup:apply(userTask: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+	table.insert(scope, userTask)
 end
 
 return Cleanup

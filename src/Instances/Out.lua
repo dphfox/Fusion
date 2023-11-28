@@ -16,7 +16,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 	outKey.kind = "Out"
 	outKey.stage = "observer"
 
-	function outKey:apply(outState: any, applyTo: Instance, cleanupTasks: { PubTypes.Task })
+	function outKey:apply(outState: any, applyTo: Instance, scope: { PubTypes.Task })
 		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
 			logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
@@ -25,12 +25,12 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		else
 			outState:set((applyTo :: any)[propertyName])
 			table.insert(
-				cleanupTasks,
+				scope,
 				event:Connect(function()
 					outState:set((applyTo :: any)[propertyName])
 				end)
 			)
-			table.insert(cleanupTasks, function()
+			table.insert(scope, function()
 				outState:set(nil)
 			end)
 		end

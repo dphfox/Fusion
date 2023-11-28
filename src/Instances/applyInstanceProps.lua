@@ -50,7 +50,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: PubTypes.Scope<any>)
+local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, scope: PubTypes.Scope<any>)
 	if xtypeof(value) == "State" then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
@@ -65,7 +65,7 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 		end
 
 		setProperty(instance, property, peek(value))
-		table.insert(cleanupTasks, Observer(cleanupTasks, value :: any):onChange(updateLater))
+		table.insert(scope, Observer(scope, value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
 		setProperty(instance, property, value)

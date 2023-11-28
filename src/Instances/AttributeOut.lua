@@ -16,7 +16,7 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 	attributeOutKey.kind = "AttributeOut"
 	attributeOutKey.stage = "observer"
 
-	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, cleanupTasks: { PubTypes.Task })
+	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, scope: { PubTypes.Task })
 		if xtypeof(stateObject) ~= "State" or stateObject.kind ~= "Value" then
 			logError("invalidAttributeOutType")
 		end
@@ -28,10 +28,10 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
-			table.insert(cleanupTasks, event:Connect(function()	
+			table.insert(scope, event:Connect(function()	
 				stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			end))
-			table.insert(cleanupTasks, function()
+			table.insert(scope, function()
 				stateObject:set(nil)
 			end)
 		end

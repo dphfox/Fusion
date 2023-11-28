@@ -175,7 +175,7 @@ export type SpecialKey = {
 	type: "SpecialKey",
 	kind: string,
 	stage: "self" | "descendants" | "ancestor" | "observer",
-	apply: (SpecialKey, value: any, applyTo: Instance, cleanupTasks: {Task}) -> ()
+	apply: (SpecialKey, value: any, applyTo: Instance, scope: {Task}) -> ()
 }
 
 -- A collection of instances that may be parented to another instance.

@@ -17,7 +17,7 @@ local function setAttribute(instance: Instance, attribute: string, value: any)
     instance:SetAttribute(attribute, value)
 end
 
-local function bindAttribute(instance: Instance, attribute: string, value: any, cleanupTasks: PubTypes.Scope<any>)
+local function bindAttribute(instance: Instance, attribute: string, value: any, scope: PubTypes.Scope<any>)
     if xtypeof(value) == "State" then
         local didDefer = false
         local function update()
@@ -30,7 +30,7 @@ local function bindAttribute(instance: Instance, attribute: string, value: any, 
             end
         end
 	    setAttribute(instance, attribute, peek(value))
-	    table.insert(cleanupTasks, Observer(value :: any):onChange(update))
+	    table.insert(scope, Observer(value :: any):onChange(update))
     else
         setAttribute(instance, attribute, value)
     end
@@ -46,8 +46,8 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
         logError("attributeNameNil")
     end
 
-    function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
-        bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
+    function AttributeKey:apply(attributeValue: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+        bindAttribute(applyTo, attributeName, attributeValue, scope)
     end
     return AttributeKey
 end

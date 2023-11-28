@@ -20,7 +20,7 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
     	logError("attributeNameNil")
 	end
 
-	function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
+	function attributeKey:apply(callback: any, applyTo: Instance, scope: PubTypes.Scope<any>)
 		if typeof(callback) ~= "function" then
 			logError("invalidAttributeChangeHandler", nil, attributeName)
 		end
@@ -29,7 +29,7 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 			logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
 		else
 			callback((applyTo :: any):GetAttribute(attributeName))
-			table.insert(cleanupTasks, event:Connect(function()
+			table.insert(scope, event:Connect(function()
 				callback((applyTo :: any):GetAttribute(attributeName))
 			end))
 		end
