@@ -41,7 +41,7 @@ local function ForPairs<KI, KO, VI, VO, S>(
 					logErrorNonFatal("forProcessorError", parseError)
 					doCleanup(scope)
 					table.clear(scope)
-					return nil
+					return {key = nil, value = nil}
 				end
 			end)
 			return Computed(function(_, use)
