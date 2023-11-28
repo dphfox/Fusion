@@ -24,8 +24,8 @@ local peek = require(Package.State.peek)
 local xtypeof = require(Package.Utility.xtypeof)
 
 local function setProperty_unsafe(
-	instance: Instance, 
-	property: string, 
+	instance: Instance,
+	property: string,
 	value: any
 )
 	(instance :: any)[property] = value
@@ -100,7 +100,7 @@ local function applyInstanceProps(
 
 		if keyType == "string" then
 			if key ~= "Parent" then
-				bindProperty(applyTo, key :: string, value, scope)
+				bindProperty(scope, applyTo, key :: string, value)
 			end
 		elseif keyType == "SpecialKey" then
 			local stage = (key :: PubTypes.SpecialKey).stage
@@ -124,7 +124,7 @@ local function applyInstanceProps(
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyTo, "Parent", props.Parent, scope)
+		bindProperty(scope, applyTo, "Parent", props.Parent)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do

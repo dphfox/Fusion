@@ -4,6 +4,7 @@ local Value = require(Package.State.Value)
 local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
+	FOCUS()
 	it("should assign properties (constant)", function()
 		local scope = {}
 		local instance = Instance.new("Folder")

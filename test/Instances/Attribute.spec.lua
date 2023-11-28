@@ -6,7 +6,6 @@ local Value = require(Package.State.Value)
 local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	FOCUS()
 	it("creates attributes (constant)", function()
 		local scope = {}
 		local child = New(scope, "Folder") {
