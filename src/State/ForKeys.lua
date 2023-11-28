@@ -33,8 +33,11 @@ local function ForKeys<KI, KO, V, S>(
 		scope,
 		inputTable,
 		function(scope, inputPair)
+			local inputKey = Computed(scope, function(scope, use)
+				return use(inputPair).key
+			end)
 			local outputKey = Computed(scope, function(scope, use)
-				local ok, key = xpcall(processor, parseError, scope, use, use(inputPair).key)
+				local ok, key = xpcall(processor, parseError, scope, use, use(inputKey))
 				if ok then
 					return key
 				else
