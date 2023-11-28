@@ -167,7 +167,7 @@ function class:destroy()
 end
 
 local function Spring<T>(
-	scope: {PubTypes.Task},
+	scope: PubTypes.Scope<any>,
 	goalState: PubTypes.Value<T>,
 	speed: PubTypes.CanBeState<number>?,
 	damping: PubTypes.CanBeState<number>?

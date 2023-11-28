@@ -20,7 +20,7 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
     	logError("attributeNameNil")
 	end
 
-	function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+	function attributeKey:apply(callback: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
 		if typeof(callback) ~= "function" then
 			logError("invalidAttributeChangeHandler", nil, attributeName)
 		end

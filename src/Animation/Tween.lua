@@ -78,7 +78,7 @@ function class:destroy()
 end
 
 local function Tween<T>(
-	scope: {PubTypes.Task},
+	scope: PubTypes.Scope<any>,
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>

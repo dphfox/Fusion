@@ -49,7 +49,7 @@ function class:destroy()
 end
 
 local function Value<T>(
-	scope: {PubTypes.Task},
+	scope: PubTypes.Scope<any>,
 	initialValue: T
 ): Types.State<T>
 	local self = setmetatable({

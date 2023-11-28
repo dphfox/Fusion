@@ -23,7 +23,7 @@ Children.type = "SpecialKey"
 Children.kind = "Children"
 Children.stage = "descendants"
 
-function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 

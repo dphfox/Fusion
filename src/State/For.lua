@@ -204,7 +204,7 @@ function class:destroy()
 end
 
 local function For<KI, VI, KO, VO>(
-	scope: {PubTypes.Task},
+	scope: PubTypes.Scope<any>,
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (
 		{any},

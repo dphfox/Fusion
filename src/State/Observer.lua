@@ -59,7 +59,7 @@ function class:destroy()
 end
 
 local function Observer(
-	scope: {PubTypes.Task},
+	scope: PubTypes.Scope<any>,
 	watchedState: PubTypes.Value<any>
 ): Types.Observer
 	local self = setmetatable({

@@ -50,7 +50,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
+local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: PubTypes.Scope<any>)
 	if xtypeof(value) == "State" then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false

@@ -17,7 +17,7 @@ local function setAttribute(instance: Instance, attribute: string, value: any)
     instance:SetAttribute(attribute, value)
 end
 
-local function bindAttribute(instance: Instance, attribute: string, value: any, cleanupTasks: {PubTypes.Task})
+local function bindAttribute(instance: Instance, attribute: string, value: any, cleanupTasks: PubTypes.Scope<any>)
     if xtypeof(value) == "State" then
         local didDefer = false
         local function update()
@@ -46,7 +46,7 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
         logError("attributeNameNil")
     end
 
-    function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
+    function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: PubTypes.Scope<any>)
         bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
     end
     return AttributeKey
