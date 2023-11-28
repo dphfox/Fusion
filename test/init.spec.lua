@@ -2,14 +2,32 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local Fusion = require(Package)
 
 return function()
-	it("should load with the correct public APIs", function()
+	itFOCUS("should load with the correct public APIs", function()
 		expect(Fusion).to.be.a("table")
 
 		local api = {
 			version = "table",
 
+			cleanup = "function",
+			doCleanup = "function",
+			doNothing = "function",
+			scoped = "function",
+			deriveScope = "function",
+
+			peek = "function",
+			Value = "function",
+			Computed = "function",
+			ForPairs = "function",
+			ForKeys = "function",
+			ForValues = "function",
+			Observer = "function",
+			
+			Tween = "function",
+			Spring = "function",
+
 			New = "function",
 			Hydrate = "function",
+			
 			Ref = "table",
 			Out = "function",
 			Cleanup = "table",
@@ -18,21 +36,7 @@ return function()
 			OnChange = "function",
 			Attribute = "function",
 			AttributeChange = "function",
-			AttributeOut = "function",
-
-			Value = "function",
-			Computed = "function",
-			ForPairs = "function",
-			ForKeys = "function",
-			ForValues = "function",
-			Observer = "function",
-
-			Tween = "function",
-			Spring = "function",
-
-			doCleanup = "function",
-			doNothing = "function",
-			peek = "function"
+			AttributeOut = "function"
 		}
 
 		for apiName, apiType in pairs(api) do

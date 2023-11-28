@@ -5,7 +5,6 @@ local peek = require(Package.State.peek)
 local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	FOCUS()
 	it("constructs in scopes", function()
 		local scope = {}
 		local computed = Computed(scope, function()
