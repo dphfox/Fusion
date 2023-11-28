@@ -9,32 +9,9 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local External = require(Package.External)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
-
-local function setAttribute(instance: Instance, attribute: string, value: any)
-    instance:SetAttribute(attribute, value)
-end
-
-local function bindAttribute(instance: Instance, attribute: string, value: any, scope: PubTypes.Scope<any>)
-    if xtypeof(value) == "State" then
-        local didDefer = false
-        local function update()
-            if not didDefer then
-                didDefer = true
-                External.doTaskDeferred(function()
-                    didDefer = false
-                    setAttribute(instance, attribute, peek(value))
-                end)
-            end
-        end
-	    setAttribute(instance, attribute, peek(value))
-	    table.insert(scope, Observer(value :: any):onChange(update))
-    else
-        setAttribute(instance, attribute, value)
-    end
-end
 
 local function Attribute(attributeName: string): PubTypes.SpecialKey
     local AttributeKey = {}
@@ -46,8 +23,27 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
         logError("attributeNameNil")
     end
 
-    function AttributeKey:apply(attributeValue: any, applyTo: Instance, scope: PubTypes.Scope<any>)
-        bindAttribute(applyTo, attributeName, attributeValue, scope)
+    function AttributeKey:apply(
+		scope: PubTypes.Scope<any>,
+		value: any,
+		applyTo: Instance
+	)
+		if isState(value) then
+			local didDefer = false
+			local function update()
+				if not didDefer then
+					didDefer = true
+					External.doTaskDeferred(function()
+						didDefer = false
+						applyTo:SetAttribute(attributeName, peek(value))
+					end)
+				end
+			end
+			applyTo:SetAttribute(attributeName, peek(value))
+			table.insert(scope, Observer(scope, value :: any):onChange(update))
+		else
+			applyTo:SetAttribute(attributeName, value)
+		end
     end
     return AttributeKey
 end

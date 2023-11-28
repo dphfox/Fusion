@@ -17,29 +17,35 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local doCleanup = require(Package.Memory.doCleanup)
 local External = require(Package.External)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
+local xtypeof = require(Package.Utility.xtypeof)
 
-local function setProperty_unsafe(instance: Instance, property: string, value: any)
+local function setProperty_unsafe(
+	instance: Instance, 
+	property: string, 
+	value: any
+)
 	(instance :: any)[property] = value
 end
 
-local function testPropertyAssignable(instance: Instance, property: string)
+local function testPropertyAssignable(
+	instance: Instance,
+	property: string
+)
 	(instance :: any)[property] = (instance :: any)[property]
 end
 
-local function setProperty(instance: Instance, property: string, value: any)
+local function setProperty(
+	instance: Instance,
+	property: string,
+	value: any
+)
 	if not pcall(setProperty_unsafe, instance, property, value) then
 		if not pcall(testPropertyAssignable, instance, property) then
-			if instance == nil then
-				-- reference has been lost
-				logError("setPropertyNilRef", nil, property, tostring(value))
-			else
-				-- property is not assignable
-				logError("cannotAssignProperty", nil, instance.ClassName, property)
-			end
+			logError("cannotAssignProperty", nil, instance.ClassName, property)
 		else
 			-- property is assignable, but this specific assignment failed
 			-- this typically implies the wrong type was received
@@ -50,8 +56,13 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, scope: PubTypes.Scope<any>)
-	if xtypeof(value) == "State" then
+local function bindProperty(
+	scope: PubTypes.Scope<any>,
+	instance: Instance,
+	property: string,
+	value: PubTypes.CanBeState<any>
+)
+	if isState(value) then
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
 		local function updateLater()
@@ -101,15 +112,15 @@ local function applyInstanceProps(
 			end
 		else
 			-- we don't recognise what this key is supposed to be
-			logError("unrecognisedPropertyKey", nil, xtypeof(key))
+			logError("unrecognisedPropertyKey", nil, keyType)
 		end
 	end
 
 	for key, value in pairs(specialKeys.self) do
-		key:apply(value, applyTo, scope)
+		key:apply(scope, value, applyTo)
 	end
 	for key, value in pairs(specialKeys.descendants) do
-		key:apply(value, applyTo, scope)
+		key:apply(scope, value, applyTo)
 	end
 
 	if props.Parent ~= nil then
@@ -117,10 +128,10 @@ local function applyInstanceProps(
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do
-		key:apply(value, applyTo, scope)
+		key:apply(scope, value, applyTo)
 	end
 	for key, value in pairs(specialKeys.observer) do
-		key:apply(value, applyTo, scope)
+		key:apply(scope, value, applyTo)
 	end
 
 	applyTo.Destroying:Connect(function()
