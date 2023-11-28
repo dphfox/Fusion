@@ -2,7 +2,7 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local Fusion = require(Package)
 
 return function()
-	itFOCUS("should load with the correct public APIs", function()
+	it("should load with the correct public APIs", function()
 		expect(Fusion).to.be.a("table")
 
 		local api = {

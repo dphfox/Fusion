@@ -19,7 +19,7 @@ local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
-local logError = require(Package.Logging.logError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local function ForKeys<KI, KO, V, M>(
 	scope: {PubTypes.Task},
@@ -36,7 +36,8 @@ local function ForKeys<KI, KO, V, M>(
 				if ok then
 					return key, meta
 				else
-					logError("forProcessorError", parseError)
+					logErrorNonFatal("forProcessorError", parseError)
+					return nil
 				end
 			end), inputValue
 		end
