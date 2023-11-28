@@ -88,14 +88,14 @@ return function()
 		local suffix = Value(scope, "first")
 		local destroyed = {}
 		local forObject = ForKeys(scope, data, function(innerScope, use, key)
-			local value = key .. use(suffix)
+			local generated = key .. use(suffix)
 			table.insert(innerScope, function()
-				destroyed[value] = true
+				destroyed[generated] = true
 			end)
 			if key == "bar" and use(suffix) == "second" then
 				error("This is an intentional error from a unit test")
 			end
-			return value
+			return generated
 		end)
 		expect(peek(forObject).foofirst).to.equal(1)
 		expect(peek(forObject).barfirst).to.equal(2)
