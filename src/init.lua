@@ -57,34 +57,4 @@ export type Tween<T> = PubTypes.Tween<T>
 export type Spring<T> = PubTypes.Spring<T>
 export type Use = PubTypes.Use
 
-type Fusion = {
-	version: PubTypes.Version,
-
-	New: (className: string) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
-	Hydrate: (target: Instance) -> ((propertyTable: PubTypes.PropertyTable) -> Instance),
-	Ref: PubTypes.SpecialKey,
-	Cleanup: PubTypes.SpecialKey,
-	Children: PubTypes.SpecialKey,
-	Out: (propertyName: string) -> PubTypes.SpecialKey,
-	OnEvent: (eventName: string) -> PubTypes.SpecialKey,
-	OnChange: (propertyName: string) -> PubTypes.SpecialKey,
-	Attribute: (attributeName: string) -> PubTypes.SpecialKey,
-	AttributeChange: (attributeName: string) -> PubTypes.SpecialKey,
-	AttributeOut: (attributeName: string) -> PubTypes.SpecialKey,
-
-	Value: <T>(initialValue: T) -> Value<T>,
-	Computed: <T, M>(callback: (Use) -> (T, M?), destructor: (T, M?) -> ()?) -> Computed<T>,
-	ForPairs: <KI, KO, VI, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> For<KO, VO>,
-	ForKeys: <KI, KO, V, M>(inputTable: CanBeState<{[KI]: V}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> For<KO, V>,
-	ForValues: <K, VI, VO, M>(inputTable: CanBeState<{[K]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> For<K, VO>,
-	Observer: (watchedState: StateObject<any>) -> Observer,
-
-	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
-	Spring: <T>(goalState: StateObject<T>, speed: CanBeState<number>?, damping: CanBeState<number>?) -> Spring<T>,
-
-	doCleanup: (...any) -> (),
-	doNothing: (...any) -> (),
-	peek: Use
-}
-
 return Fusion

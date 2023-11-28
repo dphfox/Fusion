@@ -49,7 +49,7 @@ function class:destroy()
 end
 
 local function Value<T>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	initialValue: T
 ): Types.State<T>
 	local self = setmetatable({
@@ -59,7 +59,7 @@ local function Value<T>(
 		_value = initialValue
 	}, CLASS_METATABLE)
 
-	table.insert(cleanupTable, self)
+	table.insert(scope, self)
 
 	return self
 end

@@ -21,14 +21,14 @@ local Computed = require(Package.State.Computed)
 local doNothing = require(Package.Memory.doNothing)
 
 local function ForPairs<KI, KO, VI, VO, M>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
 	processor: (PubTypes.Use, KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.For<KI, KO, VI, VO>
 
 	return For(
-		cleanupTable,
+		scope,
 		inputTable,
 		function(scope, inputKey, inputValue)
 			local pair = Computed(scope, function(use)

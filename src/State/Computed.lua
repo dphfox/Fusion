@@ -15,9 +15,11 @@ local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
-local needsDestruction = require(Package.Memory.needsDestruction)
 -- State
 local makeUseCallback = require(Package.State.makeUseCallback)
+-- Memory
+local doCleanup = require(Package.Memory.doCleanup)
+local deriveScope = require(Package.Memory.deriveScope)
 
 local class = {}
 
@@ -25,19 +27,10 @@ local CLASS_METATABLE = {__index = class}
 
 --[[
 	Called when a dependency changes value.
-	Returns true if this object changed value.
-]]
-function class:update(): boolean
-	return self:_recalculate(false)
-end
-
---[[
 	Recalculates this Computed's cached value and dependencies.
 	Returns true if it changed, or false if it's identical.
 ]]
-function class:_recalculate(
-	firstTime: boolean
-): boolean
+function class:update(): boolean
 	-- remove this object from its dependencies' dependent sets
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -50,21 +43,18 @@ function class:_recalculate(
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
+	local innerScope = deriveScope(self._outerScope)
 	local use = makeUseCallback(self.dependencySet)
-	local ok, newValue, newMetaValue = xpcall(self._processor, parseError, use)
+	local ok, newValue = xpcall(self._processor, parseError, innerScope, use)
 
 	if ok then
-		if self._destructor == nil and needsDestruction(newValue) then
-			logWarn("destructorNeededComputed")
-		end
-
 		local oldValue = self._value
 		local similar = isSimilar(oldValue, newValue)
-		if self._destructor ~= nil and not firstTime then
-			self._destructor(oldValue, self._meta)
+		if self._innerScope ~= nil then
+			doCleanup(self._innerScope)
 		end
 		self._value = newValue
-		self._meta = newMetaValue
+		self._innerScope = innerScope
 
 		-- add this object to the dependencies' dependent sets
 		for dependency in pairs(self.dependencySet) do
@@ -76,6 +66,8 @@ function class:_recalculate(
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
 		logErrorNonFatal("computedCallbackError", newValue)
+
+		doCleanup(innerScope)
 
 		-- restore old dependencies, because the new dependencies may be corrupt
 		self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
@@ -104,16 +96,16 @@ function class:destroy()
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
-	if self._destructor ~= nil then
-		self._destructor(self._value, self._meta)
+	if self._innerScope ~= nil then
+		doCleanup(self._innerScope)
 	end
 end
 
-local function Computed<T, M>(
-	cleanupTable: {PubTypes.Task},
-	processor: () -> (T, M?),
-	destructor: ((T, M?) -> ())?
-): Types.Computed<T, M>
+local function Computed<T, S>(
+	scope: PubTypes.Scope<S>,
+	processor: (PubTypes.Scope<S>, PubTypes.Use) -> T,
+	destructor: any -- TODO: warn for this
+): Types.Computed<T, S>
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
@@ -121,13 +113,13 @@ local function Computed<T, M>(
 		dependentSet = {},
 		_oldDependencySet = {},
 		_processor = processor,
-		_destructor = destructor,
 		_value = nil,
-		_meta = nil
+		_outerScope = scope,
+		_innerScope = nil
 	}, CLASS_METATABLE)
 
-	self:_recalculate(true)
-	table.insert(cleanupTable, self)
+	self:update()
+	table.insert(scope, self)
 
 	return self
 end

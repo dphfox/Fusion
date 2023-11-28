@@ -167,7 +167,7 @@ function class:destroy()
 end
 
 local function Spring<T>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	goalState: PubTypes.Value<T>,
 	speed: PubTypes.CanBeState<number>?,
 	damping: PubTypes.CanBeState<number>?
@@ -214,7 +214,7 @@ local function Spring<T>(
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
 	self:update()
-	table.insert(self, cleanupTable)
+	table.insert(self, scope)
 
 	return self
 end

@@ -46,6 +46,9 @@ export type Task =
 	{Destroy: (any) -> ()} |
 	{Task}
 
+-- A scope of tasks to clean up.
+export type Scope<Constructors> = {Task} & Constructors
+
 -- Script-readable version information.
 export type Version = {
 	major: number,
@@ -89,18 +92,42 @@ export type Value<T> = StateObject<T> & {
  	set: (Value<T>, newValue: any, force: boolean?) -> (),
 	destroy: () -> ()
 }
+type ValueConstructor = <T, S>(
+	scope: Scope<S>,
+	initialValue: T
+) -> Value<T>
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & Dependent & {
 	kind: "Computed",
 	destroy: () -> ()
 }
+type ComputedConstructor = <T, S>(
+	scope: Scope<S>,
+	callback: (Scope<S>, Use) -> T
+) -> Computed<T>
 
 -- A state object which maps over keys and/or values in another table.
 export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
 	kind: "For",
 	destroy: () -> ()
 }
+type ForPairsConstructor =  <KI, KO, VI, VO, S>(
+	scope: Scope<S>,
+	inputTable: CanBeState<{[KI]: VI}>,
+	processor: (Scope<S>, Use, KI, VI) -> (KO, VO)
+) -> For<KO, VO>
+type ForKeysConstructor =  <KI, KO, V, M>(
+	inputTable: CanBeState<{[KI]: V}>,
+	processor: (Use, KI) -> (KO, M?),
+	destructor: (KO, M?) -> ()?
+) -> For<KO, V>
+type ForValuesConstructor =  <K, VI, VO, M>(
+	inputTable: CanBeState<{[K]: VI}>,
+	processor: (Use, VI) -> (VO, M?),
+	destructor: (VO, M?) -> ()?
+) -> For<K, VO>
+
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
@@ -141,5 +168,35 @@ export type Children = Instance | StateObject<Children> | {[any]: Children}
 
 -- A table that defines an instance's properties, handlers and children.
 export type PropertyTable = {[string | SpecialKey]: any}
+
+export type Fusion = {
+	version: Version,
+
+	New: (className: string) -> ((propertyTable: PropertyTable) -> Instance),
+	Hydrate: (target: Instance) -> ((propertyTable: PropertyTable) -> Instance),
+	Ref: SpecialKey,
+	Cleanup: SpecialKey,
+	Children: SpecialKey,
+	Out: (propertyName: string) -> SpecialKey,
+	OnEvent: (eventName: string) -> SpecialKey,
+	OnChange: (propertyName: string) -> SpecialKey,
+	Attribute: (attributeName: string) -> SpecialKey,
+	AttributeChange: (attributeName: string) -> SpecialKey,
+	AttributeOut: (attributeName: string) -> SpecialKey,
+
+	Value: ValueConstructor,
+	Computed: ComputedConstructor,
+	ForPairs: <KI, KO, VI, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> For<KO, VO>,
+	ForKeys: <KI, KO, V, M>(inputTable: CanBeState<{[KI]: V}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> For<KO, V>,
+	ForValues: <K, VI, VO, M>(inputTable: CanBeState<{[K]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> For<K, VO>,
+	Observer: (watchedState: StateObject<any>) -> Observer,
+
+	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
+	Spring: <T>(goalState: StateObject<T>, speed: CanBeState<number>?, damping: CanBeState<number>?) -> Spring<T>,
+
+	doCleanup: (...any) -> (),
+	doNothing: (...any) -> (),
+	peek: Use
+}
 
 return nil

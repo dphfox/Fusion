@@ -78,7 +78,7 @@ function class:destroy()
 end
 
 local function Tween<T>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	goalState: PubTypes.StateObject<PubTypes.Animatable>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>
@@ -126,7 +126,7 @@ local function Tween<T>(
 
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
-	table.insert(cleanupTable, self)
+	table.insert(scope, self)
 
 	return self
 end

@@ -193,7 +193,7 @@ function class:destroy()
 end
 
 local function For<KI, VI, KO, VO>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (
 		{any},
@@ -221,7 +221,7 @@ local function For<KI, VI, KO, VO>(
 
 	self:update()
 	
-	table.insert(cleanupTable, self)
+	table.insert(scope, self)
 
 	return self
 end

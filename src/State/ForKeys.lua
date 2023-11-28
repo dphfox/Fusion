@@ -22,14 +22,14 @@ local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local function ForKeys<KI, KO, V, M>(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	inputTable: PubTypes.CanBeState<{[KI]: V}>,
 	processor: (PubTypes.Use, KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.For<KI, KO, V, V>
 
 	return For(
-		cleanupTable,
+		scope,
 		inputTable,
 		function(scope, inputKey, inputValue)
 			return Computed(scope, function(use)

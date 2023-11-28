@@ -59,7 +59,7 @@ function class:destroy()
 end
 
 local function Observer(
-	cleanupTable: {PubTypes.Task},
+	scope: {PubTypes.Task},
 	watchedState: PubTypes.Value<any>
 ): Types.Observer
 	local self = setmetatable({
@@ -72,7 +72,7 @@ local function Observer(
 
 	-- add this object to the watched state's dependent set
 	watchedState.dependentSet[self] = true
-	table.insert(cleanupTable, self)
+	table.insert(scope, self)
 
 	return self
 end
