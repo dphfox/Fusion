@@ -93,8 +93,8 @@ export type Value<T> = StateObject<T> & {
  	set: (Value<T>, newValue: any, force: boolean?) -> (),
 	destroy: () -> ()
 }
-type ValueConstructor = <T, S>(
-	scope: Scope<S>,
+type ValueConstructor = <T>(
+	scope: Scope<any>,
 	initialValue: T
 ) -> Value<T>
 
@@ -118,23 +118,38 @@ type ForPairsConstructor =  <KI, KO, VI, VO, S>(
 	inputTable: CanBeState<{[KI]: VI}>,
 	processor: (Scope<S>, Use, KI, VI) -> (KO, VO)
 ) -> For<KO, VO>
-type ForKeysConstructor =  <KI, KO, V, M>(
+type ForKeysConstructor =  <KI, KO, V, M, S>(
+	scope: Scope<S>,
 	inputTable: CanBeState<{[KI]: V}>,
-	processor: (Use, KI) -> (KO, M?),
-	destructor: (KO, M?) -> ()?
+	processor: (Scope<S>, Use, KI) -> (KO, M?)
 ) -> For<KO, V>
-type ForValuesConstructor =  <K, VI, VO, M>(
+type ForValuesConstructor =  <K, VI, VO, M, S>(
+	scope: Scope<S>,
 	inputTable: CanBeState<{[K]: VI}>,
-	processor: (Use, VI) -> (VO, M?),
-	destructor: (VO, M?) -> ()?
+	processor: (Scope<S>, Use, VI) -> (VO, M?)
 ) -> For<K, VO>
 
+-- An object which can listen for updates on another state object.
+export type Observer = Dependent & {
+	kind: "Observer",
+	onChange: (Observer, callback: () -> ()) -> (() -> ()),
+	destroy: () -> ()
+}
+type ObserverConstructor = (
+	scope: Scope<any>,
+	watchedState: StateObject<any>
+) -> Observer
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
 	kind: "Tween",
 	destroy: () -> ()
 }
+type TweenConstructor = <T>(
+	scope: Scope<any>,
+	goalState: StateObject<T>,
+	tweenInfo: TweenInfo?
+) -> Tween<T>
 
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = StateObject<T> & Dependent & {
@@ -144,13 +159,12 @@ export type Spring<T> = StateObject<T> & Dependent & {
 	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> (),
 	destroy: () -> ()
 }
-
--- An object which can listen for updates on another state object.
-export type Observer = Dependent & {
-	kind: "Observer",
-	onChange: (Observer, callback: () -> ()) -> (() -> ()),
-	destroy: () -> ()
-}
+type SpringConstructor = <T>(
+	scope: Scope<any>,
+	goalState: StateObject<T>,
+	speed: CanBeState<number>?,
+	damping: CanBeState<number>?
+) -> Spring<T>
 
 --[[
 	Instance related types
@@ -170,11 +184,36 @@ export type Children = Instance | StateObject<Children> | {[any]: Children}
 -- A table that defines an instance's properties, handlers and children.
 export type PropertyTable = {[string | SpecialKey]: any}
 
+type NewConstructor = (
+	scope: Scope<any>,
+	className: string
+) -> (propertyTable: PropertyTable) -> Instance
+
+type HydrateConstructor = (
+	scope: Scope<any>,
+	target: Instance
+) -> (propertyTable: PropertyTable) -> Instance
+
 export type Fusion = {
 	version: Version,
 
-	New: (className: string) -> ((propertyTable: PropertyTable) -> Instance),
-	Hydrate: (target: Instance) -> ((propertyTable: PropertyTable) -> Instance),
+	doCleanup: (...any) -> (),
+	doNothing: (...any) -> (),
+	peek: Use,
+
+	Value: ValueConstructor,
+	Computed: ComputedConstructor,
+	ForPairs: ForPairsConstructor,
+	ForKeys: ForKeysConstructor,
+	ForValues: ForValuesConstructor,
+	Observer: ObserverConstructor,
+	
+	Tween: TweenConstructor,
+	Spring: SpringConstructor,
+
+	New: NewConstructor,
+	Hydrate: HydrateConstructor,
+
 	Ref: SpecialKey,
 	Cleanup: SpecialKey,
 	Children: SpecialKey,
@@ -184,20 +223,7 @@ export type Fusion = {
 	Attribute: (attributeName: string) -> SpecialKey,
 	AttributeChange: (attributeName: string) -> SpecialKey,
 	AttributeOut: (attributeName: string) -> SpecialKey,
-
-	Value: ValueConstructor,
-	Computed: ComputedConstructor,
-	ForPairs: <KI, KO, VI, VO, M>(inputTable: CanBeState<{[KI]: VI}>, processor: (Use, KI, VI) -> (KO, VO, M?), destructor: (KO, VO, M?) -> ()?) -> For<KO, VO>,
-	ForKeys: <KI, KO, V, M>(inputTable: CanBeState<{[KI]: V}>, processor: (Use, KI) -> (KO, M?), destructor: (KO, M?) -> ()?) -> For<KO, V>,
-	ForValues: <K, VI, VO, M>(inputTable: CanBeState<{[K]: VI}>, processor: (Use, VI) -> (VO, M?), destructor: (VO, M?) -> ()?) -> For<K, VO>,
-	Observer: (watchedState: StateObject<any>) -> Observer,
-
-	Tween: <T>(goalState: StateObject<T>, tweenInfo: TweenInfo?) -> Tween<T>,
-	Spring: <T>(goalState: StateObject<T>, speed: CanBeState<number>?, damping: CanBeState<number>?) -> Spring<T>,
-
-	doCleanup: (...any) -> (),
-	doNothing: (...any) -> (),
-	peek: Use
+	
 }
 
 return nil
