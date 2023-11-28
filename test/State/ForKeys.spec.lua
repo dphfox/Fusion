@@ -215,7 +215,7 @@ return function()
 		expect(destructed.bar).to.equal(true)
 	end)
 
-	it("doesn't recompute when values chaneg", function()
+	it("doesn't recompute when values change", function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
 		local computations = 0
