@@ -28,6 +28,7 @@ local WEAK_KEYS_METATABLE = { __mode = "k" }
 ]]
 
 function class:update(): boolean
+	
 	local existingInputTable = self._existingInputTable
 	local existingOutputTable = self._existingOutputTable
 	local existingProcessors = self._existingProcessors
@@ -57,15 +58,31 @@ function class:update(): boolean
 
 		-- First, try and reuse processors who match both the key and value of a
 		-- remaining pair. This can be done with no recomputation.
+		-- NOTE: we also reuse processors with nil output keys here, so long as
+		-- they match values. This ensures they don't get recomputed either.
 		for tryReuseProcessor in existingProcessors do
-			local key = peek(tryReuseProcessor.inputKey)
-			local value = peek(tryReuseProcessor.inputValue)
-			local remainingValues = remainingPairs[key]
-			if remainingValues ~= nil and remainingValues[value] ~= nil then
-				remainingValues[value] = nil
-				newProcessors[tryReuseProcessor] = true
-				existingProcessors[tryReuseProcessor] = nil
+			if tryReuseProcessor.outputKey == nil then
+				local value = peek(tryReuseProcessor.inputValue)
+				for key, remainingValues in remainingPairs do
+					if remainingValues[value] ~= nil then
+						remainingValues[value] = nil
+						tryReuseProcessor.inputKey:set(key)
+						newProcessors[tryReuseProcessor] = true
+						existingProcessors[tryReuseProcessor] = nil
+						break
+					end
+				end
+			else
+				local key = peek(tryReuseProcessor.inputKey)
+				local value = peek(tryReuseProcessor.inputValue)
+				local remainingValues = remainingPairs[key]
+				if remainingValues ~= nil and remainingValues[value] ~= nil then
+					remainingValues[value] = nil
+					newProcessors[tryReuseProcessor] = true
+					existingProcessors[tryReuseProcessor] = nil
+				end
 			end
+			
 		end
 		-- Next, try and reuse processors who match the key of a remaining pair.
 		-- The value will change but the key will stay stable.
