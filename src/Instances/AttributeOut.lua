@@ -16,7 +16,7 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 	attributeOutKey.kind = "AttributeOut"
 	attributeOutKey.stage = "observer"
 
-	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, scope: { PubTypes.Task })
+	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, scope: PubTypes.Scope<any>)
 		if xtypeof(stateObject) ~= "State" or stateObject.kind ~= "Value" then
 			logError("invalidAttributeOutType")
 		end
