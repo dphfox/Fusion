@@ -19,9 +19,11 @@ local doCleanup = require(Package.Memory.doCleanup)
 local External = require(Package.External)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local xtypeof = require(Package.Utility.xtypeof)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local function setProperty_unsafe(
 	instance: Instance,
@@ -63,6 +65,10 @@ local function bindProperty(
 	value: PubTypes.CanBeState<any>
 )
 	if isState(value) then
+		if not assertLifetime(scope, nil, value) then
+			logWarn("possiblyOutlives", value.kind, `{instance.ClassName}.{property}`)
+		end
+
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
 		local function updateLater()
