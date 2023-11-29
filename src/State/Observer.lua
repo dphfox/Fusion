@@ -72,7 +72,7 @@ local function Observer(
 		_changeListeners = {}
 	}, CLASS_METATABLE)
 
-	if not assertLifetime(scope, self, watchedState) then
+	if not assertLifetime(scope, watchedState) then
 		logWarn("possiblyOutlives", "Observer", watchedState.kind)
 	end
 
