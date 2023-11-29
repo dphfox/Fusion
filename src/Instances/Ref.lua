@@ -7,8 +7,10 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 local xtypeof = require(Package.Utility.xtypeof)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local Ref = {}
 Ref.type = "SpecialKey"
@@ -23,10 +25,10 @@ function Ref:apply(
 	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
 		logError("invalidRefType")
 	else
+		if not assertLifetime(scope, nil, refState) then
+			logWarn("possiblyOutlives")
+		end
 		refState:set(applyTo)
-		table.insert(scope, function()
-			refState:set(nil)
-		end)
 	end
 end
 
