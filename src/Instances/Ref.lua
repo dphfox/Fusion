@@ -26,7 +26,7 @@ function Ref:apply(
 		logError("invalidRefType")
 	else
 		if not assertLifetime(scope, nil, refState) then
-			logWarn("possiblyOutlives", "Value object", "[Ref]")
+			logWarn("possiblyOutlives", "Value", "[Ref]")
 		end
 		refState:set(applyTo)
 	end

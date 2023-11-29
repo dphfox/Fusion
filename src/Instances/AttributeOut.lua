@@ -34,7 +34,7 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
 			if not assertLifetime(scope, nil, stateObject) then
-				logWarn("possiblyOutlives", "Value object", `[AttributeOut "{attributeName}"]`)
+				logWarn("possiblyOutlives", "Value", `[AttributeOut "{attributeName}"]`)
 			end
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			table.insert(scope, event:Connect(function()	
