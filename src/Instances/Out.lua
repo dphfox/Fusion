@@ -8,7 +8,9 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local xtypeof = require(Package.Utility.xtypeof)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local function Out(propertyName: string): PubTypes.SpecialKey
 	local outKey = {}
@@ -27,6 +29,9 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 			logError("invalidOutType")
 		else
+			if not assertLifetime(scope, nil, outState) then
+				logWarn("possiblyOutlives")
+			end
 			outState:set((applyTo :: any)[propertyName])
 			table.insert(
 				scope,
@@ -34,9 +39,6 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 					outState:set((applyTo :: any)[propertyName])
 				end)
 			)
-			table.insert(scope, function()
-				outState:set(nil)
-			end)
 		end
 	end
 
