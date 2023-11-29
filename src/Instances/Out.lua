@@ -30,7 +30,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 			logError("invalidOutType")
 		else
 			if not assertLifetime(scope, nil, outState) then
-				logWarn("possiblyOutlives")
+				logWarn("possiblyOutlives", "Value object", `[Out "{propertyName}"]`)
 			end
 			outState:set((applyTo :: any)[propertyName])
 			table.insert(

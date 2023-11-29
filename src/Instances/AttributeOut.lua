@@ -8,7 +8,9 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local xtypeof = require(Package.Utility.xtypeof)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 	local attributeOutKey = {}
@@ -31,13 +33,13 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
+			if not assertLifetime(scope, nil, stateObject) then
+				logWarn("possiblyOutlives", "Value object", `[AttributeOut "{attributeName}"]`)
+			end
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			table.insert(scope, event:Connect(function()	
 				stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			end))
-			table.insert(scope, function()
-				stateObject:set(nil)
-			end)
 		end
 	end
 
