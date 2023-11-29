@@ -8,7 +8,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 return function()
 	it("should reflect external property changes", function()
 		local scope = {}
-		local outValue = Value()
+		local outValue = Value(scope, nil)
 
 		local child = New(scope, "Folder") {
 			[Out "Name"] = outValue
@@ -23,8 +23,8 @@ return function()
 
 	it("should reflect property changes from bound state", function()
 		local scope = {}
-		local outValue = Value()
-		local inValue = Value("Gabriel")
+		local outValue = Value(scope, nil)
+		local inValue = Value(scope, "Gabriel")
 
 		local child = New(scope, "Folder") {
 			Name = inValue,
@@ -40,7 +40,7 @@ return function()
 
 	it("should support two-way data binding", function()
 		local scope = {}
-		local twoWayValue = Value("Gabriel")
+		local twoWayValue = Value(scope, "Gabriel")
 
 		local child = New(scope, "Folder") {
 			Name = twoWayValue,
