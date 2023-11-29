@@ -9,9 +9,11 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local External = require(Package.External)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local isState = require(Package.State.isState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local function Attribute(attributeName: string): PubTypes.SpecialKey
 	local AttributeKey = {}
@@ -29,6 +31,9 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		applyTo: Instance
 	)
 		if isState(value) then
+			if not assertLifetime(scope, nil, value) then
+				logWarn("possiblyOutlives", value.kind .. " object", `[Attribute "{attributeName}"]`)
+			end
 			local didDefer = false
 			local function update()
 				if not didDefer then
