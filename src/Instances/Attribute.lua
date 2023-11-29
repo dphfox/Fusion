@@ -31,7 +31,7 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		applyTo: Instance
 	)
 		if isState(value) then
-			if whichLivesLonger(scope, applyTo, value.scope, value) == "b" then
+			if whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
 				logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 			end
 			local didDefer = false
