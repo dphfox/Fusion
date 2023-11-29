@@ -16,10 +16,11 @@ local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 -- State
-local makeUseCallback = require(Package.State.makeUseCallback)
+local isState = require(Package.State.isState)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
+local assertLifetime = require(Package.Memory.assertLifetime)
 
 local class = {}
 
@@ -44,7 +45,17 @@ function class:update(): boolean
 	table.clear(self.dependencySet)
 
 	local innerScope = deriveScope(self._outerScope)
-	local use = makeUseCallback(self.dependencySet)
+	local function use<T>(target: PubTypes.CanBeState<T>): T
+		if isState(target) then
+			if not assertLifetime(self._outerScope, self, target) then
+				logWarn("possiblyOutlives", "Computed", target.kind)
+			end		
+			self.dependencySet[target] = true
+			return (target :: Types.StateObject<T>):_peek()
+		else
+			return target
+		end
+	end
 	local ok, newValue = xpcall(self._processor, parseError, innerScope, use)
 
 	if ok then
@@ -117,10 +128,9 @@ local function Computed<T, S>(
 		_outerScope = scope,
 		_innerScope = nil
 	}, CLASS_METATABLE)
-
-	self:update()
 	table.insert(scope, self)
-
+	self:update()
+	
 	return self
 end
 
