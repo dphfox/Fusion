@@ -19,7 +19,11 @@ local function OnEvent(eventName: string): PubTypes.SpecialKey
 	eventKey.kind = "OnEvent"
 	eventKey.stage = "observer"
 
-	function eventKey:apply(callback: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+	function eventKey:apply(
+		scope: PubTypes.Scope<any>,
+		callback: any,
+		applyTo: Instance
+	)
 		local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
 		if not ok or typeof(event) ~= "RBXScriptSignal" then
 			logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)

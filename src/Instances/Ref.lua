@@ -15,7 +15,11 @@ Ref.type = "SpecialKey"
 Ref.kind = "Ref"
 Ref.stage = "observer"
 
-function Ref:apply(refState: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+function Ref:apply(
+	scope: PubTypes.Scope<any>,
+	refState: any,
+	applyTo: Instance
+)
 	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
 		logError("invalidRefType")
 	else
