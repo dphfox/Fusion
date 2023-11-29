@@ -2,7 +2,7 @@
 
 --[[
 	A special key for property tables, which allows users to apply custom
-    attributes to instances
+	attributes to instances
 ]]
 
 local Package = script.Parent.Parent
@@ -14,16 +14,16 @@ local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 
 local function Attribute(attributeName: string): PubTypes.SpecialKey
-    local AttributeKey = {}
-    AttributeKey.type = "SpecialKey"
-    AttributeKey.kind = "Attribute"
-    AttributeKey.stage = "self"
+	local AttributeKey = {}
+	AttributeKey.type = "SpecialKey"
+	AttributeKey.kind = "Attribute"
+	AttributeKey.stage = "self"
 
-    if attributeName == nil then
-        logError("attributeNameNil")
-    end
+	if attributeName == nil then
+		logError("attributeNameNil")
+	end
 
-    function AttributeKey:apply(
+	function AttributeKey:apply(
 		scope: PubTypes.Scope<any>,
 		value: any,
 		applyTo: Instance
@@ -44,8 +44,8 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		else
 			applyTo:SetAttribute(attributeName, value)
 		end
-    end
-    return AttributeKey
+	end
+	return AttributeKey
 end
 
 return Attribute

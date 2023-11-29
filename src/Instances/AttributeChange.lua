@@ -2,7 +2,7 @@
 
 --[[
 	A special key for property tables, which allows users to connect to
-    an attribute change on an instance.
+	an attribute change on an instance.
 ]]
 
 local Package = script.Parent.Parent
@@ -17,20 +17,24 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 	attributeKey.stage = "observer"
 
 	if attributeName == nil then
-    	logError("attributeNameNil")
+		logError("attributeNameNil")
 	end
 
-	function attributeKey:apply(callback: any, applyTo: Instance, scope: PubTypes.Scope<any>)
-		if typeof(callback) ~= "function" then
+	function attributeKey:apply(
+		scope: PubTypes.Scope<any>,
+		value: any,
+		applyTo: Instance
+	)
+		if typeof(value) ~= "function" then
 			logError("invalidAttributeChangeHandler", nil, attributeName)
 		end
 		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 		if not ok then
 			logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
 		else
-			callback((applyTo :: any):GetAttribute(attributeName))
+			value((applyTo :: any):GetAttribute(attributeName))
 			table.insert(scope, event:Connect(function()
-				callback((applyTo :: any):GetAttribute(attributeName))
+				value((applyTo :: any):GetAttribute(attributeName))
 			end))
 		end
 	end

@@ -4,11 +4,13 @@ local Attribute = require(Package.Instances.Attribute)
 local AttributeOut = require(Package.Instances.AttributeOut)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
 	it("should update when attributes are changed externally", function()
-		local attributeValue = Value()
-		local child = New "Folder" {
+		local scope = {}
+		local attributeValue = Value(scope, nil)
+		local child = New(scope, "Folder") {
 			[AttributeOut "Foo"] = attributeValue
 		}
 
@@ -16,12 +18,14 @@ return function()
 		child:SetAttribute("Foo", "Bar")
 		task.wait()
 		expect(peek(attributeValue)).to.equal("Bar")
+		doCleanup(scope)
 	end)
 
 	it("should update when state objects linked update", function()
-		local attributeValue = Value("Foo")
-		local attributeOutValue = Value()
-		local child = New "Folder" {
+		local scope = {}
+		local attributeValue = Value(scope, "Foo")
+		local attributeOutValue = Value(scope)
+		local child = New(scope, "Folder") {
 			[Attribute "Foo"] = attributeValue,
 			[AttributeOut "Foo"] = attributeOutValue
 		}
@@ -29,11 +33,13 @@ return function()
 		attributeValue:set("Bar")
 		task.wait()
 		expect(peek(attributeOutValue)).to.equal("Bar")
+		doCleanup(scope)
 	end)
 
 	it("should work with two-way connections", function()
-		local attributeValue = Value("Bar")
-		local child = New "Folder" {
+		local scope = {}
+		local attributeValue = Value(scope, "Bar")
+		local child = New(scope, "Folder") {
 			[Attribute "Foo"] = attributeValue,
 			[AttributeOut "Foo"] = attributeValue
 		}
@@ -45,5 +51,6 @@ return function()
 		child:SetAttribute("Foo", "Biff")
 		task.wait()
 		expect(peek(attributeValue)).to.equal("Biff")
+		doCleanup(scope)
 	end)
 end

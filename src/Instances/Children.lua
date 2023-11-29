@@ -23,7 +23,11 @@ Children.type = "SpecialKey"
 Children.kind = "Children"
 Children.stage = "descendants"
 
-function Children:apply(propValue: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+function Children:apply(
+	scope: PubTypes.Scope<any>,
+	propValue: any,
+	applyTo: Instance
+)
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 
@@ -82,7 +86,7 @@ function Children:apply(propValue: any, applyTo: Instance, scope: PubTypes.Scope
 				local disconnect = oldDisconnects[child]
 				if disconnect == nil then
 					-- wasn't previously present
-					disconnect = Observer(child):onChange(queueUpdate)
+					disconnect = Observer(scope, child):onChange(queueUpdate)
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting

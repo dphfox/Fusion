@@ -2,32 +2,36 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Children = require(Package.Instances.Children)
 local Value = require(Package.State.Value)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
 	it("should assign single children to instances", function()
-		local ins = New "Folder" {
+		local scope = {}
+		local ins = New(scope, "Folder") {
 			Name = "Bob",
 
-			[Children] = New "Folder" {
+			[Children] = New(scope, "Folder") {
 				Name = "Fred"
 			}
 		}
 
 		expect(ins:FindFirstChild("Fred")).to.be.ok()
+		doCleanup(scope)
 	end)
 
 	it("should assign multiple children to instances", function()
-		local ins = New "Folder" {
+		local scope = {}
+		local ins = New(scope, "Folder") {
 			Name = "Bob",
 
 			[Children] = {
-				New "Folder" {
+				New(scope, "Folder") {
 					Name = "Fred"
 				},
-				New "Folder" {
+				New(scope, "Folder") {
 					Name = "George"
 				},
-				New "Folder" {
+				New(scope, "Folder") {
 					Name = "Harry"
 				}
 			}
@@ -36,22 +40,24 @@ return function()
 		expect(ins:FindFirstChild("Fred")).to.be.ok()
 		expect(ins:FindFirstChild("George")).to.be.ok()
 		expect(ins:FindFirstChild("Harry")).to.be.ok()
+		doCleanup(scope)
 	end)
 
 	it("should flatten children to be assigned", function()
-		local ins = New "Folder" {
+		local scope = {}
+		local ins = New(scope, "Folder") {
 			Name = "Bob",
 
 			[Children] = {
-				New "Folder" {
+				New(scope, "Folder") {
 					Name = "Fred"
 				},
 				{
-					New "Folder" {
+					New(scope, "Folder") {
 						Name = "George"
 					},
 					{
-						New "Folder" {
+						New(scope, "Folder") {
 							Name = "Harry"
 						}
 					}
@@ -62,17 +68,19 @@ return function()
 		expect(ins:FindFirstChild("Fred")).to.be.ok()
 		expect(ins:FindFirstChild("George")).to.be.ok()
 		expect(ins:FindFirstChild("Harry")).to.be.ok()
+		doCleanup(scope)
 	end)
 
 	it("should bind State objects passed as children", function()
-		local child1 = New "Folder" {}
-		local child2 = New "Folder" {}
-		local child3 = New "Folder" {}
-		local child4 = New "Folder" {}
+		local scope = {}
+		local child1 = New(scope, "Folder") {}
+		local child2 = New(scope, "Folder") {}
+		local child3 = New(scope, "Folder") {}
+		local child4 = New(scope, "Folder") {}
 
-		local children = Value({child1})
+		local children = Value(scope, {child1})
 
-		local parent = New "Folder" {
+		local parent = New(scope, "Folder") {
 			[Children] = {
 				children
 			}
@@ -94,15 +102,17 @@ return function()
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
 		expect(child4.Parent).to.equal(parent)
+		doCleanup(scope)
 	end)
 
 	it("should defer updates to State children", function()
-		local child1 = New "Folder" {}
-		local child2 = New "Folder" {}
+		local scope = {}
+		local child1 = New(scope, "Folder") {}
+		local child2 = New(scope, "Folder") {}
 
-		local children = Value(child1)
+		local children = Value(scope, child1)
 
-		local parent = New "Folder" {
+		local parent = New(scope, "Folder") {
 			[Children] = {
 				children
 			}
@@ -119,24 +129,26 @@ return function()
 
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
+		doCleanup(scope)
 	end)
 
 	it("should recursively bind State children", function()
-		local child1 = New "Folder" {}
-		local child2 = New "Folder" {}
-		local child3 = New "Folder" {}
-		local child4 = New "Folder" {}
+		local scope = {}
+		local child1 = New(scope, "Folder") {}
+		local child2 = New(scope, "Folder") {}
+		local child3 = New(scope, "Folder") {}
+		local child4 = New(scope, "Folder") {}
 
-		local children = Value({
+		local children = Value(scope, {
 			child1,
-			Value(child2),
-			Value({
+			Value(scope, child2),
+			Value(scope, {
 				child3,
-				Value(Value(child4))
+				Value(scope, Value(scope, child4))
 			})
 		})
 
-		local parent = New "Folder" {
+		local parent = New(scope, "Folder") {
 			[Children] = {
 				children
 			}
@@ -146,14 +158,16 @@ return function()
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
 		expect(child4.Parent).to.equal(parent)
+		doCleanup(scope)
 	end)
 
 	it("should allow for State children to be nil", function()
-		local child = New "Folder" {}
+		local scope = {}
+		local child = New(scope, "Folder") {}
 
-		local children = Value(nil)
+		local children = Value(scope, nil)
 
-		local parent = New "Folder" {
+		local parent = New(scope, "Folder") {
 			[Children] = {
 				children
 			}
@@ -170,5 +184,6 @@ return function()
 		task.wait()
 
 		expect(child.Parent).to.equal(nil)
+		doCleanup(scope)
 	end)
 end

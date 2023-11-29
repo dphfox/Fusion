@@ -3,12 +3,14 @@ local New = require(Package.Instances.New)
 local Out = require(Package.Instances.Out)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
 	it("should reflect external property changes", function()
+		local scope = {}
 		local outValue = Value()
 
-		local child = New "Folder" {
+		local child = New(scope, "Folder") {
 			[Out "Name"] = outValue
 		}
 		expect(peek(outValue)).to.equal("Folder")
@@ -16,13 +18,15 @@ return function()
 		child.Name = "Mary"
 		task.wait()
 		expect(peek(outValue)).to.equal("Mary")
+		doCleanup(scope)
 	end)
 
 	it("should reflect property changes from bound state", function()
+		local scope = {}
 		local outValue = Value()
 		local inValue = Value("Gabriel")
 
-		local child = New "Folder" {
+		local child = New(scope, "Folder") {
 			Name = inValue,
 			[Out "Name"] = outValue
 		}
@@ -31,12 +35,14 @@ return function()
 		inValue:set("Joseph")
 		task.wait()
 		expect(peek(outValue)).to.equal("Joseph")
+		doCleanup(scope)
 	end)
 
 	it("should support two-way data binding", function()
+		local scope = {}
 		local twoWayValue = Value("Gabriel")
 
-		local child = New "Folder" {
+		local child = New(scope, "Folder") {
 			Name = twoWayValue,
 			[Out "Name"] = twoWayValue
 		}
@@ -49,5 +55,6 @@ return function()
 		child.Name = "Elias"
 		task.wait()
 		expect(peek(twoWayValue)).to.equal("Elias")
+		doCleanup(scope)
 	end)
 end

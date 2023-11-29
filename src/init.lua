@@ -60,7 +60,6 @@ local Fusion = restrictRead("Fusion", {
 
 	Ref = require(script.Instances.Ref),
 	Out = require(script.Instances.Out),
-	Cleanup = require(script.Instances.Cleanup),
 	Children = require(script.Instances.Children),
 	OnEvent = require(script.Instances.OnEvent),
 	OnChange = require(script.Instances.OnChange),
