@@ -95,7 +95,7 @@ return function()
 	it("disconnects on destroy", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
-		local observer = Observer({}, dependency)
+		local observer = Observer(scope, dependency)
 		local numFires = 0
 		local _ = observer:onChange(function()
 			numFires += 1
