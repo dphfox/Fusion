@@ -17,7 +17,9 @@ local function logWarn(messageID, ...)
 		formatString = messages[messageID]
 	end
 
-	warn(string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")", ...))
+	local warnMessage = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")", ...)
+	warnMessage ..=  "\n---- Stack trace ----\n" .. debug.traceback(nil, 3)
+	warn(warnMessage)
 end
 
 return logWarn
