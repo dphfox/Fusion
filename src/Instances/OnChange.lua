@@ -15,7 +15,11 @@ local function OnChange(propertyName: string): PubTypes.SpecialKey
 	changeKey.kind = "OnChange"
 	changeKey.stage = "observer"
 
-	function changeKey:apply(callback: any, applyTo: Instance, scope: PubTypes.Scope<any>)
+	function changeKey:apply(
+		scope: PubTypes.Scope<any>,
+		callback: any,
+		applyTo: Instance
+	)
 		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
 			logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
