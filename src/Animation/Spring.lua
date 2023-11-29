@@ -191,6 +191,7 @@ local function Spring<T>(
 	local self = setmetatable({
 		type = "State",
 		kind = "Spring",
+		scope = scope,
 		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope

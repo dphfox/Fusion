@@ -49,10 +49,10 @@ export type State<T> = PubTypes.Value<T> & {
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T, S> = PubTypes.Computed<T> & {
+	scope: PubTypes.Scope<S>,
 	_oldDependencySet: Set<PubTypes.Dependency>,
 	_processor: (PubTypes.Scope<S>, PubTypes.Use) -> T,
 	_value: T,
-	_outerScope: PubTypes.Scope<S>,
 	_innerScope: PubTypes.Scope<S>?
 }
 

@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local xtypeof = require(Package.Utility.xtypeof)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 	local attributeOutKey = {}
@@ -33,8 +33,8 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
-			if not assertLifetime(scope, stateObject, applyTo) then
-				logWarn("possiblyOutlives", "Value", `[AttributeOut "{attributeName}"]`)
+			if whichLivesLonger(scope, applyTo, stateObject.scope, stateObject) == "a" then
+				logWarn("possiblyOutlives", `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
 			table.insert(scope, event:Connect(function()	

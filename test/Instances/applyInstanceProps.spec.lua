@@ -7,6 +7,7 @@ return function()
 	it("should assign properties (constant)", function()
 		local scope = {}
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Name = "Bob" },
@@ -20,6 +21,7 @@ return function()
 		local scope = {}
 		local value = Value(scope, "Bob")
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Name = value },
@@ -37,7 +39,9 @@ return function()
 	it("should assign Parent (constant)", function()
 		local scope = {}
 		local parent = Instance.new("Folder")
+		table.insert(scope, parent)
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Parent = parent },
@@ -50,9 +54,12 @@ return function()
 	it("should assign Parent (state)", function()
 		local scope = {}
 		local parent1 = Instance.new("Folder")
+		table.insert(scope, parent1)
 		local parent2 = Instance.new("Folder")
+		table.insert(scope, parent2)
 		local value = Value(scope, parent1)
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Parent = value },
@@ -71,6 +78,7 @@ return function()
 		expect(function()
 			local scope = {}
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
 				{ NotARealProperty = true },
@@ -83,10 +91,12 @@ return function()
 	it("should throw for non-existent properties (state)", function()
 		expect(function()
 			local scope = {}
+			local value = Value(scope, true)
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
-				{ NotARealProperty = Value(scope, true) },
+				{ NotARealProperty = value },
 				instance
 			)
 			doCleanup(scope)
@@ -97,6 +107,7 @@ return function()
 		expect(function()
 			local scope = {}
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
 				{ Name = Vector3.new() },
@@ -109,10 +120,12 @@ return function()
 	it("should throw for invalid property types (state)", function()
 		expect(function()
 			local scope = {}
+			local value = Value(scope, Vector3.new())
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
-				{ Name = Value(scope, Vector3.new()) },
+				{ Name = value },
 				instance
 			)
 			doCleanup(scope)
@@ -123,6 +136,7 @@ return function()
 		expect(function()
 			local scope = {}
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
 				{ Parent = Vector3.new() },
@@ -135,10 +149,12 @@ return function()
 	it("should throw for invalid Parent types (state)", function()
 		expect(function()
 			local scope = {}
+			local value = Value(scope, Vector3.new()) 
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
-				{ Parent = Value(scope, Vector3.new()) },
+				{ Parent = value },
 				instance
 			)
 			doCleanup(scope)
@@ -149,6 +165,7 @@ return function()
 		expect(function()
 			local scope = {}
 			local instance = Instance.new("Folder")
+			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
 				{ [2] = true }, 
@@ -162,6 +179,7 @@ return function()
 		local scope = {}
 		local value = Value(scope, "Bob")
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Name = value },
@@ -178,9 +196,12 @@ return function()
 	it("should defer Parent changes", function()
 		local scope = {}
 		local parent1 = Instance.new("Folder")
+		table.insert(scope, parent1)
 		local parent2 = Instance.new("Folder")
+		table.insert(scope, parent2)
 		local value = Value(scope, parent1)
 		local instance = Instance.new("Folder")
+		table.insert(scope, instance)
 		applyInstanceProps(
 			scope,
 			{ Parent = value },

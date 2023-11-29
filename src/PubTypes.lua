@@ -49,6 +49,11 @@ export type Task =
 -- A scope of tasks to clean up.
 export type Scope<Constructors> = {Task} & Constructors
 
+-- An object which uses a scope to dictate how long it lives.
+export type ScopeLifetime = {
+	scope: Scope<any>
+}
+
 -- Script-readable version information.
 export type Version = {
 	major: number,
@@ -60,7 +65,7 @@ export type Version = {
 ]]
 
 -- A graph object which can have dependents.
-export type Dependency = {
+export type Dependency = ScopeLifetime & {
 	dependentSet: Set<Dependent>
 }
 

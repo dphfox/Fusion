@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 local xtypeof = require(Package.Utility.xtypeof)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local Ref = {}
 Ref.type = "SpecialKey"
@@ -25,8 +25,8 @@ function Ref:apply(
 	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
 		logError("invalidRefType")
 	else
-		if not assertLifetime(scope, refState, applyTo) then
-			logWarn("possiblyOutlives", "Value", "[Ref]")
+		if whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
+			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
 		end
 		refState:set(applyTo)
 	end

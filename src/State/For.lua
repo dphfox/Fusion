@@ -215,6 +215,7 @@ local function For<KI, VI, KO, VO>(
 	local self = setmetatable({
 		type = "State",
 		kind = "For",
+		scope = scope,
 		dependencySet = {},
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope

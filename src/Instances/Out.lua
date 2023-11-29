@@ -10,7 +10,7 @@ local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local xtypeof = require(Package.Utility.xtypeof)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function Out(propertyName: string): PubTypes.SpecialKey
 	local outKey = {}
@@ -29,8 +29,8 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 			logError("invalidOutType")
 		else
-			if not assertLifetime(scope, outState, applyTo) then
-				logWarn("possiblyOutlives", "Value", `[Out "{propertyName}"]`)
+			if whichLivesLonger(scope, applyTo, outState.scope, outState) == "a" then
+				logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			outState:set((applyTo :: any)[propertyName])
 			table.insert(

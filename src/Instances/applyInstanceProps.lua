@@ -23,7 +23,7 @@ local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local xtypeof = require(Package.Utility.xtypeof)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function setProperty_unsafe(
 	instance: Instance,
@@ -65,8 +65,8 @@ local function bindProperty(
 	value: PubTypes.CanBeState<any>
 )
 	if isState(value) then
-		if not assertLifetime(scope, value) then
-			logWarn("possiblyOutlives", `{instance.ClassName}.{property}`, value.kind)
+		if whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
+			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end
 
 		-- value is a state object - assign and observe for changes
@@ -139,10 +139,6 @@ local function applyInstanceProps(
 	for key, value in pairs(specialKeys.observer) do
 		key:apply(scope, value, applyTo)
 	end
-
-	applyTo.Destroying:Connect(function()
-		doCleanup(scope)
-	end)
 end
 
 return applyInstanceProps

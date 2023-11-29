@@ -13,7 +13,7 @@ local logWarn = require(Package.Logging.logWarn)
 local isState = require(Package.State.isState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function Attribute(attributeName: string): PubTypes.SpecialKey
 	local AttributeKey = {}
@@ -31,8 +31,8 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		applyTo: Instance
 	)
 		if isState(value) then
-			if not assertLifetime(scope, value) then
-				logWarn("possiblyOutlives", value.kind, `[Attribute "{attributeName}"]`)
+			if whichLivesLonger(scope, applyTo, value.scope, value) == "b" then
+				logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 			end
 			local didDefer = false
 			local function update()

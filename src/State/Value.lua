@@ -55,6 +55,7 @@ local function Value<T>(
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",
+		scope = scope,
 		dependentSet = {},
 		_value = initialValue
 	}, CLASS_METATABLE)

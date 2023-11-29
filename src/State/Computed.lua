@@ -20,7 +20,7 @@ local isState = require(Package.State.isState)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
-local assertLifetime = require(Package.Memory.assertLifetime)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local class = {}
 
@@ -44,11 +44,11 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local innerScope = deriveScope(self._outerScope)
+	local innerScope = deriveScope(self.scope)
 	local function use<T>(target: PubTypes.CanBeState<T>): T
 		if isState(target) then
-			if not assertLifetime(self._outerScope, self, target) then
-				logWarn("possiblyOutlives", "Computed", target.kind)
+			if whichLivesLonger(self.scope, self, target.scope, target) == "a" then
+				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
 			return (target :: Types.StateObject<T>):_peek()
@@ -120,12 +120,12 @@ local function Computed<T, S>(
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
+		scope = scope,
 		dependencySet = {},
 		dependentSet = {},
 		_oldDependencySet = {},
 		_processor = processor,
 		_value = nil,
-		_outerScope = scope,
 		_innerScope = nil
 	}, CLASS_METATABLE)
 	table.insert(scope, self)

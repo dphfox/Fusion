@@ -30,6 +30,7 @@ local function New(
 			end
 		end
 
+		table.insert(scope, instance)
 		applyInstanceProps(scope, props, instance)
 
 		return instance
