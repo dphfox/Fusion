@@ -65,8 +65,8 @@ local function bindProperty(
 	value: PubTypes.CanBeState<any>
 )
 	if isState(value) then
-		if not assertLifetime(scope, nil, value) then
-			logWarn("possiblyOutlives", value.kind, `{instance.ClassName}.{property}`)
+		if not assertLifetime(scope, instance, value) then
+			logWarn("possiblyOutlives", `{instance.ClassName}.{property}`, value.kind)
 		end
 
 		-- value is a state object - assign and observe for changes

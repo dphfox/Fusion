@@ -1,9 +1,9 @@
 --!strict
 
 --[[
-	Checks the scope of the parent to see if the child will be destroyed before
-	the parent is destroyed. If the parent is omitted, the scope will only be
-	checked for presence of the child.
+	Given one argument, checks if the argument is destroyed by this scope.
+	Given two arguments, checks if the first argument is destroyed before the
+	second argument by this scope.
 ]]
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
@@ -11,18 +11,18 @@ local PubTypes = require(Package.PubTypes)
 local function assertLifetimeImpl(
 	haystack: {any},
 	alreadyChecked: {[any]: true},
-	parent: any?,
-	child: any
+	destroyedFirst: any,
+	destroyedSecond: any?
 ): boolean?
 	for index = #haystack, 1, -1 do
 		local value = haystack[index]
-		if parent ~= nil and value == parent then
+		if destroyedSecond ~= nil and value == destroyedSecond then
 			return false
-		elseif value == child then
+		elseif value == destroyedFirst then
 			return true
 		elseif typeof(value) == "table" and value[1] ~= nil and alreadyChecked[value] == nil then
 			alreadyChecked[value] = true
-			local appearsLater = assertLifetimeImpl(value, alreadyChecked, parent, child)
+			local appearsLater = assertLifetimeImpl(value, alreadyChecked, destroyedFirst, destroyedSecond)
 			if appearsLater ~= nil then
 				return appearsLater
 			end
@@ -33,10 +33,10 @@ end
 
 local function assertLifetime(
 	scope: PubTypes.Scope<any>,
-	parent: any?,
-	child: any
+	destroyedFirst: any,
+	destroyedSecond: any?
 ): boolean
-	return assertLifetimeImpl(scope, {}, parent, child) == true
+	return assertLifetimeImpl(scope, {}, destroyedFirst, destroyedSecond) == true
 end
 
 return assertLifetime

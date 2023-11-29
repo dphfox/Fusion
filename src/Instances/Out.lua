@@ -29,7 +29,7 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 			logError("invalidOutType")
 		else
-			if not assertLifetime(scope, nil, outState) then
+			if not assertLifetime(scope, outState, applyTo) then
 				logWarn("possiblyOutlives", "Value", `[Out "{propertyName}"]`)
 			end
 			outState:set((applyTo :: any)[propertyName])

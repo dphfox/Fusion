@@ -31,7 +31,7 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		applyTo: Instance
 	)
 		if isState(value) then
-			if not assertLifetime(scope, nil, value) then
+			if not assertLifetime(scope, applyTo, value) then
 				logWarn("possiblyOutlives", value.kind, `[Attribute "{attributeName}"]`)
 			end
 			local didDefer = false

@@ -11,6 +11,8 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local External = require(Package.External)
+local assertLifetime = require(Package.Memory.assertLifetime)
+local logWarn = require(Package.Logging.logWarn)
 
 type Set<T> = {[T]: any}
 
@@ -60,7 +62,7 @@ end
 
 local function Observer(
 	scope: PubTypes.Scope<any>,
-	watchedState: PubTypes.Value<any>
+	watchedState: PubTypes.StateObject<any>
 ): Types.Observer
 	local self = setmetatable({
 		type = "State",
@@ -69,6 +71,10 @@ local function Observer(
 		dependentSet = {},
 		_changeListeners = {}
 	}, CLASS_METATABLE)
+
+	if not assertLifetime(scope, self, watchedState) then
+		logWarn("possiblyOutlives", "Observer", watchedState.kind)
+	end
 
 	-- add this object to the watched state's dependent set
 	watchedState.dependentSet[self] = true

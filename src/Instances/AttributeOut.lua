@@ -33,7 +33,7 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
-			if not assertLifetime(scope, nil, stateObject) then
+			if not assertLifetime(scope, stateObject, applyTo) then
 				logWarn("possiblyOutlives", "Value", `[AttributeOut "{attributeName}"]`)
 			end
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))
