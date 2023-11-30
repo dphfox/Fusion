@@ -29,7 +29,9 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 			logError("invalidOutType")
 		else
-			if whichLivesLonger(scope, applyTo, outState.scope, outState) == "a" then
+			if outState.scope == nil then
+				logError("useAfterDestroy", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			elseif whichLivesLonger(scope, applyTo, outState.scope, outState) == "a" then
 				logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			outState:set((applyTo :: any)[propertyName])

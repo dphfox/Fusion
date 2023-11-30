@@ -33,7 +33,9 @@ local function AttributeOut(attributeName: string): PubTypes.SpecialKey
 		if not ok then
 			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
 		else
-			if whichLivesLonger(scope, applyTo, stateObject.scope, stateObject) == "a" then
+			if stateObject.scope == nil then
+				logError("useAfterDestroy", `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			elseif whichLivesLonger(scope, applyTo, stateObject.scope, stateObject) == "a" then
 				logWarn("possiblyOutlives", `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			stateObject:set((applyTo :: any):GetAttribute(attributeName))

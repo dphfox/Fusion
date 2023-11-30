@@ -46,6 +46,7 @@ function class:get()
 end
 
 function class:destroy()
+	self.scope = nil
 end
 
 local function Value<T>(

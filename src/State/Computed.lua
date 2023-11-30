@@ -47,7 +47,9 @@ function class:update(): boolean
 	local innerScope = deriveScope(self.scope)
 	local function use<T>(target: PubTypes.CanBeState<T>): T
 		if isState(target) then
-			if whichLivesLonger(self.scope, self, target.scope, target) == "a" then
+			if target.scope == nil then
+				logError("useAfterDestroy", `The {target.kind} object`, "the Computed that is use()-ing it")
+			elseif whichLivesLonger(self.scope, self, target.scope, target) == "a" then
 				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
@@ -104,6 +106,7 @@ function class:get()
 end
 
 function class:destroy()
+	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end

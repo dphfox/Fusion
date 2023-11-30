@@ -25,7 +25,9 @@ function Ref:apply(
 	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
 		logError("invalidRefType")
 	else
-		if whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
+		if refState.scope == nil then
+			logError("useAfterDestroy", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		elseif whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
 			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
 		end
 		refState:set(applyTo)

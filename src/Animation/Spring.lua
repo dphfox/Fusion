@@ -163,6 +163,7 @@ function class:get()
 end
 
 function class:destroy()
+	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
@@ -214,7 +215,9 @@ local function Spring<T>(
 		_springVelocities = nil
 	}, CLASS_METATABLE)
 	table.insert(scope, self)
-	if whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
+	if goalState.scope == nil then
+		logError("useAfterDestroy", `The {goalState.kind} object`, `the Spring that is following it`)
+	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
 		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Spring that is following it`)
 	end
 

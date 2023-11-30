@@ -195,6 +195,7 @@ function class:get()
 end
 
 function class:destroy()
+	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end

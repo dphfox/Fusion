@@ -51,7 +51,7 @@ export type Scope<Constructors> = {Task} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopeLifetime = {
-	scope: Scope<any>
+	scope: Scope<any>?
 }
 
 -- Script-readable version information.

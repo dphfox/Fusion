@@ -13,6 +13,7 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
+local logError = require(Package.Logging.logError)
 
 type Set<T> = {[T]: any}
 
@@ -55,6 +56,7 @@ function class:onBind(callback: () -> ()): () -> ()
 end
 
 function class:destroy()
+	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
@@ -74,7 +76,9 @@ local function Observer(
 	}, CLASS_METATABLE)
 	table.insert(scope, self)
 
-	if whichLivesLonger(scope, self, watchedState.scope, watchedState) == "a" then
+	if watchedState.scope == nil then
+		logError("useAfterDestroy", `The {watchedState.kind} object`, `the Observer that is watching it`)
+	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "a" then
 		logWarn("possiblyOutlives", `The {watchedState.kind} object`, `the Observer that is watching it`)
 	end
 

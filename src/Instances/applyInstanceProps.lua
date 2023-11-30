@@ -65,7 +65,9 @@ local function bindProperty(
 	value: PubTypes.CanBeState<any>
 )
 	if isState(value) then
-		if whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
+		if value.scope == nil then
+			logError("useAfterDestroy", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
+		elseif whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
 			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end
 
