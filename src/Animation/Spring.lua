@@ -13,8 +13,10 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
 local updateAll = require(Package.State.updateAll)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local peek = require(Package.State.peek)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local logWarn = require(Package.Logging.logWarn)
 
 local class = {}
 
@@ -168,7 +170,7 @@ end
 
 local function Spring<T>(
 	scope: PubTypes.Scope<any>,
-	goalState: PubTypes.Value<T>,
+	goalState: PubTypes.StateObject<T>,
 	speed: PubTypes.CanBeState<number>?,
 	damping: PubTypes.CanBeState<number>?
 ): Types.Spring<T>
@@ -181,10 +183,10 @@ local function Spring<T>(
 	end
 
 	local dependencySet = {[goalState] = true}
-	if xtypeof(speed) == "State" then
+	if isState(speed) then
 		dependencySet[speed] = true
 	end
-	if xtypeof(damping) == "State" then
+	if isState(damping) then
 		dependencySet[damping] = true
 	end
 
@@ -211,11 +213,14 @@ local function Spring<T>(
 		_springGoals = nil,
 		_springVelocities = nil
 	}, CLASS_METATABLE)
+	table.insert(scope, self)
+	if whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
+		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Spring that is following it`)
+	end
 
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
 	self:update()
-	table.insert(self, scope)
 
 	return self
 end

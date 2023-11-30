@@ -14,6 +14,8 @@ local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local xtypeof = require(Package.Utility.xtypeof)
 local peek = require(Package.State.peek)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local logWarn = require(Package.Logging.logWarn)
 
 local class = {}
 
@@ -79,7 +81,7 @@ end
 
 local function Tween<T>(
 	scope: PubTypes.Scope<any>,
-	goalState: PubTypes.StateObject<PubTypes.Animatable>,
+	goalState: PubTypes.StateObject<T>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>
 	local currentValue = peek(goalState)
@@ -125,9 +127,13 @@ local function Tween<T>(
 		_currentlyAnimating = false
 	}, CLASS_METATABLE)
 
+	table.insert(scope, self)
+	if whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
+		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Tween that is following it`)
+	end
+
 	-- add this object to the goal state's dependent set
 	goalState.dependentSet[self] = true
-	table.insert(scope, self)
 
 	return self
 end
