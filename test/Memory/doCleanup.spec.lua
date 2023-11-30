@@ -63,9 +63,14 @@ return function()
 			numRuns += 1
 		end
 
-		doCleanup({doRun, doRun, doRun})
+		local arr = {doRun, doRun, doRun}
+
+		doCleanup(arr)
 
 		expect(numRuns).to.equal(3)
+		expect(arr[3]).to.equal(nil)
+		expect(arr[2]).to.equal(nil)
+		expect(arr[1]).to.equal(nil)
 	end)
 
 	it("should clean up contents of nested arrays", function()
