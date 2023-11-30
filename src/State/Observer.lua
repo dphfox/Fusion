@@ -70,7 +70,7 @@ local function Observer(
 	watchedState: PubTypes.StateObject<any>
 ): Types.Observer
 	if watchedState == nil then
-		logError("scopeMissing", nil, "Observer", "myScope:Observer(watchedState)")
+		logError("scopeMissing", nil, "Observers", "myScope:Observer(watchedState)")
 	end
 
 	local self = setmetatable({

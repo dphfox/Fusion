@@ -35,7 +35,7 @@ return {
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
 	noTaskScheduler = "Fusion is not connected to an external task scheduler.",
 	possiblyOutlives = "%s could be destroyed before %s. Ensure they're created in the correct scope & correct order.",
-	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion#xxx on GitHub for advice.",
+	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion #xxx on GitHub for advice.",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	stateGetWasRemoved = "`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.",
 	strictReadError = "'%s' is not a valid member of '%s'.",

@@ -41,6 +41,7 @@ local function doCleanupOne(task: any)
 			-- objects are added in order of construction.
 			for index = #task, 1, -1 do
 				doCleanupOne(task[index])
+				task[index] = nil
 			end
 		end
 	end
