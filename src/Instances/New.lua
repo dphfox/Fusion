@@ -15,6 +15,9 @@ local function New(
 	scope: PubTypes.Scope<any>,
 	className: string
 )
+	if className == nil then
+		logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
+	end
 	return function(
 		props: PubTypes.PropertyTable
 	): Instance

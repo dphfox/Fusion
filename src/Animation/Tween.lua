@@ -12,7 +12,7 @@ local Types = require(Package.Types)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
@@ -75,7 +75,7 @@ end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", "Tween")
+		logError("destroyedTwice", nil, "Tween")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -88,6 +88,9 @@ local function Tween<T>(
 	goalState: PubTypes.StateObject<T>,
 	tweenInfo: PubTypes.CanBeState<TweenInfo>?
 ): Types.Tween<T>
+	if isState(scope) then
+		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
+	end
 	local currentValue = peek(goalState)
 
 	-- apply defaults for tween info
@@ -96,7 +99,7 @@ local function Tween<T>(
 	end
 
 	local dependencySet = {[goalState] = true}
-	local tweenInfoIsState = xtypeof(tweenInfo) == "State"
+	local tweenInfoIsState = isState(tweenInfo)
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
 	end

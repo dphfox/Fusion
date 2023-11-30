@@ -26,9 +26,14 @@ local doCleanup = require(Package.Memory.doCleanup)
 local function ForPairs<KI, KO, VI, VO, S>(
 	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use, KI, VI) -> (KO, VO)
+	processor: (PubTypes.Scope<S>, PubTypes.Use, KI, VI) -> (KO, VO),
+	destructor: any?
 ): Types.For<KI, KO, VI, VO>
-
+	if typeof(inputTable) == "function" then
+		logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
+	elseif destructor ~= nil then
+		logWarn("destructorRedundant", "ForPairs")
+	end
 	return For(
 		scope,
 		inputTable,

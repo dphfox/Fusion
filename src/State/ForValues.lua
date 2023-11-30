@@ -26,9 +26,14 @@ local doCleanup = require(Package.Memory.doCleanup)
 local function ForValues<K, VI, VO, S>(
 	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[K]: VI}>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use, VI) -> VO
+	processor: (PubTypes.Scope<S>, PubTypes.Use, VI) -> VO,
+	destructor: any?
 ): Types.For<K, K, VI, VO>
-
+	if typeof(inputTable) == "function" then
+		logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(scope, use, value) ... end)")
+	elseif destructor ~= nil then
+		logWarn("destructorRedundant", "ForValues")
+	end
 	return For(
 		scope,
 		inputTable,

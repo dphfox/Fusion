@@ -6,7 +6,6 @@
 
 local PubTypes = require(script.PubTypes)
 local External = require(script.External)
-local restrictRead = require(script.Utility.restrictRead)
 
 export type Symbol  = PubTypes.Symbol 
 export type Animatable = PubTypes.Animatable
@@ -35,7 +34,7 @@ do
 	External.setExternalScheduler(RobloxExternal)
 end
 
-local Fusion = restrictRead("Fusion", {
+local Fusion: PubTypes.Fusion = {
 	version = {major = 0, minor = 3, isRelease = false},
 
 	cleanup = require(script.Memory.legacyCleanup),
@@ -66,6 +65,6 @@ local Fusion = restrictRead("Fusion", {
 	Attribute = require(script.Instances.Attribute),
 	AttributeChange = require(script.Instances.AttributeChange),
 	AttributeOut = require(script.Instances.AttributeOut)
-}) :: PubTypes.Fusion
+}
 
 return Fusion

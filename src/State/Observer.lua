@@ -57,7 +57,7 @@ end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", "Observer")
+		logError("destroyedTwice", nil, "Observer")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -69,6 +69,10 @@ local function Observer(
 	scope: PubTypes.Scope<any>,
 	watchedState: PubTypes.StateObject<any>
 ): Types.Observer
+	if watchedState == nil then
+		logError("scopeMissing", nil, "Observer", "myScope:Observer(watchedState)")
+	end
+
 	local self = setmetatable({
 		type = "State",
 		kind = "Observer",

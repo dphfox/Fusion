@@ -57,9 +57,9 @@ return function()
 		end
 	end)
 
-	it("should error when accessing non-existent APIs", function()
+	it("should not error when accessing non-existent APIs", function()
 		expect(function()
 			local foo = Fusion.thisIsNotARealAPI
-		end).to.throw("strictReadError")
+		end).never.to.throw()
 	end)
 end

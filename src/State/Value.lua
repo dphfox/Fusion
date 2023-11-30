@@ -47,7 +47,7 @@ end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", "Value")
+		logError("destroyedTwice", nil, "Value")
 	end
 	self.scope = nil
 end
@@ -56,6 +56,10 @@ local function Value<T>(
 	scope: PubTypes.Scope<any>,
 	initialValue: T
 ): Types.State<T>
+	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
+		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
+	end
+
 	local self = setmetatable({
 		type = "State",
 		kind = "Value",

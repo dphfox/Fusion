@@ -164,7 +164,7 @@ end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", "Spring")
+		logError("destroyedTwice", nil, "Spring")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -178,6 +178,9 @@ local function Spring<T>(
 	speed: PubTypes.CanBeState<number>?,
 	damping: PubTypes.CanBeState<number>?
 ): Types.Spring<T>
+	if isState(scope) then
+		logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
+	end
 	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10

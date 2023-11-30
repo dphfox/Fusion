@@ -107,7 +107,7 @@ end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", "Computed")
+		logError("destroyedTwice", nil, "Computed")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -121,8 +121,13 @@ end
 local function Computed<T, S>(
 	scope: PubTypes.Scope<S>,
 	processor: (PubTypes.Scope<S>, PubTypes.Use) -> T,
-	destructor: any -- TODO: warn for this
+	destructor: any
 ): Types.Computed<T, S>
+	if typeof(scope) == "function" then
+		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(scope, use) ... end)")
+	elseif destructor ~= nil then
+		logWarn("destructorRedundant", "Computed")
+	end
 	local self = setmetatable({
 		type = "State",
 		kind = "Computed",
