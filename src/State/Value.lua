@@ -46,6 +46,9 @@ function class:get()
 end
 
 function class:destroy()
+	if self.scope == nil then
+		logError("destroyedTwice", "Value")
+	end
 	self.scope = nil
 end
 

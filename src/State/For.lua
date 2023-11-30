@@ -195,6 +195,9 @@ function class:get()
 end
 
 function class:destroy()
+	if self.scope == nil then
+		logError("destroyedTwice", "For")
+	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil

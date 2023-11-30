@@ -13,6 +13,7 @@ return {
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	cleanupWasRenamed = "`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.",
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
+	destroyedTwice = "Attempted to destroy %s twice; if you meant to destroy this separately from the rest of the scope, put it in its own scope and call doCleanup() on that scope instead.",
 	destructorNeededComputed = "To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
 	multiReturnComputed = "Returning multiple values from Computeds is discouraged, as behaviour will change soon - see discussion #189 on GitHub.",
 	forKeyCollision = "The key '%s' was returned multiple times simultaneously, which is not allowed in `For` objects.",
