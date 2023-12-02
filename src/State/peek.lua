@@ -14,7 +14,7 @@ local function peek<T>(target: PubTypes.CanBeState<T>): T
 	if isState(target) then
 		return (target :: Types.StateObject<T>):_peek()
 	else
-		return target
+		return target :: T
 	end
 end
 

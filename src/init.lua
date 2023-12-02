@@ -7,7 +7,6 @@
 local PubTypes = require(script.PubTypes)
 local External = require(script.External)
 
-export type Symbol  = PubTypes.Symbol 
 export type Animatable = PubTypes.Animatable
 export type Task = PubTypes.Task
 export type Scope<Constructors> = PubTypes.Scope<Constructors>

@@ -1,5 +1,5 @@
 --!nonstrict
-
+--!nolint LocalShadow
 --[[
 	Constructs and returns objects which can be used to model derived reactive
 	state.
@@ -47,15 +47,16 @@ function class:update(): boolean
 	local innerScope = deriveScope(self.scope)
 	local function use<T>(target: PubTypes.CanBeState<T>): T
 		if isState(target) then
+			local target = target :: PubTypes.StateObject<T>
 			if target.scope == nil then
-				logError("useAfterDestroy", `The {target.kind} object`, "the Computed that is use()-ing it")
+				logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
 			elseif whichLivesLonger(self.scope, self, target.scope, target) == "a" then
 				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
 			return (target :: Types.StateObject<T>):_peek()
 		else
-			return target
+			return target :: T
 		end
 	end
 	local ok, newValue = xpcall(self._processor, parseError, innerScope, use)

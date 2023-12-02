@@ -16,43 +16,41 @@ local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function Attribute(attributeName: string): PubTypes.SpecialKey
-	local AttributeKey = {}
-	AttributeKey.type = "SpecialKey"
-	AttributeKey.kind = "Attribute"
-	AttributeKey.stage = "self"
-
 	if attributeName == nil then
 		logError("attributeNameNil")
 	end
-
-	function AttributeKey:apply(
-		scope: PubTypes.Scope<any>,
-		value: any,
-		applyTo: Instance
-	)
-		if isState(value) then
-			if value.scope == nil then
-				logError("useAfterDestroy", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
-				logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-			end
-			local didDefer = false
-			local function update()
-				if not didDefer then
-					didDefer = true
-					External.doTaskDeferred(function()
-						didDefer = false
-						applyTo:SetAttribute(attributeName, peek(value))
-					end)
+	return {
+		type = "SpecialKey",
+		kind = "Attribute",
+		stage = "self",
+		apply = function(
+			scope: PubTypes.Scope<any>,
+			value: any,
+			applyTo: Instance
+		)
+			if isState(value) then
+				if value.scope == nil then
+					logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+					logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 				end
+				local didDefer = false
+				local function update()
+					if not didDefer then
+						didDefer = true
+						External.doTaskDeferred(function()
+							didDefer = false
+							applyTo:SetAttribute(attributeName, peek(value))
+						end)
+					end
+				end
+				applyTo:SetAttribute(attributeName, peek(value))
+				table.insert(scope, Observer(scope, value :: any):onChange(update))
+			else
+				applyTo:SetAttribute(attributeName, value)
 			end
-			applyTo:SetAttribute(attributeName, peek(value))
-			table.insert(scope, Observer(scope, value :: any):onChange(update))
-		else
-			applyTo:SetAttribute(attributeName, value)
 		end
-	end
-	return AttributeKey
+	}
 end
 
 return Attribute

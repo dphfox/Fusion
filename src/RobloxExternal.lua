@@ -39,7 +39,7 @@ end
 --[[
     Binds Fusion's update step to RunService step events.
 ]]
-local stopSchedulerFunc = nil
+local stopSchedulerFunc = nil :: (() -> ())?
 function RobloxExternal.startScheduler()
     if stopSchedulerFunc ~= nil then
         return

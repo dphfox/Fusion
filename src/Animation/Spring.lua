@@ -218,11 +218,15 @@ local function Spring<T>(
 
 		_springPositions = nil,
 		_springGoals = nil,
-		_springVelocities = nil
+		_springVelocities = nil,
+
+		_lastSchedule = -math.huge,
+		_startDisplacements = {},
+		_startVelocities = {}
 	}, CLASS_METATABLE)
 	table.insert(scope, self)
 	if goalState.scope == nil then
-		logError("useAfterDestroy", `The {goalState.kind} object`, `the Spring that is following it`)
+		logError("useAfterDestroy", nil, `The {goalState.kind} object`, `the Spring that is following it`)
 	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
 		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Spring that is following it`)
 	end

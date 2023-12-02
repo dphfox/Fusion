@@ -15,7 +15,6 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
-local doCleanup = require(Package.Memory.doCleanup)
 local External = require(Package.External)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
@@ -66,7 +65,7 @@ local function bindProperty(
 )
 	if isState(value) then
 		if value.scope == nil then
-			logError("useAfterDestroy", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
+			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		elseif whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
 			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end

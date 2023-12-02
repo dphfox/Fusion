@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Calculates how the lifetimes of the two values relate. Specifically, it
@@ -22,15 +23,18 @@ local function whichScopeLivesLonger(
 	while openSetSize > 0 do
 		for _, scope in openSet do
 			closedSet[scope] = true
-			for _, inScope in scope do
+			for _, inScope in ipairs(scope) do
 				if inScope == scopeA then
 					return "b"
 				elseif inScope == scopeB then
 					return "a"
-				elseif inScope[1] ~= nil and closedSet[scope] == nil then
-					nextOpenSetSize += 1
-					nextOpenSet[nextOpenSetSize] = inScope
-				end
+				elseif typeof(inScope) == "table" then
+					local inScope: {any} = inScope
+					if inScope[1] ~= nil and closedSet[scope] == nil then
+						nextOpenSetSize += 1
+						nextOpenSet[nextOpenSetSize] = inScope
+					end
+				end 
 			end
 		end
 		table.clear(openSet)
@@ -47,6 +51,7 @@ local function whichLivesLonger(
 	b: any
 ): "a" | "b" | "unknown"
 	if scopeA == scopeB then
+		local scopeA: {any} = scopeA
 		for index = #scopeA, 1, -1 do
 			local value = scopeA[index]
 			if value == a then

@@ -17,6 +17,7 @@ local isState = require(Package.State.isState)
 local Value = require(Package.State.Value)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
+local deriveScope = require(Package.Memory.deriveScope)
 
 local class = {}
 
@@ -61,7 +62,6 @@ function class:update(): boolean
 		-- NOTE: we also reuse processors with nil output keys here, so long as
 		-- they match values. This ensures they don't get recomputed either.
 		for tryReuseProcessor in existingProcessors do
-			local key = peek(tryReuseProcessor.inputPair).key
 			local value = peek(tryReuseProcessor.inputPair).value
 			if peek(tryReuseProcessor.outputPair).key == nil then
 				for key, remainingValues in remainingPairs do
@@ -74,6 +74,7 @@ function class:update(): boolean
 					end
 				end
 			else
+				local key = peek(tryReuseProcessor.inputPair).key
 				local remainingValues = remainingPairs[key]
 				if remainingValues ~= nil and remainingValues[value] ~= nil then
 					remainingValues[value] = nil
@@ -138,7 +139,7 @@ function class:update(): boolean
 		
 		for key, remainingValues in remainingPairs do
 			for value in remainingValues do
-				local scope = {}
+				local scope = deriveScope(self.scope)
 				local inputPair = Value(scope, {key = key, value = value})
 				local processOK, outputPair = xpcall(self._processor, parseError, scope, inputPair)
 				if processOK then
@@ -213,7 +214,7 @@ local function For<KI, VI, KO, VO>(
 	processor: (
 		{any},
 		PubTypes.StateObject<{key: KI, value: VI}>
-	) -> (PubTypes.StateObject<{key: KO?, value: VO}>)
+	) -> (PubTypes.StateObject<{key: KO?, value: VO?}>)
 ): Types.For<KI, KO, VI, VO>
 
 	local self = setmetatable({

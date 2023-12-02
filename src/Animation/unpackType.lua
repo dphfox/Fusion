@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Unpacks an animatable type into an array of numbers.
@@ -13,7 +14,6 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
 
 local function unpackType(value: any, typeString: string): {number}

@@ -25,8 +25,8 @@ function SpringScheduler.add(spring: Spring)
 	-- the last update time so that springs started within the same frame have
 	-- identical time steps
 	spring._lastSchedule = lastUpdateTime
-	spring._startDisplacements = {}
-	spring._startVelocities = {}
+	table.clear(spring._startDisplacements)
+	table.clear(spring._startVelocities)
 	for index, goal in ipairs(spring._springGoals) do
 		spring._startDisplacements[index] = spring._springPositions[index] - goal
 		spring._startVelocities[index] = spring._springVelocities[index]
@@ -46,7 +46,11 @@ local function updateAllSprings(
 	lastUpdateTime = now
 
 	for spring in pairs(activeSprings) do
-		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)
+		local posPos, posVel, velPos, velVel = springCoefficients(
+			lastUpdateTime - spring._lastSchedule,
+			spring._currentDamping,
+			spring._currentSpeed
+		)
 
 		local positions = spring._springPositions
 		local velocities = spring._springVelocities

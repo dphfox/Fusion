@@ -14,7 +14,7 @@ local function Hydrate(
 	scope: PubTypes.Scope<any>,
 	target: Instance
 )
-	if target == nil then
+	if target :: any == nil then
 		logError("scopeMissing", nil, "instances using Hydrate", "myScope:Hydrate (instance) { ... }")
 	end
 	return function(

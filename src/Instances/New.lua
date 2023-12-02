@@ -29,7 +29,7 @@ local function New(
 		local classDefaults = defaultProps[className]
 		if classDefaults ~= nil then
 			for defaultProp, defaultValue in pairs(classDefaults) do
-				instance[defaultProp] = defaultValue
+				(instance :: any)[defaultProp] = defaultValue
 			end
 		end
 

@@ -10,12 +10,6 @@ type Set<T> = {[T]: any}
 	General use types
 ]]
 
--- A unique symbolic value.
-export type Symbol = {
-	type: "Symbol",
-	name: string
-}
-
 -- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
 	number |
@@ -47,7 +41,7 @@ export type Task =
 	{Task}
 
 -- A scope of tasks to clean up.
-export type Scope<Constructors> = {Task} & Constructors
+export type Scope<Constructors> = {any} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopeLifetime = {
@@ -70,7 +64,7 @@ export type Dependency = ScopeLifetime & {
 }
 
 -- A graph object which can have dependencies.
-export type Dependent = {
+export type Dependent = ScopeLifetime & {
 	update: (Dependent) -> boolean,
 	dependencySet: Set<Dependency>
 }
@@ -118,26 +112,27 @@ export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
 	kind: "For",
 	destroy: () -> ()
 }
-type ForPairsConstructor =  <KI, KO, VI, VO, S>(
+export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[KI]: VI}>,
 	processor: (Scope<S>, Use, KI, VI) -> (KO, VO)
 ) -> For<KO, VO>
-type ForKeysConstructor =  <KI, KO, V, M, S>(
+export type ForKeysConstructor =  <KI, KO, V, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[KI]: V}>,
-	processor: (Scope<S>, Use, KI) -> (KO, M?)
+	processor: (Scope<S>, Use, KI) -> KO
 ) -> For<KO, V>
-type ForValuesConstructor =  <K, VI, VO, M, S>(
+export type ForValuesConstructor =  <K, VI, VO, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[K]: VI}>,
-	processor: (Scope<S>, Use, VI) -> (VO, M?)
+	processor: (Scope<S>, Use, VI) -> VO
 ) -> For<K, VO>
 
 -- An object which can listen for updates on another state object.
 export type Observer = Dependent & {
 	kind: "Observer",
 	onChange: (Observer, callback: () -> ()) -> (() -> ()),
+	onBind: (Observer, callback: () -> ()) -> (() -> ()),
 	destroy: () -> ()
 }
 type ObserverConstructor = (
@@ -227,7 +222,6 @@ export type Fusion = {
 	Hydrate: HydrateConstructor,
 
 	Ref: SpecialKey,
-	Cleanup: SpecialKey,
 	Children: SpecialKey,
 	Out: (propertyName: string) -> SpecialKey,
 	OnEvent: (eventName: string) -> SpecialKey,

@@ -20,6 +20,8 @@ local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 
@@ -37,16 +39,19 @@ local function ForValues<K, VI, VO, S>(
 	return For(
 		scope,
 		inputTable,
-		function(scope, inputPair)
-			local inputValue = Computed(scope, function(scope, use)
+		function(
+			scope: PubTypes.Scope<any>,
+			inputPair: PubTypes.StateObject<{key: K, value: VI}>
+		)
+			local inputValue = Computed(scope, function(scope, use): VI
 				return use(inputPair).value
 			end)
-			return Computed(scope, function(scope, use)
+			return Computed(scope, function(scope, use): {key: nil, value: VO?}
 				local ok, value = xpcall(processor, parseError, scope, use, use(inputValue))
 				if ok then
 					return {key = nil, value = value}
 				else
-					logErrorNonFatal("forProcessorError", parseError)
+					logErrorNonFatal("forProcessorError", value :: any)
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}

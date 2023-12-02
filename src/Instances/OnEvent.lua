@@ -14,27 +14,26 @@ local function getProperty_unsafe(instance: Instance, property: string)
 end
 
 local function OnEvent(eventName: string): PubTypes.SpecialKey
-	local eventKey = {}
-	eventKey.type = "SpecialKey"
-	eventKey.kind = "OnEvent"
-	eventKey.stage = "observer"
-
-	function eventKey:apply(
-		scope: PubTypes.Scope<any>,
-		callback: any,
-		applyTo: Instance
-	)
-		local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
-		if not ok or typeof(event) ~= "RBXScriptSignal" then
-			logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
-		elseif typeof(callback) ~= "function" then
-			logError("invalidEventHandler", nil, eventName)
-		else
-			table.insert(scope, event:Connect(callback))
+	return {
+		type = "SpecialKey",
+		kind = "OnEvent",
+		stage = "observer",
+		apply = function(
+			self: PubTypes.SpecialKey,
+			scope: PubTypes.Scope<any>,
+			callback: any,
+			applyTo: Instance
+		)
+			local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
+			if not ok or typeof(event) ~= "RBXScriptSignal" then
+				logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
+			elseif typeof(callback) ~= "function" then
+				logError("invalidEventHandler", nil, eventName)
+			else
+				table.insert(scope, event:Connect(callback))
+			end
 		end
-	end
-
-	return eventKey
+	}
 end
 
 return OnEvent

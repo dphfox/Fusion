@@ -17,11 +17,6 @@ type Set<T> = {[T]: any}
 	General use types
 ]]
 
--- A symbol that represents the absence of a value.
-export type None = PubTypes.Symbol & {
-	-- name: "None" (add this when Luau supports singleton types)
-}
-
 -- Stores useful information about Luau errors.
 export type Error = {
 	type: string, -- replace with "Error" when Luau supports singleton types
@@ -61,7 +56,7 @@ export type For<KI, KO, VI, VO> = PubTypes.For<KO, VO> & {
 	_processor: (
 		PubTypes.Scope<any>,
 		PubTypes.StateObject<{key: KI, value: VI}>
-	) -> (PubTypes.StateObject<{key: KO?, value: VO}>),
+	) -> (PubTypes.StateObject<{key: KO?, value: VO?}>),
 	_inputTable: PubTypes.CanBeState<{[KI]: VI}>,
 	_existingInputTable: {[KI]: VI}?,
 	_existingOutputTable: {[KO]: VO},
@@ -92,18 +87,22 @@ export type Tween<T> = PubTypes.Tween<T> & {
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = PubTypes.Spring<T> & {
 	_speed: PubTypes.CanBeState<number>,
-	_speedIsState: boolean,
-	_lastSpeed: number,
 	_damping: PubTypes.CanBeState<number>,
-	_dampingIsState: boolean,
-	_lastDamping: number,
 	_goalState: State<T>,
 	_goalValue: T,
+
 	_currentType: string,
 	_currentValue: T,
+	_currentSpeed: number,
+	_currentDamping: number,
+
 	_springPositions: {number},
 	_springGoals: {number},
-	_springVelocities: {number}
+	_springVelocities: {number},
+
+	_lastSchedule: number,
+	_startDisplacements: {number},
+	_startVelocities: {number}
 }
 
 -- An object which can listen for updates on another state object.

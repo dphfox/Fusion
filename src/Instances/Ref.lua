@@ -9,29 +9,28 @@ local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local Ref = {}
-Ref.type = "SpecialKey"
-Ref.kind = "Ref"
-Ref.stage = "observer"
-
-function Ref:apply(
-	scope: PubTypes.Scope<any>,
-	refState: any,
-	applyTo: Instance
-)
-	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
-		logError("invalidRefType")
-	else
-		if refState.scope == nil then
-			logError("useAfterDestroy", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-		elseif whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
-			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+return {
+	type = "SpecialKey",
+	kind = "Ref",
+	stage = "observer",
+	apply = function(
+		self: PubTypes.SpecialKey,
+		scope: PubTypes.Scope<any>,
+		refState: any,
+		applyTo: Instance
+	)
+		if not isState(refState) or refState.kind ~= "Value" then
+			logError("invalidRefType")
+		else
+			if refState.scope == nil then
+				logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+			elseif whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
+				logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+			end
+			refState:set(applyTo)
 		end
-		refState:set(applyTo)
 	end
-end
-
-return Ref
+} :: PubTypes.SpecialKey

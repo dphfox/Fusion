@@ -10,29 +10,28 @@ local PubTypes = require(Package.PubTypes)
 local logError = require(Package.Logging.logError)
 
 local function OnChange(propertyName: string): PubTypes.SpecialKey
-	local changeKey = {}
-	changeKey.type = "SpecialKey"
-	changeKey.kind = "OnChange"
-	changeKey.stage = "observer"
-
-	function changeKey:apply(
-		scope: PubTypes.Scope<any>,
-		callback: any,
-		applyTo: Instance
-	)
-		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
-		if not ok then
-			logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
-		elseif typeof(callback) ~= "function" then
-			logError("invalidChangeHandler", nil, propertyName)
-		else
-			table.insert(scope, event:Connect(function()
-				callback((applyTo :: any)[propertyName])
-			end))
+	return {
+		type = "SpecialKey",
+		kind = "OnChange",
+		stage = "observer",
+		apply = function(
+			self: PubTypes.SpecialKey,
+			scope: PubTypes.Scope<any>,
+			callback: any,
+			applyTo: Instance
+		)
+			local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
+			if not ok then
+				logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
+			elseif typeof(callback) ~= "function" then
+				logError("invalidChangeHandler", nil, propertyName)
+			else
+				table.insert(scope, event:Connect(function()
+					callback((applyTo :: any)[propertyName])
+				end))
+			end
 		end
-	end
-
-	return changeKey
+	}
 end
 
 return OnChange

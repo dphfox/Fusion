@@ -84,7 +84,7 @@ local function Observer(
 	table.insert(scope, self)
 
 	if watchedState.scope == nil then
-		logError("useAfterDestroy", `The {watchedState.kind} object`, `the Observer that is watching it`)
+		logError("useAfterDestroy", nil, `The {watchedState.kind} object`, `the Observer that is watching it`)
 	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "a" then
 		logWarn("possiblyOutlives", `The {watchedState.kind} object`, `the Observer that is watching it`)
 	end
