@@ -24,6 +24,7 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		kind = "Attribute",
 		stage = "self",
 		apply = function(
+			self: PubTypes.SpecialKey,
 			scope: PubTypes.Scope<any>,
 			value: any,
 			applyTo: Instance
