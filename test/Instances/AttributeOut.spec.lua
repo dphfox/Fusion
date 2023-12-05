@@ -24,7 +24,7 @@ return function()
 	it("should update when state objects linked update", function()
 		local scope = {}
 		local attributeValue = Value(scope, "Foo")
-		local attributeOutValue = Value(scope)
+		local attributeOutValue = Value(scope, nil)
 		local child = New(scope, "Folder") {
 			[Attribute "Foo"] = attributeValue,
 			[AttributeOut "Foo"] = attributeOutValue

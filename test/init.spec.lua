@@ -59,7 +59,7 @@ return function()
 
 	it("should not error when accessing non-existent APIs", function()
 		expect(function()
-			local foo = Fusion.thisIsNotARealAPI
+			local foo = Fusion["thisIsNotARealAPI" :: any]
 		end).never.to.throw()
 	end)
 end

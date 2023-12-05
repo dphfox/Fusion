@@ -168,7 +168,7 @@ return function()
 			table.insert(scope, instance)
 			applyInstanceProps(
 				scope,
-				{ [2] = true }, 
+				{ [2 :: any] = true }, 
 				instance
 			)
 			doCleanup(scope)

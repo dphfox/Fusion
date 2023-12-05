@@ -41,7 +41,7 @@ return function()
 		expect(function()
 			local scope = {}
 			local child = New(scope, "Folder") {
-				[Attribute(nil)] = "foo"
+				[Attribute(nil :: any)] = "foo"
 			}
 			doCleanup(scope)
 		end).to.throw("attributeNameNil")
@@ -52,7 +52,7 @@ return function()
 			local scope = {}
 			local attributeValue = Value(scope, "foo")
 			local child = New(scope, "Folder") {
-				[Attribute(nil)] = attributeValue
+				[Attribute(nil :: any)] = attributeValue
 			}
 			doCleanup(scope)
 		end).to.throw("attributeNameNil")

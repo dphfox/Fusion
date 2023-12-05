@@ -6,7 +6,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 return function()
 	it("constructs in scopes", function()
 		local scope = {}
-		local value = Value(scope)
+		local value = Value(scope, nil)
 
 		expect(value).to.be.a("table")
 		expect(value.type).to.equal("State")
@@ -17,7 +17,7 @@ return function()
 	end)
 
 	it("is destroyable", function()
-		local value = Value({})
+		local value = Value({}, nil)
 		expect(value.destroy).to.be.a("function")
 		expect(function()
 			value:destroy()
