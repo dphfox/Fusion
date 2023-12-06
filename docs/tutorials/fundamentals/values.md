@@ -1,8 +1,11 @@
+Now that you understand how Fusion works with objects, you can create Fusion's
+simplest object.
+
 Values are objects which store single values. You can write to them with
 their `:set()` method, and read from them with the `peek()` function.
 
 ```Lua
-local health = Value(100)
+local health = scope:Value(100)
 
 print(peek(health)) --> 100
 health:set(25)
@@ -13,132 +16,50 @@ print(peek(health)) --> 25
 
 ## Usage
 
-To use `Value` in your code, you first need to import it from the Fusion module,
-so that you can refer to it by name. You should also import `peek` for later:
+To create a new value object, call `scope:Value()` and give it a value you want
+to store.
 
-```Lua linenums="1" hl_lines="2-3"
+```Lua linenums="1" hl_lines="5"
 local Fusion = require(ReplicatedStorage.Fusion)
-local Value = Fusion.Value
+local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
+
+local scope = scoped(Fusion)
+local health = scope:Value(5)
+```
+
+Fusion provides a global `peek()` function. It will read the value of whatever
+you give it. You'll use `peek()` to read the value of lots of things; for now,
+it's useful for printing `health` back out.
+
+```Lua linenums="1" hl_lines="3 7"
+local Fusion = require(ReplicatedStorage.Fusion)
+local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 local peek = Fusion.peek
+
+local scope = scoped(Fusion)
+local health = scope:Value(5)
+print(peek(health)) --> 5
 ```
 
-To create a new value, call the `Value` function:
+You can change the value using the `:set()` method. Unlike `peek()`, this is
+specific to value objects, so it's done on the object itself.
 
-```Lua
-local health = Value() -- this will create and return a new Value object
-```
+```Lua linenums="1" hl_lines="9-10"
+local Fusion = require(ReplicatedStorage.Fusion)
+local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
+local peek = Fusion.peek
 
-By default, new `Value` objects store `nil`. If you want the `Value` object to
-start with a different value, you can provide one:
+local scope = scoped(Fusion)
+local health = scope:Value(5)
+print(peek(health)) --> 5
 
-```Lua
-local health = Value(100) -- the Value will initially store a value of 100
-```
-
-Fusion provides a global `peek()` function which returns the value of whatever
-you give it. For example, it will read the value of our `health` object:
-
-```Lua
-print(peek(health)) --> 100
-```
-
-We can change the value using the `:set()` method on the object itself:
-
-```Lua
 health:set(25)
 print(peek(health)) --> 25
 ```
 
------
+Value objects are Fusion's simplest 'state object'. State objects contain a
+single value - their *state*, you might say - and that single value can be read
+out at any time using `peek()`.
 
-## Why Objects?
-
-### The Problem
-
-Imagine some UI in your head. Think about what it looks like, and think about
-the different variables it's showing to you.
-
-<figure markdown>
-![An example of a game's UI, with some variables labelled and linked to parts of the UI.](Game-UI-Variables-Light.svg#only-light)
-![An example of a game's UI, with some variables labelled and linked to parts of the UI.](Game-UI-Variables-Dark.svg#only-dark)
-<figcaption>Screenshot: GameUIDatabase (Halo Infinite)</figcaption>
-</figure>
-
-Your UIs are usually driven by a few internal variables. When those variables
-change, you want your UI to reflect those changes.
-
-Unfortunately, there's no way to listen for those changes in Lua. When you
-change those variables, it's normally *your* responsibility to figure out what
-needs to update, and to send out those updates.
-
-Over time, we've come up with many methods of dealing with this inconvenience.
-Perhaps the simplest are 'setter functions', like these:
-
-```Lua
-local ammo = 100
-
-local function setAmmo(newAmmo)
-	ammo = newAmmo
-	-- you need to send out updates to every piece of code using `ammo` here
-	updateHUD()
-	updateGunModel()
-	sendAmmoToServer()
-end
-```
-
-But this is clunky and unreliable; what if there's another piece of code using
-`ammo` that we've forgotten to update here? How can you guarantee we've covered
-everything? Moreover, why is the code setting the `ammo` even concerned with who
-uses it?
-
-### Building Better Variables
-
-In an ideal world, anyone using `ammo` should be able to listen for changes, and
-get notified when someone sets it to a new value.
-
-To make this work, we need to fundamentally extend what variables can do. In
-particular, we need two additional features:
-
-- We need to save a list of *dependents* - other places currently using our
-variable. This is so we know who to notify when the value changes.
-- We need to run some code when the variable is set to a new value. If we can
-do that, then we can go through the list and notify everyone.
-
-To solve this, Fusion introduces the idea of a 'state object'. These are objects
-that represent a single value, which you can `peek()` at any time. They also
-keep a list of dependents; when the object's value changes, it can notify
-everyone so they can respond to the change.
-
-`Value` is one such state object. It's specifically designed to act like a
-variable, so it has an extra `:set()` method. Using that method, you can change
-the object's value manually. If you set it to a different value than before,
-it'll notify anyone using the object.
-
-This means you can use `Value` objects like variables, with the added benefit of
-being able to listen to changes like we wanted!
-
-### Sharing Variables
-
-There is another benefit to using objects too; you can easily share your objects
-directly with other code. Every usage of that object will refer to the
-same underlying value:
-
-```Lua
--- someObject is a `Value` object
-local function printValue(someObject)
-	print(peek(someObject))
-end
-
-local health = Value(100)
-printValue(health) --> 100
-
-local myDogsName = Value("Dan")
-printValue(myDogsName) --> Dan
-```
-
-This is something that normal variables can't do by default, and is a benefit
-exclusive to state objects.
-
-In the above code, `printValue` can operate on *any* arbitrary variable without
-knowing what it is, or where it comes from. This is very useful for writing
-generic, reusable code, and you'll see it used a lot throughout Fusion.
+Later on, you'll discover more advanced state objects that can calculate their
+value in more interesting ways.
