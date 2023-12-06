@@ -54,11 +54,11 @@ nav:
   - Home: index.md
   - Tutorials:
     - Get Started: tutorials/index.md
-    - State Objects:
+    - Fundamentals:
+      - Objects: tutorials/fundamentals/objects.md
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md
-      - Destructors: tutorials/fundamentals/destructors.md
     - Instances:
       - Hydration: tutorials/instances/hydration.md
       - New Instances: tutorials/instances/new-instances.md
