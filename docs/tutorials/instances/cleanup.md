@@ -153,7 +153,7 @@ method is called, meaning other kinds of destruction are ignored.
 
 For example, notice only one of these parts runs their cleanup code:
 
-=== "Script code"
+=== "Luau code"
 
     ```Lua linenums="1"
     local part1 = New "Part" {
@@ -186,7 +186,7 @@ For example, notice only one of these parts runs their cleanup code:
 Meanwhile, Fusion's `[Cleanup]` will work regardless of how your instances were
 destroyed, meaning you can avoid serious memory leaks:
 
-=== "Script code"
+=== "Luau code"
 
     ```Lua linenums="1"
     local part1 = New "Part" {
