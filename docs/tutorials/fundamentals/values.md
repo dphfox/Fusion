@@ -44,11 +44,7 @@ print(peek(health)) --> 5
 You can change the value using the `:set()` method. Unlike `peek()`, this is
 specific to value objects, so it's done on the object itself.
 
-```Lua linenums="1" hl_lines="9-10"
-local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
-local peek = Fusion.peek
-
+```Lua linenums="5" hl_lines="5-6"
 local scope = scoped(Fusion)
 local health = scope:Value(5)
 print(peek(health)) --> 5
