@@ -104,7 +104,7 @@ export type Computed<T> = StateObject<T> & Dependent & {
 }
 type ComputedConstructor = <T, S>(
 	scope: Scope<S>,
-	callback: (Scope<S>, Use) -> T
+	callback: (Use, Scope<S>) -> T
 ) -> Computed<T>
 
 -- A state object which maps over keys and/or values in another table.

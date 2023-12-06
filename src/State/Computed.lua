@@ -59,7 +59,7 @@ function class:update(): boolean
 			return target :: T
 		end
 	end
-	local ok, newValue = xpcall(self._processor, parseError, innerScope, use)
+	local ok, newValue = xpcall(self._processor, parseError, use, innerScope)
 
 	if ok then
 		local oldValue = self._value
@@ -121,11 +121,11 @@ end
 
 local function Computed<T, S>(
 	scope: PubTypes.Scope<S>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use) -> T,
+	processor: (PubTypes.Use, PubTypes.Scope<S>) -> T,
 	destructor: any
 ): Types.Computed<T, S>
 	if typeof(scope) == "function" then
-		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(scope, use) ... end)")
+		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
 	elseif destructor ~= nil then
 		logWarn("destructorRedundant", "Computed")
 	end

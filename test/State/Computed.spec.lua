@@ -31,7 +31,7 @@ return function()
 
 	it("computes with constants", function()
 		local scope = {}
-		local computed = Computed(scope, function(_, use)
+		local computed = Computed(scope, function(use)
 			return use(5)
 		end)
 		expect(peek(computed)).to.equal(5)
@@ -41,7 +41,7 @@ return function()
 	it("computes with state objects", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
-		local computed = Computed(scope, function(_, use)
+		local computed = Computed(scope, function(use)
 			return use(dependency)
 		end)
 		expect(peek(computed)).to.equal(5)
@@ -53,7 +53,7 @@ return function()
 	it("preserves value on error", function()
 		local scope = {}
 		local dependency = Value(scope, 5)
-		local computed = Computed(scope, function(_, use)
+		local computed = Computed(scope, function(use)
 			assert(use(dependency) ~= 13, "This is an intentional error from a unit test")
 			return use(dependency)
 		end)
@@ -82,7 +82,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local dependency = Value(scope, 1)
-		local _ = Computed(scope, function(innerScope, use)
+		local _ = Computed(scope, function(use, innerScope)
 			local value = use(dependency)
 			table.insert(innerScope, function()
 				destructed[value] = true
@@ -103,7 +103,7 @@ return function()
 		local scope = {}
 		local numDestructions = {}
 		local dependency = Value(scope, 1)
-		local _ = Computed(scope, function(innerScope, use)
+		local _ = Computed(scope, function(use, innerScope)
 			local value = use(dependency)
 			table.insert(innerScope, function()
 				numDestructions[value] = (numDestructions[value] or 0) + 1
@@ -127,7 +127,7 @@ return function()
 	it("destroys inner scope on destroy", function()
 		local scope = {}
 		local destructed = false
-		local _ = Computed(scope, function(innerScope, use)
+		local _ = Computed(scope, function(use, innerScope)
 			table.insert(innerScope, function()
 				destructed = true
 			end)

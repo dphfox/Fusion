@@ -28,7 +28,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 local function ForKeys<KI, KO, V, S>(
 	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[KI]: V}>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use, KI) -> KO,
+	processor: (PubTypes.Use, PubTypes.Scope<S>, KI) -> KO,
 	destructor: any?
 ): Types.For<KI, KO, V, V>
 	if typeof(inputTable) == "function" then
@@ -43,11 +43,11 @@ local function ForKeys<KI, KO, V, S>(
 			scope: PubTypes.Scope<any>,
 			inputPair: PubTypes.StateObject<{key: KI, value: V}>
 		)
-			local inputKey = Computed(scope, function(scope, use): KI
+			local inputKey = Computed(scope, function(use, scope): KI
 				return use(inputPair).key
 			end)
-			local outputKey = Computed(scope, function(scope, use): KO?
-				local ok, key = xpcall(processor, parseError, scope, use, use(inputKey))
+			local outputKey = Computed(scope, function(use, scope): KO?
+				local ok, key = xpcall(processor, parseError, use, scope, use(inputKey))
 				if ok then
 					return key
 				else
@@ -57,7 +57,7 @@ local function ForKeys<KI, KO, V, S>(
 					return nil
 				end
 			end)
-			return Computed(scope, function(scope, use)
+			return Computed(scope, function(use, scope)
 				return {key = use(outputKey), value = use(inputPair).value}
 			end)
 		end

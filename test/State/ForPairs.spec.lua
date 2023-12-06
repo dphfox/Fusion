@@ -63,7 +63,7 @@ return function()
 	it("computes with constants", function()
 		local scope = {}
 		local data = {foo = "oof", bar = "rab"}
-		local forObject = ForPairs(scope, data, function(_, use, key, value)
+		local forObject = ForPairs(scope, data, function(use, _, key, value)
 			return value .. use("baz"), key .. use("baz")
 		end)
 		expect(peek(forObject).oofbaz).to.equal("foobaz")
@@ -75,7 +75,7 @@ return function()
 		local scope = {}
 		local data = {foo = "oof", bar = "rab"}
 		local suffix = Value(scope, "first")
-		local forObject = ForPairs(scope, data, function(_, use, key, value)
+		local forObject = ForPairs(scope, data, function(use, _, key, value)
 			return value .. use(suffix), key .. use(suffix)
 		end)
 		expect(peek(forObject).ooffirst).to.equal("foofirst")
@@ -93,7 +93,7 @@ return function()
 		local data = {foo = "oof", bar = "rab", baz = "zab"}
 		local suffix = Value(scope, "first")
 		local destroyed = {}
-		local forObject = ForPairs(scope, data, function(innerScope, use, key, value)
+		local forObject = ForPairs(scope, data, function(use, innerScope, key, value)
 			local generatedKey = value .. use(suffix)
 			local generatedValue = key .. use(suffix)
 			table.insert(innerScope, function()
@@ -137,7 +137,7 @@ return function()
 		local scope = {}
 		local data = {foo = "oof", bar = "rab", baz = "zab"}
 		local omitThird = Value(scope, false)
-		local forObject = ForPairs(scope, data, function(_, use, key, value)
+		local forObject = ForPairs(scope, data, function(use, _, key, value)
 			if key == "bar" then
 				return nil
 			end
@@ -166,7 +166,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab", baz = "zab"})
-		local _ = ForPairs(scope, data, function(innerScope, _, key, value)
+		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
@@ -185,7 +185,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab"})
-		local _ = ForPairs(scope, data, function(innerScope, _, key, value)
+		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
@@ -204,7 +204,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab"})
-		local _ = ForPairs(scope, data, function(innerScope, _, key, value)
+		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)

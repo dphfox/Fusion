@@ -46,7 +46,7 @@ export type State<T> = PubTypes.Value<T> & {
 export type Computed<T, S> = PubTypes.Computed<T> & {
 	scope: PubTypes.Scope<S>,
 	_oldDependencySet: Set<PubTypes.Dependency>,
-	_processor: (PubTypes.Scope<S>, PubTypes.Use) -> T,
+	_processor: (PubTypes.Use, PubTypes.Scope<S>) -> T,
 	_value: T,
 	_innerScope: PubTypes.Scope<S>?
 }
@@ -54,8 +54,8 @@ export type Computed<T, S> = PubTypes.Computed<T> & {
 -- A state object which maps over keys and/or values in another table.
 export type For<KI, KO, VI, VO> = PubTypes.For<KO, VO> & {
 	_processor: (
-		PubTypes.Scope<any>,
-		PubTypes.StateObject<{key: KI, value: VI}>
+		PubTypes.StateObject<{key: KI, value: VI}>,
+		PubTypes.Scope<any>
 	) -> (PubTypes.StateObject<{key: KO?, value: VO?}>),
 	_inputTable: PubTypes.CanBeState<{[KI]: VI}>,
 	_existingInputTable: {[KI]: VI}?,

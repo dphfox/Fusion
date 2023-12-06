@@ -28,7 +28,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 local function ForPairs<KI, KO, VI, VO, S>(
 	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use, KI, VI) -> (KO, VO),
+	processor: (PubTypes.Use, PubTypes.Scope<S>, KI, VI) -> (KO, VO),
 	destructor: any?
 ): Types.For<KI, KO, VI, VO>
 	if typeof(inputTable) == "function" then
@@ -43,8 +43,8 @@ local function ForPairs<KI, KO, VI, VO, S>(
 			scope: PubTypes.Scope<any>,
 			inputPair: PubTypes.StateObject<{key: KI, value: VI}>
 		)
-			return Computed(scope, function(scope, use): {key: KO?, value: VO?}
-				local ok, key, value = xpcall(processor, parseError, scope, use, use(inputPair).key, use(inputPair).value)
+			return Computed(scope, function(use, scope): {key: KO?, value: VO?}
+				local ok, key, value = xpcall(processor, parseError, use, scope, use(inputPair).key, use(inputPair).value)
 				if ok then
 					return {key = key, value = value}
 				else

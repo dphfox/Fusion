@@ -28,7 +28,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 local function ForValues<K, VI, VO, S>(
 	scope: PubTypes.Scope<S>,
 	inputTable: PubTypes.CanBeState<{[K]: VI}>,
-	processor: (PubTypes.Scope<S>, PubTypes.Use, VI) -> VO,
+	processor: (PubTypes.Use, PubTypes.Scope<S>, VI) -> VO,
 	destructor: any?
 ): Types.For<K, K, VI, VO>
 	if typeof(inputTable) == "function" then
@@ -43,11 +43,11 @@ local function ForValues<K, VI, VO, S>(
 			scope: PubTypes.Scope<any>,
 			inputPair: PubTypes.StateObject<{key: K, value: VI}>
 		)
-			local inputValue = Computed(scope, function(scope, use): VI
+			local inputValue = Computed(scope, function(use, scope): VI
 				return use(inputPair).value
 			end)
-			return Computed(scope, function(scope, use): {key: nil, value: VO?}
-				local ok, value = xpcall(processor, parseError, scope, use, use(inputValue))
+			return Computed(scope, function(use, scope): {key: nil, value: VO?}
+				local ok, value = xpcall(processor, parseError, use, scope, use(inputValue))
 				if ok then
 					return {key = nil, value = value}
 				else

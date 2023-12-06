@@ -212,7 +212,7 @@ local function For<KI, VI, KO, VO>(
 	scope: PubTypes.Scope<any>,
 	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
 	processor: (
-		{any},
+		PubTypes.Scope<any>,
 		PubTypes.StateObject<{key: KI, value: VI}>
 	) -> (PubTypes.StateObject<{key: KO?, value: VO?}>)
 ): Types.For<KI, KO, VI, VO>

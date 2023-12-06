@@ -61,7 +61,7 @@ return function()
 	it("computes with constants", function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
-		local forObject = ForKeys(scope, data, function(_, use, key)
+		local forObject = ForKeys(scope, data, function(use, _, key)
 			return key .. use("baz")
 		end)
 		expect(peek(forObject).foobaz).to.equal(1)
@@ -73,7 +73,7 @@ return function()
 		local scope = {}
 		local data = {foo = 1, bar = 2}
 		local suffix = Value(scope, "first")
-		local forObject = ForKeys(scope, data, function(_, use, key)
+		local forObject = ForKeys(scope, data, function(use, _, key)
 			return key .. use(suffix)
 		end)
 		expect(peek(forObject).foofirst).to.equal(1)
@@ -91,7 +91,7 @@ return function()
 		local data = {foo = 1, bar = 2, baz = 3}
 		local suffix = Value(scope, "first")
 		local destroyed = {}
-		local forObject = ForKeys(scope, data, function(innerScope, use, key)
+		local forObject = ForKeys(scope, data, function(use, innerScope, key)
 			local generated = key .. use(suffix)
 			table.insert(innerScope, function()
 				destroyed[generated] = true
@@ -134,7 +134,7 @@ return function()
 		local scope = {}
 		local data = {foo = 1, bar = 2, baz = 3}
 		local omitThird = Value(scope, false)
-		local forObject = ForKeys(scope, data, function(_, use, key)
+		local forObject = ForKeys(scope, data, function(use, _, key)
 			if key == "bar" then
 				return nil
 			end
@@ -163,7 +163,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(innerScope, _, key)
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
@@ -182,7 +182,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(innerScope, _, key)
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
@@ -201,7 +201,7 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(innerScope, _, key)
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
@@ -218,7 +218,7 @@ return function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
 		local computations = 0
-		local _ = ForKeys(scope, data, function(innerScope, _, key)
+		local _ = ForKeys(scope, data, function(_, _, key)
 			computations += 1
 			return string.upper(key)
 		end)
