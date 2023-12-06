@@ -38,7 +38,7 @@ function. Luau will execute the function, then return to your code.
 
 In this example, the `fiveTimes` function calls a callback five times:
 
-=== "Script code"
+=== "Luau code"
 
     ```Lua
     local function fiveTimes(callback)
