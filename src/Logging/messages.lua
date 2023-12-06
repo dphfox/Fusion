@@ -15,7 +15,7 @@ return {
 	computedCallbackError = "Computed callback error: ERROR_MESSAGE",
 	destroyedTwice = "Attempted to destroy %s twice; ensure you're not manually calling `:destroy()` while using scopes. See discussion #292 on GitHub for advice.",
 	destructorNeededComputed = "To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.",
-	destructorRedundant = "%s destructors no longer do anything. If you wish to run code on destroy, `table.insert` a function into the `scope` argument. See #292 on GitHub for advice.",
+	destructorRedundant = "%s destructors no longer do anything. If you wish to run code on destroy, `table.insert` a function into the `scope` argument. See discussion #292 on GitHub for advice.",
 	multiReturnComputed = "Returning multiple values from Computeds is discouraged, as behaviour will change soon - see discussion #189 on GitHub.",
 	forKeyCollision = "The key '%s' was returned multiple times simultaneously, which is not allowed in `For` objects.",
 	forProcessorError = "Error while processing `For` object: ERROR_MESSAGE",
