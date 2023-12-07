@@ -259,3 +259,6 @@ end)
 	In many cases, using the same variable name can be a mistake, but in this
 	case we actually find it useful. So, to turn off the warning, try adding
 	`--!nolint LocalShadow` to the top of your file.
+
+Once you understand computeds, as well as the previously discussed scopes,
+values and observers, you're well positioned to explore the rest of Fusion.
