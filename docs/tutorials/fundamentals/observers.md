@@ -33,18 +33,34 @@ different methods.
 The first method is `:onChange()`, which runs your code when the state object
 changes value.
 
-```Lua
-observer:onChange(function()
-	print("The new value is: ", peek(health))
-end)
-```
+=== "Luau code"
+
+	```Lua linenums="7" hl_lines="4-6"
+	local observer = scope:Observer(health)
+
+	print("...connecting...")
+	observer:onChange(function()
+		print("Observed a change to: ", peek(health))
+	end)
+
+	print("...setting health to 25...")
+	health:set(25)
+	```
+
+=== "Output"
+
+	```
+	...connecting...
+	...setting health to 25...
+	Observed a change to: 25
+	```
 
 By default, the `:onChange()` connection is disconnected when the observer
 object is destroyed. However, if you want to disconnect it earlier, the
 `:onChange()` method returns an optional disconnect function. Calling it will
 disconnect that specific `:onChange()` handler early.
 
-```Lua
+```Lua linenums="7" hl_lines="1 5-7"
 local disconnect = observer:onChange(function()
 	print("The new value is: ", peek(health))
 end)
@@ -57,15 +73,28 @@ disconnect()
 The second method is `:onBind()`. It works identically to `:onChange()`, but it
 also runs your code right away, which can often be useful.
 
-```Lua
-local disconnect = observer:onBind(function()
-	print("The new value is: ", peek(health))
-end)
+=== "Luau code"
 
--- disconnect the above handler after 5 seconds
-task.wait(5)
-disconnect()
-```
+	```Lua linenums="7" hl_lines="4"
+	local observer = scope:Observer(health)
+
+	print("...connecting...")
+	observer:onBind(function()
+		print("Observed a change to: ", peek(health))
+	end)
+
+	print("...setting health to 25...")
+	health:set(25)
+	```
+
+=== "Output"
+
+	```
+	...connecting...
+	Observed a change to: 5
+	...setting health to 25...
+	Observed a change to: 25
+	```
 
 -----
 
@@ -76,35 +105,28 @@ notice your observer only runs the first time.
 
 === "Luau code"
 
-	```Lua
-	local thing = Value("Hello")
+	```Lua linenums="7"
+	local observer = scope:Observer(health)
 
-	Observer(thing):onChange(function()
-		print("=> Thing changed to", peek(thing))
+	observer:onChange(function()
+		print("Observed a change to: ", peek(health))
 	end)
 
-	print("Setting thing once...")
-	thing:set("World")
-	print("Setting thing twice...")
-	thing:set("World")
-	print("Setting thing thrice...")
-	thing:set("World")
+	print("...setting health to 25 three times...")
+	health:set(25)
+	health:set(25)
+	health:set(25)
 	```
 
 === "Output"
 
 	```
-	Setting thing once...
-	=> Thing changed to World
-	Setting thing twice...
-	Setting thing thrice...
+	...setting health to 25 three times...
+	Observed a change to: 25
 	```
 
 This is because the `health` object sees that it isn't actually changing value,
 so it doesn't broadcast any updates. Therefore, our observer doesn't run.
-
-![A diagram showing how value objects only send updates if the new value and previous value aren't equal.](Value-Equality-Dark.svg#only-dark)
-![A diagram showing how value objects only send updates if the new value and previous value aren't equal.](Value-Equality-Light.svg#only-light)
 
 This leads to improved performance because your code runs less often. Fusion
 applies these kinds of optimisations generously throughout your program.
