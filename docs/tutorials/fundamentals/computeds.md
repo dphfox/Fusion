@@ -26,7 +26,7 @@ print(peek(finalCoins)) --> 10
 To create a new computed object, call `scope:Computed()` and give it a function
 that performs your calculation.
 
-```Lua linenums="5" hl_lines="2-4"
+```Lua linenums="6" hl_lines="2-4"
 local scope = scoped(Fusion)
 local hardMaths = scope:Computed(function(_, _)
     return 1 + 1
@@ -36,7 +36,7 @@ end)
 The value the callback returns will be stored as the computed's value. You can
 get the computed's current value using `peek()`:
 
-```Lua linenums="5" hl_lines="6"
+```Lua linenums="6" hl_lines="6"
 local scope = scoped(Fusion)
 local hardMaths = scope:Computed(function(_, _)
     return 1 + 1
@@ -56,7 +56,7 @@ occur (e.g. waiting for a server to respond to a request).
 The calculation is only run once by default. If you try to `peek()` at state
 objects inside the calculation, your code breaks quickly:
 
-```Lua linenums="5"
+```Lua linenums="6"
 local scope = scoped(Fusion)
 local number = scope:Value(2)
 local double = scope:Computed(function(_, _)
@@ -74,7 +74,7 @@ Instead, the computed object provides a `use` function as the first argument.
 As your logic runs, you can call this function with different state objects. If
 any of them changes, then the computed throws everything away and recalculates.
 
-```Lua linenums="5" hl_lines="4"
+```Lua linenums="6" hl_lines="4"
 local scope = scoped(Fusion)
 local number = scope:Value(2)
 local double = scope:Computed(function(use, _)
@@ -93,7 +93,7 @@ For convenience, `use()` will also read the value, just like `peek()`, so you
 can easily replace `peek()` calls with `use()` calls. This keeps your logic
 concise, readable and easily copyable.
 
-```Lua linenums="5" hl_lines="4"
+```Lua linenums="6" hl_lines="4"
 local scope = scoped(Fusion)
 local number = scope:Value(2)
 local double = scope:Computed(function(use, _)
@@ -124,7 +124,7 @@ scope:Computed(function(use, _)
 end)
 ```
 
-??? question "Help! Using the same name gives me a warning."
+??? warning "Help! Using the same name gives me a warning."
 
 	Depending on your setup, Luau might be configured to warn when you use the
 	same variable name multiple times.
@@ -149,10 +149,10 @@ these cases, you want the temporary things to be destroyed when you're done.
 You might try and reuse the scope you already have, but that scope doesn't get
 destroyed when the computed object recalculates, so it won't work:
 
-```Lua linenums="5"
+```Lua linenums="6"
 local scope = scoped(Fusion)
 local valueMaker = scope:Computed(function(use, _)
-	-- this `innerValue` never gets destroyed, ever
+	-- this `innerValue` never gets destroyed by the computed object
 	local innerValue = scope:Value(5)
 end)
 ```
@@ -161,7 +161,7 @@ That's why the second argument is a freshly created scope for you to use while
 inside the computed object. This freshly created scope is automatically cleaned
 up for you when the computed object recalculates.
 
-```Lua linenums="5" hl_lines="2"
+```Lua linenums="6" hl_lines="2"
 local scope = scoped(Fusion)
 local valueMaker = scope:Computed(function(use, brandNewScope)
 	-- now, `innerValue` is destroyed at the correct time
@@ -173,14 +173,14 @@ It can help to give this parameter the same name as the original scope. This
 stops you from accidentally using the original scope inside the computed, and
 makes your code more easily copyable and movable.
 
-```Lua linenums="5"
+```Lua linenums="6"
 local scope = scoped(Fusion)
 local valueMaker = scope:Computed(function(use, scope)
 	local innerValue = scope:Value(5)
 end)
 ```
 
-??? question "Help! Using the same name gives me a warning."
+??? warning "Help! Using the same name gives me a warning."
 
 	Depending on your setup, Luau might be configured to warn when you use the
 	same variable name multiple times.

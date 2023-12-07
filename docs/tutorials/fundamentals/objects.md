@@ -17,7 +17,7 @@ a special name: *scopes*.
 
 To create a new scope, create an empty array. This array will hold your objects.
 
-```Lua linenums="1" hl_lines="3"
+```Lua linenums="2" hl_lines="3"
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local scope = {}
@@ -26,7 +26,7 @@ local scope = {}
 Later, when you create objects, they will ask you to provide a scope as the
 first argument.
 
-```Lua linenums="1" hl_lines="4"
+```Lua linenums="2" hl_lines="4"
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local scope = {}
@@ -35,7 +35,7 @@ local thing = Fusion.Value(scope, "i am a thing")
 
 When you create an object in Fusion like this, it will add itself to the scope.
 
-```Lua linenums="1" hl_lines="6"
+```Lua linenums="2" hl_lines="6"
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local scope = {}
@@ -47,7 +47,7 @@ print(scope[1] == thing) --> true
 You can repeat this as many times as you like. Objects are added in the order
 they are created.
 
-```Lua linenums="1" hl_lines="4-10"
+```Lua linenums="2" hl_lines="4-10"
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local scope = {}
@@ -63,7 +63,7 @@ print(scope[3] == thing3) --> true
 Later on, you can destroy the scope by using the `doCleanup()` function. That
 will destroy all the objects you added to it.
 
-```Lua linenums="1" hl_lines="2 9"
+```Lua linenums="2" hl_lines="2 9"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup = Fusion.doCleanup
 
@@ -100,7 +100,7 @@ more convenient shorthand that makes writing them out easier.
 The first change is to use `scoped()` to make our scope, instead of creating an
 array normally. It asks for a table argument, which we'll leave empty for now.
 
-```Lua linenums="1" hl_lines="2 4"
+```Lua linenums="2" hl_lines="2 4"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 
@@ -118,7 +118,7 @@ However, we can now upgrade it with Fusion's syntax.
 Whenever we have a function that takes `scope` as the first argument, we can add
 it to the table argument of `scoped()`.
 
-```Lua linenums="1" hl_lines="4-6"
+```Lua linenums="2" hl_lines="4-6"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 
@@ -134,7 +134,7 @@ doCleanup(scope)
 
 Now, we can use that function as a method on `scope`, like this:
 
-```Lua linenums="1" hl_lines="7-9"
+```Lua linenums="2" hl_lines="7-9"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 
@@ -156,7 +156,7 @@ As a nice shorthand, you can pass in `Fusion` directly to `scoped()` rather than
 listing out all the functions you want manually. Because `Fusion` is already a
 table full of functions for creating things, it works too.
 
-```Lua linenums="1" hl_lines="4"
+```Lua linenums="2" hl_lines="4"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 

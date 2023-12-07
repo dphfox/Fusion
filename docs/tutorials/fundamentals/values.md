@@ -19,7 +19,7 @@ print(peek(health)) --> 25
 To create a new value object, call `scope:Value()` and give it a value you want
 to store.
 
-```Lua linenums="1" hl_lines="5"
+```Lua linenums="2" hl_lines="5"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 
@@ -31,7 +31,7 @@ Fusion provides a global `peek()` function. It will read the value of whatever
 you give it. You'll use `peek()` to read the value of lots of things; for now,
 it's useful for printing `health` back out.
 
-```Lua linenums="1" hl_lines="3 7"
+```Lua linenums="2" hl_lines="3 7"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 local peek = Fusion.peek
@@ -44,7 +44,7 @@ print(peek(health)) --> 5
 You can change the value using the `:set()` method. Unlike `peek()`, this is
 specific to value objects, so it's done on the object itself.
 
-```Lua linenums="5" hl_lines="5-6"
+```Lua linenums="6" hl_lines="5-6"
 local scope = scoped(Fusion)
 local health = scope:Value(5)
 print(peek(health)) --> 5

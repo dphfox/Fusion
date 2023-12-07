@@ -20,7 +20,7 @@ disconnect()
 To create a new observer object, call `scope:Observer()` and give it a state
 object you want to detect changes on.
 
-```Lua linenums="5" hl_lines="3"
+```Lua linenums="6" hl_lines="3"
 local scope = scoped(Fusion)
 local health = scope:Value(5)
 local observer = scope:Observer(health)
@@ -35,7 +35,7 @@ changes value.
 
 === "Luau code"
 
-	```Lua linenums="7" hl_lines="4-6"
+	```Lua linenums="8" hl_lines="4-6"
 	local observer = scope:Observer(health)
 
 	print("...connecting...")
@@ -60,7 +60,7 @@ object is destroyed. However, if you want to disconnect it earlier, the
 `:onChange()` method returns an optional disconnect function. Calling it will
 disconnect that specific `:onChange()` handler early.
 
-```Lua linenums="7" hl_lines="1 5-7"
+```Lua linenums="8" hl_lines="1 5-7"
 local disconnect = observer:onChange(function()
 	print("The new value is: ", peek(health))
 end)
@@ -75,7 +75,7 @@ also runs your code right away, which can often be useful.
 
 === "Luau code"
 
-	```Lua linenums="7" hl_lines="4"
+	```Lua linenums="8" hl_lines="4"
 	local observer = scope:Observer(health)
 
 	print("...connecting...")
@@ -105,7 +105,7 @@ notice your observer only runs the first time.
 
 === "Luau code"
 
-	```Lua linenums="7"
+	```Lua linenums="8"
 	local observer = scope:Observer(health)
 
 	observer:onChange(function()
