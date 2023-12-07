@@ -1,12 +1,14 @@
-Computeds are state objects that can process values from other state objects.
+Computeds are state objects that immediately process values from other state
+objects.
+
 You pass in a callback to define a calculation. Then, you can use
 `peek()` to read the result of the calculation at any time.
 
 ```Lua
-local numCoins = Value(50)
-local itemPrice = Value(10)
+local numCoins = scope:Value(50)
+local itemPrice = scope:Value(10)
 
-local finalCoins = Computed(function(use)
+local finalCoins = scope:Computed(function(use, scope)
     return use(numCoins) - use(itemPrice)
 end)
 
@@ -21,19 +23,12 @@ print(peek(finalCoins)) --> 10
 
 ## Usage
 
-To use `Computed` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
+To create a new computed object, call `scope:Computed()` and give it a function
+that performs your calculation.
 
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local Computed = Fusion.Computed
-```
-
-To create a new computed object, call the `Computed` function. You need to give
-it a callback representing the calculation - for now, we'll add two numbers:
-
-```Lua
-local hardMaths = Computed(function(use)
+```Lua linenums="5" hl_lines="2-4"
+local scope = scoped(Fusion)
+local hardMaths = scope:Computed(function(_, _)
     return 1 + 1
 end)
 ```
@@ -41,20 +36,33 @@ end)
 The value the callback returns will be stored as the computed's value. You can
 get the computed's current value using `peek()`:
 
-```Lua
+```Lua linenums="5" hl_lines="6"
+local scope = scoped(Fusion)
+local hardMaths = scope:Computed(function(_, _)
+    return 1 + 1
+end)
+
 print(peek(hardMaths)) --> 2
 ```
 
-The calculation is only run once by default. If you try and use `peek()` inside
-the calculation, your code won't work:
+The calculation should be *immediate* - that is, it should never delay. That
+means you should not use computed objects when you need to wait for something to
+occur (e.g. waiting for a server to respond to a request).
 
-```Lua
-local number = Value(2)
-local double = Computed(function(use)
+-----
+
+## Using State Objects
+
+The calculation is only run once by default. If you try to `peek()` at state
+objects inside the calculation, your code breaks quickly:
+
+```Lua linenums="5"
+local scope = scoped(Fusion)
+local number = scope:Value(2)
+local double = scope:Computed(function(_, _)
     return peek(number) * 2
 end)
 
--- The calculation runs once by default.
 print(peek(number), peek(double)) --> 2 4
 
 -- The calculation won't re-run! Oh no!
@@ -62,12 +70,14 @@ number:set(10)
 print(peek(number), peek(double)) --> 10 4
 ```
 
-This is where the `use` parameter comes in (see line 2 above). If you want your
-calculation to re-run when your objects change value, pass the object to `use()`:
+Instead, the computed object provides a `use` function as the first argument.
+As your logic runs, you can call this function with different state objects. If
+any of them changes, then the computed throws everything away and recalculates.
 
-```Lua
-local number = Value(2)
-local double = Computed(function(use)
+```Lua linenums="5" hl_lines="4"
+local scope = scoped(Fusion)
+local number = scope:Value(2)
+local double = scope:Computed(function(use, _)
 	use(number) -- the calculation will re-run when `number` changes value
     return peek(number) * 2
 end)
@@ -80,156 +90,101 @@ print(peek(number), peek(double)) --> 10 20
 ```
 
 For convenience, `use()` will also read the value, just like `peek()`, so you
-can easily replace `peek()` calls with `use()` calls:
+can easily replace `peek()` calls with `use()` calls. This keeps your logic
+concise, readable and easily copyable.
+
+```Lua linenums="5" hl_lines="4"
+local scope = scoped(Fusion)
+local number = scope:Value(2)
+local double = scope:Computed(function(use, _)
+    return use(number) * 2
+end)
+
+print(peek(number), peek(double)) --> 2 4
+
+number:set(10)
+print(peek(number), peek(double)) --> 10 20
+```
+
+It's recommended you always give the first parameter the name `use`, even if it
+already exists. This helps prevent you from using the wrong parameter if you
+have multiple computed objects at the same time.
 
 ```Lua
-local number = Value(2)
-local double = Computed(function(use)
-    return use(number) * 2 -- works identically to before
+scope:Computed(function(use, _)
+	-- ...
+	scope:Computed(function(use, _)
+		-- ...
+		scope:Computed(function(use, _)
+			return use(number) * 2
+		end)
+		-- ...
+	end)
+	-- ...
 end)
 ```
+
+??? question "Help! Using the same name gives me a warning."
+
+	Depending on your setup, Luau might be configured to warn when you use the
+	same variable name multiple times.
+
+	In many cases, using the same variable name can be a mistake, but in this
+	case we actually find it useful. So, to turn off the warning, try adding
+	`--!nolint LocalShadow` to the top of your file.
+
+Keep in mind that Fusion might apply its own optimisations to these calculations.
+It might choose to delay the recalculation if the computed isn't actively being
+used, or it might never recalculate at all. It shouldn't affect normal
+calculations, but if you need to do things like playing sound effects, you
+should put those things inside observer objects instead.
 
 -----
 
-## When To Use This
+## Inner Scopes
 
-Computeds are more specialist than regular values and observers. They're
-designed for a single purpose: they make it easier and more efficient to derive
-new values from existing state objects.
+Sometimes, you'll need to create things inside computed objects temporarily. In
+these cases, you want the temporary things to be destroyed when you're done.
 
-Derived values show up in a lot of places throughout UIs. For example, you might
-want to insert a death counter into a string. Therefore, the contents of the
-string are derived from the death counter:
+You might try and reuse the scope you already have, but that scope doesn't get
+destroyed when the computed object recalculates, so it won't work:
 
-![Diagram showing how the message depends on the death counter.](Derived-Value-Dark.svg#only-dark)
-![Diagram showing how the message depends on the death counter.](Derived-Value-Light.svg#only-light)
-
-While you can do this with values and observers alone, your code could get messy.
-
-Consider the following code that doesn't use computeds - the intent is to create
-a derived value, `finalCoins`, which equals `numCoins - itemPrice` at all times:
-
-```Lua linenums="1"
-local numCoins = Value(50)
-local itemPrice = Value(10)
-
-local finalCoins = Value(peek(numCoins) - peek(itemPrice))
-local function updateFinalCoins()
-    finalCoins:set(peek(numCoins) - peek(itemPrice))
-end
-Observer(numCoins):onChange(updateFinalCoins)
-Observer(itemPrice):onChange(updateFinalCoins)
-```
-
-There are a few problems with this code currently:
-
-- It's not immediately clear what's happening at a glance; there's lots of
-boilerplate code obscuring what the *intent* of the code is.
-- The logic for calculating `finalCoins` is duplicated twice - on lines 4 and 6.
-- You have to manage updating the value yourself using observers. This is an
-easy place for desynchronisation bugs to slip in.
-- Another part of the code base could call `finalCoins:set()` and mess with the
-value.
-
-When written with computeds, the above problems are largely solved:
-
-```Lua linenums="1"
-local numCoins = Value(50)
-local itemPrice = Value(10)
-
-local finalCoins = Computed(function(use)
-    return use(numCoins) - use(itemPrice)
+```Lua linenums="5"
+local scope = scoped(Fusion)
+local valueMaker = scope:Computed(function(use, _)
+	-- this `innerValue` never gets destroyed, ever
+	local innerValue = scope:Value(5)
 end)
 ```
 
-- The intent is immediately clear - this is a derived value.
-- The logic is only specified once, in one callback.
-- The computed updates itself when a state object you `use()` changes value.
-- The callback is the only thing that can change the value - there is no `:set()`
-method.
+That's why the second argument is a freshly created scope for you to use while
+inside the computed object. This freshly created scope is automatically cleaned
+up for you when the computed object recalculates.
 
-??? warning "A warning about delays in computed callbacks"
+```Lua linenums="5" hl_lines="2"
+local scope = scoped(Fusion)
+local valueMaker = scope:Computed(function(use, brandNewScope)
+	-- now, `innerValue` is destroyed at the correct time
+	local innerValue = brandNewScope:Value(5)
+end)
+```
 
-    One small caveat of computeds is that you must return the value immediately.
-    If you need to send a request to the server or perform a long-running
-    calculation, you shouldn't use computeds.
+It can help to give this parameter the same name as the original scope. This
+stops you from accidentally using the original scope inside the computed, and
+makes your code more easily copyable and movable.
 
-    The reason for this is consistency between variables. When all computeds run
-    immediately (i.e. without yielding), all of your variables will behave
-    consistently:
+```Lua linenums="5"
+local scope = scoped(Fusion)
+local valueMaker = scope:Computed(function(use, scope)
+	local innerValue = scope:Value(5)
+end)
+```
 
-    ```Lua
-    local numCoins = Value(50)
-    local isEnoughCoins = Computed(function(use)
-        return use(numCoins) > 25
-    end)
+??? question "Help! Using the same name gives me a warning."
 
-    local message = Computed(function(use)
-        if use(isEnoughCoins) then
-            return use(numCoins) .. " is enough coins."
-        else
-            return use(numCoins) .. " is NOT enough coins."
-        end
-    end)
+	Depending on your setup, Luau might be configured to warn when you use the
+	same variable name multiple times.
 
-    print(peek(message)) --> 50 is enough coins.
-    numCoins:set(2)
-    print(peek(message)) --> 2 is NOT enough coins.
-    ```
-
-    If a delay is introduced, then inconsistencies and nonsense values could
-    quickly appear:
-
-    ```Lua hl_lines="3 17"
-    local numCoins = Value(50)
-    local isEnoughCoins = Computed(function(use)
-        task.wait(5) -- Don't do this! This is just for the example
-        return use(numCoins) > 25
-    end)
-
-    local message = Computed(function(use)
-        if use(isEnoughCoins) then
-            return use(numCoins) .. " is enough coins."
-        else
-            return use(numCoins) .. " is NOT enough coins."
-        end
-    end)
-
-    print(peek(message)) --> 50 is enough coins.
-    numCoins:set(2)
-    print(peek(message)) --> 2 is enough coins.
-    ```
-
-    For this reason, yielding in computed callbacks is disallowed.
-
-    If you have to introduce a delay, for example when invoking a
-    RemoteFunction, consider using values and observers.
-
-    ```Lua hl_lines="3-10 13-14 24-26"
-    local numCoins = Value(50)
-
-    local isEnoughCoins = Value(nil)
-    local function updateIsEnoughCoins()
-        isEnoughCoins:set(nil) -- indicate that we're calculating the value
-        task.wait(5) -- this is now ok
-        isEnoughCoins:set(peek(numCoins) > 25)
-    end
-    task.spawn(updateIsEnoughCoins)
-    Observer(numCoins):onChange(updateIsEnoughCoins)
-
-    local message = Computed(function()
-        if peek(isEnoughCoins) == nil then
-            return "Loading..."
-        elseif peek(isEnoughCoins) then
-            return peek(numCoins) .. " is enough coins."
-        else
-            return peek(numCoins) .. " is NOT enough coins."
-        end
-    end)
-
-    print(peek(message)) --> 50 is enough coins.
-    numCoins:set(2)
-    print(peek(message)) --> Loading...
-    task.wait(5)
-    print(peek(message)) --> 2 is NOT enough coins.
-    ```
+	In many cases, using the same variable name can be a mistake, but in this
+	case we actually find it useful. So, to turn off the warning, try adding
+	`--!nolint LocalShadow` to the top of your file.

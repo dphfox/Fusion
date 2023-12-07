@@ -79,7 +79,16 @@ doCleanup(scope)
 -- thing1:destroy()
 ```
 
-That's all there is to scopes. They are nothing more than arrays of objects.
+Scopes passed to `doCleanup` can have any of the following:
+
+- Objects with `:destroy()` or `:Destroy()` methods to be called
+- Functions to be run
+- Roblox instances to destroy
+- Roblox event connections to disconnect
+- Other nested scopes to be cleaned up
+
+That's all there is to scopes. They are nothing more than arrays of objects
+which eventually get passed to a cleanup function.
 
 -----
 
