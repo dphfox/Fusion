@@ -1,15 +1,18 @@
 Welcome to the Fusion tutorial section! Here, you'll learn how to build great
 things with Fusion, even if you're a complete newcomer to the library.
 
+You'll not only learn how Fusion's features work, but you'll also be presented
+with wisdom from those who've worked with some of the largest Fusion codebases
+today.
+
 !!! caution "But first, something important..."
 	**<span style="font-size: 1.5em; color: var(--fusiondoc-accent);">
-	Do not use Fusion for real-world production work unless you're 100,000%
-	willing and able to withstand large breaking changes.
+	Do not use Fusion for real-world work unless you're 100,000% able to deal
+	with a changing environment!
 	</span>**
 
-	Fusion is in beta right now! You *will* encounter:
+	Fusion is not version 1.0 yet! You *will* encounter:
 
-	- bugs in core features
 	- updates that completely remove existing features
 	- changes in behaviour between versions
 	- changing advice on coding conventions and how to structure your project
@@ -18,9 +21,8 @@ things with Fusion, even if you're a complete newcomer to the library.
 	we can quickly abandon counterproductive ideas and features, and discover
 	much more solid foundations to build upon.
 
-	Don't be discouraged from Fusion though; feel free to follow along with our
-	development and try using the library in your own time! More stable,
-	long-term Fusion versions will be available once Fusion exits beta testing.
+	Don't be discouraged from Fusion though! Once features have settled down,
+	releases will be more stable.
 
 -----
 
