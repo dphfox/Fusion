@@ -47,7 +47,7 @@ print(scope[1] == thing) --> true
 You can repeat this as many times as you like. Objects are added in the order
 they are created.
 
-```Lua linenums="2" hl_lines="4-10"
+```Lua linenums="2"
 local Fusion = require(ReplicatedStorage.Fusion)
 
 local scope = {}

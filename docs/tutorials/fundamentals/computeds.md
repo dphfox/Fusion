@@ -56,7 +56,7 @@ occur (e.g. waiting for a server to respond to a request).
 The calculation is only run once by default. If you try to `peek()` at state
 objects inside the calculation, your code breaks quickly:
 
-```Lua linenums="6"
+```Lua linenums="6" hl_lines="10-11"
 local scope = scoped(Fusion)
 local number = scope:Value(2)
 local double = scope:Computed(function(_, _)
@@ -133,11 +133,9 @@ end)
 	case we actually find it useful. So, to turn off the warning, try adding
 	`--!nolint LocalShadow` to the top of your file.
 
-Keep in mind that Fusion might apply its own optimisations to these calculations.
-It might choose to delay the recalculation if the computed isn't actively being
-used, or it might never recalculate at all. It shouldn't affect normal
-calculations, but if you need to do things like playing sound effects, you
-should put those things inside observer objects instead.
+Keep in mind that Fusion applies optimisations; recalculations might be
+postponed or cancelled if the value of the computed isn't being used. This is
+why you should not use computed objects for things like playing sound effects.
 
 -----
 
@@ -146,37 +144,109 @@ should put those things inside observer objects instead.
 Sometimes, you'll need to create things inside computed objects temporarily. In
 these cases, you want the temporary things to be destroyed when you're done.
 
-You might try and reuse the scope you already have, but that scope doesn't get
-destroyed when the computed object recalculates, so it won't work:
+You might try and reuse the scope you already have, to construct objects and
+add cleanup tasks.
 
-```Lua linenums="6"
-local scope = scoped(Fusion)
-local valueMaker = scope:Computed(function(use, _)
-	-- this `innerValue` never gets destroyed by the computed object
-	local innerValue = scope:Value(5)
-end)
-```
+=== "Luau code"
+
+	```Lua linenums="6" hl_lines="7"
+	local scope = scoped(Fusion)
+	local number = scope:Value(5)
+	local double = scope:Computed(function(use, _)
+		local current = use(number)
+		print("Creating", current)
+		-- suppose we want to run some cleanup code for stuff in here
+		table.insert(scope, function()
+			print("Destroying", current)
+		end)
+		return current * 2
+	end)
+
+	print("...setting to 25...")
+	number:set(25)
+	print("...setting to 2...")
+	number:set(2)
+	print("...cleaning up...")
+	doCleanup(scope)
+	```
+
+=== "Output"
+
+	```Lua
+	Creating 5
+	...setting to 25...
+	Creating 25
+	...setting to 2...
+	Creating 2
+	...cleaning up...
+	Destroying 2
+	Destroying 25
+	Destroying 5
+	```
+
+However, this doesn't work the way you'd want it to. All of the tasks pile up at
+the end of the program, so they aren't being destroyed quickly enough.
 
 That's why the second argument is a freshly created scope for you to use while
 inside the computed object. This freshly created scope is automatically cleaned
 up for you when the computed object recalculates.
 
-```Lua linenums="6" hl_lines="2"
-local scope = scoped(Fusion)
-local valueMaker = scope:Computed(function(use, brandNewScope)
-	-- now, `innerValue` is destroyed at the correct time
-	local innerValue = brandNewScope:Value(5)
-end)
-```
+=== "Luau code"
+
+	```Lua linenums="6" hl_lines="3 6"
+	local scope = scoped(Fusion)
+	local number = scope:Value(5)
+	local double = scope:Computed(function(use, myBrandNewScope)
+		local current = use(number)
+		print("Creating", current)
+		table.insert(myBrandNewScope, function()
+			print("Destroying", current)
+		end)
+		return current * 2
+	end)
+
+	print("...setting to 25...")
+	number:set(25)
+	print("...setting to 2...")
+	number:set(2)
+	print("...cleaning up...")
+	doCleanup(scope)
+	```
+
+=== "Output"
+
+	```Lua
+	Creating 5
+	...setting to 25...
+	Creating 25
+	Destroying 5
+	...setting to 2...
+	Creating 2
+	Destroying 25
+	...cleaning up...
+	Destroying 2
+	```
+
+When using this new 'inner' scope, the tasks no longer pile up at the end of the
+program. Instead, they're cleaned up as soon as possible, when the computed
+object throws away the old calculation.
 
 It can help to give this parameter the same name as the original scope. This
 stops you from accidentally using the original scope inside the computed, and
 makes your code more easily copyable and movable.
 
-```Lua linenums="6"
+```Lua
 local scope = scoped(Fusion)
-local valueMaker = scope:Computed(function(use, scope)
-	local innerValue = scope:Value(5)
+scope:Computed(function(use, scope)
+	-- ...
+	scope:Computed(function(use, scope)
+		-- ...
+		scope:Computed(function(use, scope)
+			local innerValue = scope:Value(5)
+		end)
+		-- ...
+	end)
+	-- ...
 end)
 ```
 

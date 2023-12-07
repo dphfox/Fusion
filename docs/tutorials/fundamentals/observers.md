@@ -60,7 +60,7 @@ object is destroyed. However, if you want to disconnect it earlier, the
 `:onChange()` method returns an optional disconnect function. Calling it will
 disconnect that specific `:onChange()` handler early.
 
-```Lua linenums="8" hl_lines="1 5-7"
+```Lua linenums="8" hl_lines="1 7"
 local disconnect = observer:onChange(function()
 	print("The new value is: ", peek(health))
 end)
