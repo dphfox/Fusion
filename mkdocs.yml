@@ -59,7 +59,7 @@ nav:
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md
-    - Instances:
+    - Roblox:
       - Hydration: tutorials/instances/hydration.md
       - New Instances: tutorials/instances/new-instances.md
       - Parenting: tutorials/instances/parenting.md
