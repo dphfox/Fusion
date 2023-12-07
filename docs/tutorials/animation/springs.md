@@ -17,12 +17,12 @@ local Fusion = require(ReplicatedStorage.Fusion)
 local Spring = Fusion.Spring
 ```
 
-To create a new spring object, call the `Spring` function and pass it a state
+To create a new spring object, call `scope:Spring()` and pass it a state
 object to move towards:
 
 ```Lua
-local goal = Value(0)
-local animated = Spring(target)
+local goal = scope:Value(0)
+local animated = scope:Spring(target)
 ```
 
 The spring will smoothly follow the 'goal' state object over time. As with other
@@ -36,10 +36,17 @@ To configure how the spring moves, you can provide a speed and damping ratio to
 use. Both are optional, and both can be state objects if desired:
 
 ```Lua
-local goal = Value(0)
+local goal = scope:Value(0)
 local speed = 25
-local damping = Value(0.5)
-local animated = Spring(target, speed, damping)
+local damping = scope:Value(0.5)
+local animated = scope:Spring(target, speed, damping)
+```
+
+You can also set the position and velocity of the spring at any time.
+
+```Lua
+animated:setPosition(5) -- teleport the spring to 5
+animated:setVelocity(2) -- from here, move 2 units/second
 ```
 
 You can use many different kinds of values with springs, not just numbers.
@@ -47,8 +54,8 @@ Vectors, CFrames, Color3s, UDim2s and other number-based types are supported;
 each number inside the type is animated individually.
 
 ```Lua
-local goalPosition = Value(UDim2.new(0.5, 0, 0, 0))
-local animated = Spring(target, 25, 0.5)
+local goalPosition = scope:Value(UDim2.new(0.5, 0, 0, 0))
+local animated = scope:Spring(target, 25, 0.5)
 ```
 
 -----
