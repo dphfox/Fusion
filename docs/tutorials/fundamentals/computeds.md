@@ -173,7 +173,7 @@ add cleanup tasks.
 
 === "Output"
 
-	```Lua
+	```
 	Creating 5
 	...setting to 25...
 	Creating 25
@@ -186,11 +186,12 @@ add cleanup tasks.
 	```
 
 However, this doesn't work the way you'd want it to. All of the tasks pile up at
-the end of the program, so they aren't being destroyed quickly enough.
+the end of the program, instead of being thrown away with the rest of the
+calculation.
 
-That's why the second argument is a freshly created scope for you to use while
-inside the computed object. This freshly created scope is automatically cleaned
-up for you when the computed object recalculates.
+That's why the second argument is a different scope for you to use while inside
+the computed object. This scope argument is automatically cleaned up for you
+when the computed object recalculates.
 
 === "Luau code"
 
@@ -216,7 +217,7 @@ up for you when the computed object recalculates.
 
 === "Output"
 
-	```Lua
+	```
 	Creating 5
 	...setting to 25...
 	Creating 25
