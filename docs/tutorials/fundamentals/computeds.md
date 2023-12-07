@@ -24,7 +24,8 @@ print(peek(finalCoins)) --> 10
 ## Usage
 
 To create a new computed object, call `scope:Computed()` and give it a function
-that performs your calculation.
+that performs your calculation. It takes two parameters which will be explained
+later; for the first part of this tutorial, they'll be left unnamed.
 
 ```Lua linenums="6" hl_lines="2-4"
 local scope = scoped(Fusion)
@@ -133,8 +134,8 @@ end)
 	case we actually find it useful. So, to turn off the warning, try adding
 	`--!nolint LocalShadow` to the top of your file.
 
-Keep in mind that Fusion applies optimisations; recalculations might be
-postponed or cancelled if the value of the computed isn't being used. This is
+Keep in mind that Fusion sometimes applies optimisations; recalculations might
+be postponed or cancelled if the value of the computed isn't being used. This is
 why you should not use computed objects for things like playing sound effects.
 
 -----
