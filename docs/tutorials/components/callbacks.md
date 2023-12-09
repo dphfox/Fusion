@@ -41,7 +41,9 @@ In this example, the `fiveTimes` function calls a callback five times:
 === "Luau code"
 
     ```Lua
-    local function fiveTimes(callback)
+    local function fiveTimes(
+		callback: (number) -> ()
+	)
         for x=1, 5 do
             callback(x)
         end
