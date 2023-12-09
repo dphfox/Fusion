@@ -9,24 +9,17 @@ movement naturally without abrupt changes in direction.
 
 ## Usage
 
-To use `Spring` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
-
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local Spring = Fusion.Spring
-```
-
-To create a new spring object, call `scope:Spring()` and pass it a state
-object to move towards:
+To create a new spring object, call `scope:Spring()` and pass it a state object
+to move towards:
 
 ```Lua
 local goal = scope:Value(0)
 local animated = scope:Spring(target)
 ```
 
-The spring will smoothly follow the 'goal' state object over time. As with other
-state objects, you can `peek()` at its value at any time:
+The spring will smoothly follow the 'goal' state object over time.
+
+As with other state objects, you can `peek()` at its value at any time:
 
 ```Lua
 print(peek(animated)) --> 0.26425...
