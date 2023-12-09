@@ -71,7 +71,7 @@ In this example, the `fiveTimes` function calls a callback five times:
 Components can use callbacks the same way. Consider this button component; when
 the button is clicked, the button needs to run some external code:
 
-```Lua
+```Lua hl_lines="18"
 local function Button(
 	props: {
 		Scope: Fusion.Scope<typeof(Fusion)>,
@@ -106,7 +106,8 @@ local button = Button {
 ```
 
 Assuming that callback is passed in, the callback can be passed directly into
-`[OnEvent]`, because `[OnEvent]` accepts functions:
+`[OnEvent]`, because `[OnEvent]` accepts functions. It can even be optional -
+Luau won't add the key to the table if the value is `nil`.
 
 ```Lua hl_lines="7 19"
 local function Button(
@@ -135,7 +136,7 @@ end
 Alternatively, we can call `props.OnClick` manually, which is useful if you want
 to do your own processing first:
 
-```Lua hl_lines="7-8 20-25"
+```Lua hl_lines="7 20-24"
 local function Button(
 	props: {
 		Scope: Fusion.Scope<typeof(Fusion)>,
@@ -143,7 +144,7 @@ local function Button(
 		Size: Fusion.CanBeState<UDim2>?,
 		Text: Fusion.CanBeState<string>?,
 		Disabled: Fusion.CanBeState<boolean>?,
-		OnClick: () -> ()
+		OnClick: (() -> ())?
 	}
 )
 	local scope = props.Scope
@@ -156,8 +157,7 @@ local function Button(
         TextColor3 = Color3.new(1, 1, 1),
 
         [OnEvent "Activated"] = function()
-            -- don't send clicks if the button is disabled
-            if not peek(props.Disabled) then
+            if props.OnClick ~= nil and not peek(props.Disabled) then
                 props.OnClick()
             end
         end
