@@ -135,14 +135,15 @@ end
 Alternatively, we can call `props.OnClick` manually, which is useful if you want
 to do your own processing first:
 
-```Lua hl_lines="19-24"
+```Lua hl_lines="7-8 20-25"
 local function Button(
 	props: {
 		Scope: Fusion.Scope<typeof(Fusion)>,
 		Position: Fusion.CanBeState<UDim2>?,
 		Size: Fusion.CanBeState<UDim2>?,
 		Text: Fusion.CanBeState<string>?,
-		OnClick: (() -> ())?
+		Disabled: Fusion.CanBeState<boolean>?,
+		OnClick: () -> ()
 	}
 )
 	local scope = props.Scope
