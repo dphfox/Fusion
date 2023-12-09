@@ -70,8 +70,16 @@ Components can use callbacks the same way. Consider this button component; when
 the button is clicked, the button needs to run some external code:
 
 ```Lua
-local function Button(props)
-    return New "TextButton" {
+local function Button(
+	props: {
+		Scope: Fusion.Scope<typeof(Fusion)>,
+		Position: Fusion.CanBeState<UDim2>?,
+		Size: Fusion.CanBeState<UDim2>?,
+		Text: Fusion.CanBeState<string>?
+	}
+)
+	local scope = props.Scope
+    return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
         Size = props.Size,
@@ -98,9 +106,18 @@ local button = Button {
 Assuming that callback is passed in, the callback can be passed directly into
 `[OnEvent]`, because `[OnEvent]` accepts functions:
 
-```Lua hl_lines="10"
-local function Button(props)
-    return New "TextButton" {
+```Lua hl_lines="7 19"
+local function Button(
+	props: {
+		Scope: Fusion.Scope<typeof(Fusion)>,
+		Position: Fusion.CanBeState<UDim2>?,
+		Size: Fusion.CanBeState<UDim2>?,
+		Text: Fusion.CanBeState<string>?,
+		OnClick: (() -> ())?
+	}
+)
+	local scope = props.Scope
+    return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
         Size = props.Size,
@@ -116,9 +133,18 @@ end
 Alternatively, we can call `props.OnClick` manually, which is useful if you want
 to do your own processing first:
 
-```Lua hl_lines="10-15"
-local function Button(props)
-    return New "TextButton" {
+```Lua hl_lines="19-24"
+local function Button(
+	props: {
+		Scope: Fusion.Scope<typeof(Fusion)>,
+		Position: Fusion.CanBeState<UDim2>?,
+		Size: Fusion.CanBeState<UDim2>?,
+		Text: Fusion.CanBeState<string>?,
+		OnClick: (() -> ())?
+	}
+)
+	local scope = props.Scope
+    return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
         Size = props.Size,
