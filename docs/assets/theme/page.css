@@ -85,6 +85,7 @@
 
 .md-banner {
 	overflow-x: hidden;
+	text-align: center;
 }
 
 .md-banner__inner {
@@ -97,9 +98,15 @@
 	height: 100%;
 }
 
-.md-banner {
-	background-color: var(--fusiondoc-bg-0);
-	text-align: center;
+.md-banner__inner::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -50%;
+	right: -50%;
+	bottom: 0;
+	background: url(../aura.png);
+	background-size: 100% 100%;
 }
 
 .md-footer__inner {

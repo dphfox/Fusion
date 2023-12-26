@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block announce %}
+This information is for a newer, unreleased version of Fusion. Use the version
+switcher if you're not on Fusion's dev branch.
+{% endblock %}
+
 {% block fonts %}
 	<!-- Load fonts from Google -->
 	{% if config.theme.font != false %}
