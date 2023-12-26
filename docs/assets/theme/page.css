@@ -83,6 +83,19 @@
 	color: var(--fusiondoc-bg-1);
 }
 
+.md-banner {
+	overflow-x: hidden;
+}
+
+.md-banner__inner {
+	position: relative;
+	max-width: 100%;
+	width: fit-content;
+	margin: 0 auto;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	height: 100%;
+}
 
 .md-banner {
 	background-color: var(--fusiondoc-bg-0);
