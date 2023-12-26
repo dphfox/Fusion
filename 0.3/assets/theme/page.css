@@ -83,10 +83,25 @@
 	color: var(--fusiondoc-bg-1);
 }
 
+.md-banner__inner {
+	position: relative;
+	max-width: 100%;
+	width: fit-content;
+	margin: 0 auto;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	height: 100%;
+}
 
-.md-banner {
-	background-color: var(--fusiondoc-bg-0);
-	text-align: center;
+.md-banner__inner::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -50%;
+	right: -50%;
+	bottom: 0;
+	background: url(../aura.png);
+	background-size: 100% 100%;
 }
 
 .md-footer__inner {
