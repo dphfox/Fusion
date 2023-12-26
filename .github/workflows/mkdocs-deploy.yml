@@ -20,6 +20,9 @@ jobs:
         with:
           python-version: 3.x
 
+      - name: Install setuptools (for mike)
+        run: pip install --upgrade setuptools
+
       - name: Install MkDocs
         run: pip install mkdocs-material==8.2.13
 
