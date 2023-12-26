@@ -1,3 +1,9 @@
+!!! warning "Intent to replace"
+	While the contents of this page still apply (and are useful for explaining
+	other features), `Hydrate` itself will be replaced by other primitives in
+	the near future.
+	[See this issue on GitHub for further details.](https://github.com/dphfox/Fusion/issues/206)
+
 The process of connecting your scripts to a pre-made UI template is known as
 *hydration*. This is where logic in your scripts translate into UI effects, for
 example setting a message inside a TextLabel, moving menus around, or showing
@@ -15,9 +21,9 @@ of properties. If you pass in Fusion objects, changes will be applied on the
 next frame:
 
 ```Lua
-local showUI = Value(false)
+local showUI = scope:Value(false)
 
-local ui = Hydrate(StarterGui.Template:Clone()) {
+local ui = scope:Hydrate(StarterGui.Template:Clone()) {
 	Name = "MainGui",
 	Enabled = showUI
 }
@@ -34,21 +40,13 @@ print(ui.Enabled) --> true
 
 ## Usage
 
-To use `Hydrate` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
-
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local Hydrate = Fusion.Hydrate
-```
-
 The `Hydrate` function is called in two parts. First, call the function with the
 instance you want to hydrate, then pass in the property table:
 
 ```Lua
 local instance = workspace.Part
 
-Hydrate(instance)({
+scope:Hydrate(instance)({
 	Color = Color3.new(1, 0, 0)
 })
 ```
@@ -60,7 +58,7 @@ parentheses `()` are optional:
 local instance = workspace.Part
 
 -- This only works when you're using curly braces {}!
-Hydrate(instance) {
+scope:Hydrate(instance) {
 	Color = Color3.new(1, 0, 0)
 }
 ```
@@ -68,7 +66,7 @@ Hydrate(instance) {
 `Hydrate` returns the instance you give it, so you can use it in declarations:
 
 ```Lua
-local instance = Hydrate(workspace.Part) {
+local instance = scope:Hydrate(workspace.Part) {
 	Color = Color3.new(1, 0, 0)
 }
 ```
@@ -78,9 +76,9 @@ instance directly. However, if you pass in a Fusion object (like `Value`), then
 changes will be applied on the next frame:
 
 ```Lua
-local message = Value("Loading...")
+local message = scope:Value("Loading...")
 
-Hydrate(PlayerGui.LoadingText) {
+scope:Hydrate(PlayerGui.LoadingText) {
 	Text = message
 }
 
