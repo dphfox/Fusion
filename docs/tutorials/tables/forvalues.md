@@ -1,7 +1,6 @@
-`ForValues` is a state object that processes values read from another table.
+`ForValues` is a state object that processes values from another table.
 
-The input table can be a state object, and the output values can use state
-objects.
+It supports both constants and state objects.
 
 ```Lua
 local numbers = {1, 2, 3, 4, 5}
