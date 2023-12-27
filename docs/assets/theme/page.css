@@ -169,6 +169,10 @@
 	margin-right: 0rem;
 }
 
+.md-header__title .md-header__topic:first-child {
+	height: 2.4rem;
+}
+
 .md-header__title .md-header__topic:first-child::before {
 	content: "";
 	display: inline-block;
