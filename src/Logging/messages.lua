@@ -33,6 +33,7 @@ return {
 	mistypedSpringDamping = "The damping ratio for a spring must be a number. (got a %s)",
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
+	mergeConflict = "Multiple definitions for '%s' found while merging.",
 	noTaskScheduler = "Fusion is not connected to an external task scheduler.",
 	possiblyOutlives = "%s could be destroyed before %s; review the order they're created in, and what scopes they belong to. See discussion #292 on GitHub for advice.",
 	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion #292 on GitHub for advice.",
