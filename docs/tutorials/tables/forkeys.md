@@ -22,7 +22,7 @@ print(peek(renamed)) --> {colourRed = "foo", colourBlue = "bar"}
 
 To create a new `ForKeys` object, call the constructor with an input table and
 a processor function. The first two arguments are `use` and `scope`, just like
-[computed objects](../fundamentals/computeds.md). The third argument is one of
+[computed objects](../../fundamentals/computeds). The third argument is one of
 the keys read from the input table.
 
 ```Lua

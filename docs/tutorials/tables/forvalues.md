@@ -22,7 +22,7 @@ print(peek(multiplied)) --> {10, 20, 30, 40, 50}
 
 To create a new `ForValues` object, call the constructor with an input table and
 a processor function. The first two arguments are `use` and `scope`, just like
-[computed objects](../fundamentals/computeds). The third argument is one of the
+[computed objects](../../fundamentals/computeds). The third argument is one of the
 values read from the input table.
 
 ```Lua

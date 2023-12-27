@@ -25,7 +25,7 @@ print(peek(manipulated)) --> {red = "April's shoes", blue = "April's socks"}
 
 To create a new `ForPairs` object, call the constructor with an input table and
 a processor function. The first two arguments are `use` and `scope`, just like
-[computed objects](../fundamentals/computeds). The third and fourth arguments
+[computed objects](../../fundamentals/computeds). The third and fourth arguments
 are one of the key-value pairs read from the input table.
 
 ```Lua
@@ -115,8 +115,8 @@ itemColours:set({ shoes = "red", socks = "green" }) --> No longer wearing blue s
 
 	If you don't need the keys or the values, Fusion can offer better optimisations.
 	For example, if you're working with an array of values where position doesn't
-	matter, [ForValues can move values between keys.](./forvalues.md#optimisations)
+	matter, [ForValues can move values between keys.](./forvalues.md)
 
 	Alternatively, if you're working with a set of objects stored in keys, and don't
 	need the values in the table,
-	[ForKeys will ignore the values for optimal performance.](./forkeys.md#optimisations)
+	[ForKeys will ignore the values for optimal performance.](./forkeys.md)
