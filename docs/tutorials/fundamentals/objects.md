@@ -97,8 +97,8 @@ to a cleanup function.
 Fusion provides better shorthand for scopes to improve readability and
 maintainability.
 
-To use shorthand, use `scoped({})` to create your scopes. By default this still
-creates a normal empty array.
+To use shorthand, use `scoped({})` to create your scopes. This creates a normal
+empty array.
 
 ```Lua linenums="2" hl_lines="2 4"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -112,10 +112,10 @@ local thing3 = Fusion.Value(scope, "i am thing 3")
 doCleanup(scope)
 ```
 
-`scoped` can extend the array with custom methods. This is used primarily for
-constructors.
+`scoped` can add methods to that array for you. This is most useful for
+constructor functions.
 
-Specify them in the table argument:
+Name some constructors in the table argument of `scoped`:
 
 ```Lua linenums="2" hl_lines="4-6"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -131,7 +131,8 @@ local thing3 = Fusion.Value(scope, "i am thing 3")
 doCleanup(scope)
 ```
 
-You can now rewrite those constructors as method calls.
+You can now rewrite those constructors as method calls. The `scope` argument is
+inferred for you.
 
 ```Lua linenums="2" hl_lines="7-9"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -147,9 +148,8 @@ local thing3 = scope:Value("i am thing 3")
 doCleanup(scope)
 ```
 
-This makes code shorter, cleaner and consistent. You import fewer things, names
-are consistently positioned and more visually parseable, and it is easier to
-move and copy code.
+This strongly ties your constructors to your scopes, which makes it much harder
+to mess up or circumvent them. It also makes code read much more naturally.
 
 Try passing `Fusion` to `scoped()` rather than listing functions manually. 
 Because `Fusion` already contains those functions, it works too.
@@ -166,7 +166,44 @@ local thing3 = scope:Value("i am thing 3")
 doCleanup(scope)
 ```
 
-!!! tip "This syntax is recommended"
+This gives you access to all of Fusion's constructors without having to import
+each one manually.
+
+??? tip "Merging libraries together"
+	If you use multiple libraries supporting scopes, you can mix functions from
+	both in your `scoped` call.
+
+	```Lua
+	local scope = scoped({
+		Foo = LibraryA.Foo,
+		Bar = LibraryB.Bar
+	})
+
+	local foo = scope:Foo()
+	local bar = scope:Bar()
+	```
+
+	You can automatically generate this merged table if desired. However, be
+	aware that libraries might use the same name for different things.
+
+	The following code is *one way* of dealing with this:
+
+	```Lua
+	local everything = {}
+	for name, member in {LibraryA, LibraryB} do
+		if everything[name] ~= nil then
+			error("Two libraries contain '" .. name .. "' - they can't be merged.")
+		else
+			everything[name] = member
+		end
+	end
+
+	-- later...
+	local scope = scope(everything)
+	```
+
+
+!!! success "This syntax is recommended"
 	It is recommended to use `scoped()` syntax. However, it is technically
 	optional; if it does not work for your codebase requirements, the barebones
 	syntax will always be available.
