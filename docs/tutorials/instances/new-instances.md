@@ -3,9 +3,9 @@ creates a new instance, applies some default properties, then hydrates it with
 a property table.
 
 ```Lua
-local message = Value("Hello there!")
+local message = scope:Value("Hello there!")
 
-local ui = New "TextLabel" {
+local ui = scope:New "TextLabel" {
 	Name = "Greeting",
 	Parent = PlayerGui.ScreenGui,
 
@@ -24,19 +24,11 @@ print(ui.Text) --> Goodbye friend!
 
 ## Usage
 
-To use `New` in your code, you first need to import it from the Fusion module,
-so that you can refer to it by name:
-
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local New = Fusion.New
-```
-
 The `New` function is called in two parts. First, call the function with the
 type of instance, then pass in the property table:
 
 ```Lua
-local instance = New("Part")({
+local instance = scope:New("Part")({
 	Parent = workspace,
 	Color = Color3.new(1, 0, 0)
 })
@@ -47,7 +39,7 @@ your class type, the extra parentheses `()` are optional:
 
 ```Lua
 -- This only works when you're using curly braces {} and quotes '' ""!
-local instance = New "Part" {
+local instance = scope:New "Part" {
 	Parent = workspace,
 	Color = Color3.new(1, 0, 0)
 }
