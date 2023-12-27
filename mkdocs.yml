@@ -66,7 +66,6 @@ nav:
       - Events: tutorials/instances/events.md
       - Change Events: tutorials/instances/change-events.md
       - Outputs: tutorials/instances/outputs.md
-      - Cleanup: tutorials/instances/cleanup.md
       - References: tutorials/instances/references.md
     - Lists & Tables:
       - The For Objects: tutorials/lists-and-tables/the-for-objects.md
