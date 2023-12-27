@@ -169,6 +169,13 @@ doCleanup(scope)
 This gives you access to all of Fusion's constructors without having to import
 each one manually.
 
+!!! success "This syntax is recommended"
+	It is recommended to use `scoped()` syntax. However, it is technically
+	optional; if it does not work for your codebase requirements, the barebones
+	syntax will always be available.
+
+	From now on, you'll see this `scoped()` syntax used throughout the tutorials.
+
 ??? tip "Merging libraries together"
 	If you use multiple libraries supporting scopes, you can mix functions from
 	both in your `scoped` call.
@@ -201,11 +208,3 @@ each one manually.
 	-- later...
 	local scope = scope(everything)
 	```
-
-
-!!! success "This syntax is recommended"
-	It is recommended to use `scoped()` syntax. However, it is technically
-	optional; if it does not work for your codebase requirements, the barebones
-	syntax will always be available.
-
-	From now on, you'll see this `scoped()` syntax used throughout the tutorials.
