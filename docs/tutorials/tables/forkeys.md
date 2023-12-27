@@ -1,7 +1,6 @@
-`ForKeys` is a state object that creates a new table by processing keys from
-another table.
+`ForKeys` is a state object that processes keys from another table.
 
-The input table can be a state object, and the output keys can use state objects.
+It supports both constants and state objects.
 
 ```Lua
 local data = {Red = "foo", Blue = "bar"}
@@ -21,173 +20,110 @@ print(peek(renamed)) --> {colourRed = "foo", colourBlue = "bar"}
 
 ## Usage
 
-To use `ForKeys` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
-
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local ForKeys = Fusion.ForKeys
-```
-
-### Basic Usage
-
 To create a new `ForKeys` object, call the constructor with an input table and
-a processor function:
+a processor function. The first two arguments are `use` and `scope`, just like
+[computed objects](../fundamentals/computeds.md). The third argument is one of
+the keys read from the input table.
 
 ```Lua
 local data = {red = "foo", blue = "bar"}
-local renamed = ForKeys(data, function(use, key)
+local renamed = scope:ForKeys(data, function(use, scope, key)
 	return string.upper(key)
 end)
 ```
 
-This will generate a new table, where each key is replaced using the processor
-function. The first argument is `use`, similar to a computed, and the
-second argument is one of the keys from the input table.
-
-You can read the processed table using `peek()`:
+You can read the table of processed keys using `peek()`:
 
 ```Lua hl_lines="6"
 local data = {red = "foo", blue = "bar"}
-local renamed = ForKeys(data, function(use, key)
+local renamed = scope:ForKeys(data, function(use, scope, key)
 	return string.upper(key)
 end)
 
 print(peek(renamed)) --> {RED = "foo", BLUE = "bar"}
 ```
 
-### State Objects
-
-The input table can be provided as a state object instead, and the output table
-will update as the input table is changed:
+The input table can be a state object. When the input table changes, the output
+will update.
 
 ```Lua
-local playerSet = Value({})
-local userIdSet = ForKeys(playerSet, function(use, player)
-	return player.UserId
+local foodSet = scope:Value({})
+
+local prefixes = { pie = "tasty", chocolate = "yummy", broccoli = "gross" }
+local renamedFoodSet = scope:ForKeys(foodSet, function(use, scope, food)
+	return prefixes[food] .. food
 end)
 
-playerSet:set({ [Players.Elttob] = true })
-print(peek(userIdSet)) --> {[1670764] = true}
+foodSet:set({ pie = true })
+print(peek(renamedFoodSet)) --> { tasty_pie = true }
 
-playerSet:set({ [Players.boatbomber] = true, [Players.EgoMoose] = true })
-print(peek(userIdSet)) --> {[33655127] = true, [2155311] = true}
+foodSet:set({ broccoli = true, chocolate = true })
+print(peek(renamedFoodSet)) --> { gross_broccoli = true, yummy_chocolate = true }
 ```
 
-Additionally, you can `use()` state objects in your calculations, just like a
-computed:
+You can also `use()` state objects in your calculations, just like a computed.
 
 ```Lua
-local playerSet = { [Players.boatbomber] = true, [Players.EgoMoose] = true }
-local prefix = Value("User_")
-local userIdSet = ForKeys(playerSet, function(use, player)
-	return use(prefix) .. player.UserId
+local foodSet = scope:Value({ broccoli = true, chocolate = true })
+
+local prefixes = { chocolate = "yummy", broccoli = scope:Value("gross") }
+local renamedFoodSet = scope:ForKeys(foodSet, function(use, scope, food)
+	return use(prefixes[food]) .. food
 end)
 
-print(peek(userIdSet)) --> {User_33655127 = true, User_2155311 = true}
+print(peek(renamedFoodSet)) --> { gross_broccoli = true, yummy_chocolate = true }
 
-prefix:set("player")
-print(peek(userIdSet)) --> {player33655127 = true, player2155311 = true}
+prefixes.broccoli:set("scrumptious")
+print(peek(renamedFoodSet)) --> { scrumptious_broccoli = true, yummy_chocolate = true }
 ```
 
-### Cleanup Behaviour
-
-Similar to computeds, if you want to run your own code when values are removed,
-you can pass in a second 'destructor' function:
-
-```Lua hl_lines="15-19"
-local eventSet = Value({
-	[RunService.RenderStepped] = true,
-	[RunService.Heartbeat] = true
-})
-
-local connectionSet = ForKeys(eventSet,
-	-- processor
-	function(use, event)
-		local eventName = tostring(event)
-		local connection = event:Connect(function(...)
-			print(eventName, "fired with arguments:", ...)
-		end)
-		return connection
-	end,
-	-- destructor
-	function(connection)
-		print("Disconnecting the event!")
-		connection:Disconnect() -- don't forget we're overriding the default cleanup
-	end
-)
-
--- remove Heartbeat from the event set
--- this will run the destructor with the Heartbeat connection
-eventSet:set({ [RunService.RenderStepped] = true }) --> Disconnecting the event!
-```
-
-When using a custom destructor, you can send one extra return value to your
-destructor without including it in the output table:
-
-```Lua hl_lines="13 16"
-local eventSet = Value({
-	[RunService.RenderStepped] = true,
-	[RunService.Heartbeat] = true
-})
-
-local connectionSet = ForKeys(eventSet,
-	-- processor
-	function(use, event)
-		local eventName = tostring(event)
-		local connection = event:Connect(function(...)
-			print(eventName, "fired with arguments:", ...)
-		end)
-		return connection, eventName
-	end,
-	-- destructor
-	function(connection, eventName)
-		print("Disconnecting " .. eventName .. "!")
-		connection:Disconnect()
-	end
-)
-
-eventSet:set({ [RunService.RenderStepped] = true }) --> Disconnecting Signal Heartbeat!
-```
-
------
-
-## Optimisations
-
-!!! help "Optional"
-	You don't have to memorise these optimisations to use `ForKeys`, but it
-	can be helpful if you have a performance problem.
-
-Rather than creating a new output table from scratch every time the input table
-is changed, `ForKeys` will try and reuse as much as possible to improve
-performance.
-
-For example, let's say we're converting an array to a dictionary:
+Anything added to the `scope` is cleaned up for you when the processed key is
+removed.
 
 ```Lua
-local array = Value({"Fusion", "Knit", "Matter"})
-local dict = ForKeys(array, function(use, index)
-	return "Value" .. index
+local foodSet = scope:Value({ broccoli = true, chocolate = true })
+
+local shoutingFoodSet = scope:ForKeys(names, function(use, scope, food)
+	table.insert(scope, function()
+		print("I ate the " .. food .. "!")
+	end)
+	return string.upper(food)
 end)
 
-print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+names:set({ chocolate = true }) --> I ate the broccoli!
 ```
 
-Because `ForKeys` only operates on the keys, changing the values in the array
-doesn't affect the keys. Keys are only added or removed as needed:
+??? tip "How ForKeys optimises your code"
+	Rather than creating a new output table from scratch every time the input table
+	is changed, `ForKeys` will try and reuse as much as possible to improve
+	performance.
 
-```Lua
-local array = Value({"Fusion", "Knit", "Matter"})
-local dict = ForKeys(array, function(use, index)
-	return "Value" .. index
-end)
+	Say you're converting an array to a dictionary:
 
-print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+	```Lua
+	local array = Value({"Fusion", "Knit", "Matter"})
+	local dict = scope:ForKeys(array, function(use, scope, index)
+		return "Value" .. index
+	end)
 
-array:set({"Roact", "Rodux"})
-print(peek(dict)) --> {Value1 = "Roact", Value2 = "Rodux"}
-```
+	print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+	```
 
-`ForKeys` takes advantage of this - when a value changes, it's copied into the
-output table without recalculating the key. Keys are only calculated when a
-value is assigned to a new key.
+	Because `ForKeys` only operates on the keys, changing the values in the array
+	doesn't affect the keys. Keys are only added or removed as needed:
+
+	```Lua
+	local array = Value({"Fusion", "Knit", "Matter"})
+	local dict = scope:ForKeys(array, function(use, scope, index)
+		return "Value" .. index
+	end)
+
+	print(peek(dict)) --> {Value1 = "Fusion", Value2 = "Knit", Value3 = "Matter"}
+
+	array:set({"Roact", "Rodux", "Promise"})
+	print(peek(dict)) --> {Value1 = "Roact", Value2 = "Rodux", Value3 = "Promise"}
+	```
+
+	`ForKeys` takes advantage of this - when a value changes, it's copied into the
+	output table without recalculating the key. Keys are only calculated when a
+	value is assigned to a new key.
