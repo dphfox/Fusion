@@ -4,9 +4,9 @@ It supports both constants and state objects.
 
 ```Lua
 local data = {Red = "foo", Blue = "bar"}
-local prefix = Value("Key_")
+local prefix = scope:Value("Key_")
 
-local renamed = ForKeys(data, function(use, key)
+local renamed = scope:ForKeys(data, function(use, key)
 	return use(prefix) .. key
 end)
 
@@ -101,7 +101,7 @@ names:set({ chocolate = true }) --> I ate the broccoli!
 	Say you're converting an array to a dictionary:
 
 	```Lua
-	local array = Value({"Fusion", "Knit", "Matter"})
+	local array = scope:Value({"Fusion", "Knit", "Matter"})
 	local dict = scope:ForKeys(array, function(use, scope, index)
 		return "Value" .. index
 	end)
@@ -113,7 +113,7 @@ names:set({ chocolate = true }) --> I ate the broccoli!
 	doesn't affect the keys. Keys are only added or removed as needed:
 
 	```Lua
-	local array = Value({"Fusion", "Knit", "Matter"})
+	local array = scope:Value({"Fusion", "Knit", "Matter"})
 	local dict = scope:ForKeys(array, function(use, scope, index)
 		return "Value" .. index
 	end)
