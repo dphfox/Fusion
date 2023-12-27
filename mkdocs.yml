@@ -59,27 +59,27 @@ nav:
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md
+    - Tables:
+      - ForValues: tutorials/tables/forvalues.md
+      - ForKeys: tutorials/tables/forkeys.md
+      - ForPairs: tutorials/tables/forpairs.md
+    - Animation:
+      - Tweens: tutorials/animation/tweens.md
+      - Springs: tutorials/animation/springs.md
     - Roblox:
-      - Hydration: tutorials/instances/hydration.md
-      - New Instances: tutorials/instances/new-instances.md
-      - Parenting: tutorials/instances/parenting.md
-      - Events: tutorials/instances/events.md
-      - Change Events: tutorials/instances/change-events.md
-      - Outputs: tutorials/instances/outputs.md
-      - References: tutorials/instances/references.md
-    - Lists & Tables:
-      - The For Objects: tutorials/lists-and-tables/the-for-objects.md
-      - ForValues: tutorials/lists-and-tables/forvalues.md
-      - ForKeys: tutorials/lists-and-tables/forkeys.md
-      - ForPairs: tutorials/lists-and-tables/forpairs.md
+      - Hydration: tutorials/roblox/hydration.md
+      - New Instances: tutorials/roblox/new-instances.md
+      - Parenting: tutorials/roblox/parenting.md
+      - Events: tutorials/roblox/events.md
+      - Change Events: tutorials/roblox/change-events.md
+      - Outputs: tutorials/roblox/outputs.md
+      - References: tutorials/roblox/references.md
     - Components:
       - Reusing UI: tutorials/components/reusing-ui.md
       - Children: tutorials/components/children.md
       - Callbacks: tutorials/components/callbacks.md
       - State: tutorials/components/state.md
-    - Animation:
-      - Tweens: tutorials/animation/tweens.md
-      - Springs: tutorials/animation/springs.md
+    
   - Examples:
     - Home: examples/index.md
     - Cookbook:
