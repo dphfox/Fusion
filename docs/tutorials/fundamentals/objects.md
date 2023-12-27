@@ -166,6 +166,9 @@ local thing3 = scope:Value("i am thing 3")
 doCleanup(scope)
 ```
 
-Remember: this is only nicer syntax for exactly the same thing you did before.
+!!! tip "This syntax is recommended"
+	It is recommended to use `scoped()` syntax. However, it is technically
+	optional; if it does not work for your codebase requirements, the barebones
+	syntax will always be available.
 
-From now on, you'll see this `scoped()` syntax used throughout the tutorials.
+	From now on, you'll see this `scoped()` syntax used throughout the tutorials.
