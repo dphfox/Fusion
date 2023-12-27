@@ -10,10 +10,10 @@ local multiplied = ForValues(numbers, function(use, num)
 	return num * use(multiplier)
 end)
 
-print(multiplied:get()) --> {2, 4, 6, 8, 10}
+print(peek(multiplied)) --> {2, 4, 6, 8, 10}
 
 multiplier:set(10)
-print(multiplied:get()) --> {10, 20, 30, 40, 50}
+print(peek(multiplied)) --> {10, 20, 30, 40, 50}
 ```
 
 -----
