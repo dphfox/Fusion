@@ -2,7 +2,7 @@
 instance. Those keys let you connect functions to events on the instance.
 
 ```Lua
-local button = New "TextButton" {
+local button = scope:New "TextButton" {
     [OnEvent "Activated"] = function(_, numClicks)
         print("The button was pressed", numClicks, "time(s)!")
     end
@@ -13,11 +13,9 @@ local button = New "TextButton" {
 
 ## Usage
 
-To use `OnEvent` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
+`OnEvent` doesn't need a scope - import it into your code from Fusion directly.
 
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
+```Lua
 local OnEvent = Fusion.OnEvent
 ```
 
@@ -31,7 +29,7 @@ When that key is used in a property table, you can pass in a handler and it will
 be connected to the event for you:
 
 ```Lua
-local button = New "TextButton" {
+local button = scope:New "TextButton" {
     [OnEvent("Activated")] = function(_, numClicks)
         print("The button was pressed", numClicks, "time(s)!")
     end
@@ -42,7 +40,7 @@ If you're using quotes `'' ""` for the event name, the extra parentheses `()`
 are optional:
 
 ```Lua
-local button = New "TextButton" {
+local button = scope:New "TextButton" {
     [OnEvent "Activated"] = function(_, numClicks)
         print("The button was pressed", numClicks, "time(s)!")
     end

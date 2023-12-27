@@ -26,8 +26,7 @@ local folder = scope:New "Folder" {
 `Children` doesn't need a scope - import it into your code from Fusion
 directly.
 
-```Lua hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
+```Lua
 local Children = Fusion.Children
 ```
 
