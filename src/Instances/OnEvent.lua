@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs special keys for property tables which connect event listeners to
@@ -6,22 +7,27 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 
-local function getProperty_unsafe(instance: Instance, property: string)
+local function getProperty_unsafe(
+	instance: Instance,
+	property: string
+)
 	return (instance :: any)[property]
 end
 
-local function OnEvent(eventName: string): PubTypes.SpecialKey
+local function OnEvent(
+	eventName: string
+): Types.SpecialKey
 	return {
 		type = "SpecialKey",
 		kind = "OnEvent",
 		stage = "observer",
 		apply = function(
-			self: PubTypes.SpecialKey,
-			scope: PubTypes.Scope<any>,
-			callback: any,
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			callback: unknown,
 			applyTo: Instance
 		)
 			local ok, event = pcall(getProperty_unsafe, applyTo, eventName)

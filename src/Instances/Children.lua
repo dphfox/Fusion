@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which parents any given descendants into
@@ -6,14 +7,14 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local External = require(Package.External)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local isState = require(Package.State.isState)
 
-type Set<T> = {[T]: boolean}
+type Set<T> = {[T]: unknown}
 
 -- Experimental flag: name children based on the key used in the [Children] table
 local EXPERIMENTAL_AUTO_NAMING = false
@@ -23,17 +24,17 @@ return {
 	kind = "Children",
 	stage = "descendants",
 	apply = function(
-		self: PubTypes.SpecialKey,
-		scope: PubTypes.Scope<any>,
-		propValue: any,
+		self: Types.SpecialKey,
+		scope: Types.Scope<unknown>,
+		value: unknown,
 		applyTo: Instance
 	)
 		local newParented: Set<Instance> = {}
 		local oldParented: Set<Instance> = {}
 	
 		-- save disconnection functions for state object observers
-		local newDisconnects: {[PubTypes.StateObject<any>]: () -> ()} = {}
-		local oldDisconnects: {[PubTypes.StateObject<any>]: () -> ()} = {}
+		local newDisconnects: {[Types.StateObject<unknown>]: () -> ()} = {}
+		local oldDisconnects: {[Types.StateObject<unknown>]: () -> ()} = {}
 	
 		local updateQueued = false
 		local queueUpdate: () -> ()
@@ -52,11 +53,15 @@ return {
 			table.clear(newParented)
 			table.clear(newDisconnects)
 	
-			local function processChild(child: any, autoName: string?)
+			local function processChild(
+				child: unknown,
+				autoName: string?
+			)
 				local childType = typeof(child)
 	
 				if childType == "Instance" then
 					-- case 1; single instance
+					local child = child :: Instance
 	
 					newParented[child] = true
 					if oldParented[child] == nil then
@@ -76,6 +81,7 @@ return {
 	
 				elseif isState(child) then
 					-- case 2; state object
+					local child = child :: Types.StateObject<unknown>
 	
 					local value = peek(child)
 					-- allow nil to represent the absence of a child
@@ -97,14 +103,17 @@ return {
 	
 				elseif childType == "table" then
 					-- case 3; table of objects
+					local child = child :: {[unknown]: unknown}
 	
 					for key, subChild in pairs(child) do
 						local keyType = typeof(key)
 						local subAutoName: string? = nil
 	
 						if keyType == "string" then
+							local key = key :: string
 							subAutoName = key
 						elseif keyType == "number" and autoName ~= nil then
+							local key = key :: number
 							subAutoName = autoName .. "_" .. key
 						end
 	
@@ -116,10 +125,10 @@ return {
 				end
 			end
 	
-			if propValue ~= nil then
+			if value ~= nil then
 				-- `propValue` is set to nil on cleanup, so we don't process children
 				-- in that case
-				processChild(propValue)
+				processChild(value)
 			end
 	
 			-- unparent any children that are no longer present
@@ -141,7 +150,7 @@ return {
 		end
 	
 		table.insert(scope, function()
-			propValue = nil
+			value = nil
 			updateQueued = true
 			updateChildren()
 		end)
@@ -150,4 +159,4 @@ return {
 		updateQueued = true
 		updateChildren()
 	end
-} :: PubTypes.SpecialKey
+} :: Types.SpecialKey

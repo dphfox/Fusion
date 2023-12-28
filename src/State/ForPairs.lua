@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs a new For object which maps pairs of a table using a `processor`
@@ -12,8 +13,8 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
@@ -26,11 +27,11 @@ local logWarn = require(Package.Logging.logWarn)
 local doCleanup = require(Package.Memory.doCleanup)
 
 local function ForPairs<KI, KO, VI, VO, S>(
-	scope: PubTypes.Scope<S>,
-	inputTable: PubTypes.CanBeState<{[KI]: VI}>,
-	processor: (PubTypes.Use, PubTypes.Scope<S>, KI, VI) -> (KO, VO),
-	destructor: any?
-): Types.For<KI, KO, VI, VO>
+	scope: Types.Scope<S>,
+	inputTable: Types.CanBeState<{[KI]: VI}>,
+	processor: (Types.Use, Types.Scope<S>, KI, VI) -> (KO, VO),
+	destructor: unknown?
+): Types.For<KO, VO>
 	if typeof(inputTable) == "function" then
 		logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
 	elseif destructor ~= nil then
@@ -40,15 +41,16 @@ local function ForPairs<KI, KO, VI, VO, S>(
 		scope,
 		inputTable,
 		function(
-			scope: PubTypes.Scope<any>,
-			inputPair: PubTypes.StateObject<{key: KI, value: VI}>
+			scope: Types.Scope<S>,
+			inputPair: Types.StateObject<{key: KI, value: VI}>
 		)
 			return Computed(scope, function(use, scope): {key: KO?, value: VO?}
 				local ok, key, value = xpcall(processor, parseError, use, scope, use(inputPair).key, use(inputPair).value)
 				if ok then
 					return {key = key, value = value}
 				else
-					logErrorNonFatal("forProcessorError", key :: any)
+					local errorObj = (key :: any) :: InternalTypes.Error
+					logErrorNonFatal("forProcessorError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}

@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to extract values from
@@ -6,42 +7,51 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function Out(propertyName: string): PubTypes.SpecialKey
+local function Out(
+	propertyName: string
+): Types.SpecialKey
 	return {
 		type = "SpecialKey",
 		kind = "Out",
 		stage = "observer",
 		apply = function(
-			self: PubTypes.SpecialKey,
-			scope: PubTypes.Scope<any>,
-			outState: any,
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
 			applyTo: Instance
 		)
 			local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 			if not ok then
 				logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
-			elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
-				logError("invalidOutType")
-			else
-				if outState.scope == nil then
-					logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
-				elseif whichLivesLonger(scope, applyTo, outState.scope, outState) == "a" then
-					logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
-				end
-				outState:set((applyTo :: any)[propertyName])
-				table.insert(
-					scope,
-					event:Connect(function()
-						outState:set((applyTo :: any)[propertyName])
-					end)
-				)
 			end
+
+			if not isState(value) then
+				logError("invalidAttributeOutType")
+			end
+			local value = value :: Types.StateObject<unknown>
+			if value.kind ~= "Value" then
+				logError("invalidAttributeOutType")
+			end
+			local value = value :: Types.Value<unknown>
+
+			if value.scope == nil then
+				logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+				logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			end
+			value:set((applyTo :: any)[propertyName])
+			table.insert(
+				scope,
+				event:Connect(function()
+					value:set((applyTo :: any)[propertyName])
+				end)
+			)
 		end
 	}
 end

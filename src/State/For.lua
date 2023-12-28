@@ -1,12 +1,13 @@
---!nonstrict
+--!strict
+--!nolint LocalShadow
 
 --[[
 	The private generic implementation for all public `For` objects.
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
@@ -22,14 +23,17 @@ local deriveScope = require(Package.Memory.deriveScope)
 local class = {}
 
 local CLASS_METATABLE = { __index = class }
-local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 --[[
 	Called when the original table is changed.
 ]]
 
 function class:update(): boolean
-	
+	local self = self :: InternalTypes.For<unknown, unknown, unknown, unknown, unknown>
+	if self.scope == nil then
+		return false
+	end
+	local outerScope = self.scope :: Types.Scope<unknown>
 	local existingInputTable = self._existingInputTable
 	local existingOutputTable = self._existingOutputTable
 	local existingProcessors = self._existingProcessors
@@ -45,7 +49,8 @@ function class:update(): boolean
 	table.clear(self.dependencySet)
 
 	if isState(self._inputTable) then
-		self._inputTable.dependentSet[self], self.dependencySet[self._inputTable] = true, true
+		local inputTable = self._inputTable :: Types.StateObject<{[unknown]: unknown}> 
+		inputTable.dependentSet[self], self.dependencySet[inputTable] = true, true
 	end
 
 	if newInputTable ~= existingInputTable then
@@ -139,18 +144,19 @@ function class:update(): boolean
 		
 		for key, remainingValues in remainingPairs do
 			for value in remainingValues do
-				local scope = deriveScope(self.scope)
-				local inputPair = Value(scope, {key = key, value = value})
-				local processOK, outputPair = xpcall(self._processor, parseError, scope, inputPair)
+				local innerScope = deriveScope(outerScope)
+				local inputPair = Value(innerScope, {key = key, value = value})
+				local processOK, outputPair = xpcall(self._processor, parseError, innerScope, inputPair)
 				if processOK then
 					local processor = {
 						inputPair = inputPair,
 						outputPair = outputPair,
-						cleanupTask = scope
+						cleanupTask = innerScope
 					}
 					newProcessors[processor] = true
 				else
-					logErrorNonFatal("forProcessorError", outputPair)
+					local errorObj = (outputPair :: any) :: InternalTypes.Error
+					logErrorNonFatal("forProcessorError", errorObj)
 				end
 			end
 		end
@@ -169,7 +175,7 @@ function class:update(): boolean
 		if newOutputTable[key] == nil then
 			newOutputTable[key] = value
 		else
-			logErrorNonFatal("forKeyCollision", key)
+			logErrorNonFatal("forKeyCollision", nil, key)
 		end
 	end
 
@@ -187,7 +193,7 @@ end
 --[[
 	Returns the interior value of this state object.
 ]]
-function class:_peek(): any
+function class:_peek(): unknown
 	return self._existingOutputTable
 end
 
@@ -208,23 +214,21 @@ function class:destroy()
 	end
 end
 
-local function For<KI, VI, KO, VO>(
-	scope: PubTypes.Scope<any>,
-	inputTable: PubTypes.CanBeState<{ [KI]: VI }>,
+local function For<KI, KO, VI, VO, S>(
+	scope: Types.Scope<S>,
+	inputTable: Types.CanBeState<{ [KI]: VI }>,
 	processor: (
-		PubTypes.Scope<any>,
-		PubTypes.StateObject<{key: KI, value: VI}>
-	) -> (PubTypes.StateObject<{key: KO?, value: VO?}>)
-): Types.For<KI, KO, VI, VO>
+		Types.Scope<S>,
+		Types.StateObject<{key: KI, value: VI}>
+	) -> (Types.StateObject<{key: KO?, value: VO?}>)
+): Types.For<KO, VO>
 
 	local self = setmetatable({
 		type = "State",
 		kind = "For",
 		scope = scope,
 		dependencySet = {},
-		-- if we held strong references to the dependents, then they wouldn't be
-		-- able to get garbage collected when they fall out of scope
-		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		dependentSet = {},
 		_processor = processor,
 		_inputTable = inputTable,
 		_existingInputTable = nil,
@@ -234,10 +238,10 @@ local function For<KI, VI, KO, VO>(
 		_newProcessors = {},
 		_remainingPairs = {}
 	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.For<KI, KO, VI, VO, S>
 
-	self:update()
-	
 	table.insert(scope, self)
+	self:update()
 
 	return self
 end

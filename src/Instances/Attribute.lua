@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to apply custom
@@ -6,7 +7,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local External = require(Package.External)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
@@ -15,7 +16,9 @@ local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function Attribute(attributeName: string): PubTypes.SpecialKey
+local function Attribute(
+	attributeName: string
+): Types.SpecialKey
 	if attributeName == nil then
 		logError("attributeNameNil")
 	end
@@ -24,12 +27,13 @@ local function Attribute(attributeName: string): PubTypes.SpecialKey
 		kind = "Attribute",
 		stage = "self",
 		apply = function(
-			self: PubTypes.SpecialKey,
-			scope: PubTypes.Scope<any>,
-			value: any,
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
 			applyTo: Instance
 		)
 			if isState(value) then
+				local value = value :: Types.StateObject<unknown>
 				if value.scope == nil then
 					logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then

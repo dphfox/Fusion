@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs a new For object which maps keys of a table using a `processor`
@@ -12,8 +13,8 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
@@ -26,11 +27,11 @@ local logWarn = require(Package.Logging.logWarn)
 local doCleanup = require(Package.Memory.doCleanup)
 
 local function ForKeys<KI, KO, V, S>(
-	scope: PubTypes.Scope<S>,
-	inputTable: PubTypes.CanBeState<{[KI]: V}>,
-	processor: (PubTypes.Use, PubTypes.Scope<S>, KI) -> KO,
-	destructor: any?
-): Types.For<KI, KO, V, V>
+	scope: Types.Scope<S>,
+	inputTable: Types.CanBeState<{[KI]: V}>,
+	processor: (Types.Use, Types.Scope<S>, KI) -> KO,
+	destructor: unknown?
+): Types.For<KO, V>
 	if typeof(inputTable) == "function" then
 		logError("scopeMissing", nil, "ForKeys", "myScope:ForKeys(inputTable, function(scope, use, key) ... end)")
 	elseif destructor ~= nil then
@@ -40,8 +41,8 @@ local function ForKeys<KI, KO, V, S>(
 		scope,
 		inputTable,
 		function(
-			scope: PubTypes.Scope<any>,
-			inputPair: PubTypes.StateObject<{key: KI, value: V}>
+			scope: Types.Scope<S>,
+			inputPair: Types.StateObject<{key: KI, value: V}>
 		)
 			local inputKey = Computed(scope, function(use, scope): KI
 				return use(inputPair).key
@@ -51,7 +52,8 @@ local function ForKeys<KI, KO, V, S>(
 				if ok then
 					return key
 				else
-					logErrorNonFatal("forProcessorError", key :: any)
+					local errorObj = (key :: any) :: InternalTypes.Error
+					logErrorNonFatal("forProcessorError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)
 					return nil

@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Applies a table of properties to an instance, including binding to any
@@ -14,7 +15,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local External = require(Package.External)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
@@ -27,7 +28,7 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local function setProperty_unsafe(
 	instance: Instance,
 	property: string,
-	value: any
+	value: unknown
 )
 	(instance :: any)[property] = value
 end
@@ -42,7 +43,7 @@ end
 local function setProperty(
 	instance: Instance,
 	property: string,
-	value: any
+	value: unknown
 )
 	if not pcall(setProperty_unsafe, instance, property, value) then
 		if not pcall(testPropertyAssignable, instance, property) then
@@ -58,12 +59,13 @@ local function setProperty(
 end
 
 local function bindProperty(
-	scope: PubTypes.Scope<any>,
+	scope: Types.Scope<unknown>,
 	instance: Instance,
 	property: string,
-	value: PubTypes.CanBeState<any>
+	value: Types.CanBeState<unknown>
 )
 	if isState(value) then
+		local value = value :: Types.StateObject<unknown>
 		if value.scope == nil then
 			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		elseif whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
@@ -91,15 +93,15 @@ local function bindProperty(
 end
 
 local function applyInstanceProps(
-	scope: PubTypes.Scope<any>,
-	props: PubTypes.PropertyTable,
+	scope: Types.Scope<unknown>,
+	props: Types.PropertyTable,
 	applyTo: Instance
 )
 	local specialKeys = {
-		self = {} :: {[PubTypes.SpecialKey]: any},
-		descendants = {} :: {[PubTypes.SpecialKey]: any},
-		ancestor = {} :: {[PubTypes.SpecialKey]: any},
-		observer = {} :: {[PubTypes.SpecialKey]: any}
+		self = {} :: {[Types.SpecialKey]: unknown},
+		descendants = {} :: {[Types.SpecialKey]: unknown},
+		ancestor = {} :: {[Types.SpecialKey]: unknown},
+		observer = {} :: {[Types.SpecialKey]: unknown}
 	}
 
 	for key, value in pairs(props) do
@@ -110,7 +112,7 @@ local function applyInstanceProps(
 				bindProperty(scope, applyTo, key :: string, value)
 			end
 		elseif keyType == "SpecialKey" then
-			local stage = (key :: PubTypes.SpecialKey).stage
+			local stage = (key :: Types.SpecialKey).stage
 			local keys = specialKeys[stage]
 			if keys == nil then
 				logError("unrecognisedPropertyStage", nil, stage)

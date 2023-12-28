@@ -7,11 +7,11 @@
 	to infer this from their scopes.
 ]]
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 
 local function whichScopeLivesLonger(
-	scopeA: PubTypes.Scope<any>,
-	scopeB: PubTypes.Scope<any>
+	scopeA: Types.Scope<unknown>,
+	scopeB: Types.Scope<unknown>
 ): "a" | "b" | "unknown"
 	-- If we can prove one scope is inside of the other scope, then the outer
 	-- scope must live longer than the inner scope (assuming idiomatic scopes).
@@ -29,7 +29,7 @@ local function whichScopeLivesLonger(
 				elseif inScope == scopeB then
 					return "a"
 				elseif typeof(inScope) == "table" then
-					local inScope: {any} = inScope
+					local inScope = inScope :: {unknown}
 					if inScope[1] ~= nil and closedSet[scope] == nil then
 						nextOpenSetSize += 1
 						nextOpenSet[nextOpenSetSize] = inScope
@@ -45,13 +45,13 @@ local function whichScopeLivesLonger(
 end
 
 local function whichLivesLonger(
-	scopeA: PubTypes.Scope<any>,
-	a: any,
-	scopeB: PubTypes.Scope<any>,
-	b: any
+	scopeA: Types.Scope<unknown>,
+	a: unknown,
+	scopeB: Types.Scope<unknown>,
+	b: unknown
 ): "a" | "b" | "unknown"
 	if scopeA == scopeB then
-		local scopeA: {any} = scopeA
+		local scopeA: {unknown} = scopeA
 		for index = #scopeA, 1, -1 do
 			local value = scopeA[index]
 			if value == a then

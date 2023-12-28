@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs and returns a new instance, with options for setting properties,
@@ -6,20 +7,21 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local defaultProps = require(Package.Instances.defaultProps)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 local logError= require(Package.Logging.logError)
 
 local function New(
-	scope: PubTypes.Scope<any>,
+	scope: Types.Scope<unknown>,
 	className: string
 )
-	if className == nil then
+	if (className :: any) == nil then
+		local scope = (scope :: any) :: string
 		logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
 	end
 	return function(
-		props: PubTypes.PropertyTable
+		props: Types.PropertyTable
 	): Instance
 		local ok, instance = pcall(Instance.new, className)
 		if not ok then

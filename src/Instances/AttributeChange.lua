@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to connect to
@@ -6,10 +7,12 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 
-local function AttributeChange(attributeName: string): PubTypes.SpecialKey
+local function AttributeChange(
+	attributeName: string
+): Types.SpecialKey
 	if attributeName == nil then
 		logError("attributeNameNil")
 	end
@@ -19,14 +22,15 @@ local function AttributeChange(attributeName: string): PubTypes.SpecialKey
 		kind = "AttributeChange",
 		stage = "observer",
 		apply = function(
-			self: PubTypes.SpecialKey,
-			scope: PubTypes.Scope<any>,
-			value: any,
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
 			applyTo: Instance
 		)
 			if typeof(value) ~= "function" then
 				logError("invalidAttributeChangeHandler", nil, attributeName)
 			end
+			local value = value :: (...unknown) -> (...unknown)
 			local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
 			if not ok then
 				logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)

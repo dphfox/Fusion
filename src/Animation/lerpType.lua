@@ -5,15 +5,16 @@
 	Linearly interpolates the given animatable types by a ratio.
 	If the types are different or not animatable, then the first value will be
 	returned for ratios below 0.5, and the second value for 0.5 and above.
-
-	FIXME: This function uses a lot of redefinitions to suppress false positives
-	from the Luau typechecker - ideally these wouldn't be required
 ]]
 
 local Package = script.Parent.Parent
 local Oklab = require(Package.Colour.Oklab)
 
-local function lerpType(from: any, to: any, ratio: number): any
+local function lerpType(
+	from: unknown, 
+	to: unknown, 
+	ratio: number
+): unknown
 	local typeString = typeof(from)
 
 	if typeof(to) == typeString then

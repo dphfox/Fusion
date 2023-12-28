@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which stores a reference to the instance
@@ -6,7 +7,7 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 local isState = require(Package.State.isState)
@@ -17,20 +18,25 @@ return {
 	kind = "Ref",
 	stage = "observer",
 	apply = function(
-		self: PubTypes.SpecialKey,
-		scope: PubTypes.Scope<any>,
-		refState: any,
+		self: Types.SpecialKey,
+		scope: Types.Scope<unknown>,
+		value: unknown,
 		applyTo: Instance
 	)
-		if not isState(refState) or refState.kind ~= "Value" then
+		if not isState(value) then
 			logError("invalidRefType")
-		else
-			if refState.scope == nil then
-				logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-			elseif whichLivesLonger(scope, applyTo, refState.scope, refState) == "a" then
-				logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-			end
-			refState:set(applyTo)
 		end
+		local value = value :: Types.StateObject<unknown>
+		if value.kind ~= "Value" then
+			logError("invalidRefType")
+		end
+		local value = value :: Types.Value<unknown>
+
+		if value.scope == nil then
+			logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		end
+		value:set(applyTo)
 	end
-} :: PubTypes.SpecialKey
+} :: Types.SpecialKey

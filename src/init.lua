@@ -1,30 +1,31 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	The entry point for the Fusion library.
 ]]
 
-local PubTypes = require(script.PubTypes)
+local Types = require(script.Types)
 local External = require(script.External)
 
-export type Animatable = PubTypes.Animatable
-export type Task = PubTypes.Task
-export type Scope<Constructors> = PubTypes.Scope<Constructors>
-export type Version = PubTypes.Version
-export type Dependency = PubTypes.Dependency
-export type Dependent = PubTypes.Dependent
-export type StateObject<T> = PubTypes.StateObject<T>
-export type CanBeState<T> = PubTypes.CanBeState<T>
-export type Use = PubTypes.Use
-export type Value<T> = PubTypes.Value<T>
-export type Computed<T> = PubTypes.Computed<T>
-export type For<KO, VO> = PubTypes.For<KO, VO>
-export type Observer = PubTypes.Observer
-export type Tween<T> = PubTypes.Tween<T>
-export type Spring<T> = PubTypes.Spring<T>
-export type SpecialKey = PubTypes.SpecialKey
-export type Children = PubTypes.Children
-export type PropertyTable = PubTypes.PropertyTable
+export type Animatable = Types.Animatable
+export type Task = Types.Task
+export type Scope<Constructors> = Types.Scope<Constructors>
+export type Version = Types.Version
+export type Dependency = Types.Dependency
+export type Dependent = Types.Dependent
+export type StateObject<T> = Types.StateObject<T>
+export type CanBeState<T> = Types.CanBeState<T>
+export type Use = Types.Use
+export type Value<T> = Types.Value<T>
+export type Computed<T> = Types.Computed<T>
+export type For<KO, VO> = Types.For<KO, VO>
+export type Observer = Types.Observer
+export type Tween<T> = Types.Tween<T>
+export type Spring<T> = Types.Spring<T>
+export type SpecialKey = Types.SpecialKey
+export type Children = Types.Children
+export type PropertyTable = Types.PropertyTable
 
 -- Down the line, this will be conditional based on whether Fusion is being
 -- compiled for Roblox.
@@ -33,21 +34,20 @@ do
 	External.setExternalScheduler(RobloxExternal)
 end
 
-local Fusion: PubTypes.Fusion = {
+local Fusion: Types.Fusion = {
 	version = {major = 0, minor = 3, isRelease = false},
 
 	cleanup = require(script.Memory.legacyCleanup),
 	doCleanup = require(script.Memory.doCleanup),
-	doNothing = require(script.Memory.doNothing),
 	scoped = require(script.Memory.scoped),
 	deriveScope = require(script.Memory.deriveScope),
 	
 	peek = require(script.State.peek),
 	Value = require(script.State.Value),
 	Computed = require(script.State.Computed),
-	ForPairs = require(script.State.ForPairs),
-	ForKeys = require(script.State.ForKeys),
-	ForValues = require(script.State.ForValues),
+	ForPairs = require(script.State.ForPairs) :: Types.ForPairsConstructor,
+	ForKeys = require(script.State.ForKeys) :: Types.ForKeysConstructor,
+	ForValues = require(script.State.ForValues) :: Types.ForValuesConstructor,
 	Observer = require(script.State.Observer),
 
 	Tween = require(script.Animation.Tween),

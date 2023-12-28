@@ -1,4 +1,5 @@
---!nonstrict
+--!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs a new computed state object, which follows the value of another
@@ -6,9 +7,9 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
-local External = require(Package.External)
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
@@ -20,13 +21,13 @@ local logWarn = require(Package.Logging.logWarn)
 local class = {}
 
 local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
 	Called when the goal state changes value; this will initiate a new tween.
 	Returns false as the current value doesn't change right away.
 ]]
 function class:update(): boolean
+	local self = self :: InternalTypes.Tween<unknown>
 	local goalValue = peek(self._goalState)
 
 	-- if the goal hasn't changed, then this is a TweenInfo change.
@@ -65,7 +66,8 @@ end
 --[[
 	Returns the interior value of this state object.
 ]]
-function class:_peek(): any
+function class:_peek(): unknown
+	local self = self :: InternalTypes.Tween<unknown>
 	return self._currentValue
 end
 
@@ -74,9 +76,11 @@ function class:get()
 end
 
 function class:destroy()
+	local self = self :: InternalTypes.Tween<unknown>
 	if self.scope == nil then
 		logError("destroyedTwice", nil, "Tween")
 	end
+	TweenScheduler.remove(self)
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -84,9 +88,9 @@ function class:destroy()
 end
 
 local function Tween<T>(
-	scope: PubTypes.Scope<any>,
-	goalState: PubTypes.StateObject<T>,
-	tweenInfo: PubTypes.CanBeState<TweenInfo>?
+	scope: Types.Scope<unknown>,
+	goalState: Types.StateObject<T>,
+	tweenInfo: Types.CanBeState<TweenInfo>?
 ): Types.Tween<T>
 	if isState(scope) then
 		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
@@ -98,9 +102,10 @@ local function Tween<T>(
 		tweenInfo = TweenInfo.new()
 	end
 
-	local dependencySet = {[goalState] = true}
+	local dependencySet: {[Types.Dependency]: unknown} = {[goalState] = true}
 	local tweenInfoIsState = isState(tweenInfo)
 	if tweenInfoIsState then
+		local tweenInfo = tweenInfo :: Types.StateObject<TweenInfo>
 		dependencySet[tweenInfo] = true
 	end
 
@@ -115,9 +120,7 @@ local function Tween<T>(
 		kind = "Tween",
 		scope = scope,
 		dependencySet = dependencySet,
-		-- if we held strong references to the dependents, then they wouldn't be
-		-- able to get garbage collected when they fall out of scope
-		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		dependentSet = {},
 		_goalState = goalState,
 		_tweenInfo = tweenInfo,
 		_tweenInfoIsState = tweenInfoIsState,
@@ -133,6 +136,7 @@ local function Tween<T>(
 		_currentTweenStartTime = 0,
 		_currentlyAnimating = false
 	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.Tween<T>
 
 	table.insert(scope, self)
 	if goalState.scope == nil then

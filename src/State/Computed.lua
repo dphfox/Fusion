@@ -1,13 +1,14 @@
---!nonstrict
+--!strict
 --!nolint LocalShadow
+
 --[[
 	Constructs and returns objects which can be used to model derived reactive
 	state.
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
@@ -32,6 +33,12 @@ local CLASS_METATABLE = {__index = class}
 	Returns true if it changed, or false if it's identical.
 ]]
 function class:update(): boolean
+	local self = self :: InternalTypes.Computed<unknown, unknown>
+	if self.scope == nil then
+		return false
+	end
+	local outerScope = self.scope :: Types.Scope<unknown>
+
 	-- remove this object from its dependencies' dependent sets
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -44,17 +51,17 @@ function class:update(): boolean
 	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
 	table.clear(self.dependencySet)
 
-	local innerScope = deriveScope(self.scope)
-	local function use<T>(target: PubTypes.CanBeState<T>): T
+	local innerScope = deriveScope(outerScope)
+	local function use<T>(target: Types.CanBeState<T>): T
 		if isState(target) then
-			local target = target :: PubTypes.StateObject<T>
+			local target = target :: Types.StateObject<T>
 			if target.scope == nil then
 				logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
-			elseif whichLivesLonger(self.scope, self, target.scope, target) == "a" then
+			elseif whichLivesLonger(outerScope, self, target.scope, target) == "a" then
 				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
-			return (target :: Types.StateObject<T>):_peek()
+			return (target :: InternalTypes.StateObject<T>):_peek()
 		else
 			return target :: T
 		end
@@ -77,9 +84,10 @@ function class:update(): boolean
 
 		return not similar
 	else
+		local errorObj = (newValue :: any) :: InternalTypes.Error
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
-		logErrorNonFatal("computedCallbackError", newValue)
+		logErrorNonFatal("computedCallbackError", errorObj)
 
 		doCleanup(innerScope)
 
@@ -98,7 +106,8 @@ end
 --[[
 	Returns the interior value of this state object.
 ]]
-function class:_peek(): any
+function class:_peek(): unknown
+	local self = self :: InternalTypes.Computed<unknown, unknown>
 	return self._value
 end
 
@@ -107,6 +116,7 @@ function class:get()
 end
 
 function class:destroy()
+	local self = self :: InternalTypes.Computed<unknown, unknown>
 	if self.scope == nil then
 		logError("destroyedTwice", nil, "Computed")
 	end
@@ -120,10 +130,10 @@ function class:destroy()
 end
 
 local function Computed<T, S>(
-	scope: PubTypes.Scope<S>,
-	processor: (PubTypes.Use, PubTypes.Scope<S>) -> T,
-	destructor: any
-): Types.Computed<T, S>
+	scope: Types.Scope<S>,
+	processor: (Types.Use, Types.Scope<S>) -> T,
+	destructor: unknown?
+): Types.Computed<T>
 	if typeof(scope) == "function" then
 		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
 	elseif destructor ~= nil then
@@ -140,6 +150,8 @@ local function Computed<T, S>(
 		_value = nil,
 		_innerScope = nil
 	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.Computed<T, S>
+
 	table.insert(scope, self)
 	self:update()
 	
