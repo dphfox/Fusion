@@ -94,17 +94,24 @@ to a cleanup function.
 
 ## Improved Syntax
 
-Fusion provides better shorthand for scopes to improve readability and
+!!! success "This syntax is recommended"
+	It is recommended to use this syntax. However, it is technically optional;
+	if it does not fit your technical requirements, the barebones syntax will
+	always be available.
+
+	From now on, you'll see this syntax used throughout the tutorials.
+
+Fusion provides alternate syntax for scopes, which improves readability and
 maintainability.
 
-To use shorthand, use `scoped({})` to create your scopes. This creates a normal
+To use this syntax, call `scoped()` to create your scopes. This creates a normal
 empty array.
 
 ```Lua linenums="2" hl_lines="2 4"
 local Fusion = require(ReplicatedStorage.Fusion)
 local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
 
-local scope = scoped({})
+local scope = scoped()
 local thing1 = Fusion.Value(scope, "i am thing 1")
 local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
@@ -112,10 +119,10 @@ local thing3 = Fusion.Value(scope, "i am thing 3")
 doCleanup(scope)
 ```
 
-`scoped` can add methods to that array for you. This is most useful for
+`scoped` can then add methods to that array for you. This is most useful for
 constructor functions.
 
-Name some constructors in the table argument of `scoped`:
+Name some constructors in a table, and pass it to `scoped()`.
 
 ```Lua linenums="2" hl_lines="4-6"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -151,8 +158,10 @@ doCleanup(scope)
 This strongly ties your constructors to your scopes, which makes it much harder
 to mess up or circumvent them. It also makes code read much more naturally.
 
+### Adding Methods In Bulk
+
 Try passing `Fusion` to `scoped()` rather than listing functions manually. 
-Because `Fusion` already contains those functions, it works too.
+Because `Fusion` is a table containing functions, it works too.
 
 ```Lua linenums="2" hl_lines="4"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -169,42 +178,81 @@ doCleanup(scope)
 This gives you access to all of Fusion's constructors without having to import
 each one manually.
 
-!!! success "This syntax is recommended"
-	It is recommended to use `scoped()` syntax. However, it is technically
-	optional; if it does not work for your codebase requirements, the barebones
-	syntax will always be available.
+You can merge in as many extras as you'd like by adding them as arguments.
 
-	From now on, you'll see this `scoped()` syntax used throughout the tutorials.
+```Lua hl_lines="4"
+local LibraryA = { foo = ..., bar = ... }
+local LibraryB = { frob = ..., garb = ... }
 
-??? tip "Merging libraries together"
-	If you use multiple libraries supporting scopes, you can mix functions from
-	both in your `scoped` call.
+local scope = scoped(Fusion, LibraryA, LibraryB)
 
-	```Lua
-	local scope = scoped({
-		Foo = LibraryA.Foo,
-		Bar = LibraryB.Bar
-	})
+print(scope.Value == Fusion.Value) --> true
+print(scope.foo == LibraryA.foo) --> true
+print(scope.garb == LibraryB.garb) --> true
 
-	local foo = scope:Foo()
-	local bar = scope:Bar()
-	```
+```
 
-	You can automatically generate this merged table if desired. However, be
-	aware that libraries might use the same name for different things.
+!!! fail "Conflicting names"
+	If you pass in two tables that contain things with the same name, `scoped()`
+	will error.
 
-	The following code is *one way* of dealing with this:
+### Reusing Methods From Other Scopes
 
-	```Lua
-	local everything = {}
-	for name, member in {LibraryA, LibraryB} do
-		if everything[name] ~= nil then
-			error("Two libraries contain '" .. name .. "' - they can't be merged.")
-		else
-			everything[name] = member
-		end
-	end
+Sometimes, you'll want to make a new scope with the same methods as an existing
+scope.
 
-	-- later...
-	local scope = scope(everything)
-	```
+```Lua
+local foo = scoped({
+	Foo = Foo,
+	Bar = Bar,
+	Baz = Baz
+})
+
+-- it'd be nice to define this once only...
+local bar = scoped({
+	Foo = Foo,
+	Bar = Bar,
+	Baz = Baz
+})
+```
+
+To do this, Fusion provides a `deriveScope` function. It behaves like `scoped`
+but lets you skip defining the methods. Instead, you give it an example of what
+the scope should look like.
+
+```Lua linenums="2" hl_lines="2 11"
+local Fusion = require(ReplicatedStorage.Fusion)
+local scoped, deriveScope = Fusion.scoped, Fusion.deriveScope
+local doCleanup = Fusion.doCleanup
+
+local foo = scoped({
+	Foo = Foo,
+	Bar = Bar,
+	Baz = Baz
+})
+
+local bar = deriveScope(foo)
+
+doCleanup(bar)
+doCleanup(foo)
+```
+
+*Deriving* scopes like this is highly efficient because Fusion can re-use the
+same information for both scopes. It also helps keep your definitions all in
+one place.
+
+-----
+
+## When You'll Use This
+
+Scopes might sound like a lot of upfront work. However, you'll find in practice
+that Fusion manages most of this for you.
+
+You'll only ever have to manage scopes when you're creating and destroying them
+directly. For example, you'll likely deal with them in your main code file,
+where you need to create a scope directly in order to start using Fusion.
+
+However, Fusion manages most of your scopes for you. As you'll see, parts of
+Fusion will often give you an automatically-created scope. In those cases,
+Fusion takes responsibility for managing them, so you can use them without
+thinking about how they work.
