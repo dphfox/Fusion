@@ -21,10 +21,8 @@ For example, consider this function, which generates a button based on some
 `props` the user passes in:
 
 ```Lua
-type Dependencies = typeof(Fusion)
-
 local function Button(
-	scope: Fusion.Scope<Dependencies>,
+	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		Position: Fusion.CanBeState<UDim2>?,
 		AnchorPoint: Fusion.CanBeState<Vector2>?,
@@ -120,9 +118,7 @@ Here's an example of how you could split up some components into modules:
 	local scoped, doCleanup = Fusion.scoped, Fusion.doCleanup
 
 	local scope = scoped(Fusion, {
-		PopUp = require(script.Parent.PopUp),
-		Message = require(script.Parent.Message),
-		Button = require(script.Parent.Button)
+		PopUp = require(script.Parent.PopUp)
 	})
 
     local ui = scope:New "ScreenGui" {
@@ -139,18 +135,19 @@ Here's an example of how you could split up some components into modules:
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
 
-	type Dependencies = typeof(Fusion) & {
-		Message: typeof(require(script.Parent.Message)),
-		Button: typeof(require(script.Parent.Button)),
-	}
-
     local function PopUp(
-		scope: Fusion.Scope<Dependencies>, 
+		outerScope: Fusion.Scope<{}>, 
 		props: {
 			Message: Fusion.CanBeState<string>,
 			DismissText: Fusion.CanBeState<string>
 		}
 	)
+		local scope = scoped(Fusion, {
+			Message = require(script.Parent.Message),
+			Button = require(script.Parent.Button)
+		})
+		table.insert(outerScope, scope)
+
         return scope:New "Frame" {
             -- ...some properties...
             
@@ -175,10 +172,8 @@ Here's an example of how you could split up some components into modules:
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
 
-	type Dependencies = typeof(Fusion)
-
     local function Message(
-		scope: Fusion.Scope<Dependencies>,
+		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {
 			Text: Fusion.CanBeState<string>
 		}
@@ -201,10 +196,8 @@ Here's an example of how you could split up some components into modules:
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
 
-	type Dependencies = typeof(Fusion)
-
     local function Button(
-		scope: Fusion.Scope<Dependencies>,
+		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {
 			Text: Fusion.CanBeState<string>
 		}
@@ -222,108 +215,140 @@ Here's an example of how you could split up some components into modules:
     return Button
     ```
 
-??? tip "Type checking with components & scopes"
-	You might notice the large type definition at the top of `PopUp`.
+!!! success "Provide a list of properties"
+	If you don't provide a list of properties for your component anywhere, it
+	might be hard to figure out how to use it.
+
+	The best way to do this is using Luau types. You can specify your list of
+	properties inline with your function definition:
 
 	```Lua
-	type Dependencies = typeof(Fusion) & {
-		Message: typeof(require(script.Parent.Message)),
-		Button: typeof(require(script.Parent.Button)),
-	}
-	```	
-
-	This type merges together the `Fusion` table with a second table containing
-	`Message` and `Button`.
-
-	It'd be a bit like writing this out:
-
-	```Lua
-	type Dependencies = {
-		Message: (scope, props) -> Instance,
-		Button: (scope, props) -> Instance,
-		Value: (scope, initialValue) -> Value,
-		Computed: (scope, processor) -> Computed,
-		-- etc...
-	}
-	```
-
-	Later on, this is passed to Fusion's `Scope<T>` type. `T` is the table of
-	methods you want to access with `scoped()` syntax.
-
-	```Lua hl_lines="2"
-	local function PopUp(
-		scope: Fusion.Scope<Dependencies>, 
+	local function Cake(
+		-- ... some stuff here ...
 		props: {
-			Message: Fusion.CanBeState<string>,
-			DismissText: Fusion.CanBeState<string>
+			Size: Vector3,
+			Colour: Color3,
+			IsTasty: boolean
 		}
 	)
+		-- ... some other stuff here ...
+	end
 	```
 
-	Because the `Dependencies` type contains all of Fusion & the `Message` and
-	`Button` components, it tells Luau:
+	This isn't just good documentation - it also gives you useful autocomplete.
+	If you try to use properties incorrectly inside the function body, it will
+	raise a type checking error. Similarly, you'll get useful errors if you
+	accidentally leave out a property when you use the component later.
 
-	- to reject scopes that don't have those methods
-	- to show you autocomplete information for those methods while working on
-	  your code
-	
-	The scope defined in the main script contains all of those methods, so it
-	passes type checking:
+	Note that the above code only accepts constant values, not state objects.
+
+	If you want to accept *either* a constant or a state object, you can use the
+	`CanBeState` type.
 
 	```Lua
-	local scope = scoped(Fusion, {
-		PopUp = require(script.Parent.PopUp),
-		Message = require(script.Parent.Message),
-		Button = require(script.Parent.Button)
-	})
-
-	-- this is ok
-	scope:PopUp {
-		Message = "Hello, world!",
-		DismissText = "Close"
-	}
+	local function Cake(
+		-- ... some stuff here ...
+		props: {
+			Size: Fusion.CanBeState<Vector3>,
+			Colour: Fusion.CanBeState<Color3>,
+			IsTasty: Fusion.CanBeState<boolean>
+		}
+	)
+		-- ... some other stuff here ...
+	end
 	```
 
-	However, removing one of the methods emits a type checking error, because
-	the scope can no longer support the `PopUp` component.
+	This is usually what you want, because it means the user can easily switch
+	a property to dynamically change over time, while still writing properties
+	normally when they don't change over time. You can mostly treat `CanBeState`
+	properties like they're state objects, because functions like `peek()` and
+	`use()` automatically choose the right behaviour for you.
 
-	```Lua hl_lines="3"
-	local scope = scoped(Fusion, {
-		PopUp = require(script.Parent.PopUp),
-		Message = nil,
-		Button = require(script.Parent.Button)
-	})
+	If something *absolutely must* be a state object, you can use the
+	`StateObject` type instead. You should only consider this when it doesn't
+	make sense for the property to stay the same forever.
 
-	-- the type checker will flag this up!
-	scope:PopUp {
-		Message = "Hello, world!",
-		DismissText = "Close"
-	}
+	```Lua
+	local function Cake(
+		-- ... some stuff here ...
+		props: {
+			Size: Fusion.StateObject<Vector3>,
+			Colour: Fusion.StateObject<Color3>,
+			IsTasty: Fusion.StateObject<boolean>
+		}
+	)
+		-- ... some other stuff here ...
+	end
 	```
 
-	A nice benefit of this system is that components only specify the type of
-	the component, rather than actually loading the specific component they use.
-	This means you can substitute in other components if they provide the same
-	API.
+	You can use the rest of Luau's type checking features to do more complex
+	things, like making certain properties optional, or restricting that values
+	are valid for a given property. Go wild!
 
-	```Lua hl_lines="3-4"
-	local scope = scoped(Fusion, {
-		PopUp = require(script.Parent.PopUp),
-		Message = require(script.Parent.Test.Message),
-		Button = require(script.Parent.Test.Button)
-	})
+	Remember that, when working with `StateObject` and `CanBeState`, you should
+	be mindful of whether you're putting things inside the angled brackets, or
+	outside of them. Consider these two type definitions carefully:
 
-	-- works as long as `Test.Message` and `Test.Button` match the real counterparts
-	scope:PopUp {
-		Message = "Hello, world!",
-		DismissText = "Close"
-	}
+	```Lua
+	-- always a state object, which stores either Vector3 or nil
+	Fusion.StateObject<Vector3?>
+
+	-- either nil, or a state object which always stores Vector3
+	Fusion.StateObject<Vector3>?
 	```
 
-	This is particularly valuable for testing code in fictional environments or
-	for writing reusable code that can use custom implementations provided by
-	the developers using it.
+!!! tip "How to ask for a scope"
+	In addition to `props`, it's strongly recommended to provide a type for the
+	`scope` parameter.
 
-It might be scary at first to see a large list of modules, but because you can
-browse visually by names and folders, it's almost always better than having one
-long script.
+	The type will look something like this:
+
+	```Lua
+	scope: Fusion.Scope<YourMethodsHere>
+	```
+
+	This naturally leads to two strategies for dealing with scopes.
+	
+	The first strategy is to ask for certain methods. In  `Button` and `Message`,
+	they ask for a scope containing Fusion methods, so they can easily access
+	Fusion with no extra effort.
+
+	```Lua hl_lines="2"
+	local function Component(
+		scope: Fusion.Scope<typeof(Fusion)>,
+		props: {}
+	)
+		return scope:New "Thing" {
+			-- ... rest of code here ...
+		}
+	end
+	```
+
+	The second strategy is not to ask for any methods. Instead, you create your
+	own scope with what you need, and add it to the scope the user gives you.
+	This is what `PopUp` does.
+
+	```Lua hl_lines="2 5-9"
+	local function Component(
+		outerScope: Fusion.Scope<{}>,
+		props: {}
+	)
+		local scope = scoped(Fusion, {
+			SpecialThing1 = require(script.SpecialThing1),
+			SpecialThing2 = require(script.SpecialThing2),
+		})
+		table.insert(outerScope, scope)
+
+		return scope:SpecialThing1 {
+			-- ... rest of code here ...
+		}
+	end
+	```
+
+	The general advice is to only ask for methods if they're very common - for
+	example, if you only need access to the Fusion library, it can be convenient
+	to simply ask for it to be there. The user's scope probably has it already.
+	
+	If you need to access specialised things like other components, it's better
+	to create a new scope internally so users of your component don't have to
+	worry about those internal components.
