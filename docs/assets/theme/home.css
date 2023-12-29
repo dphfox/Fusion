@@ -41,6 +41,17 @@
 	background-repeat: no-repeat;
 	background-size: 177vh 100vh;
 	background-position: center right;
+	animation: home-fade-in-bg 0.5s ease 0.5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes home-fade-in-bg {
+	0% {
+		transform: translateY(-0.8rem);
+	}
+	100% {
+		transform: translateY(0rem);
+	}
 }
 
 [data-md-color-scheme="fusiondoc-dark"] #fusiondoc-home-main::before {
