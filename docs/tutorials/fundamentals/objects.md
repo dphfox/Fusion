@@ -246,13 +246,11 @@ one place.
 ## When You'll Use This
 
 Scopes might sound like a lot of upfront work. However, you'll find in practice
-that Fusion manages most of this for you.
+that Fusion manages a lot of this for you.
 
-You'll only ever have to manage scopes when you're creating and destroying them
-directly. For example, you'll likely deal with them in your main code file,
-where you need to create a scope directly in order to start using Fusion.
+You'll need to create and destroy your own scopes manually sometimes. For
+example, you'll need to create a scope in your main code file to start using
+Fusion, and you might want to make a few more in other parts of your code.
 
-However, Fusion manages most of your scopes for you. As you'll see, parts of
-Fusion will often give you an automatically-created scope. In those cases,
-Fusion takes responsibility for managing them, so you can use them without
-thinking about how they work.
+However, Fusion manages most of your scopes for you, so for large parts of your
+codebase, you won't have to consider scopes and destruction at all.
