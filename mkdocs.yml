@@ -74,9 +74,9 @@ nav:
       - Change Events: tutorials/roblox/change-events.md
       - Outputs: tutorials/roblox/outputs.md
       - References: tutorials/roblox/references.md
-    - Components:
-      - Reusing UI: tutorials/components/reusing-ui.md
-      - Children: tutorials/components/children.md
+    - Best Practices:
+      - Components: tutorials/components/components.md
+      - Instance Handling: tutorials/components/instance-handling.md
       - Callbacks: tutorials/components/callbacks.md
       - State: tutorials/components/state.md
     
