@@ -18,6 +18,39 @@ type Set<T> = {[T]: boolean}
 -- Experimental flag: name children based on the key used in the [Children] table
 local EXPERIMENTAL_AUTO_NAMING = false
 
+local function batchingSortedInsert(t: {Instance}, instance: Instance)
+	--  initialise binary search values
+	local iStart, iEnd, iMid, iState = 1, #t, 1, 0
+	-- store instance info to avoid having to index the properties multiple times
+	local className = instance.ClassName
+	local isImage = className == "ImageLabel" or className == "ImageButton"
+	local image = if isImage then (instance :: ImageLabel | ImageButton).Image else nil
+	-- find insert position
+	while iStart <= iEnd do
+		-- calculate middle
+		iMid = math.floor((iStart + iEnd) / 2)
+		local midInstance = t[iMid]
+		local midClassName = midInstance.ClassName
+		-- compare
+		if className < midClassName then
+			iEnd, iState = iMid - 1, 0
+		elseif isImage and midClassName == className then
+			-- when two images are compared, sort by asset id
+			-- so that identical images are grouped together for batching
+			local midImage = (midInstance :: ImageLabel | ImageButton).Image
+			if image < midImage then
+				iEnd, iState = iMid - 1, 0
+			else
+				iStart, iState = iMid + 1, 1
+			end
+		else
+			iStart, iState = iMid + 1, 1
+		end
+	end
+	-- insert
+	table.insert(t, iMid + iState, instance)
+end
+
 local Children = {}
 Children.type = "SpecialKey"
 Children.kind = "Children"
@@ -26,6 +59,7 @@ Children.stage = "descendants"
 function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
+	local parentingQueue: {Instance} = {}
 
 	-- save disconnection functions for state object observers
 	local newDisconnects: {[PubTypes.StateObject<any>]: () -> ()} = {}
@@ -47,6 +81,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 		oldDisconnects, newDisconnects = newDisconnects, oldDisconnects
 		table.clear(newParented)
 		table.clear(newDisconnects)
+		table.clear(parentingQueue)
 
 		local function processChild(child: any, autoName: string?)
 			local childType = typeof(child)
@@ -59,7 +94,7 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 					-- wasn't previously present
 
 					-- TODO: check for ancestry conflicts here
-					child.Parent = applyTo
+					batchingSortedInsert(parentingQueue, child)
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting
@@ -86,6 +121,11 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting
+
+					-- note: children that are added dynamically at a later time will not
+					-- be batched with these pre-existing children since that would require all
+					-- children to be re-parented in batching order, which is more expensive
+					-- than just sacrificing some potential batching
 					oldDisconnects[child] = nil
 				end
 
@@ -126,6 +166,11 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 		-- disconnect observers which weren't reused
 		for oldState, disconnect in pairs(oldDisconnects) do
 			disconnect()
+		end
+
+		-- parent any new children
+		for _, child in parentingQueue  do
+			child.Parent = applyTo
 		end
 	end
 
