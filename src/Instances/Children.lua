@@ -18,9 +18,9 @@ type Set<T> = {[T]: boolean}
 -- Experimental flag: name children based on the key used in the [Children] table
 local EXPERIMENTAL_AUTO_NAMING = false
 
-local function batchingSortedInsert(t: {Instance}, instance: Instance)
+local function batchingSortedInsert(queue: {Instance}, instance: Instance)
 	--  initialise binary search values
-	local iStart, iEnd, iMid, iState = 1, #t, 1, 0
+	local iStart, iEnd, iMid, iState = 1, #queue, 1, 0
 	-- store instance info to avoid having to index the properties multiple times
 	local className = instance.ClassName
 	local isImage = className == "ImageLabel" or className == "ImageButton"
@@ -29,7 +29,7 @@ local function batchingSortedInsert(t: {Instance}, instance: Instance)
 	while iStart <= iEnd do
 		-- calculate middle
 		iMid = math.floor((iStart + iEnd) / 2)
-		local midInstance = t[iMid]
+		local midInstance = queue[iMid]
 		local midClassName = midInstance.ClassName
 		-- compare
 		if className < midClassName then
@@ -48,7 +48,7 @@ local function batchingSortedInsert(t: {Instance}, instance: Instance)
 		end
 	end
 	-- insert
-	table.insert(t, iMid + iState, instance)
+	table.insert(queue, iMid + iState, instance)
 end
 
 local Children = {}
