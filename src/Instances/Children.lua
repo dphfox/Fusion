@@ -98,6 +98,11 @@ function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTyp
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting
+
+					-- note: children that are added dynamically at a later time will not
+					-- be batched with these pre-existing children since that would require all
+					-- children to be re-parented in batching order, which is more expensive
+					-- than just sacrificing some potential batching
 					oldParented[child] = nil
 				end
 
