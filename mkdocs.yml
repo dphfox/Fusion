@@ -55,7 +55,7 @@ nav:
   - Tutorials:
     - Get Started: tutorials/index.md
     - Fundamentals:
-      - Objects: tutorials/fundamentals/objects.md
+      - Scopes: tutorials/fundamentals/scopes.md
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md

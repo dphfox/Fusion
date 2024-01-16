@@ -143,6 +143,10 @@ local function PopUp(
 end
 ```
 
+!!! tip "Accepting multiple instances"
+	If you have multiple 'slots' where you want to pass through instances, you
+	can make other properties and give them the `Fusion.Children` type.
+
 Later on, when a pop-up is created, instances can now be parented into that
 pop-up:
 

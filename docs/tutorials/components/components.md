@@ -182,8 +182,8 @@ scope: Fusion.Scope<YourMethodsHere>
 If you don't know what methods to ask for, consider these two strategies.
 
 1. If you only use common methods (like Fusion's constructors) then it's a
-safe assumption that the user will also have those methods. You can ask for
-these directly.
+safe assumption that the user will also have those methods. You can ask for a
+scope with those methods pre-defined.
 
 	```Lua hl_lines="2"
 	local function Component(
@@ -196,10 +196,9 @@ these directly.
 	end
 	```
 
-2. If you need more specific or niche things, that the user probably won't
-have (for example, components you use internally), then you probably should
-not ask for those. Instead, you can create a new scope and specify every
-method you need on it, then add that new scope to the scope you were given.
+2. If you need more specific or niche things that the user likely won't have
+(for example, components you use internally), then you should not ask for those.
+Instead, create a new inner scope with the methods you need.
 
 	```Lua hl_lines="2 5-9"
 	local function Component(
@@ -218,8 +217,8 @@ method you need on it, then add that new scope to the scope you were given.
 	end
 	```
 
-If you're not sure which strategy to pick, the second is always safer,
-because it assumes less about your users.
+If you're not sure which strategy to pick, the second is always a safe fallback,
+because it assumes less about your users and helps hide implementation details.
 
 
 -----
