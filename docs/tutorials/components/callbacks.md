@@ -11,17 +11,9 @@ example to report when button clicks occur.
 
 ## In Luau
 
-Callbacks are functions which you pass into other functions. They're part of
-normal Luau code.
-
-```Lua
-workspace.ChildAdded:Connect(function()
-    -- this function is a callback!
-end)
-```
-
-They're useful because they allow the function to 'call back' into your code,
-so your code can do something in response:
+Callbacks are functions which you pass into other functions. They're useful
+because they allow the function to 'call back' into your code, so your code can
+do something in response:
 
 ```Lua
 local function printMessage()
@@ -71,16 +63,15 @@ In this example, the `fiveTimes` function calls a callback five times:
 Components can use callbacks the same way. Consider this button component; when
 the button is clicked, the button needs to run some external code:
 
-```Lua hl_lines="18"
+```Lua hl_lines="17"
 local function Button(
+	scope: Fusion.Scope<typeof(Fusion)>
 	props: {
-		Scope: Fusion.Scope<typeof(Fusion)>,
 		Position: Fusion.CanBeState<UDim2>?,
 		Size: Fusion.CanBeState<UDim2>?,
 		Text: Fusion.CanBeState<string>?
 	}
 )
-	local scope = props.Scope
     return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
@@ -94,10 +85,10 @@ local function Button(
 end
 ```
 
-It can ask the controlling code to provide a callback in `props`, called OnClick:
+It can ask the controlling code to provide an `OnClick` callback in `props`.
 
-```Lua hl_lines="3-5"
-local button = Button {
+```Lua
+local button = scope:Button {
     Text = "Hello, world!",
     OnClick = function()
         print("The button was clicked")
@@ -109,17 +100,16 @@ Assuming that callback is passed in, the callback can be passed directly into
 `[OnEvent]`, because `[OnEvent]` accepts functions. It can even be optional -
 Luau won't add the key to the table if the value is `nil`.
 
-```Lua hl_lines="7 19"
+```Lua hl_lines="7 18"
 local function Button(
+	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Scope: Fusion.Scope<typeof(Fusion)>,
 		Position: Fusion.CanBeState<UDim2>?,
 		Size: Fusion.CanBeState<UDim2>?,
 		Text: Fusion.CanBeState<string>?,
 		OnClick: (() -> ())?
 	}
 )
-	local scope = props.Scope
     return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
@@ -136,10 +126,10 @@ end
 Alternatively, we can call `props.OnClick` manually, which is useful if you want
 to do your own processing first:
 
-```Lua hl_lines="7 20-24"
+```Lua hl_lines="19-23"
 local function Button(
+	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Scope: Fusion.Scope<typeof(Fusion)>,
 		Position: Fusion.CanBeState<UDim2>?,
 		Size: Fusion.CanBeState<UDim2>?,
 		Text: Fusion.CanBeState<string>?,
@@ -147,7 +137,6 @@ local function Button(
 		OnClick: (() -> ())?
 	}
 )
-	local scope = props.Scope
     return scope:New "TextButton" {
         BackgroundColor3 = Color3.new(0.25, 0.5, 1),
         Position = props.Position,
