@@ -3,38 +3,34 @@ useful, but you should be careful when adding state.
 
 -----
 
-## Creating State Objects
+## Creation
 
-Inside a component, state objects can be created and used the same way as usual:
+You can create state objects inside components as you would anywhere else.
 
-```Lua hl_lines="5 8-10 13 17"
+```Lua hl_lines="10 13-15"
 local HOVER_COLOUR = Color3.new(0.5, 0.75, 1)
 local REST_COLOUR = Color3.new(0.25, 0.5, 1)
 
-local function Button(props)
-    local isHovering = Value(false)
+local function Button(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		-- ... some properties ...
+	}
+)
+    local isHovering = scope:Value(false)
 
-    return New "TextButton" {
-        BackgroundColor3 = Computed(function(use)
+    return scope:New "TextButton" {
+        BackgroundColor3 = scope:Computed(function(use)
             return if use(isHovering) then HOVER_COLOUR else REST_COLOUR
         end),
 
-        [OnEvent "MouseEnter"] = function()
-            isHovering:set(true)
-        end,
-
-        [OnEvent "MouseLeave"] = function()
-            isHovering:set(false)
-        end,
-
-        -- ... some properties ...
+        -- ... ... some more code ...
     }
 end
 ```
 
-Like regular Luau, state objects stay around as long as they're being used. Once
-your component is destroyed and your code no longer uses the objects, they'll be
-cleaned up.
+Because these state objects are made with the same `scope` as the rest of the
+component, they're destroyed alongside the rest of the component.
 
 -----
 
@@ -53,70 +49,111 @@ object under the hood:
 ![Showing check boxes connected to Value objects.](Check-Boxes-Dark.svg#only-dark)
 ![Showing check boxes connected to Value objects.](Check-Boxes-Light.svg#only-light)
 
-It might *seem* logical to store the state object inside the check box:
+It might *seem* logical to store the state object inside the check box, but
+this causes a few problems:
 
-```Lua hl_lines="2"
-local function CheckBox(props)
-    local isChecked = Value(false)
+- because the state is hidden, it's awkward to read and write from outside
+- often, the user already has a state object representing the same setting, so
+now there's two state objects where one would have sufficed
 
-    return New "ImageButton" {
-        -- ... some properties ...
+```Lua hl_lines="7"
+local function CheckBox(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		-- ... some properties ...
+	}
+)
+    local isChecked = scope:Value(false) -- problematic
+
+    return scope:New "ImageButton" {
+		[OnEvent "Activated"] = function()
+			isChecked:set(not peek(isChecked))
+		end,
+
+        -- ... some more code ...
     }
 end
 ```
 
-However, hiding away important state in components causes a few problems:
+A *slightly better* solution is to pass the state object in. This ensures the
+controlling code has easy access to the state if it needs it. However, this is
+not a complete solution:
 
-- to control the appearance of the check box, you're forced to change the
-internal state
-- clicking the check box has hard-coded behaviour, which is bad if you need to
-intercept the click (e.g. to show a confirmation dialogue)
-- if you already had a state object for that setting, now the check box has a
-duplicate state object representing the same setting
+- the user is forced to store the state in a `Value` object, but they might be
+computing the value dynamically with other state objects instead
+- the behaviour of clicking the check box is hardcoded; the user cannot
+intercept the click or toggle a different state
 
-Therefore, it's better for the controlling code to hold the state object, and
-use callbacks to switch the value when the check box is clicked:
+```Lua hl_lines="4"
+local function CheckBox(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		IsChecked: Fusion.Value<boolean> -- slightly better
+	}
+)
+    return scope:New "ImageButton" {
+		[OnEvent "Activated"] = function()
+			props.IsChecked:set(not peek(props.IsChecked))
+		end,
 
-```Lua
-local playMusic = Value(true)
+        -- ... some more code ...
+    }
+end
+```
 
-local checkBox = CheckBox {
-    Text = "Play music",
-    IsChecked = playMusic,
-    OnClick = function()
-        playMusic:set(not peek(playMusic))
-    end
-}
+That's why the *best* solution is to use `CanBeState` to create read-only
+properties, and add callbacks for signalling actions and events.
+
+- because `CanBeState` is read-only, it lets the user plug in any data
+source, including dynamic computations
+- because the callback is provided by the user, the behaviour of clicking the
+check box is completely customisable
+
+```Lua hl_lines="4-5 10"
+local function CheckBox(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		IsChecked: Fusion.CanBeState<boolean>, -- best
+		OnClick: () -> ()
+	}
+)
+    return scope:New "ImageButton" {
+		[OnEvent "Activated"] = function()
+			props.OnClick()
+		end,
+
+        -- ... some more code ...
+    }
+end
 ```
 
 The control is always top-down here; the check box's appearance is fully
 controlled by the creator. The creator of the check box *decides* to switch the
 setting when the check box is clicked.
 
-The check box itself is an inert, visual element; it just shows a graphic and
-reports clicks.
+### In Practice
 
------
+Setting up your components in this way makes extending their behaviour
+incredibly straightforward.
 
-Setting up the check box this way also allows for more complex behaviour later
-on. Suppose we wanted to group together multiple options under a 'main' check
-box, so you can turn them all on/off at once.
+Consider a scenario where you wish to group multiple options under a 'main'
+check box, so you can turn them all on/off at once.
 
 ![Showing check boxes connected to Value objects.](Master-Check-Box-Dark.svg#only-dark)
 ![Showing check boxes connected to Value objects.](Master-Check-Box-Light.svg#only-light)
 
 The appearance of that check box would not be controlled by a single state, but
-instead reflects the combination of multiple states. We can use a `Computed`
-for that:
+instead reflects the combination of multiple states. Because the code uses
+`CanBeState`, you can represent this with a `Computed` object.
 
 ```Lua hl_lines="7-18"
-local playMusic = Value(true)
-local playSFX = Value(false)
-local playNarration = Value(true)
+local playMusic = scope:Value(true)
+local playSFX = scope:Value(false)
+local playNarration = scope:Value(true)
 
-local checkBox = CheckBox {
+local checkBox = scope:CheckBox {
     Text = "Play sounds",
-    Appearance = Computed(function(use)
+    IsChecked = scope:Computed(function(use)
         local anyChecked = use(playMusic) or use(playSFX) or use(playNarration)
         local allChecked = use(playMusic) and use(playSFX) and use(playNarration)
 
@@ -131,14 +168,14 @@ local checkBox = CheckBox {
 }
 ```
 
-We can then implement the 'check all'/'uncheck all' behaviour inside `OnClick`:
+You can then implement the 'check all'/'uncheck all' behaviour inside `OnClick`:
 
 ```Lua hl_lines="7-13"
-local playMusic = Value(true)
-local playSFX = Value(false)
-local playNarration = Value(true)
+local playMusic = scope:Value(true)
+local playSFX = scope:Value(false)
+local playNarration = scope:Value(true)
 
-local checkBox = CheckBox {
+local checkBox = scope:CheckBox {
     -- ... same properties as before ...
     OnClick = function()
         local allChecked = peek(playMusic) and peek(playSFX) and peek(playNarration)
@@ -150,22 +187,28 @@ local checkBox = CheckBox {
 }
 ```
 
-By keeping the check box 'stateless', we can make it behave much more flexibly.
+Because the check box was written to be flexible, it can handle complex usage
+easily.
 
 -----
 
 ## Best Practices
 
-Those examples lead us into the golden rule when adding state to components.
+Those examples lead us to the golden rule of reusable components:
 
 !!! tip "Golden Rule"
-    It's better for reusable components to *reflect* program state. They should
-    not usually *contain* program state.
+    Reusable components should *reflect* program state. They should
+    not *control* program state.
 
-State objects are best suited to self-contained use cases, such as implementing
-hover effects, animations or responsive design. As such, you should think about
-whether you really need to add state to components, or whether it's better to
-add it higher up.
+At the bottom of the chain of control, components shouldn't be massively
+responsible. At these levels, reflective components are easier to work with.
+
+As you go up the chain of control, components get broader in scope and less
+reusable; those places are often suitable for controlling components.
+
+A well-balanced codebase places controlling components at key, strategic
+locations. They allow higher-up components to operate without special knowledge
+about what goes on below.
 
 At first, this might be difficult to do well, but with experience you'll have a
 better intuition for it. Remember that you can always rewrite your code if it
