@@ -24,7 +24,7 @@ export type Observer = Types.Observer
 export type Tween<T> = Types.Tween<T>
 export type Spring<T> = Types.Spring<T>
 export type SpecialKey = Types.SpecialKey
-export type Children = Types.Children
+export type Child = Types.Child
 export type PropertyTable = Types.PropertyTable
 
 -- Down the line, this will be conditional based on whether Fusion is being
