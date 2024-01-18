@@ -1,223 +1,150 @@
+This example shows a full drag-and-drop implementation for mouse input only,
+using Fusion's Roblox API.
+
+To ensure best accessibility, any interactions you implement shouldn't force you
+to hold the mouse button down. Either allow drag-and-drop with single clicks, or
+provide a non-dragging alternative. This ensures people with reduced motor
+ability aren't locked out of UI functions.
+
 ```Lua linenums="1"
-local GuiService = game:GetService("GuiService")
-local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
--- [Fusion imports omitted for clarity]
 
--- This example shows a full drag-and-drop implementation for mouse input only.
--- Extending this system to generically work with other input types, such as
--- touch gestures or gamepads, is left as an exercise to the reader. However, it
--- should robustly support dragging many types of UI around flexibly.
+local Fusion = -- initialise Fusion here however you please!
+local scoped = Fusion.scoped
+local Children, OnEvent = Fusion.Children, Fusion.OnEvent
 
--- To ensure best accessibility, any interactions you implement shouldn't force
--- the player to hold the mouse button down. Either allow drag-and-drop using
--- single inputs, or provide a non-dragging alternative; this will ensure that
--- players with reduced motor ability aren't locked out of UI functions.
-
--- We're going to need to account for the UI inset sometimes. We cache it here.
-local TOP_LEFT_INSET = GuiService:GetGuiInset()
-
--- To reflect the current position of the cursor on-screen, we'll use a state
--- object that's updated using UserInputService.
-local mousePos = Value(UserInputService:GetMouseLocation() - TOP_LEFT_INSET)
-local mousePosConn = UserInputService.InputChanged:Connect(function(inputObject)
-	if inputObject.UserInputType == Enum.UserInputType.MouseMovement then
-		mousePos:set(Vector2.new(inputObject.Position.X, inputObject.Position.Y))
-	end
-end)
-
--- We need to keep drag of which item is currently being dragged. Only one item
--- can be dragged at a time. This type stores all the information needed:
-export type CurrentlyDragging = {
-	-- Each draggable item will have a unique ID; the ID stored here represents
-	-- which item is being dragged right now. We'll use strings for this, but
-	-- you could use numbers if that's more convenient for you.
+type DragInfo = {
 	id: string,
-	-- When a drag is started, we store the mouse's offset relative to the item
-	-- being dragged. When the mouse moves, we can then apply the same offset to
-	-- make it look like the item is 'pinned' to the cursor.
-	offset: Vector2
-}
--- This state object stores the above during a drag, or `nil` when not dragging.
-local currentlyDragging: Value<CurrentlyDragging?> = Value(nil)
-
--- Now we need a component to encapsulate all of our dragging behaviour, such
--- as moving our UI between different parents, placing it at the mouse cursor,
--- managing sizing, and so on.
-
-export type DraggableProps = {
-	-- This should uniquely identify the draggable item apart from all other
-	-- draggable items. This is constant and so shouldn't be a state object.
-	ID: string,
-	-- It doesn't make sense for a draggable item to have a constant parent. You
-	-- wouldn't be able to drop it anywhere else, so we enforce that Parent is a
-	-- state object for our own convenience.
-	Parent: StateObject<Instance?>,
-	-- When an item is being dragged, it needs to appear above all other UI. We
-	-- will create an overlay frame that fills the screen to achieve this.
-	OverlayFrame: Instance,
-	-- To start a drag, we'll need to know where the top-left corner of the item
-	-- is, so we can calculate `currentlyDragging.offset`. We'll allow the
-	-- calling code to pass through a Value object to [Out "AbsolutePosition"].
-	OutAbsolutePosition: Value<Vector2?>?,
-
-	Name: CanBeState<string>?,
-	LayoutOrder: CanBeState<number>?,
-	Position: CanBeState<UDim2>?,
-	AnchorPoint: CanBeState<Vector2>?,
-	Size: CanBeState<UDim2>?,
-	AutomaticSize: CanBeState<Enum.AutomaticSize>?,
-	ZIndex: CanBeState<number>?,
-	[Children]: Child
+	mouseOffset: Vector2 -- relative to the dragged item
 }
 
-local function Draggable(props: DraggableProps): Child
-	-- If we need something to be cleaned up when our item is destroyed, we can
-	-- add it to this array. It'll be passed to `[Cleanup]` later.
-	local cleanupTasks = {}
-
-	-- This acts like `currentlyDragging`, but filters out anything without a
-	-- matching ID, so it'll only exist when this specific item is dragged.
-	local thisDragging = Computed(function(use)
-		local dragInfo = use(currentlyDragging)
-		return if dragInfo ~= nil and dragInfo.id == props.ID then dragInfo else nil
-	end)
-
-	-- Our item controls its own parent - one of the few times you'll see this
-	-- done in Fusion. This means we don't have to destroy and re-build the item
-	-- when it moves to a new location.
-	local itemParent = Computed(function(use)
-		return if use(thisDragging) ~= nil then props.OverlayFrame else use(props.Parent)
-	end, Fusion.doNothing)
-
-	-- If we move a scaled UI into the `overlayBox`, by default it will stretch
-	-- to the screen size. Ideally we want it to preserve its current size while
-	-- it's being dragged, so we need to track the parent's size and calculate
-	-- the item size ourselves.
-
-	-- To start with, we'll store the parent's absolute size. This takes a bit
-	-- of legwork to get right, and we need to remember the UI might not have a
-	-- parent which we can measure the size of - we'll represent that as `nil`.
-	-- Feel free to extract this into a separate function if you want to.
-	local parentSize = Value(nil)
+local function Draggable(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		ID: string,
+		Name: Fusion.CanBeState<string>?,
+		Parent: Fusion.StateObject<Instance?>, -- StateObject so it's observable
+		Layout: {
+			LayoutOrder: Fusion.CanBeState<number>?,
+			Position: Fusion.CanBeState<UDim2>?,
+			AnchorPoint: Fusion.CanBeState<Vector2>?,
+			ZIndex: Fusion.CanBeState<number>?,
+			Size: Fusion.CanBeState<UDim2>?,
+			OutAbsolutePosition: Fusion.Value<Vector2>?,
+		},
+		Dragging: {
+			SelfDragInfo: Fusion.CanBeState<DragInfo?>,
+			OverlayFrame: Fusion.CanBeState<Instance?>
+		}
+		[typeof(Children)]: Fusion.Child
+	}
+): Fusion.Child
+	-- When `nil`, the parent can't be measured for some reason.
+	local parentSize = scope:Value(nil)
 	do
-		-- We'll call this whenever the parent's AbsoluteSize changes, or when
-		-- the parent changes (because different parents might have different
-		-- absolute sizes, if any)
-		local function recalculateParentSize()
+		local function measureParentNow()
 			local parent = peek(props.Parent)
-			local parentHasSize = parent ~= nil and parent:IsA("GuiObject")
-			parentSize:set(if parentHasSize then parent.AbsoluteSize else nil)
+			parentSize:set(
+				if parent ~= nil and parent:IsA("GuiObject")
+				then parent.AbsoluteSize
+				else nil
+			)
 		end
-
-		-- We don't just need to connect to the AbsoluteSize changed event of
-		-- the parent we have *right now*! If the parent changes, we need to
-		-- disconnect the old event and re-connect on the new parent, which we
-		-- do here.
-		local parentSizeConn = nil
-		local function rebindToParentSize()
-			if parentSizeConn ~= nil then
-				parentSizeConn:Disconnect()
-				parentSizeConn = nil
+		local resizeConn = nil
+		local function stopMeasuring()
+			if resizeConn ~= nil then
+				resizeConn:Disconnect()
+				resizeConn = nil
 			end
-			local parent = peek(props.Parent)
-			local parentHasSize = parent ~= nil and parent:IsA("GuiObject")
-			if parentHasSize then
-				parentSizeConn = parent:GetPropertyChangedSignal("AbsoluteSize"):Connect(recalculateParentSize)
-			end
-			recalculateParentSize()
 		end
-		local disconnect = Observer(props.Parent):onBind(rebindToParentSize)
-
-		-- When the item gets destroyed, we need to disconnect that observer and
-		-- our AbsoluteSize change event (if any is active right now)
-		table.insert(cleanupTasks, function()
-			disconnect()
-			if parentSizeConn ~= nil then
-				parentSizeConn:Disconnect()
-				parentSizeConn = nil
+		scope:Observer(props.Parent):onBind(function()
+			stopMeasuring()
+			measureParentNow()
+			if peek(parentSize) ~= nil then
+				resizeConn = parent:GetPropertyChangedSignal("AbsoluteSize")
+					:Connect(measureParentNow)
 			end
 		end)
+		table.insert(scope, stopMeasuring)
 	end
-
-	-- Now that we have a reliable parent size, we can calculate the item's size
-	-- without worrying about all of those event connections.
-	local itemSize = Computed(function(use)
-		local udim2 = use(props.Size) or UDim2.fromOffset(0, 0)
-		local scaleSize = use(parentSize) or Vector2.zero -- might be nil!
-		return UDim2.fromOffset(
-			udim2.X.Scale * scaleSize.X + udim2.X.Offset,
-			udim2.Y.Scale * scaleSize.Y + udim2.Y.Offset
-		)
-	end)
-
-	-- Similarly, we'll need to override the item's position while it's being
-	-- dragged. Happily, this is simpler to do :)
-	local itemPosition = Computed(function(use)
-		local dragInfo = use(thisDragging)
-		if dragInfo == nil then
-			return use(props.Position) or UDim2.fromOffset(0, 0)
-		else
-			-- `dragInfo.offset` stores the distance from the top-left corner
-			-- of the item to the mouse position. Subtracting the offset from
-			-- the mouse position therefore gives us the item's position.
-			local position = use(mousePos) - dragInfo.offset
-			return UDim2.fromOffset(position.X, position.Y)
-		end
-	end)
 
 	return New "Frame" {
 		Name = props.Name or "Draggable",
-		LayoutOrder = props.LayoutOrder,
-		AnchorPoint = props.AnchorPoint,
-		AutomaticSize = props.AutomaticSize,
-		ZIndex = props.ZIndex,
-
-		Parent = itemParent,
-		Position = itemPosition,
-		Size = itemSize,
+		Parent = scope:Computed(function(use)
+			return
+				if use(props.Dragging.SelfDragInfo) ~= nil
+				then use(props.Dragging.OverlayFrame)
+				else use(props.Parent)
+		end),
+		
+		LayoutOrder = props.Layout.LayoutOrder,
+		AnchorPoint = props.Layout.AnchorPoint,
+		ZIndex = props.Layout.ZIndex,
+		AutomaticSize = props.Layout.AutomaticSize,
 
 		BackgroundTransparency = 1,
 
-		[Out "AbsolutePosition"] = props.OutAbsolutePosition,
+		Position = Computed(function(use)
+			local dragInfo = use(props.Dragging.SelfDragInfo)
+			if dragInfo == nil then
+				return use(props.Layout.Position) or UDim2.fromOffset(0, 0)
+			else
+				local topLeftCorner = use(mousePos) - dragInfo.mouseOffset
+				return UDim2.fromOffset(topLeftCorner.X, topLeftCorner.Y)
+			end
+		end),
+		-- Calculated manually so the Scale can be set relative to
+		-- `props.Parent` at all times, rather than the `Parent` of this Frame.
+		Size = scope:Computed(function(use)
+			local udim2 = use(props.Layout.Size) or UDim2.fromOffset(0, 0)
+			local parentSize = use(parentSize) or Vector2.zero
+			return UDim2.fromOffset(
+				udim2.X.Scale * parentSize.X + udim2.X.Offset,
+				udim2.Y.Scale * parentSize.Y + udim2.Y.Offset
+			)
+		end),
 
+		[Out "AbsolutePosition"] = props.OutAbsolutePosition,
 		[Children] = props[Children]
 	}
 end
 
--- The hard part is over! Now we just need to create some draggable items and
--- start/stop drags in response to mouse events. We'll use a very basic example.
+local COLOUR_COMPLETED = Color3.new(0, 1, 0)
+local COLOUR_NOT_COMPLETED = Color3.new(1, 1, 1)
 
--- Let's make some to-do items. They'll show up in two lists - one for
--- incomplete tasks, and another for complete tasks. You'll be able to drag
--- items between the lists to mark them as complete. The lists will be sorted
--- alphabetically so we don't have to deal with calculating where the items
--- should be placed when they're dropped.
+local TODO_ITEM_SIZE = UDim2.new(1, 0, 0, 50)
 
-export type TodoItem = {
+local function newUniqueID()
+	-- You can replace this with a better method for generating unique IDs.
+	return game:GetService("HttpService"):GenerateGUID()
+end
+
+type TodoItem = {
 	id: string,
 	text: string,
-	completed: Value<boolean>
+	completed: Fusion.Value<boolean>
 }
-local todoItems: Value<TodoItem> = {
+local todoItems: Fusion.Value<TodoItem> = {
 	{
-		-- You can use HttpService to easily generate unique IDs statelessly.
-		id = HttpService:GenerateGUID(),
+		id = newUniqueID(),
 		text = "Wake up today",
 		completed = Value(true)
 	},
 	{
-		id = HttpService:GenerateGUID(),
+		id = newUniqueID(),
 		text = "Read the Fusion docs",
 		completed = Value(true)
 	},
 	{
-		id = HttpService:GenerateGUID(),
+		id = newUniqueID(),
 		text = "Take over the universe",
 		completed = Value(false)
 	}
 }
-local function getTodoItemForID(id: string): TodoItem?
+local function getTodoItemForID(
+	id: string
+): TodoItem?
 	for _, item in todoItems do
 		if item.id == id then
 			return item
@@ -226,192 +153,195 @@ local function getTodoItemForID(id: string): TodoItem?
 	return nil
 end
 
--- These represent the individual draggable to-do item entries in the lists.
--- This is where we'll use our `Draggable` component!
-export type TodoEntryProps = {
-	Item: TodoItem,
-	Parent: StateObject<Instance?>,
-	OverlayFrame: Instance,
-}
-local function TodoEntry(props: TodoEntryProps): Child
-	local absolutePosition = Value(nil)
+local function TodoEntry(
+	outerScope: Fusion.Scope<{}>,
+	props: {
+		Item: TodoItem,
+		Parent: Fusion.StateObject<Instance?>,
+		Layout: {
+			LayoutOrder: Fusion.CanBeState<number>?,
+			Position: Fusion.CanBeState<UDim2>?,
+			AnchorPoint: Fusion.CanBeState<Vector2>?,
+			ZIndex: Fusion.CanBeState<number>?,
+			Size: Fusion.CanBeState<UDim2>?,
+			OutAbsolutePosition: Fusion.Value<Vector2>?,
+		},
+		Dragging: {
+			SelfDragInfo: Fusion.CanBeState<CurrentlyDragging?>,
+			OverlayFrame: Fusion.CanBeState<Instance>?
+		},
+		OnMouseDown: () -> ()?
+	}
+): Child
+	local scope = scoped(Fusion, {
+		Draggable = Draggable
+	})
+	table.insert(outerScope, scope)
 
-	-- Using our item's ID, we can figure out if we're being dragged to apply
-	-- some styling for dragged items only!
-	local isDragging = Computed(function(use)
-		local dragInfo = use(currentlyDragging)
+	local itemPosition = scope:Value(nil)
+	local itemIsDragging = scope:Computed(function(use)
+		local dragInfo = use(props.CurrentlyDragging)
 		return dragInfo ~= nil and dragInfo.id == props.Item.id
 	end)
 
-	return Draggable {
+	return scope:Draggable {
 		ID = props.Item.id,
-		Parent = props.Parent,
-		OverlayFrame = props.OverlayFrame,
-		OutAbsolutePosition = absolutePosition,
-
 		Name = props.Item.text,
-		Size = UDim2.new(1, 0, 0, 50),
+		Parent = props.Parent,
+		Layout = props.Layout,
+		Dragging = props.Dragging,
 
-		[Children] = New "TextButton" {
+		[Children] = scope:New "TextButton" {
 			Name = "TodoEntry",
 
 			Size = UDim2.fromScale(1, 1),
-			BackgroundColor3 = Computed(function(use)
-				if use(isDragging) then
-					return Color3.new(1, 1, 1)
-				elseif use(props.Item.completed) then
-					return Color3.new(0, 1, 0)
-				else
-					return Color3.new(1, 0, 0)
+			BackgroundColor3 = scope:Computed(function(use)
+				return
+					if use(props.Item.completed)
+					then COLOUR_COMPLETED
+					else COLOUR_NOT_COMPLETED
 				end
 			end),
 			Text = props.Item.text,
 			TextSize = 28,
+	
+			[OnEvent "MouseButton1Down"] = props.OnMouseDown
 
-			-- This is where we'll detect mouse down. When the mouse is pressed
-			-- over this item, we should pick it up.
-			[OnEvent "MouseButton1Down"] = function()
-				-- only start a drag if we're not already dragging
-				if peek(currentlyDragging) == nil then
-					local itemPos = peek(absolutePosition) or Vector2.zero
-					local offset = peek(mousePos) - itemPos
-					currentlyDragging:set({
-						id = props.Item.id,
-						offset = offset
-					})
-				end
-			end
-
-			-- We're not going to detect mouse up here, because in some rare
-			-- cases the event could be dropped due to lag between the item's
-			-- position and the cursor position. We'll deal with this at a
-			-- global level instead.
+			-- Don't detect mouse up here, because in some rare cases, the event
+			-- could be missed due to lag between the item's position and the
+			-- cursor position.
 		}
 	}
 end
 
--- Now we should construct our two task lists for housing our to-do entries.
--- Notice that they don't manage the entries themselves! The entries don't
--- belong to these lists after all, so that'd be nonsense :)
+-- Don't forget to pass this to `doCleanup` if you disable the script.
+local scope = scoped(Fusion)
 
--- When we release our mouse, we need to know where to drop any dragged item we
--- have. This will tell us if we're hovering over either list.
-local dropAction = Value(nil)
-
-local incompleteList = New "ScrollingFrame" {
-	Name = "IncompleteTasks",
-	Position = UDim2.fromScale(0.1, 0.1),
-	Size = UDim2.fromScale(0.35, 0.9),
-
-	BackgroundTransparency = 0.75,
-	BackgroundColor3 = Color3.new(1, 0, 0),
-
-	[OnEvent "MouseEnter"] = function()
-		dropAction:set("incomplete")
-	end,
-
-	[OnEvent "MouseLeave"] = function()
-		if peek(dropAction) == "incomplete" then
-			dropAction:set(nil) -- only clear this if it's not overwritten yet
+local currentlyDragging: Fusion.Value<CurrentlyDragging?> = scope:Value(nil)
+local mousePos = scope:Value(UserInputService:GetMouseLocation())
+table.insert(scope, 
+	UserInputService.InputChanged:Connect(function(inputObject)
+		if inputObject.UserInputType == Enum.UserInputType.MouseMovement then
+			-- If this code did not read coordinates from the same method, it
+			-- might inconsistently handle UI insets. So, keep it simple!
+			mousePos:set(UserInputService:GetMouseLocation())
 		end
-	end,
+	end)
+)
+local dropAction = scope:Value(nil)
 
-	[Children] = {
-		New "UIListLayout" {
-			SortOrder = "Name",
-			Padding = UDim.new(0, 5)
-		}
-	}
-}
+local taskLists = scope:ForPairs(
+	{
+		incomplete = "mark-as-incomplete",
+		completed = "mark-as-completed"	
+	},
+	function(use, scope, listName, listDropAction)
+		return 
+			listName, 
+			scope:New "ScrollingFrame" {
+				Name = `TaskList ({listName})`,
+				Position = UDim2.fromScale(0.1, 0.1),
+				Size = UDim2.fromScale(0.35, 0.9),
 
-local completedList = New "ScrollingFrame" {
-	Name = "CompletedTasks",
-	Position = UDim2.fromScale(0.55, 0.1),
-	Size = UDim2.fromScale(0.35, 0.9),
+				BackgroundTransparency = 0.75,
+				BackgroundColor3 = Color3.new(1, 0, 0),
 
-	BackgroundTransparency = 0.75,
-	BackgroundColor3 = Color3.new(0, 1, 0),
+				[OnEvent "MouseEnter"] = function()
+					dropAction:set(listDropAction)
+				end,
 
-	[OnEvent "MouseEnter"] = function()
-		dropAction:set("completed")
-	end,
+				[OnEvent "MouseLeave"] = function()
+					-- A different item might have overwritten this already.
+					if peek(dropAction) == listDropAction then
+						dropAction:set(nil)
+					end
+				end,
 
-	[OnEvent "MouseLeave"] = function()
-		if peek(dropAction) == "completed" then
-			dropAction:set(nil) -- only clear this if it's not overwritten yet
-		end
-	end,
-
-	[Children] = {
-		New "UIListLayout" {
-			SortOrder = "Name",
-			Padding = UDim.new(0, 5)
-		}
-	}
-}
-
--- Now we can write a mouse up handler to drop our items.
-
-local mouseUpConn = UserInputService.InputEnded:Connect(function(inputObject)
-	if inputObject.UserInputType ~= Enum.UserInputType.MouseButton1 then
-		return
+				[Children] = {
+					New "UIListLayout" {
+						SortOrder = "Name",
+						Padding = UDim.new(0, 5)
+					}
+				}
+			}
 	end
-	local dragInfo = peek(currentlyDragging)
-	if dragInfo == nil then
-		return
-	end
-	local item = getTodoItemForID(dragInfo.id)
-	local action = peek(dropAction)
-	if item ~= nil then
-		if action == "incomplete" then
-			item.completed:set(false)
-		elseif action == "completed" then
-			item.completed:set(true)
-		end
-	end
-	currentlyDragging:set(nil)
-end)
+)
 
--- We'll need to construct an overlay frame for our items to live in while they
--- get dragged around.
-
-local overlayFrame = New "Frame" {
+local overlayFrame = scope:New "Frame" {
 	Size = UDim2.fromScale(1, 1),
 	ZIndex = 10,
 	BackgroundTransparency = 1
 }
 
--- Let's construct the items themselves! Because we're constructing them at the
--- global level like this, they're only created and destroyed when they're added
--- and removed from the list.
+local allEntries = scope:ForValues(
+	todoItems, 
+	function(use, scope, item)
+		local itemPosition = scope:Value(nil)
+		return scope:TodoEntry {
+			Item = item,
+			Parent = Computed(function(use)
+				return
+					if use(item.completed)
+					then use(taskLists).completed
+					else use(taskLists).incomplete
+			end),
+			Layout = {
+				Size = TODO_ITEM_SIZE,
+				OutAbsolutePosition = itemPosition
+			},
+			Dragging = {
+				SelfDragInfo = scope:Computed(function(use)
+					local dragInfo = use(currentlyDragging)
+					return 
+						if dragInfo == nil or dragInfo.id ~= item.id
+						then nil
+						else dragInfo
+				end)
+				OverlayFrame = overlayFrame
+			},
+			OnMouseDown = function()
+				if peek(currentlyDragging) == nil then
+					local itemPos = peek(itemPosition) or Vector2.zero
+					local mouseOffset = peek(mousePos) - itemPos
+					currentlyDragging:set({
+						id = item.id,
+						mouseOffset = mouseOffset
+					})
+				end
+			end
+		}
+	end
+)
 
-local allEntries = ForValues(todoItems, function(use, item)
-	return TodoEntry {
-		Item = item,
-		Parent = Computed(function()
-			return if use(item.completed) then completedList else incompleteList
-		end, Fusion.doNothing),
-		OverlayFrame = overlayFrame
-	}
-end, Fusion.cleanup)
+table.insert(scope,
+	UserInputService.InputEnded:Connect(function(inputObject)
+		if inputObject.UserInputType ~= Enum.UserInputType.MouseButton1 then
+			return
+		end
+		local dragInfo = peek(currentlyDragging)
+		if dragInfo == nil then
+			return
+		end
+		local item = getTodoItemForID(dragInfo.id)
+		local action = peek(dropAction)
+		if item ~= nil then
+			if action == "mark-as-incomplete" then
+				item.completed:set(false)
+			elseif action == "mark-as-completed" then
+				item.completed:set(true)
+			end
+		end
+		currentlyDragging:set(nil)
+	end)
+)
 
--- Finally, construct the whole UI :)
-
-local ui = New "ScreenGui" {
-	Parent = game:GetService("Players").LocalPlayer.PlayerGui,
-
-	[Cleanup] = {
-		mousePosConn,
-		mouseUpConn
-	},
+local ui = scope:New "ScreenGui" {
+	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
 
 	[Children] = {
 		overlayFrame,
-		incompleteList,
-		completedList
-
-		-- We don't have to pass `allEntries` in here - they manage their own
-		-- parenting thanks to `Draggable` :)
+		taskLists,
+		-- Don't pass `allEntries` in here - they manage their own parent!
 	}
 }
 ```

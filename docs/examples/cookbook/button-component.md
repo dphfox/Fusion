@@ -3,9 +3,9 @@ Fusion's Roblox API. It handles many common interactions such as hovering and
 clicking.
 
 This should be a generally useful template for assembling components of your
-own. Unless you're prototyping, it's probably wise to stick to some good
-guidelines. The [Tutorials](../../../tutorials) have some tips if you don't have
-any existing guidelines of your own.
+own. For further ideas and best practices for building components, see
+[the Components tutorial](../../../tutorials/components/components).
+
 
 -----
 
