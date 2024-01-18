@@ -30,6 +30,12 @@ export type Error = {
 	trace: string
 }
 
+-- An object which stores a value scoped in time.
+export type Contextual<T> = PubTypes.Contextual<T> & {
+	_valuesNow: {[thread]: {value: T}},
+	_defaultValue: T
+}
+
 --[[
 	Generic reactive graph types
 ]]
