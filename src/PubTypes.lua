@@ -52,6 +52,18 @@ export type Version = {
 	minor: number,
 	isRelease: boolean
 }
+
+-- An object which stores a value scoped in time.
+export type Contextual<T> = {
+	type: "Contextual",
+	now: (Contextual<T>) -> T,
+	is: (Contextual<T>, T) -> ContextualIsMethods
+}
+
+type ContextualIsMethods = {
+	during: <T, A...>(ContextualIsMethods, (A...) -> T, A...) -> T
+}
+
 --[[
 	Generic reactive graph types
 ]]
