@@ -34,6 +34,7 @@ local function Draggable(
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
+			MousePosition: Fusion.CanBeState<Vector2>,
 			SelfDragInfo: Fusion.CanBeState<DragInfo?>,
 			OverlayFrame: Fusion.CanBeState<Instance?>
 		}
@@ -90,7 +91,8 @@ local function Draggable(
 			if dragInfo == nil then
 				return use(props.Layout.Position) or UDim2.fromOffset(0, 0)
 			else
-				local topLeftCorner = use(mousePos) - dragInfo.mouseOffset
+				local mousePos = use(props.Dragging.MousePosition)
+				local topLeftCorner = mousePos - dragInfo.mouseOffset
 				return UDim2.fromOffset(topLeftCorner.X, topLeftCorner.Y)
 			end
 		end),
@@ -167,6 +169,7 @@ local function TodoEntry(
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
+			MousePosition: Fusion.CanBeState<Vector2>,
 			SelfDragInfo: Fusion.CanBeState<CurrentlyDragging?>,
 			OverlayFrame: Fusion.CanBeState<Instance>?
 		},
@@ -290,6 +293,7 @@ local allEntries = scope:ForValues(
 				OutAbsolutePosition = itemPosition
 			},
 			Dragging = {
+				MousePosition = mousePos,
 				SelfDragInfo = scope:Computed(function(use)
 					local dragInfo = use(currentlyDragging)
 					return 
@@ -345,3 +349,12 @@ local ui = scope:New "ScreenGui" {
 	}
 }
 ```
+
+------
+
+## Explanation
+
+The basic idea is to create a container which stores the UI you want to drag.
+This container then reparents itself as it gets dragged around between
+different containers
+
