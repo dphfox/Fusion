@@ -1,47 +1,24 @@
+This shows how to use Fusion's Roblox API to create a simple, dynamically
+updating player list.
+
+-----
+
+## Overview
+
 ```Lua linenums="1"
--- [Fusion imports omitted for clarity]
+local Players = game:GetService("Players")
 
-type Set<T> = {[T]: true}
+local Fusion = -- initialise Fusion here however you please!
+local scoped = Fusion.scoped
+local Children = Fusion.Children
 
--- Defining a component for each row of the player list.
--- Each row represents a player currently logged into the server.
--- We set the `Name` to the player's name so the rows can be sorted by name.
-
-type PlayerListRowProps = {
-	Player: Player
-}
-
-local function PlayerListRow(props: PlayerListRowProps)
-	return New "TextLabel" {
-		Name = props.Player.DisplayName,
-
-		Size = UDim2.new(1, 0, 0, 25),
-		BackgroundTransparency = 1,
-
-		Text = props.Player.DisplayName,
-		TextColor3 = Color3.new(1, 1, 1),
-		Font = Enum.Font.GothamMedium,
-		FontSize = 16,
-		TextXAlignment = "Right",
-		TextTruncate = "AtEnd",
-
-		[Children] = New "UIPadding" {
-			PaddingLeft = UDim.new(0, 10),
-			PaddingRight = UDim.new(0, 10)
-		}
+local function PlayerList(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		Players: Fusion.CanBeState<{Player}>
 	}
-end
-
--- Defining a component for the entire player list.
--- It should take in a set of all logged-in players, and it should be a state
--- object so the set of players can change as players join and leave.
-
-type PlayerListProps = {
-	PlayerSet: Fusion.StateObject<Set<Player>>
-}
-
-local function PlayerList(props: PlayerListProps)
-	return New "Frame" {
+): Fusion.Child
+	return scope:New "Frame" {
 		Name = "PlayerList",
 
 		Position = UDim2.fromScale(1, 0),
@@ -53,53 +30,131 @@ local function PlayerList(props: PlayerListProps)
 		BackgroundColor3 = Color3.new(0, 0, 0),
 
 		[Children] = {
-			New "UICorner" {},
-			New "UIListLayout" {
+			scope:New "UICorner" {
+				CornerRadius = UDim.new(0, 8)
+			},
+			scope:New "UIListLayout" {
 				SortOrder = "Name",
 				FillDirection = "Vertical"
 			},
 
-			ForPairs(props.PlayerSet, function(use, player, _)
-				return player, PlayerListRow {
-					Player = player
+			scope:ForValues(props.Players, function(use, scope, player)
+				return scope:New "TextLabel" {
+					Name = "PlayerListRow: " .. player.DisplayName,
+
+					Size = UDim2.new(1, 0, 0, 25),
+					BackgroundTransparency = 1,
+
+					Text = player.DisplayName,
+					TextColor3 = Color3.new(1, 1, 1),
+					Font = Enum.Font.GothamMedium,
+					FontSize = 16,
+					TextXAlignment = "Right",
+					TextTruncate = "AtEnd",
+
+					[Children] = New "UIPadding" {
+						PaddingLeft = UDim.new(0, 10),
+						PaddingRight = UDim.new(0, 10)
+					}
 				}
-			end, Fusion.cleanup)
+			end)
 		}
 	}
 end
 
--- To create the PlayerList component, first we need a state object that stores
--- the set of logged-in players, and updates as players join and leave.
+-- Don't forget to pass this to `doCleanup` if you disable the script.
+local scope = scoped(Fusion, {
+	PlayerList = PlayerList
+})
 
-local Players = game:GetService("Players")
-
-local playerSet = Value()
-local function updatePlayerSet()
-	local newPlayerSet = {}
-	for _, player in Players:GetPlayers() do
-		newPlayerSet[player] = true
-	end
-	playerSet:set(newPlayerSet)
+local players = scope:Value(Players:GetPlayers())
+local function updatePlayers()
+	players:set(Players:GetPlayers())
 end
-local playerConnections = {
-	Players.PlayerAdded:Connect(updatePlayerSet),
-	Players.PlayerRemoving:Connect(updatePlayerSet)
-}
-updatePlayerSet()
+table.insert(scope, {
+	Players.PlayerAdded:Connect(updatePlayers),
+	Players.PlayerRemoving:Connect(updatePlayers)
+})
 
--- Now, we can create the component and pass in `playerSet`.
--- Don't forget to clean up your connections when your UI is destroyed; to do
--- that, we're using the `[Cleanup]` key to clean up `playerConnections` later.
-
-local gui = New "ScreenGui" {
+local gui = scope:New "ScreenGui" {
 	Name = "PlayerListGui",
 	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui"),
 
-	[Cleanup] = playerConnections,
-
-	[Children] = PlayerList {
-		PlayerSet = playerSet
+	[Children] = scope:PlayerList {
+		Players = players
 	}
 }
+```
 
+-----
+
+## Explanation
+
+The `PlayerList` component is designed to be simple and self-contained. The only
+thing it needs is a `Players` list - it handles everything else, including its
+position, size, appearance and behaviour.
+
+```Lua linenums="7"
+local function PlayerList(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		Players: Fusion.CanBeState<{Player}>
+	}
+): Fusion.Child
+```
+
+After creating a vertically expanding Frame with some style and layout added,
+it turns the `Players` into a series of text labels using `ForValues`, which
+will automatically create and remove them as the `Players` list changes.
+
+```Lua linenums="33"
+			scope:ForValues(props.Players, function(use, scope, player)
+				return scope:New "TextLabel" {
+					Name = "PlayerListRow: " .. player.DisplayName,
+
+					Size = UDim2.new(1, 0, 0, 25),
+					BackgroundTransparency = 1,
+
+					Text = player.DisplayName,
+					TextColor3 = Color3.new(1, 1, 1),
+					Font = Enum.Font.GothamMedium,
+					FontSize = 16,
+					TextXAlignment = "Right",
+					TextTruncate = "AtEnd",
+
+					[Children] = New "UIPadding" {
+						PaddingLeft = UDim.new(0, 10),
+						PaddingRight = UDim.new(0, 10)
+					}
+				}
+			end)
+```
+
+That's all that the `PlayerList` component has to do.
+
+Later on, the code creates a `Value` object to store a list of players, and
+update it every time a player joins or leaves the game.
+
+```Lua linenums="62"
+local players = scope:Value(Players:GetPlayers())
+local function updatePlayers()
+	players:set(Players:GetPlayers())
+end
+table.insert(scope, {
+	Players.PlayerAdded:Connect(updatePlayers),
+	Players.PlayerRemoving:Connect(updatePlayers)
+})
+```
+
+That object can then be passed in as `Players` when creating the `PlayerList`.
+
+```Lua linenums="71" hl_lines="6"
+local gui = scope:New "ScreenGui" {
+	Name = "PlayerListGui",
+	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui"),
+
+	[Children] = scope:PlayerList {
+		Players = players
+	}
+}
 ```
