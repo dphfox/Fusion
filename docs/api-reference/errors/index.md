@@ -25,9 +25,6 @@ the details for you.
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## cannotAssignProperty
 
@@ -58,9 +55,6 @@ local folder = New "Folder" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## cannotConnectChange
 
@@ -86,9 +80,6 @@ local textBox = New "TextBox" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## cannotConnectEvent
 
@@ -114,9 +105,6 @@ local button = New "TextButton" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## cannotCreateClass
 
@@ -139,9 +127,6 @@ local instance = New "ThisClassTypeIsInvalid" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## callbackError
 
@@ -166,9 +151,6 @@ end)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## forKeyCollision
 
@@ -195,9 +177,6 @@ end)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## forProcessorError
 
@@ -218,9 +197,6 @@ end)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidChangeHandler
 
@@ -242,9 +218,6 @@ local input = New "TextBox" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
 
 ## invalidAttributeChangeHandler
 
@@ -266,9 +239,6 @@ local config = New "Configuration" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidEventHandler
 
@@ -290,9 +260,6 @@ local button = New "TextButton" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidPropertyType
 
@@ -318,9 +285,6 @@ local ui = New "Frame" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidRefType
 
@@ -341,9 +305,6 @@ local thing = New "Part" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidOutType
 
@@ -365,9 +326,6 @@ local thing = New "Part" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
 
 ## invalidAttributeOutType
 
@@ -389,9 +347,6 @@ local config = New "Configuration" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## invalidOutProperty
 
@@ -415,9 +370,6 @@ local thing = New "Part" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## invalidSpringDamping
 
@@ -441,9 +393,6 @@ physically simulatable.
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## invalidSpringSpeed
 
@@ -466,9 +415,6 @@ is not simulatable or physically sensible.
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## mistypedSpringDamping
 
@@ -489,9 +435,6 @@ local spring = Spring(state, speed, damping)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## mistypedSpringSpeed
 
@@ -511,9 +454,6 @@ local spring = Spring(state, speed)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## mistypedTweenInfo
 
@@ -533,9 +473,6 @@ local tween = Tween(state, tweenInfo)
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
 
 ## noTaskScheduler
 
@@ -555,9 +492,6 @@ callbacks necessary to schedule tasks for execution in the future.
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## springTypeMismatch
 
@@ -582,9 +516,6 @@ colourSpring:addVelocity(Vector2.new(2, 3))
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
 
 ## stateGetWasRemoved
 
@@ -608,9 +539,6 @@ print(value:get()) -- should be print(peek(value))
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## unknownMessage
 
@@ -631,9 +559,6 @@ with this one.
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## unrecognisedChildType
 
@@ -665,9 +590,6 @@ local instance = New "Folder" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
 
 ## unrecognisedPropertyKey
 
@@ -695,9 +617,6 @@ local folder = New "Folder" {
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ## unrecognisedPropertyStage
 

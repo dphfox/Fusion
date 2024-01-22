@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">AttributeOut</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">function</span>
-		<span class="fusiondoc-api-pill-since">since v0.3</span>
 	</span>
 </h1>
 

@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Animatable</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">type</span>
-		<span class="fusiondoc-api-pill-since">since v0.1</span>
 	</span>
 </h1>
 

@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Spring</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">state object</span>
-		<span class="fusiondoc-api-pill-since">since v0.1</span>
 	</span>
 </h1>
 
@@ -40,10 +39,6 @@ without overshooting or oscillating. Defaults to `1`.
 
 ## Methods
 
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
 ### :octicons-code-24: Spring:setPosition()
 
 Instantaneously moves the spring to a new position. This does not affect the
@@ -62,10 +57,6 @@ the position will snap instantly to the new value.
 
 -----
 
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
 ### :octicons-code-24: Spring:setVelocity()
 
 Overwrites the velocity of this spring. This does not have an immediate effect
@@ -83,10 +74,6 @@ the velocity will snap instantly to the new value.
 - `newVelocity` - The value the spring's velocity should jump to.
 
 -----
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ### :octicons-code-24: Spring:addVelocity()
 

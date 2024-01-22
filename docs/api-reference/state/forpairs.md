@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">ForPairs</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">state object</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
 	</span>
 </h1>
 

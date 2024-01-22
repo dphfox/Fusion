@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">CanBeState</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">type</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
 	</span>
 </h1>
 

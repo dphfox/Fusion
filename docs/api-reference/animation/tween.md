@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Tween</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">state object</span>
-		<span class="fusiondoc-api-pill-since">since v0.1</span>
 	</span>
 </h1>
 

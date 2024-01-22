@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Attribute</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">special key</span>
-		<span class="fusiondoc-api-pill-since">since v0.3</span>
 	</span>
 </h1>
 

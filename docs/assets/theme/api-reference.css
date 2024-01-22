@@ -59,11 +59,6 @@
 	color: var(--fusiondoc-accent-text);
 }
 
-.fusiondoc-api-pills .fusiondoc-api-pill-since {
-	background-color: var(--fusiondoc-grey-a20);
-	color: var(--fusiondoc-fg-1);
-}
-
 .fusiondoc-api-breadcrumbs {
 	display: flex;
 	align-items: center;

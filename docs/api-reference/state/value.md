@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Value</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">state object</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
 	</span>
 </h1>
 
@@ -29,10 +28,6 @@ Stores a single value which can be updated at any time.
 -----
 
 ## Methods
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ### :octicons-code-24: Value:set()
 

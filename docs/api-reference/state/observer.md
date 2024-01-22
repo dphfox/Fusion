@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Observer</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">graph object</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
 	</span>
 </h1>
 
@@ -29,10 +28,6 @@ Observes various updates and events on a given dependency.
 -----
 
 ## Object Methods
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ### :octicons-code-24: Observer:onChange()
 
@@ -57,10 +52,6 @@ dependency is updated.
 	holding your state objects in memory forever after you're done using them.
 
 -----
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
 
 ### :octicons-code-24: Observer:onBind()
 

@@ -8,7 +8,6 @@
 	<span class="fusiondoc-api-name">Dependent</span>
 	<span class="fusiondoc-api-pills">
 		<span class="fusiondoc-api-pill-type">type</span>
-		<span class="fusiondoc-api-pill-since">since v0.2</span>
 	</span>
 </h1>
 
@@ -35,10 +34,6 @@ updates from
 -----
 
 ## Methods
-
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
 
 ### :octicons-code-24: Dependent:update()
 
