@@ -27,7 +27,7 @@ local function Spinner(
 		CurrentTime: Fusion.CanBeState<number>,
 	}
 ): Fusion.Child
-	return New "ImageLabel" {
+	return scope:New "ImageLabel" {
 		Name = "Spinner",
 
 		LayoutOrder = props.Layout.LayoutOrder,
@@ -40,7 +40,7 @@ local function Spinner(
 		BackgroundTransparency = 1,
 		Image = "rbxassetid://your-loading-spinner-image", -- replace this!
 
-		Rotation = Computed(function(use)
+		Rotation = scope:Computed(function(use)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
 	}
@@ -51,7 +51,7 @@ local scope = scoped(Fusion, {
 	Spinner = Spinner
 })
 
-local currentTime = Value(os.clock())
+local currentTime = scope:Value(os.clock())
 table.insert(scope,
 	RunService.RenderStepped:Connect(function()
 		currentTime:set(os.clock())
@@ -95,7 +95,7 @@ local function Spinner(
 The `CurrentTime` is used to drive the rotation of the loading spinner.
 
 ```Lua linenums="35"
-		Rotation = Computed(function(use)
+		Rotation = scope:Computed(function(use)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
 ```
@@ -106,7 +106,7 @@ Later on, the example creates a `Value` object that will store the current time,
 and starts a process to keep it up to date.
 
 ```Lua linenums="46"
-local currentTime = Value(os.clock())
+local currentTime = scope:Value(os.clock())
 table.insert(scope,
 	RunService.RenderStepped:Connect(function()
 		currentTime:set(os.clock())
