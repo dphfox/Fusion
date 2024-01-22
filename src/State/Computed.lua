@@ -87,7 +87,7 @@ function class:update(): boolean
 		local errorObj = (newValue :: any) :: InternalTypes.Error
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
-		logErrorNonFatal("computedCallbackError", errorObj)
+		logErrorNonFatal("callbackError", errorObj)
 
 		doCleanup(innerScope)
 

@@ -53,7 +53,7 @@ local function ForValues<K, VI, VO, S>(
 					return {key = nil, value = value}
 				else
 					local errorObj = (value :: any) :: InternalTypes.Error
-					logErrorNonFatal("forProcessorError", errorObj)
+					logErrorNonFatal("callbackError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}

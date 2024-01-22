@@ -37,27 +37,6 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("errors when given nil names (constant)", function()
-		expect(function()
-			local scope = {}
-			local child = New(scope, "Folder") {
-				[Attribute(nil :: any)] = "foo"
-			}
-			doCleanup(scope)
-		end).to.throw("attributeNameNil")
-	end)
-
-	it("errors when given nil names (state)", function()
-		expect(function()
-			local scope = {}
-			local attributeValue = Value(scope, "foo")
-			local child = New(scope, "Folder") {
-				[Attribute(nil :: any)] = attributeValue
-			}
-			doCleanup(scope)
-		end).to.throw("attributeNameNil")
-	end)
-
 	it("defers attribute changes", function()
 		local scope = {}
 		local value = Value(scope, "Bar")

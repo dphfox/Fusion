@@ -16,10 +16,6 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local function AttributeOut(
 	attributeName: string
 ): Types.SpecialKey
-	if attributeName == nil then
-		logError("attributeNameNil")
-	end
-
 	return {
 		type = "SpecialKey",
 		kind = "AttributeOut",
@@ -30,10 +26,7 @@ local function AttributeOut(
 			value: unknown,
 			applyTo: Instance
 		)
-			local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
-			if not ok then
-				logError("invalidOutAttributeName", nil, applyTo.ClassName, attributeName)
-			end
+			local event = applyTo:GetAttributeChangedSignal(attributeName)
 
 			if not isState(value) then
 				logError("invalidAttributeOutType")

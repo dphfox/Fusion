@@ -19,9 +19,6 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local function Attribute(
 	attributeName: string
 ): Types.SpecialKey
-	if attributeName == nil then
-		logError("attributeNameNil")
-	end
 	return {
 		type = "SpecialKey",
 		kind = "Attribute",

@@ -156,7 +156,7 @@ function class:update(): boolean
 					newProcessors[processor] = true
 				else
 					local errorObj = (outputPair :: any) :: InternalTypes.Error
-					logErrorNonFatal("forProcessorError", errorObj)
+					logErrorNonFatal("callbackError", errorObj)
 				end
 			end
 		end

@@ -13,10 +13,6 @@ local logError = require(Package.Logging.logError)
 local function AttributeChange(
 	attributeName: string
 ): Types.SpecialKey
-	if attributeName == nil then
-		logError("attributeNameNil")
-	end
-	
 	return {
 		type = "SpecialKey",
 		kind = "AttributeChange",
@@ -31,15 +27,11 @@ local function AttributeChange(
 				logError("invalidAttributeChangeHandler", nil, attributeName)
 			end
 			local value = value :: (...unknown) -> (...unknown)
-			local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
-			if not ok then
-				logError("cannotConnectAttributeChange", nil, applyTo.ClassName, attributeName)
-			else
+			local event = applyTo:GetAttributeChangedSignal(attributeName)
+			value((applyTo :: any):GetAttribute(attributeName))
+			table.insert(scope, event:Connect(function()
 				value((applyTo :: any):GetAttribute(attributeName))
-				table.insert(scope, event:Connect(function()
-					value((applyTo :: any):GetAttribute(attributeName))
-				end))
-			end
+			end))
 		end
 	}
 end

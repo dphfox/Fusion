@@ -32,11 +32,11 @@ local function Out(
 			end
 
 			if not isState(value) then
-				logError("invalidAttributeOutType")
+				logError("invalidOutType")
 			end
 			local value = value :: Types.StateObject<unknown>
 			if value.kind ~= "Value" then
-				logError("invalidAttributeOutType")
+				logError("invalidOutType")
 			end
 			local value = value :: Types.Value<unknown>
 

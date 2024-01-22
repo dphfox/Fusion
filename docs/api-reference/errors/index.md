@@ -26,29 +26,6 @@ the details for you.
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
-
-## attributeNameNil
-
-```
-Attribute name cannot be nil.
-```
-
-This message occurs when you try to set an attribute with a 'nil' name.
-This error shouldn't occur, however it is a failsafe incase something goes wrong.
-
-```Lua
-local folder = New "Configuration" {
-	[Attribute(nil)] = "Foo"
-}
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.1</span>
 </p>
 
@@ -103,29 +80,6 @@ local textBox = New "TextBox" {
 		...
 	end)
 }
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
-
-## cannotConnectAttributeChange
-
-```
-The Configuration class doesn't have an attribute called 'Foo'.
-```
-
-This message means you tried to connect to an attribute change event, however
-the connection failed to register.
-
-```Lua
--- How does an example for this work?
--- An attribute change shouldn't fail, as GetAttributeChangedSignal
--- doesn't error if the attribute doesn't exist.
 ```
 </div>
 
@@ -189,14 +143,18 @@ local instance = New "ThisClassTypeIsInvalid" {
 	<span class="fusiondoc-api-pill-since">since v0.1</span>
 </p>
 
-## computedCallbackError
+## callbackError
 
 ```
-Computed callback error: attempt to index a nil value
+Callback error: attempt to index a nil value
 ```
 
-This message means the callback of a [computed object](../state/computed)
-encountered an error.
+This message means you provided a callback to Fusion, but it ran into an error.
+For example, a [computed object](../state/computed) might have failed to compute
+a value.
+
+Review the stack trace that came with the error to see what part of the code
+may have caused the error.
 
 ```Lua
 local example = Computed(function()
@@ -212,151 +170,7 @@ end)
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
-## destructorNeededComputed
-
-```
-To return instances from Computeds, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.
-```
-
-This message shows if you return destructible values from a
-[computed object](../state/computed), without also specifying how to destroy
-those values using a destructor.
-
-[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/183)
-
-```Lua
-local badComputed = Computed(function()
-	return New "Folder" { ... }
-end, nil)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## destructorNeededForKeys
-
-```
-To return instances from ForKeys, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.
-```
-
-This message shows if you return destructible values from a
-[ForKeys object](../state/forkeys), without also specifying how to destroy
-those values using a destructor.
-
-[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/183)
-
-```Lua
-local badForKeys = ForKeys(array, function(key)
-	return New "Folder" { ... }
-end, nil)
-```
-
-!!! note
-	For some time during the development of v0.2, `ForKeys` would implicitly
-	insert a destructor for you. This behaviour still works, but it's going to
-	be removed in an upcoming version.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## destructorNeededForPairs
-
-```
-To return instances from ForPairs, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.
-```
-
-This message shows if you return destructible values from a
-[ForPairs object](../state/forpairs), without also specifying how to destroy
-those values using a destructor.
-
-[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/183)
-
-```Lua
-local badForPairs = ForPairs(array, function(key, value)
-	return key, New "Folder" { ... }
-end, nil)
-```
-
-!!! note
-	For some time during the development of v0.2, `ForPairs` would implicitly
-	insert a destructor for you. This behaviour still works, but it's going to
-	be removed in an upcoming version.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## destructorNeededForValues
-
-```
-To return instances from ForValues, provide a destructor function. This will be an error soon - see discussion #183 on GitHub.
-```
-
-This message shows if you return destructible values from a
-[ForValues object](../state/forvalues), without also specifying how to destroy
-those values using a destructor.
-
-[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/183)
-
-```Lua
-local badForValues = ForValues(array, function(value)
-	return New "Folder" { ... }
-end, nil)
-```
-
-!!! note
-	For some time during the development of v0.2, `ForValues` would implicitly
-	insert a destructor for you. This behaviour still works, but it's going to
-	be removed in an upcoming version.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forKeysDestructorError
-
-```
-ForKeys destructor error: attempt to index a nil value
-```
-
-This message means the destructor passed to a [ForKeys object](../state/forkeys)
-encountered an error.
-
-```Lua
-local function destructor(x)
-	local badMath = 2 + "fish"
-end
-
-local example = ForKeys(array, doSomething, destructor)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forKeysKeyCollision
+## forKeyCollision
 
 ```
 ForKeys should only write to output key 'Charlie' once when processing key changes, but it wrote to it twice. Previously input key: 'Alice'; New input key: 'Bob'
@@ -385,7 +199,7 @@ end)
 	<span class="fusiondoc-api-pill-since">since v0.2</span>
 </p>
 
-## forKeysProcessorError
+## forProcessorError
 
 ```
 ForKeys callback error: attempt to index a nil value
@@ -396,131 +210,6 @@ encountered an error.
 
 ```Lua
 local example = ForKeys(array, function(key)
-	local badMath = 2 + "fish"
-end)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forPairsDestructorError
-
-```
-ForPairs destructor error: attempt to index a nil value
-```
-
-This message means the destructor passed to a [ForPairs object](../state/forpairs)
-encountered an error.
-
-```Lua
-local function destructor(x, y)
-	local badMath = 2 + "fish"
-end
-
-local example = ForPairs(array, doSomething, destructor)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forPairsKeyCollision
-
-```
-ForPairs should only write to output key 'Charlie' once when processing key changes, but it wrote to it twice. Previously input key: 'Alice'; New input key: 'Bob'
-```
-
-This message means you returned the same value twice for two different keys in
-a [ForPairs object](../state/forpairs).
-
-```Lua
-local data = {
-	Alice = true,
-	Bob = true
-}
-local example = ForPairs(data, function(key, value)
-	if key == "Alice" or key == "Bob" then
-		return "Charlie", value
-	end
-end)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forPairsProcessorError
-
-```
-ForPairs callback error: attempt to index a nil value
-```
-
-This message means the callback of a [ForPairs object](../state/forpairs)
-encountered an error.
-
-```Lua
-local example = ForPairs(array, function(key, value)
-	local badMath = 2 + "fish"
-end)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forValuesDestructorError
-
-```
-ForValues destructor error: attempt to index a nil value
-```
-
-This message means the destructor passed to a [ForValues object](../state/forvalues)
-encountered an error.
-
-```Lua
-local function destructor(x)
-	local badMath = 2 + "fish"
-end
-
-local example = ForValues(array, doSomething, destructor)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## forValuesProcessorError
-
-```
-ForValues callback error: attempt to index a nil value
-```
-
-This message means the callback of a [ForValues object](../state/forvalues)
-encountered an error.
-
-```Lua
-local example = ForValues(array, function(value)
 	local badMath = 2 + "fish"
 end)
 ```
@@ -727,28 +416,6 @@ local thing = New "Part" {
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.3</span>
-</p>
-
-## invalidAttributeOutName
-
-```
-The Configuration class doesn't have an attribute called 'Ammo'
-```
-
-This message means you tried to read an attribute of an instance using
-[AttributeOut](../instances/attributeout), but the attribute can't be read. This error
-shouldn't occur, however it is here for a failsafe.
-
-```Lua
--- Once again, how does an example for this work?
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.1</span>
 </p>
 
@@ -867,36 +534,6 @@ local tween = Tween(state, tweenInfo)
 
 <div class="fusiondoc-error-api-section" markdown>
 <p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.2</span>
-</p>
-
-## multiReturnComputed
-
-```
-Returning multiple values from Computeds is discouraged, as behaviour will change soon - see discussion #189 on GitHub.
-```
-
-This message means you returned more than one value from a [computed object](../state/computed).
-There are two ways this could occur; either you're explicitly returning two
-values (e.g. `return 1, 2`) or you're calling a function which returns two
-values (e.g. `string.find`).
-
-A simple fix is to surround your return expression with parentheses `()`, or to
-save it into a variable before returning it.
-
-[Learn more by visiting this discussion on GitHub.](https://github.com/Elttob/Fusion/discussions/189)
-
-```Lua
-local badComputed = Computed(function()
-	return 1, 2, "foo", true
-end, nil)
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
 	<span class="fusiondoc-api-pill-since">since v0.3</span>
 </p>
 
@@ -965,28 +602,6 @@ has been removed in favour of the [peek function](../state/peek.md) and
 ```Lua
 local value = Value(5)
 print(value:get()) -- should be print(peek(value))
-```
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-<p class="fusiondoc-api-pills">
-	<span class="fusiondoc-api-pill-since">since v0.1</span>
-</p>
-
-## strictReadError
-
-```
-'thisDoesNotExist' is not a valid member of 'Fusion'.
-```
-
-This message means you tried to access something that doesn't exist. This
-specifically occurs with a few 'locked' tables in Fusion, such as the table
-returned by the module directly.
-
-```Lua
-local Foo = Fusion.thisDoesNotExist
 ```
 </div>
 

@@ -49,5 +49,3 @@ try {
 } catch(e) {
 	alert("Couldn't instantiate the error paste box - " + e);
 }
-
-const input = "[Fusion] Computed callback error: attempt to index nil with 'get' (ID: computedCallbackError) ---- Stack trace ---- Replica";

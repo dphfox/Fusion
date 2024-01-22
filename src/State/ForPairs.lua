@@ -50,7 +50,7 @@ local function ForPairs<KI, KO, VI, VO, S>(
 					return {key = key, value = value}
 				else
 					local errorObj = (key :: any) :: InternalTypes.Error
-					logErrorNonFatal("forProcessorError", errorObj)
+					logErrorNonFatal("callbackError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}
