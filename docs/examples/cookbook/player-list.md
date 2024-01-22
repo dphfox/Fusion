@@ -52,7 +52,7 @@ local function PlayerList(
 					TextXAlignment = "Right",
 					TextTruncate = "AtEnd",
 
-					[Children] = New "UIPadding" {
+					[Children] = scope:New "UIPadding" {
 						PaddingLeft = UDim.new(0, 10),
 						PaddingRight = UDim.new(0, 10)
 					}
@@ -122,7 +122,7 @@ will automatically create and remove them as the `Players` list changes.
 					TextXAlignment = "Right",
 					TextTruncate = "AtEnd",
 
-					[Children] = New "UIPadding" {
+					[Children] = scope:New "UIPadding" {
 						PaddingLeft = UDim.new(0, 10),
 						PaddingRight = UDim.new(0, 10)
 					}
