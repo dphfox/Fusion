@@ -16,12 +16,11 @@ the details for you.
 
 <input
 	id="fusiondoc-error-paste-box"
-    class="md-input md-input--stretch"
-    placeholder="Type or paste an error ID here..."
+	class="md-input md-input--stretch"
+	placeholder="Type or paste an error ID here..."
 />
 
 <script src="./error-paste-box.js" defer></script>
-
 
 -----
 
@@ -44,6 +43,7 @@ local folder = New "Configuration" {
 	[Attribute(nil)] = "Foo"
 }
 ```
+</div>
 
 -----
 
@@ -127,6 +127,7 @@ the connection failed to register.
 -- An attribute change shouldn't fail, as GetAttributeChangedSignal
 -- doesn't error if the attribute doesn't exist.
 ```
+</div>
 
 -----
 
@@ -571,6 +572,7 @@ local config = New "Configuration" {
 	[AttributeChange "Ammo"] = "guns"
 }
 ```
+</div>
 
 -----
 
@@ -618,7 +620,7 @@ This usually occurs with the [New](../instances/new) or
 ```Lua
 local ui = New "Frame" {
 	Size = Computed(function()
-        return Color3.new(1, 0, 0)
+		return Color3.new(1, 0, 0)
 	end)
 }
 ```
@@ -693,6 +695,7 @@ local config = New "Configuration" {
 	[AttributeChange "Ammo"] = "guns"
 }
 ```
+</div>
 
 -----
 
@@ -740,6 +743,7 @@ shouldn't occur, however it is here for a failsafe.
 ```Lua
 -- Once again, how does an example for this work?
 ```
+</div>
 
 -----
 
@@ -909,6 +913,7 @@ For users of Fusion on Roblox, this generally shouldn't occur as Fusion should
 automatically be bound to Roblox's task scheduler. However, when using Fusion
 in other environments, the fix is to provide Fusion with all the task scheduler
 callbacks necessary to schedule tasks for execution in the future.
+</div>
 
 -----
 
