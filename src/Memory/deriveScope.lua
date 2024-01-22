@@ -10,8 +10,10 @@ local Types = require(Package.Types)
 
 -- This return type is technically a lie, but it's required for useful type
 -- checking behaviour.
-local function deriveScope<S>(scope: Types.Scope<S>): Types.Scope<S>
-	return setmetatable({}, getmetatable(scope)) :: any
+local function deriveScope<T>(
+	existing: Types.Scope<T>
+): Types.Scope<T>
+	return setmetatable({}, getmetatable(existing)) :: any
 end
 
 return deriveScope

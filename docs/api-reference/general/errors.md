@@ -1,5 +1,6 @@
 <nav class="fusiondoc-api-breadcrumbs">
-	<a href="..">Fusion</a>
+	<span>General</span>
+	<span>Errors</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>

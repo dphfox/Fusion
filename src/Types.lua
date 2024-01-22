@@ -222,7 +222,7 @@ export type Fusion = {
 
 	doCleanup: (...unknown) -> (),
 	scoped: ScopedConstructor,
-	deriveScope: <S>(scope: Scope<S>) -> Scope<S>,
+	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
 
 	peek: Use,
 	Value: ValueConstructor,
