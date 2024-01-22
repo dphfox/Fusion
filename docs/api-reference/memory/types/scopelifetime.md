@@ -16,6 +16,9 @@ export type ScopeLifetime = {
 ```
 
 An object which uses a [scope](../../types/scope) to dictate how long it lives.
+Objects satisfying this interface can be probed for information about their
+lifetime and how long they live relative to other objects satisfying this
+interface.
 
 -----
 
@@ -25,7 +28,7 @@ An object which uses a [scope](../../types/scope) to dictate how long it lives.
 	scope
 	<a href="../../types/scope" class="fusiondoc-api-type">
 		: Scope&lt;unknown&gt;?
-	</span>
+	</a>
 </h2>
 
 The scope which this object was constructed within, or `nil` if the object has
