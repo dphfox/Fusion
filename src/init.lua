@@ -18,6 +18,7 @@ export type For<KO, VO> = Types.For<KO, VO>
 export type Observer = Types.Observer
 export type PropertyTable = Types.PropertyTable
 export type Scope<Constructors> = Types.Scope<Constructors>
+export type ScopeLifetime = Types.ScopeLifetime
 export type SpecialKey = Types.SpecialKey
 export type Spring<T> = Types.Spring<T>
 export type StateObject<T> = Types.StateObject<T>
