@@ -41,7 +41,7 @@ parameter.
 	Returns
 	<a href="../../types/scope" class="fusiondoc-api-type">
 		-> Scope&lt;T&gt;
-	</span>
+	</a>
 </h2>
 
 A freshly created, blank scope.

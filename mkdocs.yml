@@ -75,10 +75,10 @@ nav:
       - Outputs: tutorials/roblox/outputs.md
       - References: tutorials/roblox/references.md
     - Best Practices:
-      - Components: tutorials/components/components.md
-      - Instance Handling: tutorials/components/instance-handling.md
-      - Callbacks: tutorials/components/callbacks.md
-      - State: tutorials/components/state.md
+      - Components: tutorials/best-practices/components.md
+      - Instance Handling: tutorials/best-practices/instance-handling.md
+      - Callbacks: tutorials/best-practices/callbacks.md
+      - State: tutorials/best-practices/state.md
     
   - Examples:
     - Home: examples/index.md
