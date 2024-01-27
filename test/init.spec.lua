@@ -30,6 +30,7 @@ return function()
 			Tween = "function",
 			Spring = "function",
 
+			Contextual = "function",
 			cleanup = "function",
 			doNothing = "function",
 			peek = "function"
