@@ -116,17 +116,17 @@ export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[KI]: VI}>,
-	processor: (Scope<S>, Use, KI, VI) -> (KO, VO)
+	processor: (Use, Scope<S>, KI, VI) -> (KO, VO)
 ) -> For<KO, VO>
 export type ForKeysConstructor =  <KI, KO, V, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[KI]: V}>,
-	processor: (Scope<S>, Use, KI) -> KO
+	processor: (Use, Scope<S>, KI) -> KO
 ) -> For<KO, V>
 export type ForValuesConstructor =  <K, VI, VO, S>(
 	scope: Scope<S>,
 	inputTable: CanBeState<{[K]: VI}>,
-	processor: (Scope<S>, Use, VI) -> VO
+	processor: (Use, Scope<S>, VI) -> VO
 ) -> For<K, VO>
 
 -- An object which can listen for updates on another state object.
