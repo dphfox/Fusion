@@ -10,7 +10,8 @@ local function isSimilar(a: any, b: any): boolean
     if typeof(a) == "table" then
         return false
     else
-        return a == b
+        -- NaN does not equal itself but is the same
+        return a == b or a ~= a and b ~= b
     end
 end
 

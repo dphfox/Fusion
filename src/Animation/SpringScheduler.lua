@@ -4,13 +4,12 @@
 	Manages batch updating of spring objects.
 ]]
 
-local RunService = game:GetService("RunService")
-
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
-local updateAll = require(Package.Dependencies.updateAll)
+local updateAll = require(Package.State.updateAll)
 
 type Set<T> = {[T]: any}
 type Spring = Types.Spring<any>
@@ -19,7 +18,7 @@ local SpringScheduler = {}
 
 local EPSILON = 0.0001
 local activeSprings: Set<Spring> = {}
-local lastUpdateTime = os.clock()
+local lastUpdateTime = External.lastUpdateStep()
 
 function SpringScheduler.add(spring: Spring)
 	-- we don't necessarily want to use the most accurate time - here we snap to
@@ -40,10 +39,11 @@ function SpringScheduler.remove(spring: Spring)
 	activeSprings[spring] = nil
 end
 
-
-local function updateAllSprings()
+local function updateAllSprings(
+	now: number
+)
 	local springsToSleep: Set<Spring> = {}
-	lastUpdateTime = os.clock()
+	lastUpdateTime = now
 
 	for spring in pairs(activeSprings) do
 		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)
@@ -80,13 +80,11 @@ local function updateAllSprings()
 
 	for spring in pairs(springsToSleep) do
 		activeSprings[spring] = nil
+		-- Guarantee that springs reach exact goals, since mathematically they only approach it infinitely
+		spring._currentValue = packType(spring._springGoals, spring._currentType)
 	end
 end
 
-RunService:BindToRenderStep(
-	"__FusionSpringScheduler",
-	Enum.RenderPriority.First.Value,
-	updateAllSprings
-)
+External.bindToUpdateStep(updateAllSprings)
 
 return SpringScheduler

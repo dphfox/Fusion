@@ -10,7 +10,7 @@
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
-local initDependency = require(Package.Dependencies.initDependency)
+local External = require(Package.External)
 
 type Set<T> = {[T]: any}
 
@@ -25,7 +25,7 @@ local strongRefs: Set<Types.Observer> = {}
 ]]
 function class:update(): boolean
 	for _, callback in pairs(self._changeListeners) do
-		task.spawn(callback)
+		External.doTaskImmediate(callback)
 	end
 	return false
 end
@@ -63,6 +63,15 @@ function class:onChange(callback: () -> ()): () -> ()
 	end
 end
 
+--[[
+	Similar to `class:onChange()`, however it runs the provided callback
+	immediately.
+]]
+function class:onBind(callback: () -> ()): () -> ()
+	External.doTaskImmediate(callback)
+	return self:onChange(callback)
+end
+
 local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 	local self = setmetatable({
 		type = "State",
@@ -73,7 +82,6 @@ local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 		_numChangeListeners = 0,
 	}, CLASS_METATABLE)
 
-	initDependency(self)
 	-- add this object to the watched state's dependent set
 	watchedState.dependentSet[self] = true
 

@@ -2,8 +2,7 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Ref = require(Package.Instances.Ref)
 local Value = require(Package.State.Value)
-
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+local peek = require(Package.State.peek)
 
 return function()
 	it("should set State objects passed as [Ref]", function()
@@ -13,23 +12,6 @@ return function()
 			[Ref] = refValue
 		}
 
-		expect(refValue:get()).to.equal(child)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			local refValue = Value()
-			ref[1] = New "Folder" {
-				[Ref] = refValue
-			}
-			refValue:set(nil)
-		end
-
-		waitForGC()
-		-- Wait twice in case the Value keeps the instance an extra cycle
-		waitForGC()
-		
-		expect(ref[1]).to.equal(nil)
+		expect(peek(refValue)).to.equal(child)
 	end)
 end

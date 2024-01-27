@@ -1,66 +1,138 @@
 site_name: Fusion
 site_url: https://elttob.uk/Fusion/
-repo_name: Elttob/Fusion
-repo_url: https://github.com/Elttob/Fusion
+repo_name: dphfox/Fusion
+repo_url: https://github.com/dphfox/Fusion
+
+extra:
+  version:
+    provider: mike
 
 theme:
   name: material
   custom_dir: docs/assets/overrides
-  logo: assets/logo-animated.png
+  logo: assets/logo
   favicon: assets/logo-dark.svg
   palette:
-    scheme: fusion-dark
-    primary: black
+    - media: "(prefers-color-scheme: dark)"
+      scheme: fusiondoc-dark
+      toggle:
+        icon: octicons/sun-24
+        title: Switch to light theme
+    - media: "(prefers-color-scheme: light)"
+      scheme: fusiondoc-light
+      toggle:
+        icon: octicons/moon-24
+        title: Switch to dark theme
   font:
-    text: Inter
+    text: Plus Jakarta Sans
     code: JetBrains Mono
   features:
     - navigation.tabs
+    - navigation.top
+    - navigation.sections
+    - navigation.instant
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
   icon:
-    repo: fontawesome/brands/github
+    repo: octicons/mark-github-16
 
 extra_css:
-  - assets/fusion.css
+  - assets/theme/fusiondoc.css
+  - assets/theme/colours.css
+  - assets/theme/code.css
+  - assets/theme/paragraph.css
+  - assets/theme/page.css
+  - assets/theme/admonition.css
+  - assets/theme/404.css
+  - assets/theme/api-reference.css
+
+extra_javascript:
+  - assets/scripts/smooth-scroll.js
 
 nav:
   - Home: index.md
   - Tutorials:
     - Get Started: tutorials/index.md
-    - Fundamentals:
-      - Creating UI: tutorials/fundamentals/creating-ui.md
-      - Handling Events: tutorials/fundamentals/handling-events.md
-      - Storing State: tutorials/fundamentals/storing-state.md
-      - Computations: tutorials/fundamentals/computations.md
-      - Changing Properties: tutorials/fundamentals/changing-properties.md
-      - Changing Children: tutorials/fundamentals/changing-children.md
-      - "Project 1: Counting Clicks": tutorials/fundamentals/project-1.md
-    - Further Basics:
-      - Components: tutorials/further-basics/components.md
-      - Arrays and Lists: tutorials/further-basics/arrays-and-lists.md
-      - Compatibility: tutorials/further-basics/compatibility.md
-      - "Project 2: To-Do List": tutorials/further-basics/project-2.md
+    - State Objects:
+      - Values: tutorials/fundamentals/values.md
+      - Observers: tutorials/fundamentals/observers.md
+      - Computeds: tutorials/fundamentals/computeds.md
+      - Destructors: tutorials/fundamentals/destructors.md
+    - Instances:
+      - Hydration: tutorials/instances/hydration.md
+      - New Instances: tutorials/instances/new-instances.md
+      - Parenting: tutorials/instances/parenting.md
+      - Events: tutorials/instances/events.md
+      - Change Events: tutorials/instances/change-events.md
+      - Outputs: tutorials/instances/outputs.md
+      - Cleanup: tutorials/instances/cleanup.md
+      - References: tutorials/instances/references.md
+    - Lists & Tables:
+      - The For Objects: tutorials/lists-and-tables/the-for-objects.md
+      - ForValues: tutorials/lists-and-tables/forvalues.md
+      - ForKeys: tutorials/lists-and-tables/forkeys.md
+      - ForPairs: tutorials/lists-and-tables/forpairs.md
+    - Components:
+      - Reusing UI: tutorials/components/reusing-ui.md
+      - Children: tutorials/components/children.md
+      - Callbacks: tutorials/components/callbacks.md
+      - State: tutorials/components/state.md
     - Animation:
       - Tweens: tutorials/animation/tweens.md
       - Springs: tutorials/animation/springs.md
-      - "Project 3: Switches": tutorials/animation/project-3.md
   - Examples:
     - Home: examples/index.md
+    - Cookbook:
+      - examples/cookbook/index.md
+      - Player List: examples/cookbook/player-list.md
+      - Animated Computed: examples/cookbook/animated-computed.md
+      - Fetch Data From Server: examples/cookbook/fetch-data-from-server.md
+      - Light & Dark Theme: examples/cookbook/light-and-dark-theme.md
+      - Button Component: examples/cookbook/button-component.md
+      - Loading Spinner: examples/cookbook/loading-spinner.md
+      - Drag & Drop: examples/cookbook/drag-and-drop.md
   - API Reference:
     - Home: api-reference/index.md
-    - Errors & Messages: api-reference/errors-and-messages.md
+    - Errors:
+      - api-reference/errors/index.md
+    - State:
+      - api-reference/state/index.md
+      - CanBeState: api-reference/state/canbestate.md
+      - Computed: api-reference/state/computed.md
+      - cleanup: api-reference/state/cleanup.md
+      - Dependency: api-reference/state/dependency.md
+      - Dependent: api-reference/state/dependent.md
+      - doNothing: api-reference/state/donothing.md
+      - ForKeys: api-reference/state/forkeys.md
+      - ForPairs: api-reference/state/forpairs.md
+      - ForValues: api-reference/state/forvalues.md
+      - Observer: api-reference/state/observer.md
+      - peek: api-reference/state/peek.md
+      - StateObject: api-reference/state/stateobject.md
+      - Use: api-reference/state/use.md
+      - Value: api-reference/state/value.md
     - Instances:
-      - New: api-reference/api/new.md
-      - Children: api-reference/api/children.md
-      - OnEvent: api-reference/api/onevent.md
-      - OnChange: api-reference/api/onchange.md
-    - State Management:
-      - State: api-reference/api/state.md
-      - Computed: api-reference/api/computed.md
-      - ComputedPairs: api-reference/api/computedpairs.md
-      - Compat: api-reference/api/compat.md
+      - api-reference/instances/index.md
+      - Attribute: api-reference/instances/attribute.md
+      - AttributeChange: api-reference/instances/attributechange.md
+      - AttributeOut: api-reference/instances/attributeout.md
+      - Child: api-reference/instances/child.md
+      - Children: api-reference/instances/children.md
+      - Cleanup: api-reference/instances/cleanup.md
+      - Component: api-reference/instances/component.md
+      - Hydrate: api-reference/instances/hydrate.md
+      - New: api-reference/instances/new.md
+      - OnChange: api-reference/instances/onchange.md
+      - OnEvent: api-reference/instances/onevent.md
+      - Out: api-reference/instances/out.md
+      - Ref: api-reference/instances/ref.md
+      - SpecialKey: api-reference/instances/specialkey.md
     - Animation:
-      - Tween: api-reference/api/tween.md
-      - Spring: api-reference/api/spring.md
+      - api-reference/animation/index.md
+      - Animatable: api-reference/animation/animatable.md
+      - Tween: api-reference/animation/tween.md
+      - Spring: api-reference/animation/spring.md
   - Extras:
     - Home: extras/index.md
     - Backgrounds: extras/backgrounds.md
@@ -70,12 +142,17 @@ markdown_extensions:
   - admonition
   - attr_list
   - meta
+  - md_in_html
   - pymdownx.superfences
   - pymdownx.betterem
   - pymdownx.details
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.inlinehilite
   - toc:
       permalink: true
   - pymdownx.highlight:
       guess_lang: false
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg

@@ -1,0 +1,13 @@
+.md-typeset .admonition-title,
+.md-typeset summary {
+	background: none !important;
+}
+
+[dir="ltr"] .md-typeset :is(.admonition, details) {
+	border-radius: 0.25rem;
+	border-width: 0.1rem;
+}
+
+[data-md-color-scheme="fusiondoc-dark"] .md-typeset :is(.admonition, details) {
+	--md-code-bg-color:                var(--fusiondoc-grey-1);
+}

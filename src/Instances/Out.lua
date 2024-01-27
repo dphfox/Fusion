@@ -16,20 +16,18 @@ local function Out(propertyName: string): PubTypes.SpecialKey
 	outKey.kind = "Out"
 	outKey.stage = "observer"
 
-	function outKey:apply(outState: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: { PubTypes.Task })
-		local ok, event = pcall(applyToRef.instance.GetPropertyChangedSignal, applyToRef.instance, propertyName)
+	function outKey:apply(outState: any, applyTo: Instance, cleanupTasks: { PubTypes.Task })
+		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 		if not ok then
-			logError("invalidOutProperty", nil, applyToRef.instance.ClassName, propertyName)
+			logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
 		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
 			logError("invalidOutType")
 		else
-			outState:set((applyToRef.instance :: any)[propertyName])
+			outState:set((applyTo :: any)[propertyName])
 			table.insert(
 				cleanupTasks,
 				event:Connect(function()
-					if applyToRef.instance ~= nil then
-						outState:set((applyToRef.instance :: any)[propertyName])
-					end
+					outState:set((applyTo :: any)[propertyName])
 				end)
 			)
 			table.insert(cleanupTasks, function()

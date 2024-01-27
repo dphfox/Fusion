@@ -2,8 +2,6 @@ local Package = game:GetService("ReplicatedStorage").Fusion
 local New = require(Package.Instances.New)
 local Cleanup = require(Package.Instances.Cleanup)
 
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
-
 return function()
 	it("should destroy instances", function()
 		local instance = New "Folder" {}
@@ -108,18 +106,5 @@ return function()
 		task.wait()
 
 		expect(numRuns).to.equal(3)
-	end)
-
-	it("should not inhibit garbage collection", function()
-		local ref = setmetatable({}, {__mode = "v"})
-		do
-			ref[1] = New "Folder" {
-				[Cleanup] = function() end
-			}
-		end
-
-		waitForGC()
-
-		expect(ref[1]).to.equal(nil)
 	end)
 end

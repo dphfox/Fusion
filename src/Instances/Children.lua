@@ -7,9 +7,11 @@
 
 local Package = script.Parent.Parent
 local PubTypes = require(Package.PubTypes)
+local External = require(Package.External)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
-local xtypeof = require(Package.Utility.xtypeof)
+local peek = require(Package.State.peek)
+local isState = require(Package.State.isState)
 
 type Set<T> = {[T]: boolean}
 
@@ -21,7 +23,7 @@ Children.type = "SpecialKey"
 Children.kind = "Children"
 Children.stage = "descendants"
 
-function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanupTasks: {PubTypes.Task})
+function Children:apply(propValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
 	local newParented: Set<Instance> = {}
 	local oldParented: Set<Instance> = {}
 
@@ -36,6 +38,9 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 	-- to observe for changes; then unparents instances no longer found and
 	-- disconnects observers for state objects no longer present.
 	local function updateChildren()
+		if not updateQueued then
+			return -- this update may have been canceled by destruction, etc.
+		end
 		updateQueued = false
 
 		oldParented, newParented = newParented, oldParented
@@ -44,9 +49,9 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 		table.clear(newDisconnects)
 
 		local function processChild(child: any, autoName: string?)
-			local kind = xtypeof(child)
+			local childType = typeof(child)
 
-			if kind == "Instance" then
+			if childType == "Instance" then
 				-- case 1; single instance
 
 				newParented[child] = true
@@ -54,7 +59,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 					-- wasn't previously present
 
 					-- TODO: check for ancestry conflicts here
-					child.Parent = applyToRef.instance
+					child.Parent = applyTo
 				else
 					-- previously here; we want to reuse, so remove from old
 					-- set so we don't encounter it during unparenting
@@ -65,10 +70,10 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 					child.Name = autoName
 				end
 
-			elseif kind == "State" then
+			elseif isState(child) then
 				-- case 2; state object
 
-				local value = child:get(false)
+				local value = peek(child)
 				-- allow nil to represent the absence of a child
 				if value ~= nil then
 					processChild(value, autoName)
@@ -86,7 +91,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 
 				newDisconnects[child] = disconnect
 
-			elseif kind == "table" then
+			elseif childType == "table" then
 				-- case 3; table of objects
 
 				for key, subChild in pairs(child) do
@@ -103,7 +108,7 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 				end
 
 			else
-				logWarn("unrecognisedChildType", kind)
+				logWarn("unrecognisedChildType", childType)
 			end
 		end
 
@@ -127,16 +132,18 @@ function Children:apply(propValue: any, applyToRef: PubTypes.SemiWeakRef, cleanu
 	queueUpdate = function()
 		if not updateQueued then
 			updateQueued = true
-			task.defer(updateChildren)
+			External.doTaskDeferred(updateChildren)
 		end
 	end
 
 	table.insert(cleanupTasks, function()
 		propValue = nil
+		updateQueued = true
 		updateChildren()
 	end)
 
 	-- perform initial child parenting
+	updateQueued = true
 	updateChildren()
 end
 
