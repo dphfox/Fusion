@@ -39,7 +39,7 @@ local function AttributeOut(
 			
 			if value.scope == nil then
 				logError("useAfterDestroy", nil, `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
-			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 				logWarn("possiblyOutlives", `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			value:set((applyTo :: any):GetAttribute(attributeName))

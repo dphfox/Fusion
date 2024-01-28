@@ -34,7 +34,7 @@ return {
 
 		if value.scope == nil then
 			logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
 		end
 		value:set(applyTo)

@@ -12,7 +12,7 @@ local Types = require(Package.Types)
 local function whichScopeLivesLonger(
 	scopeA: Types.Scope<unknown>,
 	scopeB: Types.Scope<unknown>
-): "a" | "b" | "unknown"
+): "definitely-a" | "definitely-b" | "unsure"
 	-- If we can prove one scope is inside of the other scope, then the outer
 	-- scope must live longer than the inner scope (assuming idiomatic scopes).
 	-- So, we will search the scopes recursively until we find one of them, at
@@ -25,9 +25,9 @@ local function whichScopeLivesLonger(
 			closedSet[scope] = true
 			for _, inScope in ipairs(scope) do
 				if inScope == scopeA then
-					return "b"
+					return "definitely-b"
 				elseif inScope == scopeB then
-					return "a"
+					return "definitely-a"
 				elseif typeof(inScope) == "table" then
 					local inScope = inScope :: {unknown}
 					if inScope[1] ~= nil and closedSet[scope] == nil then
@@ -41,7 +41,7 @@ local function whichScopeLivesLonger(
 		openSet, nextOpenSet = nextOpenSet, openSet
 		openSetSize, nextOpenSetSize = nextOpenSetSize, 0
 	end
-	return "unknown"
+	return "unsure"
 end
 
 local function whichLivesLonger(
@@ -49,18 +49,18 @@ local function whichLivesLonger(
 	a: unknown,
 	scopeB: Types.Scope<unknown>,
 	b: unknown
-): "a" | "b" | "unknown"
+): "definitely-a" | "definitely-b" | "unsure"
 	if scopeA == scopeB then
 		local scopeA: {unknown} = scopeA
 		for index = #scopeA, 1, -1 do
 			local value = scopeA[index]
 			if value == a then
-				return "b"
+				return "definitely-b"
 			elseif value == b then
-				return "a"
+				return "definitely-a"
 			end
 		end
-		return "unknown"
+		return "unsure"
 	else
 		return whichScopeLivesLonger(scopeA, scopeB)
 	end

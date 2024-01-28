@@ -68,7 +68,7 @@ local function bindProperty(
 		local value = value :: Types.StateObject<unknown>
 		if value.scope == nil then
 			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-		elseif whichLivesLonger(scope, instance, value.scope, value) ~= "b" then
+		elseif whichLivesLonger(scope, instance, value.scope, value) == "definitely-a" then
 			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end
 

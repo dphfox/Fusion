@@ -33,7 +33,7 @@ local function Attribute(
 				local value = value :: Types.StateObject<unknown>
 				if value.scope == nil then
 					logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 					logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 				end
 				local didDefer = false

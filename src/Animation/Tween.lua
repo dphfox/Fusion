@@ -141,7 +141,7 @@ local function Tween<T>(
 	table.insert(scope, self)
 	if goalState.scope == nil then
 		logError("useAfterDestroy", nil, `The {goalState.kind} object`, `the Tween that is following it`)
-	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "a" then
+	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "definitely-a" then
 		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Tween that is following it`)
 	end
 

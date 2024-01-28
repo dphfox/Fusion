@@ -57,7 +57,7 @@ function class:update(): boolean
 			local target = target :: Types.StateObject<T>
 			if target.scope == nil then
 				logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
-			elseif whichLivesLonger(outerScope, self, target.scope, target) == "a" then
+			elseif whichLivesLonger(outerScope, self, target.scope, target) == "definitely-a" then
 				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true

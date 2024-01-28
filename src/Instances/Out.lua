@@ -42,7 +42,7 @@ local function Out(
 
 			if value.scope == nil then
 				logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
-			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "a" then
+			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 				logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 			end
 			value:set((applyTo :: any)[propertyName])

@@ -92,7 +92,7 @@ local function Observer(
 
 	if watchedState.scope == nil then
 		logError("useAfterDestroy", nil, `The {watchedState.kind} object`, `the Observer that is watching it`)
-	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "a" then
+	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "definitely-a" then
 		logWarn("possiblyOutlives", `The {watchedState.kind} object`, `the Observer that is watching it`)
 	end
 
