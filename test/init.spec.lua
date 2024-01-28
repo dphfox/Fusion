@@ -7,6 +7,7 @@ return function()
 
 		local api = {
 			version = "table",
+			Contextual = "function",
 
 			cleanup = "function",
 			doCleanup = "function",

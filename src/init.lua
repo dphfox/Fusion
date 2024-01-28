@@ -12,6 +12,7 @@ export type Animatable = Types.Animatable
 export type CanBeState<T> = Types.CanBeState<T>
 export type Child = Types.Child
 export type Computed<T> = Types.Computed<T>
+export type Contextual<T> = Types.Contextual<T>
 export type Dependency = Types.Dependency
 export type Dependent = Types.Dependent
 export type For<KO, VO> = Types.For<KO, VO>
@@ -38,6 +39,7 @@ end
 local Fusion: Types.Fusion = {
 	-- General
 	version = {major = 0, minor = 3, isRelease = false},
+	Contextual = require(script.Utility.Contextual),
 
 	-- Memory
 	cleanup = require(script.Memory.legacyCleanup),
