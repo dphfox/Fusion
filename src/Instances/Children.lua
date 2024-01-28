@@ -13,6 +13,7 @@ local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local isState = require(Package.State.isState)
+local doCleanup = require(Package.Memory.doCleanup)
 
 type Set<T> = {[T]: unknown}
 
@@ -32,9 +33,9 @@ return {
 		local newParented: Set<Instance> = {}
 		local oldParented: Set<Instance> = {}
 	
-		-- save disconnection functions for state object observers
-		local newDisconnects: {[Types.StateObject<unknown>]: () -> ()} = {}
-		local oldDisconnects: {[Types.StateObject<unknown>]: () -> ()} = {}
+		-- save scopes for state object observers
+		local newScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
+		local oldScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
 	
 		local updateQueued = false
 		local queueUpdate: () -> ()
@@ -49,9 +50,9 @@ return {
 			updateQueued = false
 	
 			oldParented, newParented = newParented, oldParented
-			oldDisconnects, newDisconnects = newDisconnects, oldDisconnects
+			oldScopes, newScopes = newScopes, oldScopes
 			table.clear(newParented)
-			table.clear(newDisconnects)
+			table.clear(newScopes)
 	
 			local function processChild(
 				child: unknown,
@@ -89,17 +90,18 @@ return {
 						processChild(value, autoName)
 					end
 	
-					local disconnect = oldDisconnects[child]
-					if disconnect == nil then
+					local childScope = oldScopes[child]
+					if childScope == nil then
 						-- wasn't previously present
-						disconnect = Observer(scope, child):onChange(queueUpdate)
+						childScope = {}
+						Observer(childScope, child):onChange(queueUpdate)
 					else
 						-- previously here; we want to reuse, so remove from old
 						-- set so we don't encounter it during unparenting
-						oldDisconnects[child] = nil
+						oldScopes[child] = nil
 					end
 	
-					newDisconnects[child] = disconnect
+					newScopes[child] = childScope
 	
 				elseif childType == "table" then
 					-- case 3; table of objects
@@ -137,8 +139,8 @@ return {
 			end
 	
 			-- disconnect observers which weren't reused
-			for oldState, disconnect in pairs(oldDisconnects) do
-				disconnect()
+			for oldState, childScope in pairs(oldScopes) do
+				doCleanup(childScope)
 			end
 		end
 	
