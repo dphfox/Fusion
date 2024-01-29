@@ -64,7 +64,7 @@ export type Contextual<T> = {
 }
 
 type ContextualIsMethods = {
-	during: <T, A...>(ContextualIsMethods, (A...) -> T, A...) -> T
+	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
 --[[
