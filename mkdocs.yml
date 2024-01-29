@@ -79,6 +79,7 @@ nav:
       - Instance Handling: tutorials/best-practices/instance-handling.md
       - Callbacks: tutorials/best-practices/callbacks.md
       - State: tutorials/best-practices/state.md
+      - Sharing Values: tutorials/best-practices/sharing-values.md
     
   - Examples:
     - Home: examples/index.md
@@ -96,8 +97,10 @@ nav:
     - General:
       - Errors: api-reference/general/errors.md
       - Types:
+        - Contextual: api-reference/general/types/contextual.md
         - Version: api-reference/general/types/version.md
       - Members:
+        - Contextual: api-reference/general/members/contextual.md
         - version: api-reference/general/members/version.md
     - Memory:
       - Types:
