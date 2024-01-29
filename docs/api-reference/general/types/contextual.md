@@ -1,5 +1,5 @@
 <nav class="fusiondoc-api-breadcrumbs">
-	<span>Memory</span>
+	<span>General</span>
 	<span>Types</span>
 	<span>Contextual</span>
 </nav>
