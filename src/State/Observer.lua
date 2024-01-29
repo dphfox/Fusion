@@ -12,13 +12,10 @@ local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 local External = require(Package.External)
 
-type Set<T> = {[T]: any}
+local observerCache: { [PubTypes.Value<any>]: Types.Observer } = {}
 
 local class = {}
-local CLASS_METATABLE = {__index = class}
-
--- Table used to hold Observer objects in memory.
-local strongRefs: Set<Types.Observer> = {}
+local CLASS_METATABLE = { __index = class }
 
 --[[
 	Called when the watched state changes value.
@@ -44,9 +41,6 @@ function class:onChange(callback: () -> ()): () -> ()
 	self._numChangeListeners += 1
 	self._changeListeners[uniqueIdentifier] = callback
 
-	-- disallow gc (this is important to make sure changes are received)
-	strongRefs[self] = true
-
 	local disconnected = false
 	return function()
 		if disconnected then
@@ -58,7 +52,10 @@ function class:onChange(callback: () -> ()): () -> ()
 
 		if self._numChangeListeners == 0 then
 			-- allow gc if all listeners are disconnected
-			strongRefs[self] = nil
+			-- by removing this observer from the hardRef cache
+			for state in pairs(self.dependencySet) do
+				observerCache[state] = nil
+			end
 		end
 	end
 end
@@ -73,10 +70,14 @@ function class:onBind(callback: () -> ()): () -> ()
 end
 
 local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
+	if observerCache[watchedState] then
+		return observerCache[watchedState]
+	end
+
 	local self = setmetatable({
 		type = "State",
 		kind = "Observer",
-		dependencySet = {[watchedState] = true},
+		dependencySet = { [watchedState] = true },
 		dependentSet = {},
 		_changeListeners = {},
 		_numChangeListeners = 0,
@@ -84,6 +85,8 @@ local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
 
 	-- add this object to the watched state's dependent set
 	watchedState.dependentSet[self] = true
+
+	observerCache[watchedState] = self
 
 	return self
 end
