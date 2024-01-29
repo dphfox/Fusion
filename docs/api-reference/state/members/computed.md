@@ -21,6 +21,12 @@ function Fusion.Computed<T, S>(
 
 Constructs and returns a new [computed state object](../../types/computed).
 
+!!! success "Use scoped() method syntax"
+	This function is intended to be accessed as a method on a scope:
+	```Lua
+	local computed = scope:Computed(processor)
+	```
+
 -----
 
 ## Parameters

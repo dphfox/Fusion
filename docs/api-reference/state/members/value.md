@@ -21,6 +21,12 @@ function Fusion.Value<T>(
 
 Constructs and returns a new [value state object](../../types/value).
 
+!!! success "Use scoped() method syntax"
+	This function is intended to be accessed as a method on a scope:
+	```Lua
+	local computed = scope:Computed(processor)
+	```
+
 -----
 
 ## Parameters
