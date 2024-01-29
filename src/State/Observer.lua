@@ -15,6 +15,9 @@ local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 
 local class = {}
+class.type = "State"
+class.kind = "Observer"
+
 local CLASS_METATABLE = {__index = class}
 
 --[[
@@ -79,8 +82,6 @@ local function Observer(
 	end
 
 	local self = setmetatable({
-		type = "State",
-		kind = "Observer",
 		scope = scope,
 		dependencySet = {[watchedState] = true},
 		dependentSet = {},

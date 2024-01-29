@@ -14,6 +14,7 @@ local logError = require(Package.Logging.logError)
 local parseError = require(Package.Logging.parseError)
 
 local class = {}
+class.type = "Contextual"
 
 local CLASS_METATABLE = {__index = class}
 local WEAK_KEYS_METATABLE = {__mode = "k"}
@@ -68,7 +69,6 @@ local function Contextual<T>(
 	defaultValue: T
 ): Types.Contextual<T>
 	local self = setmetatable({
-		type = "Contextual",
 		-- if we held strong references to threads here, then if a thread was
 		-- killed before this contextual had a chance to finish executing its
 		-- callback, it would be held strongly in this table forever

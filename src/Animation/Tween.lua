@@ -19,6 +19,8 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
 
 local class = {}
+class.type = "State"
+class.kind = "Tween"
 
 local CLASS_METATABLE = {__index = class}
 
@@ -116,8 +118,6 @@ local function Tween<T>(
 	end
 
 	local self = setmetatable({
-		type = "State",
-		kind = "Tween",
 		scope = scope,
 		dependencySet = dependencySet,
 		dependentSet = {},

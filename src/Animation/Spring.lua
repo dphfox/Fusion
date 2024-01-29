@@ -20,6 +20,8 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
 
 local class = {}
+class.type = "State"
+class.kind = "Spring"
 
 local CLASS_METATABLE = {__index = class}
 
@@ -213,8 +215,6 @@ local function Spring<T>(
 	end
 
 	local self = setmetatable({
-		type = "State",
-		kind = "Spring",
 		scope = scope,
 		dependencySet = dependencySet,
 		dependentSet = {},

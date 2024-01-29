@@ -24,6 +24,8 @@ local deriveScope = require(Package.Memory.deriveScope)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local class = {}
+class.type = "State"
+class.kind = "Computed"
 
 local CLASS_METATABLE = {__index = class}
 
@@ -140,8 +142,6 @@ local function Computed<T, S>(
 		logWarn("destructorRedundant", "Computed")
 	end
 	local self = setmetatable({
-		type = "State",
-		kind = "Computed",
 		scope = scope,
 		dependencySet = {},
 		dependentSet = {},

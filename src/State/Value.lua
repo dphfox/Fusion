@@ -17,6 +17,8 @@ local updateAll = require(Package.State.updateAll)
 local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
+class.type = "State"
+class.kind = "Value"
 
 local CLASS_METATABLE = {__index = class}
 
@@ -68,8 +70,6 @@ local function Value<T>(
 	end
 
 	local self = setmetatable({
-		type = "State",
-		kind = "Value",
 		scope = scope,
 		dependentSet = {},
 		_value = initialValue

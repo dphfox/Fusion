@@ -21,6 +21,8 @@ local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 
 local class = {}
+class.type = "State"
+class.kind = "For"
 
 local CLASS_METATABLE = { __index = class }
 
@@ -224,8 +226,6 @@ local function For<KI, KO, VI, VO, S>(
 ): Types.For<KO, VO>
 
 	local self = setmetatable({
-		type = "State",
-		kind = "For",
 		scope = scope,
 		dependencySet = {},
 		dependentSet = {},
