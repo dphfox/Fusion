@@ -14,6 +14,7 @@
 
 ```Lua
 function Fusion.Value<T>(
+	scope: Scope<unknown>,
 	initialValue: T
 ) -> Value<T>
 ```
@@ -23,6 +24,16 @@ Constructs and returns a new [value state object](../../types/value).
 -----
 
 ## Parameters
+
+<h3 markdown>
+	scope
+	<a href="../../../memory/types/scope" class="fusiondoc-api-type">
+		: Scope&lt;S&gt;
+	</a>
+</h3>
+
+The [scope](../../../memory/types/scope) which should be used to store
+destruction tasks for this object.
 
 <h3 markdown>
 	initialValue
