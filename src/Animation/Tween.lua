@@ -16,9 +16,11 @@ local xtypeof = require(Package.Utility.xtypeof)
 local peek = require(Package.State.peek)
 
 local class = {}
+class.type = "State"
+class.kind = "Tween"
 
-local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local CLASS_METATABLE = { __index = class }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 --[[
 	Called when the goal state changes value; this will initiate a new tween.
@@ -82,7 +84,7 @@ local function Tween<T>(
 		tweenInfo = TweenInfo.new()
 	end
 
-	local dependencySet = {[goalState] = true}
+	local dependencySet = { [goalState] = true }
 	local tweenInfoIsState = xtypeof(tweenInfo) == "State"
 	if tweenInfoIsState then
 		dependencySet[tweenInfo] = true
@@ -95,8 +97,6 @@ local function Tween<T>(
 	end
 
 	local self = setmetatable({
-		type = "State",
-		kind = "Tween",
 		dependencySet = dependencySet,
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
@@ -114,7 +114,7 @@ local function Tween<T>(
 		_currentTweenInfo = tweenInfo,
 		_currentTweenDuration = 0,
 		_currentTweenStartTime = 0,
-		_currentlyAnimating = false
+		_currentlyAnimating = false,
 	}, CLASS_METATABLE)
 
 	-- add this object to the goal state's dependent set

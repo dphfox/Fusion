@@ -15,9 +15,11 @@ local updateAll = require(Package.State.updateAll)
 local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
+class.type = "State"
+class.kind = "Value"
 
-local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local CLASS_METATABLE = { __index = class }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 --[[
 	Updates the value stored in this State object.
@@ -47,12 +49,10 @@ end
 
 local function Value<T>(initialValue: T): Types.State<T>
 	local self = setmetatable({
-		type = "State",
-		kind = "Value",
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
 		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
-		_value = initialValue
+		_value = initialValue,
 	}, CLASS_METATABLE)
 
 	return self

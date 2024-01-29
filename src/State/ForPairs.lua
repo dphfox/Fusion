@@ -28,6 +28,8 @@ local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
 
 local class = {}
+class.type = "State"
+class.kind = "ForPairs"
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
@@ -59,7 +61,6 @@ function class:update(): boolean
 	local meta = self._meta
 
 	local didChange = false
-
 
 	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
@@ -97,7 +98,6 @@ function class:update(): boolean
 			self._keyData[newInKey] = keyData
 		end
 
-
 		-- check if the pair is new or changed
 		local shouldRecalculate = oldInputTable[newInKey] ~= newInValue
 
@@ -111,19 +111,20 @@ function class:update(): boolean
 			end
 		end
 
-
 		-- recalculate the output pair if necessary
 		if shouldRecalculate then
 			keyData.oldDependencySet, keyData.dependencySet = keyData.dependencySet, keyData.oldDependencySet
 			table.clear(keyData.dependencySet)
 
 			local use = makeUseCallback(keyData.dependencySet)
-			local processOK, newOutKey, newOutValue, newMetaValue = xpcall(
-				self._processor, parseError, use, newInKey, newInValue
-			)
+			local processOK, newOutKey, newOutValue, newMetaValue =
+				xpcall(self._processor, parseError, use, newInKey, newInValue)
 
 			if processOK then
-				if self._destructor == nil and (needsDestruction(newOutKey) or needsDestruction(newOutValue) or needsDestruction(newMetaValue)) then
+				if
+					self._destructor == nil
+					and (needsDestruction(newOutKey) or needsDestruction(newOutValue) or needsDestruction(newMetaValue))
+				then
 					logWarn("destructorNeededForPairs")
 				end
 
@@ -159,7 +160,8 @@ function class:update(): boolean
 				if oldOutValue ~= newOutValue then
 					local oldMetaValue = meta[newOutKey]
 					if oldOutValue ~= nil then
-						local destructOK, err = xpcall(self._destructor or cleanup, parseError, newOutKey, oldOutValue, oldMetaValue)
+						local destructOK, err =
+							xpcall(self._destructor or cleanup, parseError, newOutKey, oldOutValue, oldMetaValue)
 						if not destructOK then
 							logErrorNonFatal("forPairsDestructorError", err)
 						end
@@ -217,7 +219,6 @@ function class:update(): boolean
 			newOutputTable[storedOutKey] = oldOutputTable[storedOutKey]
 		end
 
-
 		-- save dependency values and add to main dependency set
 		for dependency in pairs(keyData.dependencySet) do
 			keyData.dependencyValues[dependency] = peek(dependency)
@@ -234,7 +235,8 @@ function class:update(): boolean
 			-- clean up the old output pair
 			local oldMetaValue = meta[oldOutKey]
 			if oldOutValue ~= nil then
-				local destructOK, err = xpcall(self._destructor or cleanup, parseError, oldOutKey, oldOutValue, oldMetaValue)
+				local destructOK, err =
+					xpcall(self._destructor or cleanup, parseError, oldOutKey, oldOutValue, oldMetaValue)
 				if not destructOK then
 					logErrorNonFatal("forPairsDestructorError", err)
 				end
@@ -276,12 +278,9 @@ local function ForPairs<KI, VI, KO, VO, M>(
 	processor: (KI, VI) -> (KO, VO, M?),
 	destructor: (KO, VO, M?) -> ()?
 ): Types.ForPairs<KI, VI, KO, VO, M>
-
 	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
-		type = "State",
-		kind = "ForPairs",
 		dependencySet = {},
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope

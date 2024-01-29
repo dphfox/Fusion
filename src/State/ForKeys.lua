@@ -28,10 +28,11 @@ local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
 
 local class = {}
+class.type = "State"
+class.kind = "ForKeys"
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
-
 
 --[[
 	Called when the original table is changed.
@@ -63,7 +64,6 @@ function class:update(): boolean
 
 	local didChange = false
 
-
 	-- clean out main dependency set
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -77,7 +77,6 @@ function class:update(): boolean
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
 	end
-
 
 	-- STEP 1: find keys that changed or were not previously present
 	for newInKey, value in pairs(newInputTable) do
@@ -105,7 +104,6 @@ function class:update(): boolean
 				end
 			end
 		end
-
 
 		-- recalculate the output key if necessary
 		if shouldRecalculate then
@@ -160,7 +158,6 @@ function class:update(): boolean
 			end
 		end
 
-
 		-- save dependency values and add to main dependency set
 		for dependency in pairs(keyData.dependencySet) do
 			keyData.dependencyValues[dependency] = peek(dependency)
@@ -169,7 +166,6 @@ function class:update(): boolean
 			dependency.dependentSet[self] = true
 		end
 	end
-
 
 	-- STEP 2: find keys that were removed
 	for outputKey, inputKey in pairs(keyOIMap) do
@@ -214,12 +210,9 @@ local function ForKeys<KI, KO, M>(
 	processor: (KI) -> (KO, M?),
 	destructor: (KO, M?) -> ()?
 ): Types.ForKeys<KI, KO, M>
-
 	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
-		type = "State",
-		kind = "ForKeys",
 		dependencySet = {},
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope

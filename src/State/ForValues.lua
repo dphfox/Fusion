@@ -27,6 +27,8 @@ local makeUseCallback = require(Package.State.makeUseCallback)
 local isState = require(Package.State.isState)
 
 local class = {}
+class.type = "State"
+class.kind = "ForValues"
 
 local CLASS_METATABLE = { __index = class }
 local WEAK_KEYS_METATABLE = { __mode = "k" }
@@ -74,7 +76,6 @@ function class:update(): boolean
 		self._inputTable.dependentSet[self] = true
 		self.dependencySet[self._inputTable] = true
 	end
-
 
 	-- STEP 1: find values that changed or were not previously present
 	for inKey, inValue in pairs(inputTable) do
@@ -144,11 +145,11 @@ function class:update(): boolean
 				didChange = true
 			else
 				-- restore old dependencies, because the new dependencies may be corrupt
-				valueData.oldDependencySet, valueData.dependencySet = valueData.dependencySet, valueData.oldDependencySet
+				valueData.oldDependencySet, valueData.dependencySet =
+					valueData.dependencySet, valueData.oldDependencySet
 				logErrorNonFatal("forValuesProcessorError", newOutValue)
 			end
 		end
-
 
 		-- store the value and its dependency/meta data
 		local newCachedValues = newValueCache[inValue]
@@ -165,7 +166,6 @@ function class:update(): boolean
 
 		outputValues[inKey] = value
 
-
 		-- save dependency values and add to main dependency set
 		for dependency in pairs(valueData.dependencySet) do
 			valueData.dependencyValues[dependency] = peek(dependency)
@@ -174,7 +174,6 @@ function class:update(): boolean
 			dependency.dependentSet[self] = true
 		end
 	end
-
 
 	-- STEP 2: find values that were removed
 	-- for tables of data, we just need to check if it's still in the cache
@@ -215,12 +214,9 @@ local function ForValues<VI, VO, M>(
 	processor: (VI) -> (VO, M?),
 	destructor: (VO, M?) -> ()?
 ): Types.ForValues<VI, VO, M>
-
 	local inputIsState = isState(inputTable)
 
 	local self = setmetatable({
-		type = "State",
-		kind = "ForValues",
 		dependencySet = {},
 		-- if we held strong references to the dependents, then they wouldn't be
 		-- able to get garbage collected when they fall out of scope
