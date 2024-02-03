@@ -5,8 +5,6 @@
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
-type Set<T> = {[T]: unknown}
-
 --[[
 	General use types
 ]]
@@ -73,13 +71,13 @@ type ContextualIsMethods = {
 
 -- A graph object which can have dependents.
 export type Dependency = ScopeLifetime & {
-	dependentSet: Set<Dependent>
+	dependentSet: {[Dependent]: unknown}
 }
 
 -- A graph object which can have dependencies.
 export type Dependent = ScopeLifetime & {
 	update: (Dependent) -> boolean,
-	dependencySet: Set<Dependency>
+	dependencySet: {[Dependency]: unknown}
 }
 
 -- An object which stores a piece of reactive state.

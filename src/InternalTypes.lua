@@ -12,8 +12,6 @@
 local Package = script.Parent
 local Types = require(Package.Types)
 
-type Set<T> = {[T]: unknown}
-
 --[[
 	General use types
 ]]
@@ -52,7 +50,7 @@ export type Value<T> = Types.Value<T> & {
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T, S> = Types.Computed<T> & {
 	scope: Types.Scope<S>?,
-	_oldDependencySet: Set<Types.Dependency>,
+	_oldDependencySet: {[Types.Dependency]: unknown},
 	_processor: (Types.Use, Types.Scope<S>) -> T,
 	_value: T,
 	_innerScope: Types.Scope<S>?
