@@ -20,6 +20,11 @@ function Fusion.doCleanup(
 
 Attempts to destroy all arguments based on their runtime type.
 
+!!! warning "This is a black hole!"
+	Any values you pass into `doCleanup` should be treated as completely gone.
+	Make sure you remove all references to those values, and ensure your code
+	never uses them again.
+
 -----
 
 ## Parameters

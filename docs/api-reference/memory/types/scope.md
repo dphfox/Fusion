@@ -19,3 +19,10 @@ with optional `Constructors` as methods which can be called.
 !!! note "Approximated type"
 	Luau does not yet have syntax for annotating metatables, so scopes created
 	with constructor methods cannot be represented in text.
+
+!!! warning "Scopes are not unique"
+	Fusion can recycle old unused scopes and return them from other functions.
+	This reduces wasted memory while your program is running.
+
+	However, it means this function doesn't always return a completely new
+	scope, so you shouldn't save the scope anywhere or use it as an identifier.

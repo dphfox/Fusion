@@ -18,8 +18,15 @@ function Fusion.deriveScope<T>(
 ): Scope<T>
 ```
 
-Creates a new [scope](../../types/scope) with the same methods as an existing
+Returns a blank [scope](../../types/scope) with the same methods as an existing
 scope.
+
+!!! warning "Scopes are not unique"
+	Fusion can recycle old unused scopes and return them from this function.
+	This reduces wasted memory while your program is running.
+
+	However, it means this function doesn't always return a completely new
+	scope, so you shouldn't save the scope anywhere or use it as an identifier.
 
 -----
 
