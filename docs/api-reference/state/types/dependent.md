@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Dependent = ScopeLifetime & {
+export type Dependent = ScopedObject & {
 	update: (self) -> boolean,
 	dependencySet: {[Dependency]: unknown}
 }
@@ -19,7 +19,7 @@ export type Dependent = ScopeLifetime & {
 A reactive graph object which can add itself to [dependencies](../dependency)
 and receive updates.
 
-This type includes [`ScopeLifetime`](../../../memory/types/scopelifetime), which
+This type includes [`ScopedObject`](../../../memory/types/scopedobject), which
 allows the lifetime and destruction order of the reactive graph to be analysed.
 
 !!! note "Non-standard type syntax"

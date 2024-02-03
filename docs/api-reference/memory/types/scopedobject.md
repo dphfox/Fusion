@@ -1,16 +1,16 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<span>Memory</span>
 	<span>Types</span>
-	<span>ScopeLifetime</span>
+	<span>ScopedObject</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-	<span class="fusiondoc-api-name">ScopeLifetime</span>
+	<span class="fusiondoc-api-name">ScopedObject</span>
 </h1>
 
 ```Lua
-export type ScopeLifetime = {
+export type ScopedObject = {
 	scope: Scope<unknown>?,
 	destroy: () -> ()
 }
@@ -65,7 +65,7 @@ been destroyed.
 </h2>
 
 ```Lua
-function ScopeLifetime:destroy(): ()
+function ScopedObject:destroy(): ()
 ```
 
 Called from a dependency when a change occurs. Returns `true` if the update

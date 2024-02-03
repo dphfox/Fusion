@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Dependency = ScopeLifetime & {
+export type Dependency = ScopedObject & {
 	dependentSet: {[Dependent]: unknown}
 }
 ```
@@ -19,7 +19,7 @@ A reactive graph object which can broadcast updates. Other graph objects can
 declare themselves as [dependent](../dependent) upon this object to receive
 updates.
 
-This type includes [`ScopeLifetime`](../../../memory/types/scopelifetime), which
+This type includes [`ScopedObject`](../../../memory/types/scopedobject), which
 allows the lifetime and destruction order of the reactive graph to be analysed.
 
 -----

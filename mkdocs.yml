@@ -105,7 +105,7 @@ nav:
     - Memory:
       - Types:
         - Scope: api-reference/memory/types/scope.md
-        - ScopeLifetime: api-reference/memory/types/scopelifetime.md
+        - ScopedObject: api-reference/memory/types/scopedobject.md
         - Task: api-reference/memory/types/task.md
       - Members:
         - deriveScope: api-reference/memory/members/derivescope.md

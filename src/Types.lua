@@ -43,7 +43,7 @@ export type Task =
 export type Scope<Constructors> = {unknown} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
-export type ScopeLifetime = {
+export type ScopedObject = {
 	scope: Scope<unknown>?,
 	destroy: () -> ()
 }
@@ -71,12 +71,12 @@ type ContextualIsMethods = {
 ]]
 
 -- A graph object which can have dependents.
-export type Dependency = ScopeLifetime & {
+export type Dependency = ScopedObject & {
 	dependentSet: {[Dependent]: unknown}
 }
 
 -- A graph object which can have dependencies.
-export type Dependent = ScopeLifetime & {
+export type Dependent = ScopedObject & {
 	update: (Dependent) -> boolean,
 	dependencySet: {[Dependency]: unknown}
 }
