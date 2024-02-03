@@ -14,6 +14,7 @@ local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local isState = require(Package.State.isState)
 local doCleanup = require(Package.Memory.doCleanup)
+local scopePool = require(Package.Memory.scopePool)
 
 type Set<T> = {[T]: unknown}
 
@@ -141,6 +142,7 @@ return {
 			-- disconnect observers which weren't reused
 			for oldState, childScope in pairs(oldScopes) do
 				doCleanup(childScope)
+				scopePool.clearAndGive(childScope)
 			end
 		end
 	

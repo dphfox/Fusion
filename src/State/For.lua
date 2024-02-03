@@ -143,6 +143,7 @@ function class:update(): boolean
 		-- be created. This accomodates for table growth and shrinking.
 		for unusedProcessor in existingProcessors do
 			doCleanup(unusedProcessor.scope)
+			scopePool.clearAndGive(unusedProcessor.scope)
 		end
 		
 		for key, remainingValues in remainingPairs do
@@ -215,6 +216,7 @@ function class:destroy()
 	end
 	for unusedProcessor in self._existingProcessors do
 		doCleanup(unusedProcessor.cleanupTask)
+		scopePool.clearAndGive(unusedProcessor.cleanupTask)
 	end
 end
 

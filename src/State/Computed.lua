@@ -77,6 +77,7 @@ function class:update(): boolean
 		local similar = isSimilar(oldValue, newValue)
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
+			scopePool.clearAndGive(self._innerScope)
 		end
 		self._value = newValue
 		self._innerScope = innerScope
@@ -95,6 +96,7 @@ function class:update(): boolean
 
 		if innerScope ~= nil then
 			doCleanup(innerScope)
+			scopePool.clearAndGive(self._innerScope)
 		end
 
 		-- restore old dependencies, because the new dependencies may be corrupt
@@ -132,6 +134,7 @@ function class:destroy()
 	end
 	if self._innerScope ~= nil then
 		doCleanup(self._innerScope)
+		scopePool.clearAndGive(self._innerScope)
 	end
 end
 

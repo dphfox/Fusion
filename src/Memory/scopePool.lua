@@ -23,6 +23,15 @@ return {
 			return scope
 		end
 	end,
+	clearAndGive = function(
+		scope: Types.Scope<unknown>
+	)
+		if poolSize < MAX_POOL_SIZE then
+			table.clear(scope)
+			poolSize += 1
+			pool[poolSize] = scope
+		end
+	end,
 	reuseAny = function(): Types.Scope<unknown>
 		if poolSize == 0 then
 			return nil
