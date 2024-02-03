@@ -15,8 +15,9 @@ export type Dependency = ScopeLifetime & {
 }
 ```
 
-A reactive graph object which can broadcast updates to other reactive graph
-objects.
+A reactive graph object which can broadcast updates. Other graph objects can
+declare themselves as [dependent](../dependent) upon this object to receive
+updates.
 
 This type includes [`ScopeLifetime`](../../../memory/types/scopelifetime), which
 allows the lifetime and destruction order of the reactive graph to be analysed.
