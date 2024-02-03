@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.Observer(
 	scope: Scope<unknown>,
-	watchedState: StateObject<unknown>
+	watching: Dependency
 ) -> Observer
 ```
 
@@ -24,7 +24,7 @@ Constructs and returns a new [observer](../../types/observer).
 !!! success "Use scoped() method syntax"
 	This function is intended to be accessed as a method on a scope:
 	```Lua
-	local observer = scope:Observer(watchedState)
+	local observer = scope:Observer(watching)
 	```
 
 -----
@@ -42,14 +42,13 @@ The [scope](../../../memory/types/scope) which should be used to store
 destruction tasks for this object.
 
 <h3 markdown>
-	watchedState
+	watching
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/stateobject">StateObject</a>&lt;unknown&gt;
+		: <a href="../../../state/types/dependency">Dependency</a>
 	</span>
 </h3>
 
-The <a href="../../../state/types/stateobject">state object</a> which this
-object should respond to.
+The object which the observer should receive updates from.
 
 -----
 

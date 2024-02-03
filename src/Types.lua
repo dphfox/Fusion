@@ -145,7 +145,7 @@ export type Observer = Dependent & {
 }
 export type ObserverConstructor = (
 	scope: Scope<unknown>,
-	watchedState: Dependency
+	watching: Dependency
 ) -> Observer
 
 -- A state object which follows another state object using tweens.

@@ -74,15 +74,15 @@ end
 
 local function Observer(
 	scope: Types.Scope<unknown>,
-	watchedState: Types.Dependency
+	watching: Types.Dependency
 ): Types.Observer
-	if watchedState == nil then
-		logError("scopeMissing", nil, "Observers", "myScope:Observer(watchedState)")
+	if watching == nil then
+		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
 	end
 
 	local self = setmetatable({
 		scope = scope,
-		dependencySet = {[watchedState] = true},
+		dependencySet = {[watching] = true},
 		dependentSet = {},
 		_changeListeners = {}
 	}, CLASS_METATABLE)
@@ -90,23 +90,23 @@ local function Observer(
 	
 	table.insert(scope, self)
 
-	if watchedState.scope == nil then
+	if watching.scope == nil then
 		logError(
 			"useAfterDestroy",
 			nil,
-			`The {watchedState.kind or watchedState.type or "watched"} object`,
+			`The {watching.kind or watching.type or "watched"} object`,
 			`the Observer that is watching it`
 		)
-	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "definitely-a" then
+	elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
 		logWarn(
 			"possiblyOutlives",
-			`The {watchedState.kind or watchedState.type or "watched"} object`,
+			`The {watching.kind or watching.type or "watched"} object`,
 			`the Observer that is watching it`
 		)
 	end
 
-	-- add this object to the watched state's dependent set
-	watchedState.dependentSet[self] = true
+	-- add this object to the watched object's dependent set
+	watching.dependentSet[self] = true
 
 	return self
 end
