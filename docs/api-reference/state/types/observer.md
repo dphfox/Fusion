@@ -29,38 +29,55 @@ A user-constructed [dependent](../dependent) that runs user code when its
 ## Members
 
 <h3 markdown>
-	kind
+	type
 	<span class="fusiondoc-api-type">
-		: "Value"
+		: "Observer"
 	</span>
 </h3>
 
-A more specific type string which can be used for runtime type checking. This
-can be used to tell types of state object apart.
+A type string which can be used for runtime type checking.
 
 -----
 
 ## Methods
 
 <h3 markdown>
-	set
+	onChange
 	<span class="fusiondoc-api-type">
-		-> ()
+		-> (() -> ())
 	</span>
 </h3>
 
 ```Lua
-function Value:set(
-	newValue: T
-): ()
+function Observer:onChange(
+	callback: () -> ()
+): (() -> ())
 ```
 
-Updates the value of this state object.
+Registers the callback to run when an update is received. 
 
-Other objects using the value are notified immediately of the change.
+The returned function will unregister the callback.
+
+<h3 markdown>
+	onBind
+	<span class="fusiondoc-api-type">
+		-> (() -> ())
+	</span>
+</h3>
+
+```Lua
+function Observer:onBind(
+	callback: () -> ()
+): (() -> ())
+```
+
+Runs the callback immediately, and registers the callback to run when an update
+is received.
+
+The returned function will unregister the callback.
 
 -----
 
 ## Learn More
 
-- [Values tutorial](../../../../tutorials/fundamentals/values)
+- [Observers tutorial](../../../../tutorials/fundamentals/observers)
