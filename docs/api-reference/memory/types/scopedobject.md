@@ -44,15 +44,6 @@ been destroyed.
 	should be set to `nil` to indicate that it no longer exists inside of a
 	scope. This is typically done inside the `:destroy()` method, if it exists.
 
-!!! tip "Double-destruction prevention"
-	Fusion's objects throw
-	[`destroyedTwice`](../../../general/errors/#destroyedtwice) if they detect
-	a `nil` scope during`:destroy()`.
-
-	It's strongly recommended that you emulate this behaviour if you're
-	implementing your own objects, as this protects against double-destruction
-	and exposes potential scoping issues further ahead of time.
-
 -----
 
 ## Methods
@@ -70,3 +61,12 @@ function ScopedObject:destroy(): ()
 
 Called by `doCleanup` to destroy this object. User code should generally not
 call this; instead, destroy the scope as a whole.
+
+!!! tip "Double-destruction prevention"
+	Fusion's objects throw
+	[`destroyedTwice`](../../../general/errors/#destroyedtwice) if they detect
+	a `nil` scope during`:destroy()`.
+
+	It's strongly recommended that you emulate this behaviour if you're
+	implementing your own objects, as this protects against double-destruction
+	and exposes potential scoping issues further ahead of time.
