@@ -32,9 +32,9 @@ change.
 
 <h3 markdown>
 	target
-	<a href="../canbestate" class="fusiondoc-api-type">
-		: CanBeState&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../canbestate">CanBeState</a>&lt;T&gt;
+	</span>
 </h3>
 
 The abstract representation of `T` to extract a value from.

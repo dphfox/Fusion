@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">deriveScope</span>
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		-> Scope&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/scope">Scope</a>&lt;T&gt;
+	</span>
 </h1>
 
 ```Lua
@@ -27,9 +27,9 @@ scope.
 
 <h3 markdown>
 	existing
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		: Scope&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../../types/scope">Scope</a>&lt;T&gt;
+	</span>
 </h3>
 
 An existing scope, whose methods should be re-used for the new scope.
@@ -38,9 +38,9 @@ An existing scope, whose methods should be re-used for the new scope.
 
 <h2 markdown>
 	Returns
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		-> Scope&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/scope">Scope</a>&lt;T&gt;
+	</span>
 </h2>
 
 A freshly-made, blank scope with the same methods.

@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">scoped</span>
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		-> Scope&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/scope">Scope</a>&lt;T&gt;
+	</span>
 </h1>
 
 ```Lua
@@ -39,9 +39,9 @@ parameter.
 
 <h2 markdown>
 	Returns
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		-> Scope&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/scope">Scope</a>&lt;T&gt;
+	</span>
 </h2>
 
 A freshly created, blank scope.

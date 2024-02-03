@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">peek</span>
-	<a href="../../types/use" class="fusiondoc-api-type">
-		: Use
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../../types/use">Use</a>
+	</span>
 </h1>
 
 ```Lua
@@ -44,9 +44,9 @@ the returned value.
 
 <h3 markdown>
 	target
-	<a href="../canbestate" class="fusiondoc-api-type">
-		: CanBeState&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../canbestate">CanBeState</a>&lt;T&gt;
+	</span>
 </h3>
 
 The abstract representation of `T` to extract a value from.

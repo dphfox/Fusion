@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">Contextual</span>
-	<a href="../../types/contextual" class="fusiondoc-api-type">
-		-> Contextual&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/contextual">Contextual</a>&lt;T&gt;
+	</span>
 </h1>
 
 ```Lua
@@ -38,9 +38,9 @@ by `Contextual:is():during()`.
 
 <h2 markdown>
 	Returns
-	<a href="../../types/contextual" class="fusiondoc-api-type">
-		-> Contextual&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/contextual">Contextual</a>&lt;T&gt;
+	</span>
 </h2>
 
 A freshly constructed contextual.

@@ -26,9 +26,9 @@ interface.
 
 <h2 markdown>
 	scope
-	<a href="../../types/scope" class="fusiondoc-api-type">
-		: Scope&lt;unknown&gt;?
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../../types/scope">Scope</a>&lt;unknown&gt;?
+	</span>
 </h2>
 
 The scope which this object was constructed within, or `nil` if the object has

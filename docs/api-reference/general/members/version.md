@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">version</span>
-	<a href="../../types/version" class="fusiondoc-api-type">
-		: Version
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../../types/version">Version</a>
+	</span>
 </h1>
 
 ```Lua

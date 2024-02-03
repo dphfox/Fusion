@@ -7,9 +7,9 @@
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">Value</span>
-	<a href="../../types/value" class="fusiondoc-api-type">
-		-> Value&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/value">Value</a>&lt;T&gt;
+	</span>
 </h1>
 
 ```Lua
@@ -33,9 +33,9 @@ Constructs and returns a new [value state object](../../types/value).
 
 <h3 markdown>
 	scope
-	<a href="../../../memory/types/scope" class="fusiondoc-api-type">
-		: Scope&lt;S&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		: <a href="../../../memory/types/scope">Scope</a>&lt;S&gt;
+	</span>
 </h3>
 
 The [scope](../../../memory/types/scope) which should be used to store
@@ -54,9 +54,9 @@ The initial value that will be stored until the next value is `:set()`.
 
 <h2 markdown>
 	Returns
-	<a href="../../types/value" class="fusiondoc-api-type">
-		-> Value&lt;T&gt;
-	</a>
+	<span class="fusiondoc-api-type">
+		-> <a href="../../types/value">Value</a>&lt;T&gt;
+	</span>
 </h2>
 
 A freshly constructed value state object.
