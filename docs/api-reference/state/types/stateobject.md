@@ -21,3 +21,26 @@ Stores a value of `T` which can change over time. As a
 
 This type isn't generally useful outside of Fusion itself; you should prefer to
 work with [`CanBeState<T>`](../canbestate) in your own code.
+
+-----
+
+## Members
+
+<h2 markdown>
+	type
+	<span class="fusiondoc-api-type">
+		: "State"
+	</span>
+</h2>
+
+A type string which can be used for runtime type checking.
+
+<h2 markdown>
+	kind
+	<span class="fusiondoc-api-type">
+		: string
+	</span>
+</h2>
+
+A more specific type string which can be used for runtime type checking. This
+can be used to tell types of state object apart.
