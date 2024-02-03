@@ -19,6 +19,7 @@ local Value = require(Package.State.Value)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
+local scopePool = require(Package.Memory.scopePool)
 
 local class = {}
 class.type = "State"
@@ -141,7 +142,7 @@ function class:update(): boolean
 		-- So, existing processors should be destroyed, and remaining pairs should
 		-- be created. This accomodates for table growth and shrinking.
 		for unusedProcessor in existingProcessors do
-			doCleanup(unusedProcessor.cleanupTask)
+			doCleanup(unusedProcessor.scope)
 		end
 		
 		for key, remainingValues in remainingPairs do
@@ -149,11 +150,12 @@ function class:update(): boolean
 				local innerScope = deriveScope(outerScope)
 				local inputPair = Value(innerScope, {key = key, value = value})
 				local processOK, outputPair = xpcall(self._processor, parseError, innerScope, inputPair)
+				local innerScope = scopePool.giveIfEmpty(innerScope)
 				if processOK then
 					local processor = {
 						inputPair = inputPair,
 						outputPair = outputPair,
-						cleanupTask = innerScope
+						scope = innerScope
 					}
 					newProcessors[processor] = true
 				else

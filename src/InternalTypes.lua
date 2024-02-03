@@ -74,7 +74,7 @@ export type For<KI, KO, VI, VO, S> = Types.For<KO, VO> & {
 type ForProcessor = {
 	inputPair: Types.Value<{key: unknown, value: unknown}>,
 	outputPair: Types.StateObject<{key: unknown, value: unknown}>,
-	cleanupTask: unknown
+	scope: Types.Scope<unknown>?
 }
 
 -- A state object which follows another state object using tweens.

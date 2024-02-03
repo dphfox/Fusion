@@ -7,13 +7,17 @@
 ]]
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local scopePool = require(Package.Memory.scopePool)
 
 -- This return type is technically a lie, but it's required for useful type
 -- checking behaviour.
 local function deriveScope<T>(
 	existing: Types.Scope<T>
 ): Types.Scope<T>
-	return setmetatable({}, getmetatable(existing)) :: any
+	return setmetatable(
+		scopePool.reuseAny() or {},
+		getmetatable(existing)
+	) :: any
 end
 
 return deriveScope

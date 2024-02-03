@@ -22,6 +22,7 @@ local isState = require(Package.State.isState)
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local scopePool = require(Package.Memory.scopePool)
 
 local class = {}
 class.type = "State"
@@ -69,6 +70,7 @@ function class:update(): boolean
 		end
 	end
 	local ok, newValue = xpcall(self._processor, parseError, use, innerScope)
+	local innerScope = scopePool.giveIfEmpty(innerScope)
 
 	if ok then
 		local oldValue = self._value
@@ -91,7 +93,9 @@ function class:update(): boolean
 		-- update process
 		logErrorNonFatal("callbackError", errorObj)
 
-		doCleanup(innerScope)
+		if innerScope ~= nil then
+			doCleanup(innerScope)
+		end
 
 		-- restore old dependencies, because the new dependencies may be corrupt
 		self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet

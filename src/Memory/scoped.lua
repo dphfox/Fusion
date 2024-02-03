@@ -8,6 +8,7 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
+local scopePool = require(Package.Memory.scopePool)
 
 local function merge(
 	into: {[unknown]: unknown},
@@ -31,7 +32,10 @@ end
 local function scoped(
 	...: {[unknown]: unknown}
 ): {[unknown]: unknown}
-	return setmetatable({}, {__index = merge({}, ...)}) :: any
+	return setmetatable(
+		scopePool.reuseAny() or {},
+		{__index = merge({}, ...)}
+	) :: any
 end
 
 return (scoped :: any) :: Types.ScopedConstructor
