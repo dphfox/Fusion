@@ -21,8 +21,9 @@ with optional `Constructors` as methods which can be called.
 	with constructor methods cannot be represented in text.
 
 !!! warning "Scopes are not unique"
-	Fusion can recycle old unused scopes and return them from other functions.
-	This reduces wasted memory while your program is running.
+	Fusion can recycle old unused scopes. This helps make scopes more
+	lightweight, but it also means they don't uniquely belong to any part of
+	your program.
 
-	However, it means this function doesn't always return a completely new
-	scope, so you shouldn't save the scope anywhere or use it as an identifier.
+	As a result, you shouldn't hold on to scopes after they've been cleaned up,
+	and you shouldn't use them as unique identifiers anywhere.

@@ -22,11 +22,12 @@ Returns a blank [scope](../../types/scope), with the `__index` metatable
 pointing at the given list of constructors for syntax convenience.
 
 !!! warning "Scopes are not unique"
-	Fusion can recycle old unused scopes and return them from this function.
-	This reduces wasted memory while your program is running.
+	Fusion can recycle old unused scopes. This helps make scopes more
+	lightweight, but it also means they don't uniquely belong to any part of
+	your program.
 
-	However, it means this function doesn't always return a completely new
-	scope, so you shouldn't save the scope anywhere or use it as an identifier.
+	As a result, you shouldn't hold on to scopes after they've been cleaned up,
+	and you shouldn't use them as unique identifiers anywhere.
 
 -----
 
@@ -40,7 +41,7 @@ pointing at the given list of constructors for syntax convenience.
 </h3>
 
 A table, ideally including functions which take a scope as their first
-parameter.
+parameter. Those functions will turn into methods.
 
 -----
 
@@ -51,7 +52,7 @@ parameter.
 	</span>
 </h2>
 
-A freshly created, blank scope.
+A blank scope with the specified methods.
 
 -----
 

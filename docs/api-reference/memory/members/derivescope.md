@@ -22,11 +22,12 @@ Returns a blank [scope](../../types/scope) with the same methods as an existing
 scope.
 
 !!! warning "Scopes are not unique"
-	Fusion can recycle old unused scopes and return them from this function.
-	This reduces wasted memory while your program is running.
+	Fusion can recycle old unused scopes. This helps make scopes more
+	lightweight, but it also means they don't uniquely belong to any part of
+	your program.
 
-	However, it means this function doesn't always return a completely new
-	scope, so you shouldn't save the scope anywhere or use it as an identifier.
+	As a result, you shouldn't hold on to scopes after they've been cleaned up,
+	and you shouldn't use them as unique identifiers anywhere.
 
 -----
 
@@ -50,7 +51,7 @@ An existing scope, whose methods should be re-used for the new scope.
 	</span>
 </h2>
 
-A freshly-made, blank scope with the same methods.
+A blank scope with the same methods as the existing scope.
 
 -----
 
