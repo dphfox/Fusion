@@ -68,6 +68,5 @@ been destroyed.
 function ScopedObject:destroy(): ()
 ```
 
-Called from a dependency when a change occurs. Returns `true` if the update
-should propagate transitively through this object, or `false` if the update
-should not continue through this object specifically.
+Called by `doCleanup` to destroy this object. User code should generally not
+call this; instead, destroy the scope as a whole.
