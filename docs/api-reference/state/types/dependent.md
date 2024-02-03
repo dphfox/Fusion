@@ -1,23 +1,22 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<span>State</span>
 	<span>Types</span>
-	<span>Dependency</span>
+	<span>Dependent</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-	<span class="fusiondoc-api-name">Dependency</span>
+	<span class="fusiondoc-api-name">Dependent</span>
 </h1>
 
 ```Lua
-export type Dependency = ScopeLifetime & {
-	dependentSet: {[Dependent]: unknown}
+export type Dependent = ScopeLifetime & {
+	update: (Dependent) -> boolean,
+	dependencySet: {[Dependency]: unknown}
 }
 ```
 
-A reactive graph object which can broadcast updates. Other graph objects can
-declare themselves as [dependent](../dependent) upon this object to receive
-updates.
+A reactive graph object which can receive updates by adding [dependencies](../dependency).
 
 This type includes [`ScopeLifetime`](../../../memory/types/scopelifetime), which
 allows the lifetime and destruction order of the reactive graph to be analysed.
@@ -27,9 +26,9 @@ allows the lifetime and destruction order of the reactive graph to be analysed.
 ## Members
 
 <h2 markdown>
-	dependentSet
+	dependencySet
 	<span class="fusiondoc-api-type">
-		: {[<a href="../dependent">Dependent</a>]: unknown}
+		: <a href="../../../memory/types/scope">Scope</a>&lt;unknown&gt;?
 	</span>
 </h2>
 
