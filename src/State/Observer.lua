@@ -74,7 +74,7 @@ end
 
 local function Observer(
 	scope: Types.Scope<unknown>,
-	watchedState: Types.StateObject<unknown>
+	watchedState: Types.Dependency
 ): Types.Observer
 	if watchedState == nil then
 		logError("scopeMissing", nil, "Observers", "myScope:Observer(watchedState)")
@@ -91,9 +91,18 @@ local function Observer(
 	table.insert(scope, self)
 
 	if watchedState.scope == nil then
-		logError("useAfterDestroy", nil, `The {watchedState.kind} object`, `the Observer that is watching it`)
+		logError(
+			"useAfterDestroy",
+			nil,
+			`The {watchedState.kind or watchedState.type or "watched"} object`,
+			`the Observer that is watching it`
+		)
 	elseif whichLivesLonger(scope, self, watchedState.scope, watchedState) == "definitely-a" then
-		logWarn("possiblyOutlives", `The {watchedState.kind} object`, `the Observer that is watching it`)
+		logWarn(
+			"possiblyOutlives",
+			`The {watchedState.kind or watchedState.type or "watched"} object`,
+			`the Observer that is watching it`
+		)
 	end
 
 	-- add this object to the watched state's dependent set
