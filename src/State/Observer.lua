@@ -15,8 +15,7 @@ local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 
 local class = {}
-class.type = "State"
-class.kind = "Observer"
+class.type = "Observer"
 
 local CLASS_METATABLE = {__index = class}
 

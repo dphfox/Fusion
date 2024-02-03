@@ -139,7 +139,7 @@ export type ForValuesConstructor =  <K, VI, VO, S>(
 
 -- An object which can listen for updates on another state object.
 export type Observer = Dependent & {
-	kind: "Observer",
+	type: "Observer",
 	onChange: (Observer, callback: () -> ()) -> (() -> ()),
 	onBind: (Observer, callback: () -> ()) -> (() -> ())
 }

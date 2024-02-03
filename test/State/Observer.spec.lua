@@ -11,8 +11,7 @@ return function()
 		local observer = Observer(scope, dependency)
 
 		expect(observer).to.be.a("table")
-		expect(observer.type).to.equal("State")
-		expect(observer.kind).to.equal("Observer")
+		expect(observer.type).to.equal("Observer")
 		expect(scope[2]).to.equal(observer)
 
 		doCleanup(scope)
