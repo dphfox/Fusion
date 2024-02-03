@@ -11,14 +11,18 @@
 
 ```Lua
 export type ScopeLifetime = {
-	scope: Scope<unknown>?
+	scope: Scope<unknown>?,
+	destroy: () -> ()
 }
 ```
 
-An object which uses a [scope](../../types/scope) to dictate how long it lives.
+An object designed for use with [scopes](../../types/scope).
+
 Objects satisfying this interface can be probed for information about their
 lifetime and how long they live relative to other objects satisfying this
-interface.
+interface. 
+
+These objects are also recognised by [`doCleanup`](../../members/docleanup).
 
 -----
 
@@ -31,7 +35,7 @@ interface.
 	</span>
 </h2>
 
-The scope which this object was constructed within, or `nil` if the object has
+The scope which this object was constructed with, or `nil` if the object has
 been destroyed.
 
 !!! note "Unchanged until destruction"
@@ -48,3 +52,22 @@ been destroyed.
 	It's strongly recommended that you emulate this behaviour if you're
 	implementing your own objects, as this protects against double-destruction
 	and exposes potential scoping issues further ahead of time.
+
+-----
+
+## Methods
+
+<h2 markdown>
+	destroy
+	<span class="fusiondoc-api-type">
+		-> ()
+	</span>
+</h2>
+
+```Lua
+function ScopeLifetime:destroy(): ()
+```
+
+Called from a dependency when a change occurs. Returns `true` if the update
+should propagate transitively through this object, or `false` if the update
+should not continue through this object specifically.

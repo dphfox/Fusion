@@ -44,7 +44,8 @@ export type Scope<Constructors> = {unknown} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopeLifetime = {
-	scope: Scope<unknown>?
+	scope: Scope<unknown>?,
+	destroy: () -> ()
 }
 
 -- Script-readable version information.
@@ -100,8 +101,7 @@ export type Use = <T>(target: CanBeState<T>) -> T
 -- A state object whose value can be set at any time by the user.
 export type Value<T> = StateObject<T> & {
 	kind: "State",
- 	set: (Value<T>, newValue: T, force: boolean?) -> (),
-	destroy: () -> ()
+ 	set: (Value<T>, newValue: T, force: boolean?) -> ()
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
@@ -110,8 +110,7 @@ export type ValueConstructor = <T>(
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & Dependent & {
-	kind: "Computed",
-	destroy: () -> ()
+	kind: "Computed"
 }
 export type ComputedConstructor = <T, S>(
 	scope: Scope<S>,
@@ -120,8 +119,7 @@ export type ComputedConstructor = <T, S>(
 
 -- A state object which maps over keys and/or values in another table.
 export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
-	kind: "For",
-	destroy: () -> ()
+	kind: "For"
 }
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
 	scope: Scope<S>,
@@ -143,8 +141,7 @@ export type ForValuesConstructor =  <K, VI, VO, S>(
 export type Observer = Dependent & {
 	kind: "Observer",
 	onChange: (Observer, callback: () -> ()) -> (() -> ()),
-	onBind: (Observer, callback: () -> ()) -> (() -> ()),
-	destroy: () -> ()
+	onBind: (Observer, callback: () -> ()) -> (() -> ())
 }
 export type ObserverConstructor = (
 	scope: Scope<unknown>,
@@ -153,8 +150,7 @@ export type ObserverConstructor = (
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
-	kind: "Tween",
-	destroy: () -> ()
+	kind: "Tween"
 }
 export type TweenConstructor = <T>(
 	scope: Scope<unknown>,
@@ -167,8 +163,7 @@ export type Spring<T> = StateObject<T> & Dependent & {
 	kind: "Spring",
 	setPosition: (Spring<T>, newPosition: Animatable) -> (),
 	setVelocity: (Spring<T>, newVelocity: Animatable) -> (),
-	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> (),
-	destroy: () -> ()
+	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> ()
 }
 export type SpringConstructor = <T>(
 	scope: Scope<unknown>,
