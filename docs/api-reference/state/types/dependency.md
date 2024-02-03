@@ -28,7 +28,7 @@ allows the lifetime and destruction order of the reactive graph to be analysed.
 <h2 markdown>
 	dependentSet
 	<span class="fusiondoc-api-type">
-		: <a href="../../types/scope">Scope</a>&lt;unknown&gt;?
+		: <a href="../../../memory/types/scope">Scope</a>&lt;unknown&gt;?
 	</span>
 </h2>
 
