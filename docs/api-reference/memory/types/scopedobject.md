@@ -57,12 +57,12 @@ been destroyed.
 
 ## Methods
 
-<h2 markdown>
+<h3 markdown>
 	destroy
 	<span class="fusiondoc-api-type">
 		-> ()
 	</span>
-</h2>
+</h3>
 
 ```Lua
 function ScopedObject:destroy(): ()
