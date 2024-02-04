@@ -30,12 +30,12 @@ allows the lifetime and destruction order of the reactive graph to be analysed.
 
 ## Members
 
-<h2 markdown>
+<h3 markdown>
 	dependencySet
 	<span class="fusiondoc-api-type">
 		: {[<a href="../dependency">Dependency</a>]: unknown}
 	</span>
-</h2>
+</h3>
 
 Everything this reactive graph object currently declares itself as dependent
 upon.
@@ -44,12 +44,12 @@ upon.
 
 ## Methods
 
-<h2 markdown>
+<h3 markdown>
 	update
 	<span class="fusiondoc-api-type">
 		-> boolean
 	</span>
-</h2>
+</h3>
 
 ```Lua
 function Dependent:update(): boolean

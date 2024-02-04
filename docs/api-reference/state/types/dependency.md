@@ -26,12 +26,12 @@ allows the lifetime and destruction order of the reactive graph to be analysed.
 
 ## Members
 
-<h2 markdown>
+<h3 markdown>
 	dependentSet
 	<span class="fusiondoc-api-type">
 		: {[<a href="../dependent">Dependent</a>]: unknown}
 	</span>
-</h2>
+</h3>
 
 The reactive graph objects which declare themselves as dependent upon this
 object.

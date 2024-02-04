@@ -26,21 +26,21 @@ work with [`CanBeState<T>`](../canbestate) in your own code.
 
 ## Members
 
-<h2 markdown>
+<h3 markdown>
 	type
 	<span class="fusiondoc-api-type">
 		: "State"
 	</span>
-</h2>
+</h3>
 
 A type string which can be used for runtime type checking.
 
-<h2 markdown>
+<h3 markdown>
 	kind
 	<span class="fusiondoc-api-type">
 		: string
 	</span>
-</h2>
+</h3>
 
 A more specific type string which can be used for runtime type checking. This
 can be used to tell types of state object apart.

@@ -23,3 +23,9 @@ with optional `Constructors` as methods which can be called.
 
 	As a result, you shouldn't hold on to scopes after they've been cleaned up,
 	and you shouldn't use them as unique identifiers anywhere.
+
+-----
+
+## Learn More
+
+- [Scopes tutorial](../../../../tutorials/fundamentals/scopes)

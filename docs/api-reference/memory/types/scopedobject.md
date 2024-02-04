@@ -28,12 +28,12 @@ These objects are also recognised by [`doCleanup`](../../members/docleanup).
 
 ## Members
 
-<h2 markdown>
+<h3 markdown>
 	scope
 	<span class="fusiondoc-api-type">
 		: <a href="../../types/scope">Scope</a>&lt;unknown&gt;?
 	</span>
-</h2>
+</h3>
 
 The scope which this object was constructed with, or `nil` if the object has
 been destroyed.
@@ -70,3 +70,9 @@ call this; instead, destroy the scope as a whole.
 	It's strongly recommended that you emulate this behaviour if you're
 	implementing your own objects, as this protects against double-destruction
 	and exposes potential scoping issues further ahead of time.
+
+-----
+
+## Learn More
+
+- [Scopes tutorial](../../../../tutorials/fundamentals/scopes)

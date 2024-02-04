@@ -25,3 +25,9 @@ Types which [`doCleanup`](../../members/docleanup) has defined behaviour for.
 	which it can process.
 
 	This type is only exposed for your own use.
+
+-----
+
+## Learn More
+
+- [Scopes tutorial](../../../../tutorials/fundamentals/scopes)
