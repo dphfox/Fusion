@@ -33,21 +33,15 @@ the details for you.
 The class type 'Foo' has no assignable property 'Bar'.
 ```
 
+**Related to:**
+[`New`](../../instances/members/new),
+[`Hydrate`](../../instances/members/hydrate)
+
 This message means you tried to set a property on an instance, but the property
 can't be assigned to. This could be because the property doesn't exist, or
 because it's locked by Roblox to prevent edits.
 
-This usually occurs with the [New](../instances/new) or
-[Hydrate](../instances/hydrate) functions:
-
-```Lua
-local folder = New "Folder" {
-	DataCost = 12345,
-	ThisPropertyDoesntExist = "Example"
-}
-```
-
-!!! tip
+!!! warning "Check your privileges"
 	Different scripts may have different privileges - for example, plugins will
 	be allowed more privileges than in-game scripts. Make sure you have the
 	necessary privileges to assign to your properties!
@@ -63,19 +57,11 @@ local folder = New "Folder" {
 The Frame class doesn't have a property called 'Foo'.
 ```
 
+**Related to:**
+[`OnChange`](../../instances/members/onchange)
+
 This message means you tried to connect to a property change event, but the
 property you specify doesn't exist on the instance.
-
-This usually occurs with the [New](../instances/new) or
-[Hydrate](../instances/hydrate) functions:
-
-```Lua
-local textBox = New "TextBox" {
-	[OnChange "ThisPropertyDoesntExist"] = function()
-		...
-	end)
-}
-```
 </div>
 
 -----
@@ -88,19 +74,11 @@ local textBox = New "TextBox" {
 The Frame class doesn't have an event called 'Foo'.
 ```
 
+**Related to:**
+[`OnEvent`](../../instances/members/onevent)
+
 This message means you tried to connect to an event on an instance, but the
 event you specify doesn't exist on the instance.
-
-This usually occurs with the [New](../instances/new) or
-[Hydrate](../instances/hydrate) functions:
-
-```Lua
-local button = New "TextButton" {
-	[OnEvent "ThisEventDoesntExist"] = function()
-		...
-	end)
-}
-```
 </div>
 
 -----
@@ -113,16 +91,19 @@ local button = New "TextButton" {
 Can't create a new instance of class 'Foo'.
 ```
 
-This message means you tried to create a new instance type, but the type of
-instance you specify doesn't exist in Roblox.
+**Related to:**
+[`New`](../../instances/members/new)
 
-This usually occurs with the [New](../instances/new) function:
+This message means you tried to create a new instance type, but that type of
+instance could not be created, or doesn't exist in Roblox.
 
-```Lua
-local instance = New "ThisClassTypeIsInvalid" {
-	...
-}
-```
+Check that you spelled the class name correctly.
+
+!!! warning "Some instances are not available outside of testing"
+	Sometimes, Roblox will lock new instance types behind beta tests or FFlags,
+	so if you're using bleeding-edge or unreleased features, ensure you're
+	enrolled in the correct beta tests, using the correct Roblox Studio
+	update channel, and have the correct flags configured locally.
 </div>
 
 -----
