@@ -47,3 +47,9 @@ The name of the property that the special key should target.
 </h2>
 
 A special key for listening to changes for properties of that name.
+
+-----
+
+## Learn More
+
+- [Change Events tutorial](../../../../tutorials/roblox/change-events)

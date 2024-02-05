@@ -47,3 +47,9 @@ The name of the event that the special key should target.
 </h2>
 
 A special key for listening to events of that name.
+
+-----
+
+## Learn More
+
+- [Events tutorial](../../../../tutorials/roblox/events)
