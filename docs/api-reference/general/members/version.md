@@ -13,11 +13,7 @@
 </h1>
 
 ```Lua
-Fusion.version = {
-	major = 0,
-	minor = 3,
-	isRelease = false
-}
+Fusion.version: Version
 ```
 
 The version of the Fusion source code.
