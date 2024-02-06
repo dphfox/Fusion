@@ -50,7 +50,7 @@ local function setProperty(instance: Instance, property: string, value: any)
 			local expectedType = typeof((instance :: any)[property])
 
 			if givenType == expectedType then
-				logError("propertyAssignmentFailed", err, value, property, instance.ClassName)
+				logError("propertyAssignmentFailure", err, value, property, instance.ClassName)
 			else
 				logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
 			end
