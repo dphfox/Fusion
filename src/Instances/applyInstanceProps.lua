@@ -19,6 +19,7 @@ local External = require(Package.External)
 local cleanup = require(Package.Utility.cleanup)
 local xtypeof = require(Package.Utility.xtypeof)
 local logError = require(Package.Logging.logError)
+local parseError = require(Package.Logging.parseError)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 
@@ -31,7 +32,9 @@ local function testPropertyAssignable(instance: Instance, property: string)
 end
 
 local function setProperty(instance: Instance, property: string, value: any)
-	if not pcall(setProperty_unsafe, instance, property, value) then
+	local success, err = xpcall(setProperty_unsafe, parseError, instance, property, value)
+
+	if not success then
 		if not pcall(testPropertyAssignable, instance, property) then
 			if instance == nil then
 				-- reference has been lost
@@ -45,7 +48,12 @@ local function setProperty(instance: Instance, property: string, value: any)
 			-- this typically implies the wrong type was received
 			local givenType = typeof(value)
 			local expectedType = typeof((instance :: any)[property])
-			logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
+
+			if givenType == expectedType then
+				logError("propertyAssignmentFailed", err, value, property, instance.ClassName)
+			else
+				logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
+			end
 		end
 	end
 end
