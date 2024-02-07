@@ -42,7 +42,7 @@ return {
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
 	noTaskScheduler = "Fusion is not connected to an external task scheduler.",
-	propertyAssignmentFailure = "Failed to assign value '%s' to property '%s' of instance '%s'. Error: ERROR_MESSAGE",
+	propertySetError = "Error setting property: ERROR_MESSAGE",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	stateGetWasRemoved = "`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.",
 	strictReadError = "'%s' is not a valid member of '%s'.",
