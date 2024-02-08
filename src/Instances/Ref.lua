@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which stores a reference to the instance
@@ -6,24 +7,36 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
+local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local Ref = {}
-Ref.type = "SpecialKey"
-Ref.kind = "Ref"
-Ref.stage = "observer"
+return {
+	type = "SpecialKey",
+	kind = "Ref",
+	stage = "observer",
+	apply = function(
+		self: Types.SpecialKey,
+		scope: Types.Scope<unknown>,
+		value: unknown,
+		applyTo: Instance
+	)
+		if not isState(value) then
+			logError("invalidRefType")
+		end
+		local value = value :: Types.StateObject<unknown>
+		if value.kind ~= "Value" then
+			logError("invalidRefType")
+		end
+		local value = value :: Types.Value<unknown>
 
-function Ref:apply(refState: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
-	if xtypeof(refState) ~= "State" or refState.kind ~= "Value" then
-		logError("invalidRefType")
-	else
-		refState:set(applyTo)
-		table.insert(cleanupTasks, function()
-			refState:set(nil)
-		end)
+		if value.scope == nil then
+			logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		end
+		value:set(applyTo)
 	end
-end
-
-return Ref
+} :: Types.SpecialKey

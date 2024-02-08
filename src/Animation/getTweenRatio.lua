@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Given a `tweenInfo` and `currentTime`, returns a ratio which can be used to
@@ -7,7 +8,10 @@
 
 local TweenService = game:GetService("TweenService")
 
-local function getTweenRatio(tweenInfo: TweenInfo, currentTime: number): number
+local function getTweenRatio(
+	tweenInfo: TweenInfo,
+	currentTime: number
+): number
 	local delay = tweenInfo.DelayTime
 	local duration = tweenInfo.Time
 	local reverses = tweenInfo.Reverses

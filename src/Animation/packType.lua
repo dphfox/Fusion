@@ -1,19 +1,19 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Packs an array of numbers into a given animatable data type.
 	If the type is not animatable, nil will be returned.
-
-	FUTURE: When Luau supports singleton types, those could be used in
-	conjunction with intersection types to make this function fully statically
-	type checkable.
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local Oklab = require(Package.Colour.Oklab)
 
-local function packType(numbers: {number}, typeString: string): PubTypes.Animatable?
+local function packType(
+	numbers: {number},
+	typeString: string
+): Types.Animatable?
 	if typeString == "number" then
 		return numbers[1]
 

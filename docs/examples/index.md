@@ -24,7 +24,7 @@ animations and responding to different events.
 
 ## Open-Source Projects
 
-### Fusion Wordle
+### Fusion Wordle (for Fusion 0.2)
 
 ![A photo taken in Fusion Wordle, showing a completed game board](place-thumbnails/Fusion-Wordle.jpg)
 
@@ -33,7 +33,7 @@ validation, spring animations and sounds.
 
 [Play and edit the game on Roblox.](https://www.roblox.com/games/12178127791/)
 
-### Fusion Obby
+### Fusion Obby (for Fusion 0.1)
 
 ![A photo taken in Fusion Obby, showing the counter and confetti](place-thumbnails/Fusion-Obby.jpg)
 

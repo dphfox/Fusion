@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	An xpcall() error handler to collect and parse useful information about
@@ -6,9 +7,11 @@
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 
-local function parseError(err: string): Types.Error
+local function parseError(
+	err: string
+): InternalTypes.Error
 	return {
 		type = "Error",
 		raw = err,

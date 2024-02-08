@@ -7,33 +7,36 @@ return function()
 
 		local api = {
 			version = "table",
+			Contextual = "function",
 
-			New = "function",
-			Hydrate = "function",
-			Ref = "table",
-			Out = "function",
-			Cleanup = "table",
-			Children = "table",
-			OnEvent = "function",
-			OnChange = "function",
-			Attribute = "function",
-			AttributeChange = "function",
-			AttributeOut = "function",
+			cleanup = "function",
+			doCleanup = "function",
+			doNothing = "function",
+			scoped = "function",
+			deriveScope = "function",
 
+			peek = "function",
 			Value = "function",
 			Computed = "function",
 			ForPairs = "function",
 			ForKeys = "function",
 			ForValues = "function",
 			Observer = "function",
-
+			
 			Tween = "function",
 			Spring = "function",
 
-			Contextual = "function",
-			cleanup = "function",
-			doNothing = "function",
-			peek = "function"
+			New = "function",
+			Hydrate = "function",
+			
+			Ref = "table",
+			Out = "function",
+			Children = "table",
+			OnEvent = "function",
+			OnChange = "function",
+			Attribute = "function",
+			AttributeChange = "function",
+			AttributeOut = "function"
 		}
 
 		for apiName, apiType in pairs(api) do
@@ -55,9 +58,9 @@ return function()
 		end
 	end)
 
-	it("should error when accessing non-existent APIs", function()
+	it("should not error when accessing non-existent APIs", function()
 		expect(function()
-			local foo = Fusion.thisIsNotARealAPI
-		end).to.throw("strictReadError")
+			local foo = Fusion["thisIsNotARealAPI" :: any]
+		end).never.to.throw()
 	end)
 end

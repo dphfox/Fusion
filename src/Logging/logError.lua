@@ -1,14 +1,19 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Utility function to log a Fusion-specific error.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 local messages = require(Package.Logging.messages)
 
-local function logError(messageID: string, errObj: Types.Error?, ...)
+local function logError(
+	messageID: string,
+	errObj: InternalTypes.Error?,
+	...: unknown
+)
 	local formatString: string
 
 	if messages[messageID] ~= nil then

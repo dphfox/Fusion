@@ -1,42 +1,88 @@
+This example demonstrates how to create dynamic theme colours using Fusion's
+state objects.
+
+-----
+
+## Overview
+
 ```Lua linenums="1"
--- [Fusion imports omitted for clarity]
+local Fusion = --initialise Fusion here however you please!
+local scoped = Fusion.scoped
 
--- Defining some theme colours. Something to note; I'm intentionally putting the
--- actual colour names as the topmost keys here, and putting `light` and `dark`
--- keys inside the colours. If you did it the other way around, then there's no
--- single source of truth for what colour names are available, and it's hard to
--- keep in sync. If a theme doesn't have a colour, it's better to explicitly not
--- specify it under the colour name.
+local Theme = {}
 
-local THEME_COLOURS = {
+Theme.colours = {
 	background = {
 		light = Color3.fromHex("FFFFFF"),
-		dark = Color3.fromHex("2D2D2D")
+		dark = Color3.fromHex("222222")
 	},
 	text = {
-		light = Color3.fromHex("2D2D2D"),
+		light = Color3.fromHex("222222"),
 		dark = Color3.fromHex("FFFFFF")
-	},
-	-- [etc, for all the colours you'd want]
+	}
 }
 
--- This will control which colours we're using at the moment. You could expose
--- this to the rest of your code directly, or calculate it using a Computed.
-local currentTheme = Value("light")
+-- Don't forget to pass this to `doCleanup` if you disable the script.
+local scope = scoped(Fusion)
 
--- Now we'll create a Computed for every theme colour, which will pick a colour
--- from `THEME_COLS` based on our `currentTheme`.
-local currentColours = {}
-for colourName, colourOptions in THEME_COLOURS do
-	currentColours[colourName] = Computed(function(use)
-		return colourOptions[use(currentTheme)]
+Theme.current = scope:Value("light")
+Theme.dynamic = {}
+for colour, variants in Theme.colours do
+	Theme.dynamic[colour] = scope:Computed(function(use)
+		return variants[use(Theme.current)]
 	end)
 end
 
--- Now you can expose `colourOptions` to the rest of your code, preferably under
--- a convenient name :)
+Theme.current:set("light")
+print(peek(Theme.dynamic.background)) --> 255, 255, 255
 
-local text = New "TextLabel" {
-	TextColor3 = currentColours.text
+Theme.current:set("dark")
+print(peek(Theme.dynamic.background)) --> 34, 34, 34
+```
+
+-----
+
+## Explanation
+
+To begin, this example defines a set of colours with light and dark variants.
+
+```Lua linenums="6"
+Theme.colours = {
+	background = {
+		light = Color3.fromHex("FFFFFF"),
+		dark = Color3.fromHex("222222")
+	},
+	text = {
+		light = Color3.fromHex("222222"),
+		dark = Color3.fromHex("FFFFFF")
+	}
 }
+```
+
+A `Value` object stores which variant is in use right now.
+
+```Lua linenums="20"
+Theme.current = scope:Value("light")
+```
+
+Finally, each colour is turned into a `Computed`, which dynamically pulls the
+desired variant from the list.
+
+```Lua linenums="21"
+Theme.dynamic = {}
+for colour, variants in Theme.colours do
+	Theme.dynamic[colour] = scope:Computed(function(use)
+		return variants[use(Theme.current)]
+	end)
+end
+```
+
+This allows other code to easily access theme colours from `Theme.dynamic`.
+
+```Lua linenums="28"
+Theme.current:set("light")
+print(peek(Theme.dynamic.background)) --> 255, 255, 255
+
+Theme.current:set("dark")
+print(peek(Theme.dynamic.background)) --> 34, 34, 34
 ```

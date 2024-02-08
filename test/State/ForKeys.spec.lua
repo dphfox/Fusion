@@ -1,281 +1,234 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local ForKeys = require(Package.State.ForKeys)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
-
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	it("should construct a ForKeys object", function()
-		local forKeys = ForKeys({}, function(use) end)
-
-		expect(forKeys).to.be.a("table")
-		expect(forKeys.type).to.equal("State")
-		expect(forKeys.kind).to.equal("ForKeys")
-	end)
-
-	it("should calculate and retrieve its value", function()
-		local computedPair = ForKeys({ ["foo"] = true }, function(use, key)
-			return key .. "baz"
+	it("constructs in scopes", function()
+		local scope = {}
+		local forObject = ForKeys(scope, {}, function()
+			-- intentionally blank
 		end)
 
-		local state = peek(computedPair)
+		expect(forObject).to.be.a("table")
+		expect(forObject.type).to.equal("State")
+		expect(forObject.kind).to.equal("For")
+		expect(scope[1]).to.equal(forObject)
 
-		expect(state["foobaz"]).to.be.ok()
-		expect(state["foobaz"]).to.equal(true)
+		doCleanup(scope)
 	end)
 
-	it("should not recalculate its KO in response to an unchanged KI", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
+	it("is destroyable", function()
+		local scope = {}
+		local forObject = ForKeys(scope, {}, function()
+			-- intentionally blank
+		end)
+		expect(function()
+			forObject:destroy()
+		end).to.never.throw()
+	end)
 
-		local calculations = 0
+	it("iterates on constants", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local forObject = ForKeys(scope, data, function(_, _, key)
+			return key:upper()
+		end)
+		expect(peek(forObject)).to.be.a("table")
+		expect(peek(forObject).FOO).to.equal(1)
+		expect(peek(forObject).BAR).to.equal(2)
+		doCleanup(scope)
+	end)
 
-		local computedPair = ForKeys(state, function(use, key)
-			calculations += 1
+	it("iterates on state objects", function()
+		local scope = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local forObject = ForKeys(scope, data, function(_, _, key)
+			return key:upper()
+		end)
+		expect(peek(forObject)).to.be.a("table")
+		expect(peek(forObject).FOO).to.equal(1)
+		expect(peek(forObject).BAR).to.equal(2)
+		data:set({baz = 3, garb = 4})
+		expect(peek(forObject).FOO).to.equal(nil)
+		expect(peek(forObject).BAR).to.equal(nil)
+		expect(peek(forObject).BAZ).to.equal(3)
+		expect(peek(forObject).GARB).to.equal(4)
+		doCleanup(scope)
+	end)
+
+	it("computes with constants", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local forObject = ForKeys(scope, data, function(use, _, key)
+			return key .. use("baz")
+		end)
+		expect(peek(forObject).foobaz).to.equal(1)
+		expect(peek(forObject).barbaz).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("computes with state objects", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2}
+		local suffix = Value(scope, "first")
+		local forObject = ForKeys(scope, data, function(use, _, key)
+			return key .. use(suffix)
+		end)
+		expect(peek(forObject).foofirst).to.equal(1)
+		expect(peek(forObject).barfirst).to.equal(2)
+		suffix:set("second")
+		expect(peek(forObject).foofirst).to.equal(nil)
+		expect(peek(forObject).barfirst).to.equal(nil)
+		expect(peek(forObject).foosecond).to.equal(1)
+		expect(peek(forObject).barsecond).to.equal(2)
+		doCleanup(scope)
+	end)
+
+	it("destroys and omits keys that error during processing", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2, baz = 3}
+		local suffix = Value(scope, "first")
+		local destroyed = {}
+		local forObject = ForKeys(scope, data, function(use, innerScope, key)
+			local generated = key .. use(suffix)
+			table.insert(innerScope, function()
+				destroyed[generated] = true
+			end)
+			if key == "bar" and use(suffix) == "second" then
+				error("This is an intentional error from a unit test")
+			end
+			return generated
+		end)
+		expect(peek(forObject).foofirst).to.equal(1)
+		expect(peek(forObject).barfirst).to.equal(2)
+		expect(peek(forObject).bazfirst).to.equal(3)
+		suffix:set("second")
+		expect(peek(forObject).foofirst).to.equal(nil)
+		expect(peek(forObject).barfirst).to.equal(nil)
+		expect(peek(forObject).bazfirst).to.equal(nil)
+		expect(peek(forObject).foosecond).to.equal(1)
+		expect(peek(forObject).barsecond).to.equal(nil)
+		expect(peek(forObject).bazsecond).to.equal(3)
+		expect(destroyed.foofirst).to.equal(true)
+		expect(destroyed.barfirst).to.equal(true)
+		expect(destroyed.bazfirst).to.equal(true)
+		expect(destroyed.foosecond).to.equal(nil)
+		expect(destroyed.barsecond).to.equal(true)
+		expect(destroyed.bazsecond).to.equal(nil)
+		suffix:set("third")
+		expect(peek(forObject).foofirst).to.equal(nil)
+		expect(peek(forObject).barfirst).to.equal(nil)
+		expect(peek(forObject).bazfirst).to.equal(nil)
+		expect(peek(forObject).foosecond).to.equal(nil)
+		expect(peek(forObject).barsecond).to.equal(nil)
+		expect(peek(forObject).bazsecond).to.equal(nil)
+		expect(peek(forObject).foothird).to.equal(1)
+		expect(peek(forObject).barthird).to.equal(2)
+		expect(peek(forObject).bazthird).to.equal(3)
+		doCleanup(scope)
+	end)
+
+	it("omits keys that return nil", function()
+		local scope = {}
+		local data = {foo = 1, bar = 2, baz = 3}
+		local omitThird = Value(scope, false)
+		local forObject = ForKeys(scope, data, function(use, _, key)
+			if key == "bar" then
+				return nil
+			end
+			if use(omitThird) then
+				if key == "baz" then
+					return nil
+				end
+			end
 			return key
 		end)
-
-		expect(calculations).to.equal(1)
-
-		state:set({
-			["foo"] = "biz",
-			["baz"] = "bar",
-		})
-
-		expect(calculations).to.equal(2)
+		expect(peek(forObject).foo).to.equal(1)
+		expect(peek(forObject).bar).to.equal(nil)
+		expect(peek(forObject).baz).to.equal(3)
+		omitThird:set(true)
+		expect(peek(forObject).foo).to.equal(1)
+		expect(peek(forObject).bar).to.equal(nil)
+		expect(peek(forObject).baz).to.equal(nil)
+		omitThird:set(false)
+		expect(peek(forObject).foo).to.equal(1)
+		expect(peek(forObject).bar).to.equal(nil)
+		expect(peek(forObject).baz).to.equal(3)
+		doCleanup(scope)
 	end)
 
-	it("should call the destructor when a key gets removed", function()
-		local state = Value({
-			["foo"] = "bar",
-			["baz"] = "bar",
-		})
-
-		local destructions = 0
-
-		local computedPair = ForKeys(state, function(use, key)
-			return key .. "biz"
-		end, function(key)
-			destructions += 1
-		end)
-
-		state:set({
-			["foo"] = "bar",
-		})
-
-		expect(destructions).to.equal(1)
-
-		state:set({
-			["baz"] = "bar",
-		})
-
-		expect(destructions).to.equal(2)
-
-		state:set({
-			["foo"] = "bar",
-			["baz"] = "bar",
-		})
-
-		expect(destructions).to.equal(2)
-
-		state:set({})
-
-		expect(destructions).to.equal(4)
-	end)
-
-	it("should throw if there is a key collision", function()
-		expect(function()
-			local state = Value({
-				["foo"] = "bar",
-				["baz"] = "bar",
-			})
-
-			local computed = ForKeys(state, function(use)
-				return "foo"
+	it("doesn't destroy inner scope on creation", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
 			end)
-		end).to.throw("forKeysKeyCollision")
-
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local computed = ForKeys(state, function(use)
-			return "foo"
+			return key
 		end)
-
-		expect(function()
-			state:set({
-				["foo"] = "bar",
-				["baz"] = "bar",
-			})
-		end).to.throw("forKeysKeyCollision")
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		data:set({foo = 1, bar = 2, baz = 3})
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		expect(destructed.baz).to.equal(nil)
+		doCleanup(scope)
 	end)
 
-	it("should call the destructor with meta data", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local destructions = 0
-
-		local computedKey = ForKeys(state, function(use, key)
-			local newKey = key .. "biz"
-			return newKey, newKey
-		end, function(key, meta)
-			expect(meta).to.equal(key)
-			destructions += 1
-		end)
-
-		state:set({
-			["baz"] = "bar",
-		})
-
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(1)
-
-		state:set({})
-
-		-- this verifies that the meta expectation passed
-		expect(destructions).to.equal(2)
-	end)
-
-	it("should only destruct an output key when it has no associated input key", function()
-		local map = {
-			["foo"] = "fiz",
-			["bar"] = "fiz",
-			["baz"] = "fuzz",
-		}
-
-		local state = Value({
-			["foo"] = true,
-		})
-
-		local destructions = 0
-
-		local computedKey = ForKeys(state, function(use, key)
-			return map[key]
-		end, function()
-			destructions += 1
-		end)
-
-		state:set({
-			["bar"] = true,
-		})
-
-		expect(destructions).to.equal(0)
-
-		state:set({
-			["foo"] = true,
-			["bar"] = true,
-			["baz"] = true,
-		})
-
-		expect(destructions).to.equal(0)
-
-		state:set({
-			["baz"] = true,
-		})
-
-		expect(destructions).to.equal(1)
-	end)
-
-	it("should recalculate its value in response to State objects", function()
-		local baseMap = Value({
-			["foo"] = "baz",
-		})
-		local barMap = ForKeys(baseMap, function(use, key)
-			return key .. "bar"
-		end)
-
-		expect(peek(barMap)["foobar"]).to.be.ok()
-
-		baseMap:set({
-			["baz"] = "foo",
-		})
-
-		expect(peek(barMap)["bazbar"]).to.be.ok()
-	end)
-
-	it("should recalculate its value in response to ForKeys objects", function()
-		local baseMap = Value({
-			["foo"] = "baz",
-		})
-		local barMap = ForKeys(baseMap, function(use, key)
-			return key .. "bar"
-		end)
-		local bizMap = ForKeys(barMap, function(use, key)
-			return key .. "biz"
-		end)
-
-		expect(peek(barMap)["foobar"]).to.be.ok()
-		expect(peek(bizMap)["foobarbiz"]).to.be.ok()
-
-		baseMap:set({
-			["fiz"] = "foo",
-			["baz"] = "foo",
-		})
-
-		expect(peek(barMap)["fizbar"]).to.be.ok()
-		expect(peek(bizMap)["fizbarbiz"]).to.be.ok()
-		expect(peek(barMap)["bazbar"]).to.be.ok()
-		expect(peek(bizMap)["bazbarbiz"]).to.be.ok()
-	end)
-
-	itSKIP("should not corrupt dependencies after an error", function()
-		-- needs rewrite
-	end)
-
-	it("should garbage-collect unused objects", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-
-		local counter = 0
-
-		do
-			local computedKeys = ForKeys(state, function(use, key)
-				counter += 1
-				return key
+	it("destroys inner scope on update", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
 			end)
-		end
-
-		waitForGC()
-
-		state:set({
-			["bar"] = "baz",
-		})
-
-		expect(counter).to.equal(1)
+			return key
+		end)
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		data:set({baz = 3})
+		expect(destructed.foo).to.equal(true)
+		expect(destructed.bar).to.equal(true)
+		expect(destructed.baz).to.equal(nil)
+		doCleanup(scope)
 	end)
 
-	it("should not garbage-collect objects in use", function()
-		local state = Value({
-			["foo"] = "bar",
-		})
-		local computed2
-
-		local counter = 0
-
-		do
-			local computed = ForKeys(state, function(use, key)
-				counter += 1
-				return key
+	it("destroys inner scope on destroy", function()
+		local scope = {}
+		local destructed = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local _ = ForKeys(scope, data, function(_, innerScope, key)
+			table.insert(innerScope, function()
+				destructed[key] = true
 			end)
+			return key
+		end)
+		expect(destructed.foo).to.equal(nil)
+		expect(destructed.bar).to.equal(nil)
+		doCleanup(scope)
+		expect(destructed.foo).to.equal(true)
+		expect(destructed.bar).to.equal(true)
+	end)
 
-			computed2 = ForKeys(computed, function(use, key)
-				return key
-			end)
-		end
-
-		waitForGC()
-		state:set({
-			["bar"] = "baz",
-		})
-
-		expect(counter).to.equal(2)
+	it("doesn't recompute when values change", function()
+		local scope = {}
+		local data = Value(scope, {foo = 1, bar = 2})
+		local computations = 0
+		local _ = ForKeys(scope, data, function(_, _, key)
+			computations += 1
+			return string.upper(key)
+		end)
+		expect(computations).to.equal(2)
+		data:set({foo = 3, bar = 4})
+		expect(computations).to.equal(2)
+		data:set({foo = 3, bar = 4, baz = 5})
+		expect(computations).to.equal(3)
+		data:set({foo = 4, bar = 5, baz = 6})
+		expect(computations).to.equal(3)
+		doCleanup(scope)
 	end)
 end
