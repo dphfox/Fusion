@@ -21,7 +21,7 @@ local function PlayerListRow(props: PlayerListRowProps)
 		Text = props.Player.DisplayName,
 		TextColor3 = Color3.new(1, 1, 1),
 		Font = Enum.Font.GothamMedium,
-		FontSize = 16,
+		FontSize = Enum.FontSize.Size18,
 		TextXAlignment = "Right",
 		TextTruncate = "AtEnd",
 
