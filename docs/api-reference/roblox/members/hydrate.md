@@ -35,7 +35,7 @@ A special exception is made for assigning `Parent`, which is only assigned after
 the `descendants` stage.
 
 !!! warning "Do not overwrite properties"
-	If the instance was previously created with [`New`](../new) or oreviously
+	If the instance was previously created with [`New`](../new) or previously
 	hydrated, do not assign to any properties that were previously specified in
 	those prior calls. Duplicated assignments can interfere with each other in
 	unpredictable ways.
