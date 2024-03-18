@@ -215,8 +215,8 @@ function class:destroy()
 		dependency.dependentSet[self] = nil
 	end
 	for unusedProcessor in self._existingProcessors do
-		doCleanup(unusedProcessor.cleanupTask)
-		scopePool.clearAndGive(unusedProcessor.cleanupTask)
+		doCleanup(unusedProcessor.scope)
+		scopePool.clearAndGive(unusedProcessor.scope)
 	end
 end
 
