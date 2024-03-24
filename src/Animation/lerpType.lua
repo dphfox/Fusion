@@ -28,20 +28,20 @@ local function lerpType(from: any, to: any, ratio: number): any
 
 		elseif typeString == "Color3" then
 			local to, from = to :: Color3, from :: Color3
-			local fromLab = Oklab.to(from)
-			local toLab = Oklab.to(to)
-			return Oklab.from(
+			local fromLab = Oklab.fromSRGB(from)
+			local toLab = Oklab.fromSRGB(to)
+			return Oklab.toSRGB(
 				fromLab:Lerp(toLab, ratio),
 				false
 			)
 
 		elseif typeString == "ColorSequenceKeypoint" then
 			local to, from = to :: ColorSequenceKeypoint, from :: ColorSequenceKeypoint
-			local fromLab = Oklab.to(from.Value)
-			local toLab = Oklab.to(to.Value)
+			local fromLab = Oklab.fromSRGB(from.Value)
+			local toLab = Oklab.fromSRGB(to.Value)
 			return ColorSequenceKeypoint.new(
 				(to.Time - from.Time) * ratio + from.Time,
-				Oklab.from(
+				Oklab.toSRGB(
 					fromLab:Lerp(toLab, ratio),
 					false
 				)
