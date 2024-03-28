@@ -6,6 +6,7 @@
 ]]
 
 local Package = script.Parent.Parent
+local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
@@ -93,7 +94,7 @@ function class:get()
 	logError("stateGetWasRemoved")
 end
 
-local function Computed<T>(processor: () -> T, destructor: ((T) -> ())?): Types.Computed<T>
+local function Computed<T>(processor: (PubTypes.Use) -> T, destructor: ((T) -> ())?): Types.Computed<T>
 	local dependencySet = {}
 	local self = setmetatable({
 		type = "State",
