@@ -35,6 +35,18 @@ local function unpackType(value: any, typeString: string): {number}
 		local lab = Oklab.to(value.Value)
 		return {lab.X, lab.Y, lab.Z, value.Time}
 
+	elseif typeString == "ColorSequence" then
+		local unpacked, i = table.create(4 * #value.Keypoints), 0
+		for _, keypoint in value.Keypoints do
+			local lab = Oklab.to(keypoint.Value)
+			unpacked[i + 1] = lab.X
+			unpacked[i + 2] = lab.Y
+			unpacked[i + 3] = lab.Z
+			unpacked[i + 4] = keypoint.Time
+			i += 4
+		end
+		return unpacked
+
 	elseif typeString == "DateTime" then
 		return {value.UnixTimestampMillis}
 

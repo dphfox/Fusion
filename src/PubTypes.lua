@@ -21,6 +21,7 @@ export type Animatable =
 	number |
 	CFrame |
 	Color3 |
+	ColorSequence |
 	ColorSequenceKeypoint |
 	DateTime |
 	NumberRange |
