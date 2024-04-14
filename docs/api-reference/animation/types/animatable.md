@@ -31,7 +31,7 @@ export type Animatable =
 	Vector3int16
 ```
 
-Any data type that Fusion can decompose into a tuple of animatable numbers.
+Any data type that Fusion can decompose into a tuple of animatable parameters.
 
 !!! note "Passing other types to animation objects"
 	Other types can be passed to `Tween` and `Spring` objects, however those
