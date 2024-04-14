@@ -518,3 +518,36 @@ then ensure they're created in the correct order.
 - Otherwise, move the objects into separate scopes, and ensure that both scopes
 can exist without the other scope.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## scopeMissing
+
+```
+To create Observers, provide a scope. (e.g. `myScope:Observer(watching)`). See
+discussion #292 on GitHub for advice.
+```
+
+**Thrown by:**
+[`New`](../../instances/members/new),
+[`Hydrate`](../../instances/members/hydrate),
+[`Value`](../../state/members/value),
+[`Computed`](../../state/members/computed),
+[`Observer`](../../state/members/observer),
+[`ForKeys`](../../state/members/forkeys),
+[`ForValues`](../../state/members/forvalues),
+[`ForPairs`](../../state/members/forpairs),
+[`Spring`](../../animation/members/spring),
+[`Tween`](../../animation/members/tween)
+
+**Related discussions:** 
+[`#292`](https://github.com/dphfox/Fusion/discussions/292)
+
+You attempted to create an object without providing a
+[scope](../../../tutorials/fundamentals/scopes) as the first parameter.
+
+Scopes are mandatory for all Fusion constructors so that Fusion knows when the
+object should be destroyed.
+</div>
