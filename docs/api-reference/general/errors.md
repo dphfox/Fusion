@@ -222,7 +222,6 @@ changes, but you provided something other than a function.
 For example, you might have accidentally provided `nil`.
 </div>
 
-
 -----
 
 <div class="fusiondoc-error-api-section" markdown>
@@ -238,6 +237,25 @@ The change handler for the 'Active' attribute must be a function.
 
 `AttributeChange` expected you to provide a function for it to run when the
 attribute changes, but you provided something other than a function.
+
+For example, you might have accidentally provided `nil`.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidEventHandler
+
+```
+The handler for the 'MouseEnter' event must be a function.
+```
+
+**Thrown by:**
+[`OnEvent`](../../instances/members/onevent)
+
+`OnEvent` expected you to provide a function for it to run when the event is
+fired, but you provided something other than a function.
 
 For example, you might have accidentally provided `nil`.
 </div>
