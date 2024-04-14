@@ -329,3 +329,20 @@ it something else.
 `AttributeOut` expected you to give it a [value](../../state/members/value), but
 you gave it something else.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidOutProperty
+
+```
+The Frame class doesn't have a property called 'MouseButton1Down'.
+```
+
+**Thrown by:**
+[`Out`](../../instances/members/out)
+
+The property that you tried to output doesn't exist on the instance that `Out`
+was used with.
+</div>
