@@ -259,3 +259,22 @@ fired, but you provided something other than a function.
 
 For example, you might have accidentally provided `nil`.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidPropertyType
+
+```
+'Frame.BackgroundColor3' expected a 'Color3' type, but got a 'Vector3' type.
+```
+
+**Thrown by:**
+[`New`](../../instances/members/new),
+[`Hydrate`](../../instances/members/hydrate)
+
+You attempted to assign a value to a Roblox instance's property, but the 
+assignment threw an error because that property doesn't accept values of that
+type.
+</div>
