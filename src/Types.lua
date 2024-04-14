@@ -155,7 +155,7 @@ export type Tween<T> = StateObject<T> & Dependent & {
 export type TweenConstructor = <T>(
 	scope: Scope<unknown>,
 	goalState: StateObject<T>,
-	tweenInfo: TweenInfo?
+	tweenInfo: CanBeState<TweenInfo>?
 ) -> Tween<T>
 
 -- A state object which follows another state object using spring simulation.
