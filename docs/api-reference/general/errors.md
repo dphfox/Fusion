@@ -202,3 +202,22 @@ The key '6' was returned multiple times simultaneously, which is not allowed in
 When called with different items from the table, the same key was returned for
 both of them. This is not allowed, because keys have to be unique in a table.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidChangeHandler
+
+```
+The change handler for the 'AbsoluteSize' property must be a function.
+```
+
+**Thrown by:**
+[`OnChange`](../../instances/members/onchange)
+
+`OnChange` expected you to provide a function for it to run when the property
+changes, but you provided something other than a function.
+
+For example, you might have accidentally provided `nil`.
+</div>
