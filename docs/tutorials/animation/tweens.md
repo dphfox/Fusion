@@ -13,7 +13,7 @@ move towards:
 
 ```Lua
 local goal = scope:Value(0)
-local animated = scope:Tween(target)
+local animated = scope:Tween(goal)
 ```
 
 The tween will smoothly follow the 'goal' state object over time.
@@ -31,7 +31,7 @@ desired:
 ```Lua
 local goal = scope:Value(0)
 local style = TweenInfo.new(0.5, Enum.EasingStyle.Quad)
-local animated = scope:Tween(target, style)
+local animated = scope:Tween(goal, style)
 ```
 
 You can use many different kinds of values with tweens, not just numbers.
@@ -40,7 +40,7 @@ each number inside the type is animated individually.
 
 ```Lua
 local goalPosition = scope:Value(UDim2.new(0.5, 0, 0, 0))
-local animated = scope:Tween(target, TweenInfo.new(0.5, Enum.EasingStyle.Quad))
+local animated = scope:Tween(goalPosition, TweenInfo.new(0.5, Enum.EasingStyle.Quad))
 ```
 
 -----

@@ -14,7 +14,7 @@ to move towards:
 
 ```Lua
 local goal = scope:Value(0)
-local animated = scope:Spring(target)
+local animated = scope:Spring(goal)
 ```
 
 The spring will smoothly follow the 'goal' state object over time.
@@ -32,7 +32,7 @@ use. Both are optional, and both can be state objects if desired:
 local goal = scope:Value(0)
 local speed = 25
 local damping = scope:Value(0.5)
-local animated = scope:Spring(target, speed, damping)
+local animated = scope:Spring(goal, speed, damping)
 ```
 
 You can also set the position and velocity of the spring at any time.
@@ -48,7 +48,7 @@ each number inside the type is animated individually.
 
 ```Lua
 local goalPosition = scope:Value(UDim2.new(0.5, 0, 0, 0))
-local animated = scope:Spring(target, 25, 0.5)
+local animated = scope:Spring(goalPosition, 25, 0.5)
 ```
 
 -----
