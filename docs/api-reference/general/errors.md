@@ -37,9 +37,9 @@ The class type 'Foo' has no assignable property 'Bar'.
 [`New`](../../instances/members/new),
 [`Hydrate`](../../instances/members/hydrate)
 
-This message means you tried to set a property on an instance, but the property
-can't be assigned to. This could be because the property doesn't exist, or
-because it's locked by Roblox to prevent edits.
+You tried to set a property on an instance, but the property can't be assigned 
+to for some reason. This could be because the property doesn't exist, or because
+it's locked by Roblox to prevent edits.
 
 !!! warning "Check your privileges"
 	Different scripts may have different privileges - for example, plugins will
@@ -60,8 +60,8 @@ The Frame class doesn't have a property called 'Foo'.
 **Related to:**
 [`OnChange`](../../instances/members/onchange)
 
-This message means you tried to connect to a property change event, but the
-property you specify doesn't exist on the instance.
+You tried to connect to a property change event, but the property you specify
+doesn't exist on the instance.
 </div>
 
 -----
@@ -77,8 +77,8 @@ The Frame class doesn't have an event called 'Foo'.
 **Related to:**
 [`OnEvent`](../../instances/members/onevent)
 
-This message means you tried to connect to an event on an instance, but the
-event you specify doesn't exist on the instance.
+You tried to connect to an event on an instance, but the event you specify
+doesn't exist on the instance.
 </div>
 
 -----
@@ -98,9 +98,26 @@ Error in callback: attempt to perform arithmetic (add) on number and string
 [`ForPairs`](../../state/members/forpairs),
 [`Contextual`](../../memory/members/contextual)
 
-This message means that Fusion ran a function you specified, but the function
-threw an error that Fusion couldn't handle.
+Fusion ran a function you specified, but the function threw an error that Fusion
+couldn't handle.
 
 The error includes a more specific message which can be used to diagnose the
 issue.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## cleanupWasRenamed
+
+```
+`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.
+```
+
+**Related to:**
+[`doCleanup`](../../memory/members/doCleanup)
+
+You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
+`doCleanup()` method.
 </div>
