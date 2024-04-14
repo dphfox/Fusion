@@ -654,3 +654,23 @@ property table, rather than passing them into the
 [`[Children]`](../../roblox/members/children) special key.
 </div>
 
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## unrecognisedPropertyStage
+
+```
+'children' isn't a valid stage for a special key to be applied at.
+```
+
+**Thrown by:**
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate)
+
+You attempted to use a [special key](../../roblox/types/specialkey) which has a
+misconfigured `stage`, so Fusion didn't know when to apply it during instance
+construction.
+</div>
+
