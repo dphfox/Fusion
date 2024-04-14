@@ -568,3 +568,33 @@ The type 'Vector3' doesn't match the spring's type 'Color3'.
 The spring expected you to provide a type matching the data type that the spring
 is currently outputting. However, you provided a different data type.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## stateGetWasRemoved
+
+```
+`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion
+#217 on GitHub.
+```
+
+**Thrown by:**
+[`Value`](../../state/members/value),
+[`Computed`](../../state/members/computed),
+[`ForKeys`](../../state/members/forkeys),
+[`ForValues`](../../state/members/forvalues),
+[`ForPairs`](../../state/members/forpairs),
+[`Spring`](../../animation/members/spring),
+[`Tween`](../../animation/members/tween)
+
+**Related discussions:** 
+[`#217`](https://github.com/dphfox/Fusion/discussions/217)
+
+Older versions of Fusion let you call `:get()` directly on state objects to read
+their current value and attempt to infer dependencies.
+
+This has been replaced by [use functions](../../state/types/use) in Fusion 0.3
+for more predictable behaviour and better support for constant values.
+</div>
