@@ -34,8 +34,8 @@ The class type 'Foo' has no assignable property 'Bar'.
 ```
 
 **Thrown by:**
-[`New`](../../instances/members/new),
-[`Hydrate`](../../instances/members/hydrate)
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate)
 
 You tried to set a property on an instance, but the property can't be assigned 
 to for some reason. This could be because the property doesn't exist, or because
@@ -58,7 +58,7 @@ The Frame class doesn't have a property called 'Foo'.
 ```
 
 **Thrown by:**
-[`OnChange`](../../instances/members/onchange)
+[`OnChange`](../../roblox/members/onchange)
 
 You tried to connect to a property change event, but the property you specify
 doesn't exist on the instance.
@@ -75,7 +75,7 @@ The Frame class doesn't have an event called 'Foo'.
 ```
 
 **Thrown by:**
-[`OnEvent`](../../instances/members/onevent)
+[`OnEvent`](../../roblox/members/onevent)
 
 You tried to connect to an event on an instance, but the event you specify
 doesn't exist on the instance.
@@ -214,7 +214,7 @@ The change handler for the 'AbsoluteSize' property must be a function.
 ```
 
 **Thrown by:**
-[`OnChange`](../../instances/members/onchange)
+[`OnChange`](../../roblox/members/onchange)
 
 `OnChange` expected you to provide a function for it to run when the property
 changes, but you provided something other than a function.
@@ -233,7 +233,7 @@ The change handler for the 'Active' attribute must be a function.
 ```
 
 **Thrown by:**
-[`AttributeChange`](../../instances/members/attributechange)
+[`AttributeChange`](../../roblox/members/attributechange)
 
 `AttributeChange` expected you to provide a function for it to run when the
 attribute changes, but you provided something other than a function.
@@ -252,7 +252,7 @@ The handler for the 'MouseEnter' event must be a function.
 ```
 
 **Thrown by:**
-[`OnEvent`](../../instances/members/onevent)
+[`OnEvent`](../../roblox/members/onevent)
 
 `OnEvent` expected you to provide a function for it to run when the event is
 fired, but you provided something other than a function.
@@ -271,8 +271,8 @@ For example, you might have accidentally provided `nil`.
 ```
 
 **Thrown by:**
-[`New`](../../instances/members/new),
-[`Hydrate`](../../instances/members/hydrate)
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate)
 
 You attempted to assign a value to a Roblox instance's property, but the 
 assignment threw an error because that property doesn't accept values of that
@@ -290,7 +290,7 @@ Instance refs must be Value objects.
 ```
 
 **Thrown by:**
-[`Ref`](../../instances/members/ref)
+[`Ref`](../../roblox/members/ref)
 
 `Ref` expected you to give it a [value](../../state/members/value), but you gave
 it something else.
@@ -307,7 +307,7 @@ it something else.
 ```
 
 **Thrown by:**
-[`Out`](../../instances/members/out)
+[`Out`](../../roblox/members/out)
 
 `Out` expected you to give it a [value](../../state/members/value), but you gave
 it something else.
@@ -324,7 +324,7 @@ it something else.
 ```
 
 **Thrown by:**
-[`AttributeOut`](../../instances/members/attributeout)
+[`AttributeOut`](../../roblox/members/attributeout)
 
 `AttributeOut` expected you to give it a [value](../../state/members/value), but
 you gave it something else.
@@ -341,7 +341,7 @@ The Frame class doesn't have a property called 'MouseButton1Down'.
 ```
 
 **Thrown by:**
-[`Out`](../../instances/members/out)
+[`Out`](../../roblox/members/out)
 
 The property that you tried to output doesn't exist on the instance that `Out`
 was used with.
@@ -358,7 +358,7 @@ The damping ratio for a spring must be >= 0. (damping was -1.00)
 ```
 
 **Thrown by:**
-[`Spring`](../../instances/members/spring)
+[`Spring`](../../roblox/members/spring)
 
 You provided a damping ratio that the spring doesn't support, for example `NaN`,
 or a negative damping implying negative friction.
@@ -375,7 +375,7 @@ The speed of a spring must be >= 0. (speed was NaN)
 ```
 
 **Thrown by:**
-[`Spring`](../../instances/members/spring)
+[`Spring`](../../roblox/members/spring)
 
 You provided a speed multiplier that the spring doesn't support, for example
 `NaN` or a negative speed implying the spring moves backwards through time.
@@ -392,7 +392,7 @@ The damping ratio for a spring must be a number. (got a string)
 ```
 
 **Thrown by:**
-[`Spring`](../../instances/members/spring)
+[`Spring`](../../roblox/members/spring)
 
 You provided a damping ratio that the spring couldn't understand. Damping ratio
 has to be a number.
@@ -409,7 +409,7 @@ The speed of a spring must be a number. (got a string)
 ```
 
 **Thrown by:**
-[`Spring`](../../instances/members/spring)
+[`Spring`](../../roblox/members/spring)
 
 You provided a speed multiplier that the spring couldn't understand. Speed has
 to be a number.
@@ -426,7 +426,7 @@ The tween info of a tween must be a TweenInfo. (got a table)
 ```
 
 **Thrown by:**
-[`Tween`](../../instances/members/tween)
+[`Tween`](../../roblox/members/tween)
 
 You provided an easing curve that the tween couldn't understand. The easing
 curve has to be specified using Roblox's `TweenInfo` data type.
@@ -487,12 +487,12 @@ discussion #292 on GitHub for advice.
 **Thrown by:**
 [`Spring`](../../animation/members/spring),
 [`Tween`](../../animation/members/tween),
-[`New`](../../instances/members/new),
-[`Hydrate`](../../instances/members/hydrate),
-[`Attribute`](../../instances/members/attribute),
-[`AttributeOut`](../../instances/members/attributeout),
-[`Out`](../../instances/members/out),
-[`Ref`](../../instances/members/ref),
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate),
+[`Attribute`](../../roblox/members/attribute),
+[`AttributeOut`](../../roblox/members/attributeout),
+[`Out`](../../roblox/members/out),
+[`Ref`](../../roblox/members/ref),
 [`Computed`](../../state/members/computed),
 [`Observer`](../../state/members/observer)
 
@@ -531,8 +531,8 @@ discussion #292 on GitHub for advice.
 ```
 
 **Thrown by:**
-[`New`](../../instances/members/new),
-[`Hydrate`](../../instances/members/hydrate),
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate),
 [`Value`](../../state/members/value),
 [`Computed`](../../state/members/computed),
 [`Observer`](../../state/members/observer),
@@ -613,3 +613,22 @@ Fusion ran into a problem, but couldn't associate it with a valid type of error.
 This is a fallback error type which shouldn't be seen by end users, because it
 indicates that Fusion code isn't reporting errors correctly.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## unrecognisedChildType
+
+```
+'string' type children aren't accepted by `[Children]`.
+```
+
+**Thrown by:**
+[`Children`](../../roblox/members/children)
+
+You provided a value inside of `[Children]` which didn't meet the definition of
+a [child](../../roblox/types/child) value. Check that you're only passing
+instances, arrays and state objects.
+</div>
+
