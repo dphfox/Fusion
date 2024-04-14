@@ -169,6 +169,10 @@
 	margin-right: 0rem;
 }
 
+.md-header__title .md-header__topic:first-child {
+	height: 2.4rem;
+}
+
 .md-header__title .md-header__topic:first-child::before {
 	content: "";
 	display: inline-block;
@@ -238,7 +242,7 @@
 }
 
 .md-copyright::after {
-	content: "∙ Theme by Elttob";
+	content: "∙ Theme by Daniel P H Fox";
 }
 
 @media screen and (max-width: 76.1875em) {
