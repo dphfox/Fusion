@@ -380,3 +380,37 @@ The speed of a spring must be >= 0. (speed was NaN)
 You provided a speed multiplier that the spring doesn't support, for example
 `NaN` or a negative speed implying the spring moves backwards through time.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## mistypedSpringDamping
+
+```
+The damping ratio for a spring must be a number. (got a string)
+```
+
+**Thrown by:**
+[`Spring`](../../instances/members/spring)
+
+You provided a damping ratio that the spring couldn't understand. Damping ratio
+has to be a number.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## mistypedSpringSpeed
+
+```
+The speed of a spring must be a number. (got a string)
+```
+
+**Thrown by:**
+[`Spring`](../../instances/members/spring)
+
+You provided a speed multiplier that the spring couldn't understand. Speed has
+to be a number.
+</div>
