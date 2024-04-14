@@ -300,15 +300,15 @@ it something else.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## invalidRefType
+## invalidOutType
 
 ```
-Instance refs must be Value objects.
+[Out] properties must be given Value objects.
 ```
 
 **Thrown by:**
-[`Ref`](../../instances/members/ref)
+[`Out`](../../instances/members/out)
 
-`Ref` expected you to give it a [value](../../state/members/value), but you gave
+`Out` expected you to give it a [value](../../state/members/value), but you gave
 it something else.
 </div>
