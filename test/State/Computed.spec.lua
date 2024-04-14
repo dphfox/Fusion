@@ -1,138 +1,138 @@
-local RunService = game:GetService("RunService")
-
 local Package = game:GetService("ReplicatedStorage").Fusion
 local Computed = require(Package.State.Computed)
 local Value = require(Package.State.Value)
 local peek = require(Package.State.peek)
-
-local waitForGC = require(script.Parent.Parent.Utility.waitForGC)
+local doCleanup = require(Package.Memory.doCleanup)
 
 return function()
-	it("should construct a Computed object", function()
-		local computed = Computed(function(use) end)
+	it("constructs in scopes", function()
+		local scope = {}
+		local computed = Computed(scope, function()
+			-- intentionally blank
+		end)
 
 		expect(computed).to.be.a("table")
 		expect(computed.type).to.equal("State")
 		expect(computed.kind).to.equal("Computed")
+		expect(scope[1]).to.equal(computed)
+
+		doCleanup(scope)
 	end)
 
-	it("should calculate and retrieve its value", function()
-		local computed = Computed(function(use)
-			return "foo"
+	it("is destroyable", function()
+		local scope = {}
+		local computed = Computed(scope, function()
+			-- intentionally blank
 		end)
+		expect(function()
+			computed:destroy()
+		end).to.never.throw()
+	end)
 
+	it("computes with constants", function()
+		local scope = {}
+		local computed = Computed(scope, function(use)
+			return use(5)
+		end)
+		expect(peek(computed)).to.equal(5)
+		doCleanup(scope)
+	end)
+
+	it("computes with state objects", function()
+		local scope = {}
+		local dependency = Value(scope, 5)
+		local computed = Computed(scope, function(use)
+			return use(dependency)
+		end)
+		expect(peek(computed)).to.equal(5)
+		dependency:set("foo")
 		expect(peek(computed)).to.equal("foo")
+		doCleanup(scope)
 	end)
 
-	it("should recalculate its value in response to State objects", function()
-		local currentNumber = Value(2)
-		local doubled = Computed(function(use)
-			return use(currentNumber) * 2
+	it("preserves value on error", function()
+		local scope = {}
+		local dependency = Value(scope, 5)
+		local computed = Computed(scope, function(use)
+			assert(use(dependency) ~= 13, "This is an intentional error from a unit test")
+			return use(dependency)
 		end)
-
-		expect(peek(doubled)).to.equal(4)
-
-		currentNumber:set(4)
-		expect(peek(doubled)).to.equal(8)
+		expect(peek(computed)).to.equal(5)
+		dependency:set(13) -- this will invoke the error
+		expect(peek(computed)).to.equal(5)
+		dependency:set(2)
+		expect(peek(computed)).to.equal(2)
+		doCleanup(scope)
 	end)
 
-	it("should recalculate its value in response to Computed objects", function()
-		local currentNumber = Value(2)
-		local doubled = Computed(function(use)
-			return use(currentNumber) * 2
-		end)
-		local tripled = Computed(function(use)
-			return use(doubled) * 1.5
-		end)
-
-		expect(peek(tripled)).to.equal(6)
-
-		currentNumber:set(4)
-		expect(peek(tripled)).to.equal(12)
-	end)
-
-	it("should not corrupt dependencies after an error", function()
-		local state = Value(1)
-		local simulateError = false
-		local computed = Computed(function(use)
-			if simulateError then
-				-- in a naive implementation, this would corrupt dependencies as
-				-- use(state) hasn't been captured yet, preventing future
-				-- reactive updates from taking place
-				-- to avoid this, dependencies captured when a callback errors
-				-- have to be discarded
-				error("This is an intentional error from a unit test")
-			end
-
-			return use(state)
-		end)
-
-		expect(peek(computed)).to.equal(1)
-
-		simulateError = true
-		state:set(5) -- update the computed to invoke the error
-
-		simulateError = false
-		state:set(10) -- if dependencies are corrupt, the computed won't update
-
-		expect(peek(computed)).to.equal(10)
-	end)
-
-	it("should garbage-collect unused objects", function()
-		local state = Value(2)
-
-		local counter = 0
-
-		do
-			local computed = Computed(function(use)
-				counter += 1
-				return use(state)
+	it("doesn't destroy inner scope on creation", function()
+		local scope = {}
+		local destructed = false
+		local _ = Computed(scope, function(innerScope)
+			table.insert(innerScope, function()
+				destructed = true
 			end)
-		end
+		end)
+		expect(destructed).to.equal(false)
 
-		waitForGC()
-		state:set(5)
-
-		expect(counter).to.equal(1)
+		doCleanup(scope)
 	end)
 
-	it("should not garbage-collect objects in use", function()
-		local state = Value(2)
-		local computed2
-
-		local counter = 0
-
-		do
-			local computed = Computed(function(use)
-				counter += 1
-				return use(state)
+	it("destroys inner scope on update", function()
+		local scope = {}
+		local destructed = {}
+		local dependency = Value(scope, 1)
+		local _ = Computed(scope, function(use, innerScope)
+			local value = use(dependency)
+			table.insert(innerScope, function()
+				destructed[value] = true
 			end)
+			return use(dependency)
+		end)
+		expect(destructed[1]).to.equal(nil)
+		dependency:set(2)
+		expect(destructed[1]).to.equal(true)
+		expect(destructed[2]).to.equal(nil)
+		dependency:set(3)
+		expect(destructed[2]).to.equal(true)
 
-			computed2 = Computed(function(use)
-				return use(computed)
-			end)
-		end
-
-		waitForGC()
-		state:set(5)
-
-		expect(counter).to.equal(2)
+		doCleanup(scope)
 	end)
 
-	it("should call destructors when old values are replaced", function()
-		local didRun = false
-		local function destructor(x)
-			if x == "old" then
-				didRun = true
-			end
-		end
+	it("destroys errored values and preserves the last non-error value", function()
+		local scope = {}
+		local numDestructions = {}
+		local dependency = Value(scope, 1)
+		local _ = Computed(scope, function(use, innerScope)
+			local value = use(dependency)
+			table.insert(innerScope, function()
+				numDestructions[value] = (numDestructions[value] or 0) + 1
+			end)
+			assert(value ~= 2, "This is an intentional error from a unit test")
+			return use(dependency)
+		end)
+		expect(numDestructions[1]).to.equal(nil)
+		dependency:set(2)
+		expect(numDestructions[1]).to.equal(nil)
+		expect(numDestructions[2]).to.equal(1)
+		dependency:set(3)
+		expect(numDestructions[2]).to.equal(1)
+		expect(numDestructions[3]).to.equal(nil)
+		dependency:set(4)
+		expect(numDestructions[3]).to.equal(1)
 
-		local value = Value("old")
-		local computed = Computed(function(use)
-			return use(value)
-		end, destructor)
-		value:set("new")
+		doCleanup(scope)
+	end)
 
-		expect(didRun).to.equal(true)
+	it("destroys inner scope on destroy", function()
+		local scope = {}
+		local destructed = false
+		local _ = Computed(scope, function(use, innerScope)
+			table.insert(innerScope, function()
+				destructed = true
+			end)
+		end)
+		doCleanup(scope)
+		expect(destructed).to.equal(true)
 	end)
 end

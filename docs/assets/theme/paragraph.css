@@ -87,12 +87,3 @@ h6 > .twemoji:first-child {
 	font-size: 0.8em;
 	letter-spacing: 0.02em;
 }
-
-.fusiondoc-index-multicol {
-	column-width: 15em;
-}
-
-.fusiondoc-index-multicol .fusiondoc-index-multicol-section {
-	break-inside: avoid;
-	padding-top: 0.001em; /* prevent margins collapsing */
-}

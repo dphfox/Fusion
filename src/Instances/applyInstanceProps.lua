@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Applies a table of properties to an instance, including binding to any
@@ -14,35 +15,42 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local External = require(Package.External)
-local cleanup = require(Package.Utility.cleanup)
-local xtypeof = require(Package.Utility.xtypeof)
+local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
+local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
+local xtypeof = require(Package.Utility.xtypeof)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function setProperty_unsafe(instance: Instance, property: string, value: any)
+local function setProperty_unsafe(
+	instance: Instance,
+	property: string,
+	value: unknown
+)
 	(instance :: any)[property] = value
 end
 
-local function testPropertyAssignable(instance: Instance, property: string)
+local function testPropertyAssignable(
+	instance: Instance,
+	property: string
+)
 	(instance :: any)[property] = (instance :: any)[property]
 end
 
-local function setProperty(instance: Instance, property: string, value: any)
-	local success, err = xpcall(setProperty_unsafe, parseError, instance, property, value)
+local function setProperty(
+	instance: Instance,
+	property: string,
+	value: unknown
+)
+	local success, err = xpcall(setProperty_unsafe :: any, parseError, instance, property, value)
 
 	if not success then
 		if not pcall(testPropertyAssignable, instance, property) then
-			if instance == nil then
-				-- reference has been lost
-				logError("setPropertyNilRef", nil, property, tostring(value))
-			else
-				-- property is not assignable
-				logError("cannotAssignProperty", nil, instance.ClassName, property)
-			end
+			logError("cannotAssignProperty", nil, instance.ClassName, property)
 		else
 			-- property is assignable, but this specific assignment failed
 			-- this typically implies the wrong type was received
@@ -58,8 +66,20 @@ local function setProperty(instance: Instance, property: string, value: any)
 	end
 end
 
-local function bindProperty(instance: Instance, property: string, value: PubTypes.CanBeState<any>, cleanupTasks: {PubTypes.Task})
-	if xtypeof(value) == "State" then
+local function bindProperty(
+	scope: Types.Scope<unknown>,
+	instance: Instance,
+	property: string,
+	value: Types.CanBeState<unknown>
+)
+	if isState(value) then
+		local value = value :: Types.StateObject<unknown>
+		if value.scope == nil then
+			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
+		elseif whichLivesLonger(scope, instance, value.scope, value) == "definitely-a" then
+			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
+		end
+
 		-- value is a state object - assign and observe for changes
 		local willUpdate = false
 		local function updateLater()
@@ -73,31 +93,34 @@ local function bindProperty(instance: Instance, property: string, value: PubType
 		end
 
 		setProperty(instance, property, peek(value))
-		table.insert(cleanupTasks, Observer(value :: any):onChange(updateLater))
+		table.insert(scope, Observer(scope, value :: any):onChange(updateLater))
 	else
 		-- value is a constant - assign once only
 		setProperty(instance, property, value)
 	end
 end
 
-local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instance)
+local function applyInstanceProps(
+	scope: Types.Scope<unknown>,
+	props: Types.PropertyTable,
+	applyTo: Instance
+)
 	local specialKeys = {
-		self = {} :: {[PubTypes.SpecialKey]: any},
-		descendants = {} :: {[PubTypes.SpecialKey]: any},
-		ancestor = {} :: {[PubTypes.SpecialKey]: any},
-		observer = {} :: {[PubTypes.SpecialKey]: any}
+		self = {} :: {[Types.SpecialKey]: unknown},
+		descendants = {} :: {[Types.SpecialKey]: unknown},
+		ancestor = {} :: {[Types.SpecialKey]: unknown},
+		observer = {} :: {[Types.SpecialKey]: unknown}
 	}
-	local cleanupTasks = {}
 
 	for key, value in pairs(props) do
 		local keyType = xtypeof(key)
 
 		if keyType == "string" then
 			if key ~= "Parent" then
-				bindProperty(applyTo, key :: string, value, cleanupTasks)
+				bindProperty(scope, applyTo, key :: string, value)
 			end
 		elseif keyType == "SpecialKey" then
-			local stage = (key :: PubTypes.SpecialKey).stage
+			local stage = (key :: Types.SpecialKey).stage
 			local keys = specialKeys[stage]
 			if keys == nil then
 				logError("unrecognisedPropertyStage", nil, stage)
@@ -106,31 +129,27 @@ local function applyInstanceProps(props: PubTypes.PropertyTable, applyTo: Instan
 			end
 		else
 			-- we don't recognise what this key is supposed to be
-			logError("unrecognisedPropertyKey", nil, xtypeof(key))
+			logError("unrecognisedPropertyKey", nil, keyType)
 		end
 	end
 
 	for key, value in pairs(specialKeys.self) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(scope, value, applyTo)
 	end
 	for key, value in pairs(specialKeys.descendants) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(scope, value, applyTo)
 	end
 
 	if props.Parent ~= nil then
-		bindProperty(applyTo, "Parent", props.Parent, cleanupTasks)
+		bindProperty(scope, applyTo, "Parent", props.Parent)
 	end
 
 	for key, value in pairs(specialKeys.ancestor) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(scope, value, applyTo)
 	end
 	for key, value in pairs(specialKeys.observer) do
-		key:apply(value, applyTo, cleanupTasks)
+		key:apply(scope, value, applyTo)
 	end
-
-	applyTo.Destroying:Connect(function()
-		cleanup(cleanupTasks)
-	end)
 end
 
 return applyInstanceProps

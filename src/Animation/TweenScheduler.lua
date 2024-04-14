@@ -1,11 +1,12 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Manages batch updating of tween objects.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 local lerpType = require(Package.Animation.lerpType)
 local getTweenRatio = require(Package.Animation.getTweenRatio)
@@ -13,26 +14,26 @@ local updateAll = require(Package.State.updateAll)
 
 local TweenScheduler = {}
 
-type Set<T> = {[T]: any}
-type Tween = Types.Tween<any>
-
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+type Set<T> = {[T]: unknown}
 
 -- all the tweens currently being updated
-local allTweens: Set<Tween> = {}
-setmetatable(allTweens, WEAK_KEYS_METATABLE)
+local allTweens: Set<InternalTypes.Tween<unknown>> = {}
 
 --[[
 	Adds a Tween to be updated every render step.
 ]]
-function TweenScheduler.add(tween: Tween)
+function TweenScheduler.add(
+	tween: InternalTypes.Tween<unknown>
+)
 	allTweens[tween] = true
 end
 
 --[[
 	Removes a Tween from the scheduler.
 ]]
-function TweenScheduler.remove(tween: Tween)
+function TweenScheduler.remove(
+	tween: InternalTypes.Tween<unknown>
+)
 	allTweens[tween] = nil
 end
 
@@ -42,8 +43,7 @@ end
 local function updateAllTweens(
 	now: number
 )
-	-- FIXME: Typed Luau doesn't understand this loop yet
-	for tween: Tween in pairs(allTweens :: any) do
+	for tween in allTweens do
 		local currentTime = now - tween._currentTweenStartTime
 
 		if currentTime > tween._currentTweenDuration and tween._currentTweenInfo.RepeatCount > -1 then

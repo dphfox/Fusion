@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Processes and returns an existing instance, with options for setting
@@ -6,12 +7,23 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
+local logError = require(Package.Logging.logError)
 
-local function Hydrate(target: Instance)
-	return function(props: PubTypes.PropertyTable): Instance
-		applyInstanceProps(props, target)
+local function Hydrate(
+	scope: Types.Scope<unknown>,
+	target: Instance
+)
+	if target :: any == nil then
+		logError("scopeMissing", nil, "instances using Hydrate", "myScope:Hydrate (instance) { ... }")
+	end
+	return function(
+		props: Types.PropertyTable
+	): Instance
+	
+		table.insert(scope, target)
+		applyInstanceProps(scope, props, target)
 		return target
 	end
 end
