@@ -414,3 +414,20 @@ The speed of a spring must be a number. (got a string)
 You provided a speed multiplier that the spring couldn't understand. Speed has
 to be a number.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## mistypedTweenInfo
+
+```
+The tween info of a tween must be a TweenInfo. (got a table)
+```
+
+**Thrown by:**
+[`Tween`](../../instances/members/tween)
+
+You provided an easing curve that the tween couldn't understand. The easing
+curve has to be specified using Roblox's `TweenInfo` data type.
+</div>
