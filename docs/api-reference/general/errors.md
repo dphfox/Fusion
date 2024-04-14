@@ -674,3 +674,37 @@ misconfigured `stage`, so Fusion didn't know when to apply it during instance
 construction.
 </div>
 
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## useAfterDestroy
+
+```
+The Value object is no longer valid - it was destroyed before the Computed that 
+is use()-ing. See discussion #292 on GitHub for advice.
+```
+
+**Thrown by:**
+[`Spring`](../../animation/members/spring),
+[`Tween`](../../animation/members/tween),
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate),
+[`Attribute`](../../roblox/members/attribute),
+[`AttributeOut`](../../roblox/members/attributeout),
+[`Out`](../../roblox/members/out),
+[`Ref`](../../roblox/members/ref),
+[`Computed`](../../state/members/computed),
+[`Observer`](../../state/members/observer)
+
+**Related discussions:** 
+[`#292`](https://github.com/dphfox/Fusion/discussions/292)
+
+Your code attempted to access an object after that object was destroyed, either
+because its `:destroy()` method was called manually, or because the object's
+[scope](../../../tutorials/fundamentals/scope) was cleaned up.
+
+Make sure your objects are being added to the correct scopes according to when
+you expect them to be destroyed. Additionally, make sure your code can detect
+and deal with situations where other objects are no longer available.
+</div>
