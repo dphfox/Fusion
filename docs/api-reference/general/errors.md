@@ -33,7 +33,7 @@ the details for you.
 The class type 'Foo' has no assignable property 'Bar'.
 ```
 
-**Related to:**
+**Thrown by:**
 [`New`](../../instances/members/new),
 [`Hydrate`](../../instances/members/hydrate)
 
@@ -57,7 +57,7 @@ it's locked by Roblox to prevent edits.
 The Frame class doesn't have a property called 'Foo'.
 ```
 
-**Related to:**
+**Thrown by:**
 [`OnChange`](../../instances/members/onchange)
 
 You tried to connect to a property change event, but the property you specify
@@ -74,7 +74,7 @@ doesn't exist on the instance.
 The Frame class doesn't have an event called 'Foo'.
 ```
 
-**Related to:**
+**Thrown by:**
 [`OnEvent`](../../instances/members/onevent)
 
 You tried to connect to an event on an instance, but the event you specify
@@ -91,7 +91,7 @@ doesn't exist on the instance.
 Error in callback: attempt to perform arithmetic (add) on number and string
 ```
 
-**Related to:**
+**Thrown by:**
 [`Computed`](../../state/members/computed),
 [`ForKeys`](../../state/members/forkeys),
 [`ForValues`](../../state/members/forvalues),
@@ -115,9 +115,36 @@ issue.
 `Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.
 ```
 
-**Related to:**
-[`doCleanup`](../../memory/members/doCleanup)
+**Thrown by:**
+[`doCleanup`](../../memory/members/docleanup)
 
 You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
 `doCleanup()` method.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## destroyedTwice
+
+```
+Attempted to destroy Computed twice; ensure you're not manually calling `:destroy()` while using scopes. See discussion #292 on GitHub for advice.
+```
+
+**Thrown by:**
+[`Value`](../../state/members/value),
+[`Computed`](../../state/members/computed),
+[`Observer`](../../state/members/observer),
+[`For`](../../state/members/for),
+[`Spring`](../../animation/members/spring),
+[`Tween`](../../animation/members/tween),
+
+The `:destroy()` method of the object in question was called more than once.
+
+This usually means you called `:destroy()` manually, which is almost never
+required because Fusion's constructors always link objects to
+[scopes](../../../tutorials/fundamentals/scopes). When that scope is passed to 
+[`doCleanup()`](../../memory/members/docleanup), the `:destroy()` method is
+called on every object inside.
 </div>
