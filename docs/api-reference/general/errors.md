@@ -632,3 +632,25 @@ a [child](../../roblox/types/child) value. Check that you're only passing
 instances, arrays and state objects.
 </div>
 
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## unrecognisedPropertyKey
+
+```
+'number' keys aren't accepted in property tables.
+```
+
+**Thrown by:**
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate)
+
+You provided something other than a property assignment (`Property = Value`) or
+[special key](../../roblox/types/specialkey) in your property table.
+
+Most commonly, this means you tried to add child instances directly into the
+property table, rather than passing them into the
+[`[Children]`](../../roblox/members/children) special key.
+</div>
+
