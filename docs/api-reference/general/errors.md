@@ -312,3 +312,20 @@ it something else.
 `Out` expected you to give it a [value](../../state/members/value), but you gave
 it something else.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidAttributeOutType
+
+```
+[AttributeOut] properties must be given Value objects.
+```
+
+**Thrown by:**
+[`AttributeOut`](../../instances/members/attributeout)
+
+`AttributeOut` expected you to give it a [value](../../state/members/value), but
+you gave it something else.
+</div>
