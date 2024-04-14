@@ -598,3 +598,18 @@ their current value and attempt to infer dependencies.
 This has been replaced by [use functions](../../state/types/use) in Fusion 0.3
 for more predictable behaviour and better support for constant values.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## unknownMessage
+
+```
+Unknown error: attempt to call a nil value
+```
+
+Fusion ran into a problem, but couldn't associate it with a valid type of error.
+This is a fallback error type which shouldn't be seen by end users, because it
+indicates that Fusion code isn't reporting errors correctly.
+</div>
