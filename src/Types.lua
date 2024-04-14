@@ -161,9 +161,9 @@ export type TweenConstructor = <T>(
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = StateObject<T> & Dependent & {
 	kind: "Spring",
-	setPosition: (Spring<T>, newPosition: Animatable) -> (),
-	setVelocity: (Spring<T>, newVelocity: Animatable) -> (),
-	addVelocity: (Spring<T>, deltaVelocity: Animatable) -> ()
+	setPosition: (Spring<T>, newPosition: T) -> (),
+	setVelocity: (Spring<T>, newVelocity: T) -> (),
+	addVelocity: (Spring<T>, deltaVelocity: T) -> ()
 }
 export type SpringConstructor = <T>(
 	scope: Scope<unknown>,
