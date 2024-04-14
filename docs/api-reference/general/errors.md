@@ -112,7 +112,8 @@ issue.
 ## cleanupWasRenamed
 
 ```
-`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.
+`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in
+future versions of Fusion.
 ```
 
 **Thrown by:**
@@ -129,16 +130,22 @@ You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
 ## destroyedTwice
 
 ```
-Attempted to destroy Computed twice; ensure you're not manually calling `:destroy()` while using scopes. See discussion #292 on GitHub for advice.
+Attempted to destroy Computed twice; ensure you're not manually calling
+`:destroy()` while using scopes. See discussion #292 on GitHub for advice.
 ```
 
 **Thrown by:**
 [`Value`](../../state/members/value),
 [`Computed`](../../state/members/computed),
 [`Observer`](../../state/members/observer),
-[`For`](../../state/members/for),
+[`ForKeys`](../../state/members/forkeys),
+[`ForValues`](../../state/members/forvalues),
+[`ForPairs`](../../state/members/forpairs),
 [`Spring`](../../animation/members/spring),
-[`Tween`](../../animation/members/tween),
+[`Tween`](../../animation/members/tween)
+
+**Related discussions:** 
+[`#292`](https://github.com/dphfox/Fusion/discussions/292)
 
 The `:destroy()` method of the object in question was called more than once.
 
@@ -147,4 +154,32 @@ required because Fusion's constructors always link objects to
 [scopes](../../../tutorials/fundamentals/scopes). When that scope is passed to 
 [`doCleanup()`](../../memory/members/docleanup), the `:destroy()` method is
 called on every object inside.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## destructorRedundant
+
+```
+Computed destructors no longer do anything. If you wish to run code on destroy,
+`table.insert` a function into the `scope` argument. See discussion #292 on
+GitHub for advice.
+```
+
+**Thrown by:**
+[`Computed`](../../state/members/computed),
+[`ForKeys`](../../state/members/forkeys),
+[`ForValues`](../../state/members/forvalues),
+[`ForPairs`](../../state/members/forpairs)
+
+**Related discussions:** 
+[`#292`](https://github.com/dphfox/Fusion/discussions/292)
+
+You passed an extra parameter to the constructor, which has historically been
+interpreted as a function that runs when a value is cleaned up.
+
+This mechanism has been replaced by
+[scopes](../../../tutorials/fundamentals/scopes).
 </div>
