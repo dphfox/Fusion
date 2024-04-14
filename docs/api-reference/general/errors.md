@@ -21,7 +21,7 @@ the details for you.
 	placeholder="Type or paste an error ID here..."
 />
 
-<script src="./error-paste-box.js" defer></script>
+<script src="../../../assets/scripts/error-paste-box.js" defer></script>
 
 -----
 
