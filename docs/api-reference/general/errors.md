@@ -471,3 +471,50 @@ set of standard task scheduler functions that Fusion can use for those purposes.
 Roblox users should never see this error, as Fusion automatically connects to
 Roblox's task scheduling APIs.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## possiblyOutlives
+
+```
+The Value object could be destroyed before the Computed that is use()-ing it;
+review the order they're created in, and what scopes they belong to. See
+discussion #292 on GitHub for advice.
+```
+
+**Thrown by:**
+[`Spring`](../../animation/members/spring),
+[`Tween`](../../animation/members/tween),
+[`New`](../../instances/members/new),
+[`Hydrate`](../../instances/members/hydrate),
+[`Attribute`](../../instances/members/attribute),
+[`AttributeOut`](../../instances/members/attributeout),
+[`Out`](../../instances/members/out),
+[`Ref`](../../instances/members/ref),
+[`Computed`](../../state/members/computed),
+[`Observer`](../../state/members/observer)
+
+**Related discussions:** 
+[`#292`](https://github.com/dphfox/Fusion/discussions/292)
+
+If you use an object after it's been destroyed, then your code can break. This
+mainly happens when one object 'outlives' another object that it's using.
+
+Because [scopes](../../../tutorials/fundamentals/scopes) clean up the newest
+objects first, this can happen when an old object depends on something much
+newer that itself. During cleanup, a situation could arise where the newer
+object is destroyed, then the older object runs code of some kind that needed
+the newer object to be there.
+
+Fusion can check for situations like this by analysing the scopes. This message
+is shown when Fusion can prove one of these situations will occur.
+
+There are two typical solutions:
+
+- If the objects should always be created and destroyed at the exact same time,
+then ensure they're created in the correct order.
+- Otherwise, move the objects into separate scopes, and ensure that both scopes
+can exist without the other scope.
+</div>
