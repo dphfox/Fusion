@@ -278,3 +278,37 @@ You attempted to assign a value to a Roblox instance's property, but the
 assignment threw an error because that property doesn't accept values of that
 type.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidRefType
+
+```
+Instance refs must be Value objects.
+```
+
+**Thrown by:**
+[`Ref`](../../instances/members/ref)
+
+`Ref` expected you to give it a [value](../../state/members/value), but you gave
+it something else.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidRefType
+
+```
+Instance refs must be Value objects.
+```
+
+**Thrown by:**
+[`Ref`](../../instances/members/ref)
+
+`Ref` expected you to give it a [value](../../state/members/value), but you gave
+it something else.
+</div>
