@@ -81,15 +81,16 @@ local function updateAllSprings(
 		end
 	end
 
-	for spring in pairs(activeSprings) do
-		spring._currentValue = packType(spring._springPositions, spring._currentType)
-		updateAll(spring)
-	end
-
 	for spring in pairs(springsToSleep) do
 		activeSprings[spring] = nil
 		-- Guarantee that springs reach exact goals, since mathematically they only approach it infinitely
 		spring._currentValue = packType(spring._springGoals, spring._currentType)
+		updateAll(spring)
+	end
+
+	for spring in pairs(activeSprings) do
+		spring._currentValue = packType(spring._springPositions, spring._currentType)
+		updateAll(spring)
 	end
 end
 

@@ -20,6 +20,7 @@ local External = require(Package.External)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
+local parseError = require(Package.Logging.parseError)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local xtypeof = require(Package.Utility.xtypeof)
@@ -45,7 +46,9 @@ local function setProperty(
 	property: string,
 	value: unknown
 )
-	if not pcall(setProperty_unsafe, instance, property, value) then
+	local success, err = xpcall(setProperty_unsafe :: any, parseError, instance, property, value)
+
+	if not success then
 		if not pcall(testPropertyAssignable, instance, property) then
 			logError("cannotAssignProperty", nil, instance.ClassName, property)
 		else
@@ -53,7 +56,12 @@ local function setProperty(
 			-- this typically implies the wrong type was received
 			local givenType = typeof(value)
 			local expectedType = typeof((instance :: any)[property])
-			logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
+
+			if givenType == expectedType then
+				logError("propertySetError", err)
+			else
+				logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
+			end
 		end
 	end
 end
