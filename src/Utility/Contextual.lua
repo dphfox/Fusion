@@ -58,7 +58,7 @@ function class:is(
 		if ok then
 			return value
 		else
-			logError("contextualCallbackError", value)
+			logError("callbackError", value)
 		end
 	end
 
