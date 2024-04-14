@@ -183,3 +183,22 @@ interpreted as a function that runs when a value is cleaned up.
 This mechanism has been replaced by
 [scopes](../../../tutorials/fundamentals/scopes).
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## forKeyCollision
+
+```
+The key '6' was returned multiple times simultaneously, which is not allowed in
+`For` objects.
+```
+
+**Thrown by:**
+[`ForKeys`](../../state/members/forkeys),
+[`ForPairs`](../../state/members/forpairs)
+
+When called with different items from the table, the same key was returned for
+both of them. This is not allowed, because keys have to be unique in a table.
+</div>
