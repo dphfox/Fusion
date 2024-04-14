@@ -453,3 +453,21 @@ This can happen subtly with methods such as
 [`scoped()`](../../memory/members/scoped) which automatically merge together all
 of their arguments.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## noTaskScheduler
+
+```
+Fusion is not connected to an external task scheduler.
+```
+
+Fusion depends on a task scheduler being present to perform certain time-related
+tasks such as deferral, delays, or updating animations. You'll need to define a
+set of standard task scheduler functions that Fusion can use for those purposes.
+
+Roblox users should never see this error, as Fusion automatically connects to
+Roblox's task scheduling APIs.
+</div>
