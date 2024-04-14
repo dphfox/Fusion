@@ -42,5 +42,5 @@ Any data type that Fusion can decompose into a tuple of animatable numbers.
 
 ## Learn More
 
-- [Tweens tutorial](../../../../tutorials/animations/tweens)
-- [Springs tutorial](../../../../tutorials/animations/springs)
+- [Tweens tutorial](../../../../tutorials/animation/tweens)
+- [Springs tutorial](../../../../tutorials/animation/springs)
