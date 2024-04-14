@@ -346,3 +346,37 @@ The Frame class doesn't have a property called 'MouseButton1Down'.
 The property that you tried to output doesn't exist on the instance that `Out`
 was used with.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidSpringDamping
+
+```
+The damping ratio for a spring must be >= 0. (damping was -1.00)
+```
+
+**Thrown by:**
+[`Spring`](../../instances/members/spring)
+
+You provided a damping ratio that the spring doesn't support, for example `NaN`,
+or a negative damping implying negative friction.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidSpringSpeed
+
+```
+The speed of a spring must be >= 0. (speed was NaN)
+```
+
+**Thrown by:**
+[`Spring`](../../instances/members/spring)
+
+You provided a speed multiplier that the spring doesn't support, for example
+`NaN` or a negative speed implying the spring moves backwards through time.
+</div>
