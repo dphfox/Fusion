@@ -551,3 +551,20 @@ You attempted to create an object without providing a
 Scopes are mandatory for all Fusion constructors so that Fusion knows when the
 object should be destroyed.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## springTypeMismatch
+
+```
+The type 'Vector3' doesn't match the spring's type 'Color3'.
+```
+
+**Thrown by:**
+[`Spring`](../../animation/members/spring)
+
+The spring expected you to provide a type matching the data type that the spring
+is currently outputting. However, you provided a different data type.
+</div>
