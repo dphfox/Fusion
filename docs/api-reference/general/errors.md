@@ -431,3 +431,25 @@ The tween info of a tween must be a TweenInfo. (got a table)
 You provided an easing curve that the tween couldn't understand. The easing
 curve has to be specified using Roblox's `TweenInfo` data type.
 </div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## mergeConflict
+
+```
+Multiple definitions for 'Observer' found while merging.
+```
+
+**Thrown by:**
+[`scoped`](../../memory/members/scoped)
+
+Fusion tried to merge together multiple tables, but a key was found in more than
+one of the tables, and it's unclear which one you intended to have in the final
+merged result.
+
+This can happen subtly with methods such as 
+[`scoped()`](../../memory/members/scoped) which automatically merge together all
+of their arguments.
+</div>
