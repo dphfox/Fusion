@@ -27,6 +27,30 @@ the details for you.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## callbackError
+
+```
+Error in callback: attempt to perform arithmetic (add) on number and string
+```
+
+**Thrown by:**
+[`Computed`](../../state/members/computed),
+[`ForKeys`](../../state/members/forkeys),
+[`ForValues`](../../state/members/forvalues),
+[`ForPairs`](../../state/members/forpairs),
+[`Contextual`](../../memory/members/contextual)
+
+Fusion ran a function you specified, but the function threw an error that Fusion
+couldn't handle.
+
+The error includes a more specific message which can be used to diagnose the
+issue.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## cannotAssignProperty
 
 ```
@@ -85,24 +109,21 @@ doesn't exist on the instance.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## callbackError
+## cannotCreateClass
 
 ```
-Error in callback: attempt to perform arithmetic (add) on number and string
+Can't create a new instance of class 'EditableImage'.
 ```
 
 **Thrown by:**
-[`Computed`](../../state/members/computed),
-[`ForKeys`](../../state/members/forkeys),
-[`ForValues`](../../state/members/forvalues),
-[`ForPairs`](../../state/members/forpairs),
-[`Contextual`](../../memory/members/contextual)
+[`New`](../../roblox/members/new)
 
-Fusion ran a function you specified, but the function threw an error that Fusion
-couldn't handle.
+You attempted to create a type of instance that Fusion can't create.
 
-The error includes a more specific message which can be used to diagnose the
-issue.
+!!! warning "Beta features"
+	Some instances are only creatable when you have certain Studio betas
+	enabled. Check your Beta Features tab to ensure that beta features aren't
+	causing the issue.
 </div>
 
 -----
@@ -207,25 +228,6 @@ both of them. This is not allowed, because keys have to be unique in a table.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## invalidChangeHandler
-
-```
-The change handler for the 'AbsoluteSize' property must be a function.
-```
-
-**Thrown by:**
-[`OnChange`](../../roblox/members/onchange)
-
-`OnChange` expected you to provide a function for it to run when the property
-changes, but you provided something other than a function.
-
-For example, you might have accidentally provided `nil`.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
 ## invalidAttributeChangeHandler
 
 ```
@@ -237,6 +239,42 @@ The change handler for the 'Active' attribute must be a function.
 
 `AttributeChange` expected you to provide a function for it to run when the
 attribute changes, but you provided something other than a function.
+
+For example, you might have accidentally provided `nil`.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidAttributeOutType
+
+```
+[AttributeOut] properties must be given Value objects.
+```
+
+**Thrown by:**
+[`AttributeOut`](../../roblox/members/attributeout)
+
+`AttributeOut` expected you to give it a [value](../../state/members/value), but
+you gave it something else.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidChangeHandler
+
+```
+The change handler for the 'AbsoluteSize' property must be a function.
+```
+
+**Thrown by:**
+[`OnChange`](../../roblox/members/onchange)
+
+`OnChange` expected you to provide a function for it to run when the property
+changes, but you provided something other than a function.
 
 For example, you might have accidentally provided `nil`.
 </div>
@@ -258,6 +296,40 @@ The handler for the 'MouseEnter' event must be a function.
 fired, but you provided something other than a function.
 
 For example, you might have accidentally provided `nil`.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidOutProperty
+
+```
+The Frame class doesn't have a property called 'MouseButton1Down'.
+```
+
+**Thrown by:**
+[`Out`](../../roblox/members/out)
+
+The property that you tried to output doesn't exist on the instance that `Out`
+was used with.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## invalidOutType
+
+```
+[Out] properties must be given Value objects.
+```
+
+**Thrown by:**
+[`Out`](../../roblox/members/out)
+
+`Out` expected you to give it a [value](../../state/members/value), but you gave
+it something else.
 </div>
 
 -----
@@ -300,57 +372,6 @@ it something else.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## invalidOutType
-
-```
-[Out] properties must be given Value objects.
-```
-
-**Thrown by:**
-[`Out`](../../roblox/members/out)
-
-`Out` expected you to give it a [value](../../state/members/value), but you gave
-it something else.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## invalidAttributeOutType
-
-```
-[AttributeOut] properties must be given Value objects.
-```
-
-**Thrown by:**
-[`AttributeOut`](../../roblox/members/attributeout)
-
-`AttributeOut` expected you to give it a [value](../../state/members/value), but
-you gave it something else.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## invalidOutProperty
-
-```
-The Frame class doesn't have a property called 'MouseButton1Down'.
-```
-
-**Thrown by:**
-[`Out`](../../roblox/members/out)
-
-The property that you tried to output doesn't exist on the instance that `Out`
-was used with.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
 ## invalidSpringDamping
 
 ```
@@ -379,6 +400,28 @@ The speed of a spring must be >= 0. (speed was NaN)
 
 You provided a speed multiplier that the spring doesn't support, for example
 `NaN` or a negative speed implying the spring moves backwards through time.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## mergeConflict
+
+```
+Multiple definitions for 'Observer' found while merging.
+```
+
+**Thrown by:**
+[`scoped`](../../memory/members/scoped)
+
+Fusion tried to merge together multiple tables, but a key was found in more than
+one of the tables, and it's unclear which one you intended to have in the final
+merged result.
+
+This can happen subtly with methods such as 
+[`scoped()`](../../memory/members/scoped) which automatically merge together all
+of their arguments.
 </div>
 
 -----
@@ -430,28 +473,6 @@ The tween info of a tween must be a TweenInfo. (got a table)
 
 You provided an easing curve that the tween couldn't understand. The easing
 curve has to be specified using Roblox's `TweenInfo` data type.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## mergeConflict
-
-```
-Multiple definitions for 'Observer' found while merging.
-```
-
-**Thrown by:**
-[`scoped`](../../memory/members/scoped)
-
-Fusion tried to merge together multiple tables, but a key was found in more than
-one of the tables, and it's unclear which one you intended to have in the final
-merged result.
-
-This can happen subtly with methods such as 
-[`scoped()`](../../memory/members/scoped) which automatically merge together all
-of their arguments.
 </div>
 
 -----
@@ -517,6 +538,27 @@ There are two typical solutions:
 then ensure they're created in the correct order.
 - Otherwise, move the objects into separate scopes, and ensure that both scopes
 can exist without the other scope.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## propertySetError
+
+```
+Error setting property: UIAspectRatioConstraint.AspectRatio set to a
+non-positive value. Value must be a positive.
+```
+
+**Thrown by:**
+[`New`](../../roblox/members/new),
+[`Hydrate`](../../roblox/members/hydrate)
+
+You attempted to set a property, but Roblox threw an error in response.
+
+The error includes a more specific message which can be used to diagnose the
+issue.
 </div>
 
 -----
