@@ -1,4 +1,5 @@
---!nonstrict
+--!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs and returns objects which can be used to model independent
@@ -7,6 +8,7 @@
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 -- State
@@ -15,9 +17,10 @@ local updateAll = require(Package.State.updateAll)
 local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
+class.type = "State"
+class.kind = "Value"
 
 local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
 
 --[[
 	Updates the value stored in this State object.
@@ -26,7 +29,11 @@ local WEAK_KEYS_METATABLE = {__mode = "k"}
 	state object and any dependents - use this with care as this can lead to
 	unnecessary updates.
 ]]
-function class:set(newValue: any, force: boolean?)
+function class:set(
+	newValue: unknown,
+	force: boolean?
+)
+	local self = self :: InternalTypes.Value<unknown>
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
@@ -37,7 +44,8 @@ end
 --[[
 	Returns the interior value of this state object.
 ]]
-function class:_peek(): any
+function class:_peek(): unknown
+	local self = self :: InternalTypes.Value<unknown>
 	return self._value
 end
 
@@ -45,15 +53,30 @@ function class:get()
 	logError("stateGetWasRemoved")
 end
 
-local function Value<T>(initialValue: T): Types.State<T>
+function class:destroy()
+	local self = self :: InternalTypes.Value<unknown>
+	if self.scope == nil then
+		logError("destroyedTwice", nil, "Value")
+	end
+	self.scope = nil
+end
+
+local function Value<T>(
+	scope: Types.Scope<unknown>,
+	initialValue: T
+): Types.Value<T>
+	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
+		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
+	end
+
 	local self = setmetatable({
-		type = "State",
-		kind = "Value",
-		-- if we held strong references to the dependents, then they wouldn't be
-		-- able to get garbage collected when they fall out of scope
-		dependentSet = setmetatable({}, WEAK_KEYS_METATABLE),
+		scope = scope,
+		dependentSet = {},
 		_value = initialValue
 	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.Value<T>
+
+	table.insert(scope, self)
 
 	return self
 end

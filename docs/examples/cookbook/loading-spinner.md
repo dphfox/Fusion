@@ -1,39 +1,128 @@
+This example implements a procedural spinning animation using Fusion's Roblox
+APIs.
+
+-----
+
+## Overview
+
 ```Lua linenums="1"
 local RunService = game:GetService("RunService")
--- [Fusion imports omitted for clarity]
 
--- Loading spinners generally don't use transition-based animations like tweens.
--- Instead, they animate continuously and independently, so we'll need to set up
--- our own animation clock that will drive the animation.
--- We can set up one clock and use it everywhere.
-local timer = Value(os.clock())
-local timerConn = RunService.RenderStepped:Connect(function()
-	-- Remember to disconnect this event when you're done using it!
-	timer:set(os.clock())
-end)
+local Fusion = -- initialise Fusion here however you please!
+local scoped = Fusion.scoped
+local Children = Fusion.Children
 
--- Our loading spinner will consist of an image which rotates around. You could
--- do something more complex or intricate for spice, but in the interest of
--- providing a simple starting point, let's keep it simple.
-local spinner = New "ImageLabel" {
-	Position = UDim2.fromScale(0.5, 0.5),
-	AnchorPoint = Vector2.new(0.5, 0.5),
-	Size = UDim2.fromOffset(50, 50),
+local SPIN_DEGREES_PER_SECOND = 180
+local SPIN_SIZE = 50
 
-	BackgroundTransparency = 1,
-	Image = "rbxassetid://your-loading-spinner-image", -- replace this!
+local function Spinner(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		Layout: {
+			LayoutOrder: Fusion.CanBeState<number>?,
+			Position: Fusion.CanBeState<UDim2>?,
+			AnchorPoint: Fusion.CanBeState<Vector2>?,
+			ZIndex: Fusion.CanBeState<number>?
+		},
+		CurrentTime: Fusion.CanBeState<number>,
+	}
+): Fusion.Child
+	return scope:New "ImageLabel" {
+		Name = "Spinner",
 
-	-- As the timer runs, this will automatically update and rotate our image.
-	Rotation = Computed(function(use)
-		local time = use(timer)
-		local angle = time * 180 -- Spin at a rate of 180 degrees per second
-		angle %= 360 -- Don't need to go beyond 360 degrees; wrap instead
-		return angle
-	end),
+		LayoutOrder = props.Layout.LayoutOrder,
+		Position = props.Layout.Position,
+		AnchorPoint = props.Layout.AnchorPoint,
+		ZIndex = props.Layout.ZIndex,
 
-	-- If your `timer` is only used by this one loading spinner, you can clean
-	-- up the `timerConn` here. If you're re-using one timer for all of your
-	-- spinners, you don't need to do this here.
-	[Cleanup] = timerConn
+		Size = UDim2.fromOffset(SPIN_SIZE, SPIN_SIZE),
+
+		BackgroundTransparency = 1,
+		Image = "rbxassetid://your-loading-spinner-image", -- replace this!
+
+		Rotation = scope:Computed(function(use)
+			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
+		end)
+	}
+end
+
+-- Don't forget to pass this to `doCleanup` if you disable the script.
+local scope = scoped(Fusion, {
+	Spinner = Spinner
+})
+
+local currentTime = scope:Value(os.clock())
+table.insert(scope,
+	RunService.RenderStepped:Connect(function()
+		currentTime:set(os.clock())
+	end)
+)
+
+local spinner = scope:Spinner {
+	Layout = {
+		Position = UDim2.fromScale(0.5, 0.5),
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Size = UDim2.fromOffset(50, 50)
+	},
+	CurrentTime = currentTime
+}
+```
+
+-----
+
+## Explanation
+
+The `Spinner` components implements the animation for the loading spinner. It's
+largely a standard Fusion component definition.
+
+The main thing to note is that it asks for a `CurrentTime` property.
+
+```Lua linenums="10" hl_lines="10"
+local function Spinner(
+	scope: Fusion.Scope<typeof(Fusion)>,
+	props: {
+		Layout: {
+			LayoutOrder: Fusion.CanBeState<number>?,
+			Position: Fusion.CanBeState<UDim2>?,
+			AnchorPoint: Fusion.CanBeState<Vector2>?,
+			ZIndex: Fusion.CanBeState<number>?
+		},
+		CurrentTime: Fusion.CanBeState<number>,
+	}
+): Fusion.Child
+```
+
+The `CurrentTime` is used to drive the rotation of the loading spinner.
+
+```Lua linenums="35"
+		Rotation = scope:Computed(function(use)
+			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
+		end)
+```
+
+That's all that's required for the `Spinner` component.
+
+Later on, the example creates a `Value` object that will store the current time,
+and starts a process to keep it up to date.
+
+```Lua linenums="46"
+local currentTime = scope:Value(os.clock())
+table.insert(scope,
+	RunService.RenderStepped:Connect(function()
+		currentTime:set(os.clock())
+	end)
+)
+```
+
+This can then be passed in as `CurrentTime` when the `Spinner` is created.
+
+```Lua linenums="53" hl_lines="7"
+local spinner = scope:Spinner {
+	Layout = {
+		Position = UDim2.fromScale(0.5, 0.5),
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Size = UDim2.fromOffset(50, 50)
+	},
+	CurrentTime = currentTime
 }
 ```

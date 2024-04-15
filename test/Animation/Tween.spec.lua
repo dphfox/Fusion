@@ -43,7 +43,7 @@ return function()
 	-- 	local followerState = Value(UDim2.fromScale(1, 1))
 
 	-- 	local tween = Tween(followerState, TweenInfo.new(0.1))
-	-- 	local testInstance = New "Frame" { Size = tween }
+	-- 	local testInstance = New(scope, "Frame") { Size = tween }
 
 	-- 	followerState:set(UDim2.fromScale(0.5, 0.5))
 

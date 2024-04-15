@@ -1,43 +1,53 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to save instance attributes
-    into state objects
+	into state objects
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local logWarn = require(Package.Logging.logWarn)
+local isState = require(Package.State.isState)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function AttributeOut(attributeName: string): PubTypes.SpecialKey
-	local attributeOutKey = {}
-	attributeOutKey.type = "SpecialKey"
-	attributeOutKey.kind = "AttributeOut"
-	attributeOutKey.stage = "observer"
+local function AttributeOut(
+	attributeName: string
+): Types.SpecialKey
+	return {
+		type = "SpecialKey",
+		kind = "AttributeOut",
+		stage = "observer",
+		apply = function(
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
+			applyTo: Instance
+		)
+			local event = applyTo:GetAttributeChangedSignal(attributeName)
 
-	function attributeOutKey:apply(stateObject: PubTypes.StateObject, applyTo: Instance, cleanupTasks: { PubTypes.Task })
-		if xtypeof(stateObject) ~= "State" or stateObject.kind ~= "Value" then
-			logError("invalidAttributeOutType")
-		end
-		if attributeName == nil then
-			logError("attributeNameNil")
-		end
-		local ok, event = pcall(applyTo.GetAttributeChangedSignal, applyTo, attributeName)
-		if not ok then
-			logError("invalidOutAttributeName", applyTo.ClassName, attributeName)
-		else
-			stateObject:set((applyTo :: any):GetAttribute(attributeName))
-			table.insert(cleanupTasks, event:Connect(function()	
-				stateObject:set((applyTo :: any):GetAttribute(attributeName))
+			if not isState(value) then
+				logError("invalidAttributeOutType")
+			end
+			local value = value :: Types.StateObject<unknown>
+			if value.kind ~= "Value" then
+				logError("invalidAttributeOutType")
+			end
+			local value = value :: Types.Value<unknown>
+			
+			if value.scope == nil then
+				logError("useAfterDestroy", nil, `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+				logWarn("possiblyOutlives", `The Value object, which [AttributeOut "{attributeName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			end
+			value:set((applyTo :: any):GetAttribute(attributeName))
+			table.insert(scope, event:Connect(function()	
+				value:set((applyTo :: any):GetAttribute(attributeName))
 			end))
-			table.insert(cleanupTasks, function()
-				stateObject:set(nil)
-			end)
 		end
-	end
-
-	return attributeOutKey
+	}
 end
 
 return AttributeOut

@@ -83,10 +83,30 @@
 	color: var(--fusiondoc-bg-1);
 }
 
-
 .md-banner {
-	background-color: var(--fusiondoc-bg-0);
+	overflow-x: hidden;
 	text-align: center;
+}
+
+.md-banner__inner {
+	position: relative;
+	max-width: 100%;
+	width: fit-content;
+	margin: 0 auto;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	height: 100%;
+}
+
+.md-banner__inner::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -50%;
+	right: -50%;
+	bottom: 0;
+	background: url(../aura.png);
+	background-size: 100% 100%;
 }
 
 .md-footer__inner {
@@ -147,6 +167,10 @@
 
 [dir=rtl] .md-header__title {
 	margin-right: 0rem;
+}
+
+.md-header__title .md-header__topic:first-child {
+	height: 2.4rem;
 }
 
 .md-header__title .md-header__topic:first-child::before {
@@ -218,7 +242,7 @@
 }
 
 .md-copyright::after {
-	content: "∙ Theme by Elttob";
+	content: "∙ Theme by Daniel P H Fox";
 }
 
 @media screen and (max-width: 76.1875em) {

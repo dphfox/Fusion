@@ -17,7 +17,8 @@ local function buildReactiveGraph(ancestorsToDescendants, handler)
 			dependentSet = {},
 			update = handler,
 			updates = 0,
-			name = named
+			name = named,
+			scope = "not nil"
 		}
 
 		objects[named] = object
@@ -73,6 +74,31 @@ return function()
 		expect(objects.B.updates).to.equal(1)
 		expect(objects.C.updates).to.equal(1)
 		expect(objects.D.updates).to.equal(1)
+	end)
+
+	it("should not update destroyed objects", function()
+		local objects = buildReactiveGraph({
+			edge("A", "B"),
+			edge("B", "C"),
+			edge("C", "D"),
+		}, function(self)
+			self.updates += 1
+			return true
+		end)
+
+		objects.D.scope = nil
+		updateAll(objects.A)
+		expect(objects.A.updates).to.equal(0)
+		expect(objects.B.updates).to.equal(1)
+		expect(objects.C.updates).to.equal(1)
+		expect(objects.D.updates).to.equal(0)
+
+		objects.B.scope = nil
+		updateAll(objects.A)
+		expect(objects.A.updates).to.equal(0)
+		expect(objects.B.updates).to.equal(1)
+		expect(objects.C.updates).to.equal(1)
+		expect(objects.D.updates).to.equal(0)
 	end)
 
 	it("should not update unchanged subgraphs", function()

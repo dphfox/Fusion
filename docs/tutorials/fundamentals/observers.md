@@ -1,14 +1,14 @@
-Observers allow you to detect when any state object changes value. You can
-connect handlers using `:onChange()`, which returns a function you can call to
-disconnect it later.
+When you're working with state objects, it can be useful to detect various
+changes that happen to them.
+
+Observers allow you to detect those changes. Create one with a state object to
+'watch', then connect code to run using `:onChange()` or `:onBind()`.
 
 ```Lua
-local observer = Observer(health)
-
+local observer = scope:Observer(health)
 local disconnect = observer:onChange(function()
 	print("The new value is: ", peek(health))
 end)
-
 task.wait(5)
 disconnect()
 ```
@@ -17,36 +17,50 @@ disconnect()
 
 ## Usage
 
-To use `Observer` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
+To create a new observer object, call `scope:Observer()` and give it a state
+object you want to detect changes on.
 
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local Observer = Fusion.Observer
+```Lua linenums="6" hl_lines="3"
+local scope = scoped(Fusion)
+local health = scope:Value(5)
+local observer = scope:Observer(health)
 ```
 
-To create a new observer, call the `Observer` function with an object to watch:
+The observer will watch the state object for changes until it's destroyed. You
+can take advantage of this by connecting your own code using the observer's
+different methods.
 
-```Lua
-local health = Value(100)
+The first method is `:onChange()`, which runs your code when the state object
+changes value.
 
--- This observer will watch `health` for changes:
-local observer = Observer(health)
-```
+=== "Luau code"
 
-When the watched object changes value, the observer will run all of its handlers.
-To add a handler, you can use `:onChange()`:
+	```Lua linenums="8" hl_lines="4-6"
+	local observer = scope:Observer(health)
 
-```Lua
-local disconnect = observer:onChange(function()
-	print("The new value is: ", peek(health))
-end)
-```
+	print("...connecting...")
+	observer:onChange(function()
+		print("Observed a change to: ", peek(health))
+	end)
 
-When you're done with the handler, it's very important to disconnect it. The
-`:onChange()` method returns a function you can call to disconnect your handler:
+	print("...setting health to 25...")
+	health:set(25)
+	```
 
-```Lua
+=== "Output"
+
+	```
+	...connecting...
+	...setting health to 25...
+	Observed a change to: 25
+	```
+
+By default, the `:onChange()` connection is disconnected when the observer
+object is destroyed. However, if you want to disconnect it earlier, the
+`:onChange()` method returns an optional disconnect function. Calling it will
+disconnect that specific `:onChange()` handler early.
+
+```Lua linenums="8" hl_lines="1 7"
 local disconnect = observer:onChange(function()
 	print("The new value is: ", peek(health))
 end)
@@ -56,81 +70,63 @@ task.wait(5)
 disconnect()
 ```
 
-??? question "Why is disconnecting so important?"
-	While an observer has at least one active handler, it will hold the watched
-	object in memory forcibly. This is done to make sure that changes aren't
-	missed.
+The second method is `:onBind()`. It works identically to `:onChange()`, but it
+also runs your code right away, which can often be useful.
 
-	Disconnecting your handlers tells Fusion you don't need to track changes
-	any more, which allows it to clean up the observer and the watched object.
+=== "Luau code"
+
+	```Lua linenums="8" hl_lines="4"
+	local observer = scope:Observer(health)
+
+	print("...connecting...")
+	observer:onBind(function()
+		print("Observed a change to: ", peek(health))
+	end)
+
+	print("...setting health to 25...")
+	health:set(25)
+	```
+
+=== "Output"
+
+	```
+	...connecting...
+	Observed a change to: 5
+	...setting health to 25...
+	Observed a change to: 25
+	```
 
 -----
 
 ## What Counts As A Change?
 
-You might notice that not all calls to `Value:set()` will cause your observer to
-run:
+If you set the `health` to the same value multiple times in a row, you might
+notice your observer only runs the first time.
 
-=== "Script code"
+=== "Luau code"
 
-	```Lua
-	local thing = Value("Hello")
+	```Lua linenums="8"
+	local observer = scope:Observer(health)
 
-	Observer(thing):onChange(function()
-		print("=> Thing changed to", peek(thing))
+	observer:onChange(function()
+		print("Observed a change to: ", peek(health))
 	end)
 
-	print("Setting thing once...")
-	thing:set("World")
-	print("Setting thing twice...")
-	thing:set("World")
-	print("Setting thing thrice...")
-	thing:set("World")
+	print("...setting health to 25 three times...")
+	health:set(25)
+	health:set(25)
+	health:set(25)
 	```
 
 === "Output"
 
 	```
-	Setting thing once...
-	=> Thing changed to World
-	Setting thing twice...
-	Setting thing thrice...
+	...setting health to 25 three times...
+	Observed a change to: 25
 	```
 
-When you set the value, if it's the same as the existing value, an update won't
-be sent out. This means observers won't re-run when you set the
-value multiple times in a row.
+This is because the `health` object sees that it isn't actually changing value,
+so it doesn't broadcast any updates. Therefore, our observer doesn't run.
 
-![A diagram showing how value objects only send updates if the new value and previous value aren't equal.](Value-Equality-Dark.svg#only-dark)
-![A diagram showing how value objects only send updates if the new value and previous value aren't equal.](Value-Equality-Light.svg#only-light)
-
-In most cases, this leads to improved performance because your code runs less
-often. However, if you need to override this behaviour, `Value:set()` accepts a
-second argument - if you set it to `true`, an update will be forced:
-
-=== "Script code"
-
-	```Lua hl_lines="11-12"
-	local thing = Value("Hello")
-
-	Observer(thing):onChange(function()
-		print("=> Thing changed to", peek(thing))
-	end)
-
-	print("Setting thing once...")
-	thing:set("World")
-	print("Setting thing twice...")
-	thing:set("World")
-	print("Setting thing thrice (update forced)...")
-	thing:set("World", true)
-	```
-
-=== "Output"
-
-	``` hl_lines="4-5"
-	Setting thing once...
-	=> Thing changed to World
-	Setting thing twice...
-	Setting thing thrice (update forced)...
-	=> Thing changed to World
-	```
+This leads to improved performance because your code runs less often. Fusion
+applies these kinds of optimisations generously throughout your program.

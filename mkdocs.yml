@@ -54,33 +54,33 @@ nav:
   - Home: index.md
   - Tutorials:
     - Get Started: tutorials/index.md
-    - State Objects:
+    - Fundamentals:
+      - Scopes: tutorials/fundamentals/scopes.md
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md
-      - Destructors: tutorials/fundamentals/destructors.md
-    - Instances:
-      - Hydration: tutorials/instances/hydration.md
-      - New Instances: tutorials/instances/new-instances.md
-      - Parenting: tutorials/instances/parenting.md
-      - Events: tutorials/instances/events.md
-      - Change Events: tutorials/instances/change-events.md
-      - Outputs: tutorials/instances/outputs.md
-      - Cleanup: tutorials/instances/cleanup.md
-      - References: tutorials/instances/references.md
-    - Lists & Tables:
-      - The For Objects: tutorials/lists-and-tables/the-for-objects.md
-      - ForValues: tutorials/lists-and-tables/forvalues.md
-      - ForKeys: tutorials/lists-and-tables/forkeys.md
-      - ForPairs: tutorials/lists-and-tables/forpairs.md
-    - Components:
-      - Reusing UI: tutorials/components/reusing-ui.md
-      - Children: tutorials/components/children.md
-      - Callbacks: tutorials/components/callbacks.md
-      - State: tutorials/components/state.md
+    - Tables:
+      - ForValues: tutorials/tables/forvalues.md
+      - ForKeys: tutorials/tables/forkeys.md
+      - ForPairs: tutorials/tables/forpairs.md
     - Animation:
       - Tweens: tutorials/animation/tweens.md
       - Springs: tutorials/animation/springs.md
+    - Roblox:
+      - Hydration: tutorials/roblox/hydration.md
+      - New Instances: tutorials/roblox/new-instances.md
+      - Parenting: tutorials/roblox/parenting.md
+      - Events: tutorials/roblox/events.md
+      - Change Events: tutorials/roblox/change-events.md
+      - Outputs: tutorials/roblox/outputs.md
+      - References: tutorials/roblox/references.md
+    - Best Practices:
+      - Components: tutorials/best-practices/components.md
+      - Instance Handling: tutorials/best-practices/instance-handling.md
+      - Callbacks: tutorials/best-practices/callbacks.md
+      - State: tutorials/best-practices/state.md
+      - Sharing Values: tutorials/best-practices/sharing-values.md
+    
   - Examples:
     - Home: examples/index.md
     - Cookbook:
@@ -93,46 +93,67 @@ nav:
       - Loading Spinner: examples/cookbook/loading-spinner.md
       - Drag & Drop: examples/cookbook/drag-and-drop.md
   - API Reference:
-    - Home: api-reference/index.md
-    - Errors:
-      - api-reference/errors/index.md
+    - api-reference/index.md
+    - General:
+      - Errors: api-reference/general/errors.md
+      - Types:
+        - Contextual: api-reference/general/types/contextual.md
+        - Version: api-reference/general/types/version.md
+      - Members:
+        - Contextual: api-reference/general/members/contextual.md
+        - version: api-reference/general/members/version.md
+    - Memory:
+      - Types:
+        - Scope: api-reference/memory/types/scope.md
+        - ScopedObject: api-reference/memory/types/scopedobject.md
+        - Task: api-reference/memory/types/task.md
+      - Members:
+        - deriveScope: api-reference/memory/members/derivescope.md
+        - doCleanup: api-reference/memory/members/docleanup.md
+        - scoped: api-reference/memory/members/scoped.md
     - State:
-      - api-reference/state/index.md
-      - CanBeState: api-reference/state/canbestate.md
-      - Computed: api-reference/state/computed.md
-      - cleanup: api-reference/state/cleanup.md
-      - Dependency: api-reference/state/dependency.md
-      - Dependent: api-reference/state/dependent.md
-      - doNothing: api-reference/state/donothing.md
-      - ForKeys: api-reference/state/forkeys.md
-      - ForPairs: api-reference/state/forpairs.md
-      - ForValues: api-reference/state/forvalues.md
-      - Observer: api-reference/state/observer.md
-      - peek: api-reference/state/peek.md
-      - StateObject: api-reference/state/stateobject.md
-      - Use: api-reference/state/use.md
-      - Value: api-reference/state/value.md
-    - Instances:
-      - api-reference/instances/index.md
-      - Attribute: api-reference/instances/attribute.md
-      - AttributeChange: api-reference/instances/attributechange.md
-      - AttributeOut: api-reference/instances/attributeout.md
-      - Child: api-reference/instances/child.md
-      - Children: api-reference/instances/children.md
-      - Cleanup: api-reference/instances/cleanup.md
-      - Component: api-reference/instances/component.md
-      - Hydrate: api-reference/instances/hydrate.md
-      - New: api-reference/instances/new.md
-      - OnChange: api-reference/instances/onchange.md
-      - OnEvent: api-reference/instances/onevent.md
-      - Out: api-reference/instances/out.md
-      - Ref: api-reference/instances/ref.md
-      - SpecialKey: api-reference/instances/specialkey.md
+      - Types:
+        - CanBeState: api-reference/state/types/canbestate.md 
+        - Computed: api-reference/state/types/computed.md 
+        - Dependency: api-reference/state/types/dependency.md 
+        - Dependent: api-reference/state/types/dependent.md 
+        - For: api-reference/state/types/for.md 
+        - Observer: api-reference/state/types/observer.md 
+        - StateObject: api-reference/state/types/stateobject.md 
+        - Use: api-reference/state/types/use.md 
+        - Value: api-reference/state/types/value.md 
+      - Members:
+        - Computed: api-reference/state/members/computed.md
+        - ForKeys: api-reference/state/members/forkeys.md
+        - ForPairs: api-reference/state/members/forpairs.md
+        - ForValues: api-reference/state/members/forvalues.md
+        - Observer: api-reference/state/members/observer.md
+        - peek: api-reference/state/members/peek.md
+        - Value: api-reference/state/members/value.md
+    - Roblox:
+      - Types:
+        - Child: api-reference/roblox/types/child.md
+        - PropertyTable: api-reference/roblox/types/propertytable.md
+        - SpecialKey: api-reference/roblox/types/specialkey.md
+      - Members:
+        - Attribute: api-reference/roblox/members/attribute.md
+        - AttributeChange: api-reference/roblox/members/attributechange.md
+        - AttributeOut: api-reference/roblox/members/attributeout.md
+        - Children: api-reference/roblox/members/children.md
+        - Hydrate: api-reference/roblox/members/hydrate.md
+        - New: api-reference/roblox/members/new.md
+        - OnChange: api-reference/roblox/members/onchange.md
+        - OnEvent: api-reference/roblox/members/onevent.md
+        - Out: api-reference/roblox/members/out.md
+        - Ref: api-reference/roblox/members/ref.md
     - Animation:
-      - api-reference/animation/index.md
-      - Animatable: api-reference/animation/animatable.md
-      - Tween: api-reference/animation/tween.md
-      - Spring: api-reference/animation/spring.md
+      - Types:
+        - Animatable: api-reference/animation/types/animatable.md
+        - Spring: api-reference/animation/types/spring.md
+        - Tween: api-reference/animation/types/tween.md
+      - Members:
+        - Tween: api-reference/animation/members/tween.md
+        - Spring: api-reference/animation/members/spring.md
   - Extras:
     - Home: extras/index.md
     - Backgrounds: extras/backgrounds.md

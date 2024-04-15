@@ -1,32 +1,34 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Manages batch updating of spring objects.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.State.updateAll)
 
-type Set<T> = {[T]: any}
-type Spring = Types.Spring<any>
+type Set<T> = {[T]: unknown}
 
 local SpringScheduler = {}
 
 local EPSILON = 0.0001
-local activeSprings: Set<Spring> = {}
+local activeSprings: Set<InternalTypes.Spring<unknown>> = {}
 local lastUpdateTime = External.lastUpdateStep()
 
-function SpringScheduler.add(spring: Spring)
+function SpringScheduler.add(
+	spring: InternalTypes.Spring<unknown>
+)
 	-- we don't necessarily want to use the most accurate time - here we snap to
 	-- the last update time so that springs started within the same frame have
 	-- identical time steps
 	spring._lastSchedule = lastUpdateTime
-	spring._startDisplacements = {}
-	spring._startVelocities = {}
+	table.clear(spring._startDisplacements)
+	table.clear(spring._startVelocities)
 	for index, goal in ipairs(spring._springGoals) do
 		spring._startDisplacements[index] = spring._springPositions[index] - goal
 		spring._startVelocities[index] = spring._springVelocities[index]
@@ -35,18 +37,24 @@ function SpringScheduler.add(spring: Spring)
 	activeSprings[spring] = true
 end
 
-function SpringScheduler.remove(spring: Spring)
+function SpringScheduler.remove(
+	spring: InternalTypes.Spring<unknown>
+)
 	activeSprings[spring] = nil
 end
 
 local function updateAllSprings(
 	now: number
 )
-	local springsToSleep: Set<Spring> = {}
+	local springsToSleep: Set<InternalTypes.Spring<unknown>> = {}
 	lastUpdateTime = now
 
 	for spring in pairs(activeSprings) do
-		local posPos, posVel, velPos, velVel = springCoefficients(lastUpdateTime - spring._lastSchedule, spring._currentDamping, spring._currentSpeed)
+		local posPos, posVel, velPos, velVel = springCoefficients(
+			lastUpdateTime - spring._lastSchedule,
+			spring._currentDamping,
+			spring._currentSpeed
+		)
 
 		local positions = spring._springPositions
 		local velocities = spring._springVelocities
@@ -73,15 +81,16 @@ local function updateAllSprings(
 		end
 	end
 
-	for spring in pairs(activeSprings) do
-		spring._currentValue = packType(spring._springPositions, spring._currentType)
-		updateAll(spring)
-	end
-
 	for spring in pairs(springsToSleep) do
 		activeSprings[spring] = nil
 		-- Guarantee that springs reach exact goals, since mathematically they only approach it infinitely
 		spring._currentValue = packType(spring._springGoals, spring._currentType)
+		updateAll(spring)
+	end
+
+	for spring in pairs(activeSprings) do
+		spring._currentValue = packType(spring._springPositions, spring._currentType)
+		updateAll(spring)
 	end
 end
 

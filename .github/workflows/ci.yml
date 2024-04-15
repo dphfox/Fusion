@@ -21,4 +21,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Selene
-        run: selene src test benchmark
+        run: selene src test

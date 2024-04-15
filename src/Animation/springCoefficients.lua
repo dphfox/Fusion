@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Returns a 2x2 matrix of coefficients for a given time, damping and speed.
@@ -11,7 +12,11 @@
 	Special thanks to AxisAngle for helping to improve numerical precision.
 ]]
 
-local function springCoefficients(time: number, damping: number, speed: number): (number, number, number, number)
+local function springCoefficients(
+	time: number,
+	damping: number,
+	speed: number
+): (number, number, number, number)
 	-- if time or speed is 0, then the spring won't move
 	if time == 0 or speed == 0 then
 		return 1, 0, 0, 1

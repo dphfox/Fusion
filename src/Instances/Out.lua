@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to extract values from
@@ -6,37 +7,53 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local logWarn = require(Package.Logging.logWarn)
+local isState = require(Package.State.isState)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function Out(propertyName: string): PubTypes.SpecialKey
-	local outKey = {}
-	outKey.type = "SpecialKey"
-	outKey.kind = "Out"
-	outKey.stage = "observer"
+local function Out(
+	propertyName: string
+): Types.SpecialKey
+	return {
+		type = "SpecialKey",
+		kind = "Out",
+		stage = "observer",
+		apply = function(
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
+			applyTo: Instance
+		)
+			local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
+			if not ok then
+				logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
+			end
 
-	function outKey:apply(outState: any, applyTo: Instance, cleanupTasks: { PubTypes.Task })
-		local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
-		if not ok then
-			logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
-		elseif xtypeof(outState) ~= "State" or outState.kind ~= "Value" then
-			logError("invalidOutType")
-		else
-			outState:set((applyTo :: any)[propertyName])
+			if not isState(value) then
+				logError("invalidOutType")
+			end
+			local value = value :: Types.StateObject<unknown>
+			if value.kind ~= "Value" then
+				logError("invalidOutType")
+			end
+			local value = value :: Types.Value<unknown>
+
+			if value.scope == nil then
+				logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+				logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+			end
+			value:set((applyTo :: any)[propertyName])
 			table.insert(
-				cleanupTasks,
+				scope,
 				event:Connect(function()
-					outState:set((applyTo :: any)[propertyName])
+					value:set((applyTo :: any)[propertyName])
 				end)
 			)
-			table.insert(cleanupTasks, function()
-				outState:set(nil)
-			end)
 		end
-	end
-
-	return outKey
+	}
 end
 
 return Out
