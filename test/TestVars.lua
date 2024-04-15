@@ -1,0 +1,5 @@
+--!strict
+
+return {
+	runTests = true
+}

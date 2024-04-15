@@ -45,7 +45,7 @@ export type Scope<Constructors> = {unknown} & Constructors
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
 	scope: Scope<unknown>?,
-	destroy: () -> ()
+	destroy: (any) -> ()
 }
 
 -- Script-readable version information.
