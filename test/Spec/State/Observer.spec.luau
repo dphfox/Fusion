@@ -73,7 +73,7 @@ return function()
 		dependency:set(10)
 
 		for _, numFires in firesPerThread do
-			expect(firesPerThread).to.equal(0)
+			expect(numFires).to.equal(1)
 		end
 
 		doCleanup(scope)
