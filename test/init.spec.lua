@@ -11,7 +11,6 @@ return function()
 
 			cleanup = "function",
 			doCleanup = "function",
-			doNothing = "function",
 			scoped = "function",
 			deriveScope = "function",
 
