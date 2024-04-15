@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	Constructs a new state object which can listen for updates on another state

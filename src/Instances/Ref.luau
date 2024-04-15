@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	A special key for property tables, which stores a reference to the instance

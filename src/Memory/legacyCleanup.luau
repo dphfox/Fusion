@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local logWarn = require(Package.Logging.logWarn)

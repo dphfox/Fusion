@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	Constructs a new For object which maps pairs of a table using a `processor`

@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	The private generic implementation for all public `For` objects.

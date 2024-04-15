@@ -1,5 +1,7 @@
 --!strict
+--!nolint LocalUnused
 --!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	Given a `tweenInfo` and `currentTime`, returns a ratio which can be used to

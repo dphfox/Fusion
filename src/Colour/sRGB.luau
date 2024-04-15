@@ -1,4 +1,7 @@
 --!strict
+--!nolint LocalUnused
+--!nolint LocalShadow
+local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
     Provides transformation functions for converting linear RGB values
