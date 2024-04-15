@@ -44,12 +44,14 @@ local function reportNode(node, buffer, level)
 			reportNode(child, buffer, level + 1)
 		end
 		table.insert(buffer, teamCityLeaveSuite(node.planNode.phrase))
+		return nil
 	else
 		table.insert(buffer, teamCityEnterCase(node.planNode.phrase))
 		if node.status == TestEnum.TestStatus.Failure then
 			table.insert(buffer, teamCityFailCase(node.planNode.phrase, table.concat(node.errors,"\n")))
 		end
 		table.insert(buffer, teamCityLeaveCase(node.planNode.phrase))
+		return nil
 	end
 end
 
