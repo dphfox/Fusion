@@ -35,7 +35,7 @@ function class:set(
 	newValue: unknown,
 	force: boolean?
 )
-	local self = self :: InternalTypes.Value<unknown>
+	local self = self :: InternalTypes.Value<unknown, unknown>
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
@@ -47,7 +47,7 @@ end
 	Returns the interior value of this state object.
 ]]
 function class:_peek(): unknown
-	local self = self :: InternalTypes.Value<unknown>
+	local self = self :: InternalTypes.Value<unknown, unknown>
 	return self._value
 end
 
@@ -56,7 +56,7 @@ function class:get()
 end
 
 function class:destroy()
-	local self = self :: InternalTypes.Value<unknown>
+	local self = self :: InternalTypes.Value<unknown, unknown>
 	if self.scope == nil then
 		logError("destroyedTwice", nil, "Value")
 	end
@@ -66,7 +66,7 @@ end
 local function Value<T>(
 	scope: Types.Scope<unknown>,
 	initialValue: T
-): Types.Value<T>
+): Types.Value<T, any>
 	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
 		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
 	end
@@ -76,7 +76,7 @@ local function Value<T>(
 		dependentSet = {},
 		_value = initialValue
 	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Value<T>
+	local self = (self :: any) :: InternalTypes.Value<T, any>
 
 	table.insert(scope, self)
 

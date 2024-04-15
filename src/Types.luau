@@ -87,7 +87,7 @@ export type Dependent = ScopedObject & {
 export type StateObject<T> = Dependency & {
 	type: "State",
 	kind: string,
-	[{}]: T -- unindexable phantom data so StateObject actually contains a T
+	____phantom_peekType: (never) -> T -- phantom data so this contains a T
 }
 
 -- Either a constant value of type T, or a state object containing type T.
@@ -101,14 +101,15 @@ export type Use = <T>(target: CanBeState<T>) -> T
 ]]
 
 -- A state object whose value can be set at any time by the user.
-export type Value<T> = StateObject<T> & {
+export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
- 	set: (Value<T>, newValue: T, force: boolean?) -> ()
+ 	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
+	 ____phantom_setType: (never) -> S -- phantom data so this contains a T
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
 	initialValue: T
-) -> Value<T>
+) -> Value<T, any>
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & Dependent & {

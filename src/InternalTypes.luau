@@ -45,8 +45,8 @@ export type StateObject<T> = Types.StateObject<T> & {
 ]]
 
 -- A state object whose value can be set at any time by the user.
-export type Value<T> = Types.Value<T> & {
-	_value: T
+export type Value<T, S = T> = Types.Value<T, S> & {
+	_value: S
 }
 
 -- A state object whose value is derived from other objects using a callback.
