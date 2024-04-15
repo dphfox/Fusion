@@ -1,19 +1,20 @@
 :root {
-	--fusiondoc-grey-0: hsl(240, 5%, 2.5%);
-	--fusiondoc-grey-1: hsl(240, 5%, 5%);
-	--fusiondoc-grey-2: hsl(240, 5%, 10%);
-	--fusiondoc-grey-3: hsl(240, 5%, 20%);
-	--fusiondoc-grey-4: hsl(240, 5%, 30%);
-	--fusiondoc-grey-5: hsl(240, 5%, 50%);
-	--fusiondoc-grey-6: hsl(240, 5%, 60%);
-	--fusiondoc-grey-7: hsl(240, 5%, 80%);
-	--fusiondoc-grey-8: hsl(240, 5%, 90%);
-	--fusiondoc-grey-9: hsl(240, 5%, 92%);
-	--fusiondoc-grey-10: hsl(240, 5%, 95%);
+	--fusiondoc-grey-0: #000000;
+	--fusiondoc-grey-1: #08001B;
+	--fusiondoc-grey-2: #201432;
+	--fusiondoc-grey-3: #36304f;
+	--fusiondoc-grey-4: #544c68;
+	--fusiondoc-grey-5: #716a87;
+	--fusiondoc-grey-6: #9189a7;
+	--fusiondoc-grey-7: #aeacc3;
+	--fusiondoc-grey-8: #d2cede;
+	--fusiondoc-grey-9: #F5F1FF;
+	--fusiondoc-grey-10: #ffffff;
 
-	--fusiondoc-grey-1-a80: hsl(240, 5%, 5%, 80%);
-	--fusiondoc-grey-2-a80: hsl(240, 5%, 10%, 80%);
-	--fusiondoc-grey-8-a80: hsl(240, 5%, 90%, 80%);
+	--fusiondoc-grey-1-a80: #08001Bcc;
+	--fusiondoc-grey-2-a80: #201432cc;
+	--fusiondoc-grey-8-a80: #d2cedecc;
+	--fusiondoc-grey-9-a80: #F5F1FFcc;
 
 	--fusiondoc-orange: hsl(40, 100%, 50%);
 	--fusiondoc-orange-p1: hsl(40, 100%, 60%);
@@ -44,9 +45,10 @@
 }
 
 [data-md-color-scheme="fusiondoc-light"] {
-	--fusiondoc-bg-1: var(--fusiondoc-grey-8);
-	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-8-a80);
-	--fusiondoc-bg-2: var(--fusiondoc-grey-9);
+	--fusiondoc-bg-0: var(--fusiondoc-grey-8);
+	--fusiondoc-bg-1: var(--fusiondoc-grey-9);
+	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-9-a80);
+	--fusiondoc-bg-2: var(--fusiondoc-grey-10);
 	--fusiondoc-bg-3: var(--fusiondoc-grey-10);
 
 	--fusiondoc-fg-1: var(--fusiondoc-grey-2);
@@ -66,18 +68,19 @@
 	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
 
 	--fusiondoc-stroke: hsla(240, 5%, 0%, 15%);
-	--fusiondoc-smoke: hsla(240, 5%, 85%, 90%);
+	--fusiondoc-smoke: var(--fusiondoc-grey-9-a80);
 }
 
 [data-md-color-scheme="fusiondoc-dark"] {
-	--fusiondoc-bg-1: var(--fusiondoc-grey-2);
-	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-2-a80);
-	--fusiondoc-bg-2: var(--fusiondoc-grey-3);
-	--fusiondoc-bg-3: var(--fusiondoc-grey-4);
+	--fusiondoc-bg-0: var(--fusiondoc-grey-2);
+	--fusiondoc-bg-1: var(--fusiondoc-grey-1);
+	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-1-a80);
+	--fusiondoc-bg-2: var(--fusiondoc-grey-2);
+	--fusiondoc-bg-3: var(--fusiondoc-grey-3);
 
 	--fusiondoc-fg-1: var(--fusiondoc-grey-9);
-	--fusiondoc-fg-2: var(--fusiondoc-grey-8);
-	--fusiondoc-fg-3: var(--fusiondoc-grey-7);
+	--fusiondoc-fg-2: var(--fusiondoc-grey-9);
+	--fusiondoc-fg-3: var(--fusiondoc-grey-10);
 
 	--fusiondoc-accent: var(--fusiondoc-orange);
 	--fusiondoc-accent-light: var(--fusiondoc-orange-p2);
@@ -92,7 +95,7 @@
 	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
 
 	--fusiondoc-stroke: hsla(240, 5%, 100%, 15%);
-	--fusiondoc-smoke: hsla(240, 5%, 0%, 90%);
+	--fusiondoc-smoke: var(--fusiondoc-grey-1-a80);
 }
 
 [data-md-color-scheme="fusiondoc-light"] .fusiondoc-dark-theme-only,

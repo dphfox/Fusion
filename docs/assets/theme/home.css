@@ -18,12 +18,7 @@
 }
 
 #fusiondoc-home-main {
-	background: url(../home/hero-pattern.svg);
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center bottom;
-	border-bottom: 1px solid var(--fusiondoc-stroke);
-
+	position: relative;
 	min-height: calc(100vh - 5rem - var(--distance-to-top-of-page));
 	padding-bottom: var(--distance-to-top-of-page);
 	font-size: 1.2em;
@@ -36,39 +31,81 @@
 	justify-content: center;
 }
 
+#fusiondoc-home-main::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-repeat: no-repeat;
+	background-size: 177vh 100vh;
+	background-position: center right;
+	animation: home-fade-in-bg 0.5s ease 0.5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes home-fade-in-bg {
+	0% {
+		transform: translateY(-0.8rem);
+	}
+	100% {
+		transform: translateY(0rem);
+	}
+}
+
+[data-md-color-scheme="fusiondoc-dark"] #fusiondoc-home-main::before {
+	background-image: url(../home/Hero-Dark.svg);
+}
+
+[data-md-color-scheme="fusiondoc-light"] #fusiondoc-home-main::before {
+	background-image: url(../home/Hero-Light.svg);
+}
+
 #fusiondoc-home-main-inner {
 	max-width: 50rem;
-	background-color: var(--fusiondoc-bg-1-a80);
-	border: 1em solid transparent;
+	translate: calc(min(0px, 25rem - 50vw) * 0.8) 0;
+	border: 0.5em solid transparent;
+	border-radius: 0.75rem;
+}
+
+@media screen and (max-aspect-ratio: 16/9) {
+	#fusiondoc-home-main-inner {
+		translate: 0;
+	}
+	#fusiondoc-home-main::before {
+		filter: blur(2rem);
+		opacity: 0.5;
+	}	
 }
 
 #fusiondoc-home-main-inner > h1 {
 	margin-bottom: 1rem;
 }
 
+#fusiondoc-home-main-inner > nav{
+	display: flex;
+	gap: 0.5em;
+}
+
 #fusiondoc-home-main-inner > nav > a {
-	display: inline-flex;
-	min-width: 15em;
-	padding: 0.75em 1em;
+	display: flex;
+	padding: 0.25rem 0.75rem;
 	background-color: var(--fusiondoc-fg-1);
 	color: var(--fusiondoc-bg-1);
 	font-weight: 600;
-	font-size: 0.8em;
+	font-size: 0.75rem;
 	transition: color 0s;
+	border-radius: 0.25rem;
+	transition: background-color 125ms;
 }
 
-#fusiondoc-home-main-inner > nav > a::after {
-	content: "→";
-	margin-left: auto;
-	margin-right: 0.2em;
-	transition: transform 0.2s ease;
-}
-
-#fusiondoc-home-main-inner > nav > a:hover::after {
-	transform: translateX(0.5em);
+#fusiondoc-home-main-inner > nav > a:is(:hover, :focus) {
+	background-color: var(--fusiondoc-accent);
 }
 
 #fusiondoc-home-scroll {
+	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 
@@ -82,6 +119,21 @@
 	padding: 0.5em;
 
 	background-color: var(--fusiondoc-bg-1);
+	font-weight: 700;
+	overflow: hidden;
+}
+
+#fusiondoc-home-scroll::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: -200%;
+	right: -200%;
+	height: 100%;
+	background: linear-gradient(to right, var(--fusiondoc-bg-1) 40%, transparent 45%, transparent 55%, var(--fusiondoc-bg-1) 60%);
+	opacity: 0.25;
+	animation: home-scroll-shimmer 2s linear infinite;
 }
 
 #fusiondoc-home-scroll::before {
@@ -89,23 +141,27 @@
 	display: inline-block;
 	margin-right: 0.5em;
 
-	animation: home-scroll-move 1.5s ease infinite;
+	animation: home-scroll-move 1s ease-in-out infinite alternate;
 }
 
 @keyframes home-scroll-move {
 	0% {
-		transform: translateY(-0.4rem);
-		opacity: 0;
-	}
-	50% {
-		transform: translateY(0rem);
-		opacity: 1;
+		transform: translateY(-0.2rem);
 	}
 	100% {
-		transform: translateY(0.4rem);
-		opacity: 0;
+		transform: translateY(0.2rem);
 	}
 }
+
+@keyframes home-scroll-shimmer {
+	0% {
+		transform: translateX(-25%);
+	}
+	100% {
+		transform: translateX(25%);
+	}
+}
+
 
 #fusiondoc-home-belowfold {
 	max-width: 50rem;
@@ -142,5 +198,12 @@
 	100% {
 		transform: translateY(0rem);
 		opacity: 1;
+	}
+}
+
+@media screen and (min-width: 160rem) {
+	.md-header[data-md-state=shadow] {
+		box-shadow: 0 1rem 1rem var(--fusiondoc-bg-1) !important;
+		background-color: var(--fusiondoc-bg-1);
 	}
 }

@@ -1,36 +1,44 @@
 .md-typeset h1 {
-	font-weight: 600;
-	letter-spacing: -0.04em;
+	font-weight: 700;
+	letter-spacing: -0.02em;
 }
 
 .md-typeset h2 {
-	font-weight: 600;
-	letter-spacing: -0.03em;
+	font-weight: 700;
+	letter-spacing: -0.02em;
 }
 
 .md-typeset h3 {
 	font-weight: 600;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.01em;
 }
 
 .md-typeset hr {
 	border-bottom-color: var(--fusiondoc-stroke) !important;
 }
 
+.md-typeset img {
+	border-radius: 0.25rem;
+}
+
 .js .md-typeset .tabbed-labels::before {
-	background-color: var(--fusiondoc-grey-a10);
+	background-color: transparent;
 	height: 100%;
-	box-shadow: 0 2px var(--fusiondoc-fg-1) inset;
+	box-shadow: 0 -0.325rem var(--md-code-bg-color) inset, 0 -0.4rem var(--fusiondoc-orange) inset;
 }
 
 .md-typeset .tabbed-labels>label {
-	color: var(--fusiondoc-fg-3);
-	font-weight: 500;
+	color: var(--md-code-fg-color);
+	font-weight: 400;
+	padding: 0;
+	margin: .78125em 1.25em .625em;
 }
 
 .md-typeset .tabbed-labels {
-	background-color: var(--fusiondoc-bg-2);
+	background-color: var(--md-code-bg-color);
 	box-shadow: none;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
 }
 
 h1 > .twemoji:first-child,
@@ -64,8 +72,8 @@ h6 > .twemoji:first-child {
 .md-typeset .tabbed-set>input:nth-child(18):checked~.tabbed-labels>:nth-child(18),
 .md-typeset .tabbed-set>input:nth-child(19):checked~.tabbed-labels>:nth-child(19),
 .md-typeset .tabbed-set>input:nth-child(20):checked~.tabbed-labels>:nth-child(20) {
-	color: var(--fusiondoc-fg-1);
-	font-weight: 600;
+	color: var(--fusiondoc-orange);
+	font-weight: 700;
 }
 
 .fusiondoc-yt-embed {
@@ -78,13 +86,4 @@ h6 > .twemoji:first-child {
 	font-style: normal;
 	font-size: 0.8em;
 	letter-spacing: 0.02em;
-}
-
-.fusiondoc-index-multicol {
-	column-width: 15em;
-}
-
-.fusiondoc-index-multicol .fusiondoc-index-multicol-section {
-	break-inside: avoid;
-	padding-top: 0.001em; /* prevent margins collapsing */
 }

@@ -1,30 +1,31 @@
---!nonstrict
+--!strict
+--!nolint LocalShadow
 
 --[[
 	Constructs a new state object which can listen for updates on another state
 	object.
-
-	FIXME: enabling strict types here causes free types to leak
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Types = require(Package.Types)
-
-type Set<T> = {[T]: any}
+local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local logWarn = require(Package.Logging.logWarn)
+local logError = require(Package.Logging.logError)
 
 local class = {}
-local CLASS_METATABLE = {__index = class}
+class.type = "Observer"
 
--- Table used to hold Observer objects in memory.
-local strongRefs: Set<Types.Observer> = {}
+local CLASS_METATABLE = {__index = class}
 
 --[[
 	Called when the watched state changes value.
 ]]
 function class:update(): boolean
+	local self = self :: InternalTypes.Observer
 	for _, callback in pairs(self._changeListeners) do
-		task.spawn(callback)
+		External.doTaskImmediate(callback)
 	end
 	return false
 end
@@ -37,28 +38,14 @@ end
 	As long as there is at least one active change listener, this Observer
 	will be held in memory, preventing GC, so disconnecting is important.
 ]]
-function class:onChange(callback: () -> ()): () -> ()
+function class:onChange(
+	callback: () -> ()
+): () -> ()
+	local self = self :: InternalTypes.Observer
 	local uniqueIdentifier = {}
-
-	self._numChangeListeners += 1
 	self._changeListeners[uniqueIdentifier] = callback
-
-	-- disallow gc (this is important to make sure changes are received)
-	strongRefs[self] = true
-
-	local disconnected = false
 	return function()
-		if disconnected then
-			return
-		end
-		disconnected = true
 		self._changeListeners[uniqueIdentifier] = nil
-		self._numChangeListeners -= 1
-
-		if self._numChangeListeners == 0 then
-			-- allow gc if all listeners are disconnected
-			strongRefs[self] = nil
-		end
 	end
 end
 
@@ -66,23 +53,60 @@ end
 	Similar to `class:onChange()`, however it runs the provided callback
 	immediately.
 ]]
-function class:onBind(callback: () -> ()): () -> ()
-	task.spawn(callback)
+function class:onBind(
+	callback: () -> ()
+): () -> ()
+	local self = self :: InternalTypes.Observer
+	External.doTaskImmediate(callback)
 	return self:onChange(callback)
 end
 
-local function Observer(watchedState: PubTypes.Value<any>): Types.Observer
-	local self = setmetatable({
-		type = "State",
-		kind = "Observer",
-		dependencySet = {[watchedState] = true},
-		dependentSet = {},
-		_changeListeners = {},
-		_numChangeListeners = 0,
-	}, CLASS_METATABLE)
+function class:destroy()
+	local self = self :: InternalTypes.Observer
+	if self.scope == nil then
+		logError("destroyedTwice", nil, "Observer")
+	end
+	self.scope = nil
+	for dependency in pairs(self.dependencySet) do
+		dependency.dependentSet[self] = nil
+	end
+end
 
-	-- add this object to the watched state's dependent set
-	watchedState.dependentSet[self] = true
+local function Observer(
+	scope: Types.Scope<unknown>,
+	watching: Types.Dependency
+): Types.Observer
+	if watching == nil then
+		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
+	end
+
+	local self = setmetatable({
+		scope = scope,
+		dependencySet = {[watching] = true},
+		dependentSet = {},
+		_changeListeners = {}
+	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.Observer
+	
+	table.insert(scope, self)
+
+	if watching.scope == nil then
+		logError(
+			"useAfterDestroy",
+			nil,
+			`The {watching.kind or watching.type or "watched"} object`,
+			`the Observer that is watching it`
+		)
+	elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
+		logWarn(
+			"possiblyOutlives",
+			`The {watching.kind or watching.type or "watched"} object`,
+			`the Observer that is watching it`
+		)
+	end
+
+	-- add this object to the watched object's dependent set
+	watching.dependentSet[self] = true
 
 	return self
 end

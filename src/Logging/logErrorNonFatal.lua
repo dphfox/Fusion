@@ -1,14 +1,24 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Utility function to log a Fusion-specific error, without halting execution.
 ]]
 
 local Package = script.Parent.Parent
-local Types = require(Package.Types)
+local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
 local messages = require(Package.Logging.messages)
 
-local function logErrorNonFatal(messageID: string, errObj: Types.Error?, ...)
+local function logErrorNonFatal(
+	messageID: string,
+	errObj: InternalTypes.Error?,
+	...: unknown
+)
+	if External.unitTestSilenceNonFatal then
+		return
+	end
+	
 	local formatString: string
 
 	if messages[messageID] ~= nil then
@@ -26,9 +36,9 @@ local function logErrorNonFatal(messageID: string, errObj: Types.Error?, ...)
 		errorString = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")\n---- Stack trace ----\n" .. errObj.trace, ...)
 	end
 
-	task.spawn(function(...)
+	coroutine.wrap(function()
 		error(errorString:gsub("\n", "\n    "), 0)
-	end, ...)
+	end)()
 end
 
 return logErrorNonFatal

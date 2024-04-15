@@ -1,26 +1,37 @@
 Welcome to the Fusion tutorial section! Here, you'll learn how to build great
-interfaces with Fusion, even if you're a complete newcomer to the library.
+things with Fusion, even if you're a complete newcomer to the library.
 
-!!! caution "But first, something important..."
+You'll not only learn how Fusion's features work, but you'll also be presented
+with wisdom from those who've worked with some of the largest Fusion codebases
+today.
+
+!!! caution "But first, some advice from the maintainers..."
 	**<span style="font-size: 1.5em; color: var(--fusiondoc-accent);">
-	Do not use Fusion for real-world production work unless you're 100,000%
-	willing and able to withstand large breaking changes.
+	Fusion is pre-1.0 software.
 	</span>**
 
-	Fusion is in very early beta right now! You *will* encounter:
+	We *(the maintainers and contributors)* work hard to keep releases bug-free
+	and relatively complete, so it should be safe to use in production. Many
+	people already do, and report fantastic results!
 
-	- bugs in core features
-	- updates that completely remove existing features
-	- changes in behaviour between versions
-	- changing advice on coding conventions and how to structure your project
+	However, we mark Fusion as pre-1.0 because we are working on the design of
+	the library itself. We strive for the best library design we can deliver,
+	which means breaking changes are common and sweeping.
 
-	This is not a bad thing! Moving fast with Fusion at this early stage means
-	we can quickly abandon counterproductive ideas and features, and discover
-	much more solid foundations to build upon.
+	With Fusion, you should expect:
 
-	Don't be discouraged from Fusion though; feel free to follow along with our
-	development and try using the library in your own time! More stable,
-	long-term Fusion versions will be available once Fusion exits beta testing.
+	- upgrades to be frictionful, requiring code to be rethought
+	- features to be superseded or removed across versions
+	- advice or best practices to change over time
+
+	You should *also* expect:
+
+	- careful consideration around breakage, even though we reserve the right to
+	  do it
+	- clear communication ahead of any major changes
+	- helpful advice to answer your questions and ease your porting process
+
+	We hope you enjoy using Fusion!
 
 -----
 
@@ -28,108 +39,98 @@ interfaces with Fusion, even if you're a complete newcomer to the library.
 
 These tutorials assume:
 
-- You're comfortable with Roblox and the Luau scripting language.
-	- These tutorials aren't an introduction to scripting! If you'd like to
-	  learn, check out the [Roblox DevHub](https://developer.roblox.com/).
-- You're familiar with how UI works on Roblox.
-    - You don't have to be a designer - knowing about UI instances, events
-	and data types like `UDim2` and `Color3` will be good enough.
+- That you're comfortable with the Luau scripting language.
+	- These tutorials aren't an introduction to Luau! If you'd like to learn,
+	check out the [Roblox documentation](https://create.roblox.com/docs).
+- That - if you're using Roblox features - you're familiar with how Roblox works.
+    - You don't have to be an expert! Knowing about basic instances, events
+	and data types will be good enough.
 
-Of course, based on your existing knowledge, you may find some tutorials easier
-or harder. Fusion's built to be easy to learn, but it may still take a bit of
-time to absorb some concepts, so don't be discouraged :slightly_smiling_face:
+Based on your existing knowledge, you may find some tutorials easier or harder.
+Don't be discouraged - Fusion's built to be easy to learn, but it may still take
+a bit of time to absorb some concepts. Learn at a pace which is right for you.
 
 -----
 
 ## Installing Fusion
 
-Fusion is distributed as a single module script. Before starting, you'll need
-to add this module script to your game. Here's how:
+There are two ways of installing Fusion, dependent on your use case.
 
-### If you edit scripts in Roblox Studio...
+If you are creating Luau experiences in Roblox Studio, then you can import a
+Roblox model file containing Fusion.
 
-Head over to [Fusion's 'Releases' page](https://github.com/Elttob/Fusion/releases).
-Click the 'Assets' dropdown to view the downloadable files:
+??? example "Steps (click to expand)"
 
-![Picture of Fusion's GitHub Releases page, with the Assets dropdown highlighted.](index/Github-Releases-Guide-1-Light.png#only-light)
-![Picture of Fusion's GitHub Releases page, with the Assets dropdown highlighted.](index/Github-Releases-Guide-1-Dark.png#only-dark)
+	Head over to [Fusion's 'Releases' page](https://github.com/Elttob/Fusion/releases).
+	Click the 'Assets' dropdown to view the downloadable files:
 
-Now, click on the `Fusion.rbxm` file to download it. This contains the module as
-a Roblox model:
+	![Picture of Fusion's GitHub Releases page, with the Assets dropdown highlighted.](index/Github-Releases-Guide-1-Light.png#only-light)
+	![Picture of Fusion's GitHub Releases page, with the Assets dropdown highlighted.](index/Github-Releases-Guide-1-Dark.png#only-dark)
 
-![The Assets dropdown opened to reveal downloads, with Fusion.rbxm highlighted.](index/Github-Releases-Guide-2-Light.png#only-light)
-![The Assets dropdown opened to reveal downloads, with Fusion.rbxm highlighted.](index/Github-Releases-Guide-2-Dark.png#only-dark)
+	Now, click on the `Fusion.rbxm` file to download it. This model contains Fusion.
 
-Head into Roblox Studio to import the model; if you're just following the
-tutorials, an empty baseplate will do.
+	![The Assets dropdown opened to reveal downloads, with Fusion.rbxm highlighted.](index/Github-Releases-Guide-2-Light.png#only-light)
+	![The Assets dropdown opened to reveal downloads, with Fusion.rbxm highlighted.](index/Github-Releases-Guide-2-Dark.png#only-dark)
 
-Right-click on `ReplicatedStorage`, and select 'Insert from File':
+	Head into Roblox Studio to import the model; if you're just following the
+	tutorials, an empty baseplate will do.
 
-![ReplicatedStorage is right-clicked, showing a context menu of items. Insert from File is highlighted.](index/Github-Releases-Guide-3-Light.png#only-light)
-![ReplicatedStorage is right-clicked, showing a context menu of items. Insert from File is highlighted.](index/Github-Releases-Guide-3-Dark.png#only-dark)
+	Right-click on `ReplicatedStorage`, and select 'Insert from File':
 
-Select the `Fusion.rbxm` file you just downloaded. You should see the module
-script appear in `ReplicatedStorage` - you're ready to go!
+	![ReplicatedStorage is right-clicked, showing a context menu of items. Insert from File is highlighted.](index/Github-Releases-Guide-3-Light.png#only-light)
+	![ReplicatedStorage is right-clicked, showing a context menu of items. Insert from File is highlighted.](index/Github-Releases-Guide-3-Dark.png#only-dark)
 
-### If you edit scripts externally... (advanced)
+	Select the `Fusion.rbxm` file you just downloaded. You should see a 'Fusion'
+	module script appear in `ReplicatedStorage`!
 
-If you use an external editor to write scripts, and synchronise them into Roblox
-using a plugin, you can use these alternate steps instead:
+	Now, you can create a script for testing:
+
+	1. Create a `LocalScript` in `StarterGui` or `StarterPlayerScripts`.
+	2. Remove the default code, and paste the following code in:
+	```Lua linenums="1"
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Fusion = require(ReplicatedStorage.Fusion)
+	```
+	3. Press 'Play' - if there are no errors, everything was set up correctly!.
+
+If you're using pure Luau, or if you're synchronising external files into Roblox
+Studio, then you can use Fusion's source code directly.
 
 ??? example "Steps (click to expand)"
 	1. Head over to [Fusion's 'Releases' page](https://github.com/Elttob/Fusion/releases).
 	2. Under 'Assets', download `Source code (zip)`. Inside is a copy
 	of the Fusion GitHub repository.
 	3. Inside the zip, copy the `src` folder - it may be inside another folder.
-	4. Paste `src` into your local project, preferably in your `shared` folder
-	if you have one.
-	5. Rename the folder from `src` to `Fusion`.
+	4. Paste the `src` folder into your local project, wherever you keep your
+	libraries (e.g. inside a `lib` or `shared` folder)
+	5. Rename the pasted folder from `src` to `Fusion`.
 
-	Once everything is set up, you should see Fusion appear in Studio when you
-	next synchronise your project.
+	Once everything is set up, you should be able to `require()` Fusion in one
+	of the following ways:
+
+	```Lua
+	-- Rojo
+	local Fusion = require(ReplicatedStorage.Fusion)
+
+	-- darklua
+	local Fusion = require("../shared/Fusion")
+
+	-- vanilla Luau
+	local Fusion = require("../shared/Fusion/init.lua")
+	```
 
 -----
 
-## Setting Up A Test Script
+## Getting Help
 
-Now that you've installed Fusion, you can set up a local script for testing.
-Here's how:
+Fusion is built to be easy to use, and this website strives to be as useful and
+comprehensive as possible. However, you might need targeted help on a specific
+issue, or you might want to grow your understanding of Fusion in other ways.
 
-1. Create a `LocalScript` in `StarterGui` or `StarterPlayerScripts`.
-2. Remove the default code, and paste the following code in:
-```Lua linenums="1"
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Fusion = require(ReplicatedStorage.Fusion)
-```
-3. Press 'Play' - if there are no errors, everything was set up correctly!
+The best place to get help is [the #fusion channel](https://discord.com/channels/385151591524597761/895437663040077834)
+over on [the Roblox OSS Discord server](https://discord.gg/h2NV8PqhAD).
+Maintainers and contributors drop in frequently, alongside many eager Fusion
+users.
 
-??? fail "My script didn't work! (click to expand)"
-	```
-	Fusion is not a valid member of ReplicatedStorage "ReplicatedStorage"
-	```
-
-	If you're seeing this error, then your script can't find Fusion.
-
-	This code assumes you've installed Fusion into `ReplicatedStorage`. If
-	you've installed Fusion elsewhere, you'll need to tweak the `require()` on
-	line 2 to point to the correct location.
-
-	If line 2 looks like it points to the correct location, refer back to
-	[the previous section](#installing-fusion) and double-check you've set
-	everything up properly. Make sure you have a `ModuleScript` inside
-	`ReplicatedStorage` called "Fusion".
-
------
-
-## Where To Get Help
-
-Fusion is built to be easy to use, and we want these tutorials to be as useful
-and comprehensive as possible. However, maybe you're stuck on a cursed issue
-and really need some help; or perhaps you're looking to get a better overall
-understanding of Fusion!
-
-Whatever you're looking for, here are some resources for you to get help:
-
-- [The Roblox OSS Discord](https://discord.gg/h2NV8PqhAD) has a [#fusion](https://discord.com/channels/385151591524597761/895437663040077834) channel
-- Check out [our Discussions page](https://github.com/Elttob/Fusion/discussions) on GitHub
-- [Open an issue](https://github.com/Elttob/Fusion/issues) if you run into bugs or have feature requests
+For bugs and feature requests, [open an issue](https://github.com/Elttob/Fusion/issues)
+on GitHub.

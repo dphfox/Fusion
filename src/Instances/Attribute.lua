@@ -1,54 +1,58 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	A special key for property tables, which allows users to apply custom
-    attributes to instances
+	attributes to instances
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
+local External = require(Package.External)
 local logError = require(Package.Logging.logError)
-local xtypeof = require(Package.Utility.xtypeof)
+local logWarn = require(Package.Logging.logWarn)
+local isState = require(Package.State.isState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
-local function setAttribute(instance: Instance, attribute: string, value: any)
-    instance:SetAttribute(attribute, value)
-end
-
-local function bindAttribute(instance: Instance, attribute: string, value: any, cleanupTasks: {PubTypes.Task})
-    if xtypeof(value) == "State" then
-        local didDefer = false
-        local function update()
-            if not didDefer then
-                didDefer = true
-                    task.defer(function()
-                    didDefer = false
-                    setAttribute(instance, attribute, peek(value))
-                end)
-            end
-        end
-	    setAttribute(instance, attribute, peek(value))
-	    table.insert(cleanupTasks, Observer(value :: any):onChange(update))
-    else
-        setAttribute(instance, attribute, value)
-    end
-end
-
-local function Attribute(attributeName: string): PubTypes.SpecialKey
-    local AttributeKey = {}
-    AttributeKey.type = "SpecialKey"
-    AttributeKey.kind = "Attribute"
-    AttributeKey.stage = "self"
-
-    if attributeName == nil then
-        logError("attributeNameNil")
-    end
-
-    function AttributeKey:apply(attributeValue: any, applyTo: Instance, cleanupTasks: {PubTypes.Task})
-        bindAttribute(applyTo, attributeName, attributeValue, cleanupTasks)
-    end
-    return AttributeKey
+local function Attribute(
+	attributeName: string
+): Types.SpecialKey
+	return {
+		type = "SpecialKey",
+		kind = "Attribute",
+		stage = "self",
+		apply = function(
+			self: Types.SpecialKey,
+			scope: Types.Scope<unknown>,
+			value: unknown,
+			applyTo: Instance
+		)
+			if isState(value) then
+				local value = value :: Types.StateObject<unknown>
+				if value.scope == nil then
+					logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+					logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+				end
+				local didDefer = false
+				local function update()
+					if not didDefer then
+						didDefer = true
+						External.doTaskDeferred(function()
+							didDefer = false
+							applyTo:SetAttribute(attributeName, peek(value))
+						end)
+					end
+				end
+				applyTo:SetAttribute(attributeName, peek(value))
+				table.insert(scope, Observer(scope, value :: any):onChange(update))
+			else
+				applyTo:SetAttribute(attributeName, value)
+			end
+		end
+	}
 end
 
 return Attribute

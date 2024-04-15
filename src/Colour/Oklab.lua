@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Provides functions for converting Color3s into Oklab space, for more
@@ -7,10 +8,13 @@
 	See: https://bottosson.github.io/posts/oklab/
 ]]
 
+local sRGB = require(script.Parent.sRGB)
+
 local Oklab = {}
 
--- Converts a Color3 in RGB space to a Vector3 in Oklab space.
-function Oklab.to(rgb: Color3): Vector3
+-- Converts a Color3 in linear RGB space to a Vector3 in Oklab space.
+function Oklab.fromLinear(rgb: Color3): Vector3
+
 	local l = rgb.R * 0.4122214708 + rgb.G * 0.5363325363 + rgb.B * 0.0514459929
 	local m = rgb.R * 0.2119034982 + rgb.G * 0.6806995451 + rgb.B * 0.1073969566
 	local s = rgb.R * 0.0883024619 + rgb.G * 0.2817188376 + rgb.B * 0.6299787005
@@ -26,9 +30,14 @@ function Oklab.to(rgb: Color3): Vector3
 	)
 end
 
--- Converts a Vector3 in CIELAB space to a Color3 in RGB space.
+-- Converts a Color3 in sRGB space to a Vector3 in Oklab space.
+function Oklab.fromSRGB(srgb: Color3): Vector3
+	return Oklab.fromLinear(sRGB.toLinear(srgb))
+end
+
+-- Converts a Vector3 in Oklab space to a Color3 in linear RGB space.
 -- The Color3 will be clamped by default unless specified otherwise.
-function Oklab.from(lab: Vector3, unclamped: boolean?): Color3
+function Oklab.toLinear(lab: Vector3, unclamped: boolean?): Color3
 	local lRoot = lab.X + lab.Y * 0.3963377774 + lab.Z * 0.2158037573
 	local mRoot = lab.X - lab.Y * 0.1055613458 - lab.Z * 0.0638541728
 	local sRoot = lab.X - lab.Y * 0.0894841775 - lab.Z * 1.2914855480
@@ -48,6 +57,12 @@ function Oklab.from(lab: Vector3, unclamped: boolean?): Color3
 	end
 
 	return Color3.new(red, green, blue)
+end
+
+-- Converts a Vector3 in Oklab space to a Color3 in sRGB space.
+-- The Color3 will be clamped by default unless specified otherwise.
+function Oklab.toSRGB(lab: Vector3, unclamped: boolean?): Color3
+	return sRGB.fromLinear(Oklab.toLinear(lab, unclamped))
 end
 
 return Oklab

@@ -1,19 +1,20 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Linearly interpolates the given animatable types by a ratio.
 	If the types are different or not animatable, then the first value will be
 	returned for ratios below 0.5, and the second value for 0.5 and above.
-
-	FIXME: This function uses a lot of redefinitions to suppress false positives
-	from the Luau typechecker - ideally these wouldn't be required
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
 local Oklab = require(Package.Colour.Oklab)
 
-local function lerpType(from: any, to: any, ratio: number): any
+local function lerpType(
+	from: unknown, 
+	to: unknown, 
+	ratio: number
+): unknown
 	local typeString = typeof(from)
 
 	if typeof(to) == typeString then
@@ -28,20 +29,20 @@ local function lerpType(from: any, to: any, ratio: number): any
 
 		elseif typeString == "Color3" then
 			local to, from = to :: Color3, from :: Color3
-			local fromLab = Oklab.to(from)
-			local toLab = Oklab.to(to)
-			return Oklab.from(
+			local fromLab = Oklab.fromSRGB(from)
+			local toLab = Oklab.fromSRGB(to)
+			return Oklab.toSRGB(
 				fromLab:Lerp(toLab, ratio),
 				false
 			)
 
 		elseif typeString == "ColorSequenceKeypoint" then
 			local to, from = to :: ColorSequenceKeypoint, from :: ColorSequenceKeypoint
-			local fromLab = Oklab.to(from.Value)
-			local toLab = Oklab.to(to.Value)
+			local fromLab = Oklab.fromSRGB(from.Value)
+			local toLab = Oklab.fromSRGB(to.Value)
 			return ColorSequenceKeypoint.new(
 				(to.Time - from.Time) * ratio + from.Time,
-				Oklab.from(
+				Oklab.toSRGB(
 					fromLab:Lerp(toLab, ratio),
 					false
 				)

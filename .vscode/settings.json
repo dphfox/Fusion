@@ -1,0 +1,7 @@
+{
+    "robloxLsp.diagnostics.disable": [
+        "undefined-type",
+        "undefined-variable",
+        "redefined-type"
+    ]
+}

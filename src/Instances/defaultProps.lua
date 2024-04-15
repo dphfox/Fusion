@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Stores 'sensible default' properties to be applied to instances created by
@@ -147,7 +148,7 @@ return {
 	
 	TrussPart = {
 		Anchored = true,
-		Size = Vector3.one,
+		Size = Vector3.one * 2,
 		FrontSurface = Enum.SurfaceType.Smooth,
 		BackSurface = Enum.SurfaceType.Smooth,
 		LeftSurface = Enum.SurfaceType.Smooth,

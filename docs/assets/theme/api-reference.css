@@ -1,67 +1,31 @@
 .fusiondoc-api-header {
 	display: flex;
-	align-items: center;
-	gap: 0.75rem;
+	align-items: baseline;
 	margin: 0 !important;
 	flex-wrap: wrap;
 }
 
-.fusiondoc-api-header .headerlink {
-	display: none;
+.fusiondoc-api-header .fusiondoc-api-icon {
+	margin-right: 0.5em;
 }
 
 .fusiondoc-api-header > * {
 	flex-shrink: 0;
 }
 
-.fusiondoc-api-header .fusiondoc-api-name {
-	margin-right: auto;
-}
-
-.fusiondoc-api-pills {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 0.5em;
-	flex-wrap: wrap;
-	line-height: 1.5em;
-
-	font-size: 0.75rem;
-	margin-left: 0.5em;
-	margin-bottom: -2em;
-
-	letter-spacing: -0.02em;
-	font-weight: 400;
+.fusiondoc-api-type {
 	vertical-align: middle;
-}
-
-.fusiondoc-api-pills + h1,
-.fusiondoc-api-pills + h2,
-.fusiondoc-api-pills + h3,
-.fusiondoc-api-pills + h4 {
-	margin-top: 0;
-}
-
-.fusiondoc-api-header .fusiondoc-api-pills {
-	font-size: 0.5em;
-	margin-bottom: 0em;
-}
-
-.fusiondoc-api-pills > * {
-	padding: 0.25em 0.75em;
-	border-radius: 1em;
-	height: 2em;
+	font-size: calc((0.5em + 1rem) / 2);
 	flex-shrink: 0;
+
+	margin-left: 0.5em;
+
+	font-family: var(--md-code-font-family);
+	font-weight: 400;
 }
 
-.fusiondoc-api-pills .fusiondoc-api-pill-type {
-	background-color: var(--fusiondoc-accent-a20);
-	color: var(--fusiondoc-accent-text);
-}
-
-.fusiondoc-api-pills .fusiondoc-api-pill-since {
-	background-color: var(--fusiondoc-accent-hover-a20);
-	color: var(--fusiondoc-accent-hover-text);
+.fusiondoc-api-type:not(a){
+	opacity: 0.8;
 }
 
 .fusiondoc-api-breadcrumbs {
@@ -70,19 +34,58 @@
 	height: 2rem;
 }
 
-.fusiondoc-api-breadcrumbs > a {
-	color: var(--fusiondoc-fg-3);
+.fusiondoc-api-breadcrumbs {
+	opacity: 0.8;
 }
 
-.fusiondoc-api-breadcrumbs > a:hover {
-	color: var(--fusiondoc-accent-hover);
-}
-
-.fusiondoc-api-breadcrumbs > a::after {
-	content: "/";
+.fusiondoc-api-breadcrumbs > *:not(:last-child)::after {
+	content: "›";
 	margin: 0 0.25rem;
-	opacity: 0.5;
+}
+
+.fusiondoc-error-api-section {
+	opacity: 1;
+	transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.fusiondoc-error-api-section.fusiondoc-error-api-section-defocus {
+	opacity: 0.4;
+	filter: blur(0.25rem);
+	pointer-events: none;
+}
+
+.fusiondoc-api-bento {
+	column-width: 12rem;
+	column-gap: 0.5rem;
+}
+
+.fusiondoc-api-bento > * {
+	break-inside: avoid;
+	background-color: var(--fusiondoc-bg-2);
+	box-shadow: var(--md-shadow-z1);
+	border-radius: 0.25rem;
+	padding: 0.75rem 1rem;
+	padding-bottom: 0.01rem;
+	margin: 0.5rem 0;
+	margin-top: 0;
+}
+
+.fusiondoc-api-bento > * :first-child {
+	margin-top: 0 !important;
+}
+
+.fusiondoc-api-bento > * > h3 {
+	font-size: 0.7rem;
 	color: var(--fusiondoc-fg-3);
+	font-weight: 700;
+}
+
+.fusiondoc-api-index-header {
+	color: var(--fusiondoc-fg-1) !important;
+}
+
+.fusiondoc-api-index-header:hover {
+	color: var(--fusiondoc-accent-hover) !important;
 }
 
 .fusiondoc-api-index-link {
@@ -99,20 +102,11 @@
 }
 
 .fusiondoc-api-index-link > .fusiondoc-api-index-arrow {
+	margin-bottom: -0.3em;
 	transform: translateX(0rem);
 	transition: transform 0.2s ease;
 }
 
 .fusiondoc-api-index-link:hover > .fusiondoc-api-index-arrow {
 	transform: translateX(0.5rem);
-}
-
-.fusiondoc-error-api-section {
-	opacity: 1;
-	transition: opacity 0.4s ease;
-}
-
-.fusiondoc-error-api-section.fusiondoc-error-api-section-defocus {
-	opacity: 0.4;
-	transition: opacity 0.4s ease;
 }

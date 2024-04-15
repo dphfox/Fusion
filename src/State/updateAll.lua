@@ -1,4 +1,5 @@
 --!strict
+--!nolint LocalShadow
 
 --[[
 	Given a reactive object, updates all dependent reactive objects.
@@ -8,13 +9,14 @@
 ]]
 
 local Package = script.Parent.Parent
-local PubTypes = require(Package.PubTypes)
+local Types = require(Package.Types)
 
-type Set<T> = {[T]: any}
-type Descendant = (PubTypes.Dependent & PubTypes.Dependency) | PubTypes.Dependent
+type Descendant = (Types.Dependent & Types.Dependency) | Types.Dependent
 
 -- Credit: https://blog.elttob.uk/2022/11/07/sets-efficient-topological-search.html
-local function updateAll(root: PubTypes.Dependency)
+local function updateAll(
+	root: Types.Dependency
+)
 	local counters: {[Descendant]: number} = {}
 	local flags: {[Descendant]: boolean} = {}
 	local queue: {Descendant} = {}
@@ -33,7 +35,8 @@ local function updateAll(root: PubTypes.Dependency)
 		local counter = counters[next]
 		counters[next] = if counter == nil then 1 else counter + 1
 		if (next :: any).dependentSet ~= nil then
-			for object in (next :: any).dependentSet do
+			local next = next :: (Types.Dependent & Types.Dependency)
+			for object in next.dependentSet do
 				queueSize += 1
 				queue[queueSize] = object
 			end
@@ -47,8 +50,15 @@ local function updateAll(root: PubTypes.Dependency)
 		local next = queue[queuePos]
 		local counter = counters[next] - 1
 		counters[next] = counter
-		if counter == 0 and flags[next] and next:update() and (next :: any).dependentSet ~= nil then
-			for object in (next :: any).dependentSet do
+		if 
+			counter == 0 
+			and flags[next] 
+			and next.scope ~= nil 
+			and next:update() 
+			and (next :: any).dependentSet ~= nil 
+		then
+			local next = next :: (Types.Dependent & Types.Dependency)
+			for object in next.dependentSet do
 				flags[object] = true
 			end
 		end

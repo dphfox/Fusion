@@ -8,24 +8,17 @@ This can be used for basic, predictable animations.
 
 ## Usage
 
-To use `Tween` in your code, you first need to import it from the Fusion
-module, so that you can refer to it by name:
-
-```Lua linenums="1" hl_lines="2"
-local Fusion = require(ReplicatedStorage.Fusion)
-local Tween = Fusion.Tween
-```
-
-To create a new tween object, call the `Tween` function and pass it a state
-object to move towards:
+To create a new tween object, call `scope:Tween()` and pass it a state object to
+move towards:
 
 ```Lua
-local goal = Value(0)
-local animated = Tween(target)
+local goal = scope:Value(0)
+local animated = scope:Tween(goal)
 ```
 
-The tween will smoothly follow the 'goal' state object over time. As with other
-state objects, you can `peek()` at its value at any time:
+The tween will smoothly follow the 'goal' state object over time.
+
+As with other state objects, you can `peek()` at its value at any time:
 
 ```Lua
 print(peek(animated)) --> 0.26425...
@@ -36,9 +29,9 @@ shape of the animation curve. It's optional, and it can be a state object if
 desired:
 
 ```Lua
-local goal = Value(0)
+local goal = scope:Value(0)
 local style = TweenInfo.new(0.5, Enum.EasingStyle.Quad)
-local animated = Tween(target, style)
+local animated = scope:Tween(goal, style)
 ```
 
 You can use many different kinds of values with tweens, not just numbers.
@@ -46,8 +39,8 @@ Vectors, CFrames, Color3s, UDim2s and other number-based types are supported;
 each number inside the type is animated individually.
 
 ```Lua
-local goalPosition = Value(UDim2.new(0.5, 0, 0, 0))
-local animated = Tween(target, TweenInfo.new(0.5, Enum.EasingStyle.Quad))
+local goalPosition = scope:Value(UDim2.new(0.5, 0, 0, 0))
+local animated = scope:Tween(goalPosition, TweenInfo.new(0.5, Enum.EasingStyle.Quad))
 ```
 
 -----

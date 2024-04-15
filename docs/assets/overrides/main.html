@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block announce %}
+This&nbsp;information is for a newer, unreleased version&nbsp;of&nbsp;Fusion.
+Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;branch.
+{% endblock %}
+
 {% block fonts %}
 	<!-- Load fonts from Google -->
 	{% if config.theme.font != false %}
@@ -7,11 +12,16 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family={{
+				font.text | replace(' ', '+')
+				}}:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=fallback"
+		/>
+		<link
+			rel="stylesheet"
 			href="https://fonts.googleapis.com/css?family={{
 				font.code | replace(' ', '+')
 				}}&display=fallback"
 		/>
-		<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
 		<style>
 			:root {
 				--md-text-font: "{{ font.text }}";
