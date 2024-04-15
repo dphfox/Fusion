@@ -115,9 +115,8 @@ nav:
       - Types:
         - CanBeState: api-reference/state/types/canbestate.md 
         - Computed: api-reference/state/types/computed.md 
-        - Dependency: api-reference/state/types/dependency.md 
-        - Dependent: api-reference/state/types/dependent.md 
         - For: api-reference/state/types/for.md 
+        - GraphObject: api-reference/state/types/graphobject.md 
         - Observer: api-reference/state/types/observer.md 
         - StateObject: api-reference/state/types/stateobject.md 
         - Use: api-reference/state/types/use.md 
