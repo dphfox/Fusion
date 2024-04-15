@@ -598,6 +598,50 @@ object should be destroyed.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## springNanGoal
+
+```
+A spring was given a NaN goal, so some simulation has been skipped. Ensure no
+springs have NaN goals.
+```
+
+**Thrown by:**
+[`Spring`](../../animation/members/spring)
+
+The goal parameter given to the spring during construction contained one or more
+NaN values. 
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## springNanMotion
+
+```
+A spring encountered NaN during motion, so has snapped to the goal position.
+Ensure no springs have NaN positions or velocities.
+```
+
+**Thrown by:**
+[`Spring`](../../animation/members/spring)
+
+While calculating updated position and velocity, one or both of those values
+ended up as NaN.
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## springTypeMismatch
 
 ```

@@ -35,11 +35,13 @@ return {
 	possiblyOutlives = "%s could be destroyed before %s; review the order they're created in, and what scopes they belong to. See discussion #292 on GitHub for advice.",
 	propertySetError = "Error setting property: ERROR_MESSAGE",
 	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion #292 on GitHub for advice.",
+	springNanGoal = "A spring was given a NaN goal, so some simulation has been skipped. Ensure no springs have NaN goals.",
+	springNanMotion = "A spring encountered NaN during motion, so has snapped to the goal position. Ensure no springs have NaN positions or velocities.",
 	springTypeMismatch = "The type '%s' doesn't match the spring's type '%s'.",
 	stateGetWasRemoved = "`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.",
 	unknownMessage = "Unknown error: ERROR_MESSAGE",
 	unrecognisedChildType = "'%s' type children aren't accepted by `[Children]`.",
 	unrecognisedPropertyKey = "'%s' keys aren't accepted in property tables.",
 	unrecognisedPropertyStage = "'%s' isn't a valid stage for a special key to be applied at.",
-	useAfterDestroy = "%s is no longer valid - it was destroyed before %s. See discussion #292 on GitHub for advice.",
+	useAfterDestroy = "%s is no longer valid - it was destroyed before %s. See discussion #292 on GitHub for advice."
 }

@@ -13,6 +13,7 @@ local External = require(Package.External)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.State.updateAll)
+local logWarn = require(Package.Logging.logWarn)
 
 type Set<T> = {[T]: unknown}
 
@@ -65,10 +66,21 @@ local function updateAllSprings(
 		local isMoving = false
 
 		for index, goal in ipairs(spring._springGoals) do
+			if goal ~= goal then
+				logWarn("springNanGoal")
+				continue
+			end
+
 			local oldDisplacement = startDisplacements[index]
 			local oldVelocity = startVelocities[index]
 			local newDisplacement = oldDisplacement * posPos + oldVelocity * posVel
 			local newVelocity = oldDisplacement * velPos + oldVelocity * velVel
+
+			if newDisplacement ~= newDisplacement or newVelocity ~= newVelocity then
+				logWarn("springNanMotion")
+				newDisplacement = 0
+				newVelocity = 0
+			end
 
 			if math.abs(newDisplacement) > EPSILON or math.abs(newVelocity) > EPSILON then
 				isMoving = true
