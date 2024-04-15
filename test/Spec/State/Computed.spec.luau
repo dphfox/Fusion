@@ -133,7 +133,7 @@ return function()
 				numDestructions[value] = (numDestructions[value] or 0) + 1
 			end)
 			assert(value ~= 2, "This is an intentional error from a unit test")
-			return use(dependency)
+			return value
 		end)
 		expect(numDestructions[1]).to.equal(nil)
 		dependency:set(2)

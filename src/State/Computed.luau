@@ -99,6 +99,7 @@ function class:update(): boolean
 		if innerScope ~= nil then
 			doCleanup(innerScope)
 			scopePool.clearAndGive(self._innerScope :: any)
+			self._innerScope = nil
 		end
 
 		-- restore old dependencies, because the new dependencies may be corrupt
