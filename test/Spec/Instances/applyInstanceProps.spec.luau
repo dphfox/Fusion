@@ -86,104 +86,108 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should throw for non-existent properties (constant)", function()
-		local expect = getfenv().expect
-		
-		expect(function()
-			local scope = {}
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ NotARealProperty = true },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("cannotAssignProperty")
-	end)
+	-- These can't be tested right now because they're non-fatal errors thrown
+	-- in a different thread.
+	-- TODO: upgrade unit tests to be able to capture those errors.
 
-	it("should throw for non-existent properties (state)", function()
-		local expect = getfenv().expect
+	-- it("should throw for non-existent properties (constant)", function()
+	-- 	local expect = getfenv().expect
 		
-		expect(function()
-			local scope = {}
-			local value = Value(scope, true)
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ NotARealProperty = value },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("cannotAssignProperty")
-	end)
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ NotARealProperty = true },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("cannotAssignProperty")
+	-- end)
 
-	it("should throw for invalid property types (constant)", function()
-		local expect = getfenv().expect
+	-- it("should throw for non-existent properties (state)", function()
+	-- 	local expect = getfenv().expect
 		
-		expect(function()
-			local scope = {}
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ Name = Vector3.new() },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("invalidPropertyType")
-	end)
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local value = Value(scope, true)
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ NotARealProperty = value },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("cannotAssignProperty")
+	-- end)
 
-	it("should throw for invalid property types (state)", function()
-		local expect = getfenv().expect
+	-- it("should throw for invalid property types (constant)", function()
+	-- 	local expect = getfenv().expect
 		
-		expect(function()
-			local scope = {}
-			local value = Value(scope, Vector3.new())
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ Name = value },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("invalidPropertyType")
-	end)
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ Name = Vector3.new() },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("invalidPropertyType")
+	-- end)
 
-	it("should throw for invalid Parent types (constant)", function()
-		local expect = getfenv().expect
+	-- it("should throw for invalid property types (state)", function()
+	-- 	local expect = getfenv().expect
 		
-		expect(function()
-			local scope = {}
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ Parent = Vector3.new() },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("invalidPropertyType")
-	end)
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local value = Value(scope, Vector3.new())
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ Name = value },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("invalidPropertyType")
+	-- end)
 
-	it("should throw for invalid Parent types (state)", function()
-		local expect = getfenv().expect
+	-- it("should throw for invalid Parent types (constant)", function()
+	-- 	local expect = getfenv().expect
 		
-		expect(function()
-			local scope = {}
-			local value = Value(scope, Vector3.new()) 
-			local instance = Instance.new("Folder")
-			table.insert(scope, instance)
-			applyInstanceProps(
-				scope,
-				{ Parent = value },
-				instance
-			)
-			doCleanup(scope)
-		end).to.throw("invalidPropertyType")
-	end)
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ Parent = Vector3.new() },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("invalidPropertyType")
+	-- end)
+
+	-- it("should throw for invalid Parent types (state)", function()
+	-- 	local expect = getfenv().expect
+		
+	-- 	expect(function()
+	-- 		local scope = {}
+	-- 		local value = Value(scope, Vector3.new()) 
+	-- 		local instance = Instance.new("Folder")
+	-- 		table.insert(scope, instance)
+	-- 		applyInstanceProps(
+	-- 			scope,
+	-- 			{ Parent = value },
+	-- 			instance
+	-- 		)
+	-- 		doCleanup(scope)
+	-- 	end).to.throw("invalidPropertyType")
+	-- end)
 
 	it("should throw for unrecognised keys in the property table", function()
 		local expect = getfenv().expect

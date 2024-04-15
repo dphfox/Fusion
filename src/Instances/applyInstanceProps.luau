@@ -20,6 +20,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 local Observer = require(Package.State.Observer)
@@ -51,7 +52,7 @@ local function setProperty(
 
 	if not success then
 		if not pcall(testPropertyAssignable, instance, property) then
-			logError("cannotAssignProperty", nil, instance.ClassName, property)
+			logErrorNonFatal("cannotAssignProperty", nil, instance.ClassName, property)
 		else
 			-- property is assignable, but this specific assignment failed
 			-- this typically implies the wrong type was received
@@ -59,9 +60,9 @@ local function setProperty(
 			local expectedType = typeof((instance :: any)[property])
 
 			if givenType == expectedType then
-				logError("propertySetError", err)
+				logErrorNonFatal("propertySetError", err)
 			else
-				logError("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
+				logErrorNonFatal("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
 			end
 		end
 	end
