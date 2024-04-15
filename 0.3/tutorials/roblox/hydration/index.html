@@ -2771,8 +2771,8 @@ and hiding buttons.</p>
 <figcaption>Screenshot: GameUIDatabase (Halo Infinite)</figcaption>
 </figure>
 <p>Fusion provides a <code>Hydrate</code> function for hydrating an instance using a table
-of properties. If you pass in Fusion objects, changes will be applied on the
-next frame:</p>
+of properties. If you pass in Fusion objects, changes will be applied
+immediately:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">showUI</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">StarterGui</span><span class="p">.</span><span class="n">Template</span><span class="p">:</span><span class="n">Clone</span><span class="p">())</span> <span class="p">{</span>
@@ -2813,7 +2813,7 @@ parentheses <code>()</code> are optional:</p>
 </code></pre></div>
 <p>If you pass in constant values for properties, they'll be applied to the
 instance directly. However, if you pass in a Fusion object (like <code>Value</code>), then
-changes will be applied on the next frame:</p>
+changes will be applied immediately:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Loading...&quot;</span><span class="p">)</span>
 
 <span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">PlayerGui</span><span class="p">.</span><span class="n">LoadingText</span><span class="p">)</span> <span class="p">{</span>
