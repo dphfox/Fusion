@@ -40,18 +40,10 @@ return {
 		local newScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
 		local oldScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
 	
-		local updateQueued = false
-		local queueUpdate: () -> ()
-	
 		-- Rescans this key's value to find new instances to parent and state objects
 		-- to observe for changes; then unparents instances no longer found and
 		-- disconnects observers for state objects no longer present.
 		local function updateChildren()
-			if not updateQueued then
-				return -- this update may have been canceled by destruction, etc.
-			end
-			updateQueued = false
-	
 			oldParented, newParented = newParented, oldParented
 			oldScopes, newScopes = newScopes, oldScopes
 			table.clear(newParented)
@@ -97,7 +89,7 @@ return {
 					if childScope == nil then
 						-- wasn't previously present
 						childScope = {}
-						Observer(childScope, child):onChange(queueUpdate)
+						Observer(childScope, child):onChange(updateChildren)
 					else
 						-- previously here; we want to reuse, so remove from old
 						-- set so we don't encounter it during unparenting
@@ -148,21 +140,12 @@ return {
 			end
 		end
 	
-		queueUpdate = function()
-			if not updateQueued then
-				updateQueued = true
-				External.doTaskDeferred(updateChildren)
-			end
-		end
-	
 		table.insert(scope, function()
 			value = nil
-			updateQueued = true
 			updateChildren()
 		end)
 	
 		-- perform initial child parenting
-		updateQueued = true
 		updateChildren()
 	end
 } :: Types.SpecialKey

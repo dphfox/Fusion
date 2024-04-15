@@ -18,7 +18,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
 local isState = require(Package.State.isState)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
@@ -81,21 +80,10 @@ local function bindProperty(
 		elseif whichLivesLonger(scope, instance, value.scope, value) == "definitely-a" then
 			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end
-
-		-- value is a state object - assign and observe for changes
-		local willUpdate = false
-		local function updateLater()
-			if not willUpdate then
-				willUpdate = true
-				External.doTaskDeferred(function()
-					willUpdate = false
-					setProperty(instance, property, peek(value))
-				end)
-			end
-		end
-
-		setProperty(instance, property, peek(value))
-		table.insert(scope, Observer(scope, value :: any):onChange(updateLater))
+		-- value is a state object - bind to changes
+		Observer(scope, value :: any):onBind(function()
+			setProperty(instance, property, peek(value))
+		end)
 	else
 		-- value is a constant - assign once only
 		setProperty(instance, property, value)

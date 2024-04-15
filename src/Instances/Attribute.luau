@@ -10,7 +10,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local isState = require(Package.State.isState)
@@ -38,18 +37,9 @@ local function Attribute(
 				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 					logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 				end
-				local didDefer = false
-				local function update()
-					if not didDefer then
-						didDefer = true
-						External.doTaskDeferred(function()
-							didDefer = false
-							applyTo:SetAttribute(attributeName, peek(value))
-						end)
-					end
-				end
-				applyTo:SetAttribute(attributeName, peek(value))
-				table.insert(scope, Observer(scope, value :: any):onChange(update))
+				Observer(scope, value :: any):onBind(function()
+					applyTo:SetAttribute(attributeName, peek(value))
+				end)
 			else
 				applyTo:SetAttribute(attributeName, value)
 			end

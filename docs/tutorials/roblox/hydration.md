@@ -17,8 +17,8 @@ and hiding buttons.
 </figure>
 
 Fusion provides a `Hydrate` function for hydrating an instance using a table
-of properties. If you pass in Fusion objects, changes will be applied on the
-next frame:
+of properties. If you pass in Fusion objects, changes will be applied
+immediately:
 
 ```Lua
 local showUI = scope:Value(false)
@@ -73,7 +73,7 @@ local instance = scope:Hydrate(workspace.Part) {
 
 If you pass in constant values for properties, they'll be applied to the
 instance directly. However, if you pass in a Fusion object (like `Value`), then
-changes will be applied on the next frame:
+changes will be applied immediately:
 
 ```Lua
 local message = scope:Value("Loading...")
