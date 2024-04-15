@@ -14,6 +14,7 @@ export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
 	invalidation: "none" | "direct" | "transitive",
+	timeliness: "lazy" | "eager",
 	duringRevalidation: (self) -> ()
 }
 ```
@@ -62,6 +63,19 @@ object.
 Encodes whether this graph object has been invalidated, and whether that's a
 result of being invalidated directly, or having been transitively invalidated by
 one of its dependencies.
+
+<h3 markdown>
+	timeliness
+	<span class="fusiondoc-api-type">
+		: "lazy" | "eager"
+	</span>
+</h3>
+
+Describes when this object expects to be revalidated. Most objects should use
+`lazy` timeliness to defer computation as late as possible. However, if it's
+important for this object to respond to changes as soon as possible, for example
+for the purposes of observation, then `eager` timeliness ensures that a
+revalidation is dispatched as soon as possible.
 
 -----
 

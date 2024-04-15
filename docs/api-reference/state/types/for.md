@@ -10,17 +10,13 @@
 </h1>
 
 ```Lua
-export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
+export type For<KO, VO> = StateObject<{[KO]: VO}> & {
 	kind: "For"
 }
 ```
 
 A specialised [state object](../stateobject) for tracking multiple values
 computed from user-defined computations, which are merged into an output table.
-
-In addition to the standard state object interfaces, this object is a 
-[dependent](../dependent) so it can receive updates from objects used as
-part of any of the computations.
 
 This type isn't generally useful outside of Fusion itself.
 

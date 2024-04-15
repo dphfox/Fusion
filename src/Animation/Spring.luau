@@ -206,7 +206,7 @@ local function Spring<T>(
 		damping = 1
 	end
 
-	local dependencySet: {[Types.Dependency]: unknown} = {[goalState] = true}
+	local dependencySet: {[Types.GraphObject]: unknown} = {[goalState] = true}
 	if isState(speed) then
 		local speed = speed :: Types.StateObject<number>
 		dependencySet[speed] = true

@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.Observer(
 	scope: Scope<unknown>,
-	watching: Dependency
+	watching: GraphObject
 ) -> Observer
 ```
 
@@ -44,7 +44,7 @@ destruction tasks for this object.
 <h3 markdown>
 	watching
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/dependency">Dependency</a>
+		: <a href="../../../state/types/graphobject">GraphObject</a>
 	</span>
 </h3>
 

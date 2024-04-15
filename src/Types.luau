@@ -77,6 +77,7 @@ export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
 	invalidation: "none" | "direct" | "transitive",
+	timeliness: "lazy" | "eager",
 	duringRevalidation: (GraphObject) -> ()
 }
 

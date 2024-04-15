@@ -10,17 +10,13 @@
 </h1>
 
 ```Lua
-export type Computed<T> = StateObject<T> & Dependent & {
+export type Computed<T> = StateObject<T> & {
 	kind: "Computed"
 }
 ```
 
 A specialised [state object](../stateobject) for tracking single values computed
 from a user-defined computation.
-
-In addition to the standard state object interfaces, this object is a 
-[dependent](../dependent) so it can receive updates from the objects used as
-part of the computation.
 
 This type isn't generally useful outside of Fusion itself.
 

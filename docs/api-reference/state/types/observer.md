@@ -10,15 +10,15 @@
 </h1>
 
 ```Lua
-export type Observer = Dependent & {
+export type Observer = GraphObject & {
 	type: "Observer",
 	onChange: (self, callback: () -> ()) -> (() -> ()),
 	onBind: (self, callback: () -> ()) -> (() -> ())
 }
 ```
 
-A user-constructed [dependent](../dependent) that runs user code when its
-[dependency](../dependency) is updated.
+A user-constructed [graphobject](../graph object) that runs user code when it's
+updated by the reactive graph.
 
 !!! note "Non-standard type syntax"
 	The above type definition uses `self` to denote methods. At time of writing,

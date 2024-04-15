@@ -76,7 +76,7 @@ end
 
 local function Observer(
 	scope: Types.Scope<unknown>,
-	watching: Types.Dependency
+	watching: Types.GraphObject
 ): Types.Observer
 	if watching == nil then
 		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")

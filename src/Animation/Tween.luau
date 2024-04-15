@@ -106,7 +106,7 @@ local function Tween<T>(
 		tweenInfo = TweenInfo.new()
 	end
 
-	local dependencySet: {[Types.Dependency]: unknown} = {[goalState] = true}
+	local dependencySet: {[Types.GraphObject]: unknown} = {[goalState] = true}
 	local tweenInfoIsState = isState(tweenInfo)
 	if tweenInfoIsState then
 		local tweenInfo = tweenInfo :: Types.StateObject<TweenInfo>
