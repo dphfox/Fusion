@@ -1566,6 +1566,20 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
+  <a href="#springnangoal" class="md-nav__link">
+    springNanGoal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#springnanmotion" class="md-nav__link">
+    springNanMotion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#springtypemismatch" class="md-nav__link">
     springTypeMismatch
   </a>
@@ -3150,6 +3164,20 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
+  <a href="#springnangoal" class="md-nav__link">
+    springNanGoal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#springnanmotion" class="md-nav__link">
+    springNanMotion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#springtypemismatch" class="md-nav__link">
     springTypeMismatch
   </a>
@@ -3609,6 +3637,34 @@ discussion #292 on GitHub for advice.
 <a href="../../../tutorials/fundamentals/scopes">scope</a> as the first parameter.</p>
 <p>Scopes are mandatory for all Fusion constructors so that Fusion knows when the
 object should be destroyed.</p>
+</div>
+<hr />
+<div class="fusiondoc-error-api-section">
+<h2 id="springnangoal">springNanGoal<a class="headerlink" href="#springnangoal" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>A spring was given a NaN goal, so some simulation has been skipped. Ensure no
+springs have NaN goals.
+</code></pre></div>
+<p><strong>Thrown by:</strong>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
+<p>The goal parameter given to the spring during construction contained one or more
+NaN values. </p>
+<p>This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.</p>
+</div>
+<hr />
+<div class="fusiondoc-error-api-section">
+<h2 id="springnanmotion">springNanMotion<a class="headerlink" href="#springnanmotion" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>A spring encountered NaN during motion, so has snapped to the goal position.
+Ensure no springs have NaN positions or velocities.
+</code></pre></div>
+<p><strong>Thrown by:</strong>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
+<p>While calculating updated position and velocity, one or both of those values
+ended up as NaN.</p>
+<p>This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.</p>
 </div>
 <hr />
 <div class="fusiondoc-error-api-section">
