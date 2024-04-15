@@ -48,7 +48,7 @@ local function PlayerList(
 					Text = player.DisplayName,
 					TextColor3 = Color3.new(1, 1, 1),
 					Font = Enum.Font.GothamMedium,
-					FontSize = 16,
+					TextSize = 16,
 					TextXAlignment = "Right",
 					TextTruncate = "AtEnd",
 
@@ -118,7 +118,7 @@ will automatically create and remove them as the `Players` list changes.
 					Text = player.DisplayName,
 					TextColor3 = Color3.new(1, 1, 1),
 					Font = Enum.Font.GothamMedium,
-					FontSize = 16,
+					TextSize = 16,
 					TextXAlignment = "Right",
 					TextTruncate = "AtEnd",
 
