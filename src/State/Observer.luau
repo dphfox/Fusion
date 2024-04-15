@@ -91,6 +91,7 @@ local function Observer(
 	table.insert(scope, self)
 
 	if watching.scope == nil then
+		local watching: any = watching
 		logError(
 			"useAfterDestroy",
 			nil,
@@ -98,6 +99,7 @@ local function Observer(
 			`the Observer that is watching it`
 		)
 	elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
+		local watching: any = watching
 		logWarn(
 			"possiblyOutlives",
 			`The {watching.kind or watching.type or "watched"} object`,

@@ -29,12 +29,12 @@ return {
 		if poolSize < MAX_POOL_SIZE then
 			table.clear(scope)
 			poolSize += 1
-			pool[poolSize] = scope
+			pool[poolSize] = scope :: any
 		end
 	end,
 	reuseAny = function(): Types.Scope<unknown>
 		if poolSize == 0 then
-			return nil
+			return nil :: any
 		else
 			local scope = pool[poolSize]
 			poolSize -= 1

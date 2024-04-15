@@ -55,11 +55,10 @@ function class:is(
 		outerSelf._valuesNow[thread] = { value = newValue }
 		local ok, value = xpcall(callback, parseError, ...)
 		outerSelf._valuesNow[thread] = prevValue
-		if ok then
-			return value
-		else
-			logError("callbackError", value)
+		if not ok then
+			logError("callbackError", value :: any)
 		end
+		return value
 	end
 
 	return methods
@@ -75,6 +74,7 @@ local function Contextual<T>(
 		_valuesNow = setmetatable({}, WEAK_KEYS_METATABLE),
 		_defaultValue = defaultValue
 	}, CLASS_METATABLE)
+	local self = (self :: any) :: InternalTypes.Contextual<T>
 
 	return self
 end

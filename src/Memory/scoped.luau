@@ -33,7 +33,7 @@ local function scoped(
 	...: {[unknown]: unknown}
 ): {[unknown]: unknown}
 	return setmetatable(
-		scopePool.reuseAny() or {},
+		scopePool.reuseAny() :: any or {},
 		{__index = merge({}, ...)}
 	) :: any
 end

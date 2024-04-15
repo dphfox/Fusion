@@ -15,7 +15,7 @@ local function deriveScope<T>(
 	existing: Types.Scope<T>
 ): Types.Scope<T>
 	return setmetatable(
-		scopePool.reuseAny() or {},
+		scopePool.reuseAny() :: any or {},
 		getmetatable(existing)
 	) :: any
 end
