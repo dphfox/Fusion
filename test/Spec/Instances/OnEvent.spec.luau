@@ -12,8 +12,12 @@ local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
 	local it = getfenv().it
+	local itSKIP = getfenv().itSKIP
 
-	it("should connect event handlers", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should connect event handlers", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -61,7 +65,10 @@ return function()
 		end).to.throw("cannotConnectEvent")
 	end)
 
-	it("shouldn't fire events during initialisation", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("shouldn't fire events during initialisation", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

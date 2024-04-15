@@ -11,8 +11,12 @@ local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
 	local it = getfenv().it
+	local itSKIP = getfenv().itSKIP
 
-	it("should connect property change handlers", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should connect property change handlers", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -30,7 +34,10 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should pass the new value to the handler", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should pass the new value to the handler", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -62,7 +69,10 @@ return function()
 		end).to.throw("cannotConnectChange")
 	end)
 
-	it("shouldn't fire property changes during initialisation", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("shouldn't fire property changes during initialisation", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

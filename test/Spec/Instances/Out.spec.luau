@@ -13,8 +13,12 @@ local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
 	local it = getfenv().it
+	local itSKIP = getfenv().itSKIP
 
-	it("should reflect external property changes", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should reflect external property changes", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -30,7 +34,10 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should reflect property changes from bound state", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should reflect property changes from bound state", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -48,7 +55,10 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should support two-way data binding", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should support two-way data binding", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

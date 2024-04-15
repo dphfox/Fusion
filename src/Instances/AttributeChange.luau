@@ -30,7 +30,6 @@ local function AttributeChange(
 			end
 			local value = value :: (...unknown) -> (...unknown)
 			local event = applyTo:GetAttributeChangedSignal(attributeName)
-			value((applyTo :: any):GetAttribute(attributeName))
 			table.insert(scope, event:Connect(function()
 				value((applyTo :: any):GetAttribute(attributeName))
 			end))

@@ -138,9 +138,6 @@ return function()
 
 		children:set(child2)
 
-		expect(child1.Parent).to.equal(parent)
-		expect(child2.Parent).to.equal(nil)
-
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
 		doCleanup(scope)

@@ -12,8 +12,12 @@ local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
 	local it = getfenv().it
+	local itSKIP = getfenv().itSKIP
 
-	it("should connect attribute change handlers", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should connect attribute change handlers", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -30,14 +34,19 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should pass the updated value as an argument", function()
+	-- TODO: the event is spawned by Roblox's task scheduler, so it doesn't work
+	-- with our testing architecture anymore.
+
+	itSKIP("should pass the updated value as an argument", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
 		local updatedValue = ""
+		local updated = false
 		local child = New(scope, "Folder") {
 			[AttributeChange "Foo"] = function(newValue)
 				updatedValue = newValue
+				updated = true
 			end
 		}
 
