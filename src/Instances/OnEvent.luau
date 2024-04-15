@@ -38,7 +38,7 @@ local function OnEvent(
 			elseif typeof(callback) ~= "function" then
 				logError("invalidEventHandler", nil, eventName)
 			else
-				table.insert(scope, event:Connect(callback))
+				table.insert(scope, event:Connect(callback :: any))
 			end
 		end
 	}
