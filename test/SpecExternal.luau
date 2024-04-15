@@ -29,6 +29,11 @@ function SpecExternal.doTaskDeferred(
 	table.insert(queue, coroutine.create(resume))
 end
 
+function SpecExternal.deferSelfForTesting()
+	table.insert(queue, coroutine.running())
+	coroutine.yield()
+end
+
 local doUpdateSteps = false
 
 --[[

@@ -27,7 +27,7 @@ export type StateObject<T> = Types.StateObject<T>
 export type Task = Types.Task
 export type Tween<T> = Types.Tween<T>
 export type Use = Types.Use
-export type Value<T> = Types.Value<T>
+export type Value<T, S = T> = Types.Value<T, S>
 export type Version = Types.Version
 
 -- Down the line, this will be conditional based on whether Fusion is being
