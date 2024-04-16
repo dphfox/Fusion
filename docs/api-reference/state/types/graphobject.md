@@ -13,9 +13,10 @@
 export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
-	invalidation: "none" | "direct" | "transitive",
+	lastChange: number,
 	timeliness: "lazy" | "eager",
-	duringRevalidation: (self) -> ()
+	valid: boolean,
+	duringRevalidation: (GraphObject) -> ()
 }
 ```
 
@@ -54,15 +55,14 @@ The reactive graph objects which declare themselves as dependent upon this
 object.
 
 <h3 markdown>
-	invalidation
+	lastChange
 	<span class="fusiondoc-api-type">
-		: "none" | "direct" | "transitive"
+		: number?
 	</span>
 </h3>
 
-Encodes whether this graph object has been invalidated, and whether that's a
-result of being invalidated directly, or having been transitively invalidated by
-one of its dependencies.
+The `os.clock()` time of this object's most recent meaningful change, or `nil`
+if the object is newly created.
 
 <h3 markdown>
 	timeliness
@@ -77,6 +77,16 @@ important for this object to respond to changes as soon as possible, for example
 for the purposes of observation, then `eager` timeliness ensures that a
 revalidation is dispatched as soon as possible.
 
+<h3 markdown>
+	valid
+	<span class="fusiondoc-api-type">
+		: boolean
+	</span>
+</h3>
+
+Whether the most recent validation operation done on this graph object was a
+revalidation.
+
 -----
 
 ## Methods
@@ -84,16 +94,20 @@ revalidation is dispatched as soon as possible.
 <h3 markdown>
 	duringRevalidation
 	<span class="fusiondoc-api-type">
-		-> ()
+		-> boolean
 	</span>
 </h3>
 
 ```Lua
-function GraphObject:duringRevalidation(): ()
+function GraphObject:duringRevalidation(): boolean
 ```
 
 Called by Fusion while the graph object is in the process of being revalidated.
 This is where logic to do with computational updates should be placed.
+
+The return value is `true` when a 'meaningful change' occurs because of this
+revalidation. A 'meaningful change' is one that would affect dependencies'
+behaviour. This is used to efficiently skip over calculations for dependencies.
 
 !!! fail "Restrictions"
 	This method should finish without spawning new processes or blocking the 

@@ -76,9 +76,10 @@ type ContextualIsMethods = {
 export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
-	invalidation: "none" | "direct" | "transitive",
+	lastChange: number?,
 	timeliness: "lazy" | "eager",
-	duringRevalidation: (GraphObject) -> ()
+	valid: boolean,
+	duringRevalidation: (GraphObject) -> boolean
 }
 
 -- An object which stores a piece of reactive state.
