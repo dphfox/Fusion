@@ -16,9 +16,13 @@ local function isSimilar(
 	-- about similarity from equality for now (see issue #44)
 	if typeof(a) == "table" then
 		return false
-	else
+	elseif a == b then
+		return true
+	elseif a ~= a and b ~= b then
 		-- NaN does not equal itself but is the same
-		return a == b or a ~= a and b ~= b
+		return true
+	else
+		return false
 	end
 end
 
