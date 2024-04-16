@@ -2067,8 +2067,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#watching-dependency" class="md-nav__link">
-    watching : Dependency
+  <a href="#watching-unknown" class="md-nav__link">
+    watching : unknown
   </a>
   
 </li>
@@ -2781,8 +2781,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#watching-dependency" class="md-nav__link">
-    watching : Dependency
+  <a href="#watching-unknown" class="md-nav__link">
+    watching : unknown
   </a>
   
 </li>
@@ -2843,7 +2843,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <a class="headerlink" href="#observer-observer" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Observer</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">watching</span><span class="p">:</span> <span class="n">Dependency</span>
+    <span class="n">watching</span><span class="p">:</span> <span class="n">unknown</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Observer</span>
 </code></pre></div>
 <p>Constructs and returns a new <a href="../../types/observer">observer</a>.</p>
@@ -2863,18 +2863,23 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <a class="headerlink" href="#scope-scopeunknown" title="Permanent link">&para;</a></h3>
 <p>The <a href="../../../memory/types/scope">scope</a> which should be used to store
 destruction tasks for this object.</p>
-<h3 id="watching-dependency">
+<h3 id="watching-unknown">
     watching
     <span class="fusiondoc-api-type">
-        : <a href="../../../state/types/dependency">Dependency</a>
+        : unknown
     </span>
-<a class="headerlink" href="#watching-dependency" title="Permanent link">&para;</a></h3>
-<p>The object which the observer should receive updates from.</p>
+<a class="headerlink" href="#watching-unknown" title="Permanent link">&para;</a></h3>
+<p>The target that the observer should watch for changes.</p>
+<div class="admonition note">
+<p class="admonition-title">Works best with state objects</p>
+<p>While non-<a href="../../../state/types/stateobject">state object</a> values are
+accepted for compatibility, they won't be able to trigger updates.</p>
+</div>
 <hr />
 <h2 id="returns-observer">
     Returns
     <span class="fusiondoc-api-type">
-        -&gt; <a href="../../../state/types/Observer">Observer</a>
+        -&gt; <a href="../../../state/types/observer">Observer</a>
     </span>
 <a class="headerlink" href="#returns-observer" title="Permanent link">&para;</a></h2>
 <p>A freshly constructed observer.</p>

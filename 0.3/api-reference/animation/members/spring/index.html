@@ -2605,8 +2605,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#goalstate-stateobjectt" class="md-nav__link">
-    goalState : StateObject&lt;T&gt;
+  <a href="#goal-usedast" class="md-nav__link">
+    goal : UsedAs&lt;T&gt;
   </a>
   
 </li>
@@ -2795,8 +2795,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#goalstate-stateobjectt" class="md-nav__link">
-    goalState : StateObject&lt;T&gt;
+  <a href="#goal-usedast" class="md-nav__link">
+    goal : UsedAs&lt;T&gt;
   </a>
   
 </li>
@@ -2871,7 +2871,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <a class="headerlink" href="#spring-springt" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">goalState</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">goal</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">speed</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
     <span class="n">damping</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
@@ -2893,13 +2893,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <a class="headerlink" href="#scope-scopes" title="Permanent link">&para;</a></h3>
 <p>The <a href="../../../memory/types/scope">scope</a> which should be used to store
 destruction tasks for this object.</p>
-<h3 id="goalstate-stateobjectt">
-    goalState
+<h3 id="goal-usedast">
+    goal
     <span class="fusiondoc-api-type">
-        : <a href="../../../state/types/stateobject">StateObject</a>&lt;T&gt;
+        : <a href="../../../state/types/used">UsedAs</a>&lt;T&gt;
     </span>
-<a class="headerlink" href="#goalstate-stateobjectt" title="Permanent link">&para;</a></h3>
-<p>The goal state that this object should follow. For best results, <code>T</code> should be
+<a class="headerlink" href="#goal-usedast" title="Permanent link">&para;</a></h3>
+<p>The goal that this object should follow. For best results, the goal should be
 <a href="../../types/animatable">animatable</a>.</p>
 <h3 id="speed-usedast">
     speed
