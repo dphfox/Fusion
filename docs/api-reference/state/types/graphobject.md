@@ -15,8 +15,8 @@ export type GraphObject = ScopedObject & {
 	dependentSet: {[GraphObject]: unknown},
 	lastChange: number,
 	timeliness: "lazy" | "eager",
-	valid: boolean,
-	duringRevalidation: (GraphObject) -> ()
+	validity: "valid" | "invalid" | "busy",
+	duringRevalidation: (GraphObject, lastChange: number?) -> boolean
 }
 ```
 
@@ -78,14 +78,15 @@ for the purposes of observation, then `eager` timeliness ensures that a
 revalidation is dispatched as soon as possible.
 
 <h3 markdown>
-	valid
+	validity
 	<span class="fusiondoc-api-type">
-		: boolean
+		: "valid" | "invalid" | "busy"
 	</span>
 </h3>
 
 Whether the most recent validation operation done on this graph object was a
-revalidation.
+revalidation or an invalidation. `busy` is used while the graph object is in
+the middle of a revalidation.
 
 -----
 
@@ -110,5 +111,5 @@ revalidation. A 'meaningful change' is one that would affect dependencies'
 behaviour. This is used to efficiently skip over calculations for dependencies.
 
 !!! fail "Restrictions"
-	This method should finish without spawning new processes or blocking the 
-	thread, though it is allowed to error.
+	This method should finish without spawning new processes, blocking the 
+	thread, or erroring.

@@ -78,7 +78,7 @@ export type GraphObject = ScopedObject & {
 	dependentSet: {[GraphObject]: unknown},
 	lastChange: number?,
 	timeliness: "lazy" | "eager",
-	valid: boolean,
+	validity: "valid" | "invalid" | "busy",
 	duringRevalidation: (GraphObject) -> boolean
 }
 

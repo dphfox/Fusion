@@ -12,30 +12,40 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local logError = require(Package.Logging.logError)
 
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
+local invalidateList: {Types.GraphObject} = {}
 
 local function invalidate(
 	target: Types.GraphObject
 ): ()
-	if not target.valid then
+	if target.validity == "valid" then
 		table.clear(searchInNow)
+		table.clear(invalidateList)
 		searchInNow[1] = target
 		repeat
 			table.clear(searchInNext)
 			local done = true
 			for _, searchTarget in searchInNow do
 				for dependent in searchTarget.dependentSet do
-					if dependent.valid then
-						dependent.valid = false
+					if dependent.validity == "valid" then
+						table.insert(invalidateList, dependent)
 						done = false
 						table.insert(searchInNext, dependent)
+					elseif dependent.validity == "busy" then
+						logError("infiniteLoop")
 					end
 				end
 			end
 			searchInNow, searchInNext = searchInNext, searchInNow
 		until done
+		for _, invalidateTarget in invalidateList do
+			invalidateTarget.validity = "invalid"
+		end
+	elseif target.validity == "busy" then
+		logError("infiniteLoop")
 	end
 end
 

@@ -17,6 +17,7 @@ return {
 	destroyedTwice = "Attempted to destroy %s twice; ensure you're not manually calling `:destroy()` while using scopes. See discussion #292 on GitHub for advice.",
 	destructorRedundant = "%s destructors no longer do anything. If you wish to run code on destroy, `table.insert` a function into the `scope` argument. See discussion #292 on GitHub for advice.",
 	forKeyCollision = "The key '%s' was returned multiple times simultaneously, which is not allowed in `For` objects.",
+	infiniteLoop = "Detected an infinite loop. Consider adding an explicit breakpoint to your code to prevent a cyclic dependency.",
 	invalidAttributeChangeHandler = "The change handler for the '%s' attribute must be a function.",
 	invalidAttributeOutType = "[AttributeOut] properties must be given Value objects.",
 	invalidChangeHandler = "The change handler for the '%s' property must be a function.",
