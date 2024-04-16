@@ -45,7 +45,7 @@ the returned value.
 <h3 markdown>
 	target
 	<span class="fusiondoc-api-type">
-		: <a href="../usedas">UsedAs</a>&lt;T&gt;
+		: <a href="../../types/usedas">UsedAs</a>&lt;T&gt;
 	</span>
 </h3>
 
