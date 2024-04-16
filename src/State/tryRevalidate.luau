@@ -22,7 +22,7 @@ local function tryRevalidate(
 			target.lastChange = os.clock()
 		end
 	elseif target.validity == "busy" then
-		logError("infiniteLoop")
+		return logError("infiniteLoop")
 	end
 end
 

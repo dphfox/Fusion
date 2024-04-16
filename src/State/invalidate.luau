@@ -35,7 +35,7 @@ local function invalidate(
 						table.insert(invalidateList, dependent)
 						table.insert(searchInNext, dependent)
 					elseif dependent.validity == "busy" then
-						logError("infiniteLoop")
+						return logError("infiniteLoop")
 					end
 				end
 			end
@@ -45,7 +45,7 @@ local function invalidate(
 			invalidateTarget.validity = "invalid"
 		end
 	elseif target.validity == "busy" then
-		logError("infiniteLoop")
+		return logError("infiniteLoop")
 	end
 end
 
