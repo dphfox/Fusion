@@ -4,7 +4,8 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Attempts to revalidate a graph object.
+	Revalidates a graph object using monotonic painting.
+	https://fluff.blog/2024/04/16/monotonic-painting.html
 ]]
 
 local Package = script.Parent.Parent
@@ -16,11 +17,22 @@ local function tryRevalidate(
 ): ()
 	if target.validity == "invalid" then
 		target.validity = "busy"
-		local meaningfulChange = target:duringRevalidation()
-		target.validity = "valid"
-		if meaningfulChange or target.lastChange == nil then
+		local meaningfulChange = true
+		if target.lastChange ~= nil then
+			local newerDependencyFound = false
+			for dependency in target.dependencySet do
+				tryRevalidate(dependency)
+				if dependency.lastChange > target.lastChange then
+					newerDependencyFound = true
+					break
+				end
+			end
+			meaningfulChange = newerDependencyFound and target:duringRevalidation()
+		end
+		if meaningfulChange then
 			target.lastChange = os.clock()
 		end
+		target.validity = "valid"
 	elseif target.validity == "busy" then
 		return logError("infiniteLoop")
 	end

@@ -4,10 +4,8 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Invalidates a graph object, and transitively invalidates all of the graph
-	objects' dependents.
-
-	This is guaranteed to succeed, even for cyclic graphs.
+	Invalidates a graph object using monotonic painting.
+	https://fluff.blog/2024/04/16/monotonic-painting.html
 ]]
 
 local Package = script.Parent.Parent
@@ -18,7 +16,7 @@ local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
 local invalidateList: {Types.GraphObject} = {}
 
-local function invalidate(
+local function tryInvalidate(
 	target: Types.GraphObject
 ): ()
 	if target.validity == "valid" then
@@ -49,4 +47,4 @@ local function invalidate(
 	end
 end
 
-return invalidate
+return tryInvalidate
