@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.Tween<T>(
 	scope: Scope<unknown>,
-	goalState: StateObject<T>,
+	goal: StateObject<T>,
 	tweenInfo: UsedAs<TweenInfo>?
 ) -> Tween<T>
 ```
@@ -43,13 +43,13 @@ The [scope](../../../memory/types/scope) which should be used to store
 destruction tasks for this object.
 
 <h3 markdown>
-	goalState
+	goal
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/stateobject">StateObject</a>&lt;T&gt;
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;
 	</span>
 </h3>
 
-The goal state that this object should follow. For best results, `T` should be
+The goal that this object should follow. For best results, the goal should be
 [animatable](../../types/animatable).
 
 <h3 markdown>
