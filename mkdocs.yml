@@ -113,7 +113,7 @@ nav:
         - scoped: api-reference/memory/members/scoped.md
     - State:
       - Types:
-        - CanBeState: api-reference/state/types/canbestate.md 
+        - UsedAs: api-reference/state/types/usedas.md 
         - Computed: api-reference/state/types/computed.md 
         - Dependency: api-reference/state/types/dependency.md 
         - Dependent: api-reference/state/types/dependent.md 

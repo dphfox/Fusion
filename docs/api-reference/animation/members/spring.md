@@ -16,8 +16,8 @@
 function Fusion.Spring<T>(
 	scope: Scope<unknown>,
 	goalState: StateObject<T>,
-	speed: CanBeState<number>?,
-	damping: CanBeState<number>?
+	speed: UsedAs<number>?,
+	damping: UsedAs<number>?
 ) -> Spring<T>
 ```
 
@@ -56,7 +56,7 @@ The goal state that this object should follow. For best results, `T` should be
 <h3 markdown>
 	speed
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/canbestate">CanBeState</a>&lt;T&gt;?
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;?
 	</span>
 </h3>
 
@@ -66,7 +66,7 @@ the time it takes for the motion to complete.
 <h3 markdown>
 	damping
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/canbestate">CanBeState</a>&lt;T&gt;?
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;?
 	</span>
 </h3>
 

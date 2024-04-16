@@ -14,7 +14,7 @@ local InternalTypes = require(Package.InternalTypes)
 local isState = require(Package.State.isState)
 
 local function peek<T>(
-	target: Types.CanBeState<T>
+	target: Types.UsedAs<T>
 ): T
 	if isState(target) then
 		return (target :: InternalTypes.StateObject<T>):_peek()

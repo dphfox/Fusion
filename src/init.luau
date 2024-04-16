@@ -10,7 +10,7 @@ local Types = require(script.Types)
 local External = require(script.External)
 
 export type Animatable = Types.Animatable
-export type CanBeState<T> = Types.CanBeState<T>
+export type UsedAs<T> = Types.UsedAs<T>
 export type Child = Types.Child
 export type Computed<T> = Types.Computed<T>
 export type Contextual<T> = Types.Contextual<T>

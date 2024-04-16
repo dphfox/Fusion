@@ -192,8 +192,8 @@ end
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
 	goalState: Types.StateObject<T>,
-	speed: Types.CanBeState<number>?,
-	damping: Types.CanBeState<number>?
+	speed: Types.UsedAs<number>?,
+	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
 	if isState(scope) then
 		logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")

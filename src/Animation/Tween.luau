@@ -94,7 +94,7 @@ end
 local function Tween<T>(
 	scope: Types.Scope<unknown>,
 	goalState: Types.StateObject<T>,
-	tweenInfo: Types.CanBeState<TweenInfo>?
+	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
 	if isState(scope) then
 		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")

@@ -90,11 +90,11 @@ export type StateObject<T> = Dependency & {
 	____phantom_peekType: (never) -> T -- phantom data so this contains a T
 }
 
--- Either a constant value of type T, or a state object containing type T.
-export type CanBeState<T> = StateObject<T> | T
+-- Passing values of this type to `Use` returns `T`.
+export type UsedAs<T> = StateObject<T> | T
 
 -- Function signature for use callbacks.
-export type Use = <T>(target: CanBeState<T>) -> T
+export type Use = <T>(target: UsedAs<T>) -> T
 
 --[[
 	Specific reactive graph types
@@ -126,17 +126,17 @@ export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
 }
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
 	scope: Scope<S>,
-	inputTable: CanBeState<{[KI]: VI}>,
+	inputTable: UsedAs<{[KI]: VI}>,
 	processor: (Use, Scope<S>, key: KI, value: VI) -> (KO, VO)
 ) -> For<KO, VO>
 export type ForKeysConstructor =  <KI, KO, V, S>(
 	scope: Scope<S>,
-	inputTable: CanBeState<{[KI]: V}>,
+	inputTable: UsedAs<{[KI]: V}>,
 	processor: (Use, Scope<S>, key: KI) -> KO
 ) -> For<KO, V>
 export type ForValuesConstructor =  <K, VI, VO, S>(
 	scope: Scope<S>,
-	inputTable: CanBeState<{[K]: VI}>,
+	inputTable: UsedAs<{[K]: VI}>,
 	processor: (Use, Scope<S>, value: VI) -> VO
 ) -> For<K, VO>
 
@@ -158,7 +158,7 @@ export type Tween<T> = StateObject<T> & Dependent & {
 export type TweenConstructor = <T>(
 	scope: Scope<unknown>,
 	goalState: StateObject<T>,
-	tweenInfo: CanBeState<TweenInfo>?
+	tweenInfo: UsedAs<TweenInfo>?
 ) -> Tween<T>
 
 -- A state object which follows another state object using spring simulation.
@@ -171,8 +171,8 @@ export type Spring<T> = StateObject<T> & Dependent & {
 export type SpringConstructor = <T>(
 	scope: Scope<unknown>,
 	goalState: StateObject<T>,
-	speed: CanBeState<number>?,
-	damping: CanBeState<number>?
+	speed: UsedAs<number>?,
+	damping: UsedAs<number>?
 ) -> Spring<T>
 
 --[[

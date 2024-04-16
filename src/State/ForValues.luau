@@ -30,7 +30,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 
 local function ForValues<K, VI, VO, S>(
 	scope: Types.Scope<S>,
-	inputTable: Types.CanBeState<{[K]: VI}>,
+	inputTable: Types.UsedAs<{[K]: VI}>,
 	processor: (Types.Use, Types.Scope<S>, VI) -> VO,
 	destructor: unknown?
 ): Types.For<K, VO>

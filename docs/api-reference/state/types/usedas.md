@@ -1,16 +1,16 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<span>State</span>
 	<span>Types</span>
-	<span>CanBeState</span>
+	<span>UsedAs</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-	<span class="fusiondoc-api-name">CanBeState</span>
+	<span class="fusiondoc-api-name">UsedAs</span>
 </h1>
 
 ```Lua
-export type CanBeState<T> = T | StateObject<T>
+export type UsedAs<T> = T | StateObject<T>
 ```
 
 Something which describes a value of type `T`. When it is [used](../use) in a

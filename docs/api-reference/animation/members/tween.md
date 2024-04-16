@@ -16,7 +16,7 @@
 function Fusion.Tween<T>(
 	scope: Scope<unknown>,
 	goalState: StateObject<T>,
-	tweenInfo: CanBeState<TweenInfo>?
+	tweenInfo: UsedAs<TweenInfo>?
 ) -> Tween<T>
 ```
 
@@ -55,7 +55,7 @@ The goal state that this object should follow. For best results, `T` should be
 <h3 markdown>
 	info
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/canbestate">CanBeState</a>&lt;TweenInfo&gt;?
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;TweenInfo&gt;?
 	</span>
 </h3>
 

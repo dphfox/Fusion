@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.ForPairs<KI, KO, VI, VO, S>(
 	scope: Scope<S>,
-	inputTable: CanBeState<{[KI]: VI}>,
+	inputTable: UsedAs<{[KI]: VI}>,
 	processor: (Use, Scope<S>, key: KI, value: VI) -> (KO, VO)
 ) -> For<KO, VO>
 ```
@@ -46,7 +46,7 @@ destruction tasks for this object.
 <h3 markdown>
 	inputTable
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/canbestate">CanBeState</a>&lt;{[KI]: VI}&gt;
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;{[KI]: VI}&gt;
 	</span>
 </h3>
 

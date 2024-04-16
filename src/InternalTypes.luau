@@ -65,7 +65,7 @@ export type For<KI, KO, VI, VO, S> = Types.For<KO, VO> & {
 		Types.Scope<S>,
 		Types.StateObject<{key: KI, value: VI}>
 	) -> (Types.StateObject<{key: KO?, value: VO?}>),
-	_inputTable: Types.CanBeState<{[KI]: VI}>,
+	_inputTable: Types.UsedAs<{[KI]: VI}>,
 	_existingInputTable: {[KI]: VI}?,
 	_existingOutputTable: {[KO]: VO},
 	_existingProcessors: {[ForProcessor]: true},
@@ -94,8 +94,8 @@ export type Tween<T> = Types.Tween<T> & {
 
 -- A state object which follows another state object using spring simulation.
 export type Spring<T> = Types.Spring<T> & {
-	_speed: Types.CanBeState<number>,
-	_damping: Types.CanBeState<number>,
+	_speed: Types.UsedAs<number>,
+	_damping: Types.UsedAs<number>,
 	_goalState: Value<T>,
 	_goalValue: T,
 
