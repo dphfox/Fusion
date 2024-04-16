@@ -1822,8 +1822,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -3102,12 +3102,14 @@ ability aren't locked out of UI functions.</p>
 <span class="normal">340</span>
 <span class="normal">341</span>
 <span class="normal">342</span>
-<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="normal">343</span>
+<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">UserInputService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;UserInputService&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
 <span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
 <span class="kd">local</span> <span class="n">Children</span><span class="p">,</span> <span class="n">OnEvent</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnEvent</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="nb">type</span> <span class="n">DragInfo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
@@ -3118,20 +3120,20 @@ ability aren't locked out of UI functions.</p>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">-- StateObject so it&#39;s observable</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
             <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
         <span class="p">}</span>
         <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
     <span class="p">}</span>
@@ -3256,17 +3258,17 @@ ability aren't locked out of UI functions.</p>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
             <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
         <span class="n">OnMouseDown</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span><span class="err">?</span>
     <span class="p">}</span>
@@ -3453,8 +3455,7 @@ This container then reparents itself as it gets dragged around between
 different containers.</p>
 <p>The <code>Draggable</code> component implements everything necessary to make a seamlessly
 re-parentable container.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
-<span class="normal">14</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
 <span class="normal">17</span>
@@ -3479,7 +3480,8 @@ re-parentable container.</p>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">type</span> <span class="n">DragInfo</span> <span class="o">=</span> <span class="p">{</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">type</span> <span class="n">DragInfo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
     <span class="n">mouseOffset</span><span class="p">:</span> <span class="n">Vector2</span> <span class="c1">-- relative to the dragged item</span>
 <span class="p">}</span>
@@ -3488,20 +3490,20 @@ re-parentable container.</p>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">-- StateObject so it&#39;s observable</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
             <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
         <span class="p">}</span>
         <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
     <span class="p">}</span>
@@ -3512,12 +3514,12 @@ re-parentable container.</p>
 <p>It only behaves specially when <code>Dragging.SelfDragInfo</code> is provided. Firstly,
 it reparents itself to <code>Dragging.OverlayFrame</code>, so it can be seen in front of
 other UI.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">66</span>
-<span class="normal">67</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
-<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+<span class="normal">71</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
             <span class="kr">return</span>
                 <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span> <span class="o">~=</span> <span class="kc">nil</span>
                 <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">OverlayFrame</span><span class="p">)</span>
@@ -3554,8 +3556,7 @@ the user. Ideally, the mouse would stay fixed in position relative to the
 how far the mouse should stay from the top-left corner. So, when setting the
 position of the <code>Draggable</code>, that offset can be applied to keep the UI fixed
 in position relative to the mouse.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">80</span>
-<span class="normal">81</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">81</span>
 <span class="normal">82</span>
 <span class="normal">83</span>
 <span class="normal">84</span>
@@ -3563,7 +3564,8 @@ in position relative to the mouse.</p>
 <span class="normal">86</span>
 <span class="normal">87</span>
 <span class="normal">88</span>
-<span class="normal">89</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Position</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+<span class="normal">89</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Position</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
             <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span>
             <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
                 <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Position</span><span class="p">)</span> <span class="ow">or</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -3626,8 +3628,7 @@ expected to change, so that's specified to be a <code>Value</code> object.</p>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <p>The <code>TodoEntry</code> component is meant to represent one individual <code>TodoItem</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
-<span class="normal">150</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
 <span class="normal">153</span>
@@ -3646,23 +3647,24 @@ expected to change, so that's specified to be a <code>Value</code> object.</p>
 <span class="normal">166</span>
 <span class="normal">167</span>
 <span class="normal">168</span>
-<span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
     <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
             <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
-            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
         <span class="n">OnMouseDown</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span><span class="err">?</span>
     <span class="p">}</span>
@@ -3670,12 +3672,12 @@ expected to change, so that's specified to be a <code>Value</code> object.</p>
 </code></pre></div></td></tr></table></div>
 <p>Notice that it shares many of the same property groups as <code>Draggable</code> - these
 can be passed directly through. </p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">181</span>
-<span class="normal">182</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
 <span class="normal">183</span>
 <span class="normal">184</span>
 <span class="normal">185</span>
-<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code>    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Draggable</span> <span class="p">{</span>
+<span class="normal">186</span>
+<span class="normal">187</span></pre></div></td><td class="code"><div><pre><span></span><code>    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Draggable</span> <span class="p">{</span>
         <span class="n">ID</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
         <span class="n">Name</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
         <span class="n">Parent</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">,</span>
@@ -3699,8 +3701,7 @@ respond to mouse-up, even if the mouse happens to briefly leave this element.</p
 <p>Now, the destinations for these entries can be created. To help decide where to
 drop items later, the <code>dropAction</code> tracks which destination the mouse is hovered
 over.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">225</span>
-<span class="normal">226</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
 <span class="normal">227</span>
 <span class="normal">228</span>
 <span class="normal">229</span>
@@ -3736,7 +3737,8 @@ over.</p>
 <span class="normal">259</span>
 <span class="normal">260</span>
 <span class="normal">261</span>
-<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">dropAction</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="normal">262</span>
+<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">dropAction</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">taskLists</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForPairs</span><span class="p">(</span>
     <span class="p">{</span>
@@ -3777,11 +3779,11 @@ over.</p>
 </code></pre></div></td></tr></table></div>
 <p>This is also where the 'overlay frame' is created, which gives currently-dragged
 UI a dedicated layer above all other UI to freely move around.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
-<span class="normal">265</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">265</span>
 <span class="normal">266</span>
 <span class="normal">267</span>
-<span class="normal">268</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">overlayFrame</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
+<span class="normal">268</span>
+<span class="normal">269</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">overlayFrame</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
     <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="n">ZIndex</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span>
@@ -3789,14 +3791,14 @@ UI a dedicated layer above all other UI to freely move around.</p>
 </code></pre></div></td></tr></table></div>
 <p>Finally, each <code>TodoItem</code> is created as a <code>TodoEntry</code>. Some state is also created
 to track which entry is being dragged at the moment.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">270</span>
-<span class="normal">271</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">271</span>
 <span class="normal">272</span>
 <span class="normal">273</span>
 <span class="normal">274</span>
 <span class="normal">275</span>
 <span class="normal">276</span>
-<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">currentlyDragging</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="normal">277</span>
+<span class="normal">278</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">currentlyDragging</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">allEntries</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span>
     <span class="n">todoItems</span><span class="p">,</span> 
@@ -3807,12 +3809,12 @@ to track which entry is being dragged at the moment.</p>
 </code></pre></div></td></tr></table></div>
 <p>Each entry dynamically picks one of the two destinations based on its
 completion status.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">278</span>
-<span class="normal">279</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">279</span>
 <span class="normal">280</span>
 <span class="normal">281</span>
 <span class="normal">282</span>
-<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+<span class="normal">283</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
                 <span class="kr">return</span>
                     <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">)</span>
                     <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">taskLists</span><span class="p">).</span><span class="n">completed</span>
@@ -3823,8 +3825,7 @@ completion status.</p>
 <p>Note that the current drag information is filtered from the <code>currentlyDragging</code>
 state so the <code>Draggable</code> won't see information about other entries being
 dragged.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">288</span>
-<span class="normal">289</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">289</span>
 <span class="normal">290</span>
 <span class="normal">291</span>
 <span class="normal">292</span>
@@ -3833,7 +3834,8 @@ dragged.</p>
 <span class="normal">295</span>
 <span class="normal">296</span>
 <span class="normal">297</span>
-<span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">Dragging</span> <span class="o">=</span> <span class="p">{</span>
+<span class="normal">298</span>
+<span class="normal">299</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">Dragging</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="n">MousePosition</span> <span class="o">=</span> <span class="n">mousePos</span><span class="p">,</span>
                 <span class="n">SelfDragInfo</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
                     <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span>
@@ -3850,8 +3852,7 @@ dragged.</p>
 else is being dragged right now, the position of the mouse relative to the item
 is captured. Then, that <code>mouseOffset</code> and the <code>id</code> of the item are passed into
 the <code>currentlyDragging</code> state to indicate this entry is being dragged.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
-<span class="normal">300</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
 <span class="normal">303</span>
@@ -3859,7 +3860,8 @@ the <code>currentlyDragging</code> state to indicate this entry is being dragged
 <span class="normal">305</span>
 <span class="normal">306</span>
 <span class="normal">307</span>
-<span class="normal">308</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">OnMouseDown</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+<span class="normal">308</span>
+<span class="normal">309</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">OnMouseDown</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
                 <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
                     <span class="kd">local</span> <span class="n">itemPos</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">itemPosition</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span>
                     <span class="kd">local</span> <span class="n">mouseOffset</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">mousePos</span><span class="p">)</span> <span class="o">-</span> <span class="n">itemPos</span>
@@ -3875,8 +3877,7 @@ reliably fire no matter where or when the event occurs. </p>
 <p>If there's a <code>dropAction</code> to take, for example <code>mark-as-completed</code>, then that
 action is executed here. </p>
 <p>In all cases, <code>currentlyDragging</code> is cleared, so the entry is no longer dragged.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">313</span>
-<span class="normal">314</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">314</span>
 <span class="normal">315</span>
 <span class="normal">316</span>
 <span class="normal">317</span>
@@ -3895,7 +3896,8 @@ action is executed here. </p>
 <span class="normal">330</span>
 <span class="normal">331</span>
 <span class="normal">332</span>
-<span class="normal">333</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
+<span class="normal">333</span>
+<span class="normal">334</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
     <span class="n">UserInputService</span><span class="p">.</span><span class="n">InputEnded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">inputObject</span><span class="p">)</span>
         <span class="kr">if</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">UserInputType</span> <span class="o">~=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span> <span class="kr">then</span>
             <span class="kr">return</span>
@@ -3920,15 +3922,15 @@ action is executed here. </p>
 <p>All that remains is to parent the task lists and overlay frames to a UI, so they
 can be seen. Because the <code>TodoEntry</code> component manages their own parent, this
 code shouldn't pass in <code>allEntries</code> as a child here.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">335</span>
-<span class="normal">336</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">336</span>
 <span class="normal">337</span>
 <span class="normal">338</span>
 <span class="normal">339</span>
 <span class="normal">340</span>
 <span class="normal">341</span>
 <span class="normal">342</span>
-<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
+<span class="normal">343</span>
+<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
     <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">)</span>
 
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>

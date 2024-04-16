@@ -1783,8 +1783,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2612,15 +2612,15 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#speed-canbestatet" class="md-nav__link">
-    speed : CanBeState&lt;T&gt;?
+  <a href="#speed-usedast" class="md-nav__link">
+    speed : UsedAs&lt;T&gt;?
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#damping-canbestatet" class="md-nav__link">
-    damping : CanBeState&lt;T&gt;?
+  <a href="#damping-usedast" class="md-nav__link">
+    damping : UsedAs&lt;T&gt;?
   </a>
   
 </li>
@@ -2802,15 +2802,15 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#speed-canbestatet" class="md-nav__link">
-    speed : CanBeState&lt;T&gt;?
+  <a href="#speed-usedast" class="md-nav__link">
+    speed : UsedAs&lt;T&gt;?
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#damping-canbestatet" class="md-nav__link">
-    damping : CanBeState&lt;T&gt;?
+  <a href="#damping-usedast" class="md-nav__link">
+    damping : UsedAs&lt;T&gt;?
   </a>
   
 </li>
@@ -2872,8 +2872,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">goalState</span><span class="p">:</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-    <span class="n">damping</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+    <span class="n">damping</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>Constructs and returns a new <a href="../../types/spring">spring state object</a>.</p>
@@ -2901,20 +2901,20 @@ destruction tasks for this object.</p>
 <a class="headerlink" href="#goalstate-stateobjectt" title="Permanent link">&para;</a></h3>
 <p>The goal state that this object should follow. For best results, <code>T</code> should be
 <a href="../../types/animatable">animatable</a>.</p>
-<h3 id="speed-canbestatet">
+<h3 id="speed-usedast">
     speed
     <span class="fusiondoc-api-type">
-        : <a href="../../../state/types/canbestate">CanBeState</a>&lt;T&gt;?
+        : <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;?
     </span>
-<a class="headerlink" href="#speed-canbestatet" title="Permanent link">&para;</a></h3>
+<a class="headerlink" href="#speed-usedast" title="Permanent link">&para;</a></h3>
 <p>Multiplies how fast the motion should occur; doubling the <code>speed</code> exactly halves
 the time it takes for the motion to complete.</p>
-<h3 id="damping-canbestatet">
+<h3 id="damping-usedast">
     damping
     <span class="fusiondoc-api-type">
-        : <a href="../../../state/types/canbestate">CanBeState</a>&lt;T&gt;?
+        : <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;?
     </span>
-<a class="headerlink" href="#damping-canbestatet" title="Permanent link">&para;</a></h3>
+<a class="headerlink" href="#damping-usedast" title="Permanent link">&para;</a></h3>
 <p>The amount of resistance the motion encounters. 0 represents no resistance,
 1 is just enough resistance to prevent overshoot (critical damping), and larger
 values damp out inertia effects and straighten the motion.</p>

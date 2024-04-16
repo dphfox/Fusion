@@ -191,11 +191,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://elttob.uk/Fusion/0.3/api-reference/state/types/canbestate/</loc>
-         <lastmod>2024-04-16</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://elttob.uk/Fusion/0.3/api-reference/state/types/computed/</loc>
          <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
@@ -227,6 +222,11 @@
     </url>
     <url>
          <loc>https://elttob.uk/Fusion/0.3/api-reference/state/types/use/</loc>
+         <lastmod>2024-04-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://elttob.uk/Fusion/0.3/api-reference/state/types/usedas/</loc>
          <lastmod>2024-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>

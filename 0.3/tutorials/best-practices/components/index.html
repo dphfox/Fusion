@@ -1836,8 +1836,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2787,14 +2787,16 @@ world of UI, you may think of them as <em>components</em> - though they can be u
 much more than just UI.</p>
 <p>For example, consider this function, which generates a button based on some
 <code>props</code> the user passes in:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">ButtonText</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">ButtonText</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
@@ -2854,13 +2856,15 @@ you useful autocomplete and type checking.</p>
 </code></pre></div>
 <p>Note that the above code only accepts constant values, not state objects. If you
 want to accept <em>either</em> a constant or a state object, you can use the 
-<code>CanBeState</code> type.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Cake</span><span class="p">(</span>
+<code>UsedAs</code> type.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Cake</span><span class="p">(</span>
     <span class="c1">-- ... some stuff here ...</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">Colour</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Color3</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">IsTasty</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
+        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">Colour</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Color3</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">IsTasty</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="c1">-- ... some other stuff here ...</span>
@@ -2868,38 +2872,24 @@ want to accept <em>either</em> a constant or a state object, you can use the
 </code></pre></div>
 <p>This is usually what you want, because it means the user can easily switch
 a property to dynamically change over time, while still writing properties
-normally when they don't change over time. You can mostly treat <code>CanBeState</code>
+normally when they don't change over time. You can mostly treat <code>UsedAs</code>
 properties like they're state objects, because functions like <code>peek()</code> and
 <code>use()</code> automatically choose the right behaviour for you.</p>
-<p>If something <em>absolutely must</em> be a state object, you can use the
-<code>StateObject</code> type instead. You should only consider this when it doesn't
-make sense for the property to stay the same forever.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Cake</span><span class="p">(</span>
-    <span class="c1">-- ... some stuff here ...</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">Colour</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Color3</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">IsTasty</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-    <span class="c1">-- ... some other stuff here ...</span>
-<span class="kr">end</span>
-</code></pre></div>
 <p>You can use the rest of Luau's type checking features to do more complex
 things, like making certain properties optional, or restricting that values
 are valid for a given property. Go wild!</p>
 <div class="admonition warning">
 <p class="admonition-title">Be mindful of the angle brackets</p>
-<p>Remember that, when working with <code>StateObject</code> and <code>CanBeState</code>, you should
-be mindful of whether you're putting things inside the angled brackets, or
-outside of them. Putting some things inside of the angle brackets can change
-their meaning, compared to putting them outside of the angle brackets.</p>
+<p>Remember that, when working with <code>UsedAs</code>, you should be mindful of whether
+you're putting things inside the angled brackets, or outside of them.
+Putting some things inside of the angle brackets can change their meaning,
+compared to putting them outside of the angle brackets.</p>
 <p>Consider these two type definitions carefully:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- either nil, or a state object which always stores Vector3</span>
-<span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span><span class="err">?</span>
+<div class="highlight"><pre><span></span><code><span class="c1">-- A Vector3, or a state object storing Vector3, or nil.</span>
+<span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="o">&gt;</span><span class="err">?</span>
 
-<span class="c1">-- always a state object, which stores either Vector3 or nil</span>
-<span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="err">?</span><span class="o">&gt;</span>
+<span class="c1">-- A Vector3?, or a state object storing Vector3?</span>
+<span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector3</span><span class="err">?</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>The first type is best for <em>optional properties</em>, where you provide a
 default value if it isn't specified by the user. If the user <em>does</em> specify
@@ -3042,13 +3032,15 @@ There's a number of advantages to this:</p>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
-<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">PopUp</span><span class="p">(</span>
     <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span> 
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Message</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">DismissText</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+        <span class="n">Message</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">DismissText</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
@@ -3095,12 +3087,14 @@ There's a number of advantages to this:</p>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
-<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Message</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
@@ -3135,12 +3129,14 @@ There's a number of advantages to this:</p>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
-<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>

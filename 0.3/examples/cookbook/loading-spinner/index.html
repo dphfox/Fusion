@@ -1829,8 +1829,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2831,11 +2831,13 @@ APIs.</p>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">RunService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;RunService&quot;</span><span class="p">)</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">RunService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;RunService&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
 <span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
 <span class="kd">local</span> <span class="n">Children</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="n">SPIN_DEGREES_PER_SECOND</span> <span class="o">=</span> <span class="mi">180</span>
 <span class="kd">local</span> <span class="n">SPIN_SIZE</span> <span class="o">=</span> <span class="mi">50</span>
@@ -2844,12 +2846,12 @@ APIs.</p>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
-        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ImageLabel&quot;</span> <span class="p">{</span>
@@ -2897,8 +2899,7 @@ APIs.</p>
 <p>The <code>Spinner</code> components implements the animation for the loading spinner. It's
 largely a standard Fusion component definition.</p>
 <p>The main thing to note is that it asks for a <code>CurrentTime</code> property.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
-<span class="normal">11</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
@@ -2908,35 +2909,36 @@ largely a standard Fusion component definition.</p>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
-<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Spinner</span><span class="p">(</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Spinner</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
-<span class="hll">        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="hll">        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
 </span>    <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
 </code></pre></div></td></tr></table></div>
 <p>The <code>CurrentTime</code> is used to drive the rotation of the loading spinner.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Rotation</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code>        <span class="n">Rotation</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
             <span class="kr">return</span> <span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">CurrentTime</span><span class="p">)</span> <span class="o">*</span> <span class="n">SPIN_DEGREES_PER_SECOND</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
         <span class="kr">end</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>That's all that's required for the <code>Spinner</code> component.</p>
 <p>Later on, the example creates a <code>Value</code> object that will store the current time,
 and starts a process to keep it up to date.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
-<span class="normal">47</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
-<span class="normal">51</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
 <span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
     <span class="n">RunService</span><span class="p">.</span><span class="n">RenderStepped</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
         <span class="n">currentTime</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
@@ -2944,14 +2946,14 @@ and starts a process to keep it up to date.</p>
 <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>This can then be passed in as <code>CurrentTime</code> when the <code>Spinner</code> is created.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
-<span class="normal">54</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">spinner</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spinner</span> <span class="p">{</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">spinner</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spinner</span> <span class="p">{</span>
     <span class="n">Layout</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
         <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>

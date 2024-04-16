@@ -1787,8 +1787,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -1927,8 +1927,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#target-canbestatet" class="md-nav__link">
-    target : CanBeState&lt;T&gt;
+  <a href="#target-usedast" class="md-nav__link">
+    target : UsedAs&lt;T&gt;
   </a>
   
 </li>
@@ -2767,8 +2767,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#target-canbestatet" class="md-nav__link">
-    target : CanBeState&lt;T&gt;
+  <a href="#target-usedast" class="md-nav__link">
+    target : UsedAs&lt;T&gt;
   </a>
   
 </li>
@@ -2824,10 +2824,10 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
     <span class="fusiondoc-api-name">Use</span>
 <a class="headerlink" href="#use" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Use</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
+<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Use</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span>
 </code></pre></div>
-<p>A function which extracts a value of <code>T</code> from abstract representations of <code>T</code>
-(<a href="../canbestate"><code>CanBeState&lt;T&gt;</code></a>).</p>
+<p>A function which extracts a value of <code>T</code> from something that can be
+<a href="../usedas">used as</a> <code>T</code>.</p>
 <p>The most generic implementation of this is
 <a href="../../members/peek">the <code>peek()</code> function</a>, which performs this extraction with
 no additional steps. </p>
@@ -2838,13 +2838,13 @@ which adds inputs to a watchlist, which allows them to re-calculate as inputs
 change.</p>
 <hr />
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<h3 id="target-canbestatet">
+<h3 id="target-usedast">
     target
     <span class="fusiondoc-api-type">
-        : <a href="../canbestate">CanBeState</a>&lt;T&gt;
+        : <a href="../usedas">UsedAs</a>&lt;T&gt;
     </span>
-<a class="headerlink" href="#target-canbestatet" title="Permanent link">&para;</a></h3>
-<p>The abstract representation of <code>T</code> to extract a value from.</p>
+<a class="headerlink" href="#target-usedast" title="Permanent link">&para;</a></h3>
+<p>The representation of <code>T</code> to extract a value from.</p>
 <hr />
 <h2 id="returns-t">
     Returns

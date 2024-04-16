@@ -1829,8 +1829,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2823,9 +2823,9 @@ the button is clicked, the button needs to run some external code:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span>
+        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">)</span>
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
@@ -2854,9 +2854,9 @@ Luau won't add the key to the table if the value is <code>nil</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
 <span class="hll">        <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
 </span>    <span class="p">}</span>
 <span class="p">)</span>
@@ -2877,10 +2877,10 @@ to do your own processing first:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">)</span>

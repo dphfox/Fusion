@@ -1829,8 +1829,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2888,9 +2888,11 @@ own. For further ideas and best practices for building components, see
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
-<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
+<span class="normal">113</span>
+<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
 <span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
 <span class="kd">local</span> <span class="n">Children</span><span class="p">,</span> <span class="n">OnEvent</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnEvent</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="n">COLOUR_BLACK</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">COLOUR_WHITE</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -2909,17 +2911,17 @@ own. For further ideas and best practices for building components, see
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
@@ -3008,33 +3010,50 @@ own. For further ideas and best practices for building components, see
 you statically type the function signature for components, because it not only
 improves autocomplete and error checking, but also acts as up-to-date, machine
 readable documentation.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
         <span class="p">},</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
         <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-</code></pre></div>
+</code></pre></div></td></tr></table></div>
 <p>The <code>scope</code> parameter specifies that the component depends on Fusion's methods.
 If you're not sure how to write type definitions for scopes,
 <a href="../../../tutorials/components/components/#scopes">the 'Scopes' section of the Components tutorial</a>
 goes into further detail.</p>
 <p>The property table is laid out with each property on a new line, so it's easy to
-scan the list and see what properties are available. Most are <code>CanBeState</code>,
-which allows the user to use state objects if they desire. They're also <code>?</code>
-(optional), which can reduce boilerplate when using the component. Not all
-properties have to be that way, but usually it's better to have the flexibility.</p>
+scan the list and see what properties are available. Most are typed with
+<a href="../../../api-reference/state/types/usedas"><code>UsedAs</code></a>, which allows the user to 
+use state objects if they desire. They're also <code>?</code> (optional), which can reduce
+boilerplate when using the component. Not all properties have to be that way,
+but usually it's better to have the flexibility.</p>
 <div class="admonition tip">
 <p class="admonition-title">Property grouping</p>
 <p>You can group properties together in nested tables, like the <code>Layout</code> table

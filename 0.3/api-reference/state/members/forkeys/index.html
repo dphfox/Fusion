@@ -1785,8 +1785,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2025,8 +2025,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#inputtable-canbestateki-v" class="md-nav__link">
-    inputTable : CanBeState&lt;{[KI]: V}&gt;
+  <a href="#inputtable-usedaski-v" class="md-nav__link">
+    inputTable : UsedAs&lt;{[KI]: V}&gt;
   </a>
   
 </li>
@@ -2788,8 +2788,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
         
           <li class="md-nav__item">
-  <a href="#inputtable-canbestateki-v" class="md-nav__link">
-    inputTable : CanBeState&lt;{[KI]: V}&gt;
+  <a href="#inputtable-usedaski-v" class="md-nav__link">
+    inputTable : UsedAs&lt;{[KI]: V}&gt;
   </a>
   
 </li>
@@ -2857,7 +2857,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <a class="headerlink" href="#forkeys-forko-v" title="Permanent link">&para;</a></h1>
 <div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">ForKeys</span><span class="o">&lt;</span><span class="n">KI</span><span class="p">,</span> <span class="n">KO</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">S</span><span class="o">&gt;</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">inputTable</span><span class="p">:</span> <span class="n">CanBeState</span><span class="o">&lt;</span><span class="p">{[</span><span class="n">KI</span><span class="p">]:</span> <span class="n">V</span><span class="p">}</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">inputTable</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{[</span><span class="n">KI</span><span class="p">]:</span> <span class="n">V</span><span class="p">}</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">processor</span><span class="p">:</span> <span class="p">(</span><span class="n">Use</span><span class="p">,</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">S</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KO</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">For</span><span class="o">&lt;</span><span class="n">KO</span><span class="p">,</span> <span class="n">V</span><span class="o">&gt;</span>
 </code></pre></div>
@@ -2879,12 +2879,12 @@ keys and preserves values.</p>
 <a class="headerlink" href="#scope-scopes" title="Permanent link">&para;</a></h3>
 <p>The <a href="../../../memory/types/scope">scope</a> which should be used to store
 destruction tasks for this object.</p>
-<h3 id="inputtable-canbestateki-v">
+<h3 id="inputtable-usedaski-v">
     inputTable
     <span class="fusiondoc-api-type">
-        : <a href="../../../state/types/canbestate">CanBeState</a>&lt;{[KI]: V}&gt;
+        : <a href="../../../state/types/usedas">UsedAs</a>&lt;{[KI]: V}&gt;
     </span>
-<a class="headerlink" href="#inputtable-canbestateki-v" title="Permanent link">&para;</a></h3>
+<a class="headerlink" href="#inputtable-usedaski-v" title="Permanent link">&para;</a></h3>
 <p>The table which will provide the input keys and input values for this object.</p>
 <p>If it is a state object, this object will respond to changes in that state.</p>
 <h3 id="processor-use-scopes-key-ki-ko">

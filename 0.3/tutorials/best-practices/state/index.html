@@ -1849,8 +1849,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/canbestate/" class="md-nav__link">
-        CanBeState
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
       </a>
     </li>
   
@@ -2894,18 +2894,18 @@ intercept the click or toggle a different state</li>
     <span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
-<p>That's why the <em>best</em> solution is to use <code>CanBeState</code> to create read-only
+<p>That's why the <em>best</em> solution is to use <code>UsedAs</code> to create read-only
 properties, and add callbacks for signalling actions and events.</p>
 <ul>
-<li>because <code>CanBeState</code> is read-only, it lets the user plug in any data
-source, including dynamic computations</li>
+<li>because <code>UsedAs</code> is read-only, it lets the user plug in any data source,
+including dynamic computations</li>
 <li>because the callback is provided by the user, the behaviour of clicking the
 check box is completely customisable</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">CheckBox</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-<span class="hll">        <span class="n">IsChecked</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">CanBeState</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">-- best</span>
+<span class="hll">        <span class="n">IsChecked</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">-- best</span>
 </span><span class="hll">        <span class="n">OnClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span>
 </span>    <span class="p">}</span>
 <span class="p">)</span>
@@ -2930,7 +2930,7 @@ check box, so you can turn them all on/off at once.</p>
 <img alt="Showing check boxes connected to Value objects." src="Master-Check-Box-Light.svg#only-light" /></p>
 <p>The appearance of that check box would not be controlled by a single state, but
 instead reflects the combination of multiple states. Because the code uses
-<code>CanBeState</code>, you can represent this with a <code>Computed</code> object.</p>
+<code>UsedAs</code>, you can represent this with a <code>Computed</code> object.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">playMusic</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">playSFX</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">playNarration</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
