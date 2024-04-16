@@ -31,8 +31,8 @@ local function invalidate(
 			for _, searchTarget in searchInNow do
 				for dependent in searchTarget.dependentSet do
 					if dependent.validity == "valid" then
-						table.insert(invalidateList, dependent)
 						done = false
+						table.insert(invalidateList, dependent)
 						table.insert(searchInNext, dependent)
 					elseif dependent.validity == "busy" then
 						logError("infiniteLoop")
