@@ -6,14 +6,16 @@ For example, consider this function, which generates a button based on some
 `props` the user passes in:
 
 ```Lua
+type UsedAs<T> = Fusion.UsedAs<T>
+
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Position: Fusion.CanBeState<UDim2>?,
-		AnchorPoint: Fusion.CanBeState<Vector2>?,
-		Size: Fusion.CanBeState<UDim2>?,
-		LayoutOrder: Fusion.CanBeState<number>?,
-		ButtonText: Fusion.CanBeState<string>
+		Position: UsedAs<UDim2>?,
+		AnchorPoint: UsedAs<Vector2>?,
+		Size: UsedAs<UDim2>?,
+		LayoutOrder: UsedAs<number>?,
+		ButtonText: UsedAs<string>
 	}
 )
     return scope:New "TextButton" {
@@ -87,15 +89,17 @@ end
 
 Note that the above code only accepts constant values, not state objects. If you
 want to accept *either* a constant or a state object, you can use the 
-`CanBeState` type.
+`UsedAs` type.
 
 ```Lua
+type UsedAs<T> = Fusion.UsedAs<T>
+
 local function Cake(
 	-- ... some stuff here ...
 	props: {
-		Size: Fusion.CanBeState<Vector3>,
-		Colour: Fusion.CanBeState<Color3>,
-		IsTasty: Fusion.CanBeState<boolean>
+		Size: UsedAs<Vector3>,
+		Colour: UsedAs<Color3>,
+		IsTasty: UsedAs<boolean>
 	}
 )
 	-- ... some other stuff here ...
@@ -104,45 +108,28 @@ end
 
 This is usually what you want, because it means the user can easily switch
 a property to dynamically change over time, while still writing properties
-normally when they don't change over time. You can mostly treat `CanBeState`
+normally when they don't change over time. You can mostly treat `UsedAs`
 properties like they're state objects, because functions like `peek()` and
 `use()` automatically choose the right behaviour for you.
-
-If something *absolutely must* be a state object, you can use the
-`StateObject` type instead. You should only consider this when it doesn't
-make sense for the property to stay the same forever.
-
-```Lua
-local function Cake(
-	-- ... some stuff here ...
-	props: {
-		Size: Fusion.StateObject<Vector3>,
-		Colour: Fusion.StateObject<Color3>,
-		IsTasty: Fusion.StateObject<boolean>
-	}
-)
-	-- ... some other stuff here ...
-end
-```
 
 You can use the rest of Luau's type checking features to do more complex
 things, like making certain properties optional, or restricting that values
 are valid for a given property. Go wild!
 
 !!! warning "Be mindful of the angle brackets"
-	Remember that, when working with `StateObject` and `CanBeState`, you should
-	be mindful of whether you're putting things inside the angled brackets, or
-	outside of them. Putting some things inside of the angle brackets can change
-	their meaning, compared to putting them outside of the angle brackets.
+	Remember that, when working with `UsedAs`, you should be mindful of whether
+	you're putting things inside the angled brackets, or outside of them.
+	Putting some things inside of the angle brackets can change their meaning,
+	compared to putting them outside of the angle brackets.
 	
 	Consider these two type definitions carefully:
 
 	```Lua
-	-- either nil, or a state object which always stores Vector3
-	Fusion.StateObject<Vector3>?
+	-- A Vector3, or a state object storing Vector3, or nil.
+	UsedAs<Vector3>?
 
-	-- always a state object, which stores either Vector3 or nil
-	Fusion.StateObject<Vector3?>
+	-- A Vector3?, or a state object storing Vector3?
+	UsedAs<Vector3?>
 	```
 
 	The first type is best for *optional properties*, where you provide a
@@ -258,12 +245,13 @@ Here's an example of how you could split up some components into modules:
 
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
+	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function PopUp(
 		outerScope: Fusion.Scope<{}>, 
 		props: {
-			Message: Fusion.CanBeState<string>,
-			DismissText: Fusion.CanBeState<string>
+			Message: UsedAs<string>,
+			DismissText: UsedAs<string>
 		}
 	)
 		local scope = scoped(Fusion, {
@@ -295,11 +283,12 @@ Here's an example of how you could split up some components into modules:
 
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
+	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function Message(
 		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {
-			Text: Fusion.CanBeState<string>
+			Text: UsedAs<string>
 		}
 	)
         return scope:New "TextLabel" {
@@ -319,11 +308,12 @@ Here's an example of how you could split up some components into modules:
 
     ```Lua linenums="1"
 	local Fusion = require(game:GetService("ReplicatedStorage").Fusion)
+	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function Button(
 		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {
-			Text: Fusion.CanBeState<string>
+			Text: UsedAs<string>
 		}
 	)
         return scope:New "TextButton" {

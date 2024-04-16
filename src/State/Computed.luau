@@ -57,7 +57,7 @@ function class:update(): boolean
 	table.clear(self.dependencySet)
 
 	local innerScope = deriveScope(outerScope)
-	local function use<T>(target: Types.CanBeState<T>): T
+	local function use<T>(target: Types.UsedAs<T>): T
 		if isState(target) then
 			local target = target :: Types.StateObject<T>
 			if target.scope == nil then

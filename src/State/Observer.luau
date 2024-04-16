@@ -76,15 +76,17 @@ end
 
 local function Observer(
 	scope: Types.Scope<unknown>,
-	watching: Types.GraphObject
+	watching: unknown
 ): Types.Observer
 	if watching == nil then
 		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
 	end
 
+	local watchingState = typeof(watching) == "table" and (watching :: any).dependentSet ~= nil
+
 	local self = setmetatable({
 		scope = scope,
-		dependencySet = {[watching] = true},
+		dependencySet = if watchingState then {[watching] = true} else {},
 		dependentSet = {},
 		_changeListeners = {}
 	}, CLASS_METATABLE)
@@ -92,25 +94,26 @@ local function Observer(
 	
 	table.insert(scope, self)
 
-	if watching.scope == nil then
+	if watchingState then
 		local watching: any = watching
-		logError(
-			"useAfterDestroy",
-			nil,
-			`The {watching.kind or watching.type or "watched"} object`,
-			`the Observer that is watching it`
-		)
-	elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
-		local watching: any = watching
-		logWarn(
-			"possiblyOutlives",
-			`The {watching.kind or watching.type or "watched"} object`,
-			`the Observer that is watching it`
-		)
+		if watching.scope == nil then
+			logError(
+				"useAfterDestroy",
+				nil,
+				`The {watching.kind or watching.type or "watched"} object`,
+				`the Observer that is watching it`
+			)
+		elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
+			local watching: any = watching
+			logWarn(
+				"possiblyOutlives",
+				`The {watching.kind or watching.type or "watched"} object`,
+				`the Observer that is watching it`
+			)
+		end
+		-- add this object to the watched object's dependent set
+		watching.dependentSet[self] = true
 	end
-
-	-- add this object to the watched object's dependent set
-	watching.dependentSet[self] = true
 
 	return self
 end

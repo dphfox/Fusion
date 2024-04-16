@@ -30,7 +30,7 @@ local doCleanup = require(Package.Memory.doCleanup)
 
 local function ForPairs<KI, KO, VI, VO, S>(
 	scope: Types.Scope<S>,
-	inputTable: Types.CanBeState<{[KI]: VI}>,
+	inputTable: Types.UsedAs<{[KI]: VI}>,
 	processor: (Types.Use, Types.Scope<S>, KI, VI) -> (KO, VO),
 	destructor: unknown?
 ): Types.For<KO, VO>

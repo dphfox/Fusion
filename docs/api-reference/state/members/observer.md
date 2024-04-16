@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.Observer(
 	scope: Scope<unknown>,
-	watching: GraphObject
+	watching: unknown
 ) -> Observer
 ```
 
@@ -44,18 +44,22 @@ destruction tasks for this object.
 <h3 markdown>
 	watching
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/graphobject">GraphObject</a>
+		: unknown
 	</span>
 </h3>
 
-The object which the observer should receive updates from.
+The target that the observer should watch for changes.
+
+!!! note "Works best with state objects"
+	While non-[state object](../../../state/types/stateobject) values are
+	accepted for compatibility, they won't be able to trigger updates.
 
 -----
 
 <h2 markdown>
 	Returns
 	<span class="fusiondoc-api-type">
-		-> <a href="../../../state/types/Observer">Observer</a>
+		-> <a href="../../../state/types/observer">Observer</a>
 	</span>
 </h2>
 

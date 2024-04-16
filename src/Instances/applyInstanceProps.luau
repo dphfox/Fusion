@@ -72,7 +72,7 @@ local function bindProperty(
 	scope: Types.Scope<unknown>,
 	instance: Instance,
 	property: string,
-	value: Types.CanBeState<unknown>
+	value: Types.UsedAs<unknown>
 )
 	if isState(value) then
 		local value = value :: Types.StateObject<unknown>

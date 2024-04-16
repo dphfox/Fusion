@@ -13,6 +13,7 @@ local UserInputService = game:GetService("UserInputService")
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
 local Children, OnEvent = Fusion.Children, Fusion.OnEvent
+type UsedAs<T> = Fusion.UsedAs<T>
 
 type DragInfo = {
 	id: string,
@@ -23,20 +24,20 @@ local function Draggable(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		ID: string,
-		Name: Fusion.CanBeState<string>?,
+		Name: UsedAs<string>?,
 		Parent: Fusion.StateObject<Instance?>, -- StateObject so it's observable
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
-			MousePosition: Fusion.CanBeState<Vector2>,
-			SelfDragInfo: Fusion.CanBeState<DragInfo?>,
-			OverlayFrame: Fusion.CanBeState<Instance?>
+			MousePosition: UsedAs<Vector2>,
+			SelfDragInfo: UsedAs<DragInfo?>,
+			OverlayFrame: UsedAs<Instance?>
 		}
 		[typeof(Children)]: Fusion.Child
 	}
@@ -161,17 +162,17 @@ local function TodoEntry(
 		Item: TodoItem,
 		Parent: Fusion.StateObject<Instance?>,
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
-			MousePosition: Fusion.CanBeState<Vector2>,
-			SelfDragInfo: Fusion.CanBeState<CurrentlyDragging?>,
-			OverlayFrame: Fusion.CanBeState<Instance>?
+			MousePosition: UsedAs<Vector2>,
+			SelfDragInfo: UsedAs<CurrentlyDragging?>,
+			OverlayFrame: UsedAs<Instance>?
 		},
 		OnMouseDown: () -> ()?
 	}
@@ -363,7 +364,7 @@ different containers.
 The `Draggable` component implements everything necessary to make a seamlessly
 re-parentable container.
 
-```Lua linenums="13"
+```Lua linenums="14"
 type DragInfo = {
 	id: string,
 	mouseOffset: Vector2 -- relative to the dragged item
@@ -373,20 +374,20 @@ local function Draggable(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		ID: string,
-		Name: Fusion.CanBeState<string>?,
+		Name: UsedAs<string>?,
 		Parent: Fusion.StateObject<Instance?>, -- StateObject so it's observable
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
-			MousePosition: Fusion.CanBeState<Vector2>,
-			SelfDragInfo: Fusion.CanBeState<DragInfo?>,
-			OverlayFrame: Fusion.CanBeState<Instance?>
+			MousePosition: UsedAs<Vector2>,
+			SelfDragInfo: UsedAs<DragInfo?>,
+			OverlayFrame: UsedAs<Instance?>
 		}
 		[typeof(Children)]: Fusion.Child
 	}
@@ -400,7 +401,7 @@ It only behaves specially when `Dragging.SelfDragInfo` is provided. Firstly,
 it reparents itself to `Dragging.OverlayFrame`, so it can be seen in front of
 other UI.
 
-```Lua linenums="66"
+```Lua linenums="67"
 		Parent = scope:Computed(function(use)
 			return
 				if use(props.Dragging.SelfDragInfo) ~= nil
@@ -435,7 +436,7 @@ how far the mouse should stay from the top-left corner. So, when setting the
 position of the `Draggable`, that offset can be applied to keep the UI fixed
 in position relative to the mouse.
 
-```Lua linenums="80"
+```Lua linenums="81"
 		Position = scope:Computed(function(use)
 			local dragInfo = use(props.Dragging.SelfDragInfo)
 			if dragInfo == nil then
@@ -484,24 +485,24 @@ local todoItems: Fusion.Value<TodoItem> = {
 
 The `TodoEntry` component is meant to represent one individual `TodoItem`.
 
-```Lua linenums="149"
+```Lua linenums="150"
 local function TodoEntry(
 	outerScope: Fusion.Scope<{}>,
 	props: {
 		Item: TodoItem,
 		Parent: Fusion.StateObject<Instance?>,
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
-			MousePosition: Fusion.CanBeState<Vector2>,
-			SelfDragInfo: Fusion.CanBeState<CurrentlyDragging?>,
-			OverlayFrame: Fusion.CanBeState<Instance>?
+			MousePosition: UsedAs<Vector2>,
+			SelfDragInfo: UsedAs<CurrentlyDragging?>,
+			OverlayFrame: UsedAs<Instance>?
 		},
 		OnMouseDown: () -> ()?
 	}
@@ -511,7 +512,7 @@ local function TodoEntry(
 Notice that it shares many of the same property groups as `Draggable` - these
 can be passed directly through. 
 
-```Lua linenums="181"
+```Lua linenums="182"
 	return scope:Draggable {
 		ID = props.Item.id,
 		Name = props.Item.text,
@@ -537,7 +538,7 @@ Now, the destinations for these entries can be created. To help decide where to
 drop items later, the `dropAction` tracks which destination the mouse is hovered
 over.
 
-```Lua linenums="225"
+```Lua linenums="226"
 local dropAction = scope:Value(nil)
 
 local taskLists = scope:ForPairs(
@@ -581,7 +582,7 @@ local taskLists = scope:ForPairs(
 This is also where the 'overlay frame' is created, which gives currently-dragged
 UI a dedicated layer above all other UI to freely move around.
 
-```Lua linenums="264"
+```Lua linenums="265"
 local overlayFrame = scope:New "Frame" {
 	Size = UDim2.fromScale(1, 1),
 	ZIndex = 10,
@@ -592,7 +593,7 @@ local overlayFrame = scope:New "Frame" {
 Finally, each `TodoItem` is created as a `TodoEntry`. Some state is also created
 to track which entry is being dragged at the moment.
 
-```Lua linenums="270"
+```Lua linenums="271"
 local currentlyDragging: Fusion.Value<DragInfo?> = scope:Value(nil)
 
 local allEntries = scope:ForValues(
@@ -606,7 +607,7 @@ local allEntries = scope:ForValues(
 Each entry dynamically picks one of the two destinations based on its
 completion status.
 
-```Lua linenums="278"
+```Lua linenums="279"
 			Parent = scope:Computed(function(use)
 				return
 					if use(item.completed)
@@ -621,7 +622,7 @@ Note that the current drag information is filtered from the `currentlyDragging`
 state so the `Draggable` won't see information about other entries being
 dragged.
 
-```Lua linenums="288"
+```Lua linenums="289"
 			Dragging = {
 				MousePosition = mousePos,
 				SelfDragInfo = scope:Computed(function(use)
@@ -642,7 +643,7 @@ else is being dragged right now, the position of the mouse relative to the item
 is captured. Then, that `mouseOffset` and the `id` of the item are passed into
 the `currentlyDragging` state to indicate this entry is being dragged.
 
-```Lua linenums="299"
+```Lua linenums="300"
 			OnMouseDown = function()
 				if peek(currentlyDragging) == nil then
 					local itemPos = peek(itemPosition) or Vector2.zero
@@ -663,7 +664,7 @@ action is executed here.
 
 In all cases, `currentlyDragging` is cleared, so the entry is no longer dragged.
 
-```Lua linenums="313"
+```Lua linenums="314"
 table.insert(scope,
 	UserInputService.InputEnded:Connect(function(inputObject)
 		if inputObject.UserInputType ~= Enum.UserInputType.MouseButton1 then
@@ -691,7 +692,7 @@ All that remains is to parent the task lists and overlay frames to a UI, so they
 can be seen. Because the `TodoEntry` component manages their own parent, this
 code shouldn't pass in `allEntries` as a child here.
 
-```Lua linenums="335"
+```Lua linenums="336"
 local ui = scope:New "ScreenGui" {
 	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
 

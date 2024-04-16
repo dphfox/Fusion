@@ -53,14 +53,9 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
 
 <div markdown>
 ### State
-<a class="fusiondoc-api-index-link" href="state/types/canbestate" markdown>
+<a class="fusiondoc-api-index-link" href="state/types/usedas" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-    <span class="fusiondoc-api-name">CanBeState</span>
-    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
-</a>
-<a class="fusiondoc-api-index-link" href="state/types/stateobject" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-    <span class="fusiondoc-api-name">StateObject</span>
+    <span class="fusiondoc-api-name">UsedAs</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 <a class="fusiondoc-api-index-link" href="state/members/computed" markdown>

@@ -101,11 +101,11 @@ local function CheckBox(
 end
 ```
 
-That's why the *best* solution is to use `CanBeState` to create read-only
+That's why the *best* solution is to use `UsedAs` to create read-only
 properties, and add callbacks for signalling actions and events.
 
-- because `CanBeState` is read-only, it lets the user plug in any data
-source, including dynamic computations
+- because `UsedAs` is read-only, it lets the user plug in any data source,
+including dynamic computations
 - because the callback is provided by the user, the behaviour of clicking the
 check box is completely customisable
 
@@ -113,7 +113,7 @@ check box is completely customisable
 local function CheckBox(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		IsChecked: Fusion.CanBeState<boolean>, -- best
+		IsChecked: UsedAs<boolean>, -- best
 		OnClick: () -> ()
 	}
 )
@@ -144,7 +144,7 @@ check box, so you can turn them all on/off at once.
 
 The appearance of that check box would not be controlled by a single state, but
 instead reflects the combination of multiple states. Because the code uses
-`CanBeState`, you can represent this with a `Computed` object.
+`UsedAs`, you can represent this with a `Computed` object.
 
 ```Lua hl_lines="7-18"
 local playMusic = scope:Value(true)

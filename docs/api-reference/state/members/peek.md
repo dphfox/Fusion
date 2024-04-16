@@ -14,7 +14,7 @@
 
 ```Lua
 function Fusion.peek<T>(
-	target: CanBeState<T>
+	target: UsedAs<T>
 ): T
 ```
 
@@ -45,7 +45,7 @@ the returned value.
 <h3 markdown>
 	target
 	<span class="fusiondoc-api-type">
-		: <a href="../canbestate">CanBeState</a>&lt;T&gt;
+		: <a href="../usedas">UsedAs</a>&lt;T&gt;
 	</span>
 </h3>
 

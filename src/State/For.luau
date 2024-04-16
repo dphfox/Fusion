@@ -224,7 +224,7 @@ end
 
 local function For<KI, KO, VI, VO, S>(
 	scope: Types.Scope<S>,
-	inputTable: Types.CanBeState<{ [KI]: VI }>,
+	inputTable: Types.UsedAs<{ [KI]: VI }>,
 	processor: (
 		Types.Scope<S>,
 		Types.StateObject<{key: KI, value: VI}>

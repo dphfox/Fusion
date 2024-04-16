@@ -67,9 +67,9 @@ the button is clicked, the button needs to run some external code:
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>
 	props: {
-		Position: Fusion.CanBeState<UDim2>?,
-		Size: Fusion.CanBeState<UDim2>?,
-		Text: Fusion.CanBeState<string>?
+		Position: UsedAs<UDim2>?,
+		Size: UsedAs<UDim2>?,
+		Text: UsedAs<string>?
 	}
 )
     return scope:New "TextButton" {
@@ -104,9 +104,9 @@ Luau won't add the key to the table if the value is `nil`.
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Position: Fusion.CanBeState<UDim2>?,
-		Size: Fusion.CanBeState<UDim2>?,
-		Text: Fusion.CanBeState<string>?,
+		Position: UsedAs<UDim2>?,
+		Size: UsedAs<UDim2>?,
+		Text: UsedAs<string>?,
 		OnClick: (() -> ())?
 	}
 )
@@ -130,10 +130,10 @@ to do your own processing first:
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Position: Fusion.CanBeState<UDim2>?,
-		Size: Fusion.CanBeState<UDim2>?,
-		Text: Fusion.CanBeState<string>?,
-		Disabled: Fusion.CanBeState<boolean>?,
+		Position: UsedAs<UDim2>?,
+		Size: UsedAs<UDim2>?,
+		Text: UsedAs<string>?,
+		Disabled: UsedAs<boolean>?,
 		OnClick: (() -> ())?
 	}
 )

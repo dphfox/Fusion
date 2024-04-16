@@ -113,7 +113,7 @@ nav:
         - scoped: api-reference/memory/members/scoped.md
     - State:
       - Types:
-        - CanBeState: api-reference/state/types/canbestate.md 
+        - UsedAs: api-reference/state/types/usedas.md 
         - Computed: api-reference/state/types/computed.md 
         - For: api-reference/state/types/for.md 
         - GraphObject: api-reference/state/types/graphobject.md 

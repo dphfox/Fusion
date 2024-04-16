@@ -98,7 +98,7 @@ end
 ]]
 function class:update(): boolean
 	local self = self :: InternalTypes.Spring<unknown>
-	local goalValue = peek(self._goalState)
+	local goalValue = peek(self._goal)
 
 	-- figure out if this was a goal change or a speed/damping change
 	if goalValue == self._goalValue then
@@ -191,11 +191,11 @@ end
 
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
-	goalState: Types.StateObject<T>,
-	speed: Types.CanBeState<number>?,
-	damping: Types.CanBeState<number>?
+	goal: Types.UsedAs<T>,
+	speed: Types.UsedAs<number>?,
+	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
-	if isState(scope) then
+	if typeof(scope) ~= "table" or isState(scope) then
 		logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
 	-- apply defaults for speed and damping
@@ -206,7 +206,12 @@ local function Spring<T>(
 		damping = 1
 	end
 
-	local dependencySet: {[Types.GraphObject]: unknown} = {[goalState] = true}
+	local dependencySet: {[Types.GraphObject]: unknown} = {}
+	local goalIsState = isState(goal)
+	if goalIsState then
+		local goal = goal :: Types.StateObject<T>
+		dependencySet[goal] = true
+	end
 	if isState(speed) then
 		local speed = speed :: Types.StateObject<number>
 		dependencySet[speed] = true
@@ -223,7 +228,7 @@ local function Spring<T>(
 		_speed = speed,
 		_damping = damping,
 
-		_goalState = goalState,
+		_goal = goal,
 		_goalValue = nil,
 
 		_currentType = nil,
@@ -242,14 +247,18 @@ local function Spring<T>(
 	local self = (self :: any) :: InternalTypes.Spring<T>
 
 	table.insert(scope, self)
-	if goalState.scope == nil then
-		logError("useAfterDestroy", nil, `The {goalState.kind} object`, `the Spring that is following it`)
-	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "definitely-a" then
-		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Spring that is following it`)
+	
+	if goalIsState then
+		local goal = goal :: Types.StateObject<T>
+		if goal.scope == nil then
+			logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Spring that is following it`)
+		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
+			logWarn("possiblyOutlives", `The {goal.kind} object`, `the Spring that is following it`)
+		end
+		-- add this object to the goal state's dependent set
+		goal.dependentSet[self] = true
 	end
 
-	-- add this object to the goal state's dependent set
-	goalState.dependentSet[self] = true
 	self:update()
 
 	return self
