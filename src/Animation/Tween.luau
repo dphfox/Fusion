@@ -32,7 +32,7 @@ local CLASS_METATABLE = {__index = class}
 ]]
 function class:update(): boolean
 	local self = self :: InternalTypes.Tween<unknown>
-	local goalValue = peek(self._goalState)
+	local goalValue = peek(self._goal)
 
 	-- if the goal hasn't changed, then this is a TweenInfo change.
 	-- in that case, if we're not currently animating, we can skip everything
@@ -93,20 +93,27 @@ end
 
 local function Tween<T>(
 	scope: Types.Scope<unknown>,
-	goalState: Types.StateObject<T>,
+	goal: Types.UsedAs<T>,
 	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
 	if isState(scope) then
 		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
 	end
-	local currentValue = peek(goalState)
+	local currentValue = peek(goal)
 
 	-- apply defaults for tween info
 	if tweenInfo == nil then
 		tweenInfo = TweenInfo.new()
 	end
 
-	local dependencySet: {[Types.Dependency]: unknown} = {[goalState] = true}
+	local dependencySet: {[Types.Dependency]: unknown} = {}
+
+	local goalIsState = isState(goal)
+	if goalIsState then
+		local goal = goal :: Types.StateObject<T>
+		dependencySet[goal] = true
+	end
+
 	local tweenInfoIsState = isState(tweenInfo)
 	if tweenInfoIsState then
 		local tweenInfo = tweenInfo :: Types.StateObject<TweenInfo>
@@ -123,7 +130,7 @@ local function Tween<T>(
 		scope = scope,
 		dependencySet = dependencySet,
 		dependentSet = {},
-		_goalState = goalState,
+		_goal = goal,
 		_tweenInfo = tweenInfo,
 		_tweenInfoIsState = tweenInfoIsState,
 
@@ -141,14 +148,17 @@ local function Tween<T>(
 	local self = (self :: any) :: InternalTypes.Tween<T>
 
 	table.insert(scope, self)
-	if goalState.scope == nil then
-		logError("useAfterDestroy", nil, `The {goalState.kind} object`, `the Tween that is following it`)
-	elseif whichLivesLonger(scope, self, goalState.scope, goalState) == "definitely-a" then
-		logWarn("possiblyOutlives", `The {goalState.kind} object`, `the Tween that is following it`)
+	
+	if goalIsState then
+		local goal = goal :: any
+		if goal.scope == nil then
+			logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Tween that is following it`)
+		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
+			logWarn("possiblyOutlives", `The {goal.kind} object`, `the Tween that is following it`)
+		end
+		-- add this object to the goal state's dependent set
+		goal.dependentSet[self] = true
 	end
-
-	-- add this object to the goal state's dependent set
-	goalState.dependentSet[self] = true
 
 	return self
 end

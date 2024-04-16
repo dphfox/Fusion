@@ -148,7 +148,7 @@ export type Observer = Dependent & {
 }
 export type ObserverConstructor = (
 	scope: Scope<unknown>,
-	watching: Dependency
+	watching: unknown
 ) -> Observer
 
 -- A state object which follows another state object using tweens.
@@ -157,7 +157,7 @@ export type Tween<T> = StateObject<T> & Dependent & {
 }
 export type TweenConstructor = <T>(
 	scope: Scope<unknown>,
-	goalState: StateObject<T>,
+	goalState: UsedAs<T>,
 	tweenInfo: UsedAs<TweenInfo>?
 ) -> Tween<T>
 
@@ -170,7 +170,7 @@ export type Spring<T> = StateObject<T> & Dependent & {
 }
 export type SpringConstructor = <T>(
 	scope: Scope<unknown>,
-	goalState: StateObject<T>,
+	goalState: UsedAs<T>,
 	speed: UsedAs<number>?,
 	damping: UsedAs<number>?
 ) -> Spring<T>

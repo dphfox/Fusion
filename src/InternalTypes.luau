@@ -81,7 +81,7 @@ type ForProcessor = {
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = Types.Tween<T> & {
-	_goalState: Value<T>,
+	_goal: Types.UsedAs<T>,
 	_tweenInfo: TweenInfo,
 	_prevValue: T,
 	_nextValue: T,
@@ -96,7 +96,7 @@ export type Tween<T> = Types.Tween<T> & {
 export type Spring<T> = Types.Spring<T> & {
 	_speed: Types.UsedAs<number>,
 	_damping: Types.UsedAs<number>,
-	_goalState: Value<T>,
+	_goal: Types.UsedAs<T>,
 	_goalValue: T,
 
 	_currentType: string,
