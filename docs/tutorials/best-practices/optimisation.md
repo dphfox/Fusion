@@ -96,13 +96,17 @@ Here's what the similarity test looks for:
 	- Other kinds of table are never similar to anything.
 - Userdatas:
     - Userdatas are similar to other values when they're `==` to each other.
-	- *This doesn't apply to Roblox data types.*
 - NaN:
 	- If each value does not `==` itself, then the two values are similar to 
 	each other.
 	- *This doesn't apply to tables or userdatas.*
 - Any other values:
 	- Two values are similar to each other when they're `==` to each other.
+
+!!! note "Roblox data types"
+	Roblox data types are not considered to be userdatas. Instead, the 
+	similarity test follows `typeof()` rules when determining type.
+
 
 ### Optimising For Similarity
 
