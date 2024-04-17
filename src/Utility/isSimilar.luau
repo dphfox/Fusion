@@ -12,17 +12,13 @@ local function isSimilar(
 	a: unknown, 
 	b: unknown
 ): boolean
-	-- HACK: because tables are mutable data structures, don't make assumptions
-	-- about similarity from equality for now (see issue #44)
-	if typeof(a) == "table" then
-		return false
-	elseif a == b then
-		return true
-	elseif a ~= a and b ~= b then
-		-- NaN does not equal itself but is the same
-		return true
+	if a == b then
+		-- Tables that aren't frozen are assumed to be mutable, and mutable
+		-- tables are assumed to always be dissimilar.
+		return typeof(a) ~= "table" or table.isfrozen(a :: any) 
 	else
-		return false
+		-- NaN is the only value that's similar to itself without being equal.
+		return a ~= a and b ~= b
 	end
 end
 

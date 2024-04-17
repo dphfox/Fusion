@@ -37,7 +37,7 @@ return function()
         expect(isSimilar(nan1, nan2)).to.equal(true)
     end)
 
-    it("should return non-similar for any tables", function()
+    it("should return non-similar for mutable tables", function()
 		local expect = getfenv().expect
 		
         local initialTable = { foo = 123, bar = "hello" }
@@ -45,6 +45,18 @@ return function()
         local differentTable = { foo = 321, bar = "world" }
 
         expect(isSimilar(initialTable, initialTable)).to.equal(false)
+        expect(isSimilar(initialTable, similarTable)).to.equal(false)
+        expect(isSimilar(initialTable, differentTable)).to.equal(false)
+    end)
+
+	it("should return similar for equal frozen tables", function()
+		local expect = getfenv().expect
+		
+        local initialTable = table.freeze { foo = 123, bar = "hello" }
+        local similarTable = table.freeze { foo = 123, bar = "hello" }
+        local differentTable = table.freeze { foo = 321, bar = "world" }
+
+        expect(isSimilar(initialTable, initialTable)).to.equal(true)
         expect(isSimilar(initialTable, similarTable)).to.equal(false)
         expect(isSimilar(initialTable, differentTable)).to.equal(false)
     end)
