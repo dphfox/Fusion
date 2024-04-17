@@ -80,6 +80,7 @@ nav:
       - Callbacks: tutorials/best-practices/callbacks.md
       - State: tutorials/best-practices/state.md
       - Sharing Values: tutorials/best-practices/sharing-values.md
+      - Optimisation: tutorials/best-practices/optimisation.md
     
   - Examples:
     - Home: examples/index.md
