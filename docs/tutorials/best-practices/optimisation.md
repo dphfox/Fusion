@@ -8,7 +8,7 @@ to do, or avoid a few problematic scenarios that slow Fusion down.
 
 Fusion tries to skip updates when they result in 'meaningless changes'.
 
-!!! tip "TL;DR"
+!!! summary "TL;DR"
 	When your computations return values that aren't meaningfully different,
 	Fusion doesn't bother to perform further updates.
 
