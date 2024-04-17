@@ -21,7 +21,7 @@ local function isSimilar(
 			-- NaN is the only value that's similar without being equal.
 			-- NaN may also appear as a component of the type, e.g. vectors
 			a == b or a ~= a and b ~= b
-		elseif typeA == typeof(b) and (isUserdata or table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil) then
+		elseif typeA == typeof(b) and (table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil or isUserdata) then
 			-- Simple equality for userdatas, frozen tables, or possible __eq
 			-- Unfortunately, __eq may not be accessible from locked metatables.
 			-- As a simple heuristic, use == if a metatable is found to try and
