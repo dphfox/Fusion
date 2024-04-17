@@ -2943,7 +2943,6 @@ to each other.</li>
 </li>
 <li>Userdatas:<ul>
 <li>Userdatas are similar to other values when they're <code>==</code> to each other.</li>
-<li><em>This doesn't apply to Roblox data types.</em></li>
 </ul>
 </li>
 <li>NaN:<ul>
@@ -2957,6 +2956,11 @@ each other.</li>
 </ul>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Roblox data types</p>
+<p>Roblox data types are not considered to be userdatas. Instead, the 
+similarity test follows <code>typeof()</code> rules when determining type.</p>
+</div>
 <h3 id="optimising-for-similarity">Optimising For Similarity<a class="headerlink" href="#optimising-for-similarity" title="Permanent link">&para;</a></h3>
 <p>With this knowledge about the similarity test, you can experiment with how 
 Fusion optimises different changes, and what breaks that optimisation.</p>
