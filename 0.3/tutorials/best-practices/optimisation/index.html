@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/tutorials/best-practices/instance-handling/">
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/tutorials/best-practices/optimisation/">
       
       <link rel="icon" href="../../../assets/logo-dark.svg">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-8.2.13">
     
     
       
-        <title>Instance Handling - Fusion</title>
+        <title>Optimisation - Fusion</title>
       
     
     
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#returns" class="md-skip">
+        <a href="#update-skipping" class="md-skip">
           Skip to content
         </a>
       
@@ -160,7 +160,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Instance Handling
+              Optimisation
             
           </span>
         </div>
@@ -975,55 +975,11 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Instance Handling
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../instance-handling/" class="md-nav__link">
         Instance Handling
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#returns" class="md-nav__link">
-    Returns
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#containers" class="md-nav__link">
-    Containers
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1075,11 +1031,88 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../optimisation/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Optimisation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Optimisation
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#update-skipping" class="md-nav__link">
+    Update Skipping
+  </a>
+  
+    <nav class="md-nav" aria-label="Update Skipping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity" class="md-nav__link">
+    Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimising-for-similarity" class="md-nav__link">
+    Optimising For Similarity
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimising For Similarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    Tables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2747,16 +2780,49 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#returns" class="md-nav__link">
-    Returns
+  <a href="#update-skipping" class="md-nav__link">
+    Update Skipping
+  </a>
+  
+    <nav class="md-nav" aria-label="Update Skipping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#containers" class="md-nav__link">
-    Containers
+        
+          <li class="md-nav__item">
+  <a href="#similarity" class="md-nav__link">
+    Similarity
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimising-for-similarity" class="md-nav__link">
+    Optimising For Similarity
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimising For Similarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    Tables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2780,165 +2846,237 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   as the main headline.
 -->
 
-  <h1>Instance Handling</h1>
+  <h1>Optimisation</h1>
 
 
 <!-- Markdown content -->
-<p>Components are a good fit for Roblox instances. You can assemble complex groups
-of instances by combining simpler, self-contained parts.</p>
-<p>To ensure maximum compatibility, there are a few best practices to consider.</p>
+<p>Fusion tries to handle your code in the smartest way it can. To help achieve the
+best performance, you can give Fusion more information about what you're trying
+to do, or avoid a few problematic scenarios that slow Fusion down.</p>
 <hr />
-<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
-<p>Anything you return from a component should be supported by
-<a href="../../roblox/parenting/"><code>[Children]</code></a>.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">-- returns an instance</span>
-<span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
-
-<span class="c1">-- returns an array of instances</span>
-<span class="kr">return</span> <span class="p">{</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
-<span class="p">}</span>
-
-<span class="c1">-- returns a state object containing instances</span>
-<span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
+<h2 id="update-skipping">Update Skipping<a class="headerlink" href="#update-skipping" title="Permanent link">&para;</a></h2>
+<p>Fusion tries to skip updates when they result in 'meaningless changes'.</p>
+<div class="admonition tip">
+<p class="admonition-title">TL;DR</p>
+<p>When your computations return values that aren't meaningfully different,
+Fusion doesn't bother to perform further updates.</p>
+<p>However, Fusion can't automatically do this for tables. So, you should 
+freeze every table you create, unless you need to change what's inside the 
+table later (for example, if it's a list that changes over time).</p>
+<p>This allows Fusion to apply more aggressive optimisations for free.</p>
+</div>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>Imagine you have a number, and you're using a computed to calculate whether it's
+even or odd.</p>
+<p>An observer is used to see how often this results in other code being run.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Luau code</label><label for="__tabbed_1_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">isEven</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="kr">end</span><span class="p">)</span>
+<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">isEven</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; isEven has changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">isEven</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="c1">-- mix of arrays, instances and state objects</span>
-<span class="kr">return</span> <span class="p">{</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span> <span class="p">...</span> <span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span> <span class="p">...</span> <span class="p">)</span>
-<span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 2&quot;</span><span class="p">)</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 3&quot;</span><span class="p">)</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 13&quot;</span><span class="p">)</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 14&quot;</span><span class="p">)</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 24&quot;</span><span class="p">)</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
 </code></pre></div>
-<div class="admonition fail">
-<p class="admonition-title">Returning multiple values is fragile</p>
-<p>Don't return multiple values directly from your function. When a function
-returns multiple values directly, the extra returned values can easily get
-lost.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">BadThing</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
-    <span class="c1">-- returns *multiple* instances (not surrounded by curly braces!)</span>
-    <span class="kr">return</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
-<span class="kr">end</span>
-
-<span class="kd">local</span> <span class="n">things</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1">-- Luau doesn&#39;t let you add multiple returns to a list like this.</span>
-    <span class="c1">-- Only the first Frame will be added.</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">BadThing</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{}</span>
-<span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">things</span><span class="p">)</span> <span class="c1">--&gt; { Frame, TextButton }</span>
-</code></pre></div>
-<p>Instead, you should return them inside of an array. Because the array is a
-single return value, it won't get lost.</p>
 </div>
-<p>If your returns are compatible with <code>[Children]</code> like above, you can insert a
-component anywhere you'd normally insert an instance.</p>
-<p>You can pass in one component on its own...</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-<span class="hll">    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">        <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span>
-</span><span class="hll">    <span class="p">}</span>
-</span><span class="p">}</span>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>Number becomes 2
+-&gt; isEven has changed to true
+Number becomes 3
+-&gt; isEven has changed to false
+Number becomes 13
+Number becomes 14
+-&gt; isEven has changed to true
+Number becomes 24
 </code></pre></div>
-<p>...you can include components as part of an array..</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{},</span>
-
-<span class="hll">        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span>
-</span><span class="hll">        <span class="p">},</span>
-</span>
-<span class="hll">        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, again!&quot;</span>
-</span><span class="hll">        <span class="p">}</span>
-</span>    <span class="p">}</span>
+</div>
+</div>
+</div>
+<p>Notice that the observer only runs when <code>isEven</code> returns a meaningfully
+different value:</p>
+<ul>
+<li>
+<p>When the number changed from 2 to 3, <code>isEven</code> returned <code>false</code>. This is
+meaningfully different from the previous value of <code>isEven</code>, which was <code>true</code>.
+As a result, the observer is run and the printed message is seen.</p>
+</li>
+<li>
+<p>When the number changed from 3 to 13, <code>isEven</code> returned <code>false</code>. This is <em>not</em>
+meaningfully different from the previous value of <code>isEven</code>, which was <code>false</code>.
+As a result, the observer does not run, and no printed message is seen.</p>
+</li>
+</ul>
+<h3 id="similarity">Similarity<a class="headerlink" href="#similarity" title="Permanent link">&para;</a></h3>
+<p>When trying to determine if a change is 'meaningless', Fusion compares the old
+and new values, using what's called the <em>similarity test</em>.</p>
+<p>The similarity test is a fast, approximate test that Fusion uses to guess which
+updates it can safely discard. If two values pass the similarity test, then you
+should be able to use them interchangeably without affecting most Luau code.</p>
+<p>In Fusion's case, if the values before and after a change are similar, then
+Fusion won't continue updating other code beyond that change, because those
+updates aren't likely to have an effect on the outcome of computations.</p>
+<p>Here's what the similarity test looks for:</p>
+<ul>
+<li>Different types:<ul>
+<li>Two values of different types are never similar to each other.</li>
+</ul>
+</li>
+<li>Tables:<ul>
+<li>Frozen tables are similar to other values when they're <code>==</code> to each other.</li>
+<li>Tables with a metatable are similar to other values when when they're <code>==</code>
+to each other.</li>
+<li>Other kinds of table are never similar to anything.</li>
+</ul>
+</li>
+<li>Userdatas:<ul>
+<li>Userdatas are similar to other values when they're <code>==</code> to each other.</li>
+<li><em>This doesn't apply to Roblox data types.</em></li>
+</ul>
+</li>
+<li>NaN:<ul>
+<li>If each value does not <code>==</code> itself, then the two values are similar to 
+each other.</li>
+<li><em>This doesn't apply to tables or userdatas.</em></li>
+</ul>
+</li>
+<li>Any other values:<ul>
+<li>Two values are similar to each other when they're <code>==</code> to each other.</li>
+</ul>
+</li>
+</ul>
+<h3 id="optimising-for-similarity">Optimising For Similarity<a class="headerlink" href="#optimising-for-similarity" title="Permanent link">&para;</a></h3>
+<p>With this knowledge about the similarity test, you can experiment with how 
+Fusion optimises different changes, and what breaks that optimisation.</p>
+<h4 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h4>
+<p>Imagine you're setting a value object to a table of theme colours. You attach
+an observer object to see when Fusion thinks the theme meaningfully changed.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Luau code</label><label for="__tabbed_2_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">LIGHT_THEME</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span>
+    <span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
-</code></pre></div>
-<p>...and you can return them from state objects, too.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">stuff</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;Fusion&quot;</span><span class="p">}</span>
-
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{},</span>
-
-        <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">stuff</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="hll">            <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">                <span class="n">Text</span> <span class="o">=</span> <span class="n">text</span>
-</span><span class="hll">            <span class="p">}</span>
-</span>        <span class="kr">end</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="kd">local</span> <span class="n">DARK_THEME</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
+    <span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
+<span class="kd">local</span> <span class="n">currentTheme</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">).</span><span class="n">name</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<h2 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h2>
-<p>Some components, for example pop-ups, might contain lots of different content:</p>
-<p><img alt="Examples of pop-ups with different content." src="Popups-Dark.svg#only-dark" />
-<img alt="Examples of pop-ups with different content." src="Popups-Light.svg#only-light" /></p>
-<p>Ideally, you would be able to reuse the pop-up 'container', while placing your
-own content inside.</p>
-<p><img alt="Separating the pop-up container from the pop-up contents." src="Popup-Exploded-Dark.svg#only-dark" />
-<img alt="Separating the pop-up container from the pop-up contents." src="Popup-Exploded-Light.svg#only-light" /></p>
-<p>The simplest way to do this is to pass instances through to <code>[Children]</code>. For
-example, if you accept a table of <code>props</code>, you can add a <code>[Children]</code> key:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PopUp</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-<span class="hll">        <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
-</span>    <span class="p">}</span>
-<span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-<span class="hll">        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="n">Children</span><span class="p">]</span>
-</span>    <span class="p">}</span>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>Set to DARK_THEME
+-&gt; currentTheme changed to dark
+Set to DARK_THEME
+-&gt; currentTheme changed to dark
+Set to LIGHT_THEME
+-&gt; currentTheme changed to light
+Set to LIGHT_THEME
+-&gt; currentTheme changed to light
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Because the <code>LIGHT_THEME</code> and <code>DARK_THEME</code> tables aren't frozen, and they don't
+have any metatables, Fusion will never skip over updates that change to or from
+those values.</p>
+<details class="question">
+<summary>Why does Fusion skip those updates?</summary>
+<p>In Fusion, it's common to update arrays without creating a new array. This
+is known as <em>mutating</em> the array.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">drinks</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">({</span><span class="s2">&quot;beer&quot;</span><span class="p">,</span> <span class="s2">&quot;pepsi&quot;</span><span class="p">})</span>
+
+<span class="kr">do</span> <span class="c1">-- add tea</span>
+    <span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
+    <span class="nb">table.insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;tea&quot;</span><span class="p">)</span> <span class="c1">-- mutation occurs here</span>
+    <span class="n">drinks</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="c1">-- still the same array, so it&#39;s ==</span>
 <span class="kr">end</span>
 </code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Accepting multiple instances</p>
-<p>If you have multiple 'slots' where you want to pass through instances, you
-can make other properties and give them the <code>Fusion.Children</code> type.</p>
+<p>If Fusion skipped updates when the old and new values were <code>==</code>, then these
+mutating changes wouldn't cause an update.</p>
+<p>For that reason, Fusion doesn't skip updates for tables unless you do one
+of two things:</p>
+<ul>
+<li>You disable the ability to mutate the table (via <code>table.freeze</code>).</li>
+<li>You indicate to Fusion that this isn't plain data by adding a metatable.<ul>
+<li>Metatables are almost always used for OOP, where <code>==</code> is a sensible
+way of determining if two objects are similar.</li>
+<li>You can also use metatables to define how equality should work, which
+Fusion will respect.</li>
+</ul>
+</li>
+</ul>
+</details>
+<p>According to the similarity test (and the question section above), one way to
+skip these updates is by freezing the original tables.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Luau code</label><label for="__tabbed_3_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">LIGHT_THEME</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">freeze</span> <span class="p">{</span>
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span>
+    <span class="c1">-- imagine theme colours in here</span>
+<span class="p">}</span>
+<span class="hll"><span class="kd">local</span> <span class="n">DARK_THEME</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">freeze</span> <span class="p">{</span>
+</span>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
+    <span class="c1">-- imagine theme colours in here</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">currentTheme</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">).</span><span class="n">name</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
+<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+</code></pre></div>
 </div>
-<p>Later on, when a pop-up is created, instances can now be parented into that
-pop-up:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">PopUp</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Label</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;New item collected&quot;</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">ItemPreview</span> <span class="p">{</span>
-            <span class="n">Item</span> <span class="o">=</span> <span class="n">Items</span><span class="p">.</span><span class="n">BRICK</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Add to inventory&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>Set to DARK_THEME
+-&gt; currentTheme changed to dark
+Set to DARK_THEME
+Set to LIGHT_THEME
+-&gt; currentTheme changed to light
+Set to LIGHT_THEME
 </code></pre></div>
-<p>If you need to add other instances, you can still use arrays and state objects
-as normal. You can include instances you're given, in exactly the same way you
-would include any other instances.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-    <span class="c1">-- ... some other properties ...</span>
-
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="c1">-- the component provides some children here</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UICorner&quot;</span> <span class="p">{</span>
-            <span class="n">CornerRadius</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="p">},</span>
-
-        <span class="c1">-- include children from outside the component here</span>
-        <span class="n">props</span><span class="p">[</span><span class="n">Children</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+</div>
+</div>
+</div>
+<p>Now, Fusion is confident enough to skip over the updates.</p>
+<p>In general, you should freeze all of your tables when working with Fusion,
+unless you have a reason for modifying them later on. There's almost zero cost
+to freezing a table, making this modification essentially free. Plus, this lets
+Fusion optimise your updates more aggressively, which means you spend less time
+running computations on average.</p>
 
 <!-- Source file information -->
 
@@ -2968,9 +3106,9 @@ would include any other instances.</p>
 		
 		  
 		  <a
-			href="../components/"
+			href="../sharing-values/"
 			class="md-footer__link md-footer__link--prev"
-			aria-label="Previous: Components"
+			aria-label="Previous: Sharing Values"
 			rel="prev"
 		  >
 			<div class="md-footer__button md-icon">
@@ -2981,7 +3119,7 @@ would include any other instances.</p>
 				<span class="md-footer__direction">
 				  Previous
 				</span>
-				Components
+				Sharing Values
 			  </div>
 			</div>
 		  </a>
@@ -2991,9 +3129,9 @@ would include any other instances.</p>
 		
 		  
 		  <a
-			href="../callbacks/"
+			href="../../../examples/"
 			class="md-footer__link md-footer__link--next"
-			aria-label="Next: Callbacks"
+			aria-label="Next: Home"
 			rel="next"
 		  >
 			<div class="md-footer__title">
@@ -3001,7 +3139,7 @@ would include any other instances.</p>
 				<span class="md-footer__direction">
 				  Next
 				</span>
-				Callbacks
+				Home
 			  </div>
 			</div>
 			<div class="md-footer__button md-icon">
