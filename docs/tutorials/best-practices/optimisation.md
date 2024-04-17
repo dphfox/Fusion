@@ -157,7 +157,7 @@ Because the `LIGHT_THEME` and `DARK_THEME` tables aren't frozen, and they don't
 have any metatables, Fusion will never skip over updates that change to or from
 those values.
 
-??? question "Why does Fusion skip those updates?"
+??? question "Why won't Fusion skip those updates?"
 	In Fusion, it's common to update arrays without creating a new array. This
 	is known as *mutating* the array.
 
