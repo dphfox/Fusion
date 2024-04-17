@@ -186,7 +186,7 @@ those values.
 		- Metatables are almost always used for OOP, where `==` is a sensible
 		way of determining if two objects are similar.
 		- You can also use metatables to define how equality should work, which
-		Fusion will respect.
+		Fusion will respect - though Fusion expects it to be symmetric.
 
 According to the similarity test (and the question section above), one way to
 skip these updates is by freezing the original tables.
