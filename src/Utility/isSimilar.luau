@@ -12,14 +12,28 @@ local function isSimilar(
 	a: unknown, 
 	b: unknown
 ): boolean
-	if a == b then
-		-- Tables that aren't frozen are assumed to be mutable, and mutable
-		-- tables are assumed to always be dissimilar.
-		return typeof(a) ~= "table" or table.isfrozen(a :: any) 
-	else
-		-- NaN is the only value that's similar to itself without being equal.
-		return a ~= a and b ~= b
-	end
+	local typeA = typeof(a)
+	local isTable = typeA == "table"
+	local isUserdata = typeA == "userdata"
+	return
+		if not (isTable or isUserdata) then
+			-- Fast path for everything that doesn't have a metatable.
+			-- NaN is the only value that's similar without being equal.
+			-- NaN may also appear as a component of the type, e.g. vectors
+			a == b or a ~= a and b ~= b
+		elseif typeA == typeof(b) and (isUserdata or table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil) then
+			-- Simple equality for userdatas, frozen tables, or possible __eq
+			-- Unfortunately, __eq may not be accessible from locked metatables.
+			-- As a simple heuristic, use == if a metatable is found to try and
+			-- respect it (even if this returns true for non-similar things)
+			a == b
+		else
+			-- Either a mutable table (dissimilar by definition)
+			-- Or, different types:
+			-- 1) can never be == or rawequal()
+			-- 2) never have __eq evaluated even with identical __eq methods
+			-- 3) can never be NaN
+			false
 end
 
 return isSimilar
