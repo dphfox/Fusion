@@ -53,6 +53,7 @@ local Fusion: Types.Fusion = {
 	ForPairs = require(script.State.ForPairs) :: Types.ForPairsConstructor,
 	ForValues = require(script.State.ForValues) :: Types.ForValuesConstructor,
 	Observer = require(script.State.Observer),
+	Hourglass = require(script.State.Hourglass),
 	peek = require(script.State.peek),
 	Value = require(script.State.Value),
 

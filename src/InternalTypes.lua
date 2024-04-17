@@ -117,4 +117,10 @@ export type Observer = Types.Observer & {
 	_numChangeListeners: number
 }
 
+-- A ticking like object with an intervaled callback.
+export type Hourglass = Types.Hourglass & {
+	_tickListeners: {[{}]: () -> ()},
+	_numTickListeners: number
+}
+
 return nil
