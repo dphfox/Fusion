@@ -310,7 +310,7 @@ function Graphs.format(
 	graph: Graph
 ): {string}
 
-	local output = {`⁂ {graph.shape.name} : {table.concat(graph.shape.objects, ", ")}`}
+	local output = {`  ⁂ {graph.shape.name} : {table.concat(graph.shape.objects, ", ")}`}
 	table.insert(output, " ")
 
 	local VALIDITY_SYMBOLS = {
