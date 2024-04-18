@@ -8,6 +8,7 @@ local Fusion = ReplicatedStorage.Fusion
 local tryInvalidate = require(Fusion.State.tryInvalidate)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
+local FiniteTime = require(script.Parent.Parent.Parent.Util.FiniteTime)
 
 return function()
 	local it = getfenv().itFOCUS
@@ -19,17 +20,12 @@ return function()
 		it = "always ensures the target is valid",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -39,17 +35,12 @@ return function()
 		it = "always updates the last changed time of the target",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -59,17 +50,12 @@ return function()
 		it = "invalidates valid direct dependents",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -79,17 +65,12 @@ return function()
 		it = "stops at already-invalid direct dependents",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -99,17 +80,12 @@ return function()
 		it = "invalidates valid transitive dependents",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -119,17 +95,12 @@ return function()
 		it = "stops at already-invalid transitive dependents",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -139,17 +110,12 @@ return function()
 		it = "does *not* invalidate any dependencies, direct or transitive",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
 			return "not implemented"
 		end
 	} (it)
@@ -159,18 +125,56 @@ return function()
 		it = "succeeds in finite time for cyclic graphs",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
+		)
+			if not shape.facts.cyclic then
+				return {}
+			end
+
+			return {
+				{
+					subName = "default",
+					graph = Graphs.make({}, {
+						shape = shape,
+						objects = {}
+					})
+				}
 			}
-		}
-			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
-			return "not implemented"
+		)
+			local target = graph.objects[graph.shape.objects[1]]
+			local timeCheck = FiniteTime.start()
+
+			for _, object in graph.objects do
+				local metatable = getmetatable(object :: any)
+				if metatable == nil then
+					metatable = {}
+					setmetatable(object, metatable)
+				end
+				local realValidity = object.validity
+				object.validity = nil :: any
+				function metatable:__index(key)
+					if key == "validity" then
+						timeCheck()
+						return realValidity
+					else
+						return rawget(self, key)
+					end
+				end
+				function metatable:__newindex(key, value)
+					if key == "validity" then
+						timeCheck()
+						realValidity = value
+					else
+						return rawset(self, key, value)
+					end
+				end
+			end
+
+			tryInvalidate(target)
+
+			return true
 		end
 	} (it)
 
@@ -179,17 +183,27 @@ return function()
 		it = "throws when encountering a busy object",
 		init = function(
 			shape: Graphs.GraphShape
-		): {
-			{
-				subName: string,
-				graph: Graphs.Graph
-			}
-		}
+		)
 			return {}
 		end,
 		perform = function(
 			graph: Graphs.Graph
-		): string | true
+		)
+			return "not implemented"
+		end
+	} (it)
+
+	Graphs.propertyTest {
+		testing = "tryInvalidate",
+		it = "revalidates eager graph objects after all invalidation completes",
+		init = function(
+			shape: Graphs.GraphShape
+		)
+			return {}
+		end,
+		perform = function(
+			graph: Graphs.Graph
+		)
 			return "not implemented"
 		end
 	} (it)

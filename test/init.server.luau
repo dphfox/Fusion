@@ -1,6 +1,6 @@
 --!strict
 
-local TestEZ = require(script.TestEZ)
+local TestEZ = require(script.TestEZ) :: any
 local TestVars = require(script.TestVars)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

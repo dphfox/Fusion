@@ -1,3 +1,4 @@
+--!strict
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
@@ -458,18 +459,23 @@ function Graphs.propertyTest(
 				
 				didAnyTests = true
 				it(testTitle, function()
-					local success = test.perform(subTest.graph)
-	
-					if not success then
+					local ok, diagnosis = pcall(test.perform, subTest.graph)
+					if not ok or diagnosis ~= true then
 						local output = {
-							"Failed to verify a property of the graph.",
-							`Test name: {testTitle}`,
-							`Diagnosis: {success}`,
-							"The final state of the graph is shown below.",
-							"====="
+							"",
+							"",
+							`  Test failed: "{testTitle}"`,
+							"",
+							`  {diagnosis}`,
+							"",
+							"  The final state of the graph is shown below.",
+							"  ==================================",
+							""
 						}
 						Graphs.format(output, subTest.graph)
-						error("\n"..table.concat(output, "\n"))
+						table.insert(output, "")
+
+						error(table.concat(output, "\n"))
 					end
 				end)
 			end
