@@ -11,7 +11,7 @@ local Package = script.Parent.Parent
 local logError = require(Package.Logging.logError)
 
 local function merge(
-	overwrite: boolean,
+	overwrite: "none" | "first" | "all",
 	into: {[unknown]: unknown},
 	from: {[unknown]: unknown}?,
 	...: {[unknown]: unknown}
@@ -22,11 +22,11 @@ local function merge(
 		for key, value in from do
 			if into[key] == nil then
 				into[key] = value
-			elseif not overwrite then
+			elseif overwrite == "none" then
 				logError("mergeConflict", nil, tostring(key))
 			end
 		end
-		return merge(overwrite, into, ...)
+		return merge(if overwrite == "first" then "none" else overwrite, into, ...)
 	end
 end
 

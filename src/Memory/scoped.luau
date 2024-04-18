@@ -14,11 +14,11 @@ local scopePool = require(Package.Memory.scopePool)
 
 local function scoped(
 	...: {[unknown]: unknown}
-): {[unknown]: unknown}
+): any
 	return setmetatable(
 		scopePool.reuseAny() :: any or {},
-		{__index = merge(false, {}, ...)}
-	) :: any
+		{__index = merge("none", {}, ...)}
+	)
 end
 
 return (scoped :: any) :: Types.ScopedConstructor
