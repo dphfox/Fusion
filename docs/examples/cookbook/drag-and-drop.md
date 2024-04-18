@@ -157,7 +157,7 @@ local function getTodoItemForID(
 end
 
 local function TodoEntry(
-	outerScope: Fusion.Scope<{}>,
+	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		Item: TodoItem,
 		Parent: Fusion.StateObject<Instance?>,
@@ -177,10 +177,9 @@ local function TodoEntry(
 		OnMouseDown: () -> ()?
 	}
 ): Fusion.Child
-	local scope = scoped(Fusion, {
+	local scope = scope:innerScope {
 		Draggable = Draggable
-	})
-	table.insert(outerScope, scope)
+	}
 
 	local itemPosition = scope:Value(nil)
 	local itemIsDragging = scope:Computed(function(use)
@@ -487,7 +486,7 @@ The `TodoEntry` component is meant to represent one individual `TodoItem`.
 
 ```Lua linenums="150"
 local function TodoEntry(
-	outerScope: Fusion.Scope<{}>,
+	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		Item: TodoItem,
 		Parent: Fusion.StateObject<Instance?>,

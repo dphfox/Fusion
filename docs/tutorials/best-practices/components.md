@@ -168,8 +168,8 @@ scope: Fusion.Scope<YourMethodsHere>
 
 If you don't know what methods to ask for, consider these two strategies.
 
-1. If you only use common methods (like Fusion's constructors) then it's a
-safe assumption that the user will also have those methods. You can ask for a
+1. If you use common methods (like Fusion's constructors) then it's a safe 
+assumption that the user will also have those methods. You can ask for a
 scope with those methods pre-defined.
 
 	```Lua hl_lines="2"
@@ -187,16 +187,15 @@ scope with those methods pre-defined.
 (for example, components you use internally), then you should not ask for those.
 Instead, create a new inner scope with the methods you need.
 
-	```Lua hl_lines="2 5-9"
+	```Lua hl_lines="5-9"
 	local function Component(
-		outerScope: Fusion.Scope<{}>,
+		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {}
 	)
-		local scope = scoped(Fusion, {
+		local scope = scope:innerScope {
 			SpecialThing1 = require(script.SpecialThing1),
 			SpecialThing2 = require(script.SpecialThing2),
 		})
-		table.insert(outerScope, scope)
 
 		return scope:SpecialThing1 {
 			-- ... rest of code here ...
@@ -248,17 +247,16 @@ Here's an example of how you could split up some components into modules:
 	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function PopUp(
-		outerScope: Fusion.Scope<{}>, 
+		scope: Fusion.Scope<typeof(Fusion)>, 
 		props: {
 			Message: UsedAs<string>,
 			DismissText: UsedAs<string>
 		}
 	)
-		local scope = scoped(Fusion, {
+		local scope = scope:innerScope {
 			Message = require(script.Parent.Message),
 			Button = require(script.Parent.Button)
 		})
-		table.insert(outerScope, scope)
 
         return scope:New "Frame" {
             -- ...some properties...
