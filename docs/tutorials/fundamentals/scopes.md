@@ -60,16 +60,15 @@ print(scope[3] == thing3) --> true
 Later, destroy the scope by using the `doCleanup()` function. The contents are
 destroyed in reverse order.
 
-```Lua linenums="2" hl_lines="2 9"
+```Lua linenums="2" hl_lines="8"
 local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup = Fusion.doCleanup
 
 local scope = {}
 local thing1 = Fusion.Value(scope, "i am thing 1")
 local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
 
-doCleanup(scope)
+Fusion.doCleanup(scope)
 -- Using `doCleanup` is the same as:
 -- thing3:destroy()
 -- thing2:destroy()
@@ -104,14 +103,14 @@ You can call `scoped()` to obtain a new scope.
 
 ```Lua linenums="2" hl_lines="2 4"
 local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
+local scoped = Fusion.scoped
 
 local scope = scoped()
 local thing1 = Fusion.Value(scope, "i am thing 1")
 local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
 
-doCleanup(scope)
+Fusion.doCleanup(scope)
 ```
 
 Unlike `{}` (which always creates a new array), `scoped` can re-use old arrays.
@@ -120,36 +119,39 @@ This helps keep your program running smoothly.
 Beyond making your code more efficient, you can also use `scoped` for convenient
 syntax.
 
-You can pass a table of constructor functions into `scoped`:
+You can pass a table of functions into `scoped`:
 
-```Lua linenums="2" hl_lines="4-6"
+```Lua linenums="2" hl_lines="4-7"
 local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
+local scoped = Fusion.scoped
 
 local scope = scoped({
-	Value = Fusion.Value
+	Value = Fusion.Value,
+	doCleanup = Fusion.doCleanup
 })
 local thing1 = Fusion.Value(scope, "i am thing 1")
 local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
 
-doCleanup(scope)
+Fusion.doCleanup(scope)
 ```
 
-You can now use those constructors as methods on `scope`.
+If those functions take `scope` as their first argument, you can use them as
+methods directly on the scope:
 
-```Lua linenums="2" hl_lines="7-9"
+```Lua linenums="2" hl_lines="8-10 12"
 local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
+local scoped = Fusion.scoped
 
 local scope = scoped({
-	Value = Fusion.Value
+	Value = Fusion.Value,
+	doCleanup = Fusion.doCleanup
 })
 local thing1 = scope:Value("i am thing 1")
 local thing2 = scope:Value("i am thing 2")
 local thing3 = scope:Value("i am thing 3")
 
-doCleanup(scope)
+scope:doCleanup()
 ```
 
 This makes it harder to mess up writing scopes. Your code reads more naturally,
@@ -157,21 +159,20 @@ too.
 
 ### Adding Methods In Bulk
 
-Try passing `Fusion` to `scoped()` - it's a table with functions.
+Try passing `Fusion` to `scoped()` - it's a table with functions, too.
 
-```Lua linenums="2" hl_lines="4"
-local Fusion = require(ReplicatedStorage.Fusion)
-local doCleanup, scoped = Fusion.doCleanup, Fusion.scoped
-
+```Lua hl_lines="1"
 local scope = scoped(Fusion)
+
+-- all still works!
 local thing1 = scope:Value("i am thing 1")
 local thing2 = scope:Value("i am thing 2")
 local thing3 = scope:Value("i am thing 3")
 
-doCleanup(scope)
+scope:doCleanup()
 ```
 
-This gives you access to all of Fusion's constructors without having to import
+This gives you access to all of Fusion's functions without having to import
 each one manually.
 
 If you need to mix in other things, you can pass in another table.
@@ -201,45 +202,125 @@ local foo = scoped({
 	Baz = Baz
 })
 
+-- `bar` should have the same methods as `foo`
 -- it'd be nice to define this once only...
 local bar = scoped({
 	Foo = Foo,
 	Bar = Bar,
 	Baz = Baz
 })
+
+print(foo.Baz == bar.Baz) --> true
+
+bar:doCleanup()
+foo:doCleanup()
 ```
 
 To do this, Fusion provides a `deriveScope` function. It behaves like `scoped`
 but lets you skip defining the methods. Instead, you give it an example of what
 the scope should look like.
 
-```Lua linenums="2" hl_lines="2 11"
-local Fusion = require(ReplicatedStorage.Fusion)
-local scoped, deriveScope = Fusion.scoped, Fusion.deriveScope
-local doCleanup = Fusion.doCleanup
-
+```Lua hl_lines="8"
 local foo = scoped({
 	Foo = Foo,
 	Bar = Bar,
 	Baz = Baz
 })
 
-local bar = deriveScope(foo)
+-- `bar` should have the same methods as `foo`
+-- now, it's only defined once!
+local bar = foo:deriveScope()
 
-doCleanup(bar)
-doCleanup(foo)
+print(foo.Baz == bar.Baz) --> true
+
+bar:doCleanup()
+foo:doCleanup()
 ```
 
 *Deriving* scopes like this is highly efficient because Fusion can re-use the
 same information for both scopes. It also helps keep your definitions all in
 one place.
 
+### Inner Scopes
+
+The main reason you would want to create a new scope is to create things that
+get destroyed at different times.
+
+```Lua
+local longLivedScope = scoped(Fusion)
+local longLivedNumber = longLivedScope:Value(5)
+
+for countdown = 1, 10 do
+	local shortLivedScope = longScope:deriveScope()
+	local shortLivedNumber = shortLivedScope:Value(2)
+	task.wait(1)
+	shortLivedScope:doCleanup()
+end
+
+longLivedScope:doCleanup()
+```
+
+In the above example, the `shortLivedScope` only exists for one second before
+getting destroyed. However, the `longLivedScope` exists for the entire duration
+of the countdown.
+
+But what if you forgot to destroy those `shortLivedScope`s?
+
+```Lua hl_lines="8"
+local longLivedScope = scoped(Fusion)
+local longLivedNumber = longLivedScope:Value(5)
+
+for countdown = 1, 10 do
+	local shortLivedScope = longLivedScope:deriveScope()
+	local shortLivedNumber = shortLivedScope:Value(2)
+	task.wait(1)
+	-- shortLivedScope:doCleanup()
+end
+
+longLivedScope:doCleanup()
+```
+
+Now, every `shortLivedScope` will exist forever, *beyond* the `longLivedScope`
+they came from. This is often not desirable.
+
+In addition to this sort of bug, there's other times this happens. For example,
+imagine if the `shortLivedScope` was used for some objects in a pop-up menu, but
+the pop-up's surrounding UI (the `longLivedScope`) got destroyed.
+
+To help with this, Fusion provides an `innerScope` method that makes sure the
+`shortLivedScopes` don't 'outlive' the `longLivedScope`, limiting the impact of
+the bug.
+
+```Lua hl_lines="5"
+local longLivedScope = scoped(Fusion)
+local longLivedNumber = longLivedScope:Value(5)
+
+for countdown = 1, 10 do
+	local shortLivedScope = longLivedScope:innerScope()
+	local shortLivedNumber = shortLivedScope:Value(2)
+	task.wait(1)
+	-- shortLivedScope:doCleanup()
+end
+
+longLivedScope:doCleanup()
+```
+
+'Inner scopes' exist until either:
+
+- the 'outer scope' is cleaned up
+- the 'inner scope' itself is cleaned up
+
+This means that inner scopes are often the safest choice for creating new
+scopes. They let you call `doCleanup` whenever you like, but guarantee that they
+won't stick around beyond the rest of the code they're in.
+
 -----
 
 ## When You'll Use This
 
 Scopes might sound like a lot of upfront work. However, you'll find in practice
-that Fusion manages a lot of this for you.
+that Fusion manages a lot of this for you, and it makes your code much more
+resilient to memory leaks and other kinds of memory management issues.
 
 You'll need to create and destroy your own scopes manually sometimes. For
 example, you'll need to create a scope in your main code file to start using
