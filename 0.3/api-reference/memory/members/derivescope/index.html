@@ -2849,6 +2849,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </code></pre></div>
 <p>Returns a blank <a href="../../types/scope">scope</a> with the same methods as an existing
 scope.</p>
+<p>Unlike <a href="../derivescope">innerScope</a>, the returned scope has a completely
+independent lifecycle from the original scope.</p>
 <div class="admonition warning">
 <p class="admonition-title">Scopes are not unique</p>
 <p>Fusion can recycle old unused scopes. This helps make scopes more
@@ -2873,7 +2875,7 @@ and you shouldn't use them as unique identifiers anywhere.</p>
         -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#returns-scopet" title="Permanent link">&para;</a></h2>
-<p>A blank scope with the same methods as the existing scope.</p>
+<p>A blank (non-inner) scope with the same methods as the existing scope.</p>
 <hr />
 <h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

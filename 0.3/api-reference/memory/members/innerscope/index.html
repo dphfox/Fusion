@@ -8,21 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/tutorials/fundamentals/scopes/">
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/api-reference/memory/members/innerscope/">
       
-      <link rel="icon" href="../../../assets/logo-dark.svg">
+      <link rel="icon" href="../../../../assets/logo-dark.svg">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-8.2.13">
     
     
       
-        <title>Scopes - Fusion</title>
+        <title>Innerscope - Fusion</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.e411adfe.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -49,23 +49,23 @@
 	
 
     
-      <link rel="stylesheet" href="../../../assets/theme/fusiondoc.css">
+      <link rel="stylesheet" href="../../../../assets/theme/fusiondoc.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/colours.css">
+      <link rel="stylesheet" href="../../../../assets/theme/colours.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/code.css">
+      <link rel="stylesheet" href="../../../../assets/theme/code.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/paragraph.css">
+      <link rel="stylesheet" href="../../../../assets/theme/paragraph.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/page.css">
+      <link rel="stylesheet" href="../../../../assets/theme/page.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/admonition.css">
+      <link rel="stylesheet" href="../../../../assets/theme/admonition.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/404.css">
+      <link rel="stylesheet" href="../../../../assets/theme/404.css">
     
-      <link rel="stylesheet" href="../../../assets/theme/api-reference.css">
+      <link rel="stylesheet" href="../../../../assets/theme/api-reference.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scopes" class="md-skip">
+        <a href="#innerscope-scopet" class="md-skip">
           Skip to content
         </a>
       
@@ -131,7 +131,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
     <!-- Link to home -->
     <a
-      href="../../.."
+      href="../../../.."
       title="Fusion"
       class="md-header__button md-logo"
       aria-label="Fusion"
@@ -139,8 +139,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     >
       <!-- Logo -->
 
-  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
-  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+  <img src="../../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
 
@@ -160,7 +160,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Scopes
+              Innerscope
             
           </span>
         </div>
@@ -323,7 +323,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
 
   <li class="md-tabs__item">
-    <a href="../../.." class="md-tabs__link">
+    <a href="../../../.." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -332,15 +332,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link md-tabs__link--active">
+      <a href="../../../../tutorials/" class="md-tabs__link">
         Tutorials
       </a>
     </li>
@@ -356,7 +354,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-tabs__item">
-      <a href="../../../examples/" class="md-tabs__link">
+      <a href="../../../../examples/" class="md-tabs__link">
         Examples
       </a>
     </li>
@@ -372,7 +370,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-tabs__item">
-      <a href="../../../api-reference/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         API Reference
       </a>
     </li>
@@ -388,7 +386,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-tabs__item">
-      <a href="../../../extras/" class="md-tabs__link">
+      <a href="../../../../extras/" class="md-tabs__link">
         Extras
       </a>
     </li>
@@ -416,11 +414,11 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
+    <a href="../../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
       <!-- Logo -->
 
-  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
-  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+  <img src="../../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
     Fusion
@@ -448,7 +446,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -461,14 +459,12 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       
       
@@ -492,7 +488,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../">Tutorials</a>
+          <a href="../../../../tutorials/">Tutorials</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -513,16 +509,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
       
       
       
@@ -553,89 +547,11 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Scopes
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/fundamentals/scopes/" class="md-nav__link">
         Scopes
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#scopes" class="md-nav__link">
-    Scopes
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improved-scopes" class="md-nav__link">
-    Improved Scopes
-  </a>
-  
-    <nav class="md-nav" aria-label="Improved Scopes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-methods-in-bulk" class="md-nav__link">
-    Adding Methods In Bulk
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reusing-methods-from-other-scopes" class="md-nav__link">
-    Reusing Methods From Other Scopes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inner-scopes" class="md-nav__link">
-    Inner Scopes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-youll-use-this" class="md-nav__link">
-    When You'll Use This
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -647,7 +563,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../values/" class="md-nav__link">
+      <a href="../../../../tutorials/fundamentals/values/" class="md-nav__link">
         Values
       </a>
     </li>
@@ -661,7 +577,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../observers/" class="md-nav__link">
+      <a href="../../../../tutorials/fundamentals/observers/" class="md-nav__link">
         Observers
       </a>
     </li>
@@ -675,7 +591,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../computeds/" class="md-nav__link">
+      <a href="../../../../tutorials/fundamentals/computeds/" class="md-nav__link">
         Computeds
       </a>
     </li>
@@ -732,7 +648,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../tables/forvalues/" class="md-nav__link">
+      <a href="../../../../tutorials/tables/forvalues/" class="md-nav__link">
         ForValues
       </a>
     </li>
@@ -746,7 +662,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../tables/forkeys/" class="md-nav__link">
+      <a href="../../../../tutorials/tables/forkeys/" class="md-nav__link">
         ForKeys
       </a>
     </li>
@@ -760,7 +676,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../tables/forpairs/" class="md-nav__link">
+      <a href="../../../../tutorials/tables/forpairs/" class="md-nav__link">
         ForPairs
       </a>
     </li>
@@ -815,7 +731,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../animation/tweens/" class="md-nav__link">
+      <a href="../../../../tutorials/animation/tweens/" class="md-nav__link">
         Tweens
       </a>
     </li>
@@ -829,7 +745,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../animation/springs/" class="md-nav__link">
+      <a href="../../../../tutorials/animation/springs/" class="md-nav__link">
         Springs
       </a>
     </li>
@@ -894,7 +810,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/hydration/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/hydration/" class="md-nav__link">
         Hydration
       </a>
     </li>
@@ -908,7 +824,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/new-instances/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/new-instances/" class="md-nav__link">
         New Instances
       </a>
     </li>
@@ -922,7 +838,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/parenting/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/parenting/" class="md-nav__link">
         Parenting
       </a>
     </li>
@@ -936,7 +852,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/events/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/events/" class="md-nav__link">
         Events
       </a>
     </li>
@@ -950,7 +866,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/change-events/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/change-events/" class="md-nav__link">
         Change Events
       </a>
     </li>
@@ -964,7 +880,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/outputs/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/outputs/" class="md-nav__link">
         Outputs
       </a>
     </li>
@@ -978,7 +894,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../roblox/references/" class="md-nav__link">
+      <a href="../../../../tutorials/roblox/references/" class="md-nav__link">
         References
       </a>
     </li>
@@ -1041,7 +957,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/components/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/components/" class="md-nav__link">
         Components
       </a>
     </li>
@@ -1055,7 +971,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/instance-handling/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/instance-handling/" class="md-nav__link">
         Instance Handling
       </a>
     </li>
@@ -1069,7 +985,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/callbacks/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/callbacks/" class="md-nav__link">
         Callbacks
       </a>
     </li>
@@ -1083,7 +999,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/state/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/state/" class="md-nav__link">
         State
       </a>
     </li>
@@ -1097,7 +1013,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/sharing-values/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/sharing-values/" class="md-nav__link">
         Sharing Values
       </a>
     </li>
@@ -1111,7 +1027,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../best-practices/optimisation/" class="md-nav__link">
+      <a href="../../../../tutorials/best-practices/optimisation/" class="md-nav__link">
         Optimisation
       </a>
     </li>
@@ -1159,7 +1075,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../examples/">Examples</a>
+          <a href="../../../../examples/">Examples</a>
           
             <label for="__nav_3">
               <span class="md-nav__icon md-icon"></span>
@@ -1215,7 +1131,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../examples/cookbook/">Cookbook</a>
+          <a href="../../../../examples/cookbook/">Cookbook</a>
           
             <label for="__nav_3_2">
               <span class="md-nav__icon md-icon"></span>
@@ -1238,7 +1154,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/player-list/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/player-list/" class="md-nav__link">
         Player List
       </a>
     </li>
@@ -1252,7 +1168,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/animated-computed/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/animated-computed/" class="md-nav__link">
         Animated Computed
       </a>
     </li>
@@ -1266,7 +1182,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/fetch-data-from-server/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/fetch-data-from-server/" class="md-nav__link">
         Fetch Data From Server
       </a>
     </li>
@@ -1280,7 +1196,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/light-and-dark-theme/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/light-and-dark-theme/" class="md-nav__link">
         Light & Dark Theme
       </a>
     </li>
@@ -1294,7 +1210,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/button-component/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/button-component/" class="md-nav__link">
         Button Component
       </a>
     </li>
@@ -1308,7 +1224,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/loading-spinner/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/loading-spinner/" class="md-nav__link">
         Loading Spinner
       </a>
     </li>
@@ -1322,7 +1238,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/cookbook/drag-and-drop/" class="md-nav__link">
+      <a href="../../../../examples/cookbook/drag-and-drop/" class="md-nav__link">
         Drag & Drop
       </a>
     </li>
@@ -1378,7 +1294,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../api-reference/">API Reference</a>
+          <a href="../../../">API Reference</a>
           
             <label for="__nav_4">
               <span class="md-nav__icon md-icon"></span>
@@ -1437,7 +1353,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/general/errors/" class="md-nav__link">
+      <a href="../../../general/errors/" class="md-nav__link">
         Errors
       </a>
     </li>
@@ -1483,7 +1399,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/general/types/contextual/" class="md-nav__link">
+      <a href="../../../general/types/contextual/" class="md-nav__link">
         Contextual
       </a>
     </li>
@@ -1497,7 +1413,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/general/types/version/" class="md-nav__link">
+      <a href="../../../general/types/version/" class="md-nav__link">
         Version
       </a>
     </li>
@@ -1550,7 +1466,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/general/members/contextual/" class="md-nav__link">
+      <a href="../../../general/members/contextual/" class="md-nav__link">
         Contextual
       </a>
     </li>
@@ -1564,7 +1480,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/general/members/version/" class="md-nav__link">
+      <a href="../../../general/members/version/" class="md-nav__link">
         version
       </a>
     </li>
@@ -1660,7 +1576,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/types/scope/" class="md-nav__link">
+      <a href="../../types/scope/" class="md-nav__link">
         Scope
       </a>
     </li>
@@ -1674,7 +1590,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/types/scopedobject/" class="md-nav__link">
+      <a href="../../types/scopedobject/" class="md-nav__link">
         ScopedObject
       </a>
     </li>
@@ -1688,7 +1604,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/types/task/" class="md-nav__link">
+      <a href="../../types/task/" class="md-nav__link">
         Task
       </a>
     </li>
@@ -1743,7 +1659,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/members/derivescope/" class="md-nav__link">
+      <a href="../derivescope/" class="md-nav__link">
         deriveScope
       </a>
     </li>
@@ -1757,7 +1673,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/members/docleanup/" class="md-nav__link">
+      <a href="../docleanup/" class="md-nav__link">
         doCleanup
       </a>
     </li>
@@ -1771,7 +1687,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/memory/members/scoped/" class="md-nav__link">
+      <a href="../scoped/" class="md-nav__link">
         scoped
       </a>
     </li>
@@ -1879,7 +1795,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+      <a href="../../../state/types/usedas/" class="md-nav__link">
         UsedAs
       </a>
     </li>
@@ -1893,7 +1809,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/computed/" class="md-nav__link">
+      <a href="../../../state/types/computed/" class="md-nav__link">
         Computed
       </a>
     </li>
@@ -1907,7 +1823,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/dependency/" class="md-nav__link">
+      <a href="../../../state/types/dependency/" class="md-nav__link">
         Dependency
       </a>
     </li>
@@ -1921,7 +1837,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/dependent/" class="md-nav__link">
+      <a href="../../../state/types/dependent/" class="md-nav__link">
         Dependent
       </a>
     </li>
@@ -1935,7 +1851,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/for/" class="md-nav__link">
+      <a href="../../../state/types/for/" class="md-nav__link">
         For
       </a>
     </li>
@@ -1949,7 +1865,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/observer/" class="md-nav__link">
+      <a href="../../../state/types/observer/" class="md-nav__link">
         Observer
       </a>
     </li>
@@ -1963,7 +1879,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/stateobject/" class="md-nav__link">
+      <a href="../../../state/types/stateobject/" class="md-nav__link">
         StateObject
       </a>
     </li>
@@ -1977,7 +1893,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/use/" class="md-nav__link">
+      <a href="../../../state/types/use/" class="md-nav__link">
         Use
       </a>
     </li>
@@ -1991,7 +1907,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/types/value/" class="md-nav__link">
+      <a href="../../../state/types/value/" class="md-nav__link">
         Value
       </a>
     </li>
@@ -2054,7 +1970,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/computed/" class="md-nav__link">
+      <a href="../../../state/members/computed/" class="md-nav__link">
         Computed
       </a>
     </li>
@@ -2068,7 +1984,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/forkeys/" class="md-nav__link">
+      <a href="../../../state/members/forkeys/" class="md-nav__link">
         ForKeys
       </a>
     </li>
@@ -2082,7 +1998,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/forpairs/" class="md-nav__link">
+      <a href="../../../state/members/forpairs/" class="md-nav__link">
         ForPairs
       </a>
     </li>
@@ -2096,7 +2012,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/forvalues/" class="md-nav__link">
+      <a href="../../../state/members/forvalues/" class="md-nav__link">
         ForValues
       </a>
     </li>
@@ -2110,7 +2026,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/observer/" class="md-nav__link">
+      <a href="../../../state/members/observer/" class="md-nav__link">
         Observer
       </a>
     </li>
@@ -2124,7 +2040,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/peek/" class="md-nav__link">
+      <a href="../../../state/members/peek/" class="md-nav__link">
         peek
       </a>
     </li>
@@ -2138,7 +2054,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/state/members/value/" class="md-nav__link">
+      <a href="../../../state/members/value/" class="md-nav__link">
         Value
       </a>
     </li>
@@ -2234,7 +2150,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/types/child/" class="md-nav__link">
+      <a href="../../../roblox/types/child/" class="md-nav__link">
         Child
       </a>
     </li>
@@ -2248,7 +2164,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/types/propertytable/" class="md-nav__link">
+      <a href="../../../roblox/types/propertytable/" class="md-nav__link">
         PropertyTable
       </a>
     </li>
@@ -2262,7 +2178,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/types/specialkey/" class="md-nav__link">
+      <a href="../../../roblox/types/specialkey/" class="md-nav__link">
         SpecialKey
       </a>
     </li>
@@ -2331,7 +2247,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/attribute/" class="md-nav__link">
+      <a href="../../../roblox/members/attribute/" class="md-nav__link">
         Attribute
       </a>
     </li>
@@ -2345,7 +2261,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/attributechange/" class="md-nav__link">
+      <a href="../../../roblox/members/attributechange/" class="md-nav__link">
         AttributeChange
       </a>
     </li>
@@ -2359,7 +2275,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/attributeout/" class="md-nav__link">
+      <a href="../../../roblox/members/attributeout/" class="md-nav__link">
         AttributeOut
       </a>
     </li>
@@ -2373,7 +2289,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/children/" class="md-nav__link">
+      <a href="../../../roblox/members/children/" class="md-nav__link">
         Children
       </a>
     </li>
@@ -2387,7 +2303,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/hydrate/" class="md-nav__link">
+      <a href="../../../roblox/members/hydrate/" class="md-nav__link">
         Hydrate
       </a>
     </li>
@@ -2401,7 +2317,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/new/" class="md-nav__link">
+      <a href="../../../roblox/members/new/" class="md-nav__link">
         New
       </a>
     </li>
@@ -2415,7 +2331,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/onchange/" class="md-nav__link">
+      <a href="../../../roblox/members/onchange/" class="md-nav__link">
         OnChange
       </a>
     </li>
@@ -2429,7 +2345,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/onevent/" class="md-nav__link">
+      <a href="../../../roblox/members/onevent/" class="md-nav__link">
         OnEvent
       </a>
     </li>
@@ -2443,7 +2359,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/out/" class="md-nav__link">
+      <a href="../../../roblox/members/out/" class="md-nav__link">
         Out
       </a>
     </li>
@@ -2457,7 +2373,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/ref/" class="md-nav__link">
+      <a href="../../../roblox/members/ref/" class="md-nav__link">
         Ref
       </a>
     </li>
@@ -2553,7 +2469,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/animation/types/animatable/" class="md-nav__link">
+      <a href="../../../animation/types/animatable/" class="md-nav__link">
         Animatable
       </a>
     </li>
@@ -2567,7 +2483,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/animation/types/spring/" class="md-nav__link">
+      <a href="../../../animation/types/spring/" class="md-nav__link">
         Spring
       </a>
     </li>
@@ -2581,7 +2497,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/animation/types/tween/" class="md-nav__link">
+      <a href="../../../animation/types/tween/" class="md-nav__link">
         Tween
       </a>
     </li>
@@ -2634,7 +2550,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/animation/members/tween/" class="md-nav__link">
+      <a href="../../../animation/members/tween/" class="md-nav__link">
         Tween
       </a>
     </li>
@@ -2648,7 +2564,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../api-reference/animation/members/spring/" class="md-nav__link">
+      <a href="../../../animation/members/spring/" class="md-nav__link">
         Spring
       </a>
     </li>
@@ -2705,7 +2621,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../extras/">Extras</a>
+          <a href="../../../../extras/">Extras</a>
           
             <label for="__nav_5">
               <span class="md-nav__icon md-icon"></span>
@@ -2728,7 +2644,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../extras/backgrounds/" class="md-nav__link">
+      <a href="../../../../extras/backgrounds/" class="md-nav__link">
         Backgrounds
       </a>
     </li>
@@ -2742,7 +2658,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../extras/brand-guidelines/" class="md-nav__link">
+      <a href="../../../../extras/brand-guidelines/" class="md-nav__link">
         Brand Guidelines
       </a>
     </li>
@@ -2773,6 +2689,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2781,37 +2699,16 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#scopes" class="md-nav__link">
-    Scopes
+  <a href="#parameters" class="md-nav__link">
+    Parameters
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improved-scopes" class="md-nav__link">
-    Improved Scopes
-  </a>
-  
-    <nav class="md-nav" aria-label="Improved Scopes">
+    <nav class="md-nav" aria-label="Parameters">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#adding-methods-in-bulk" class="md-nav__link">
-    Adding Methods In Bulk
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reusing-methods-from-other-scopes" class="md-nav__link">
-    Reusing Methods From Other Scopes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inner-scopes" class="md-nav__link">
-    Inner Scopes
+  <a href="#existing-scopet" class="md-nav__link">
+    existing : Scope&lt;T&gt;
   </a>
   
 </li>
@@ -2822,8 +2719,15 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-youll-use-this" class="md-nav__link">
-    When You'll Use This
+  <a href="#returns-scopet" class="md-nav__link">
+    Returns -&gt; Scope&lt;T&gt;
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn-more" class="md-nav__link">
+    Learn More
   </a>
   
 </li>
@@ -2848,329 +2752,60 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   as the main headline.
 -->
 
-  <h1>Scopes</h1>
-
 
 <!-- Markdown content -->
-<p>In Fusion, you create a lot of objects. These objects need to be destroyed when
-you're done with them.</p>
-<p>Fusion has some coding conventions to make large quantities of objects easier to
-manage.</p>
-<hr />
-<h2 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h2>
-<p>When you create many objects at once, you often want to  <code>:destroy()</code> them
-together later. </p>
-<p>To make this easier, some people add their objects to an array. Arrays that
-group together objects like this are given a special name: <em>scopes</em>.</p>
-<p>To create a new scope, create an empty array.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<nav class="fusiondoc-api-breadcrumbs">
+    <span>Memory</span>
+    <span>Members</span>
+    <span>innerScope</span>
+</nav>
 
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-</span></code></pre></div></td></tr></table></div>
-<p>Later, when you create objects, they will ask for a scope as the first argument.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="hll"><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
-</span></code></pre></div></td></tr></table></div>
-<p>That object will add itself to the scope.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
-
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-</span></code></pre></div></td></tr></table></div>
-<p>Repeat as many times as you like. Objects appear in order of creation.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing1</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing2</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing3</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-</code></pre></div></td></tr></table></div>
-<p>Later, destroy the scope by using the <code>doCleanup()</code> function. The contents are
-destroyed in reverse order.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="hll"><span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-</span><span class="c1">-- Using `doCleanup` is the same as:</span>
-<span class="c1">-- thing3:destroy()</span>
-<span class="c1">-- thing2:destroy()</span>
-<span class="c1">-- thing1:destroy()</span>
-</code></pre></div></td></tr></table></div>
-<p>Scopes passed to <code>doCleanup</code> can contain:</p>
-<ul>
-<li>Objects with <code>:destroy()</code> or <code>:Destroy()</code> methods to be called</li>
-<li>Functions to be run</li>
-<li>Roblox instances to destroy</li>
-<li>Roblox event connections to disconnect</li>
-<li>Other nested scopes to be cleaned up</li>
-</ul>
-<p>You can add these manually using <code>table.insert</code> if you need custom behaviour,
-or if you are working with objects that don't add themselves to scopes.</p>
-<p>That's all there is to scopes. They are arrays of objects which later get passed
-to a cleanup function.</p>
-<hr />
-<h2 id="improved-scopes">Improved Scopes<a class="headerlink" href="#improved-scopes" title="Permanent link">&para;</a></h2>
-<div class="admonition success">
-<p class="admonition-title">This syntax is recommended</p>
-<p>From now on, you'll see this syntax used throughout the tutorials.</p>
-</div>
-<p>Fusion can help manage your scopes for you. This unlocks convenient syntax, and
-allows Fusion to optimise your code.</p>
-<p>You can call <code>scoped()</code> to obtain a new scope.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-</span>
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">()</span>
-</span><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<p>Unlike <code>{}</code> (which always creates a new array), <code>scoped</code> can re-use old arrays.
-This helps keep your program running smoothly.</p>
-<p>Beyond making your code more efficient, you can also use <code>scoped</code> for convenient
-syntax.</p>
-<p>You can pass a table of functions into <code>scoped</code>:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-</span><span class="hll">    <span class="n">Value</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">doCleanup</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span>
-</span><span class="hll"><span class="p">})</span>
-</span><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<p>If those functions take <code>scope</code> as their first argument, you can use them as
-methods directly on the scope:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Value</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
-    <span class="n">doCleanup</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span>
-<span class="p">})</span>
-<span class="hll"><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-</span>
-<span class="hll"><span class="n">scope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</span></code></pre></div></td></tr></table></div>
-<p>This makes it harder to mess up writing scopes. Your code reads more naturally,
-too.</p>
-<h3 id="adding-methods-in-bulk">Adding Methods In Bulk<a class="headerlink" href="#adding-methods-in-bulk" title="Permanent link">&para;</a></h3>
-<p>Try passing <code>Fusion</code> to <code>scoped()</code> - it's a table with functions, too.</p>
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-</span>
-<span class="c1">-- all still works!</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="n">scope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<h1 class="fusiondoc-api-header" id="innerscope-scopet">
+    <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M1 3a2 2 0 0 1 2-2h6.5a2 2 0 0 1 2 2v6.5a2 2 0 0 1-2 2H7v4.063C7 16.355 7.644 17 8.438 17H12.5v-2.5a2 2 0 0 1 2-2H21a2 2 0 0 1 2 2V21a2 2 0 0 1-2 2h-6.5a2 2 0 0 1-2-2v-2.5H8.437A2.938 2.938 0 0 1 5.5 15.562V11.5H3a2 2 0 0 1-2-2V3zm2-.5a.5.5 0 0 0-.5.5v6.5a.5.5 0 0 0 .5.5h6.5a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H3zM14.5 14a.5.5 0 0 0-.5.5V21a.5.5 0 0 0 .5.5H21a.5.5 0 0 0 .5-.5v-6.5a.5.5 0 0 0-.5-.5h-6.5z"/></svg></span></span>
+    <span class="fusiondoc-api-name">innerScope</span>
+    <span class="fusiondoc-api-type">
+        -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
+    </span>
+<a class="headerlink" href="#innerscope-scopet" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">innerScope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">existing</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>This gives you access to all of Fusion's functions without having to import
-each one manually.</p>
-<p>If you need to mix in other things, you can pass in another table.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="p">...,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="p">...</span>
-<span class="p">})</span>
-</code></pre></div>
-<p>You can do this for as many tables as you need.</p>
-<div class="admonition fail">
-<p class="admonition-title">Conflicting names</p>
-<p>If you pass in two tables that contain things with the same name, <code>scoped()</code>
-will error.</p>
-</div>
-<h3 id="reusing-methods-from-other-scopes">Reusing Methods From Other Scopes<a class="headerlink" href="#reusing-methods-from-other-scopes" title="Permanent link">&para;</a></h3>
-<p>Sometimes, you'll want to make a new scope with the same methods as an existing
+<p>Returns a blank <a href="../../types/scope">scope</a> with the same methods as an existing
 scope.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
-<span class="p">})</span>
-
-<span class="c1">-- `bar` should have the same methods as `foo`</span>
-<span class="c1">-- it&#39;d be nice to define this once only...</span>
-<span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
-<span class="p">})</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Baz</span> <span class="o">==</span> <span class="n">bar</span><span class="p">.</span><span class="n">Baz</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-
-<span class="n">bar</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="n">foo</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>To do this, Fusion provides a <code>deriveScope</code> function. It behaves like <code>scoped</code>
-but lets you skip defining the methods. Instead, you give it an example of what
-the scope should look like.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
-<span class="p">})</span>
-
-<span class="c1">-- `bar` should have the same methods as `foo`</span>
-<span class="hll"><span class="c1">-- now, it&#39;s only defined once!</span>
-</span><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Baz</span> <span class="o">==</span> <span class="n">bar</span><span class="p">.</span><span class="n">Baz</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-
-<span class="n">bar</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="n">foo</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p><em>Deriving</em> scopes like this is highly efficient because Fusion can re-use the
-same information for both scopes. It also helps keep your definitions all in
-one place.</p>
-<h3 id="inner-scopes">Inner Scopes<a class="headerlink" href="#inner-scopes" title="Permanent link">&para;</a></h3>
-<p>The main reason you would want to create a new scope is to create things that
-get destroyed at different times.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="kr">end</span>
-
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>In the above example, the <code>shortLivedScope</code> only exists for one second before
-getting destroyed. However, the <code>longLivedScope</code> exists for the entire duration
-of the countdown.</p>
-<p>But what if you forgot to destroy those <code>shortLivedScope</code>s?</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="hll">    <span class="c1">-- shortLivedScope:doCleanup()</span>
-</span><span class="kr">end</span>
-
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>Now, every <code>shortLivedScope</code> will exist forever, <em>beyond</em> the <code>longLivedScope</code>
-they came from. This is often not desirable.</p>
-<p>In addition to this sort of bug, there's other times this happens. For example,
-imagine if the <code>shortLivedScope</code> was used for some objects in a pop-up menu, but
-the pop-up's surrounding UI (the <code>longLivedScope</code>) got destroyed.</p>
-<p>To help with this, Fusion provides an <code>innerScope</code> method that makes sure the
-<code>shortLivedScopes</code> don't 'outlive' the <code>longLivedScope</code>, limiting the impact of
-the bug.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-<span class="hll">    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">innerScope</span><span class="p">()</span>
-</span>    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="c1">-- shortLivedScope:doCleanup()</span>
-<span class="kr">end</span>
-
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>'Inner scopes' exist until either:</p>
-<ul>
-<li>the 'outer scope' is cleaned up</li>
-<li>the 'inner scope' itself is cleaned up</li>
-</ul>
-<p>This means that inner scopes are often the safest choice for creating new
-scopes. They let you call <code>doCleanup</code> whenever you like, but guarantee that they
-won't stick around beyond the rest of the code they're in.</p>
+<p>Unlike <a href="../derivescope">deriveScope</a>, the returned scope is an inner scope of 
+the original scope. It exists until either the user calls <code>doCleanup</code> on it, or
+the original scope is cleaned up.</p>
+<div class="admonition warning">
+<p class="admonition-title">Scopes are not unique</p>
+<p>Fusion can recycle old unused scopes. This helps make scopes more
+lightweight, but it also means they don't uniquely belong to any part of
+your program.</p>
+<p>As a result, you shouldn't hold on to scopes after they've been cleaned up,
+and you shouldn't use them as unique identifiers anywhere.</p>
+</div>
 <hr />
-<h2 id="when-youll-use-this">When You'll Use This<a class="headerlink" href="#when-youll-use-this" title="Permanent link">&para;</a></h2>
-<p>Scopes might sound like a lot of upfront work. However, you'll find in practice
-that Fusion manages a lot of this for you, and it makes your code much more
-resilient to memory leaks and other kinds of memory management issues.</p>
-<p>You'll need to create and destroy your own scopes manually sometimes. For
-example, you'll need to create a scope in your main code file to start using
-Fusion, and you might want to make a few more in other parts of your code.</p>
-<p>However, Fusion manages most of your scopes for you, so for large parts of your
-codebase, you won't have to consider scopes and destruction at all.</p>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<h3 id="existing-scopet">
+    existing
+    <span class="fusiondoc-api-type">
+        : <a href="../../types/scope">Scope</a>&lt;T&gt;
+    </span>
+<a class="headerlink" href="#existing-scopet" title="Permanent link">&para;</a></h3>
+<p>An existing scope, whose methods should be re-used for the new scope.</p>
+<hr />
+<h2 id="returns-scopet">
+    Returns
+    <span class="fusiondoc-api-type">
+        -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
+    </span>
+<a class="headerlink" href="#returns-scopet" title="Permanent link">&para;</a></h2>
+<p>A blank inner scope with the same methods as the existing scope.</p>
+<hr />
+<h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../../tutorials/fundamentals/scopes">Scopes tutorial</a></li>
+</ul>
 
 <!-- Source file information -->
 
@@ -3190,58 +2825,6 @@ codebase, you won't have to consider scopes and destruction at all.</p>
 <footer class="md-footer">
 
 	<!-- Link to previous and/or next page -->
-	
-	  <nav
-		class="md-footer__inner md-grid"
-		aria-label="Footer"
-	  >
-
-		<!-- Link to previous page -->
-		
-		  
-		  <a
-			href="../../"
-			class="md-footer__link md-footer__link--prev"
-			aria-label="Previous: Get Started"
-			rel="prev"
-		  >
-			<div class="md-footer__button md-icon">
-			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
-			</div>
-			<div class="md-footer__title">
-			  <div class="md-ellipsis">
-				<span class="md-footer__direction">
-				  Previous
-				</span>
-				Get Started
-			  </div>
-			</div>
-		  </a>
-		
-
-		<!-- Link to next page -->
-		
-		  
-		  <a
-			href="../values/"
-			class="md-footer__link md-footer__link--next"
-			aria-label="Next: Values"
-			rel="next"
-		  >
-			<div class="md-footer__title">
-			  <div class="md-ellipsis">
-				<span class="md-footer__direction">
-				  Next
-				</span>
-				Values
-			  </div>
-			</div>
-			<div class="md-footer__button md-icon">
-			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.72 18.78a.75.75 0 0 0 1.06 0l6.25-6.25a.75.75 0 0 0 0-1.06L9.78 5.22a.75.75 0 0 0-1.06 1.06L14.44 12l-5.72 5.72a.75.75 0 0 0 0 1.06z"/></svg>
-			</div>
-		  </a>
-		
-	  </nav>
 	
 
 	<!-- Further information -->
@@ -3267,12 +2850,12 @@ codebase, you won't have to consider scopes and destruction at all.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
-        <script src="../../../assets/scripts/smooth-scroll.js"></script>
+        <script src="../../../../assets/scripts/smooth-scroll.js"></script>
       
     
   </body>
