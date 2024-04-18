@@ -67,7 +67,7 @@ program.
 
 However, this example has a function, `fetchUserBio`, that yields. 
 
-```Lua linenums="5"
+```Lua
 local function fetchUserBio(
 	userID: number
 ): string
@@ -80,7 +80,7 @@ end
 It also has some arbitrary state object, `currentUserID`, that it needs to
 convert into a bio somehow.
 
-```Lua linenums="15"
+```Lua
 -- This doesn't have to be a `Value` - any kind of state object works too.
 local currentUserID = scope:Value(1670764)
 ```
@@ -93,7 +93,7 @@ Notice that the 'loading' state is explicitly documented. It's a good idea to
 be clear and honest when you have no data to show, because it allows other code
 to respond to that case flexibly.
 
-```Lua linenums="18"
+```Lua
 -- While the bio is loading, this is `nil` instead of a string.
 local currentUserBio: Fusion.Value<string?> = scope:Value(nil)
 ```
@@ -105,7 +105,7 @@ can be updated.
 To avoid two fetches overwriting each other, any existing fetch task is canceled
 before the new task is created.
 
-```Lua linenums="22"
+```Lua
 	local fetchInProgress = nil
 	local function performFetch()
 		local userID = peek(currentUserID)
@@ -126,7 +126,7 @@ can be added to an `Observer`.
 The `onBind` method also runs `performFetch` once at the start of the program,
 so the request is sent out automatically.
 
-```Lua linenums="34"
+```Lua
 scope:Observer(currentUserID):onBind(performFetch)
 ```
 
@@ -134,7 +134,7 @@ That's all you need - now, any other Fusion code can read and depend upon
 `currentUserBio` as if it were any other kind of state object. Just remember to
 handle the 'loading' state as well as the successful state.
 
-```Lua linenums="37"
+```Lua
 scope:Observer(currentUserBio):onBind(function()
 	local bio = peek(currentUserBio)
 	if bio == nil then

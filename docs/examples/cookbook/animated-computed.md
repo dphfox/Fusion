@@ -62,7 +62,7 @@ There's three key components to the above code snippet.
 Firstly, there's `showTheThing`. When this is `true`, The Thing should be in
 the centre of the screen. Otherwise, The Thing should be off-screen.
 
-```Lua linenums="13"
+```Lua
 -- You can set this at any time to indicate where The Thing should be.
 local showTheThing = scope:Value(false)
 ```
@@ -72,7 +72,7 @@ turns it into a UDim2 position for The Thing to use. You can imagine this as the
 'non-animated' version of what you want The Thing to do, if it were to instantly
 teleport around.
 
-```Lua linenums="26"
+```Lua
 			scope:Computed(function(use)
 				local CENTRE = UDim2.fromScale(0.5, 0.5)
 				local OFFSCREEN = UDim2.fromScale(-0.5, 0.5)
@@ -85,7 +85,7 @@ tween object will smoothly move towards the computed over time. If needed, you
 could separate the computed into a dedicated variable to access it
 independently.
 
-```Lua linenums="25"
+```Lua
 		Position = scope:Tween(
 			scope:Computed(function(use)
 				local CENTRE = UDim2.fromScale(0.5, 0.5)
@@ -100,7 +100,7 @@ The 'shape' of the animation is saved in a `TWEEN_INFO` constant defined earlier
 in the code. [The Tween tutorial](../../../tutorials/animation/tweens) explains
 how each parameter shapes the motion.
 
-```Lua linenums="7"
+```Lua
 local TWEEN_INFO = TweenInfo.new(
     0.5,
     Enum.EasingStyle.Sine,

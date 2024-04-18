@@ -78,7 +78,7 @@ largely a standard Fusion component definition.
 
 The main thing to note is that it asks for a `CurrentTime` property.
 
-```Lua linenums="11" hl_lines="10"
+```Lua hl_lines="10"
 local function Spinner(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
@@ -95,7 +95,7 @@ local function Spinner(
 
 The `CurrentTime` is used to drive the rotation of the loading spinner.
 
-```Lua linenums="36"
+```Lua
 		Rotation = scope:Computed(function(use)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
@@ -106,7 +106,7 @@ That's all that's required for the `Spinner` component.
 Later on, the example creates a `Value` object that will store the current time,
 and starts a process to keep it up to date.
 
-```Lua linenums="47"
+```Lua
 local currentTime = scope:Value(os.clock())
 table.insert(scope,
 	RunService.RenderStepped:Connect(function()
@@ -117,7 +117,7 @@ table.insert(scope,
 
 This can then be passed in as `CurrentTime` when the `Spinner` is created.
 
-```Lua linenums="54" hl_lines="7"
+```Lua hl_lines="7"
 local spinner = scope:Spinner {
 	Layout = {
 		Position = UDim2.fromScale(0.5, 0.5),

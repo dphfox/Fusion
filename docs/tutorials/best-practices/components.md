@@ -187,7 +187,7 @@ scope with those methods pre-defined.
 (for example, components you use internally), then you should not ask for those.
 Instead, create a new inner scope with the methods you need.
 
-	```Lua hl_lines="5-9"
+	```Lua hl_lines="5-8"
 	local function Component(
 		scope: Fusion.Scope<typeof(Fusion)>,
 		props: {}
@@ -195,7 +195,7 @@ Instead, create a new inner scope with the methods you need.
 		local scope = scope:innerScope {
 			SpecialThing1 = require(script.SpecialThing1),
 			SpecialThing2 = require(script.SpecialThing2),
-		})
+		}
 
 		return scope:SpecialThing1 {
 			-- ... rest of code here ...
@@ -256,7 +256,7 @@ Here's an example of how you could split up some components into modules:
 		local scope = scope:innerScope {
 			Message = require(script.Parent.Message),
 			Button = require(script.Parent.Button)
-		})
+		}
 
         return scope:New "Frame" {
             -- ...some properties...
