@@ -3091,9 +3091,9 @@ the scope should look like.</p>
 <span class="p">})</span>
 
 <span class="c1">-- `bar` should have the same methods as `foo`</span>
-<span class="hll"><span class="c1">-- now, it&#39;s only defined once!</span>
-</span><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-
+<span class="c1">-- now, it&#39;s only defined once!</span>
+<span class="hll"><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
+</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Baz</span> <span class="o">==</span> <span class="n">bar</span><span class="p">.</span><span class="n">Baz</span><span class="p">)</span> <span class="c1">--&gt; true</span>
 
 <span class="n">bar</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
