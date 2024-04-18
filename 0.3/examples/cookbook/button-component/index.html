@@ -3026,23 +3026,7 @@ own. For further ideas and best practices for building components, see
 you statically type the function signature for components, because it not only
 improves autocomplete and error checking, but also acts as up-to-date, machine
 readable documentation.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
@@ -3059,7 +3043,7 @@ readable documentation.</p>
         <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>The <code>scope</code> parameter specifies that the component depends on Fusion's methods.
 If you're not sure how to write type definitions for scopes,
 <a href="../../../tutorials/components/components/#scopes">the 'Scopes' section of the Components tutorial</a>

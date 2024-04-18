@@ -2855,16 +2855,7 @@ state objects.</p>
 <hr />
 <h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
 <p>To begin, this example defines a set of colours with light and dark variants.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">background</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">light</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
         <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
@@ -2874,35 +2865,26 @@ state objects.</p>
         <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>A <code>Value</code> object stores which variant is in use right now.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>Finally, each colour is turned into a <code>Computed</code>, which dynamically pulls the
 desired variant from the list.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">dynamic</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="highlight"><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">dynamic</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="kr">for</span> <span class="n">colour</span><span class="p">,</span> <span class="n">variants</span> <span class="kr">in</span> <span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="kr">do</span>
     <span class="n">Theme</span><span class="p">.</span><span class="n">dynamic</span><span class="p">[</span><span class="n">colour</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
         <span class="kr">return</span> <span class="n">variants</span><span class="p">[</span><span class="n">use</span><span class="p">(</span><span class="n">Theme</span><span class="p">.</span><span class="n">current</span><span class="p">)]</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="kr">end</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>This allows other code to easily access theme colours from <code>Theme.dynamic</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">current</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">Theme</span><span class="p">.</span><span class="n">current</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">Theme</span><span class="p">.</span><span class="n">dynamic</span><span class="p">.</span><span class="n">background</span><span class="p">))</span> <span class="c1">--&gt; 255, 255, 255</span>
 
 <span class="n">Theme</span><span class="p">.</span><span class="n">current</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">Theme</span><span class="p">.</span><span class="n">dynamic</span><span class="p">.</span><span class="n">background</span><span class="p">))</span> <span class="c1">--&gt; 34, 34, 34</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 
 <!-- Source file information -->
 

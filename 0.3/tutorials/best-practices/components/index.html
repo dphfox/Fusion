@@ -2959,9 +2959,9 @@ Instead, create a new inner scope with the methods you need.</p>
 <span class="hll">    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
 </span><span class="hll">        <span class="n">SpecialThing1</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">SpecialThing1</span><span class="p">),</span>
 </span><span class="hll">        <span class="n">SpecialThing2</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">SpecialThing2</span><span class="p">),</span>
-</span><span class="hll">    <span class="p">})</span>
-</span><span class="hll">
-</span>    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">SpecialThing1</span> <span class="p">{</span>
+</span><span class="hll">    <span class="p">}</span>
+</span>
+    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">SpecialThing1</span> <span class="p">{</span>
         <span class="c1">-- ... rest of code here ...</span>
     <span class="p">}</span>
 <span class="kr">end</span>
@@ -3060,7 +3060,7 @@ There's a number of advantages to this:</p>
     <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
         <span class="n">Message</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">Message</span><span class="p">),</span>
         <span class="n">Button</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">Button</span><span class="p">)</span>
-    <span class="p">})</span>
+    <span class="p">}</span>
 
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
         <span class="c1">-- ...some properties...</span>

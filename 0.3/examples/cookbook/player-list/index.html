@@ -2951,41 +2951,17 @@ updating player list.</p>
 <p>The <code>PlayerList</code> component is designed to be simple and self-contained. The only
 thing it needs is a <code>Players</code> list - it handles everything else, including its
 position, size, appearance and behaviour.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
     <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Players</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="n">Player</span><span class="p">}</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>After creating a vertically expanding Frame with some style and layout added,
 it turns the <code>Players</code> into a series of text labels using <code>ForValues</code>, which
 will automatically create and remove them as the <code>Players</code> list changes.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code>            <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Players</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code>            <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Players</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
                 <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
                     <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListRow: &quot;</span> <span class="o">..</span> <span class="n">player</span><span class="p">.</span><span class="n">DisplayName</span><span class="p">,</span>
 
@@ -3005,18 +2981,11 @@ will automatically create and remove them as the <code>Players</code> list chang
                     <span class="p">}</span>
                 <span class="p">}</span>
             <span class="kr">end</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>That's all that the <code>PlayerList</code> component has to do.</p>
 <p>Later on, the code creates a <code>Value</code> object to store a list of players, and
 update it every time a player joins or leaves the game.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">updatePlayers</span><span class="p">()</span>
     <span class="n">players</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
 <span class="kr">end</span>
@@ -3024,16 +2993,9 @@ update it every time a player joins or leaves the game.</p>
     <span class="n">Players</span><span class="p">.</span><span class="n">PlayerAdded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">),</span>
     <span class="n">Players</span><span class="p">.</span><span class="n">PlayerRemoving</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">)</span>
 <span class="p">})</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 <p>That object can then be passed in as <code>Players</code> when creating the <code>PlayerList</code>.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">gui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">gui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
     <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListGui&quot;</span><span class="p">,</span>
     <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
 
@@ -3041,7 +3003,7 @@ update it every time a player joins or leaves the game.</p>
 <span class="hll">        <span class="n">Players</span> <span class="o">=</span> <span class="n">players</span>
 </span>    <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></td></tr></table></div>
+</code></pre></div>
 
 <!-- Source file information -->
 
