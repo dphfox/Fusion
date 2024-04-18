@@ -13,20 +13,23 @@ local FiniteTime = require(script.Parent.Parent.Parent.Util.FiniteTime)
 return function()
 	local it = getfenv().itFOCUS
 
-	it("# focuses on this", function() end)
-
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "always ensures the target is valid",
 		init = function(
 			shape: Graphs.GraphShape
 		)
-			return {}
+			return not shape.facts.cyclic
 		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local target = graph.objects[graph.shape.objects[1]]
+			tryInvalidate(target)
+			if target.validity ~= "valid" then
+				return `Validity was "{target.validity}" instead of "valid"`
+			end
+			return true
 		end
 	} (it)
 
@@ -36,12 +39,19 @@ return function()
 		init = function(
 			shape: Graphs.GraphShape
 		)
-			return {}
+			return not shape.facts.cyclic
 		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local target = graph.objects[graph.shape.objects[1]]
+			local before = target.lastChange
+			tryInvalidate(target)
+			if target.lastChange == before then
+				return "The last change time stayed identical"
+			else
+				return true
+			end
 		end
 	} (it)
 
@@ -51,12 +61,29 @@ return function()
 		init = function(
 			shape: Graphs.GraphShape
 		)
-			return {}
+			if shape.facts.cyclic then
+				return false
+			end
+			local target = shape.objects[1]
+			for _, edge in shape.edges do
+				if edge.from == target then
+					return true
+				end
+			end
+			return false
 		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local target = graph.objects[graph.shape.objects[1]]
+			tryInvalidate(target)
+			for dependent in target.dependentSet do
+				if dependent.validity ~= "invalid" then
+					local name = (dependent :: any).name or "GraphObject"
+					return `Dependent {name} was "{dependent.validity}" instead of "invalid"`
+				end
+			end
+			return true
 		end
 	} (it)
 
@@ -122,23 +149,11 @@ return function()
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
-		it = "succeeds in finite time for cyclic graphs",
+		it = "throws an error for cyclic graphs in finite time",
 		init = function(
 			shape: Graphs.GraphShape
 		)
-			if not shape.facts.cyclic then
-				return {}
-			end
-
-			return {
-				{
-					subName = "default",
-					graph = Graphs.make({}, {
-						shape = shape,
-						objects = {}
-					})
-				}
-			}
+			return shape.facts.cyclic
 		end,
 		perform = function(
 			graph: Graphs.Graph
@@ -172,9 +187,15 @@ return function()
 				end
 			end
 
-			tryInvalidate(target)
+			local ok, err = pcall(tryInvalidate :: any, target)
 
-			return true
+			if ok then
+				return "Should not have completed without errors"
+			elseif string.find(err, "infiniteLoop", 1, true) == nil then
+				return err
+			else
+				return true
+			end
 		end
 	} (it)
 

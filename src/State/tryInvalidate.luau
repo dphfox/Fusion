@@ -16,10 +16,15 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
+local External = require(Package.External)
 
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
 local invalidateList: {Types.GraphObject} = {}
+
+-- How long should this function run before it's considered to be in an infinite
+-- cycle and error out?
+local TERMINATION_TIME = 1
 
 local function tryInvalidate(
 	target: Types.GraphObject
@@ -28,7 +33,11 @@ local function tryInvalidate(
 		table.clear(searchInNow)
 		table.clear(invalidateList)
 		searchInNow[1] = target
+		local terminateBy = os.clock() + TERMINATION_TIME * External.safetyTimerMultiplier
 		repeat
+			if os.clock() > terminateBy then
+				return logError("infiniteLoop")
+			end
 			table.clear(searchInNext)
 			local done = true
 			for _, searchTarget in searchInNow do

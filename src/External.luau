@@ -17,6 +17,10 @@ local External = {}
 -- and removing false negatives when checking how systems respond to errors.
 External.unitTestSilenceNonFatal = false
 
+-- Multiplier for running-time safety checks across the Fusion codebase. Used to
+-- stricten tests on infinite loop detection during unit testing.
+External.safetyTimerMultiplier = 1
+
 export type Scheduler = {
 	doTaskImmediate: (
 		resume: () -> ()

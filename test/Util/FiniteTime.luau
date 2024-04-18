@@ -2,7 +2,7 @@
 
 local FiniteTime = {}
 
-local DEFAULT_TIME_LIMIT = 1 / 20
+local DEFAULT_TIME_LIMIT = 1 / 10
 
 function FiniteTime.start(
 	timeLimit: number?

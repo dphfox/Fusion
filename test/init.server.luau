@@ -14,6 +14,7 @@ if TestVars.runTests then
 	print("Running unit tests...")
 	-- Suppress "unknown require path" error here.
 	External.unitTestSilenceNonFatal = true
+	External.safetyTimerMultiplier = 1 / 20
 	External.setExternalScheduler(SpecExternal)
 
 	local data

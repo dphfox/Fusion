@@ -399,6 +399,7 @@ function Graphs.make(
 
 		local object: Types.GraphObject = {
 			scope = myOptions.scope or scope,
+			name = name,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = myOptions.lastChange or nil,
@@ -432,30 +433,46 @@ function Graphs.make(
 	}
 end
 
+type PropertySubTest = {
+	subName: string,
+	graph: Graph
+}
 function Graphs.propertyTest(
 	test: {
 		testing: string,
 		it: string,
-		init: (GraphShape) -> {
-			{
-				subName: string,
-				graph: Graph
-			}
-		},
+		init: (GraphShape) -> boolean | {PropertySubTest},
 		perform: (Graph) -> string | true
 	}
 )
 	return function(it: any): ()
 		local didAnyTests = false
 		for _, shape in Graphs.STANDARD do
-			local subTests = test.init(shape)
+			local subTestsRaw = test.init(shape)
 	
+			local subTests: {PropertySubTest} = 
+				if subTestsRaw == false then
+					{}
+				elseif subTestsRaw == true then
+					{
+						{
+							subName = "default",
+							graph = Graphs.make({}, {
+								shape = shape,
+								objects = {}
+							})
+						}
+					}
+				else
+					subTestsRaw :: {PropertySubTest}
+
+
 			for _, subTest in subTests do
 				local testTitle =
 					if #subTests == 1 then
-						`{test.it} - for {shape.name}`
+						`{test.it} - {shape.name}`
 					else
-						`{test.it} ({subTest.subName}) - for {shape.name}`
+						`{test.it} ({subTest.subName}) - {shape.name}`
 				
 				didAnyTests = true
 				it(testTitle, function()
@@ -465,6 +482,7 @@ function Graphs.propertyTest(
 							"",
 							"",
 							`  Test failed: "{testTitle}"`,
+							`  ... while testing {test.testing}`,
 							"",
 							`  {diagnosis}`,
 							"",
