@@ -1737,8 +1737,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#constructors-t" class="md-nav__link">
-    constructors : T
+  <a href="#methods" class="md-nav__link">
+    ... : Methods &amp; {}
   </a>
   
 </li>
@@ -2783,8 +2783,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#constructors-t" class="md-nav__link">
-    constructors : T
+  <a href="#methods" class="md-nav__link">
+    ... : Methods &amp; {}
   </a>
   
 </li>
@@ -2843,12 +2843,17 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#scoped-scopet" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">scoped</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">constructors</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">scoped</span><span class="o">&lt;</span><span class="n">Methods</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="p">...:</span> <span class="p">(</span><span class="n">Methods</span> <span class="o">&amp;</span> <span class="p">{})...</span>
+<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">merge</span><span class="p">(</span><span class="n">Methods</span><span class="p">)</span><span class="o">&gt;</span>
 </code></pre></div>
-<p>Returns a blank <a href="../../types/scope">scope</a>, with the <code>__index</code> metatable
-pointing at the given list of constructors for syntax convenience.</p>
+<p>Returns a blank <a href="../../types/scope">scope</a>. Any method tables passed in as
+arguments are merged together, and used as the <code>__index</code> of the new scope, such
+that they can be called with method notation on the created scope.</p>
+<div class="admonition note">
+<p class="admonition-title">Pseudo type</p>
+<p>Luau doesn't have adequate syntax to represent this function.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Scopes are not unique</p>
 <p>Fusion can recycle old unused scopes. This helps make scopes more
@@ -2859,14 +2864,14 @@ and you shouldn't use them as unique identifiers anywhere.</p>
 </div>
 <hr />
 <h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<h3 id="constructors-t">
-    constructors
+<h3 id="methods">
+    ...
     <span class="fusiondoc-api-type">
-        : T
+        : Methods &amp; {}
     </span>
-<a class="headerlink" href="#constructors-t" title="Permanent link">&para;</a></h3>
-<p>A table, ideally including functions which take a scope as their first
-parameter. Those functions will turn into methods.</p>
+<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h3>
+<p>A series of tables, ideally including functions which take a scope as their
+first parameter. Those functions will turn into methods on the scope.</p>
 <hr />
 <h2 id="returns-scopet">
     Returns

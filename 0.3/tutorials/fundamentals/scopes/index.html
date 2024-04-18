@@ -3102,65 +3102,82 @@ the scope should look like.</p>
 <p><em>Deriving</em> scopes like this is highly efficient because Fusion can re-use the
 same information for both scopes. It also helps keep your definitions all in
 one place.</p>
+<p>You can also add more method tables if you'd like to.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
+    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
+    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
+    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
+<span class="p">})</span>
+
+<span class="c1">-- `bar` should have the same methods as `foo`</span>
+<span class="c1">-- now, it&#39;s only defined once!</span>
+<span class="hll"><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">({</span>
+</span>    <span class="n">Garb</span> <span class="o">=</span> <span class="n">Garb</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bar</span><span class="p">.</span><span class="n">Garb</span><span class="p">)</span> <span class="c1">--&gt; function: 0x123456789abcdef</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Garb</span><span class="p">)</span> <span class="c1">--&gt; nil</span>
+</code></pre></div>
 <h3 id="inner-scopes">Inner Scopes<a class="headerlink" href="#inner-scopes" title="Permanent link">&para;</a></h3>
 <p>The main reason you would want to create a new scope is to create things that
 get destroyed at different times.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<p>For example, imagine you're creating a dropdown menu. You create a new scope for
+the menu, which you clean up when the menu is closed.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">uiScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
 
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="kr">end</span>
+<span class="c1">-- ... create the ui ...</span>
 
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="nb">table.insert</span><span class="p">(</span>
+    <span class="n">uiScope</span><span class="p">,</span>
+    <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+        <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
+
+        <span class="c1">-- ... create the dropdown ...</span>
+
+        <span class="nb">table.insert</span><span class="p">(</span>
+            <span class="n">dropdownScope</span><span class="p">,</span>
+            <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+                <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+            <span class="kr">end</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">)</span>
 </code></pre></div>
-<p>In the above example, the <code>shortLivedScope</code> only exists for one second before
-getting destroyed. However, the <code>longLivedScope</code> exists for the entire duration
-of the countdown.</p>
-<p>But what if you forgot to destroy those <code>shortLivedScope</code>s?</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="hll">    <span class="c1">-- shortLivedScope:doCleanup()</span>
-</span><span class="kr">end</span>
-
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>Now, every <code>shortLivedScope</code> will exist forever, <em>beyond</em> the <code>longLivedScope</code>
-they came from. This is often not desirable.</p>
-<p>In addition to this sort of bug, there's other times this happens. For example,
-imagine if the <code>shortLivedScope</code> was used for some objects in a pop-up menu, but
-the pop-up's surrounding UI (the <code>longLivedScope</code>) got destroyed.</p>
-<p>To help with this, Fusion provides an <code>innerScope</code> method that makes sure the
-<code>shortLivedScopes</code> don't 'outlive' the <code>longLivedScope</code>, limiting the impact of
-the bug.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">longLivedScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">longLivedNumber</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="kr">for</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="kr">do</span>
-<span class="hll">    <span class="kd">local</span> <span class="n">shortLivedScope</span> <span class="o">=</span> <span class="n">longLivedScope</span><span class="p">:</span><span class="n">innerScope</span><span class="p">()</span>
-</span>    <span class="kd">local</span> <span class="n">shortLivedNumber</span> <span class="o">=</span> <span class="n">shortLivedScope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="c1">-- shortLivedScope:doCleanup()</span>
-<span class="kr">end</span>
-
-<span class="n">longLivedScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-</code></pre></div>
-<p>'Inner scopes' exist until either:</p>
+<p>This ordinarily works just fine; when the dropdown is opened, the new scope is
+created, and when the dropdown is closed, the new scope is destroyed.</p>
+<p>However, what if the UI gets cleaned up while the dropdown is open? The
+<code>uiScope</code> will get cleaned up, but the <code>dropdownScope</code> will not.</p>
+<p>To help with this, Fusion provides an <code>innerScope</code> method. It works just like
+<code>deriveScope</code>, but it adds in extra logic:</p>
 <ul>
-<li>the 'outer scope' is cleaned up</li>
-<li>the 'inner scope' itself is cleaned up</li>
+<li>When the original scope is cleaned up, the 'inner scope' is cleaned up too</li>
+<li>You can still call <code>doCleanup()</code> to clean the inner scope up early</li>
 </ul>
-<p>This means that inner scopes are often the safest choice for creating new
-scopes. They let you call <code>doCleanup</code> whenever you like, but guarantee that they
-won't stick around beyond the rest of the code they're in.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">uiScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+
+<span class="c1">-- ... create the ui ...</span>
+
+<span class="nb">table.insert</span><span class="p">(</span>
+    <span class="n">uiScope</span><span class="p">,</span>
+    <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="hll">        <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">innerScope</span><span class="p">()</span>
+</span>
+        <span class="c1">-- ... create the dropdown ...</span>
+
+        <span class="nb">table.insert</span><span class="p">(</span>
+            <span class="n">dropdownScope</span><span class="p">,</span>
+            <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+                <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+            <span class="kr">end</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Now, the dropdown scope is guaranteed to be cleaned up if the UI it came from is
+cleaned up. This strictly limits how long the dropdown can exist for.</p>
+<p>Inner scopes are often the safest choice for creating new scopes. They let you
+call <code>doCleanup</code> whenever you like, but guarantee that they won't stick around
+beyond the rest of the code they're in.</p>
 <hr />
 <h2 id="when-youll-use-this">When You'll Use This<a class="headerlink" href="#when-youll-use-this" title="Permanent link">&para;</a></h2>
 <p>Scopes might sound like a lot of upfront work. However, you'll find in practice

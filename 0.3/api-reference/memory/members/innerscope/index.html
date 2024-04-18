@@ -2713,6 +2713,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#addmethods" class="md-nav__link">
+    ... : AddMethods...
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2767,15 +2774,21 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#innerscope-scopet" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">innerScope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">existing</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">innerScope</span><span class="o">&lt;</span><span class="n">Existing</span><span class="p">,</span> <span class="n">AddMethods</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">existing</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">Existing</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="p">...:</span> <span class="p">(</span><span class="n">AddMethods</span> <span class="o">&amp;</span> <span class="p">{})...</span>
+<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">merge</span><span class="p">(</span><span class="n">Existing</span><span class="p">,</span> <span class="n">AddMethods</span><span class="p">...)</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>Returns a blank <a href="../../types/scope">scope</a> with the same methods as an existing
-scope.</p>
+scope, plus some optional additional methods which are merged in to only the
+new scope.</p>
 <p>Unlike <a href="../derivescope">deriveScope</a>, the returned scope is an inner scope of 
 the original scope. It exists until either the user calls <code>doCleanup</code> on it, or
 the original scope is cleaned up.</p>
+<div class="admonition note">
+<p class="admonition-title">Pseudo type</p>
+<p>Luau doesn't have adequate syntax to represent this function.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Scopes are not unique</p>
 <p>Fusion can recycle old unused scopes. This helps make scopes more
@@ -2793,6 +2806,14 @@ and you shouldn't use them as unique identifiers anywhere.</p>
     </span>
 <a class="headerlink" href="#existing-scopet" title="Permanent link">&para;</a></h3>
 <p>An existing scope, whose methods should be re-used for the new scope.</p>
+<h3 id="addmethods">
+    ...
+    <span class="fusiondoc-api-type">
+        : AddMethods...
+    </span>
+<a class="headerlink" href="#addmethods" title="Permanent link">&para;</a></h3>
+<p>A series of tables, ideally including functions which take a scope as their
+first parameter. Those functions will turn into methods on the scope.</p>
 <hr />
 <h2 id="returns-scopet">
     Returns
@@ -2800,7 +2821,8 @@ and you shouldn't use them as unique identifiers anywhere.</p>
         -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#returns-scopet" title="Permanent link">&para;</a></h2>
-<p>A blank inner scope with the same methods as the existing scope.</p>
+<p>A blank inner scope with the same methods as the existing scope, plus the
+extra methods provided.</p>
 <hr />
 <h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>
