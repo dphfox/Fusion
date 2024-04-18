@@ -20,7 +20,7 @@ local function isSimilar(
 	return
 		if not (isTable or isUserdata) then
 			a == b or a ~= a and b ~= b
-		elseif typeA == typeof(b) and (table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil or isUserdata) then
+		elseif typeA == typeof(b) and (isUserdata or table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil) then
 			a == b
 		else
 			false
