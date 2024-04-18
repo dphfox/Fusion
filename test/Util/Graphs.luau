@@ -34,7 +34,7 @@ export type PropertyTest = {
 			graph: Graph
 		}
 	},
-	perform: (Graph) -> boolean
+	perform: (Graph) -> string | true
 }
 
 local Graphs = {}
@@ -307,10 +307,11 @@ Graphs.STANDARD = {
 }
 
 function Graphs.format(
+	output: {string},
 	graph: Graph
-): {string}
+): ()
 
-	local output = {`  ⁂ {graph.shape.name} : {table.concat(graph.shape.objects, ", ")}`}
+	table.insert(output, `  ⁂ {graph.shape.name} : {table.concat(graph.shape.objects, ", ")}`)
 	table.insert(output, " ")
 
 	local VALIDITY_SYMBOLS = {
@@ -379,10 +380,6 @@ function Graphs.format(
 
 		line += 1
 	end
-
-	table.insert(output, " ")
-
-	return output
 end
 
 function Graphs.make(
@@ -447,7 +444,6 @@ end
 
 function Graphs.propertyTest(
 	it: any,
-	expect: any,
 	test: PropertyTest
 ): ()
 	for _, shape in Graphs.STANDARD do
@@ -461,9 +457,19 @@ function Graphs.propertyTest(
 					`{test.name} ({subTest.subName}) for {shape.name}`
 			
 			it(testTitle, function()
-				expect(function()
-					test.perform(subTest.graph)
-				end).never.to.throw()
+				local success = test.perform(subTest.graph)
+
+				if not success then
+					local output = {
+						"Failed to verify a property of the graph.",
+						`Test name: {testTitle}`,
+						`Diagnosis: {success}`,
+						"The final state of the graph is shown below.",
+						"====="
+					}
+					Graphs.format(output, subTest.graph)
+					error("\n"..table.concat(output, "\n"))
+				end
 			end)
 		end
 	end
