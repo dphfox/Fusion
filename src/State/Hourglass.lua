@@ -112,6 +112,7 @@ function class:stop()
 	-- if the connection isn't found then the hourglass is already stopped
 	if self._connection == nil then return end
 	table.remove(self.scope, table.find(self.scope, self._connection))
+	self._connection:Disconnect()
 	self._connection = nil
 end
 
@@ -156,6 +157,7 @@ local function Hourglass(
 		_tickListeners = {},
 
 		_interval = interval,
+		_currentInterval = peek(interval),
 		_nextTick = nil,
 		_connection = nil
 	}, CLASS_METATABLE)

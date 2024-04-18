@@ -148,6 +148,17 @@ export type ObserverConstructor = (
 	watching: Dependency
 ) -> Observer
 
+-- An object which has intervaled callbacks.
+export type Hourglass = Dependent & {
+	type: "Hourglass",
+	onTick: (Hourglass, callback: () -> ()) -> (() -> ()),
+	onBind: (Hourglass, callback: () -> ()) -> (() -> ())
+}
+export type HourglassConstructor = (
+	scope: Scope<unknown>,
+	interval: Dependency
+) -> Hourglass
+
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
 	kind: "Tween"
@@ -239,6 +250,7 @@ export type Fusion = {
 	ForKeys: ForKeysConstructor,
 	ForValues: ForValuesConstructor,
 	Observer: ObserverConstructor,
+	Hourglass: HourglassConstructor,
 
 	Tween: TweenConstructor,
 	Spring: SpringConstructor,
