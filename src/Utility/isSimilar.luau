@@ -4,22 +4,26 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Returns true if A and B are 'similar' - i.e. any user of A would not need
-	to recompute if it changed to B.
+	Implements the 'similarity test' used to determine whether two values have
+	a meaningful difference.
+
+	https://elttob.uk/Fusion/0.3/tutorials/best-practices/optimisation/#similarity
 ]]
 
 local function isSimilar(
 	a: unknown, 
 	b: unknown
 ): boolean
-	if a == b then
-		-- Tables that aren't frozen are assumed to be mutable, and mutable
-		-- tables are assumed to always be dissimilar.
-		return typeof(a) ~= "table" or table.isfrozen(a :: any) 
-	else
-		-- NaN is the only value that's similar to itself without being equal.
-		return a ~= a and b ~= b
-	end
+	local typeA = typeof(a)
+	local isTable = typeA == "table"
+	local isUserdata = typeA == "userdata"
+	return
+		if not (isTable or isUserdata) then
+			a == b or a ~= a and b ~= b
+		elseif typeA == typeof(b) and (isUserdata or table.isfrozen(a :: any) or getmetatable(a :: any) ~= nil) then
+			a == b
+		else
+			false
 end
 
 return isSimilar

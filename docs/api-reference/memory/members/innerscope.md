@@ -1,19 +1,19 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<span>Memory</span>
 	<span>Members</span>
-	<span>deriveScope</span>
+	<span>innerScope</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
-	<span class="fusiondoc-api-name">deriveScope</span>
+	<span class="fusiondoc-api-name">innerScope</span>
 	<span class="fusiondoc-api-type">
 		-> <a href="../../types/scope">Scope</a>&lt;T&gt;
 	</span>
 </h1>
 
 ```Lua
-function Fusion.deriveScope<T>(
+function Fusion.innerScope<T>(
 	existing: Scope<T>
 ): Scope<T>
 ```
@@ -21,8 +21,9 @@ function Fusion.deriveScope<T>(
 Returns a blank [scope](../../types/scope) with the same methods as an existing
 scope.
 
-Unlike [innerScope](../derivescope), the returned scope has a completely
-independent lifecycle from the original scope.
+Unlike [deriveScope](../derivescope), the returned scope is an inner scope of 
+the original scope. It exists until either the user calls `doCleanup` on it, or
+the original scope is cleaned up.
 
 !!! warning "Scopes are not unique"
 	Fusion can recycle old unused scopes. This helps make scopes more
@@ -54,7 +55,7 @@ An existing scope, whose methods should be re-used for the new scope.
 	</span>
 </h2>
 
-A blank (non-inner) scope with the same methods as the existing scope.
+A blank inner scope with the same methods as the existing scope.
 
 -----
 
