@@ -220,7 +220,7 @@ To do this, Fusion provides a `deriveScope` function. It behaves like `scoped`
 but lets you skip defining the methods. Instead, you give it an example of what
 the scope should look like.
 
-```Lua hl_lines="8"
+```Lua hl_lines="9"
 local foo = scoped({
 	Foo = Foo,
 	Bar = Bar,
