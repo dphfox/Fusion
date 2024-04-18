@@ -26,17 +26,6 @@ export type Graph = {
 	objects: {[string]: Types.GraphObject}
 }
 
-export type PropertyTest = {
-	name: string,
-	init: (GraphShape) -> {
-		{
-			subName: string,
-			graph: Graph
-		}
-	},
-	perform: (Graph) -> string | true
-}
-
 local Graphs = {}
 
 Graphs.STANDARD = {
@@ -443,34 +432,50 @@ function Graphs.make(
 end
 
 function Graphs.propertyTest(
-	it: any,
-	test: PropertyTest
-): ()
-	for _, shape in Graphs.STANDARD do
-		local subTests = test.init(shape)
-
-		for _, subTest in subTests do
-			local testTitle =
-				if #subTests == 1 then
-					`{test.name} for {shape.name}`
-				else
-					`{test.name} ({subTest.subName}) for {shape.name}`
-			
-			it(testTitle, function()
-				local success = test.perform(subTest.graph)
-
-				if not success then
-					local output = {
-						"Failed to verify a property of the graph.",
-						`Test name: {testTitle}`,
-						`Diagnosis: {success}`,
-						"The final state of the graph is shown below.",
-						"====="
-					}
-					Graphs.format(output, subTest.graph)
-					error("\n"..table.concat(output, "\n"))
-				end
-			end)
+	test: {
+		testing: string,
+		it: string,
+		init: (GraphShape) -> {
+			{
+				subName: string,
+				graph: Graph
+			}
+		},
+		perform: (Graph) -> string | true
+	}
+)
+	return function(it: any): ()
+		local didAnyTests = false
+		for _, shape in Graphs.STANDARD do
+			local subTests = test.init(shape)
+	
+			for _, subTest in subTests do
+				local testTitle =
+					if #subTests == 1 then
+						`{test.it} - for {shape.name}`
+					else
+						`{test.it} ({subTest.subName}) - for {shape.name}`
+				
+				didAnyTests = true
+				it(testTitle, function()
+					local success = test.perform(subTest.graph)
+	
+					if not success then
+						local output = {
+							"Failed to verify a property of the graph.",
+							`Test name: {testTitle}`,
+							`Diagnosis: {success}`,
+							"The final state of the graph is shown below.",
+							"====="
+						}
+						Graphs.format(output, subTest.graph)
+						error("\n"..table.concat(output, "\n"))
+					end
+				end)
+			end
+		end
+		if not didAnyTests then
+			warn(`{test.testing} - No property tests produced for: "{test.it}"`)
 		end
 	end
 end

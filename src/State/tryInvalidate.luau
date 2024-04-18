@@ -6,6 +6,11 @@ local task = nil -- Disable usage of Roblox's task scheduler
 --[[
 	Invalidates a graph object using monotonic painting.
 	https://fluff.blog/2024/04/16/monotonic-painting.html
+
+	Note: after invalidation, the targeted object will be valid and will have a
+	new `lastChange` time. That's because this function assumes the change on
+	this object is always meaningful - for meaningless changes, do not call this
+	function at all.
 ]]
 
 local Package = script.Parent.Parent
@@ -39,6 +44,7 @@ local function tryInvalidate(
 			end
 			searchInNow, searchInNext = searchInNext, searchInNow
 		until done
+		target.lastChange = os.clock()
 		for _, invalidateTarget in invalidateList do
 			invalidateTarget.validity = "invalid"
 		end
