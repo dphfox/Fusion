@@ -6,9 +6,6 @@ local Types = require(Fusion.Types)
 export type GraphShape = {
 	name: string,
 	repr: {string},
-	facts: {
-		cyclic: boolean
-	},
 	objects: {string},
 	edges: {
 		{
@@ -45,9 +42,6 @@ Graphs.STANDARD = {
 		repr = {
 			"A";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A"},
 		edges = {
 		}
@@ -59,9 +53,6 @@ Graphs.STANDARD = {
 			"A";
 			"↓";
 			"B";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B"},
 		edges = {
@@ -80,9 +71,6 @@ Graphs.STANDARD = {
 			"↓";
 			"D";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
 			{from = "A", to = "B"},
@@ -98,9 +86,6 @@ Graphs.STANDARD = {
 			" ↘↓↙ ";
 			"  D  ";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
 			{from = "A", to = "D"},
@@ -115,9 +100,6 @@ Graphs.STANDARD = {
 			"  A  ";
 			" ↙↓↘ ";
 			"B C D";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -135,9 +117,6 @@ Graphs.STANDARD = {
 			"B   C";
 			"↓   ↓";
 			"D   E";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B", "C", "D", "E"},
 		edges = {
@@ -157,9 +136,6 @@ Graphs.STANDARD = {
 			"C   D";
 			"↓   ↓";
 			"E   F";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B", "C", "D", "E", "F"},
 		edges = {
@@ -181,9 +157,6 @@ Graphs.STANDARD = {
 			" ↘ ↙ ";
 			"  D  ";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
 			{from = "A", to = "B"},
@@ -203,9 +176,6 @@ Graphs.STANDARD = {
 			"D   ↓";
 			" ↘ ↙ ";
 			"  E  ";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B", "C", "D", "E"},
 		edges = {
@@ -228,9 +198,6 @@ Graphs.STANDARD = {
 			" ↘ ↙ ";
 			"  F  ";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A", "B", "C", "D", "E", "F"},
 		edges = {
 			{from = "A", to = "B"},
@@ -249,9 +216,6 @@ Graphs.STANDARD = {
 			" ↙ ↖ ";
 			" ↘ ↗ ";
 			"  B  ";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B"},
 		edges = {
@@ -272,9 +236,6 @@ Graphs.STANDARD = {
 			"  ↓  ";
 			"  D  ";
 		},
-		facts = {
-			cyclic = false
-		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
 			{from = "A", to = "B"},
@@ -292,9 +253,6 @@ Graphs.STANDARD = {
 			"B   D";
 			" ↘ ↗ ";
 			"  C  ";
-		},
-		facts = {
-			cyclic = false
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
