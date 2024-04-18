@@ -2935,8 +2935,8 @@ methods you need the scope to have.</p>
 <p>If you don't know what methods to ask for, consider these two strategies.</p>
 <ol>
 <li>
-<p>If you only use common methods (like Fusion's constructors) then it's a
-safe assumption that the user will also have those methods. You can ask for a
+<p>If you use common methods (like Fusion's constructors) then it's a safe 
+assumption that the user will also have those methods. You can ask for a
 scope with those methods pre-defined.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Component</span><span class="p">(</span>
 <span class="hll">    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
@@ -2953,16 +2953,15 @@ scope with those methods pre-defined.</p>
 (for example, components you use internally), then you should not ask for those.
 Instead, create a new inner scope with the methods you need.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Component</span><span class="p">(</span>
-<span class="hll">    <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span>
-</span>    <span class="n">props</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">props</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">)</span>
-<span class="hll">    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
+<span class="hll">    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
 </span><span class="hll">        <span class="n">SpecialThing1</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">SpecialThing1</span><span class="p">),</span>
 </span><span class="hll">        <span class="n">SpecialThing2</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">SpecialThing2</span><span class="p">),</span>
 </span><span class="hll">    <span class="p">})</span>
-</span><span class="hll">    <span class="nb">table.insert</span><span class="p">(</span><span class="n">outerScope</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
-</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">SpecialThing1</span> <span class="p">{</span>
+</span><span class="hll">
+</span>    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">SpecialThing1</span> <span class="p">{</span>
         <span class="c1">-- ... rest of code here ...</span>
     <span class="p">}</span>
 <span class="kr">end</span>
@@ -3048,22 +3047,20 @@ There's a number of advantages to this:</p>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
 <span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">PopUp</span><span class="p">(</span>
-    <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span> 
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span> 
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Message</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">DismissText</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">)</span>
-    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
         <span class="n">Message</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">Message</span><span class="p">),</span>
         <span class="n">Button</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">Button</span><span class="p">)</span>
     <span class="p">})</span>
-    <span class="nb">table.insert</span><span class="p">(</span><span class="n">outerScope</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
 
     <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
         <span class="c1">-- ...some properties...</span>

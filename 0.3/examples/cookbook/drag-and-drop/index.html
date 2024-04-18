@@ -3118,8 +3118,7 @@ ability aren't locked out of UI functions.</p>
 <span class="normal">340</span>
 <span class="normal">341</span>
 <span class="normal">342</span>
-<span class="normal">343</span>
-<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">UserInputService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;UserInputService&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
@@ -3269,7 +3268,7 @@ ability aren't locked out of UI functions.</p>
 <span class="kr">end</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
-    <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
@@ -3289,10 +3288,9 @@ ability aren't locked out of UI functions.</p>
         <span class="n">OnMouseDown</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span><span class="err">?</span>
     <span class="p">}</span>
 <span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
         <span class="n">Draggable</span> <span class="o">=</span> <span class="n">Draggable</span>
-    <span class="p">})</span>
-    <span class="nb">table.insert</span><span class="p">(</span><span class="n">outerScope</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+    <span class="p">}</span>
 
     <span class="kd">local</span> <span class="n">itemPosition</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">itemIsDragging</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
@@ -3665,7 +3663,7 @@ expected to change, so that's specified to be a <code>Value</code> object.</p>
 <span class="normal">168</span>
 <span class="normal">169</span>
 <span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
-    <span class="n">outerScope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">StateObject</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
