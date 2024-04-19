@@ -37,7 +37,8 @@ end
 
 export type Graph = {
 	shape: GraphShape,
-	objects: {[string]: Types.GraphObject}
+	objects: {[string]: Types.GraphObject},
+	allObjects: {Types.GraphObject}
 }
 
 local Graphs = {}
@@ -325,32 +326,42 @@ end
 
 Graphs.selectors = {}
 
-function Graphs.selectors.dependentDepthOf(
-	graph: Graph,
-	desiredDepth: number
+function Graphs.selectors.distance(
+	selectFrom: {Types.GraphObject},
+	distanceFrom: {Types.GraphObject},
+	kind: "dependency" | "dependent",
+	desiredDistance: number
 )
+	local isFindTarget: {[Types.GraphObject]: true} = {}
+	for _, object in distanceFrom or {} :: any  do
+		isFindTarget[object] = true
+	end
 	local selection = {}
-	for _, object in graph.objects do
-		local depth = 0
+	for _, object in selectFrom do
 		local searchNow = {[object] = true}
 		local searchNext = {}
-		while true do
-			local canGoFurther = false
+		for distance = 0, desiredDistance do
+			local found = false
 			for searchTarget in searchNow do
-				for dependent in searchTarget.dependentSet do
-					canGoFurther = true
+				if isFindTarget[searchTarget] then
+					found = true
+					continue
+				end
+				local searchSet: {[Types.GraphObject]: unknown} = 
+					if kind == "dependency" then 
+						searchTarget.dependencySet 
+					else 
+						searchTarget.dependentSet
+				for dependent in searchSet do
 					searchNext[dependent] = true
 				end
 			end
-			if not canGoFurther then
-				if depth == desiredDepth then
+			if found then
+				if distance == desiredDistance then
 					table.insert(selection, object)
+				else
+					break
 				end
-				break
-			end
-			depth += 1
-			if depth >= desiredDepth + 1 then
-				break
 			end
 			searchNow, searchNext = searchNext, searchNow
 			table.clear(searchNext)
@@ -359,68 +370,19 @@ function Graphs.selectors.dependentDepthOf(
 	return selection
 end
 
-function Graphs.selectors.dependencyDepthOf(
-	graph: Graph,
-	desiredDepth: number
+function Graphs.selectors.noConnections(
+	selectFrom: {Types.GraphObject},
+	kind: "dependency" | "dependent"
 )
 	local selection = {}
-	for _, object in graph.objects do
-		local depth = 0
-		local searchNow = {[object] = true}
-		local searchNext = {}
-		while true do
-			local canGoFurther = false
-			for searchTarget in searchNow do
-				for dependency in searchTarget.dependencySet do
-					canGoFurther = true
-					searchNext[dependency] = true
-				end
-			end
-			if not canGoFurther then
-				if depth == desiredDepth then
-					table.insert(selection, object)
-				end
-				break
-			end
-			depth += 1
-			if depth >= desiredDepth + 1 then
-				break
-			end
-			searchNow, searchNext = searchNext, searchNow
-			table.clear(searchNext)
-		end
-	end
-	return selection
-end
-
-function Graphs.selectors.objectDependents(
-	objects: {Types.GraphObject}
-): {Types.GraphObject}
-	local selection = {}
-	local seen = {}
-	for _, object in objects do
-		for dependent in object.dependentSet do
-			if not seen[dependent] then
-				table.insert(selection, dependent)
-				seen[dependent] = true
-			end
-		end
-	end
-	return selection
-end
-
-
-function Graphs.selectors.objectDependencies(
-	objects: {Types.GraphObject}
-): {Types.GraphObject}
-	local selection = {}
-	local seen = {}
-	for _, object in objects do
-		for dependency in object.dependencySet do
-			if not seen[dependency] then
-				table.insert(selection, dependency)
-				seen[dependency] = true
-			end
+	for _, object in selectFrom do
+		local searchSet: {[Types.GraphObject]: unknown} = 
+			if kind == "dependency" then 
+				object.dependencySet 
+			else 
+				object.dependentSet
+		if next(searchSet) == nil then
+			table.insert(selection, object)
 		end
 	end
 	return selection
@@ -465,9 +427,6 @@ function Graphs.format(
 	output: {string},
 	graph: Graph
 ): ()
-
-	table.insert(output, `  ⁂ {graph.shape.name} : {table.concat(graph.shape.objects, ", ")}`)
-	table.insert(output, " ")
 
 	local VALIDITY_SYMBOLS = {
 		valid = "✓",
@@ -558,6 +517,7 @@ function Graphs.make(
 	}
 ): Graph
 	local objects = {}
+	local allObjects = {}
 	for _, name in options.shape.objects do
 		local myOptions = options.objects[name]
 		if myOptions == nil then
@@ -587,6 +547,7 @@ function Graphs.make(
 		}
 
 		objects[name] = object
+		table.insert(allObjects, object)
 	end
 	for _, edge in options.shape.edges do
 		local from = objects[edge.from]
@@ -596,7 +557,8 @@ function Graphs.make(
 	end
 	return {
 		shape = options.shape,
-		objects = objects
+		objects = objects,
+		allObjects = allObjects
 	}
 end
 
@@ -643,6 +605,8 @@ function Graphs.propertyTest(
 					
 					didAnyTests = true
 					it(testTitle, function()
+						local preStateFormatted = {}
+						Graphs.format(preStateFormatted, graph)
 						local ok, diagnosis = pcall(test.perform, graph)
 						if not ok or diagnosis ~= false then
 							if diagnosis == "not implemented" then
@@ -658,15 +622,14 @@ function Graphs.propertyTest(
 								`  Tested {test.testing} ...`,
 								`  ... spec says it {test.it} ...`,
 								`  ... but {diagnosis}`,
-								
-								
 								"",
-								
+								"  Initial state of graph after preparation:",
 								"",
-								"  The final state of the graph is shown below.",
-								"  ==================================",
-								""
+								unpack(preStateFormatted)
 							}
+							table.insert(output, "")
+							table.insert(output, "  Final state of graph after error:")
+							table.insert(output, "")
 							Graphs.format(output, graph)
 							table.insert(output, "")
 

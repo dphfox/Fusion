@@ -20,12 +20,11 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
-			for _, target in targets do
+			for _, target in graph.allObjects do
 				tryInvalidate(target)
 			end
 			return Graphs.check(
-				targets,
+				graph.allObjects,
 				Graphs.tests.validity("valid")
 			)
 		end
@@ -38,11 +37,11 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			for _, target in Graphs.selectors.dependencyDepthOf(graph, 0) do
-				local before = target.lastChange
-				tryInvalidate(target)
-				if target.lastChange == before then
-					return `{Graphs.nameOf(target)} didn't change its last change time`
+			for _, object in graph.allObjects do
+				local before = object.lastChange
+				tryInvalidate(object)
+				if object.lastChange == before then
+					return `{Graphs.nameOf(object)} didn't change its last change time`
 				end
 			end
 			return false
@@ -56,12 +55,12 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
 				tryInvalidate(target)
 			end
 			return Graphs.check(
-				Graphs.selectors.objectDependents(targets),
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 1),
 				Graphs.tests.validity("invalid")
 			)
 		end
@@ -74,10 +73,9 @@ return function()
 		prepare = function(
 			graph: Graphs.Graph
 		)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, object in 
-				Graphs.selectors.objectDependents(
-					Graphs.selectors.dependencyDepthOf(graph, 0)
-				) 
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 1) 
 			do
 				object.validity = "invalid"
 			end
@@ -86,14 +84,12 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
 				tryInvalidate(target)
 			end
 			return Graphs.check(
-				Graphs.selectors.objectDependencies(
-					Graphs.selectors.objectDependencies(targets)
-				),
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 2),
 				Graphs.tests.validity("valid")
 			)
 		end
@@ -106,14 +102,12 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
 				tryInvalidate(target)
 			end
 			return Graphs.check(
-				Graphs.selectors.objectDependents(
-					Graphs.selectors.objectDependents(targets)
-				),
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 2),
 				Graphs.tests.validity("invalid")
 			)
 		end
@@ -126,12 +120,9 @@ return function()
 		prepare = function(
 			graph: Graphs.Graph
 		)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, object in 
-				Graphs.selectors.objectDependents(
-					Graphs.selectors.objectDependents(
-						Graphs.selectors.dependencyDepthOf(graph, 0)
-					) 
-				) 
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 2)
 			do
 				object.validity = "invalid"
 			end
@@ -140,17 +131,13 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
 				tryInvalidate(target)
 			end
 			return Graphs.check(
-				Graphs.selectors.objectDependents(
-					Graphs.selectors.objectDependents(
-						Graphs.selectors.objectDependents(targets)
-					)
-				),
-				Graphs.tests.validity("invalid")
+				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 3),
+				Graphs.tests.validity("valid")
 			)
 		end
 	} (describe)
@@ -170,12 +157,13 @@ return function()
 		testing = "tryInvalidate",
 		it = "throws an error for malformed graphs in finite time",
 		filters = {Graphs.filters.malformed},
-		perform = function(
+		prepare = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			local timeCheck = FiniteTime.start()
-
+			-- Because an inccorect algorithm is prone to hang when given
+			-- malformed data, implement a tiem limit as a backup strategy to
+			-- avoid hanging the entire test suite.
+			local timeCheck = FiniteTime.start(1)
 			for _, object in graph.objects do
 				local metatable = getmetatable(object :: any)
 				if metatable == nil then
@@ -201,9 +189,19 @@ return function()
 					end
 				end
 			end
-
-			local ok, err = pcall(tryInvalidate :: any, target)
-
+			return {graph}
+		end,
+		perform = function(
+			graph: Graphs.Graph
+		)
+			local ok, err = pcall(function()
+				for _, object in graph.objects do
+					tryInvalidate(object)
+					for _, object in graph.objects do
+						object.validity = "valid"
+					end
+				end
+			end)
 			if ok then
 				return "Should not have completed without errors"
 			elseif string.find(err, "infiniteLoop", 1, true) == nil then

@@ -29,7 +29,10 @@ local TERMINATION_TIME = 1
 local function tryInvalidate(
 	target: Types.GraphObject
 ): ()
-	if target.validity == "valid" then
+	if target.validity == "invalid" then
+		target.lastChange = os.clock()
+		target.validity = "valid"
+	elseif target.validity == "valid" then
 		table.clear(searchInNow)
 		table.clear(invalidateList)
 		searchInNow[1] = target
