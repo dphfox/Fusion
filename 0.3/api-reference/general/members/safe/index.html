@@ -2871,14 +2871,15 @@ the <code>fallback</code> function can handle the error and produces a fallback 
 <p><code>Safe</code> acts like a version of <code>xpcall</code> that is easier to use in calculations and
 expressions, because it only returns the values from the functions, rather than
 returning a success boolean.</p>
-<div class="admonition note">
+<div class="admonition warning">
 <p class="admonition-title">Fatal versus non-fatal errors</p>
 <p><code>Safe</code> only protects you from errors that would stop your calculation from
 successfully returning a value.</p>
-<p>In particular, this implies that errors that occur inside
-<a href="../../../state/members/computed">computeds</a> or other similar objects will
-<em>not</em> be caught by <code>Safe</code>, because those errors are safely handled by those
-objects and do not cause the calculation to crash fatally.</p>
+<p>In particular, this applies to <a href="../../../state/members/computed">computeds</a>
+you create inside <code>Safe</code> (and other similar objects). Because those errors 
+are safely handled by those objects, and do not cause the <code>Safe</code> calculation
+to crash fatally, you have to use <code>Safe</code> inside of the computed itself if
+you want to capture the error.</p>
 </div>
 <hr />
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
