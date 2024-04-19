@@ -12,7 +12,6 @@ export type GraphShape = {
 	facts: {
 		wellFormed: boolean
 	},
-	-- Objects should be topologically ordered.
 	objects: {string},
 	edges: {
 		{
@@ -434,7 +433,7 @@ function Graphs.format(
 	local VALIDITY_SYMBOLS = {
 		valid = "✓",
 		invalid = "✕",
-		busy = "◷"
+		busy = "○"
 	}
 
 	local TIMELINESS_SYMBOLS = {
@@ -511,55 +510,35 @@ export type ObjectTemplate = {
 }
 
 function Graphs.make(
-	scope: Types.Scope<unknown>,
-	options: {
-		shape: GraphShape,
-		objects: {
-			[string]: ObjectTemplate
-		}
-	}
+	shape: GraphShape
 ): Graph
 	local objects = {}
 	local allObjects = {}
-	for _, name in options.shape.objects do
-		local myOptions = options.objects[name]
-		if myOptions == nil then
-			myOptions = {}
-		end
-
+	for _, name in shape.objects do
 		local object: Types.GraphObject = {
-			scope = myOptions.scope or scope,
+			scope = nil,
 			name = name,
 			dependencySet = {},
 			dependentSet = {},
-			lastChange = myOptions.lastChange or nil,
-			timeliness = myOptions.timeliness :: any or "lazy",
-			validity = myOptions.validity :: any or "valid",
-			duringRevalidation =
-				if myOptions.duringRevalidation == nil then
-					function()
-						return true
-					end
-				else
-					function(self)
-						return myOptions.duringRevalidation(self, name)
-					end,
-			destroy = function(...): ()
-
-			end
+			lastChange = nil,
+			timeliness = "lazy" :: "lazy",
+			validity = "valid" :: "valid",
+			duringRevalidation = function()
+				return true
+			end,
+			destroy = function() end
 		}
-
 		objects[name] = object
 		table.insert(allObjects, object)
 	end
-	for _, edge in options.shape.edges do
+	for _, edge in shape.edges do
 		local from = objects[edge.from]
 		local to = objects[edge.to]
 		from.dependentSet[to] = true
 		to.dependencySet[from] = true
 	end
 	return {
-		shape = options.shape,
+		shape = shape,
 		objects = objects,
 		allObjects = allObjects
 	}
@@ -602,16 +581,10 @@ function Graphs.propertyTest(
 
 				local subTests: {Graph} = {}
 				if test.preparation == nil then
-					subTests[1] = Graphs.make({}, {
-						shape = shape,
-						objects = {}
-					})
+					subTests[1] = Graphs.make(shape)
 				else
 					for index = 1, test.preparation.count do
-						local graph = Graphs.make({}, {
-							shape = shape,
-							objects = {}
-						})
+						local graph = Graphs.make(shape)
 						test.preparation.prepare(graph)
 						subTests[index] = graph
 					end
