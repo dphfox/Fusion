@@ -323,63 +323,142 @@ function Graphs.filters.malformed(
 	return not shape.facts.wellFormed
 end
 
-function Graphs.filters.dependentDepthOf(
+Graphs.selectors = {}
+
+function Graphs.selectors.dependentDepthOf(
+	graph: Graph,
 	desiredDepth: number
 )
-	return function(
-		shape: GraphShape
-	): boolean
+	local selection = {}
+	for _, object in graph.objects do
 		local depth = 0
-		local target = shape.objects[1]
+		local searchNow = {[object] = true}
+		local searchNext = {}
 		while true do
-			local found = nil
-			for _, edge in shape.edges do
-				if edge.from == target then
-					found = edge.to
-					break
+			local canGoFurther = false
+			for searchTarget in searchNow do
+				for dependent in searchTarget.dependentSet do
+					canGoFurther = true
+					searchNext[dependent] = true
 				end
 			end
-			if found then
-				depth += 1
-				target = found
-				if depth >= desiredDepth then
-					return true
+			if not canGoFurther then
+				if depth == desiredDepth then
+					table.insert(selection, object)
 				end
-			else
-				return false
+				break
 			end
+			depth += 1
+			if depth >= desiredDepth + 1 then
+				break
+			end
+			searchNow, searchNext = searchNext, searchNow
+			table.clear(searchNext)
+		end
+	end
+	return selection
+end
+
+function Graphs.selectors.dependencyDepthOf(
+	graph: Graph,
+	desiredDepth: number
+)
+	local selection = {}
+	for _, object in graph.objects do
+		local depth = 0
+		local searchNow = {[object] = true}
+		local searchNext = {}
+		while true do
+			local canGoFurther = false
+			for searchTarget in searchNow do
+				for dependency in searchTarget.dependencySet do
+					canGoFurther = true
+					searchNext[dependency] = true
+				end
+			end
+			if not canGoFurther then
+				if depth == desiredDepth then
+					table.insert(selection, object)
+				end
+				break
+			end
+			depth += 1
+			if depth >= desiredDepth + 1 then
+				break
+			end
+			searchNow, searchNext = searchNext, searchNow
+			table.clear(searchNext)
+		end
+	end
+	return selection
+end
+
+function Graphs.selectors.objectDependents(
+	objects: {Types.GraphObject}
+): {Types.GraphObject}
+	local selection = {}
+	local seen = {}
+	for _, object in objects do
+		for dependent in object.dependentSet do
+			if not seen[dependent] then
+				table.insert(selection, dependent)
+				seen[dependent] = true
+			end
+		end
+	end
+	return selection
+end
+
+
+function Graphs.selectors.objectDependencies(
+	objects: {Types.GraphObject}
+): {Types.GraphObject}
+	local selection = {}
+	local seen = {}
+	for _, object in objects do
+		for dependency in object.dependencySet do
+			if not seen[dependency] then
+				table.insert(selection, dependency)
+				seen[dependency] = true
+			end
+		end
+	end
+	return selection
+end
+
+Graphs.tests = {}
+
+function Graphs.tests.validity(
+	shouldBe: "valid" | "invalid" | "busy"
+)
+	return function(
+		object: Types.GraphObject
+	): string | false
+		if object.validity ~= shouldBe then
+			return `{Graphs.nameOf(object)} was "{object.validity}" instead of "{shouldBe}"`
+		else
+			return false
 		end
 	end
 end
 
-function Graphs.filters.dependencyDepthOf(
-	desiredDepth: number
-)
-	return function(
-		shape: GraphShape
-	): boolean
-		local depth = 0
-		local target = shape.objects[#shape.objects]
-		while true do
-			local found = nil
-			for _, edge in shape.edges do
-				if edge.to == target then
-					found = edge.from
-					break
-				end
-			end
-			if found then
-				depth += 1
-				target = found
-				if depth >= desiredDepth then
-					return true
-				end
-			else
-				return false
-			end
+function Graphs.check(
+	objects: {Types.GraphObject},
+	test: (Types.GraphObject) -> string | false
+): string | false
+	for _, object in objects do
+		local diagnosis = test(object)
+		if diagnosis ~= false then
+			return diagnosis :: string
 		end
-		
 	end
+	return false
+end
+
+function Graphs.nameOf(
+	object: Types.GraphObject
+): string
+	return (object :: any).name or "GraphObject"
 end
 
 function Graphs.format(
@@ -530,8 +609,8 @@ function Graphs.propertyTest(
 		testing: string,
 		it: string,
 		filters: {(GraphShape) -> boolean},
-		prepare: nil | (GraphShape) -> {Graph},
-		perform: (Graph) -> string | true
+		prepare: nil | (Graph) -> {Graph},
+		perform: (Graph) -> string | false
 	}
 )
 	return function(describe: any): ()
@@ -553,16 +632,11 @@ function Graphs.propertyTest(
 					continue
 				end
 		
-				local subTests: {Graph} =
-					if test.prepare == nil then
-						{
-							Graphs.make({}, {
-								shape = shape,
-								objects = {}
-							})
-						}
-					else
-						test.prepare(shape)
+				local plainGraph = Graphs.make({}, {
+					shape = shape,
+					objects = {}
+				})
+				local subTests: {Graph} = if test.prepare == nil then {plainGraph} else test.prepare(plainGraph)
 
 				for index, graph in subTests do
 					local testTitle = if #subTests == 1 then shape.name else `{shape.name} [{index}]`
@@ -570,7 +644,7 @@ function Graphs.propertyTest(
 					didAnyTests = true
 					it(testTitle, function()
 						local ok, diagnosis = pcall(test.perform, graph)
-						if not ok or diagnosis ~= true then
+						if not ok or diagnosis ~= false then
 							if diagnosis == "not implemented" then
 								if not detectedNotImplemented then
 									warn(`{test.testing} - Property test not implemented: "{test.it}"`)
@@ -581,10 +655,13 @@ function Graphs.propertyTest(
 							local output = {
 								"",
 								"",
-								`  Test failed: "{testTitle}"`,
-								`  ... while testing {test.testing}`,
+								`  Tested {test.testing} ...`,
+								`  ... spec says it {test.it} ...`,
+								`  ... but {diagnosis}`,
+								
+								
 								"",
-								`  {diagnosis}`,
+								
 								"",
 								"  The final state of the graph is shown below.",
 								"  ==================================",

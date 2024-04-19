@@ -20,12 +20,14 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			tryInvalidate(target)
-			if target.validity ~= "valid" then
-				return `Validity was "{target.validity}" instead of "valid"`
+			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			for _, target in targets do
+				tryInvalidate(target)
 			end
-			return true
+			return Graphs.check(
+				targets,
+				Graphs.tests.validity("valid")
+			)
 		end
 	} (describe)
 
@@ -36,113 +38,127 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			local before = target.lastChange
-			tryInvalidate(target)
-			if target.lastChange == before then
-				return "The last change time stayed identical"
-			else
-				return true
+			for _, target in Graphs.selectors.dependencyDepthOf(graph, 0) do
+				local before = target.lastChange
+				tryInvalidate(target)
+				if target.lastChange == before then
+					return `{Graphs.nameOf(target)} didn't change its last change time`
+				end
 			end
+			return false
 		end
 	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "invalidates valid direct dependents",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			tryInvalidate(target)
-			for dependent in target.dependentSet do
-				if dependent.validity ~= "invalid" then
-					local name = (dependent :: any).name or "GraphObject"
-					return `Dependent {name} was "{dependent.validity}" instead of "invalid"`
-				end
+			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			for _, target in targets do
+				tryInvalidate(target)
 			end
-			return true
+			return Graphs.check(
+				Graphs.selectors.objectDependents(targets),
+				Graphs.tests.validity("invalid")
+			)
 		end
 	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "stops at already-invalid direct dependents",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(2)},
+		filters = {Graphs.filters.wellFormed},
 		prepare = function(
-			shape: Graphs.GraphShape
+			graph: Graphs.Graph
 		)
-			local target = shape.objects[1]
-			local objects: {[string]: Graphs.ObjectTemplate} = {}
-			for _, edge in shape.edges do
-				if edge.from == target then
-					local dependent = edge.to
-					objects[dependent] = {
-						validity = "invalid"
-					}
-				end
+			for _, object in 
+				Graphs.selectors.objectDependents(
+					Graphs.selectors.dependencyDepthOf(graph, 0)
+				) 
+			do
+				object.validity = "invalid"
 			end
-			return {
-				Graphs.make({}, {
-					shape = shape,
-					objects = objects
-				})
-			}
+			return {graph}
 		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			tryInvalidate(target)
-			for dependent in target.dependentSet do
-				for subDependent in dependent.dependentSet do
-					if subDependent.validity ~= "valid" then
-						local name = (subDependent :: any).name or "GraphObject"
-						return `Sub-dependent {name} was "{dependent.validity}" instead of "valid"`
-					end
-				end
+			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			for _, target in targets do
+				tryInvalidate(target)
 			end
-			return true
+			return Graphs.check(
+				Graphs.selectors.objectDependencies(
+					Graphs.selectors.objectDependencies(targets)
+				),
+				Graphs.tests.validity("valid")
+			)
 		end
 	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "invalidates valid transitive dependents",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(2)},
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
-			local target = graph.objects[graph.shape.objects[1]]
-			tryInvalidate(target)
-			for dependent in target.dependentSet do
-				for subDependent in dependent.dependentSet do
-					if subDependent.validity ~= "invalid" then
-						local name = (subDependent :: any).name or "GraphObject"
-						return `Sub-dependent {name} was "{dependent.validity}" instead of "invalid"`
-					end
-				end
+			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			for _, target in targets do
+				tryInvalidate(target)
 			end
-			return true
+			return Graphs.check(
+				Graphs.selectors.objectDependents(
+					Graphs.selectors.objectDependents(targets)
+				),
+				Graphs.tests.validity("invalid")
+			)
 		end
 	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "stops at already-invalid transitive dependents",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(3)},
+		filters = {Graphs.filters.wellFormed},
+		prepare = function(
+			graph: Graphs.Graph
+		)
+			for _, object in 
+				Graphs.selectors.objectDependents(
+					Graphs.selectors.objectDependents(
+						Graphs.selectors.dependencyDepthOf(graph, 0)
+					) 
+				) 
+			do
+				object.validity = "invalid"
+			end
+			return {graph}
+		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local targets = Graphs.selectors.dependencyDepthOf(graph, 0)
+			for _, target in targets do
+				tryInvalidate(target)
+			end
+			return Graphs.check(
+				Graphs.selectors.objectDependents(
+					Graphs.selectors.objectDependents(
+						Graphs.selectors.objectDependents(targets)
+					)
+				),
+				Graphs.tests.validity("invalid")
+			)
 		end
 	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "does *not* invalidate any dependencies, direct or transitive",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependencyDepthOf(1)},
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -193,7 +209,7 @@ return function()
 			elseif string.find(err, "infiniteLoop", 1, true) == nil then
 				return err
 			else
-				return true
+				return false
 			end
 		end
 	} (describe)
@@ -201,7 +217,7 @@ return function()
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "throws when encountering a busy object",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -212,7 +228,7 @@ return function()
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "revalidates eager graph objects after all invalidation completes",
-		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
