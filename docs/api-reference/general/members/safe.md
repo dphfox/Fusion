@@ -60,5 +60,5 @@ erroneous calculation throws an error.
 	</span>
 </h2>
 
-The value produced by `try()` if it's successful, or the value produced by
-`fallback()` if an error occurs during `try()`.
+The value produced by `try` if it's successful, or the value produced by
+`fallback` if an error occurs during `try`.
