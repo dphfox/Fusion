@@ -17,6 +17,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local External = require(Package.External)
+local tryRevalidate = require(Package.State.tryRevalidate)
 
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
@@ -66,8 +67,7 @@ local function tryInvalidate(
 			end
 		end
 		for _, eagerTarget in eagerList do
-			eagerTarget:duringRevalidation()
-			eagerTarget.validity = "valid"
+			tryRevalidate(eagerTarget)
 		end
 	elseif target.validity == "busy" then
 		return logError("infiniteLoop")
