@@ -24,7 +24,7 @@ function Fusion.Safe<Success, Fail>(
 Safely runs a function and returns the value it produces. If the function fails,
 the `fallback` function can handle the error and produces a fallback value.
 
-`Safe` acts like a version of `xpcall` that ;s easier to use in calculations and
+`Safe` acts like a version of `xpcall` that is easier to use in calculations and
 expressions, because it only returns the values from the functions, rather than
 returning a success boolean.
 
