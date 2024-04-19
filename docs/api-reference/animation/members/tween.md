@@ -15,7 +15,7 @@
 ```Lua
 function Fusion.Tween<T>(
 	scope: Scope<unknown>,
-	goal: StateObject<T>,
+	goal: UsedAs<T>,
 	tweenInfo: UsedAs<TweenInfo>?
 ) -> Tween<T>
 ```

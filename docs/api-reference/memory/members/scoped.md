@@ -13,13 +13,17 @@
 </h1>
 
 ```Lua
-function Fusion.scoped<T>(
-	constructors: T
-): Scope<T>
+function Fusion.scoped<Methods...>(
+	...: (Methods & {})...
+): Scope<merge(Methods)>
 ```
 
-Returns a blank [scope](../../types/scope), with the `__index` metatable
-pointing at the given list of constructors for syntax convenience.
+Returns a blank [scope](../../types/scope). Any method tables passed in as
+arguments are merged together, and used as the `__index` of the new scope, such
+that they can be called with method notation on the created scope.
+
+!!! note "Pseudo type"
+	Luau doesn't have adequate syntax to represent this function.
 
 !!! warning "Scopes are not unique"
 	Fusion can recycle old unused scopes. This helps make scopes more
@@ -34,14 +38,14 @@ pointing at the given list of constructors for syntax convenience.
 ## Parameters
 
 <h3 markdown>
-	constructors
+	...
 	<span class="fusiondoc-api-type">
-		: T
+		: Methods & {}
 	</span>
 </h3>
 
-A table, ideally including functions which take a scope as their first
-parameter. Those functions will turn into methods.
+A series of tables, ideally including functions which take a scope as their
+first parameter. Those functions will turn into methods on the scope.
 
 -----
 

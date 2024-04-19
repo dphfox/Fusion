@@ -12,6 +12,8 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 
+local keyCache: {[string]: Types.SpecialKey} = {}
+
 local function getProperty_unsafe(
 	instance: Instance,
 	property: string
@@ -22,26 +24,31 @@ end
 local function OnEvent(
 	eventName: string
 ): Types.SpecialKey
-	return {
-		type = "SpecialKey",
-		kind = "OnEvent",
-		stage = "observer",
-		apply = function(
-			self: Types.SpecialKey,
-			scope: Types.Scope<unknown>,
-			callback: unknown,
-			applyTo: Instance
-		)
-			local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
-			if not ok or typeof(event) ~= "RBXScriptSignal" then
-				logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
-			elseif typeof(callback) ~= "function" then
-				logError("invalidEventHandler", nil, eventName)
-			else
-				table.insert(scope, event:Connect(callback :: any))
+	local key = keyCache[eventName]
+	if key == nil then
+		key = {
+			type = "SpecialKey",
+			kind = "OnEvent",
+			stage = "observer",
+			apply = function(
+				self: Types.SpecialKey,
+				scope: Types.Scope<unknown>,
+				callback: unknown,
+				applyTo: Instance
+			)
+				local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
+				if not ok or typeof(event) ~= "RBXScriptSignal" then
+					logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
+				elseif typeof(callback) ~= "function" then
+					logError("invalidEventHandler", nil, eventName)
+				else
+					table.insert(scope, event:Connect(callback :: any))
+				end
 			end
-		end
-	}
+		}
+		keyCache[eventName] = key
+	end
+	return key
 end
 
 return OnEvent

@@ -40,6 +40,7 @@ local Fusion: Types.Fusion = {
 	-- General
 	version = {major = 0, minor = 3, isRelease = false},
 	Contextual = require(script.Utility.Contextual),
+	Safe = require(script.Utility.Safe),
 
 	-- Memory
 	cleanup = require(script.Memory.legacyCleanup),

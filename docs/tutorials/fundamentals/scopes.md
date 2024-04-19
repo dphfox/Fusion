@@ -241,78 +241,95 @@ foo:doCleanup()
 same information for both scopes. It also helps keep your definitions all in
 one place.
 
+You can also add more method tables if you'd like to.
+
+```Lua hl_lines="9"
+local foo = scoped({
+	Foo = Foo,
+	Bar = Bar,
+	Baz = Baz
+})
+
+-- `bar` should have the same methods as `foo`
+-- now, it's only defined once!
+local bar = foo:deriveScope({
+	Garb = Garb
+})
+
+print(bar.Garb) --> function: 0x123456789abcdef
+print(foo.Garb) --> nil
+```
+
 ### Inner Scopes
 
 The main reason you would want to create a new scope is to create things that
 get destroyed at different times.
 
+For example, imagine you're creating a dropdown menu. You create a new scope for
+the menu, which you clean up when the menu is closed.
+
 ```Lua
-local longLivedScope = scoped(Fusion)
-local longLivedNumber = longLivedScope:Value(5)
+local uiScope = scoped(Fusion)
 
-for countdown = 1, 10 do
-	local shortLivedScope = longScope:deriveScope()
-	local shortLivedNumber = shortLivedScope:Value(2)
-	task.wait(1)
-	shortLivedScope:doCleanup()
-end
+-- ... create the ui ...
 
-longLivedScope:doCleanup()
+table.insert(
+	uiScope,
+	dropdownOpened:Connect(function()
+		local dropdownScope = uiScope:deriveScope()
+
+		-- ... create the dropdown ...
+
+		table.insert(
+			dropdownScope,
+			dropdownClosed:Connect(function()
+				dropdownScope:doCleanup()
+			end)
+		)
+	end)
+)
 ```
 
-In the above example, the `shortLivedScope` only exists for one second before
-getting destroyed. However, the `longLivedScope` exists for the entire duration
-of the countdown.
+This ordinarily works just fine; when the dropdown is opened, the new scope is
+created, and when the dropdown is closed, the new scope is destroyed.
 
-But what if you forgot to destroy those `shortLivedScope`s?
+However, what if the UI gets cleaned up while the dropdown is open? The
+`uiScope` will get cleaned up, but the `dropdownScope` will not.
+
+To help with this, Fusion provides an `innerScope` method. It works just like
+`deriveScope`, but it adds in extra logic:
+
+- When the original scope is cleaned up, the 'inner scope' is cleaned up too
+- You can still call `doCleanup()` to clean the inner scope up early
 
 ```Lua hl_lines="8"
-local longLivedScope = scoped(Fusion)
-local longLivedNumber = longLivedScope:Value(5)
+local uiScope = scoped(Fusion)
 
-for countdown = 1, 10 do
-	local shortLivedScope = longLivedScope:deriveScope()
-	local shortLivedNumber = shortLivedScope:Value(2)
-	task.wait(1)
-	-- shortLivedScope:doCleanup()
-end
+-- ... create the ui ...
 
-longLivedScope:doCleanup()
+table.insert(
+	uiScope,
+	dropdownOpened:Connect(function()
+		local dropdownScope = uiScope:innerScope()
+
+		-- ... create the dropdown ...
+
+		table.insert(
+			dropdownScope,
+			dropdownClosed:Connect(function()
+				dropdownScope:doCleanup()
+			end)
+		)
+	end)
+)
 ```
 
-Now, every `shortLivedScope` will exist forever, *beyond* the `longLivedScope`
-they came from. This is often not desirable.
+Now, the dropdown scope is guaranteed to be cleaned up if the UI it came from is
+cleaned up. This strictly limits how long the dropdown can exist for.
 
-In addition to this sort of bug, there's other times this happens. For example,
-imagine if the `shortLivedScope` was used for some objects in a pop-up menu, but
-the pop-up's surrounding UI (the `longLivedScope`) got destroyed.
-
-To help with this, Fusion provides an `innerScope` method that makes sure the
-`shortLivedScopes` don't 'outlive' the `longLivedScope`, limiting the impact of
-the bug.
-
-```Lua hl_lines="5"
-local longLivedScope = scoped(Fusion)
-local longLivedNumber = longLivedScope:Value(5)
-
-for countdown = 1, 10 do
-	local shortLivedScope = longLivedScope:innerScope()
-	local shortLivedNumber = shortLivedScope:Value(2)
-	task.wait(1)
-	-- shortLivedScope:doCleanup()
-end
-
-longLivedScope:doCleanup()
-```
-
-'Inner scopes' exist until either:
-
-- the 'outer scope' is cleaned up
-- the 'inner scope' itself is cleaned up
-
-This means that inner scopes are often the safest choice for creating new
-scopes. They let you call `doCleanup` whenever you like, but guarantee that they
-won't stick around beyond the rest of the code they're in.
+Inner scopes are often the safest choice for creating new scopes. They let you
+call `doCleanup` whenever you like, but guarantee that they won't stick around
+beyond the rest of the code they're in.
 
 -----
 

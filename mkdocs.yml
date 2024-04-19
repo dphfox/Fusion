@@ -102,6 +102,7 @@ nav:
         - Version: api-reference/general/types/version.md
       - Members:
         - Contextual: api-reference/general/members/contextual.md
+        - Safe: api-reference/general/members/safe.md
         - version: api-reference/general/members/version.md
     - Memory:
       - Types:

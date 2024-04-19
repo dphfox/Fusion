@@ -137,7 +137,7 @@ you statically type the function signature for components, because it not only
 improves autocomplete and error checking, but also acts as up-to-date, machine
 readable documentation.
 
-```Lua linenums="20"
+```Lua
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {

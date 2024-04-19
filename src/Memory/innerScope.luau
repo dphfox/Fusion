@@ -12,20 +12,21 @@ local Types = require(Package.Types)
 local deriveScope = require(Package.Memory.deriveScope)
 
 local function innerScope<T>(
-	existing: Types.Scope<T>
-): Types.Scope<T>
-	local new = deriveScope(existing)
+	existing: Types.Scope<T>,
+	...: {[unknown]: unknown}
+): any
+	local new = deriveScope(existing, ...)
 	table.insert(existing, new)
 	table.insert(
 		new, 
 		function()
 			local index = table.find(existing, new)
 			if index ~= nil then
-				table.remove(existing, new)
+				table.remove(existing, index)
 			end
 		end
 	)
 	return new
 end
 
-return innerScope
+return (innerScope :: any) :: Types.DeriveScopeConstructor

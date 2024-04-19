@@ -46,7 +46,7 @@ print(peek(Theme.dynamic.background)) --> 34, 34, 34
 
 To begin, this example defines a set of colours with light and dark variants.
 
-```Lua linenums="6"
+```Lua
 Theme.colours = {
 	background = {
 		light = Color3.fromHex("FFFFFF"),
@@ -61,14 +61,14 @@ Theme.colours = {
 
 A `Value` object stores which variant is in use right now.
 
-```Lua linenums="20"
+```Lua
 Theme.current = scope:Value("light")
 ```
 
 Finally, each colour is turned into a `Computed`, which dynamically pulls the
 desired variant from the list.
 
-```Lua linenums="21"
+```Lua
 Theme.dynamic = {}
 for colour, variants in Theme.colours do
 	Theme.dynamic[colour] = scope:Computed(function(use)
@@ -79,7 +79,7 @@ end
 
 This allows other code to easily access theme colours from `Theme.dynamic`.
 
-```Lua linenums="28"
+```Lua
 Theme.current:set("light")
 print(peek(Theme.dynamic.background)) --> 255, 255, 255
 

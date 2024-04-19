@@ -95,7 +95,7 @@ The `PlayerList` component is designed to be simple and self-contained. The only
 thing it needs is a `Players` list - it handles everything else, including its
 position, size, appearance and behaviour.
 
-```Lua linenums="8"
+```Lua
 local function PlayerList(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
@@ -108,7 +108,7 @@ After creating a vertically expanding Frame with some style and layout added,
 it turns the `Players` into a series of text labels using `ForValues`, which
 will automatically create and remove them as the `Players` list changes.
 
-```Lua linenums="34"
+```Lua
 			scope:ForValues(props.Players, function(use, scope, player)
 				return scope:New "TextLabel" {
 					Name = "PlayerListRow: " .. player.DisplayName,
@@ -136,7 +136,7 @@ That's all that the `PlayerList` component has to do.
 Later on, the code creates a `Value` object to store a list of players, and
 update it every time a player joins or leaves the game.
 
-```Lua linenums="63"
+```Lua
 local players = scope:Value(Players:GetPlayers())
 local function updatePlayers()
 	players:set(Players:GetPlayers())
@@ -149,7 +149,7 @@ table.insert(scope, {
 
 That object can then be passed in as `Players` when creating the `PlayerList`.
 
-```Lua linenums="72" hl_lines="6"
+```Lua hl_lines="6"
 local gui = scope:New "ScreenGui" {
 	Name = "PlayerListGui",
 	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui"),
