@@ -11,16 +11,12 @@ local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 local FiniteTime = require(script.Parent.Parent.Parent.Util.FiniteTime)
 
 return function()
-	local it = getfenv().itFOCUS
+	local describe = getfenv().describe
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "always ensures the target is valid",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return not shape.facts.cyclic
-		end,
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -31,16 +27,12 @@ return function()
 			end
 			return true
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "always updates the last changed time of the target",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return not shape.facts.cyclic
-		end,
+		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -53,25 +45,12 @@ return function()
 				return true
 			end
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "invalidates valid direct dependents",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			if shape.facts.cyclic then
-				return false
-			end
-			local target = shape.objects[1]
-			for _, edge in shape.edges do
-				if edge.from == target then
-					return true
-				end
-			end
-			return false
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -85,76 +64,96 @@ return function()
 			end
 			return true
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "stops at already-invalid direct dependents",
-		init = function(
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(2)},
+		prepare = function(
 			shape: Graphs.GraphShape
 		)
-			return {}
+			local target = shape.objects[1]
+			local objects: {[string]: Graphs.ObjectTemplate} = {}
+			for _, edge in shape.edges do
+				if edge.from == target then
+					local dependent = edge.to
+					objects[dependent] = {
+						validity = "invalid"
+					}
+				end
+			end
+			return {
+				Graphs.make({}, {
+					shape = shape,
+					objects = objects
+				})
+			}
 		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local target = graph.objects[graph.shape.objects[1]]
+			tryInvalidate(target)
+			for dependent in target.dependentSet do
+				for subDependent in dependent.dependentSet do
+					if subDependent.validity ~= "valid" then
+						local name = (subDependent :: any).name or "GraphObject"
+						return `Sub-dependent {name} was "{dependent.validity}" instead of "valid"`
+					end
+				end
+			end
+			return true
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "invalidates valid transitive dependents",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return {}
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(2)},
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local target = graph.objects[graph.shape.objects[1]]
+			tryInvalidate(target)
+			for dependent in target.dependentSet do
+				for subDependent in dependent.dependentSet do
+					if subDependent.validity ~= "invalid" then
+						local name = (subDependent :: any).name or "GraphObject"
+						return `Sub-dependent {name} was "{dependent.validity}" instead of "invalid"`
+					end
+				end
+			end
+			return true
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "stops at already-invalid transitive dependents",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return {}
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(3)},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			return "not implemented"
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "does *not* invalidate any dependencies, direct or transitive",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return {}
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependencyDepthOf(1)},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			return "not implemented"
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
-		it = "throws an error for cyclic graphs in finite time",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return shape.facts.cyclic
-		end,
+		it = "throws an error for malformed graphs in finite time",
+		filters = {Graphs.filters.malformed},
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -197,35 +196,27 @@ return function()
 				return true
 			end
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "throws when encountering a busy object",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return {}
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			return "not implemented"
 		end
-	} (it)
+	} (describe)
 
 	Graphs.propertyTest {
 		testing = "tryInvalidate",
 		it = "revalidates eager graph objects after all invalidation completes",
-		init = function(
-			shape: Graphs.GraphShape
-		)
-			return {}
-		end,
+		filters = {Graphs.filters.wellFormed, Graphs.filters.dependentDepthOf(1)},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			return "not implemented"
 		end
-	} (it)
+	} (describe)
 end

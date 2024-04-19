@@ -8,8 +8,9 @@ export type GraphShape = {
 	name: string,
 	repr: {string},
 	facts: {
-		cyclic: boolean
+		wellFormed: boolean
 	},
+	-- Objects should be topologically ordered.
 	objects: {string},
 	edges: {
 		{
@@ -19,6 +20,18 @@ export type GraphShape = {
 	}
 }
 local function GraphShape(x: GraphShape)
+	if x.facts.wellFormed then
+		local reverseIndex = {}
+		for index, object in x.objects do
+			assert(reverseIndex[object] == nil, "Duplicate object definition: " .. object)
+			reverseIndex[object] = index
+		end
+		for _, edge in x.edges do
+			if reverseIndex[edge.to] < reverseIndex[edge.from] then
+				error(`{edge.to} appears before {edge.from} even though it's a dependency.`)
+			end
+		end
+	end
 	return x
 end
 
@@ -36,7 +49,7 @@ Graphs.STANDARD = {
 			"A";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A"},
 		edges = {
@@ -51,7 +64,7 @@ Graphs.STANDARD = {
 			"B";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B"},
 		edges = {
@@ -71,7 +84,7 @@ Graphs.STANDARD = {
 			"D";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -89,7 +102,7 @@ Graphs.STANDARD = {
 			"  D  ";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -107,7 +120,7 @@ Graphs.STANDARD = {
 			"B C D";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -127,7 +140,7 @@ Graphs.STANDARD = {
 			"D   E";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D", "E"},
 		edges = {
@@ -149,7 +162,7 @@ Graphs.STANDARD = {
 			"E   F";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D", "E", "F"},
 		edges = {
@@ -172,7 +185,7 @@ Graphs.STANDARD = {
 			"  D  ";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -195,7 +208,7 @@ Graphs.STANDARD = {
 			"  E  ";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D", "E"},
 		edges = {
@@ -219,7 +232,7 @@ Graphs.STANDARD = {
 			"  F  ";
 		},
 		facts = {
-			cyclic = false
+			wellFormed = true
 		},
 		objects = {"A", "B", "C", "D", "E", "F"},
 		edges = {
@@ -241,7 +254,7 @@ Graphs.STANDARD = {
 			"  B  ";
 		},
 		facts = {
-			cyclic = true
+			wellFormed = false
 		},
 		objects = {"A", "B"},
 		edges = {
@@ -263,7 +276,7 @@ Graphs.STANDARD = {
 			"  D  ";
 		},
 		facts = {
-			cyclic = true
+			wellFormed = false
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -284,7 +297,7 @@ Graphs.STANDARD = {
 			"  C  ";
 		},
 		facts = {
-			cyclic = true
+			wellFormed = false
 		},
 		objects = {"A", "B", "C", "D"},
 		edges = {
@@ -295,6 +308,79 @@ Graphs.STANDARD = {
 		}
 	},
 }
+
+Graphs.filters = {}
+
+function Graphs.filters.wellFormed(
+	shape: GraphShape
+): boolean
+	return shape.facts.wellFormed
+end
+
+function Graphs.filters.malformed(
+	shape: GraphShape
+): boolean
+	return not shape.facts.wellFormed
+end
+
+function Graphs.filters.dependentDepthOf(
+	desiredDepth: number
+)
+	return function(
+		shape: GraphShape
+	): boolean
+		local depth = 0
+		local target = shape.objects[1]
+		while true do
+			local found = nil
+			for _, edge in shape.edges do
+				if edge.from == target then
+					found = edge.to
+					break
+				end
+			end
+			if found then
+				depth += 1
+				target = found
+				if depth >= desiredDepth then
+					return true
+				end
+			else
+				return false
+			end
+		end
+	end
+end
+
+function Graphs.filters.dependencyDepthOf(
+	desiredDepth: number
+)
+	return function(
+		shape: GraphShape
+	): boolean
+		local depth = 0
+		local target = shape.objects[#shape.objects]
+		while true do
+			local found = nil
+			for _, edge in shape.edges do
+				if edge.to == target then
+					found = edge.from
+					break
+				end
+			end
+			if found then
+				depth += 1
+				target = found
+				if depth >= desiredDepth then
+					return true
+				end
+			else
+				return false
+			end
+		end
+		
+	end
+end
 
 function Graphs.format(
 	output: {string},
@@ -372,21 +458,23 @@ function Graphs.format(
 	end
 end
 
+export type ObjectTemplate = {
+	scope: Types.Scope<unknown>?,
+	lastChange: number?,
+	timeliness: nil | "lazy" | "eager",
+	validity: nil | "valid" | "invalid" | "busy",
+	duringRevalidation: nil | (
+		self: Types.GraphObject,
+		name: string
+	) -> boolean
+}
+
 function Graphs.make(
 	scope: Types.Scope<unknown>,
 	options: {
 		shape: GraphShape,
 		objects: {
-			[string]: {
-				scope: Types.Scope<unknown>?,
-				lastChange: number?,
-				timeliness: nil | "lazy" | "eager",
-				validity: nil | "valid" | "invalid" | "busy",
-				duringRevalidation: nil | (
-					self: Types.GraphObject,
-					name: string
-				) -> boolean
-			}
+			[string]: ObjectTemplate
 		}
 	}
 ): Graph
@@ -441,66 +529,79 @@ function Graphs.propertyTest(
 	test: {
 		testing: string,
 		it: string,
-		init: (GraphShape) -> boolean | {PropertySubTest},
+		filters: {(GraphShape) -> boolean},
+		prepare: nil | (GraphShape) -> {Graph},
 		perform: (Graph) -> string | true
 	}
 )
-	return function(it: any): ()
-		local didAnyTests = false
-		for _, shape in Graphs.STANDARD do
-			local subTestsRaw = test.init(shape)
-	
-			local subTests: {PropertySubTest} = 
-				if subTestsRaw == false then
-					{}
-				elseif subTestsRaw == true then
-					{
+	return function(describe: any): ()
+		describe(test.it, function()
+			getfenv().FOCUS() --temporary
+			local it = getfenv().it
+			
+			local didAnyTests = false
+			local detectedNotImplemented = false
+			for _, shape in Graphs.STANDARD do
+				local filtered = false
+				for _, filter in test.filters do
+					if not filter(shape) then
+						filtered = true
+						break
+					end
+				end
+				if filtered then
+					continue
+				end
+		
+				local subTests: {Graph} =
+					if test.prepare == nil then
 						{
-							subName = "default",
-							graph = Graphs.make({}, {
+							Graphs.make({}, {
 								shape = shape,
 								objects = {}
 							})
 						}
-					}
-				else
-					subTestsRaw :: {PropertySubTest}
-
-
-			for _, subTest in subTests do
-				local testTitle =
-					if #subTests == 1 then
-						`{test.it} - {shape.name}`
 					else
-						`{test.it} ({subTest.subName}) - {shape.name}`
-				
-				didAnyTests = true
-				it(testTitle, function()
-					local ok, diagnosis = pcall(test.perform, subTest.graph)
-					if not ok or diagnosis ~= true then
-						local output = {
-							"",
-							"",
-							`  Test failed: "{testTitle}"`,
-							`  ... while testing {test.testing}`,
-							"",
-							`  {diagnosis}`,
-							"",
-							"  The final state of the graph is shown below.",
-							"  ==================================",
-							""
-						}
-						Graphs.format(output, subTest.graph)
-						table.insert(output, "")
+						test.prepare(shape)
 
-						error(table.concat(output, "\n"))
-					end
-				end)
+				for index, graph in subTests do
+					local testTitle = if #subTests == 1 then shape.name else `{shape.name} [{index}]`
+					
+					didAnyTests = true
+					it(testTitle, function()
+						local ok, diagnosis = pcall(test.perform, graph)
+						if not ok or diagnosis ~= true then
+							if diagnosis == "not implemented" then
+								if not detectedNotImplemented then
+									warn(`{test.testing} - Property test not implemented: "{test.it}"`)
+									detectedNotImplemented = true
+								end
+								return
+							end
+							local output = {
+								"",
+								"",
+								`  Test failed: "{testTitle}"`,
+								`  ... while testing {test.testing}`,
+								"",
+								`  {diagnosis}`,
+								"",
+								"  The final state of the graph is shown below.",
+								"  ==================================",
+								""
+							}
+							Graphs.format(output, graph)
+							table.insert(output, "")
+
+							error(table.concat(output, "\n"))
+						end
+					end)
+				end
 			end
-		end
-		if not didAnyTests then
-			warn(`{test.testing} - No property tests produced for: "{test.it}"`)
-		end
+			if not didAnyTests then
+				warn(`{test.testing} - No property tests produced for: "{test.it}"`)
+			end
+		end)
 	end
 end
 
