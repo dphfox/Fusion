@@ -1,7 +1,7 @@
 --!strict
 --!nolint LocalUnused
 --!nolint LocalShadow
-local task = nil -- Disable usage of Roblox's task scheduler
+-- local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	Utility function to log a Fusion-specific error, without halting execution.
@@ -16,11 +16,7 @@ local function logErrorNonFatal(
 	messageID: string,
 	errObj: InternalTypes.Error?,
 	...: unknown
-)
-	if External.unitTestSilenceNonFatal then
-		return
-	end
-	
+)	
 	local formatString: string
 
 	if messages[messageID] ~= nil then
@@ -38,9 +34,8 @@ local function logErrorNonFatal(
 		errorString = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")\n---- Stack trace ----\n" .. errObj.trace, ...)
 	end
 
-	coroutine.wrap(function()
-		error(errorString:gsub("\n", "\n    "), 0)
-	end)()
+	local errorString = errorString:gsub("\n", "\n    ")
+	External.errorNonFatal(errorString)
 end
 
 return logErrorNonFatal

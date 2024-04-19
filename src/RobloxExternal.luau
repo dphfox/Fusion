@@ -33,6 +33,15 @@ function RobloxExternal.doTaskDeferred(
 end
 
 --[[
+	Errors in a different thread to preserve the flow of execution.
+]]
+function RobloxExternal.errorNonFatal(
+	err: unknown
+)
+	task.spawn(error, err, 0)
+end
+
+--[[
 	Sends an update step to Fusion using the Roblox clock time.
 ]]
 local function performUpdateStep()
