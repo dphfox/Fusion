@@ -12,7 +12,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 
-local function tryRevalidate(
+local function evaluate(
 	target: Types.GraphObject
 ): ()
 	if target.validity == "invalid" then
@@ -22,7 +22,7 @@ local function tryRevalidate(
 		if targetComputedBefore then
 			needsComputation = false
 			for dependency in target.dependencySet do
-				tryRevalidate(dependency)
+				evaluate(dependency)
 				if dependency.lastChange > target.lastChange then
 					needsComputation = true
 					break
@@ -43,4 +43,4 @@ local function tryRevalidate(
 	end
 end
 
-return tryRevalidate
+return evaluate

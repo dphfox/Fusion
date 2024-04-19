@@ -6,7 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
 
 local Types = require(Fusion.Types)
-local tryInvalidate = require(Fusion.State.tryInvalidate)
+local change = require(Fusion.State.change)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 
@@ -14,14 +14,14 @@ return function()
 	local describe = getfenv().describe
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "always ensures the target is valid",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			for _, target in graph.allObjects do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				graph.allObjects,
@@ -31,15 +31,15 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
-		it = "always updates the last changed time of the target",
+		testing = "change",
+		it = "always changes the last changed time of the target",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
 		)
 			for _, object in graph.allObjects do
 				local before = object.lastChange
-				tryInvalidate(object)
+				change(object)
 				if object.lastChange == before then
 					return `{Graphs.nameOf(object)} didn't change its last change time`
 				end
@@ -49,7 +49,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "invalidates valid direct dependents",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
@@ -57,7 +57,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 1),
@@ -67,7 +67,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "stops at already-invalid direct dependents",
 		filters = {Graphs.filters.wellFormed},
 		preparation = {
@@ -89,7 +89,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 2),
@@ -99,7 +99,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "invalidates valid transitive dependents",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
@@ -107,7 +107,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 2),
@@ -117,7 +117,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "stops at already-invalid transitive dependents",
 		filters = {Graphs.filters.wellFormed},
 		preparation = {
@@ -139,7 +139,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependent", 3),
@@ -149,7 +149,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "does *not* invalidate any dependencies, direct or transitive",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
@@ -157,7 +157,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependent")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependency", 1),
@@ -170,7 +170,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "throws an error for malformed graphs in finite time",
 		filters = {Graphs.filters.malformed},
 		perform = function(
@@ -178,7 +178,7 @@ return function()
 		)
 			local ok, err = pcall(function()
 				for _, object in graph.objects do
-					tryInvalidate(object)
+					change(object)
 					for _, object in graph.objects do
 						object.validity = "valid"
 					end
@@ -195,7 +195,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "throws when encountering a busy object",
 		filters = {Graphs.filters.wellFormed},
 		preparation = {
@@ -214,7 +214,7 @@ return function()
 		)
 			local ok, err = pcall(function()
 				for _, object in graph.objects do
-					tryInvalidate(object)
+					change(object)
 				end
 			end)
 			if ok then
@@ -228,7 +228,7 @@ return function()
 	} (describe)
 
 	Graphs.propertyTest {
-		testing = "tryInvalidate",
+		testing = "change",
 		it = "revalidates eager objects after all invalidation is complete",
 		filters = {Graphs.filters.wellFormed},
 		preparation = {
@@ -265,7 +265,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				tryInvalidate(target)
+				change(target)
 			end
 			return Graphs.check(
 				Graphs.selectors.noConnections(graph.allObjects, "dependent"),

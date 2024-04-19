@@ -4,7 +4,7 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Invalidates a graph object using monotonic painting.
+	Invalidates a graph object's dependents using monotonic painting.
 	https://fluff.blog/2024/04/16/monotonic-painting.html
 
 	Note: after invalidation, the targeted object will be valid and will have a
@@ -17,7 +17,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local External = require(Package.External)
-local tryRevalidate = require(Package.State.tryRevalidate)
+local evaluate = require(Package.State.evaluate)
 
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
@@ -28,7 +28,7 @@ local eagerList: {Types.GraphObject} = {}
 -- cycle and error out?
 local TERMINATION_TIME = 1
 
-local function tryInvalidate(
+local function change(
 	target: Types.GraphObject
 ): ()
 	if target.validity == "invalid" then
@@ -67,11 +67,11 @@ local function tryInvalidate(
 			end
 		end
 		for _, eagerTarget in eagerList do
-			tryRevalidate(eagerTarget)
+			evaluate(eagerTarget)
 		end
 	elseif target.validity == "busy" then
 		return logError("infiniteLoop")
 	end
 end
 
-return tryInvalidate
+return change
