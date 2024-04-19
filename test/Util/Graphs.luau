@@ -4,6 +4,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
 local Types = require(Fusion.Types)
 
+local FiniteTime = require(script.Parent.FiniteTime)
+
 export type GraphShape = {
 	name: string,
 	repr: {string},
@@ -607,14 +609,45 @@ function Graphs.propertyTest(
 					it(testTitle, function()
 						local preStateFormatted = {}
 						Graphs.format(preStateFormatted, graph)
+						-- Because an incorrect algorithm is prone to hang,
+						-- implement a time limit as a backup strategy to
+						-- avoid hanging the entire test suite.
+						local timeCheck = FiniteTime.start(1)
+						for _, object in graph.objects do
+							local metatable = getmetatable(object :: any)
+							if metatable == nil then
+								metatable = {}
+								setmetatable(object, metatable)
+							end
+							local realValidity = object.validity
+							object.validity = nil :: any
+							function metatable:__index(key)
+								if key == "validity" then
+									timeCheck()
+									return realValidity
+								else
+									return rawget(self, key)
+								end
+							end
+							function metatable:__newindex(key, value)
+								if key == "validity" then
+									timeCheck()
+									realValidity = value
+								else
+									return rawset(self, key, value)
+								end
+							end
+						end
 						local ok, diagnosis = pcall(test.perform, graph)
-						if not ok or diagnosis ~= false then
+						if not ok or typeof(diagnosis) == "string" then
 							if diagnosis == "not implemented" then
 								if not detectedNotImplemented then
 									warn(`{test.testing} - Property test not implemented: "{test.it}"`)
 									detectedNotImplemented = true
 								end
 								return
+							elseif string.find(diagnosis, "FUSION_TEST_FINITE_TIME", 1, true) ~= nil then
+								diagnosis = "the test took an unreasonable amount of time."
 							end
 							local output = {
 								"",

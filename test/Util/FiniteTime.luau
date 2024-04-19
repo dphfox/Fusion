@@ -12,7 +12,7 @@ function FiniteTime.start(
 	local function check()
 		if os.clock() > endTime and not errored then
 			errored = true
-			error("Finite time limit reached.", 0)
+			error("Finite time limit reached. (FUSION_TEST_FINITE_TIME)", 0)
 		end
 	end
 

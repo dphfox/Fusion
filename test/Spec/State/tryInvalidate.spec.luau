@@ -8,7 +8,6 @@ local Fusion = ReplicatedStorage.Fusion
 local tryInvalidate = require(Fusion.State.tryInvalidate)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
-local FiniteTime = require(script.Parent.Parent.Parent.Util.FiniteTime)
 
 return function()
 	local describe = getfenv().describe
@@ -149,7 +148,17 @@ return function()
 		perform = function(
 			graph: Graphs.Graph
 		)
-			return "not implemented"
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependent")
+			for _, target in targets do
+				tryInvalidate(target)
+			end
+			return Graphs.check(
+				Graphs.selectors.distance(graph.allObjects, targets, "dependency", 1),
+				Graphs.tests.validity("valid")
+			) or Graphs.check(
+				Graphs.selectors.distance(graph.allObjects, targets, "dependency", 2),
+				Graphs.tests.validity("valid")
+			)
 		end
 	} (describe)
 
@@ -157,40 +166,6 @@ return function()
 		testing = "tryInvalidate",
 		it = "throws an error for malformed graphs in finite time",
 		filters = {Graphs.filters.malformed},
-		prepare = function(
-			graph: Graphs.Graph
-		)
-			-- Because an inccorect algorithm is prone to hang when given
-			-- malformed data, implement a tiem limit as a backup strategy to
-			-- avoid hanging the entire test suite.
-			local timeCheck = FiniteTime.start(1)
-			for _, object in graph.objects do
-				local metatable = getmetatable(object :: any)
-				if metatable == nil then
-					metatable = {}
-					setmetatable(object, metatable)
-				end
-				local realValidity = object.validity
-				object.validity = nil :: any
-				function metatable:__index(key)
-					if key == "validity" then
-						timeCheck()
-						return realValidity
-					else
-						return rawget(self, key)
-					end
-				end
-				function metatable:__newindex(key, value)
-					if key == "validity" then
-						timeCheck()
-						realValidity = value
-					else
-						return rawset(self, key, value)
-					end
-				end
-			end
-			return {graph}
-		end,
 		perform = function(
 			graph: Graphs.Graph
 		)
@@ -204,10 +179,10 @@ return function()
 			end)
 			if ok then
 				return "Should not have completed without errors"
-			elseif string.find(err, "infiniteLoop", 1, true) == nil then
-				return err
-			else
+			elseif string.find(err, "infiniteLoop", 1, true) ~= nil then
 				return false
+			else
+				return err
 			end
 		end
 	} (describe)
