@@ -1,14 +1,14 @@
 <nav class="fusiondoc-api-breadcrumbs">
 	<span>General</span>
 	<span>Members</span>
-	<span>Contextual</span>
+	<span>Safe</span>
 </nav>
 
 <h1 class="fusiondoc-api-header" markdown>
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
-	<span class="fusiondoc-api-name">Contextual</span>
+	<span class="fusiondoc-api-name">Safe</span>
 	<span class="fusiondoc-api-type">
-		-> <a href="../../types/contextual">Contextual</a>&lt;T&gt;
+		-> Success | Fail
 	</span>
 </h1>
 
