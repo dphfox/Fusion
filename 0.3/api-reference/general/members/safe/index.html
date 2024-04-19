@@ -2876,7 +2876,7 @@ returning a success boolean.</p>
 <p><code>Safe</code> only protects you from errors that would stop your calculation from
 successfully returning a value.</p>
 <p>In particular, this applies to <a href="../../../state/members/computed">computeds</a>
-you create inside <code>Safe</code> (and other similar objects). Because those errors 
+you create inside <code>Safe</code> (and other similar objects). Because errors there
 are safely handled by those objects, and do not cause the <code>Safe</code> calculation
 to crash fatally, you have to use <code>Safe</code> inside of the computed itself if
 you want to capture the error.</p>
