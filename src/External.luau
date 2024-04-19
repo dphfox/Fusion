@@ -13,10 +13,6 @@ local logError = require(Package.Logging.logError)
 
 local External = {}
 
--- Silences non-fatal error logging, used in unit tests for cleaning up output
--- and removing false negatives when checking how systems respond to errors.
-External.unitTestSilenceNonFatal = false
-
 -- Multiplier for running-time safety checks across the Fusion codebase. Used to
 -- stricten tests on infinite loop detection during unit testing.
 External.safetyTimerMultiplier = 1
@@ -27,6 +23,9 @@ export type Scheduler = {
 	) -> (),
 	doTaskDeferred: (
 		resume: () -> ()
+	) -> (),
+	errorNonFatal: (
+		err: unknown
 	) -> (),
 	startScheduler: () -> (),
 	stopScheduler: () -> ()
@@ -77,6 +76,19 @@ function External.doTaskDeferred(
 		logError("noTaskScheduler")
 	else
 		currentScheduler.doTaskDeferred(resume)
+	end
+end
+
+--[[
+	Errors in a different thread to preserve the flow of execution.
+]]
+function External.errorNonFatal(
+	err: unknown
+)
+	if currentScheduler == nil then
+		logError("noTaskScheduler")
+	else
+		currentScheduler.errorNonFatal(err)
 	end
 end
 

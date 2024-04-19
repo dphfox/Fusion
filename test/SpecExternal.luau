@@ -34,6 +34,16 @@ function SpecExternal.deferSelfForTesting()
 	coroutine.yield()
 end
 
+--[[
+	Errors in a different thread to preserve the flow of execution.
+]]
+function SpecExternal.errorNonFatal(
+	err: unknown
+)
+	-- silently discard
+end
+
+
 local doUpdateSteps = false
 
 --[[

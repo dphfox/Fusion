@@ -15,7 +15,8 @@
 }
 
 .md-header[data-md-state=shadow] {
-	box-shadow: 0 1rem 1rem var(--fusiondoc-bg-1) !important;
+	box-shadow: 
+		0 0 0.35rem 0.5rem var(--fusiondoc-bg-1) !important;
 	background-color: var(--fusiondoc-bg-1);
 }
 
@@ -60,7 +61,7 @@
 
 .md-top {
 	box-shadow: none !important;
-	background-color: var(--fusiondoc-fg-1);
+	background-color: var(--fusiondoc-fg-2);
 	color: var(--fusiondoc-bg-1);
 	z-index: 1000;
 	border-radius: 0.25rem;
@@ -81,6 +82,16 @@
 .md-top:is(:focus, :hover) {
 	background-color: var(--fusiondoc-accent);
 	color: var(--fusiondoc-bg-1);
+}
+
+@media screen and (min-width: 90rem) {
+	.md-top {
+		transform: translate(-50%,-2.7rem);
+	}
+	
+	.md-top[data-md-state=hidden] {
+		transform: translate(-50%,-3.7rem);
+	}
 }
 
 .md-banner {
