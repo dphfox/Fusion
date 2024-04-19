@@ -28,6 +28,15 @@ the `fallback` function can handle the error and produces a fallback value.
 expressions, because it only returns the values from the functions, rather than
 returning a success boolean.
 
+!!! note "Fatal versus non-fatal errors"
+	`Safe` only protects you from errors that would stop your calculation from
+	successfully returning a value.
+
+	In particular, this implies that errors that occur inside
+	[computeds](../../../state/members/computed) or other similar objects will
+	*not* be caught by `Safe`, because those errors are safely handled by those
+	objects and do not cause the calculation to crash fatally.
+
 -----
 
 ## Properties
