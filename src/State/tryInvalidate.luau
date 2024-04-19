@@ -21,6 +21,7 @@ local External = require(Package.External)
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}
 local invalidateList: {Types.GraphObject} = {}
+local eagerList: {Types.GraphObject} = {}
 
 -- How long should this function run before it's considered to be in an infinite
 -- cycle and error out?
@@ -57,8 +58,16 @@ local function tryInvalidate(
 			searchInNow, searchInNext = searchInNext, searchInNow
 		until done
 		target.lastChange = os.clock()
+		table.clear(eagerList)
 		for _, invalidateTarget in invalidateList do
 			invalidateTarget.validity = "invalid"
+			if invalidateTarget.timeliness == "eager" then
+				table.insert(eagerList, invalidateTarget)
+			end
+		end
+		for _, eagerTarget in eagerList do
+			eagerTarget:duringRevalidation()
+			eagerTarget.validity = "valid"
 		end
 	elseif target.validity == "busy" then
 		return logError("infiniteLoop")

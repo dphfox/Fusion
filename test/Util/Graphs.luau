@@ -34,7 +34,7 @@ local function GraphShape(x: GraphShape)
 			end
 		end
 	end
-	return x
+	return table.freeze(x)
 end
 
 export type Graph = {
@@ -393,13 +393,14 @@ end
 Graphs.tests = {}
 
 function Graphs.tests.validity(
-	shouldBe: "valid" | "invalid" | "busy"
+	...: "valid" | "invalid" | "busy"
 )
+	local possibilities = {...}
 	return function(
 		object: Types.GraphObject
 	): string | false
-		if object.validity ~= shouldBe then
-			return `{Graphs.nameOf(object)} was "{object.validity}" instead of "{shouldBe}"`
+		if not table.find(possibilities, object.validity) then
+			return `{Graphs.nameOf(object)} was {object.validity} instead of {table.concat(possibilities, " or ")}`
 		else
 			return false
 		end
@@ -573,7 +574,10 @@ function Graphs.propertyTest(
 		testing: string,
 		it: string,
 		filters: {(GraphShape) -> boolean},
-		prepare: nil | (Graph) -> {Graph},
+		preparation: nil | {
+			count: number,
+			prepare: (Graph) -> ()
+		},
 		perform: (Graph) -> string | false
 	}
 )
@@ -595,12 +599,23 @@ function Graphs.propertyTest(
 				if filtered then
 					continue
 				end
-		
-				local plainGraph = Graphs.make({}, {
-					shape = shape,
-					objects = {}
-				})
-				local subTests: {Graph} = if test.prepare == nil then {plainGraph} else test.prepare(plainGraph)
+
+				local subTests: {Graph} = {}
+				if test.preparation == nil then
+					subTests[1] = Graphs.make({}, {
+						shape = shape,
+						objects = {}
+					})
+				else
+					for index = 1, test.preparation.count do
+						local graph = Graphs.make({}, {
+							shape = shape,
+							objects = {}
+						})
+						test.preparation.prepare(graph)
+						subTests[index] = graph
+					end
+				end
 
 				for index, graph in subTests do
 					local testTitle = if #subTests == 1 then shape.name else `{shape.name} [{index}]`
@@ -612,7 +627,7 @@ function Graphs.propertyTest(
 						-- Because an incorrect algorithm is prone to hang,
 						-- implement a time limit as a backup strategy to
 						-- avoid hanging the entire test suite.
-						local timeCheck = FiniteTime.start(1)
+						local timeCheck = FiniteTime.start()
 						for _, object in graph.objects do
 							local metatable = getmetatable(object :: any)
 							if metatable == nil then
