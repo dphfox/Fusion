@@ -8,21 +8,21 @@
       
       
       
-        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/api-reference/state/types/dependent/">
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/tutorials/best-practices/error-safety/">
       
-      <link rel="icon" href="../../../../assets/logo-dark.svg">
+      <link rel="icon" href="../../../assets/logo-dark.svg">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-8.2.13">
     
     
       
-        <title>Dependent - Fusion</title>
+        <title>Error Safety - Fusion</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e411adfe.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -49,23 +49,23 @@
 	
 
     
-      <link rel="stylesheet" href="../../../../assets/theme/fusiondoc.css">
+      <link rel="stylesheet" href="../../../assets/theme/fusiondoc.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/colours.css">
+      <link rel="stylesheet" href="../../../assets/theme/colours.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/code.css">
+      <link rel="stylesheet" href="../../../assets/theme/code.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/paragraph.css">
+      <link rel="stylesheet" href="../../../assets/theme/paragraph.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/page.css">
+      <link rel="stylesheet" href="../../../assets/theme/page.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/admonition.css">
+      <link rel="stylesheet" href="../../../assets/theme/admonition.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/404.css">
+      <link rel="stylesheet" href="../../../assets/theme/404.css">
     
-      <link rel="stylesheet" href="../../../../assets/theme/api-reference.css">
+      <link rel="stylesheet" href="../../../assets/theme/api-reference.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dependent" class="md-skip">
+        <a href="#fatality" class="md-skip">
           Skip to content
         </a>
       
@@ -131,7 +131,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
     <!-- Link to home -->
     <a
-      href="../../../.."
+      href="../../.."
       title="Fusion"
       class="md-header__button md-logo"
       aria-label="Fusion"
@@ -139,8 +139,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     >
       <!-- Logo -->
 
-  <img src="../../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
-  <img src="../../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
 
@@ -160,7 +160,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dependent
+              Error Safety
             
           </span>
         </div>
@@ -323,7 +323,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
 
   <li class="md-tabs__item">
-    <a href="../../../.." class="md-tabs__link">
+    <a href="../../.." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -332,13 +332,15 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../../../tutorials/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
         Tutorials
       </a>
     </li>
@@ -354,7 +356,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-tabs__item">
-      <a href="../../../../examples/" class="md-tabs__link">
+      <a href="../../../examples/" class="md-tabs__link">
         Examples
       </a>
     </li>
@@ -364,15 +366,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link md-tabs__link--active">
+      <a href="../../../api-reference/" class="md-tabs__link">
         API Reference
       </a>
     </li>
@@ -388,7 +388,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-tabs__item">
-      <a href="../../../../extras/" class="md-tabs__link">
+      <a href="../../../extras/" class="md-tabs__link">
         Extras
       </a>
     </li>
@@ -416,11 +416,11 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
+    <a href="../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
       <!-- Logo -->
 
-  <img src="../../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
-  <img src="../../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
 
     </a>
     Fusion
@@ -448,7 +448,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -461,12 +461,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -490,7 +492,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../../tutorials/">Tutorials</a>
+          <a href="../../">Tutorials</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -551,7 +553,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/fundamentals/scopes/" class="md-nav__link">
+      <a href="../../fundamentals/scopes/" class="md-nav__link">
         Scopes
       </a>
     </li>
@@ -565,7 +567,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/fundamentals/values/" class="md-nav__link">
+      <a href="../../fundamentals/values/" class="md-nav__link">
         Values
       </a>
     </li>
@@ -579,7 +581,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/fundamentals/observers/" class="md-nav__link">
+      <a href="../../fundamentals/observers/" class="md-nav__link">
         Observers
       </a>
     </li>
@@ -593,7 +595,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/fundamentals/computeds/" class="md-nav__link">
+      <a href="../../fundamentals/computeds/" class="md-nav__link">
         Computeds
       </a>
     </li>
@@ -650,7 +652,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/tables/forvalues/" class="md-nav__link">
+      <a href="../../tables/forvalues/" class="md-nav__link">
         ForValues
       </a>
     </li>
@@ -664,7 +666,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/tables/forkeys/" class="md-nav__link">
+      <a href="../../tables/forkeys/" class="md-nav__link">
         ForKeys
       </a>
     </li>
@@ -678,7 +680,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/tables/forpairs/" class="md-nav__link">
+      <a href="../../tables/forpairs/" class="md-nav__link">
         ForPairs
       </a>
     </li>
@@ -733,7 +735,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/animation/tweens/" class="md-nav__link">
+      <a href="../../animation/tweens/" class="md-nav__link">
         Tweens
       </a>
     </li>
@@ -747,7 +749,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/animation/springs/" class="md-nav__link">
+      <a href="../../animation/springs/" class="md-nav__link">
         Springs
       </a>
     </li>
@@ -812,7 +814,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/hydration/" class="md-nav__link">
+      <a href="../../roblox/hydration/" class="md-nav__link">
         Hydration
       </a>
     </li>
@@ -826,7 +828,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/new-instances/" class="md-nav__link">
+      <a href="../../roblox/new-instances/" class="md-nav__link">
         New Instances
       </a>
     </li>
@@ -840,7 +842,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/parenting/" class="md-nav__link">
+      <a href="../../roblox/parenting/" class="md-nav__link">
         Parenting
       </a>
     </li>
@@ -854,7 +856,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/events/" class="md-nav__link">
+      <a href="../../roblox/events/" class="md-nav__link">
         Events
       </a>
     </li>
@@ -868,7 +870,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/change-events/" class="md-nav__link">
+      <a href="../../roblox/change-events/" class="md-nav__link">
         Change Events
       </a>
     </li>
@@ -882,7 +884,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/outputs/" class="md-nav__link">
+      <a href="../../roblox/outputs/" class="md-nav__link">
         Outputs
       </a>
     </li>
@@ -896,7 +898,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/references/" class="md-nav__link">
+      <a href="../../roblox/references/" class="md-nav__link">
         References
       </a>
     </li>
@@ -915,14 +917,16 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" checked>
       
       
       
@@ -961,7 +965,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/components/" class="md-nav__link">
+      <a href="../components/" class="md-nav__link">
         Components
       </a>
     </li>
@@ -975,7 +979,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/instance-handling/" class="md-nav__link">
+      <a href="../instance-handling/" class="md-nav__link">
         Instance Handling
       </a>
     </li>
@@ -989,7 +993,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/callbacks/" class="md-nav__link">
+      <a href="../callbacks/" class="md-nav__link">
         Callbacks
       </a>
     </li>
@@ -1003,7 +1007,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/state/" class="md-nav__link">
+      <a href="../state/" class="md-nav__link">
         State
       </a>
     </li>
@@ -1017,7 +1021,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/sharing-values/" class="md-nav__link">
+      <a href="../sharing-values/" class="md-nav__link">
         Sharing Values
       </a>
     </li>
@@ -1029,11 +1033,88 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/error-safety/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Error Safety
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Error Safety
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fatality" class="md-nav__link">
+    Fatality
+  </a>
+  
+    <nav class="md-nav" aria-label="Fatality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#be-careful" class="md-nav__link">
+    Be Careful
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safe-expressions" class="md-nav__link">
+    Safe Expressions
+  </a>
+  
+    <nav class="md-nav" aria-label="Safe Expressions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#non-fatal-errors" class="md-nav__link">
+    Non-Fatal Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1045,7 +1126,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/best-practices/optimisation/" class="md-nav__link">
+      <a href="../optimisation/" class="md-nav__link">
         Optimisation
       </a>
     </li>
@@ -1093,7 +1174,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../../examples/">Examples</a>
+          <a href="../../../examples/">Examples</a>
           
             <label for="__nav_3">
               <span class="md-nav__icon md-icon"></span>
@@ -1149,7 +1230,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../../examples/cookbook/">Cookbook</a>
+          <a href="../../../examples/cookbook/">Cookbook</a>
           
             <label for="__nav_3_2">
               <span class="md-nav__icon md-icon"></span>
@@ -1172,7 +1253,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/player-list/" class="md-nav__link">
+      <a href="../../../examples/cookbook/player-list/" class="md-nav__link">
         Player List
       </a>
     </li>
@@ -1186,7 +1267,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/animated-computed/" class="md-nav__link">
+      <a href="../../../examples/cookbook/animated-computed/" class="md-nav__link">
         Animated Computed
       </a>
     </li>
@@ -1200,7 +1281,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/fetch-data-from-server/" class="md-nav__link">
+      <a href="../../../examples/cookbook/fetch-data-from-server/" class="md-nav__link">
         Fetch Data From Server
       </a>
     </li>
@@ -1214,7 +1295,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/light-and-dark-theme/" class="md-nav__link">
+      <a href="../../../examples/cookbook/light-and-dark-theme/" class="md-nav__link">
         Light & Dark Theme
       </a>
     </li>
@@ -1228,7 +1309,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/button-component/" class="md-nav__link">
+      <a href="../../../examples/cookbook/button-component/" class="md-nav__link">
         Button Component
       </a>
     </li>
@@ -1242,7 +1323,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/loading-spinner/" class="md-nav__link">
+      <a href="../../../examples/cookbook/loading-spinner/" class="md-nav__link">
         Loading Spinner
       </a>
     </li>
@@ -1256,7 +1337,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../examples/cookbook/drag-and-drop/" class="md-nav__link">
+      <a href="../../../examples/cookbook/drag-and-drop/" class="md-nav__link">
         Drag & Drop
       </a>
     </li>
@@ -1283,14 +1364,12 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       
       
@@ -1314,7 +1393,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../">API Reference</a>
+          <a href="../../../api-reference/">API Reference</a>
           
             <label for="__nav_4">
               <span class="md-nav__icon md-icon"></span>
@@ -1373,7 +1452,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/errors/" class="md-nav__link">
+      <a href="../../../api-reference/general/errors/" class="md-nav__link">
         Errors
       </a>
     </li>
@@ -1419,7 +1498,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/types/contextual/" class="md-nav__link">
+      <a href="../../../api-reference/general/types/contextual/" class="md-nav__link">
         Contextual
       </a>
     </li>
@@ -1433,7 +1512,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/types/version/" class="md-nav__link">
+      <a href="../../../api-reference/general/types/version/" class="md-nav__link">
         Version
       </a>
     </li>
@@ -1488,7 +1567,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/members/contextual/" class="md-nav__link">
+      <a href="../../../api-reference/general/members/contextual/" class="md-nav__link">
         Contextual
       </a>
     </li>
@@ -1502,7 +1581,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/members/safe/" class="md-nav__link">
+      <a href="../../../api-reference/general/members/safe/" class="md-nav__link">
         Safe
       </a>
     </li>
@@ -1516,7 +1595,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../general/members/version/" class="md-nav__link">
+      <a href="../../../api-reference/general/members/version/" class="md-nav__link">
         version
       </a>
     </li>
@@ -1612,7 +1691,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/types/scope/" class="md-nav__link">
+      <a href="../../../api-reference/memory/types/scope/" class="md-nav__link">
         Scope
       </a>
     </li>
@@ -1626,7 +1705,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/types/scopedobject/" class="md-nav__link">
+      <a href="../../../api-reference/memory/types/scopedobject/" class="md-nav__link">
         ScopedObject
       </a>
     </li>
@@ -1640,7 +1719,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/types/task/" class="md-nav__link">
+      <a href="../../../api-reference/memory/types/task/" class="md-nav__link">
         Task
       </a>
     </li>
@@ -1695,7 +1774,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/members/derivescope/" class="md-nav__link">
+      <a href="../../../api-reference/memory/members/derivescope/" class="md-nav__link">
         deriveScope
       </a>
     </li>
@@ -1709,7 +1788,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/members/docleanup/" class="md-nav__link">
+      <a href="../../../api-reference/memory/members/docleanup/" class="md-nav__link">
         doCleanup
       </a>
     </li>
@@ -1723,7 +1802,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../memory/members/scoped/" class="md-nav__link">
+      <a href="../../../api-reference/memory/members/scoped/" class="md-nav__link">
         scoped
       </a>
     </li>
@@ -1749,16 +1828,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
       
       
       
@@ -1785,14 +1862,12 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
       
       
       
@@ -1835,7 +1910,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../usedas/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
         UsedAs
       </a>
     </li>
@@ -1849,7 +1924,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../computed/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/computed/" class="md-nav__link">
         Computed
       </a>
     </li>
@@ -1863,7 +1938,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../dependency/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/dependency/" class="md-nav__link">
         Dependency
       </a>
     </li>
@@ -1875,85 +1950,11 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Dependent
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/dependent/" class="md-nav__link">
         Dependent
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#members" class="md-nav__link">
-    Members
-  </a>
-  
-    <nav class="md-nav" aria-label="Members">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dependencyset-dependency-unknown" class="md-nav__link">
-    dependencySet : {[Dependency]: unknown}
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#update-boolean" class="md-nav__link">
-    update -&gt; boolean
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1965,7 +1966,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../for/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/for/" class="md-nav__link">
         For
       </a>
     </li>
@@ -1979,7 +1980,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../observer/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/observer/" class="md-nav__link">
         Observer
       </a>
     </li>
@@ -1993,7 +1994,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../stateobject/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/stateobject/" class="md-nav__link">
         StateObject
       </a>
     </li>
@@ -2007,7 +2008,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../use/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/use/" class="md-nav__link">
         Use
       </a>
     </li>
@@ -2021,7 +2022,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../value/" class="md-nav__link">
+      <a href="../../../api-reference/state/types/value/" class="md-nav__link">
         Value
       </a>
     </li>
@@ -2084,7 +2085,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/computed/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/computed/" class="md-nav__link">
         Computed
       </a>
     </li>
@@ -2098,7 +2099,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/forkeys/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/forkeys/" class="md-nav__link">
         ForKeys
       </a>
     </li>
@@ -2112,7 +2113,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/forpairs/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/forpairs/" class="md-nav__link">
         ForPairs
       </a>
     </li>
@@ -2126,7 +2127,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/forvalues/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/forvalues/" class="md-nav__link">
         ForValues
       </a>
     </li>
@@ -2140,7 +2141,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/observer/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/observer/" class="md-nav__link">
         Observer
       </a>
     </li>
@@ -2154,7 +2155,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/peek/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/peek/" class="md-nav__link">
         peek
       </a>
     </li>
@@ -2168,7 +2169,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/value/" class="md-nav__link">
+      <a href="../../../api-reference/state/members/value/" class="md-nav__link">
         Value
       </a>
     </li>
@@ -2264,7 +2265,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/types/child/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/types/child/" class="md-nav__link">
         Child
       </a>
     </li>
@@ -2278,7 +2279,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/types/propertytable/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/types/propertytable/" class="md-nav__link">
         PropertyTable
       </a>
     </li>
@@ -2292,7 +2293,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/types/specialkey/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/types/specialkey/" class="md-nav__link">
         SpecialKey
       </a>
     </li>
@@ -2361,7 +2362,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/attribute/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/attribute/" class="md-nav__link">
         Attribute
       </a>
     </li>
@@ -2375,7 +2376,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/attributechange/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/attributechange/" class="md-nav__link">
         AttributeChange
       </a>
     </li>
@@ -2389,7 +2390,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/attributeout/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/attributeout/" class="md-nav__link">
         AttributeOut
       </a>
     </li>
@@ -2403,7 +2404,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/children/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/children/" class="md-nav__link">
         Children
       </a>
     </li>
@@ -2417,7 +2418,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/hydrate/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/hydrate/" class="md-nav__link">
         Hydrate
       </a>
     </li>
@@ -2431,7 +2432,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/new/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/new/" class="md-nav__link">
         New
       </a>
     </li>
@@ -2445,7 +2446,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/onchange/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/onchange/" class="md-nav__link">
         OnChange
       </a>
     </li>
@@ -2459,7 +2460,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/onevent/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/onevent/" class="md-nav__link">
         OnEvent
       </a>
     </li>
@@ -2473,7 +2474,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/out/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/out/" class="md-nav__link">
         Out
       </a>
     </li>
@@ -2487,7 +2488,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../roblox/members/ref/" class="md-nav__link">
+      <a href="../../../api-reference/roblox/members/ref/" class="md-nav__link">
         Ref
       </a>
     </li>
@@ -2583,7 +2584,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../animation/types/animatable/" class="md-nav__link">
+      <a href="../../../api-reference/animation/types/animatable/" class="md-nav__link">
         Animatable
       </a>
     </li>
@@ -2597,7 +2598,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../animation/types/spring/" class="md-nav__link">
+      <a href="../../../api-reference/animation/types/spring/" class="md-nav__link">
         Spring
       </a>
     </li>
@@ -2611,7 +2612,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../animation/types/tween/" class="md-nav__link">
+      <a href="../../../api-reference/animation/types/tween/" class="md-nav__link">
         Tween
       </a>
     </li>
@@ -2664,7 +2665,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../animation/members/tween/" class="md-nav__link">
+      <a href="../../../api-reference/animation/members/tween/" class="md-nav__link">
         Tween
       </a>
     </li>
@@ -2678,7 +2679,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../animation/members/spring/" class="md-nav__link">
+      <a href="../../../api-reference/animation/members/spring/" class="md-nav__link">
         Spring
       </a>
     </li>
@@ -2735,7 +2736,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../../../extras/">Extras</a>
+          <a href="../../../extras/">Extras</a>
           
             <label for="__nav_5">
               <span class="md-nav__icon md-icon"></span>
@@ -2758,7 +2759,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../extras/backgrounds/" class="md-nav__link">
+      <a href="../../../extras/backgrounds/" class="md-nav__link">
         Backgrounds
       </a>
     </li>
@@ -2772,7 +2773,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../../../extras/brand-guidelines/" class="md-nav__link">
+      <a href="../../../extras/brand-guidelines/" class="md-nav__link">
         Brand Guidelines
       </a>
     </li>
@@ -2803,8 +2804,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2813,16 +2812,23 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#members" class="md-nav__link">
-    Members
+  <a href="#fatality" class="md-nav__link">
+    Fatality
   </a>
   
-    <nav class="md-nav" aria-label="Members">
+    <nav class="md-nav" aria-label="Fatality">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dependencyset-dependency-unknown" class="md-nav__link">
-    dependencySet : {[Dependency]: unknown}
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#be-careful" class="md-nav__link">
+    Be Careful
   </a>
   
 </li>
@@ -2833,16 +2839,16 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
+  <a href="#safe-expressions" class="md-nav__link">
+    Safe Expressions
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
+    <nav class="md-nav" aria-label="Safe Expressions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#update-boolean" class="md-nav__link">
-    update -&gt; boolean
+  <a href="#non-fatal-errors" class="md-nav__link">
+    Non-Fatal Errors
   </a>
   
 </li>
@@ -2872,61 +2878,311 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   as the main headline.
 -->
 
+  <h1>Error Safety</h1>
+
 
 <!-- Markdown content -->
-<nav class="fusiondoc-api-breadcrumbs">
-    <span>State</span>
-    <span>Types</span>
-    <span>Dependent</span>
-</nav>
+<p>Code can fail unexpectedly for many reasons. While Fusion tries to prevent many
+errors by design, Fusion can't stop you from trying to access data that doesn't
+exist, or taking actions that don't make sense to the computer.</p>
+<p>So, you need to be able to deal with errors that happen while your program is
+running.</p>
+<hr />
+<h2 id="fatality">Fatality<a class="headerlink" href="#fatality" title="Permanent link">&para;</a></h2>
+<p>An error can be either <em>fatal</em> or <em>non-fatal</em>:</p>
+<ul>
+<li>fatal errors aren't handled by anything, so they crash your program</li>
+<li>non-fatal errors are handled by Fusion and let your program continue</li>
+</ul>
+<p>You're likely familiar with fatal errors. You can create them with <code>error()</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Luau code</label><label for="__tabbed_1_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
 
-<h1 class="fusiondoc-api-header" id="dependent">
-    <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
-    <span class="fusiondoc-api-name">Dependent</span>
-<a class="headerlink" href="#dependent" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Dependent</span> <span class="o">=</span> <span class="n">ScopedObject</span> <span class="o">&amp;</span> <span class="p">{</span>
-    <span class="n">update</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">boolean</span><span class="p">,</span>
-    <span class="n">dependencySet</span><span class="p">:</span> <span class="p">{[</span><span class="n">Dependency</span><span class="p">]:</span> <span class="n">unknown</span><span class="p">}</span>
+<span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Kaboom!&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>before
+before
+before
+<span class="hll">Main:7: Kaboom!
+</span><span class="hll">Stack Begin
+</span><span class="hll">Main:7
+</span><span class="hll">Fusion.State.Computed:74 function update
+</span><span class="hll">Fusion.State.Computed:166 function Computed
+</span><span class="hll">Main:6
+</span><span class="hll">Stack End
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>You can make it non-fatal by protecting the call, with <code>pcall()</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Luau code</label><label for="__tabbed_2_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+
+<span class="nb">pcall</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Kaboom!&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>before
+before
+before
+after
+after
+after
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>To demonstrate the difference, consider how Fusion handles errors in state objects.</p>
+<p>State objects always run your code in a safe environment, to ensure that an
+error doesn't leave your state objects in a broken configuration.</p>
+<p>This means you can broadly do whatever you like inside of them, and they won't
+cause a fatal error that stops your program from running.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Luau code</label><label for="__tabbed_3_2">Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+
+<span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Kaboom!&quot;</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>before
+before
+before
+<span class="hll">[Fusion] Error in callback: Kaboom!
+</span><span class="hll">  (ID: callbackError)
+</span><span class="hll">  ---- Stack trace ----
+</span><span class="hll">  Main:7
+</span><span class="hll">  Fusion.State.Computed:74 function update
+</span><span class="hll">  Fusion.State.Computed:166 function Computed
+</span><span class="hll">  Main:6
+</span><span class="hll">
+</span><span class="hll">Stack Begin
+</span><span class="hll">Stack End
+</span>after
+after
+after
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>These are <em>non-fatal</em> errors. You don't <em>have</em> to handle them, because
+Fusion will take all the necessary steps to ensure your program keeps running.
+In this case, the <code>Computed</code> object tries to roll back to the last value it had,
+if any.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;number:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="s2">&quot;double:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+    <span class="c1">--&gt; number: 1 double: 2</span>
+
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;number:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="s2">&quot;double:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+    <span class="c1">--&gt; number: 2 double: 4</span>
+
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;number:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="s2">&quot;double:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+<span class="hll">    <span class="c1">--&gt; number: 3 double: 4</span>
+</span>
+<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;number:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="s2">&quot;double:&quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+    <span class="c1">--&gt; number: 4 double: 8</span>
+</code></pre></div>
+<h3 id="be-careful">Be Careful<a class="headerlink" href="#be-careful" title="Permanent link">&para;</a></h3>
+<p>Just because your program continues running, doesn't mean that it will behave
+the way you expect it to. In the above example, the roll back gave us a nonsense
+answer:</p>
+<div class="highlight"><pre><span></span><code>--&gt; number: 3 double: 4
+</code></pre></div>
+<p>This is why it's still important to practice good error safety. If you expect
+an error to occur, you should always handle the error explicitly, and define
+what should be done about it.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="hll">    <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll">        <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
+</span><span class="hll">        <span class="kr">return</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class="hll">    <span class="kr">end</span><span class="p">)</span>
+</span>    <span class="kr">if</span> <span class="n">ok</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="n">result</span>
+    <span class="kr">else</span>
+        <span class="kr">return</span> <span class="s2">&quot;failed: &quot;</span> <span class="o">..</span> <span class="n">err</span>
+    <span class="kr">end</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+<p>Now when the computation fails, it fails more helpfully:</p>
+<div class="highlight"><pre><span></span><code>--&gt; number: 3 double: failed: I don&#39;t like the number 3
+</code></pre></div>
+<p>As a general rule, your program should never error in a way that prints red text
+to the output.</p>
+<hr />
+<h2 id="safe-expressions">Safe Expressions<a class="headerlink" href="#safe-expressions" title="Permanent link">&para;</a></h2>
+<p>Functions like <code>pcall</code> and <code>xpcall</code> can be useful for catching errors. However,
+they can often make a lot of code clunkier, like the code above.</p>
+<p>To help with this, Fusion introduces
+<a href="../../../api-reference/general/members/safe">safe expressions</a>. They let you
+try and run a calculation, and fall back to another calculation if it fails.</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">Safe</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+        <span class="kr">return</span> <span class="c1">-- a value that might error during calculation</span>
+    <span class="kr">end</span><span class="p">,</span>
+    <span class="n">fallback</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">theError</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="c1">-- a fallback value if an error does occur</span>
+    <span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>A reactive graph object which can add itself to <a href="../dependency">dependencies</a>
-and receive updates.</p>
-<p>This type includes <a href="../../../memory/types/scopedobject"><code>ScopedObject</code></a>, which
-allows the lifetime and destruction order of the reactive graph to be analysed.</p>
-<div class="admonition note">
-<p class="admonition-title">Non-standard type syntax</p>
-<p>The above type definition uses <code>self</code> to denote methods. At time of writing,
-Luau does not interpret <code>self</code> specially.</p>
-</div>
-<hr />
-<h2 id="members">Members<a class="headerlink" href="#members" title="Permanent link">&para;</a></h2>
-<h3 id="dependencyset-dependency-unknown">
-    dependencySet
-    <span class="fusiondoc-api-type">
-        : {[<a href="../dependency">Dependency</a>]: unknown}
-    </span>
-<a class="headerlink" href="#dependencyset-dependency-unknown" title="Permanent link">&para;</a></h3>
-<p>Everything this reactive graph object currently declares itself as dependent
-upon.</p>
-<hr />
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<h3 id="update-boolean">
-    update
-    <span class="fusiondoc-api-type">
-        -&gt; boolean
-    </span>
-<a class="headerlink" href="#update-boolean" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Dependent</span><span class="p">:</span><span class="nf">update</span><span class="p">():</span> <span class="n">boolean</span>
+To see how <code>Safe</code> improves the readability and conciseness of your code,
+consider this next snippet. You can write it using <code>Safe</code>, <code>xpcall</code> and <code>pcall</code>
+- here's how each one looks:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">pcall</label><label for="__tabbed_4_2">xpcall</label><label for="__tabbed_4_3">Safe</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+        <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="kr">end</span><span class="p">)</span>
+    <span class="kr">if</span> <span class="n">ok</span> <span class="kr">then</span>
+        <span class="kr">return</span> <span class="n">result</span>
+    <span class="kr">else</span>
+        <span class="kr">return</span> <span class="s2">&quot;failed: &quot;</span> <span class="o">..</span> <span class="n">err</span>
+    <span class="kr">end</span>
+<span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
-<p>Called from a dependency when a change occurs. Returns <code>true</code> if the update
-should propagate transitively through this object, or <code>false</code> if the update
-should not continue through this object specifically.</p>
-<div class="admonition note">
-<p class="admonition-title">Return value ignored for non-dependencies</p>
-<p>If this <code>Dependent</code> is not also a <code>Dependency</code>, the return value does
-nothing, as an object must be declarable as a dependency for other objects
-to receive updates from it.</p>
 </div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kd">local</span> <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">xpcall</span><span class="p">(</span>
+        <span class="kr">function</span><span class="p">()</span>
+            <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+            <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="kr">end</span><span class="p">,</span>
+        <span class="kr">function</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="s2">&quot;failed: &quot;</span> <span class="o">..</span> <span class="n">err</span>
+        <span class="kr">end</span>
+    <span class="p">)</span>
+    <span class="kr">return</span> <span class="n">result</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kr">return</span> <span class="n">Safe</span> <span class="p">{</span>
+        <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+            <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+            <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="kr">end</span><span class="p">,</span>
+        <span class="n">fallback</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="s2">&quot;failed: &quot;</span> <span class="o">..</span> <span class="n">err</span>
+        <span class="kr">end</span>
+    <span class="p">}</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>pcall</code> is the simplest way to safely handle errors. It's not entirely
+convenient because you have to check the <code>ok</code> boolean before you know
+whether the calculation was successful, which makes it difficult to use
+as part of a larger expression.</p>
+<p><code>xpcall</code> is an improvement over <code>pcall</code>, because it lets you define the
+fallback value as a second function, and uses its return value as the
+result of the calculation whenever an error occurs. However, it still
+returns the <code>ok</code> boolean, which has to be explicitly discarded.</p>
+<p><code>Safe</code> is an improvement over <code>xpcall</code>, because it does away with the
+<code>ok</code> boolean altogether, and <em>only</em> returns the result. It also clearly
+labels the <code>try</code> and <code>fallback</code> functions so you can easily tell which
+one handles which case.</p>
+<p>As a result of its design, <code>Safe</code> can be used widely throughout Fusion to catch
+fatal errors. For example, you can use it to conditionally render error
+components directly as part of a larger UI:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">Safe</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+        <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">FormattedForumPost</span> <span class="p">{</span>
+            <span class="c1">-- ... properties ...</span>
+        <span class="p">}</span>
+    <span class="kr">end</span><span class="p">,</span>
+    <span class="n">fallback</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">ErrorPage</span> <span class="p">{</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;An error occurred while showing this forum post&quot;</span><span class="p">,</span>
+            <span class="n">errorMessage</span> <span class="o">=</span> <span class="nb">tostring</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="kr">end</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="non-fatal-errors">Non-Fatal Errors<a class="headerlink" href="#non-fatal-errors" title="Permanent link">&para;</a></h3>
+<p>As before, note that <em>non-fatal</em> errors aren't caught by <code>Safe</code>, because they do
+not cause the computation in <code>try()</code> to crash.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- The `Safe` is outside the `Computed`.</span>
+<span class="c1">-- It will not catch the error, because the `Computed` handles the error.</span>
+<span class="kd">local</span> <span class="n">result</span> <span class="o">=</span> <span class="n">Safe</span> <span class="p">{</span>
+    <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+            <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Kaboom!&quot;</span><span class="p">)</span>
+        <span class="kr">end</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="s2">&quot;success&quot;</span>
+    <span class="kr">end</span><span class="p">,</span>
+    <span class="n">fallback</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="s2">&quot;fail&quot;</span>
+    <span class="kr">end</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1">--&gt; success</span>
+</code></pre></div>
+<p>You must move the <code>Safe</code> closer to the source of the error, as discussed before.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- The `Safe` and the the `Computed` have swapped places.</span>
+<span class="c1">-- The error is now caught by the `Safe` instead of the `Computed`.</span>
+<span class="kd">local</span> <span class="n">result</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+    <span class="kr">return</span> <span class="n">Safe</span> <span class="p">{</span>
+        <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+            <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Kaboom!&quot;</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="s2">&quot;success&quot;</span>
+        <span class="kr">end</span><span class="p">,</span>
+        <span class="n">fallback</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="s2">&quot;fail&quot;</span>
+        <span class="kr">end</span>
+    <span class="p">}</span>
+<span class="kr">end</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">result</span><span class="p">))</span> <span class="c1">--&gt; fail</span>
+</code></pre></div>
 
 <!-- Source file information -->
 
@@ -2956,9 +3212,9 @@ to receive updates from it.</p>
 		
 		  
 		  <a
-			href="../dependency/"
+			href="../sharing-values/"
 			class="md-footer__link md-footer__link--prev"
-			aria-label="Previous: Dependency"
+			aria-label="Previous: Sharing Values"
 			rel="prev"
 		  >
 			<div class="md-footer__button md-icon">
@@ -2969,7 +3225,7 @@ to receive updates from it.</p>
 				<span class="md-footer__direction">
 				  Previous
 				</span>
-				Dependency
+				Sharing Values
 			  </div>
 			</div>
 		  </a>
@@ -2979,9 +3235,9 @@ to receive updates from it.</p>
 		
 		  
 		  <a
-			href="../for/"
+			href="../optimisation/"
 			class="md-footer__link md-footer__link--next"
-			aria-label="Next: For"
+			aria-label="Next: Optimisation"
 			rel="next"
 		  >
 			<div class="md-footer__title">
@@ -2989,7 +3245,7 @@ to receive updates from it.</p>
 				<span class="md-footer__direction">
 				  Next
 				</span>
-				For
+				Optimisation
 			  </div>
 			</div>
 			<div class="md-footer__button md-icon">
@@ -3023,12 +3279,12 @@ to receive updates from it.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
-        <script src="../../../../assets/scripts/smooth-scroll.js"></script>
+        <script src="../../../assets/scripts/smooth-scroll.js"></script>
       
     
   </body>

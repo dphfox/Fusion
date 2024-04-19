@@ -331,6 +331,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.3/tutorials/best-practices/error-safety/</loc>
+         <lastmod>2024-04-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.3/tutorials/best-practices/instance-handling/</loc>
          <lastmod>2024-04-19</lastmod>
          <changefreq>daily</changefreq>
