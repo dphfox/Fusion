@@ -17,19 +17,24 @@ local function tryRevalidate(
 ): ()
 	if target.validity == "invalid" then
 		target.validity = "busy"
-		local meaningfulChange = true
-		if target.lastChange ~= nil then
-			local newerDependencyFound = false
+		local needsComputation = true
+		local targetComputedBefore = target.lastChange ~= nil
+		if targetComputedBefore then
+			needsComputation = false
 			for dependency in target.dependencySet do
 				tryRevalidate(dependency)
 				if dependency.lastChange > target.lastChange then
-					newerDependencyFound = true
+					needsComputation = true
 					break
 				end
 			end
-			meaningfulChange = newerDependencyFound and target:duringRevalidation()
 		end
-		if target.lastChange == nil or meaningfulChange then
+		local targetMeaningfullyChanged = false
+		if needsComputation then
+			table.clear(target.dependencySet)
+			targetMeaningfullyChanged = target:duringRevalidation() or not targetComputedBefore
+		end
+		if targetMeaningfullyChanged then
 			target.lastChange = os.clock()
 		end
 		target.validity = "valid"
