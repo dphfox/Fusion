@@ -47,7 +47,7 @@ return function()
 
 	Graphs.propertyTest {
 		testing = "evaluate",
-		it = "allows evaluating/depending on objects during revalidation",
+		it = "allows further evaluating/depending on objects during evaluation",
 		filters = {Graphs.filters.wellFormed},
 		perform = function(
 			graph: Graphs.Graph
