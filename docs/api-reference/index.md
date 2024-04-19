@@ -25,6 +25,11 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
     <span class="fusiondoc-api-name">Contextual</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
+<a class="fusiondoc-api-index-link" href="general/members/safe" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
+    <span class="fusiondoc-api-name">Safe</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
 </div>
 
 <div markdown>
