@@ -29,7 +29,7 @@ local function tryRevalidate(
 			end
 			meaningfulChange = newerDependencyFound and target:duringRevalidation()
 		end
-		if meaningfulChange then
+		if target.lastChange == nil or meaningfulChange then
 			target.lastChange = os.clock()
 		end
 		target.validity = "valid"
