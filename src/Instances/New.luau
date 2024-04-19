@@ -12,7 +12,11 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local defaultProps = require(Package.Instances.defaultProps)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
-local logError= require(Package.Logging.logError)
+local logError = require(Package.Logging.logError)
+
+type Component = (Types.PropertyTable) -> Instance
+
+local componentCache: {[string]: Component} = {}
 
 local function New(
 	scope: Types.Scope<unknown>,
@@ -22,26 +26,32 @@ local function New(
 		local scope = (scope :: any) :: string
 		logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
 	end
-	return function(
-		props: Types.PropertyTable
-	): Instance
-		local ok, instance = pcall(Instance.new, className)
-		if not ok then
-			logError("cannotCreateClass", nil, className)
-		end
 
-		local classDefaults = defaultProps[className]
-		if classDefaults ~= nil then
-			for defaultProp, defaultValue in pairs(classDefaults) do
-				(instance :: any)[defaultProp] = defaultValue
+	local component = componentCache[className]
+	if component == nil then
+		component = function(
+			props: Types.PropertyTable
+		): Instance
+			local ok, instance = pcall(Instance.new, className)
+			if not ok then
+				logError("cannotCreateClass", nil, className)
 			end
+
+			local classDefaults = defaultProps[className]
+			if classDefaults ~= nil then
+				for defaultProp, defaultValue in pairs(classDefaults) do
+					(instance :: any)[defaultProp] = defaultValue
+				end
+			end
+
+			table.insert(scope, instance)
+			applyInstanceProps(scope, props, instance)
+
+			return instance
 		end
-
-		table.insert(scope, instance)
-		applyInstanceProps(scope, props, instance)
-
-		return instance
+		componentCache[className] = component
 	end
+	return component
 end
 
 return New
