@@ -33,7 +33,7 @@ returning a success boolean.
 	successfully returning a value.
 
 	In particular, this applies to [computeds](../../../state/members/computed)
-	you create inside `Safe` (and other similar objects). Because those errors 
+	you create inside `Safe` (and other similar objects). Because errors there
 	are safely handled by those objects, and do not cause the `Safe` calculation
 	to crash fatally, you have to use `Safe` inside of the computed itself if
 	you want to capture the error.
