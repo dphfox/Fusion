@@ -14,13 +14,14 @@ local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 -- State
-local updateAll = require(Package.State.updateAll)
+local change = require(Package.State.change)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 
 local class = {}
 class.type = "State"
 class.kind = "Value"
+class.timeliness = "lazy"
 
 local CLASS_METATABLE = {__index = class}
 
@@ -39,7 +40,7 @@ function class:set(
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
-		updateAll(self)
+		change(self)
 	end
 end
 
@@ -49,6 +50,15 @@ end
 function class:_peek(): unknown
 	local self = self :: InternalTypes.Value<unknown, unknown>
 	return self._value
+end
+
+--[[
+	Evaluates this graph object.
+]]
+function class:_evaluate(): boolean
+	-- The only time a meaningful change occurs is when the value object
+	-- manually indicates such a change has occured via `change()`.
+	return false
 end
 
 function class:get()
@@ -72,8 +82,10 @@ local function Value<T>(
 	end
 
 	local self = setmetatable({
-		scope = scope,
 		dependentSet = {},
+		scope = scope,
+		validity = "valid",
+		_lastChange = nil,
 		_value = initialValue
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Value<T, any>
