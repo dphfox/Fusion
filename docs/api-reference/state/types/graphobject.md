@@ -16,7 +16,7 @@ export type GraphObject = ScopedObject & {
 	lastChange: number,
 	timeliness: "lazy" | "eager",
 	validity: "valid" | "invalid" | "busy",
-	duringEvaluation: (GraphObject, lastChange: number?) -> boolean
+	_evaluate: (GraphObject, lastChange: number?) -> boolean
 }
 ```
 
@@ -93,14 +93,14 @@ the middle of a revalidation.
 ## Methods
 
 <h3 markdown>
-	duringEvaluation
+	_evaluate
 	<span class="fusiondoc-api-type">
 		-> boolean
 	</span>
 </h3>
 
 ```Lua
-function GraphObject:duringEvaluation(): boolean
+function GraphObject:_evaluate(): boolean
 ```
 
 Called by Fusion while the graph object is in the process of being evaluated.

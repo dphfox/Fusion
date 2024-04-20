@@ -79,7 +79,7 @@ export type GraphObject = ScopedObject & {
 	lastChange: number?,
 	timeliness: "lazy" | "eager",
 	validity: "valid" | "invalid" | "busy",
-	duringEvaluation: (GraphObject) -> boolean
+	_evaluate: (GraphObject) -> boolean
 }
 
 -- An object which stores a piece of reactive state.

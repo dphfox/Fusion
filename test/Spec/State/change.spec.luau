@@ -244,7 +244,7 @@ return function()
 				local doNotInvalidate: {Types.GraphObject}
 				for _, object in objects do
 					object.timeliness = "eager"
-					object.duringEvaluation = function()
+					object._evaluate = function()
 						if doNotInvalidate == nil then
 							doNotInvalidate = {}
 							for _, object in graph.objects do
