@@ -20,6 +20,7 @@ local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)
+local nameOf = require(Package.Utility.nameOf)
 -- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
@@ -103,9 +104,9 @@ function class._evaluate<T, S>(
 		local targetState = castToState(target)
 		if targetState ~= nil then
 			if targetState.scope == nil then
-				logError("useAfterDestroy", nil, `The {targetState.kind} object`, "the Computed that is use()-ing it")
+				logError("useAfterDestroy", nil, `The {nameOf(targetState, "used")} object`, "the Computed that is use()-ing it")
 			elseif whichLivesLonger(outerScope, self, targetState.scope, targetState) == "definitely-a" then
-				logWarn("possiblyOutlives", `The {targetState.kind} object`, "the Computed that is use()-ing it")
+				logWarn("possiblyOutlives", `The {nameOf(targetState, "used")} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[targetState] = true
 			targetState.dependentSet[self] = true

@@ -19,6 +19,8 @@ local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 -- State
 local castToGraph = require(Package.State.castToGraph)
+-- Utility
+local nameOf = require(Package.Utility.nameOf)
 
 type Self = Types.Observer & {
 	_changeListeners: {[unknown]: () -> ()}
@@ -39,11 +41,10 @@ local function Observer(
 	end
 	local watchingGraph = castToGraph(watching)
 	if watchingGraph ~= nil and watchingGraph.scope == nil then
-		local name = (watching :: any).kind or (watching :: any).type or "watched"
 		logError(
 			"useAfterDestroy",
 			nil,
-			`The {name} object`,
+			`The {nameOf(watchingGraph, "watched")} object`,
 			`the Observer that is watching it`
 		)
 	end
@@ -62,10 +63,9 @@ local function Observer(
 	if watchingGraph ~= nil then
 		watchingGraph.dependentSet[self] = true
 		if whichLivesLonger(scope, self, watchingGraph.scope :: any, watching) == "definitely-a" then
-			local watching: any = watching
 			logWarn(
 				"possiblyOutlives",
-				`The {watching.kind or watching.type or "watched"} object`,
+				`The {nameOf(watchingGraph, "watched")} object`,
 				`the Observer that is watching it`
 			)
 		end
