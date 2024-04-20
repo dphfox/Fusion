@@ -40,10 +40,10 @@ local function Value<T>(
 		setmetatable(
 			{
 				dependentSet = {},
+				lastChange = os.clock(),
 				scope = scope,
 				validity = "valid",
-				_EXTREMELY_DANGEROUS_usedAsValue = initialValue,
-				_lastChange = os.clock(),
+				_EXTREMELY_DANGEROUS_usedAsValue = initialValue
 			}, 
 			METATABLE
 		)

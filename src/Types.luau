@@ -7,9 +7,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
---[[
-	General use types
-]]
+export type Error = {
+	type: string, -- replace with "Error" when Luau supports singleton types
+	raw: string,
+	message: string,
+	trace: string
+}
 
 -- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
@@ -107,8 +110,8 @@ export type Computed<T> = StateObject<T> & {
 	kind: "Computed"
 }
 export type ComputedConstructor = <T, S>(
-	scope: Scope<S>,
-	callback: (Use, Scope<S>) -> T
+	scope: S & Scope<unknown>,
+	callback: (Use, S) -> T
 ) -> Computed<T>
 
 -- A state object which maps over keys and/or values in another table.
@@ -116,19 +119,19 @@ export type For<KO, VO> = StateObject<{[KO]: VO}>  & {
 	kind: "For"
 }
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[KI]: VI}>,
-	processor: (Use, Scope<S>, key: KI, value: VI) -> (KO, VO)
+	processor: (Use, S, key: KI, value: VI) -> (KO, VO)
 ) -> For<KO, VO>
 export type ForKeysConstructor =  <KI, KO, V, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[KI]: V}>,
-	processor: (Use, Scope<S>, key: KI) -> KO
+	processor: (Use, S, key: KI) -> KO
 ) -> For<KO, V>
 export type ForValuesConstructor =  <K, VI, VO, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[K]: VI}>,
-	processor: (Use, Scope<S>, value: VI) -> VO
+	processor: (Use, S, value: VI) -> VO
 ) -> For<K, VO>
 
 -- An object which can listen for updates on another state object.

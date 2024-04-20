@@ -15,12 +15,7 @@ local Package = script.Parent
 local Types = require(Package.Types)
 
 -- Stores useful information about Luau errors.
-export type Error = {
-	type: string, -- replace with "Error" when Luau supports singleton types
-	raw: string,
-	message: string,
-	trace: string
-}
+
 
 -- An object which stores a value scoped in time.
 export type Contextual<T> = Types.Contextual<T> & {

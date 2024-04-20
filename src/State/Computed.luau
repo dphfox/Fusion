@@ -30,10 +30,8 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local scopePool = require(Package.Memory.scopePool)
 
 export type Self<T, S> = Types.Computed<T> & {
-	_oldDependencySet: {[Types.GraphObject]: unknown},
-	_processor: (Types.Use, Types.Scope<S>) -> T,
-	_value: T,
-	_innerScope: Types.Scope<S>?
+	_innerScope: Types.Scope<S>?,
+	_processor: (Types.Use, Types.Scope<S>) -> T
 }
 
 local class = {}
@@ -55,13 +53,14 @@ local function Computed<T, S>(
 	end
 	local self = setmetatable(
 		{
-			scope = scope,
 			dependencySet = {},
 			dependentSet = {},
-			_oldDependencySet = {},
-			_processor = processor,
-			_value = nil,
-			_innerScope = nil
+			lastChange = nil,
+			scope = scope,
+			validity = "invalid",
+			_EXTREMELY_DANGEROUS_usedAsValue = nil,
+			_innerScope = nil,
+			_processor = processor
 		}, 
 		METATABLE
 	)
@@ -99,14 +98,6 @@ function class._evaluate<T, S>(
 		return false
 	end
 	local outerScope = self.scope :: S & Types.Scope<unknown>
-
-	-- we need to create a new, empty dependency set to capture dependencies
-	-- into, but in case there's an error, we want to restore our old set of
-	-- dependencies. by using this table-swapping solution, we can avoid the
-	-- overhead of allocating new tables each update.
-	self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
-	table.clear(self.dependencySet)
-
 	local innerScope = deriveScope(outerScope)
 	local function use<T>(target: Types.UsedAs<T>): T
 		if isState(target) then
@@ -117,57 +108,32 @@ function class._evaluate<T, S>(
 				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
-			return (target :: InternalTypes.StateObject<T>):_peek()
-		else
-			return target :: T
+			target.dependentSet[self] = true
 		end
+		return peek(target)
 	end
 	local ok, newValue = xpcall(self._processor, parseError, use, innerScope)
 	local innerScope = scopePool.giveIfEmpty(innerScope)
-
 	if ok then
-		local oldValue = self._value
-		local similar = isSimilar(oldValue, newValue)
+		local similar = isSimilar(self._EXTREMELY_DANGEROUS_usedAsValue, newValue)
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
 			scopePool.clearAndGive(self._innerScope)
 		end
-		self._value = newValue
+		self._EXTREMELY_DANGEROUS_usedAsValue = newValue
 		self._innerScope = innerScope
-
-		-- add this object to the dependencies' dependent sets
-		for dependency in pairs(self.dependencySet) do
-			dependency.dependentSet[self] = true
-		end
-
 		return not similar
 	else
-		local errorObj = (newValue :: any) :: InternalTypes.Error
+		local errorObj = (newValue :: any) :: Types.Error
+		if innerScope ~= nil then
+			doCleanup(innerScope)
+			scopePool.clearAndGive(innerScope)
+		end
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
 		logErrorNonFatal("callbackError", errorObj)
-
-		if innerScope ~= nil then
-			doCleanup(innerScope)
-			scopePool.clearAndGive(self._innerScope :: any)
-			self._innerScope = nil
-		end
-
-		-- restore old dependencies, because the new dependencies may be corrupt
-		self._oldDependencySet, self.dependencySet = self.dependencySet, self._oldDependencySet
-
-		-- restore this object in the dependencies' dependent sets
-		for dependency in pairs(self.dependencySet) do
-			dependency.dependentSet[self] = true
-		end
-
 		return false
 	end
 end
 
-function class:_peek(): unknown
-	local self = self :: InternalTypes.Computed<unknown, unknown>
-	return self._value
-end
-
-return Computed
+return Computed :: Types.ComputedConstructor

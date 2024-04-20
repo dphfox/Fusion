@@ -11,8 +11,7 @@ local function isState(
 	target: unknown
 ): boolean
 	if typeof(target) == "table" then
-		local target = target :: {_peek: unknown?}
-		return typeof(target._peek) == "function"
+		return (target :: any).type == "State"
 	end
 	return false
 end
