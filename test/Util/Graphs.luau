@@ -577,7 +577,6 @@ function Graphs.propertyTest(
 			return
 		end
 		describe(test.it, function()
-			getfenv().FOCUS() --temporary
 			local it = getfenv().it
 			
 			for _, shape in Graphs.STANDARD do
