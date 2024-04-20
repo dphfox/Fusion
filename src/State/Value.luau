@@ -6,7 +6,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 --[[
 	A state object which allows regular Luau code to control its value.
 
-	https://elttob.uk/Fusion/0.3/api-reference/state/members/value/
+	https://elttob.uk/Fusion/0.3/api-reference/state/types/value/
 ]]
 
 local Package = script.Parent.Parent
