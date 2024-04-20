@@ -448,13 +448,14 @@ function Graphs.format(
 	while true do
 		local edge = graph.shape.edges[line]
 		local reprLine = graph.shape.repr[line]
+		local objectName = graph.shape.objects[line]
 
-		if edge == nil and reprLine == nil then
+		if edge == nil and reprLine == nil and objectName == nil then
 			break
 		end
 
 		if reprLine ~= nil then
-			reprWidth = math.max(reprWidth, #reprLine)
+			reprWidth = math.max(reprWidth, utf8.len(reprLine) or 0)
 		else
 			reprLine = string.rep(" ", reprWidth)
 		end
@@ -492,7 +493,17 @@ function Graphs.format(
 			end
 		end
 
-		table.insert(output, `  |  {reprLine}  |  {validityLine}  |  {timelinessLine}  |  {edgeLine}`)
+		edgeLine = edgeLine .. string.rep(" ", 5 - (utf8.len(edgeLine) or 0))
+
+		local changeLine = ""
+		if objectName ~= nil then
+			local object = graph.objects[objectName]
+			if object ~= nil then
+				changeLine = `{objectName} ◷ {object.lastChange or "nil"}`
+			end
+		end
+
+		table.insert(output, `  |  {reprLine}  |  {validityLine}  |  {timelinessLine}  |  {edgeLine}  |  {changeLine}`)
 
 		line += 1
 	end

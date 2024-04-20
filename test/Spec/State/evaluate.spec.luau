@@ -6,7 +6,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
 
 local evaluate = require(Fusion.State.evaluate)
-local change = require(Fusion.State.change)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 
@@ -370,10 +369,26 @@ return function()
 						(object :: any).TEST_MARKER = true
 						return false
 					end
-					object.validity = "valid"
 				end
-				for _, target in Graphs.selectors.noConnections(graph.allObjects, "dependency") do
-					change(target)
+				local searchNow = Graphs.selectors.noConnections(graph.allObjects, "dependency")
+				for depth = 0, math.huge do
+					local searchNext = {}
+					local seen = {}
+					for _, searchTarget in searchNow do
+						searchTarget.lastChange = -depth
+						searchTarget.validity = if depth == 0 then "valid" else "invalid"
+						for dependent in searchTarget.dependentSet do
+							if seen[dependent] then
+								continue
+							end
+							seen[dependent] = true
+							table.insert(searchNext, dependent)
+						end
+					end
+					if #searchNext == 0 then
+						break
+					end
+					searchNow = searchNext
 				end
 			end
 		},
@@ -391,7 +406,7 @@ return function()
 					return `{Graphs.nameOf(object)} did not compute despite being invalid`
 				end
 			end
-			if not didAnyTests then
+			if not didAnyTests and #graph.allObjects > 1 then
 				return "no tests were done - this is a spec bug"
 			end
 			return false
