@@ -42,7 +42,7 @@ local function Value<T>(
 				dependentSet = {},
 				scope = scope,
 				validity = "valid",
-				_EXTREMELY_DANGEROUS_peekValue = initialValue,
+				_EXTREMELY_DANGEROUS_usedAsValue = initialValue,
 				_lastChange = os.clock(),
 			}, 
 			METATABLE
@@ -71,9 +71,9 @@ function class.set<T, S>(
 	self: Self<T, S>,
 	newValue: S
 ): ()
-	local oldValue = self._EXTREMELY_DANGEROUS_peekValue
+	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 	if not isSimilar(oldValue, newValue) then
-		self._EXTREMELY_DANGEROUS_peekValue = newValue :: any
+		self._EXTREMELY_DANGEROUS_usedAsValue = newValue :: any
 		change(self)
 	end
 end

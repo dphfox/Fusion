@@ -21,7 +21,7 @@ local function peek<T>(
 	if isState(target) then
 		local target = target :: Types.StateObject<T>
 		evaluate(target)
-		return target._EXTREMELY_DANGEROUS_peekValue
+		return target._EXTREMELY_DANGEROUS_usedAsValue
 	else
 		return target :: T
 	end

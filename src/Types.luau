@@ -82,7 +82,7 @@ export type GraphObject = ScopedObject & {
 export type StateObject<T> = GraphObject & {
 	type: "State",
 	kind: string,
-	_EXTREMELY_DANGEROUS_peekValue: T
+	_EXTREMELY_DANGEROUS_usedAsValue: T
 }
 
 -- Passing values of this type to `Use` returns `T`.

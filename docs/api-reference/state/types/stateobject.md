@@ -13,7 +13,7 @@
 export type StateObject<T> = GraphObject & {
 	type: "State",
 	kind: string,
-	_EXTREMELY_DANGEROUS_peekValue: T
+	_EXTREMELY_DANGEROUS_usedAsValue: T
 }
 ```
 
@@ -47,7 +47,7 @@ A more specific type string which can be used for runtime type checking. This
 can be used to tell types of state object apart.
 
 <h3 markdown>
-	_EXTREMELY_DANGEROUS_peekValue
+	_EXTREMELY_DANGEROUS_usedAsValue
 	<span class="fusiondoc-api-type">
 		: T
 	</span>
