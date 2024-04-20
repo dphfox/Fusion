@@ -44,10 +44,6 @@ export type StateObject<T> = Types.StateObject<T> & {
 	Specific reactive graph types
 ]]
 
--- A state object whose value can be set at any time by the user.
-export type Value<T, S = T> = Types.Value<T, S> & {
-	_value: S
-}
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T, S> = Types.Computed<T> & {
