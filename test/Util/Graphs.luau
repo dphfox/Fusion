@@ -557,16 +557,18 @@ function Graphs.propertyTest(
 			count: number,
 			prepare: (Graph) -> ()
 		},
-		perform: (Graph) -> string | false
+		perform: "not implemented" | (Graph) -> string | false
 	}
 )
 	return function(describe: any): ()
+		if test.perform == "not implemented" then
+			warn(`{test.testing} - Property test not implemented: "{test.it}"`)
+			return
+		end
 		describe(test.it, function()
 			getfenv().FOCUS() --temporary
 			local it = getfenv().it
 			
-			local didAnyTests = false
-			local detectedNotImplemented = false
 			for _, shape in Graphs.STANDARD do
 				local filtered = false
 				for _, filter in test.filters do
@@ -592,8 +594,6 @@ function Graphs.propertyTest(
 
 				for index, graph in subTests do
 					local testTitle = if #subTests == 1 then shape.name else `{shape.name} [{index}]`
-					
-					didAnyTests = true
 					it(testTitle, function()
 						local preStateFormatted = {}
 						Graphs.format(preStateFormatted, graph)
@@ -628,13 +628,7 @@ function Graphs.propertyTest(
 						end
 						local ok, diagnosis = pcall(test.perform, graph)
 						if not ok or typeof(diagnosis) == "string" then
-							if diagnosis == "not implemented" then
-								if not detectedNotImplemented then
-									warn(`{test.testing} - Property test not implemented: "{test.it}"`)
-									detectedNotImplemented = true
-								end
-								return
-							elseif string.find(diagnosis, "FUSION_TEST_FINITE_TIME", 1, true) ~= nil then
+							if string.find(diagnosis, "FUSION_TEST_FINITE_TIME", 1, true) ~= nil then
 								diagnosis = "the test took an unreasonable amount of time."
 							end
 							local output = {
@@ -658,9 +652,6 @@ function Graphs.propertyTest(
 						end
 					end)
 				end
-			end
-			if not didAnyTests then
-				warn(`{test.testing} - No property tests produced for: "{test.it}"`)
 			end
 		end)
 	end

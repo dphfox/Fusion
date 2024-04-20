@@ -15,12 +15,15 @@ local logError = require(Package.Logging.logError)
 local function evaluate(
 	target: Types.GraphObject
 ): ()
-	if target.validity == "invalid" then
+	if target.validity == "busy" then
+		return logError("infiniteLoop")
+	end
+	local firstEvaluation = target.lastChange == nil
+	local isInvalid = target.validity == "invalid"
+	if firstEvaluation or isInvalid then
 		target.validity = "busy"
-		local needsComputation = true
-		local targetComputedBefore = target.lastChange ~= nil
-		if targetComputedBefore then
-			needsComputation = false
+		local needsComputation = isInvalid and firstEvaluation 
+		if not (needsComputation or firstEvaluation) then
 			for dependency in target.dependencySet do
 				evaluate(dependency)
 				if dependency.lastChange > target.lastChange then
@@ -32,14 +35,12 @@ local function evaluate(
 		local targetMeaningfullyChanged = false
 		if needsComputation then
 			table.clear(target.dependencySet)
-			targetMeaningfullyChanged = target:_evaluate() or not targetComputedBefore
+			targetMeaningfullyChanged = target:_evaluate()
 		end
-		if targetMeaningfullyChanged then
+		if targetMeaningfullyChanged or firstEvaluation then
 			target.lastChange = os.clock()
 		end
 		target.validity = "valid"
-	elseif target.validity == "busy" then
-		return logError("infiniteLoop")
 	end
 end
 
