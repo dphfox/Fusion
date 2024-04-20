@@ -4,7 +4,9 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	A common interface for accessing the values of state objects or constants.
+	Extracts a value of type T from its input.
+
+	https://elttob.uk/Fusion/0.3/api-reference/state/members/peek/
 ]]
 
 local Package = script.Parent.Parent
