@@ -12,12 +12,15 @@ local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
 -- State
 local isState = require(Package.State.isState)
+local evaluate = require(Package.State.evaluate)
 
 local function peek<T>(
 	target: Types.UsedAs<T>
 ): T
 	if isState(target) then
-		return (target :: InternalTypes.StateObject<T>):_peek()
+		local target = target :: InternalTypes.StateObject<T>
+		evaluate(target)
+		return target:_peek()
 	else
 		return target :: T
 	end
