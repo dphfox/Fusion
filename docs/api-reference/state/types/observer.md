@@ -12,13 +12,14 @@
 ```Lua
 export type Observer = GraphObject & {
 	type: "Observer",
+	timeliness: "eager",
 	onChange: (self, callback: () -> ()) -> (() -> ()),
 	onBind: (self, callback: () -> ()) -> (() -> ())
 }
 ```
 
-A user-constructed [graphobject](../graph object) that runs user code when it's
-updated by the reactive graph.
+A [graph object](../graph object) that runs user code when it's updated by the
+reactive graph.
 
 !!! note "Non-standard type syntax"
 	The above type definition uses `self` to denote methods. At time of writing,

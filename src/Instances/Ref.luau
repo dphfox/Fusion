@@ -12,7 +12,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 return {
@@ -25,7 +25,7 @@ return {
 		value: unknown,
 		applyTo: Instance
 	)
-		if not isState(value) then
+		if not castToState(value) then
 			logError("invalidRefType")
 		end
 		local value = value :: Types.StateObject<unknown>

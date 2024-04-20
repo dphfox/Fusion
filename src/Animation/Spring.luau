@@ -16,7 +16,7 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
 local updateAll = require(Package.State.updateAll)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
@@ -195,7 +195,7 @@ local function Spring<T>(
 	speed: Types.UsedAs<number>?,
 	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
-	if typeof(scope) ~= "table" or isState(scope) then
+	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
 		logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
 	-- apply defaults for speed and damping
@@ -207,16 +207,16 @@ local function Spring<T>(
 	end
 
 	local dependencySet: {[Types.GraphObject]: unknown} = {}
-	local goalIsState = isState(goal)
+	local goalIsState = castToState(goal) ~= nil
 	if goalIsState then
 		local goal = goal :: Types.StateObject<T>
 		dependencySet[goal] = true
 	end
-	if isState(speed) then
+	if castToState(speed) then
 		local speed = speed :: Types.StateObject<number>
 		dependencySet[speed] = true
 	end
-	if isState(damping) then
+	if castToState(damping) then
 		local damping = damping :: Types.StateObject<number>
 		dependencySet[damping] = true
 	end

@@ -12,7 +12,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
@@ -34,7 +34,7 @@ local function Attribute(
 				value: unknown,
 				applyTo: Instance
 			)
-				if isState(value) then
+				if castToState(value) then
 					local value = value :: Types.StateObject<unknown>
 					if value.scope == nil then
 						logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)

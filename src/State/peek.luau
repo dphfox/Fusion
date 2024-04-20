@@ -12,16 +12,16 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- State
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local evaluate = require(Package.State.evaluate)
 
 local function peek<T>(
 	target: Types.UsedAs<T>
 ): T
-	if isState(target) then
-		local target = target :: Types.StateObject<T>
-		evaluate(target)
-		return target._EXTREMELY_DANGEROUS_usedAsValue
+	local targetState = castToState(target)
+	if targetState ~= nil then
+		evaluate(targetState)
+		return targetState._EXTREMELY_DANGEROUS_usedAsValue :: T
 	else
 		return target :: T
 	end

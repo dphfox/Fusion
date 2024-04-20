@@ -13,7 +13,7 @@ local Types = require(Package.Types)
 local logWarn = require(Package.Logging.logWarn)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local doCleanup = require(Package.Memory.doCleanup)
 local scopePool = require(Package.Memory.scopePool)
 
@@ -74,7 +74,7 @@ return {
 						child.Name = autoName
 					end
 	
-				elseif isState(child) then
+				elseif castToState(child) then
 					-- case 2; state object
 					local child = child :: Types.StateObject<unknown>
 	

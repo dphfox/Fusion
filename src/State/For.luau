@@ -9,14 +9,13 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local parseError = require(Package.Logging.parseError)
 -- State
 local peek = require(Package.State.peek)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local Value = require(Package.State.Value)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
@@ -53,7 +52,7 @@ function class:update(): boolean
 	end
 	table.clear(self.dependencySet)
 
-	if isState(self._inputTable) then
+	if castToState(self._inputTable) then
 		local inputTable = self._inputTable :: Types.StateObject<{[unknown]: unknown}> 
 		inputTable.dependentSet[self], self.dependencySet[inputTable] = true, true
 	end
@@ -162,7 +161,7 @@ function class:update(): boolean
 					}
 					newProcessors[processor] = true
 				else
-					local errorObj = (outputPair :: any) :: InternalTypes.Error
+					local errorObj = (outputPair :: any) :: Types.Error
 					logErrorNonFatal("callbackError", errorObj)
 				end
 			end

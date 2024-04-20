@@ -97,6 +97,7 @@ export type Use = <T>(target: UsedAs<T>) -> T
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
+	timeliness: "lazy",
  	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
 	 ____TYPEONLY_S: (never) -> S
 }
@@ -107,7 +108,8 @@ export type ValueConstructor = <T>(
 
 -- A state object whose value is derived from other objects using a callback.
 export type Computed<T> = StateObject<T> & {
-	kind: "Computed"
+	kind: "Computed",
+	timeliness: "lazy"
 }
 export type ComputedConstructor = <T, S>(
 	scope: S & Scope<unknown>,
@@ -137,6 +139,7 @@ export type ForValuesConstructor =  <K, VI, VO, S>(
 -- An object which can listen for updates on another state object.
 export type Observer = GraphObject & {
 	type: "Observer",
+	timeliness: "eager",
 	onChange: (Observer, callback: () -> ()) -> (() -> ()),
 	onBind: (Observer, callback: () -> ()) -> (() -> ())
 }

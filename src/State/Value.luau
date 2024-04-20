@@ -36,19 +36,19 @@ local function Value<T>(
 	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
 		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
 	end
-	local self = 
-		setmetatable(
-			{
-				dependentSet = {},
-				lastChange = os.clock(),
-				scope = scope,
-				validity = "valid",
-				_EXTREMELY_DANGEROUS_usedAsValue = initialValue
-			}, 
-			METATABLE
-		)
+	local self: Self<T, any> = setmetatable(
+		{
+			dependencySet = {},
+			dependentSet = {},
+			lastChange = os.clock(),
+			scope = scope,
+			validity = "valid",
+			_EXTREMELY_DANGEROUS_usedAsValue = initialValue
+		}, 
+		METATABLE
+	) :: any
 	table.insert(scope, self)
-	return self :: any
+	return self
 end
 
 function class.destroy<T, S>(

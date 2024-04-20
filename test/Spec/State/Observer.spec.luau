@@ -10,7 +10,7 @@ local Value = require(Fusion.State.Value)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
-	local it = getfenv().it
+	local it = getfenv().itFOCUS
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
@@ -132,6 +132,36 @@ return function()
 		dependency:set(15)
 		doCleanup(subScope)
 		dependency:set(2)
+
+		expect(numFires).to.equal(1)
+
+		doCleanup(scope)
+	end)
+
+	it("never fires onChange for constants", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local observer = Observer(scope, 5)
+		local numFires = 0
+		local disconnect = observer:onChange(function()
+			numFires += 1
+		end)
+		expect(numFires).to.equal(0)
+
+		doCleanup(scope)
+	end)
+
+	it("fires onBind at bind time for constants", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local observer = Observer(scope, 5)
+		local numFires = 0
+		local disconnect = observer:onBind(function()
+			numFires += 1
+		end)
+		disconnect()
 
 		expect(numFires).to.equal(1)
 

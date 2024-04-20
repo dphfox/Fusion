@@ -18,7 +18,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logWarn = require(Package.Logging.logWarn)
@@ -74,7 +74,7 @@ local function bindProperty(
 	property: string,
 	value: Types.UsedAs<unknown>
 )
-	if isState(value) then
+	if castToState(value) then
 		local value = value :: Types.StateObject<unknown>
 		if value.scope == nil then
 			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)

@@ -15,7 +15,7 @@ local External = require(Package.External)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
@@ -96,7 +96,7 @@ local function Tween<T>(
 	goal: Types.UsedAs<T>,
 	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
-	if isState(scope) then
+	if castToState(scope) then
 		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
 	end
 	local currentValue = peek(goal)
@@ -113,12 +113,12 @@ local function Tween<T>(
 	end
 
 	local dependencySet: {[Types.GraphObject]: unknown} = {}
-	local goalIsState = isState(goal)
+	local goalIsState = castToState(goal) ~= nil
 	if goalIsState then
 		local goal = goal :: Types.StateObject<T>
 		dependencySet[goal] = true
 	end
-	local tweenInfoIsState = isState(tweenInfo)
+	local tweenInfoIsState = castToState(tweenInfo)
 	if tweenInfoIsState then
 		local tweenInfo = tweenInfo :: Types.StateObject<TweenInfo>
 		dependencySet[tweenInfo] = true

@@ -11,7 +11,8 @@
 
 ```Lua
 export type Computed<T> = StateObject<T> & {
-	kind: "Computed"
+	kind: "Computed",
+	timeliness: "lazy"
 }
 ```
 

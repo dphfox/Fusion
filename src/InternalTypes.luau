@@ -78,10 +78,4 @@ export type Spring<T> = Types.Spring<T> & {
 	_startVelocities: {number}
 }
 
--- An object which can listen for updates on another state object.
-export type Observer = Types.Observer & {
-	_changeListeners: {[{}]: () -> ()},
-	_numChangeListeners: number
-}
-
 return nil

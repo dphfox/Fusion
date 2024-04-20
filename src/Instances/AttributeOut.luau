@@ -12,7 +12,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
-local isState = require(Package.State.isState)
+local castToState = require(Package.State.castToState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local keyCache: {[string]: Types.SpecialKey} = {}
@@ -34,7 +34,7 @@ local function AttributeOut(
 			)
 				local event = applyTo:GetAttributeChangedSignal(attributeName)
 	
-				if not isState(value) then
+				if not castToState(value) then
 					logError("invalidAttributeOutType")
 				end
 				local value = value :: Types.StateObject<unknown>

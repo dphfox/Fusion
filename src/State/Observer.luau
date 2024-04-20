@@ -4,67 +4,78 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new state object which can listen for updates on another state
-	object.
+	A graph object that runs user code when it's updated by the reactive graph.
+
+	http://elttob.uk/Fusion/0.3/api-reference/state/types/observer/
 ]]
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
+-- Memory
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+-- Logging
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
+-- State
+local castToGraph = require(Package.State.castToGraph)
+
+type Self = Types.Observer & {
+	_changeListeners: {[unknown]: () -> ()}
+}
 
 local class = {}
 class.type = "Observer"
+class.timeliness = "eager"
 
-local CLASS_METATABLE = {__index = class}
+local METATABLE = {__index = class}
 
---[[
-	Called when the watched state changes value.
-]]
-function class:update(): boolean
-	local self = self :: InternalTypes.Observer
-	for _, callback in pairs(self._changeListeners) do
-		External.doTaskImmediate(callback)
+local function Observer(
+	scope: Types.Scope<unknown>,
+	watching: unknown
+): Self
+	if watching == nil then
+		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
 	end
-	return false
-end
-
---[[
-	Adds a change listener. When the watched state changes value, the listener
-	will be fired.
-
-	Returns a function which, when called, will disconnect the change listener.
-	As long as there is at least one active change listener, this Observer
-	will be held in memory, preventing GC, so disconnecting is important.
-]]
-function class:onChange(
-	callback: () -> ()
-): () -> ()
-	local self = self :: InternalTypes.Observer
-	local uniqueIdentifier = {}
-	self._changeListeners[uniqueIdentifier] = callback
-	return function()
-		self._changeListeners[uniqueIdentifier] = nil
+	local watchingGraph = castToGraph(watching)
+	if watchingGraph ~= nil and watchingGraph.scope == nil then
+		local name = (watching :: any).kind or (watching :: any).type or "watched"
+		logError(
+			"useAfterDestroy",
+			nil,
+			`The {name} object`,
+			`the Observer that is watching it`
+		)
 	end
+	local self: Self = setmetatable(
+		{
+			scope = scope,
+			dependencySet = if watchingGraph ~= nil then {[watching] = true} else {},
+			dependentSet = {},
+			lastChange = nil,
+			validity = "valid",
+			_changeListeners = {}
+		},
+		METATABLE
+	) :: any
+	table.insert(scope, self)
+	if watchingGraph ~= nil then
+		watchingGraph.dependentSet[self] = true
+		if whichLivesLonger(scope, self, watchingGraph.scope :: any, watching) == "definitely-a" then
+			local watching: any = watching
+			logWarn(
+				"possiblyOutlives",
+				`The {watching.kind or watching.type or "watched"} object`,
+				`the Observer that is watching it`
+			)
+		end
+	end
+	return self
 end
 
---[[
-	Similar to `class:onChange()`, however it runs the provided callback
-	immediately.
-]]
-function class:onBind(
-	callback: () -> ()
-): () -> ()
-	local self = self :: InternalTypes.Observer
-	External.doTaskImmediate(callback)
-	return self:onChange(callback)
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Observer
+function class.destroy(
+	self: Self
+): ()
 	if self.scope == nil then
 		logError("destroyedTwice", nil, "Observer")
 	end
@@ -74,48 +85,32 @@ function class:destroy()
 	end
 end
 
-local function Observer(
-	scope: Types.Scope<unknown>,
-	watching: unknown
-): Types.Observer
-	if watching == nil then
-		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
+function class.onBind(
+	self: Self,
+	callback: () -> ()
+): () -> ()
+	External.doTaskImmediate(callback)
+	return self:onChange(callback)
+end
+
+function class.onChange(
+	self: Self,
+	callback: () -> ()
+): () -> ()
+	local uniqueIdentifier = {}
+	self._changeListeners[uniqueIdentifier] = callback
+	return function()
+		self._changeListeners[uniqueIdentifier] = nil
 	end
+end
 
-	local watchingState = typeof(watching) == "table" and (watching :: any).dependentSet ~= nil
-
-	local self = setmetatable({
-		scope = scope,
-		dependencySet = if watchingState then {[watching] = true} else {},
-		dependentSet = {},
-		_changeListeners = {}
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Observer
-	
-	table.insert(scope, self)
-
-	if watchingState then
-		local watching: any = watching
-		if watching.scope == nil then
-			logError(
-				"useAfterDestroy",
-				nil,
-				`The {watching.kind or watching.type or "watched"} object`,
-				`the Observer that is watching it`
-			)
-		elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
-			local watching: any = watching
-			logWarn(
-				"possiblyOutlives",
-				`The {watching.kind or watching.type or "watched"} object`,
-				`the Observer that is watching it`
-			)
-		end
-		-- add this object to the watched object's dependent set
-		watching.dependentSet[self] = true
+function class._evaluate(
+	self: Self
+): ()
+	for _, callback in pairs(self._changeListeners) do
+		External.doTaskImmediate(callback)
 	end
-
-	return self
+	return false
 end
 
 return Observer
