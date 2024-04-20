@@ -88,11 +88,12 @@ return function()
 		
 		local scope = {}
 		local destructed = false
-		local _ = Computed(scope, function(innerScope)
+		local computed = Computed(scope, function(innerScope)
 			table.insert(innerScope :: any, function()
 				destructed = true
 			end)
 		end :: any)
+		peek(computed)
 		expect(destructed).to.equal(false)
 
 		doCleanup(scope)
@@ -104,18 +105,21 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local dependency = Value(scope, 1)
-		local _ = Computed(scope, function(use, innerScope)
+		local computed = Computed(scope, function(use, innerScope)
 			local value = use(dependency)
 			table.insert(innerScope, function()
 				destructed[value] = true
 			end)
 			return use(dependency)
 		end)
+		peek(computed)
 		expect(destructed[1]).to.equal(nil)
 		dependency:set(2)
+		peek(computed)
 		expect(destructed[1]).to.equal(true)
 		expect(destructed[2]).to.equal(nil)
 		dependency:set(3)
+		peek(computed)
 		expect(destructed[2]).to.equal(true)
 
 		doCleanup(scope)
@@ -127,7 +131,7 @@ return function()
 		local scope = {}
 		local numDestructions = {}
 		local dependency = Value(scope, 1)
-		local _ = Computed(scope, function(use, innerScope)
+		local computed = Computed(scope, function(use, innerScope)
 			local value = use(dependency)
 			table.insert(innerScope, function()
 				numDestructions[value] = (numDestructions[value] or 0) + 1
@@ -135,14 +139,18 @@ return function()
 			assert(value ~= 2, "This is an intentional error from a unit test")
 			return value
 		end)
+		peek(computed)
 		expect(numDestructions[1]).to.equal(nil)
 		dependency:set(2)
+		peek(computed)
 		expect(numDestructions[1]).to.equal(nil)
 		expect(numDestructions[2]).to.equal(1)
 		dependency:set(3)
+		peek(computed)
 		expect(numDestructions[2]).to.equal(1)
 		expect(numDestructions[3]).to.equal(nil)
 		dependency:set(4)
+		peek(computed)
 		expect(numDestructions[3]).to.equal(1)
 
 		doCleanup(scope)
@@ -153,11 +161,12 @@ return function()
 		
 		local scope = {}
 		local destructed = false
-		local _ = Computed(scope, function(use, innerScope)
+		local computed = Computed(scope, function(use, innerScope)
 			table.insert(innerScope, function()
 				destructed = true
 			end)
 		end :: any)
+		peek(computed)
 		doCleanup(scope)
 		expect(destructed).to.equal(true)
 	end)
