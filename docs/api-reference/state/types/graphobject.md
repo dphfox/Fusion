@@ -16,7 +16,7 @@ export type GraphObject = ScopedObject & {
 	lastChange: number,
 	timeliness: "lazy" | "eager",
 	validity: "valid" | "invalid" | "busy",
-	duringRevalidation: (GraphObject, lastChange: number?) -> boolean
+	duringEvaluation: (GraphObject, lastChange: number?) -> boolean
 }
 ```
 
@@ -93,17 +93,17 @@ the middle of a revalidation.
 ## Methods
 
 <h3 markdown>
-	duringRevalidation
+	duringEvaluation
 	<span class="fusiondoc-api-type">
 		-> boolean
 	</span>
 </h3>
 
 ```Lua
-function GraphObject:duringRevalidation(): boolean
+function GraphObject:duringEvaluation(): boolean
 ```
 
-Called by Fusion while the graph object is in the process of being revalidated.
+Called by Fusion while the graph object is in the process of being evaluated.
 This is where logic to do with computational updates should be placed.
 
 The return value is `true` when a 'meaningful change' occurs because of this

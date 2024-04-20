@@ -32,7 +32,7 @@ local function evaluate(
 		local targetMeaningfullyChanged = false
 		if needsComputation then
 			table.clear(target.dependencySet)
-			targetMeaningfullyChanged = target:duringRevalidation() or not targetComputedBefore
+			targetMeaningfullyChanged = target:duringEvaluation() or not targetComputedBefore
 		end
 		if targetMeaningfullyChanged then
 			target.lastChange = os.clock()

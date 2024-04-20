@@ -503,7 +503,7 @@ export type ObjectTemplate = {
 	lastChange: number?,
 	timeliness: nil | "lazy" | "eager",
 	validity: nil | "valid" | "invalid" | "busy",
-	duringRevalidation: nil | (
+	duringEvaluation: nil | (
 		self: Types.GraphObject,
 		name: string
 	) -> boolean
@@ -523,7 +523,7 @@ function Graphs.make(
 			lastChange = nil,
 			timeliness = "lazy" :: "lazy",
 			validity = "valid" :: "valid",
-			duringRevalidation = function()
+			duringEvaluation = function()
 				return true
 			end,
 			destroy = function() end
