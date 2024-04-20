@@ -21,193 +21,59 @@ local Value = require(Package.State.Value)
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local scopePool = require(Package.Memory.scopePool)
+-- Utility
+local never = require(Package.Utility.never)
+
+type Self<S, KI, KO, VI, VO> = Types.For<KO, VO> & {
+	scope: (S & Types.Scope<unknown>)?,
+	_inputTable: Types.UsedAs<{[KI]: VI}>,
+	_processor: (
+		Types.Scope<S>,
+		Types.StateObject<{key: KI, value: VI}>
+	) -> (Types.StateObject<{key: KO?, value: VO?}>),
+	_subObjects: {[ForSubObject<S, KI, VI, KO, VO>]: true},
+}
+type ForSubObject<S, KI, VI, KO, VO> = {
+	inputPair: Types.Value<{key: KI, value: VI}>,
+	outputPair: Types.StateObject<{key: KO, value: VO}>,
+	maybeScope: Types.Scope<S>?
+}
 
 local class = {}
 class.type = "State"
 class.kind = "For"
+class.timeliness = "lazy"
 
-local CLASS_METATABLE = { __index = class }
+local METATABLE = {__index = class}
 
---[[
-	Called when the original table is changed.
-]]
-
-function class:update(): boolean
-	local self = self :: InternalTypes.For<unknown, unknown, unknown, unknown, unknown>
-	if self.scope == nil then
-		return false
-	end
-	local outerScope = self.scope :: Types.Scope<unknown>
-	local existingInputTable = self._existingInputTable
-	local existingOutputTable = self._existingOutputTable
-	local existingProcessors = self._existingProcessors
-	local newInputTable = peek(self._inputTable)
-	local newOutputTable = self._newOutputTable
-	local newProcessors = self._newProcessors
-	local remainingPairs = self._remainingPairs
-
-	-- clean out main dependency set
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	table.clear(self.dependencySet)
-
-	if castToState(self._inputTable) then
-		local inputTable = self._inputTable :: Types.StateObject<{[unknown]: unknown}> 
-		inputTable.dependentSet[self], self.dependencySet[inputTable] = true, true
-	end
-
-	if newInputTable ~= existingInputTable then
-		for key, value in newInputTable do
-			if remainingPairs[key] == nil then
-				remainingPairs[key] = {[value] = true}
-			else
-				remainingPairs[key][value] = true
-			end
-		end
-
-		-- First, try and reuse processors who match both the key and value of a
-		-- remaining pair. This can be done with no recomputation.
-		-- NOTE: we also reuse processors with nil output keys here, so long as
-		-- they match values. This ensures they don't get recomputed either.
-		for tryReuseProcessor in existingProcessors do
-			local value = peek(tryReuseProcessor.inputPair).value
-			if peek(tryReuseProcessor.outputPair).key == nil then
-				for key, remainingValues in remainingPairs do
-					if remainingValues[value] ~= nil then
-						remainingValues[value] = nil
-						tryReuseProcessor.inputPair:set({key = key, value = value})
-						newProcessors[tryReuseProcessor] = true
-						existingProcessors[tryReuseProcessor] = nil
-						break
-					end
-				end
-			else
-				local key = peek(tryReuseProcessor.inputPair).key
-				local remainingValues = remainingPairs[key]
-				if remainingValues ~= nil and remainingValues[value] ~= nil then
-					remainingValues[value] = nil
-					newProcessors[tryReuseProcessor] = true
-					existingProcessors[tryReuseProcessor] = nil
-				end
-			end
-			
-		end
-		-- Next, try and reuse processors who match the key of a remaining pair.
-		-- The value will change but the key will stay stable.
-		for tryReuseProcessor in existingProcessors do
-			local key = peek(tryReuseProcessor.inputPair).key
-			local remainingValues = remainingPairs[key]
-			if remainingValues ~= nil then
-				local value = next(remainingValues)
-				if value ~= nil then
-					remainingValues[value] = nil
-					tryReuseProcessor.inputPair:set({key = key, value = value})
-					newProcessors[tryReuseProcessor] = true
-					existingProcessors[tryReuseProcessor] = nil
-				end
-			end
-		end
-		-- Next, try and reuse processors who match the value of a remaining pair.
-		-- The key will change but the value will stay stable.
-		for tryReuseProcessor in existingProcessors do
-			local value = peek(tryReuseProcessor.inputPair).value
-			for key, remainingValues in remainingPairs do
-				if remainingValues[value] ~= nil then
-					remainingValues[value] = nil
-					tryReuseProcessor.inputPair:set({key = key, value = value})
-					newProcessors[tryReuseProcessor] = true
-					existingProcessors[tryReuseProcessor] = nil
-					break
-				end
-			end
-		end
-		-- Finally, try and reuse any remaining processors, even if they do not
-		-- match a pair. Both key and value will be changed.
-		for tryReuseProcessor in existingProcessors do
-			for key, remainingValues in remainingPairs do
-				local value = next(remainingValues)
-				if value ~= nil then
-					remainingValues[value] = nil
-					tryReuseProcessor.inputPair:set({key = key, value = value})
-					newProcessors[tryReuseProcessor] = true
-					existingProcessors[tryReuseProcessor] = nil
-					break
-				end
-			end
-		end
-		-- By this point, we can be in one of three cases:
-		-- 1) some existing processors are left over; no remaining pairs (shrunk)
-		-- 2) no existing processors are left over; no remaining pairs (same size)
-		-- 3) no existing processors are left over; some remaining pairs (grew)
-		-- So, existing processors should be destroyed, and remaining pairs should
-		-- be created. This accomodates for table growth and shrinking.
-		for unusedProcessor in existingProcessors do
-			doCleanup(unusedProcessor.scope)
-			scopePool.clearAndGive(unusedProcessor.scope :: any)
-		end
-		
-		for key, remainingValues in remainingPairs do
-			for value in remainingValues do
-				local innerScope = deriveScope(outerScope)
-				local inputPair = Value(innerScope, {key = key, value = value})
-				local processOK, outputPair = xpcall(self._processor, parseError, innerScope, inputPair)
-				local innerScope = scopePool.giveIfEmpty(innerScope)
-				if processOK then
-					local processor = {
-						inputPair = inputPair,
-						outputPair = outputPair,
-						scope = innerScope
-					}
-					newProcessors[processor] = true
-				else
-					local errorObj = (outputPair :: any) :: Types.Error
-					logErrorNonFatal("callbackError", errorObj)
-				end
-			end
-		end
-	end
-
-	for processor in newProcessors do
-		local pair = processor.outputPair
-		pair.dependentSet[self], self.dependencySet[pair] = true, true
-		local key, value = peek(pair).key, peek(pair).value
-		if value == nil then
-			continue
-		end
-		if key == nil then
-			key = #newOutputTable + 1
-		end
-		if newOutputTable[key] == nil then
-			newOutputTable[key] = value
-		else
-			logErrorNonFatal("forKeyCollision", nil, key)
-		end
-	end
-
-	self._existingProcessors = newProcessors
-	self._existingOutputTable = newOutputTable
-	table.clear(existingOutputTable)
-	table.clear(existingProcessors)
-	table.clear(remainingPairs)
-	self._newProcessors = existingProcessors
-	self._newOutputTable = existingOutputTable
-
-	return true
+local function For<S, KI, KO, VI, VO>(
+	scope: Types.Scope<S>,
+	inputTable: Types.UsedAs<{ [KI]: VI }>,
+	processor: (
+		Types.Scope<S>,
+		Types.StateObject<{key: KI, value: VI}>
+	) -> (Types.StateObject<{key: KO?, value: VO?}>)
+): Self<S, KI, KO, VI, VO>
+	local self: Self<S, KI, KO, VI, VO> = setmetatable(
+		{
+			dependencySet = {},
+			dependentSet = {},
+			scope = scope,
+			validity = "invalid",
+			_EXTREMELY_DANGEROUS_usedAsValue = {},
+			_inputTable = inputTable,
+			_processor = processor,
+			_subObjects = {}
+		}, 
+		METATABLE
+	) :: any
+	table.insert(scope, self)
+	return self
 end
 
---[[
-	Returns the interior value of this state object.
-]]
-function class:_peek(): unknown
-	return self._existingOutputTable
-end
-
-function class:get()
-	logError("stateGetWasRemoved")
-end
-
-function class:destroy()
+function class.destroy<S, KI, KO, VI, VO>(
+	self: Self<S, KI, KO, VI, VO>
+)
 	if self.scope == nil then
 		logError("destroyedTwice", nil, "For")
 	end
@@ -215,40 +81,172 @@ function class:destroy()
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
-	for unusedProcessor in self._existingProcessors do
-		doCleanup(unusedProcessor.scope)
-		scopePool.clearAndGive(unusedProcessor.scope)
+	for subObject in self._subObjects do
+		if subObject.maybeScope ~= nil then
+			doCleanup(subObject.maybeScope)
+			scopePool.clearAndGive(subObject.maybeScope)
+		end
 	end
 end
 
-local function For<KI, KO, VI, VO, S>(
-	scope: Types.Scope<S>,
-	inputTable: Types.UsedAs<{ [KI]: VI }>,
-	processor: (
-		Types.Scope<S>,
-		Types.StateObject<{key: KI, value: VI}>
-	) -> (Types.StateObject<{key: KO?, value: VO?}>)
-): Types.For<KO, VO>
+function class.get<S, KI, KO, VI, VO>(
+	_self: Self<S, KI, KO, VI, VO>
+): never
+	logError("stateGetWasRemoved")
+	return never()
+end
 
-	local self = setmetatable({
-		scope = scope,
-		dependencySet = {},
-		dependentSet = {},
-		_processor = processor,
-		_inputTable = inputTable,
-		_existingInputTable = nil,
-		_existingOutputTable = {},
-		_existingProcessors = {},
-		_newOutputTable = {},
-		_newProcessors = {},
-		_remainingPairs = {}
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.For<KI, KO, VI, VO, S>
+function class._evaluate<S, KI, KO, VI, VO>(
+	self: Self<S, KI, KO, VI, VO>
+): boolean
+	if self.scope == nil then
+		return false
+	end
+	local outerScope = self.scope :: S & Types.Scope<unknown>
 
-	table.insert(scope, self)
-	self:update()
+	-- TODO: should do a lifetime check here?
+	local inputState = castToState(self._inputTable)
+	if inputState ~= nil then
+		inputState.dependentSet[self], self.dependencySet[inputState] = true, true
+	end
 
-	return self
+	local pairsToInclude = {} :: {[KI]: {[VI]: true}}
+	for key, value in peek(self._inputTable) do
+		if pairsToInclude[key] == nil then
+			pairsToInclude[key] = {[value] = true}
+		else
+			pairsToInclude[key][value] = true
+		end
+	end
+
+	local oldSubObjects = self._subObjects
+	self._subObjects = {}
+	local newSubObjects = self._subObjects
+
+	-- First, try and reuse sub objs who match both the key and value of a
+	-- remaining pair. This can be done with no recomputation.
+	-- NOTE: we also reuse sub objs with nil output keys here, so long as
+	-- they match values. This ensures they don't get recomputed either.
+	for tryReuseSubObject in oldSubObjects do
+		local value = peek(tryReuseSubObject.inputPair).value
+		if peek(tryReuseSubObject.outputPair).key == nil then
+			for key, remainingValues in pairsToInclude do
+				if remainingValues[value] ~= nil then
+					remainingValues[value] = nil
+					tryReuseSubObject.inputPair:set({key = key, value = value})
+					newSubObjects[tryReuseSubObject] = true
+					oldSubObjects[tryReuseSubObject] = nil
+					break
+				end
+			end
+		else
+			local key = peek(tryReuseSubObject.inputPair).key
+			local remainingValues = pairsToInclude[key]
+			if remainingValues ~= nil and remainingValues[value] ~= nil then
+				remainingValues[value] = nil
+				newSubObjects[tryReuseSubObject] = true
+				oldSubObjects[tryReuseSubObject] = nil
+			end
+		end
+		
+	end
+	-- Next, try and reuse sub objs who match the key of a remaining pair.
+	-- The value will change but the key will stay stable.
+	for tryReuseSubObject in oldSubObjects do
+		local key = peek(tryReuseSubObject.inputPair).key
+		local remainingValues = pairsToInclude[key]
+		if remainingValues ~= nil then
+			local value = next(remainingValues)
+			if value ~= nil then
+				remainingValues[value] = nil
+				tryReuseSubObject.inputPair:set({key = key, value = value})
+				newSubObjects[tryReuseSubObject] = true
+				oldSubObjects[tryReuseSubObject] = nil
+			end
+		end
+	end
+	-- Next, try and reuse sub objs who match the value of a remaining pair.
+	-- The key will change but the value will stay stable.
+	for tryReuseSubObject in oldSubObjects do
+		local value = peek(tryReuseSubObject.inputPair).value
+		for key, remainingValues in pairsToInclude do
+			if remainingValues[value] ~= nil then
+				remainingValues[value] = nil
+				tryReuseSubObject.inputPair:set({key = key, value = value})
+				newSubObjects[tryReuseSubObject] = true
+				oldSubObjects[tryReuseSubObject] = nil
+				break
+			end
+		end
+	end
+	-- Finally, try and reuse any remaining sub objs, even if they do not
+	-- match a pair. Both key and value will be changed.
+	for tryReuseSubObject in oldSubObjects do
+		for key, remainingValues in pairsToInclude do
+			local value = next(remainingValues)
+			if value ~= nil then
+				remainingValues[value] = nil
+				tryReuseSubObject.inputPair:set({key = key, value = value})
+				newSubObjects[tryReuseSubObject] = true
+				oldSubObjects[tryReuseSubObject] = nil
+				break
+			end
+		end
+	end
+	-- By this point, we can be in one of three cases:
+	-- 1) some existing sub objs are left over; no remaining pairs (shrunk)
+	-- 2) no existing sub objs are left over; no remaining pairs (same size)
+	-- 3) no existing sub objs are left over; some remaining pairs (grew)
+	-- So, existing sub objs should be destroyed, and remaining pairs should
+	-- be created. This accomodates for table growth and shrinking.
+	for unusedSubObject in oldSubObjects do
+		if unusedSubObject.maybeScope ~= nil then
+			doCleanup(unusedSubObject.maybeScope)
+			scopePool.clearAndGive(unusedSubObject.maybeScope)
+		end
+	end
+	
+	for key, remainingValues in pairsToInclude do
+		for value in remainingValues do
+			local innerScope = deriveScope(outerScope)
+			local inputPair = Value(innerScope, {key = key, value = value})
+			local processOK, outputPair = xpcall(self._processor, parseError, innerScope, inputPair)
+			local innerScope = scopePool.giveIfEmpty(innerScope)
+			if processOK then
+				local subObject: ForSubObject<S, KI, VI, KO, VO> = {
+					inputPair = inputPair,
+					outputPair = outputPair,
+					scope = innerScope
+				} :: any
+				newSubObjects[subObject] = true
+			else
+				local errorObj = (outputPair :: any) :: Types.Error
+				logErrorNonFatal("callbackError", errorObj)
+			end
+		end
+	end
+
+	local output = self._EXTREMELY_DANGEROUS_usedAsValue
+	table.clear(output)
+
+	for subObject in newSubObjects do
+		local pair = subObject.outputPair
+		pair.dependentSet[self], self.dependencySet[pair] = true, true
+		local key, value = peek(pair).key, peek(pair).value
+		if value == nil then
+			continue
+		end
+		if key == nil then
+			key = (#output + 1) :: any
+		end
+		if output[key] == nil then
+			output[key] = value
+		else
+			logErrorNonFatal("forKeyCollision", nil, key)
+		end
+	end
+
+	return true
 end
 
 return For

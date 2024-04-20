@@ -8,12 +8,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 local Package = script.Parent.Parent
-local InternalTypes = require(Package.InternalTypes)
+local Types = require(Package.Types)
 local messages = require(Package.Logging.messages)
 
 local function logError(
 	messageID: string,
-	errObj: InternalTypes.Error?,
+	errObj: Types.Error?,
 	...: unknown
 )
 	local formatString: string

@@ -12,7 +12,7 @@ local peek = require(Fusion.State.peek)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
-	local it = getfenv().it
+	local it = getfenv().itFOCUS
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect

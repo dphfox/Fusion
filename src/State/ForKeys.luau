@@ -16,7 +16,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
@@ -54,7 +53,7 @@ local function ForKeys<KI, KO, V, S>(
 				if ok then
 					return key
 				else
-					local errorObj = (key :: any) :: InternalTypes.Error
+					local errorObj = (key :: any) :: Types.Error
 					logErrorNonFatal("callbackError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)

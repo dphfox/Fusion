@@ -23,26 +23,6 @@ export type Contextual<T> = Types.Contextual<T> & {
 	_defaultValue: T
 }
 
--- A state object which maps over keys and/or values in another table.
-export type For<KI, KO, VI, VO, S> = Types.For<KO, VO> & {
-	scope: Types.Scope<S>?,
-	_processor: (
-		Types.Scope<S>,
-		Types.StateObject<{key: KI, value: VI}>
-	) -> (Types.StateObject<{key: KO?, value: VO?}>),
-	_inputTable: Types.UsedAs<{[KI]: VI}>,
-	_existingInputTable: {[KI]: VI}?,
-	_existingOutputTable: {[KO]: VO},
-	_existingProcessors: {[ForProcessor]: true},
-	_newOutputTable: {[KO]: VO},
-	_newProcessors: {[ForProcessor]: true},
-	_remainingPairs: {[KI]: {[VI]: true}}
-}
-type ForProcessor = {
-	inputPair: Types.Value<{key: unknown, value: unknown}>,
-	outputPair: Types.StateObject<{key: unknown, value: unknown}>,
-	scope: Types.Scope<unknown>?
-}
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = Types.Tween<T> & {

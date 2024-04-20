@@ -8,13 +8,13 @@
 ]]
 
 local Package = script.Parent.Parent
-local InternalTypes = require(Package.InternalTypes)
+local Types = require(Package.Types)
 local External = require(Package.External)
 local messages = require(Package.Logging.messages)
 
 local function logErrorNonFatal(
 	messageID: string,
-	errObj: InternalTypes.Error?,
+	errObj: Types.Error?,
 	...: unknown
 )	
 	local formatString: string
