@@ -4,8 +4,9 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs and returns objects which can be used to model independent
-	reactive state.
+	A state object which allows regular Luau code to control its value.
+
+	https://elttob.uk/Fusion/0.3/api-reference/state/members/value/
 ]]
 
 local Package = script.Parent.Parent
@@ -23,15 +24,31 @@ class.type = "State"
 class.kind = "Value"
 class.timeliness = "lazy"
 
-local CLASS_METATABLE = {__index = class}
+local METATABLE = {}
+METATABLE.__index = class
 
---[[
-	Updates the value stored in this State object.
+local function Value<T>(
+	scope: Types.Scope<unknown>,
+	initialValue: T
+): Types.Value<T, any>
+	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
+		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
+	end
+	local self: InternalTypes.Value<T, any> = 
+		setmetatable(
+			{
+				dependentSet = {},
+				scope = scope,
+				validity = "valid",
+				_lastChange = os.clock(),
+				_value = initialValue
+			} :: any, 
+			METATABLE
+		)
+	table.insert(scope, self)
+	return self
+end
 
-	If `force` is enabled, this will skip equality checks and always update the
-	state object and any dependents - use this with care as this can lead to
-	unnecessary updates.
-]]
 function class:set(
 	newValue: unknown,
 	force: boolean?
@@ -42,23 +59,6 @@ function class:set(
 		self._value = newValue
 		change(self)
 	end
-end
-
---[[
-	Returns the interior value of this state object.
-]]
-function class:_peek(): unknown
-	local self = self :: InternalTypes.Value<unknown, unknown>
-	return self._value
-end
-
---[[
-	Evaluates this graph object.
-]]
-function class:_evaluate(): boolean
-	-- The only time a meaningful change occurs is when the value object
-	-- manually indicates such a change has occured via `change()`.
-	return false
 end
 
 function class:get()
@@ -73,26 +73,15 @@ function class:destroy()
 	self.scope = nil
 end
 
-local function Value<T>(
-	scope: Types.Scope<unknown>,
-	initialValue: T
-): Types.Value<T, any>
-	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
-		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
-	end
+function class:_peek(): unknown
+	local self = self :: InternalTypes.Value<unknown, unknown>
+	return self._value
+end
 
-	local self = setmetatable({
-		dependentSet = {},
-		scope = scope,
-		validity = "valid",
-		_lastChange = nil,
-		_value = initialValue
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Value<T, any>
-
-	table.insert(scope, self)
-
-	return self
+function class:_evaluate(): boolean
+	-- The only time a meaningful change occurs is when the value object
+	-- manually indicates such a change has occured via `change()`.
+	return false
 end
 
 return Value
