@@ -17,7 +17,7 @@ if TestVars.runTests then
 
 	local data
 	SpecExternal.doTaskDeferred(function()
-		data = (TestEZ.TestBootstrap :: any):run({script.Spec}, TestEZ.Reporters.TextReporterQuiet)
+		data = (TestEZ.TestBootstrap :: any):run({script.Spec})
 	end)
 	SpecExternal.step(0)
 
