@@ -297,7 +297,6 @@ return function()
 				graph: Graphs.Graph
 			)
 				for index, object in graph.allObjects do
-					local dependencySet = table.clone(object.dependencySet)
 					object._evaluate = function()
 						error(`{Graphs.nameOf(object)} was evaluated`, 0)
 					end
@@ -415,30 +414,59 @@ return function()
 
 	Graphs.propertyTest {
 		testing = "evaluate",
-		it = "updates the last change time for meaningful changes in direct dependencies",
+		it = "does not compute if meaningful changes turn into meaningless changes",
 		filters = {Graphs.filters.wellFormed},
-		perform = "not implemented"
-	} (describe)
+		preparation = {
+			count = 1,
+			prepare = function(
+				graph: Graphs.Graph
+			)
+				for _, object in graph.allObjects do
+					local dependencySet = table.clone(object.dependencySet)
+					object.validity = "invalid"
+					object._evaluate = function()
+						object.dependencySet = table.clone(dependencySet)
+						for dependency in object.dependencySet do
+							evaluate(dependency)
+						end
+						return true
+					end
+				end
 
-	Graphs.propertyTest {
-		testing = "evaluate",
-		it = "updates the last change time for meaningful changes in transitive dependencies",
-		filters = {Graphs.filters.wellFormed},
-		perform = "not implemented"
-	} (describe)
-		
-	Graphs.propertyTest {
-		testing = "evaluate",
-		it = "does *not* update the last change time for meaningless changes in direct dependencies",
-		filters = {Graphs.filters.wellFormed},
-		perform = "not implemented"
-	} (describe)
+				local transitives = Graphs.selectors.noConnections(graph.allObjects, "dependency")
+				local directs = Graphs.selectors.distance(graph.allObjects, transitives, "dependent", 1)
+				local targets = Graphs.selectors.distance(graph.allObjects, directs, "dependent", 1)
 
-	Graphs.propertyTest {
-		testing = "evaluate",
-		it = "does *not* update the last change time for meaningless changes in transitive dependencies",
-		filters = {Graphs.filters.wellFormed},
-		perform = "not implemented"
+				for _, direct in directs do
+					local dependencySet = table.clone(direct.dependencySet)
+					local doEvaluate = direct._evaluate
+					direct._evaluate = function()
+						doEvaluate(direct)
+						return false
+					end
+				end
+
+				for _, target in targets do
+					target.lastChange = -math.huge
+					target._evaluate = function()
+						error(`{Graphs.nameOf(target)} was evaluated`, 0)
+					end
+				end
+			end
+		},
+		perform = function(
+			graph: Graphs.Graph
+		)
+			local transitives = Graphs.selectors.noConnections(graph.allObjects, "dependency")
+			local directs = Graphs.selectors.distance(graph.allObjects, transitives, "dependent", 1)
+			local targets = Graphs.selectors.distance(graph.allObjects, directs, "dependent", 1)
+
+			for _, target in targets do
+				evaluate(target)
+			end
+
+			return false
+		end
 	} (describe)
 
 	Graphs.propertyTest {
@@ -498,6 +526,21 @@ return function()
 				end
 			end
 		},
-		perform = "not implemented"
+		perform = function(
+			graph: Graphs.Graph
+		)
+			local ok, err = pcall(function()
+				for _, object in graph.objects do
+					evaluate(object)
+				end
+			end)
+			if ok then
+				return "Should not have completed without errors"
+			elseif string.find(err, "infiniteLoop", 1, true) ~= nil then
+				return false
+			else
+				return err
+			end
+		end
 	} (describe)
 end

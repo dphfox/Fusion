@@ -11,10 +11,6 @@ local change = require(Fusion.State.change)
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 
 return function()
-	if true then
-		warn("skipping change tests")
-		return
-	end
 	local describe = getfenv().describe
 
 	Graphs.propertyTest {
