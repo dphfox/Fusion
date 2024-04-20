@@ -172,7 +172,7 @@ return function()
 
 	Graphs.propertyTest {
 		testing = "evaluate",
-		it = "does *not* preserve dependency connections for objects that compute",
+		it = "properly clears dependency connections for objects that compute",
 		filters = {Graphs.filters.wellFormed},
 		preparation = {
 			count = 1,
@@ -180,6 +180,7 @@ return function()
 				graph: Graphs.Graph
 			)
 				for _, object in graph.allObjects do
+					(object :: any).TEST_OLD_DEPS = table.clone(object.dependencySet)
 					object.validity = "invalid"
 					object._evaluate = function()
 						(object :: any).TEST_MARKER = true
@@ -200,6 +201,11 @@ return function()
 				foundTestMarker = true
 				if next(object.dependencySet) ~= nil then
 					return `{Graphs.nameOf(object)} had dependencies after revalidation`
+				end
+				for dependency in (object :: any).TEST_OLD_DEPS do
+					if dependency.dependentSet[object] ~= nil then
+						return `{Graphs.nameOf(object)} wasn't cleared from the dependent set of an old dependency`
+					end
 				end
 			end
 			if not foundTestMarker then

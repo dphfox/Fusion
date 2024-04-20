@@ -11,7 +11,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 -- State
 local isState = require(Package.State.isState)
 local evaluate = require(Package.State.evaluate)
@@ -20,9 +19,9 @@ local function peek<T>(
 	target: Types.UsedAs<T>
 ): T
 	if isState(target) then
-		local target = target :: InternalTypes.StateObject<T>
+		local target = target :: Types.StateObject<T>
 		evaluate(target)
-		return target:_peek()
+		return target._EXTREMELY_DANGEROUS_peekValue
 	else
 		return target :: T
 	end

@@ -14,10 +14,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent
 local Types = require(Package.Types)
 
---[[
-	General use types
-]]
-
 -- Stores useful information about Luau errors.
 export type Error = {
 	type: string, -- replace with "Error" when Luau supports singleton types
@@ -30,28 +26,6 @@ export type Error = {
 export type Contextual<T> = Types.Contextual<T> & {
 	_valuesNow: {[thread]: {value: T}},
 	_defaultValue: T
-}
-
---[[
-	Generic reactive graph types
-]]
-
-export type StateObject<T> = Types.StateObject<T> & {
-	_peek: (StateObject<T>) -> T
-}
-
---[[
-	Specific reactive graph types
-]]
-
-
--- A state object whose value is derived from other objects using a callback.
-export type Computed<T, S> = Types.Computed<T> & {
-	scope: Types.Scope<S>?,
-	_oldDependencySet: {[Types.GraphObject]: unknown},
-	_processor: (Types.Use, Types.Scope<S>) -> T,
-	_value: T,
-	_innerScope: Types.Scope<S>?
 }
 
 -- A state object which maps over keys and/or values in another table.

@@ -42,7 +42,7 @@ export type Task =
 	{Task}
 
 -- A scope of tasks to clean up.
-export type Scope<Constructors> = {unknown} & Constructors
+export type Scope<Constructors = any> = {unknown} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
@@ -68,10 +68,6 @@ type ContextualIsMethods = {
 	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
---[[
-	Generic reactive graph types
-]]
-
 -- A graph object which can have dependencies and dependencies.
 export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
@@ -86,7 +82,7 @@ export type GraphObject = ScopedObject & {
 export type StateObject<T> = GraphObject & {
 	type: "State",
 	kind: string,
-	____phantom_peekType: (never) -> T -- phantom data so this contains a T
+	_EXTREMELY_DANGEROUS_peekValue: T
 }
 
 -- Passing values of this type to `Use` returns `T`.
@@ -95,15 +91,11 @@ export type UsedAs<T> = StateObject<T> | T
 -- Function signature for use callbacks.
 export type Use = <T>(target: UsedAs<T>) -> T
 
---[[
-	Specific reactive graph types
-]]
-
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
  	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
-	 ____phantom_setType: (never) -> S -- phantom data so this contains a T
+	 ____TYPEONLY_S: (never) -> S
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
@@ -173,10 +165,6 @@ export type SpringConstructor = <T>(
 	speed: UsedAs<number>?,
 	damping: UsedAs<number>?
 ) -> Spring<T>
-
---[[
-	Instance related types
-]]
 
 -- Denotes children instances in an instance or component's property table.
 export type SpecialKey = {

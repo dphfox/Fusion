@@ -4,13 +4,14 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs and returns objects which can be used to model derived reactive
-	state.
+	A specialised state object for tracking single values computed from a
+	user-defined computation.
+
+	https://elttob.uk/Fusion/0.3/api-reference/state/types/computed/
 ]]
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
@@ -18,36 +19,86 @@ local logWarn = require(Package.Logging.logWarn)
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
+local never = require(Package.Utility.never)
 -- State
 local isState = require(Package.State.isState)
+local peek = require(Package.State.peek)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local scopePool = require(Package.Memory.scopePool)
 
+export type Self<T, S> = Types.Computed<T> & {
+	_oldDependencySet: {[Types.GraphObject]: unknown},
+	_processor: (Types.Use, Types.Scope<S>) -> T,
+	_value: T,
+	_innerScope: Types.Scope<S>?
+}
+
 local class = {}
 class.type = "State"
 class.kind = "Computed"
+class.timeliness = "lazy"
 
-local CLASS_METATABLE = {__index = class}
+local METATABLE = {__index = class}
 
---[[
-	Called when a dependency changes value.
-	Recalculates this Computed's cached value and dependencies.
-	Returns true if it changed, or false if it's identical.
-]]
-function class:update(): boolean
-	local self = self :: InternalTypes.Computed<unknown, unknown>
-	if self.scope == nil then
-		return false
+local function Computed<T, S>(
+	scope: S & Types.Scope<unknown>,
+	processor: (Types.Use, S) -> T,
+	destructor: unknown?
+): Self<T, S>
+	if typeof(scope) == "function" then
+		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
+	elseif destructor ~= nil then
+		logWarn("destructorRedundant", "Computed")
 	end
-	local outerScope = self.scope :: Types.Scope<unknown>
+	local self = setmetatable(
+		{
+			scope = scope,
+			dependencySet = {},
+			dependentSet = {},
+			_oldDependencySet = {},
+			_processor = processor,
+			_value = nil,
+			_innerScope = nil
+		}, 
+		METATABLE
+	)
+	table.insert(scope, self)
+	return self :: any
+end
 
-	-- remove this object from its dependencies' dependent sets
+function class.destroy<T, S>(
+	self: Self<T, S>
+): ()
+	if self.scope == nil then
+		logError("destroyedTwice", nil, "Computed")
+	end
+	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
+	if self._innerScope ~= nil then
+		doCleanup(self._innerScope)
+		scopePool.clearAndGive(self._innerScope)
+	end
+end
+
+function class.get<T, S>(
+	_self: Self<T, S>
+): never
+	logError("stateGetWasRemoved")
+	return never()
+end
+
+function class._evaluate<T, S>(
+	self: Self<T, S>
+): boolean
+	if self.scope == nil then
+		return false
+	end
+	local outerScope = self.scope :: S & Types.Scope<unknown>
 
 	-- we need to create a new, empty dependency set to capture dependencies
 	-- into, but in case there's an error, we want to restore our old set of
@@ -114,58 +165,9 @@ function class:update(): boolean
 	end
 end
 
---[[
-	Returns the interior value of this state object.
-]]
 function class:_peek(): unknown
 	local self = self :: InternalTypes.Computed<unknown, unknown>
 	return self._value
-end
-
-function class:get()
-	logError("stateGetWasRemoved")
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Computed<unknown, unknown>
-	if self.scope == nil then
-		logError("destroyedTwice", nil, "Computed")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	if self._innerScope ~= nil then
-		doCleanup(self._innerScope)
-		scopePool.clearAndGive(self._innerScope)
-	end
-end
-
-local function Computed<T, S>(
-	scope: Types.Scope<S>,
-	processor: (Types.Use, Types.Scope<S>) -> T,
-	destructor: unknown?
-): Types.Computed<T>
-	if typeof(scope) == "function" then
-		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
-	elseif destructor ~= nil then
-		logWarn("destructorRedundant", "Computed")
-	end
-	local self = setmetatable({
-		scope = scope,
-		dependencySet = {},
-		dependentSet = {},
-		_oldDependencySet = {},
-		_processor = processor,
-		_value = nil,
-		_innerScope = nil
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Computed<T, S>
-
-	table.insert(scope, self)
-	self:update()
-	
-	return self
 end
 
 return Computed

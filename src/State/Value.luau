@@ -19,9 +19,7 @@ local change = require(Package.State.change)
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)
 
-type Self<T, S> = Types.Value<T, S> & {
-	_value: S
-}
+type Self<T, S> = Types.Value<T, S>
 
 local class = {}
 class.type = "State"
@@ -44,8 +42,8 @@ local function Value<T>(
 				dependentSet = {},
 				scope = scope,
 				validity = "valid",
+				_EXTREMELY_DANGEROUS_peekValue = initialValue,
 				_lastChange = os.clock(),
-				_value = initialValue
 			}, 
 			METATABLE
 		)
@@ -73,9 +71,9 @@ function class.set<T, S>(
 	self: Self<T, S>,
 	newValue: S
 ): ()
-	local oldValue = self._value
+	local oldValue = self._EXTREMELY_DANGEROUS_peekValue
 	if not isSimilar(oldValue, newValue) then
-		self._value = newValue
+		self._EXTREMELY_DANGEROUS_peekValue = newValue :: any
 		change(self)
 	end
 end
@@ -86,12 +84,6 @@ function class._evaluate<T, S>(
 	-- The only time a meaningful change occurs is when the value object
 	-- manually indicates such a change has occured via `change()`.
 	return false
-end
-
-function class._peek<T, S>(
-	self: Self<T, S>
-): T
-	return self._value :: any
 end
 
 return Value :: Types.ValueConstructor
