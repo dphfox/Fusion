@@ -10,15 +10,15 @@
 </h1>
 
 ```Lua
-export type StateObject<T> = {
+export type StateObject<T> = GraphObject & {
 	type: "State",
 	kind: string,
-	_evaluateOnPeek: GraphObject.
 	_EXTREMELY_DANGEROUS_usedAsValue: T
 }
 ```
 
-Stores a value of `T` which can change over time.
+Stores a value of `T` which can change over time. As a 
+[graph object](../graphobject), it can broadcast updates when its value changes.
 
 This type isn't generally useful outside of Fusion itself; you should prefer to
 work with [`UsedAs<T>`](../usedas) in your own code.
@@ -45,20 +45,6 @@ A type string which can be used for runtime type checking.
 
 A more specific type string which can be used for runtime type checking. This
 can be used to tell types of state object apart.
-
-<h3 markdown>
-	_evaluateOnPeek
-	<span class="fusiondoc-api-type">
-		: <a href="../graphobject">GraphObject</a>
-	</span>
-</h3>
-
-The graph object that should be evaluated when this state object's value needs
-to be retrieved.
-
-!!! tip "Self-referencing"
-	If the implementor of this interface also implements `GraphObject`, then
-	this member can point at the implementor itself.
 
 <h3 markdown>
 	_EXTREMELY_DANGEROUS_usedAsValue

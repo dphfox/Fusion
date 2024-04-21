@@ -67,7 +67,6 @@ local function For<S, KI, KO, VI, VO>(
 		}, 
 		METATABLE
 	) :: any
-	self._evaluateOnPeek = self
 	table.insert(scope, self)
 	return self
 end
