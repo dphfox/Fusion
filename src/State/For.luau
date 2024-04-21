@@ -99,8 +99,6 @@ end
 function class._evaluate<S, KI, KO, VI, VO>(
 	self: Self<S, KI, KO, VI, VO>
 ): boolean
-	local PRINTSHIT = _G.PRINTSHIT == true
-	_G.PRINTSHIT = nil
 	if self.scope == nil then
 		return false
 	end

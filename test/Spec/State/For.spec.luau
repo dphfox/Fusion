@@ -94,7 +94,6 @@ return function()
 		expect(peek(forObject).FOO).to.equal(10)
 		expect(peek(forObject).BAR).to.equal(20)
 
-		_G.PRINTSHIT = true
 		data:set({frob = 3, garb = 4})
 		expect(numCalls).to.equal(2)
 		peek(forObject)
