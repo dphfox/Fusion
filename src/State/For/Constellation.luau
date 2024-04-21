@@ -26,7 +26,7 @@ local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 
-export type Self<S, KI, KO, VI, VO> = Types.For<KO, VO> & {
+export type Self<S, KI, KO, VI, VO> = Types.GraphObject & {
 	populate: (Self<S, KI, KO, VI, VO>, Types.Use, output: {[KO]: VO}) -> (),
 	scope: (S & Types.Scope<unknown>)?,
 	_inputTable: Types.UsedAs<{[KI]: VI}>,
