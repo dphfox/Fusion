@@ -35,7 +35,7 @@ type Self<S, KI, KO, VI, VO> = Types.For<KO, VO> & {
 }
 type ForSubObject<S, KI, VI, KO, VO> = {
 	inputPair: Types.Value<{key: KI, value: VI}>,
-	outputPair: Types.StateObject<{key: KO, value: VO}>,
+	outputPair: Types.StateObject<{key: KO, value: VO?}>,
 	maybeScope: Types.Scope<S>?
 }
 
@@ -99,6 +99,8 @@ end
 function class._evaluate<S, KI, KO, VI, VO>(
 	self: Self<S, KI, KO, VI, VO>
 ): boolean
+	local PRINTSHIT = _G.PRINTSHIT == true
+	_G.PRINTSHIT = nil
 	if self.scope == nil then
 		return false
 	end
@@ -231,7 +233,7 @@ function class._evaluate<S, KI, KO, VI, VO>(
 
 	for subObject in newSubObjects do
 		local pair = subObject.outputPair
-		pair.dependentSet[self], self.dependencySet[pair] = true, true
+		--pair.dependentSet[self], self.dependencySet[pair] = true, true
 		local key, value = peek(pair).key, peek(pair).value
 		if value == nil then
 			continue

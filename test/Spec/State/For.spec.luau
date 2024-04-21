@@ -94,6 +94,7 @@ return function()
 		expect(peek(forObject).FOO).to.equal(10)
 		expect(peek(forObject).BAR).to.equal(20)
 
+		_G.PRINTSHIT = true
 		data:set({frob = 3, garb = 4})
 		expect(numCalls).to.equal(2)
 		peek(forObject)
@@ -108,7 +109,7 @@ return function()
 		expect(numCalls).to.equal(2)
 		peek(forObject)
 		expect(numCalls).to.equal(3)
-		
+
 		expect(peek(forObject).FROB).to.equal(50)
 		expect(peek(forObject).GARB).to.equal(60)
 		expect(peek(forObject).BAZ).to.equal(70)
@@ -210,5 +211,51 @@ return function()
 		expect(table.find(peek(forObject), "second")).to.never.be.ok()
 		expect(numCalls).to.equal(3)
 		doCleanup(scope)
+	end)
+
+	it("allows inner objects to form their own dependencies", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local outerCalls = 0
+		local innerCalls = 0
+
+		local replaceTwoWith = Value(scope, "foo")
+
+		local forObject = For(scope, {"one", "two", "three"}, function(scope, inputPair)
+			outerCalls += 1
+			return Computed(scope, function(use)
+				innerCalls += 1
+				local key = use(inputPair).key
+				local value = use(inputPair).value
+				if value == "two" then
+					value = use(replaceTwoWith)
+				end
+				return {
+					key = key,
+					value = value
+				}
+			end)
+		end)
+		expect(outerCalls).to.equal(0)
+		expect(innerCalls).to.equal(0)
+		peek(forObject)
+		expect(peek(forObject)[1]).to.equal("one")
+		expect(peek(forObject)[2]).to.equal("foo")
+		expect(peek(forObject)[3]).to.equal("three")
+		expect(outerCalls).to.equal(3)
+		expect(innerCalls).to.equal(3)
+
+		replaceTwoWith:set("shoe")
+		expect(outerCalls).to.equal(3)
+		expect(innerCalls).to.equal(3)
+		peek(forObject)
+		expect(peek(forObject)[1]).to.equal("one")
+		expect(peek(forObject)[2]).to.equal("shoe")
+		expect(peek(forObject)[3]).to.equal("three")
+		expect(outerCalls).to.equal(3)
+		expect(innerCalls).to.equal(4)
+
+		expect(next(forObject.dependencySet)).never.to.equal(nil)
 	end)
 end
