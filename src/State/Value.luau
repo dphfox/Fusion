@@ -47,6 +47,7 @@ local function Value<T>(
 		}, 
 		METATABLE
 	) :: any
+	self._evaluateOnPeek = self
 	table.insert(scope, self)
 	return self
 end

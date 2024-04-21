@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Spring<T> = StateObject<T> & {
+export type Spring<T> = StateObject<T> & GraphObject & {
 	kind: "Spring",
 	setPosition: (self, newPosition: T) -> (),
 	setVelocity: (self, newVelocity: T) -> (),

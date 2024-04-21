@@ -65,6 +65,7 @@ local function Computed<T, S>(
 		}, 
 		METATABLE
 	) :: any
+	self._evaluateOnPeek = self
 	table.insert(scope, self)
 	return self
 end

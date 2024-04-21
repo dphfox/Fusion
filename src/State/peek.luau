@@ -20,7 +20,7 @@ local function peek<T>(
 ): T
 	local targetState = castToState(target)
 	if targetState ~= nil then
-		evaluate(targetState)
+		evaluate(targetState._evaluateOnPeek)
 		return targetState._EXTREMELY_DANGEROUS_usedAsValue :: T
 	else
 		return target :: T

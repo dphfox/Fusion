@@ -82,10 +82,11 @@ export type GraphObject = ScopedObject & {
 }
 
 -- An object which stores a piece of reactive state.
-export type StateObject<T> = GraphObject & {
+export type StateObject<T> = {
 	type: "State",
 	kind: string,
-	_EXTREMELY_DANGEROUS_usedAsValue: T
+	_evaluateOnPeek: GraphObject,
+	_EXTREMELY_DANGEROUS_usedAsValue: T,
 }
 
 -- Passing values of this type to `Use` returns `T`.
@@ -95,7 +96,7 @@ export type UsedAs<T> = StateObject<T> | T
 export type Use = <T>(target: UsedAs<T>) -> T
 
 -- A state object whose value can be set at any time by the user.
-export type Value<T, S = T> = StateObject<T> & {
+export type Value<T, S = T> = StateObject<T> & GraphObject & {
 	kind: "State",
 	timeliness: "lazy",
  	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
@@ -107,7 +108,7 @@ export type ValueConstructor = <T>(
 ) -> Value<T, any>
 
 -- A state object whose value is derived from other objects using a callback.
-export type Computed<T> = StateObject<T> & {
+export type Computed<T> = StateObject<T> & GraphObject & {
 	kind: "Computed",
 	timeliness: "lazy"
 }
@@ -117,7 +118,7 @@ export type ComputedConstructor = <T, S>(
 ) -> Computed<T>
 
 -- A state object which maps over keys and/or values in another table.
-export type For<KO, VO> = StateObject<{[KO]: VO}>  & {
+export type For<KO, VO> = StateObject<{[KO]: VO}> & {
 	kind: "For"
 }
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
@@ -149,7 +150,7 @@ export type ObserverConstructor = (
 ) -> Observer
 
 -- A state object which follows another state object using tweens.
-export type Tween<T> = StateObject<T> & {
+export type Tween<T> = StateObject<T> & GraphObject &  {
 	kind: "Tween"
 }
 export type TweenConstructor = <T>(
@@ -159,7 +160,7 @@ export type TweenConstructor = <T>(
 ) -> Tween<T>
 
 -- A state object which follows another state object using spring simulation.
-export type Spring<T> = StateObject<T>  & {
+export type Spring<T> = StateObject<T> & GraphObject & {
 	kind: "Spring",
 	setPosition: (Spring<T>, newPosition: T) -> (),
 	setVelocity: (Spring<T>, newVelocity: T) -> (),

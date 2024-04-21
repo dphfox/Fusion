@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Value<T> = StateObject<T> & {
+export type Value<T> = StateObject<T> & GraphObject & {
 	kind: "State",
  	set: (self, newValue: T) -> (),
 	timeliness: "lazy"
