@@ -43,7 +43,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	it("processes pairs for constant tables", function()
+	it("lazily processes pairs for constant tables", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -58,6 +58,12 @@ return function()
 				return {key = string.upper(use(inputPair).key), value = (use(inputPair) :: any).value * 10}
 			end)
 		end)
+		expect(numCalls).to.equal(0)
+		expect(seen.foo).to.equal(nil)
+		expect(seen.bar).to.equal(nil)
+
+		peek(forObject)
+
 		expect(numCalls).to.equal(2)
 		expect(seen.foo).to.equal(1)
 		expect(seen.bar).to.equal(2)
@@ -68,7 +74,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("processes pairs for state tables", function()
+	it("lazily processes pairs for state tables", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -80,6 +86,8 @@ return function()
 				return {key = string.upper(use(inputPair).key), value = (use(inputPair) :: any).value * 10}
 			end)
 		end)
+		expect(numCalls).to.equal(0)
+		peek(forObject)
 		expect(numCalls).to.equal(2)
 
 		expect(peek(forObject)).to.be.a("table")
@@ -87,30 +95,38 @@ return function()
 		expect(peek(forObject).BAR).to.equal(20)
 
 		data:set({frob = 3, garb = 4})
-
 		expect(numCalls).to.equal(2)
+		peek(forObject)
+		expect(numCalls).to.equal(2)
+
 		expect(peek(forObject).FOO).to.equal(nil)
 		expect(peek(forObject).BAR).to.equal(nil)
 		expect(peek(forObject).FROB).to.equal(30)
 		expect(peek(forObject).GARB).to.equal(40)
 
 		data:set({frob = 5, garb = 6, baz = 7})
-
+		expect(numCalls).to.equal(2)
+		peek(forObject)
 		expect(numCalls).to.equal(3)
+		
 		expect(peek(forObject).FROB).to.equal(50)
 		expect(peek(forObject).GARB).to.equal(60)
 		expect(peek(forObject).BAZ).to.equal(70)
 
 		data:set({garb = 6, baz = 7})
-
 		expect(numCalls).to.equal(3)
+		peek(forObject)
+		expect(numCalls).to.equal(3)
+
 		expect(peek(forObject).FROB).to.equal(nil)
 		expect(peek(forObject).GARB).to.equal(60)
 		expect(peek(forObject).BAZ).to.equal(70)
 
 		data:set({})
-
 		expect(numCalls).to.equal(3)
+		peek(forObject)
+		expect(numCalls).to.equal(3)
+
 		expect(peek(forObject).GARB).to.equal(nil)
 		expect(peek(forObject).BAZ).to.equal(nil)
 		
