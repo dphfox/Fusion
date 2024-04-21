@@ -48,7 +48,7 @@ local METATABLE = {__index = class}
 
 local function For<S, KI, KO, VI, VO>(
 	scope: Types.Scope<S>,
-	inputTable: Types.UsedAs<{ [KI]: VI }>,
+	inputTable: Types.UsedAs<{[KI]: VI}>,
 	processor: (
 		Types.Scope<S>,
 		Types.StateObject<{key: KI, value: VI}>
@@ -107,6 +107,9 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	-- TODO: should do a lifetime check here?
 	local inputState = castToState(self._inputTable)
 	if inputState ~= nil then
+		-- TODO: This is bad!
+		-- The input state should *instead* connect to a detached "input" graph
+		-- object.
 		inputState.dependentSet[self], self.dependencySet[inputState] = true, true
 	end
 

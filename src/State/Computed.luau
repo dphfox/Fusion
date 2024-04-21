@@ -23,6 +23,7 @@ local never = require(Package.Utility.never)
 local nameOf = require(Package.Utility.nameOf)
 -- State
 local castToState = require(Package.State.castToState)
+local depend = require(Package.State.depend)
 local peek = require(Package.State.peek)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
@@ -108,8 +109,7 @@ function class._evaluate<T, S>(
 			elseif whichLivesLonger(outerScope, self, targetState.scope, targetState) == "definitely-a" then
 				logWarn("possiblyOutlives", `The {nameOf(targetState, "used")} object`, "the Computed that is use()-ing it")
 			end		
-			self.dependencySet[targetState] = true
-			targetState.dependentSet[self] = true
+			depend(self, targetState)
 		end
 		return peek(target)
 	end

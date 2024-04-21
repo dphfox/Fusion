@@ -7,6 +7,7 @@ local Fusion = ReplicatedStorage.Fusion
 
 local Observer = require(Fusion.State.Observer)
 local Value = require(Fusion.State.Value)
+local Computed = require(Fusion.State.Computed)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
@@ -163,6 +164,26 @@ return function()
 		end)
 		disconnect()
 
+		expect(numFires).to.equal(1)
+
+		doCleanup(scope)
+	end)
+
+	getfenv().itFOCUS("ensures dependencies are captured for unobserved lazy inputs", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local value = Value(scope, 5)
+		local double = Computed(scope, function(use)
+			return use(value) * 2
+		end)
+		local numFires = 0
+		Observer(scope, double):onChange(function()
+			numFires += 1
+		end)
+
+		expect(numFires).to.equal(0)
+		value:set(10)
 		expect(numFires).to.equal(1)
 
 		doCleanup(scope)

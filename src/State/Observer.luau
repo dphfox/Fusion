@@ -19,6 +19,7 @@ local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
 -- State
 local castToGraph = require(Package.State.castToGraph)
+local depend = require(Package.State.depend)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 
@@ -51,7 +52,7 @@ local function Observer(
 	local self: Self = setmetatable(
 		{
 			scope = scope,
-			dependencySet = if watchingGraph ~= nil then {[watching] = true} else {},
+			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
 			validity = "valid",
@@ -61,7 +62,6 @@ local function Observer(
 	) :: any
 	table.insert(scope, self)
 	if watchingGraph ~= nil then
-		watchingGraph.dependentSet[self] = true
 		if whichLivesLonger(scope, self, watchingGraph.scope :: any, watching) == "definitely-a" then
 			logWarn(
 				"possiblyOutlives",
@@ -69,6 +69,7 @@ local function Observer(
 				`the Observer that is watching it`
 			)
 		end
+		depend(self, watchingGraph)
 	end
 	return self
 end
