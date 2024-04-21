@@ -17,7 +17,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local External = require(Package.External)
-local evaluate = require(Package.State.evaluate)
+local evaluate = require(Package.Graph.evaluate)
 
 local searchInNow: {Types.GraphObject} = {}
 local searchInNext: {Types.GraphObject} = {}

@@ -17,9 +17,9 @@ local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 -- Logging
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
--- State
-local castToGraph = require(Package.State.castToGraph)
-local depend = require(Package.State.depend)
+-- Graph
+local castToGraph = require(Package.Graph.castToGraph)
+local depend = require(Package.Graph.depend)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 

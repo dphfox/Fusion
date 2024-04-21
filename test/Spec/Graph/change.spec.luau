@@ -6,7 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
 
 local Types = require(Fusion.Types)
-local change = require(Fusion.State.change)
+local change = require(Fusion.Graph.change)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 

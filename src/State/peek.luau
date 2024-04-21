@@ -13,7 +13,8 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- State
 local castToState = require(Package.State.castToState)
-local evaluate = require(Package.State.evaluate)
+-- Graph
+local evaluate = require(Package.Graph.evaluate)
 
 local function peek<T>(
 	target: Types.UsedAs<T>

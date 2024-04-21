@@ -114,13 +114,17 @@ nav:
         - deriveScope: api-reference/memory/members/derivescope.md
         - doCleanup: api-reference/memory/members/docleanup.md
         - scoped: api-reference/memory/members/scoped.md
+    - Graph:
+      - Types:
+        - GraphObject: api-reference/graph/types/graphobject.md 
+        - Observer: api-reference/graph/types/observer.md
+      - Members:
+        - Observer: api-reference/graph/members/observer.md
     - State:
       - Types:
         - UsedAs: api-reference/state/types/usedas.md 
         - Computed: api-reference/state/types/computed.md 
-        - For: api-reference/state/types/for.md 
-        - GraphObject: api-reference/state/types/graphobject.md 
-        - Observer: api-reference/state/types/observer.md 
+        - For: api-reference/state/types/for.md
         - StateObject: api-reference/state/types/stateobject.md 
         - Use: api-reference/state/types/use.md 
         - Value: api-reference/state/types/value.md 
@@ -129,7 +133,6 @@ nav:
         - ForKeys: api-reference/state/members/forkeys.md
         - ForPairs: api-reference/state/members/forpairs.md
         - ForValues: api-reference/state/members/forvalues.md
-        - Observer: api-reference/state/members/observer.md
         - peek: api-reference/state/members/peek.md
         - Value: api-reference/state/members/value.md
     - Roblox:

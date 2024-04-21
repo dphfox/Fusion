@@ -21,9 +21,10 @@ local parseError = require(Package.Logging.parseError)
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)
 local nameOf = require(Package.Utility.nameOf)
+-- Graph
+local depend = require(Package.Graph.depend)
 -- State
 local castToState = require(Package.State.castToState)
-local depend = require(Package.State.depend)
 local peek = require(Package.State.peek)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)

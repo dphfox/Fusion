@@ -9,7 +9,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local evaluate = require(Package.State.evaluate)
+local evaluate = require(Package.Graph.evaluate)
 
 local function depend<T>(
 	dependent: Types.GraphObject,

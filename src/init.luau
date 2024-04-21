@@ -49,12 +49,14 @@ local Fusion: Types.Fusion = {
 	innerScope = require(script.Memory.innerScope),
 	scoped = require(script.Memory.scoped),
 	
+	-- Graph
+	Observer = require(script.Graph.Observer),
+
 	-- State
 	Computed = require(script.State.Computed),
 	ForKeys = require(script.State.ForKeys) :: Types.ForKeysConstructor,
 	ForPairs = require(script.State.ForPairs) :: Types.ForPairsConstructor,
 	ForValues = require(script.State.ForValues) :: Types.ForValuesConstructor,
-	Observer = require(script.State.Observer),
 	peek = require(script.State.peek),
 	Value = require(script.State.Value),
 

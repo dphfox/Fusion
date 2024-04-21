@@ -1,5 +1,5 @@
 <nav class="fusiondoc-api-breadcrumbs">
-	<span>State</span>
+	<span>Graph</span>
 	<span>Types</span>
 	<span>GraphObject</span>
 </nav>

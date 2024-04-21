@@ -13,7 +13,7 @@ local Types = require(Package.Types)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
 local castToState = require(Package.State.castToState)
-local Observer = require(Package.State.Observer)
+local Observer = require(Package.Graph.Observer)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 

@@ -13,8 +13,8 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
--- State
-local change = require(Package.State.change)
+-- Graph
+local change = require(Package.Graph.change)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)

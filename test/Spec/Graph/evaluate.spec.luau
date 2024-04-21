@@ -5,7 +5,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = ReplicatedStorage.Fusion
 
-local evaluate = require(Fusion.State.evaluate)
+local evaluate = require(Fusion.Graph.evaluate)
 
 local Graphs = require(script.Parent.Parent.Parent.Util.Graphs)
 
