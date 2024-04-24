@@ -45,6 +45,7 @@ local Fusion: Types.Fusion = {
 	cleanup = require(script.Memory.legacyCleanup),
 	deriveScope = require(script.Memory.deriveScope),
 	doCleanup = require(script.Memory.doCleanup),
+	innerScope = require(script.Memory.innerScope),
 	scoped = require(script.Memory.scoped),
 	
 	-- State
