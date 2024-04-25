@@ -27,7 +27,18 @@ local function doCleanupOne(
 		local task = task :: RBXScriptConnection
 		task:Disconnect()
 
-	-- case 3: callback
+	-- case 3: thread
+	elseif taskType == "thread" then
+		local task = task :: thread
+		local cancelled; if coroutine.running() ~= task then
+			cancelled = pcall(function() task.cancel(task) end)
+		end; if not cancelled then local toCancel = task
+			task.defer(function()
+				task.cancel(toCancel)
+			end)
+		end
+
+	-- case 4: callback
 	elseif taskType == "function" then
 		local task = task :: (...unknown) -> (...unknown)
 		task()
@@ -35,7 +46,7 @@ local function doCleanupOne(
 	elseif taskType == "table" then
 		local task = task :: {destroy: unknown?, Destroy: unknown?}
 
-		-- case 4: destroy() function
+		-- case 5: destroy() function
 		if typeof(task.destroy) == "function" then
 			local task = (task :: any) :: {destroy: (...unknown) -> (...unknown)}
 			task:destroy()
