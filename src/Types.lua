@@ -156,7 +156,7 @@ export type Hourglass = Dependent & {
 }
 export type HourglassConstructor = (
 	scope: Scope<unknown>,
-	interval: Dependency
+	interval: CanBeState<number>?
 ) -> Hourglass
 
 -- A state object which follows another state object using tweens.
