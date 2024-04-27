@@ -26,6 +26,16 @@ local CLASS_METATABLE = {__index = class}
 --[[
 	Called on intervaled tick.
 ]]
+function class:tick(): boolean
+	local self = self :: InternalTypes.Hourglass
+	for _, callback in pairs(self._tickListeners) do
+		External.doTaskImmediate(callback)
+	end; return false
+end
+
+--[[
+	Updates the current interval along with the next timed tick.
+]]
 function class:update(): boolean
 	local self = self :: InternalTypes.Hourglass
 	local interval = peek(self._interval)
@@ -36,9 +46,7 @@ function class:update(): boolean
 	else
 		self._currentInterval = interval
 	end
-	for _, callback in pairs(self._tickListeners) do
-		External.doTaskImmediate(callback)
-	end
+	self._nextTick = os.clock() + peek(self._currentInterval)
 	return false
 end
 
@@ -92,13 +100,10 @@ end
 function class:start()
 	local self = self :: InternalTypes.Hourglass
 	-- connection already exists means the hourglass is already running
-	if self._connection then return end
-	self._nextTick = os.clock() + peek(self._currentInterval)
+	if self._connection then return end; self:update()
 	self._connection = RunService.Heartbeat:Connect(function()
-		local now = os.clock()
-		if now >= self._nextTick then
-			self._nextTick = now + peek(self._currentInterval)
-			self:update()
+		local now = os.clock(); if now >= self._nextTick then
+			self:update(); self:tick()
 		end
 	end)
 	table.insert(self.scope, self._connection)
@@ -164,24 +169,17 @@ local function Hourglass(
 	local self = (self :: any) :: InternalTypes.Hourglass
 
 	table.insert(scope, self)
-
 	if isState(interval) and interval.scope == nil then
-		logError(
-			"useAfterDestroy",
-			nil,
-			`The {interval.kind or interval.type or "interval"} object`,
-			`the Hourglass`
-		)
-	elseif whichLivesLonger(scope, self, interval.scope, interval) == "definitely-a" then
-		logWarn(
-			"possiblyOutlives",
-			`The {interval.kind or interval.type or "interval"} object`,
-			`the Hourglass`
-		)
+		logError("useAfterDestroy", nil, `The {interval.kind or interval.type or "interval"} object`, `the Hourglass`)
+		if whichLivesLonger(scope, self, interval.scope, interval) == "definitely-a" then
+			logWarn("possiblyOutlives", `The {interval.kind or interval.type or "interval"} object`, `the Hourglass`)
+		end
 	end
 
-	-- add this object to the interval object's dependent set
-	interval.dependentSet[self] = true
+	-- add this object to the goal state's dependent set
+	if isState(interval) then
+		interval.dependentSet[self] = true
+	end
 
 	return self
 end
