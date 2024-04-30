@@ -169,7 +169,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	getfenv().itFOCUS("ensures dependencies are captured for unobserved lazy inputs", function()
+	it("ensures dependencies are captured for unobserved lazy inputs", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

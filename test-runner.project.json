@@ -1,20 +1,21 @@
 {
-  "name": "Fusion Test Runner",
-  "tree": {
-	"$className": "DataModel",
-
-	"ReplicatedStorage": {
-	  "$className": "ReplicatedStorage",
-	  "Fusion": {
-		  "$path": "default.project.json"
-	  }
-	},
-
-	"ServerScriptService": {
-		"$className": "ServerScriptService",
-		"FusionTest": {
-		  "$path": "test"
+	"name": "Fusion Test Runner",
+	"servePlaceIds": [
+		0
+	],
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Fusion": {
+				"$path": "default.project.json"
+			}
+		},
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"FusionTest": {
+				"$path": "test"
+			}
 		}
-	  }
-  }
+	}
 }

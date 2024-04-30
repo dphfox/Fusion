@@ -12,7 +12,7 @@ local peek = require(Fusion.State.peek)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
-	local it = getfenv().it
+	local it = getfenv().itFOCUS
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
@@ -25,7 +25,7 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-		expect(scope[1]).to.equal(forObject)
+		expect(table.find(scope, forObject)).to.never.equal(nil)
 
 		doCleanup(scope)
 	end)

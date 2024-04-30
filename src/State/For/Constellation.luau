@@ -120,13 +120,15 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	local outerScope = self.scope :: S & Types.Scope<unknown>
 
 	local inputState = castToState(self._inputTable)
-	if inputState ~= nil and inputState.scope == nil then
-		logError(
-			"useAfterDestroy",
-			nil,
-			`The input {nameOf(inputState, "table")}`,
-			`the For object that is watching it`
-		)
+	if inputState ~= nil then
+		if inputState.scope == nil then
+			logError(
+				"useAfterDestroy",
+				nil,
+				`The input {nameOf(inputState, "table")}`,
+				`the For object that is watching it`
+			)
+		end
 		depend(self, inputState)
 	end
 
@@ -138,6 +140,8 @@ function class._evaluate<S, KI, KO, VI, VO>(
 			pairsToInclude[key][value] = true
 		end
 	end
+
+	print(pairsToInclude)
 
 	local oldSubObjects = self._subObjects
 	self._subObjects = {}

@@ -94,7 +94,7 @@ function class._evaluate<S, KI, KO, VI, VO>(
 		): T
 			local state = castToState(maybeState)
 			if state ~= nil then
-				depend(self, self._constellation)
+				depend(self, state)
 			end
 			return peek(maybeState)
 		end,
