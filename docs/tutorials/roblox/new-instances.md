@@ -64,4 +64,4 @@ turned off and default content is removed.
 ![Showing the difference between a text label made with Instance.new and Fusion's New function.](Default-Props-Dark.svg#only-dark)
 ![Showing the difference between a text label made with Instance.new and Fusion's New function.](Default-Props-Light.svg#only-light)
 
-For a complete list, [take a look at Fusion's default properties file.](https://github.com/Elttob/Fusion/blob/main/src/Instances/defaultProps.lua)
+For a complete list, [take a look at Fusion's default properties file.](https://github.com/Elttob/Fusion/blob/main/src/Instances/defaultProps.luau)

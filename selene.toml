@@ -1,4 +1,5 @@
-std = "roblox+testez"
+std = "roblox"
+exclude = ["test/TestEZ/**"]
 
 [rules]
 # Too aggressive in tests

@@ -138,6 +138,8 @@ Keep in mind that Fusion sometimes applies optimisations; recalculations might
 be postponed or cancelled if the value of the computed isn't being used. This is
 why you should not use computed objects for things like playing sound effects.
 
+[You will learn more about how Fusion does this later.](../../best-practices/optimisation/#similarity)
+
 -----
 
 ## Inner Scopes

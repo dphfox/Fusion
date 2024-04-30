@@ -10,11 +10,11 @@
 </h1>
 
 ```Lua
-export type Use = <T>(target: CanBeState<T>) -> T
+export type Use = <T>(target: UsedAs<T>) -> T
 ```
 
-A function which extracts a value of `T` from abstract representations of `T`
-([`CanBeState<T>`](../canbestate)).
+A function which extracts a value of `T` from something that can be
+[used as](../usedas) `T`.
 
 The most generic implementation of this is
 [the `peek()` function](../../members/peek), which performs this extraction with
@@ -33,11 +33,11 @@ change.
 <h3 markdown>
 	target
 	<span class="fusiondoc-api-type">
-		: <a href="../canbestate">CanBeState</a>&lt;T&gt;
+		: <a href="../usedas">UsedAs</a>&lt;T&gt;
 	</span>
 </h3>
 
-The abstract representation of `T` to extract a value from.
+The representation of `T` to extract a value from.
 
 -----
 

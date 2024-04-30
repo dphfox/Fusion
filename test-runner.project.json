@@ -6,19 +6,15 @@
 	"ReplicatedStorage": {
 	  "$className": "ReplicatedStorage",
 	  "Fusion": {
-		  "$path": "src"
-	  },
-	  "FusionTest": {
-		"$path": "test"
+		  "$path": "default.project.json"
 	  }
 	},
 
-	"StarterPlayer": {
-		"$className": "StarterPlayer",
-		"StarterPlayerScripts": {
-			"$className": "StarterPlayerScripts",
-			"$path": "test-runner"
+	"ServerScriptService": {
+		"$className": "ServerScriptService",
+		"FusionTest": {
+		  "$path": "test"
 		}
-	}
+	  }
   }
 }

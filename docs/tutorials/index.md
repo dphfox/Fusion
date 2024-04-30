@@ -116,7 +116,7 @@ Studio, then you can use Fusion's source code directly.
 	local Fusion = require("../shared/Fusion")
 
 	-- vanilla Luau
-	local Fusion = require("../shared/Fusion/init.lua")
+	local Fusion = require("../shared/Fusion/init.luau")
 	```
 
 -----

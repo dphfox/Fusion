@@ -11,6 +11,7 @@ local RunService = game:GetService("RunService")
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
 local Children = Fusion.Children
+type UsedAs<T> = Fusion.UsedAs<T>
 
 local SPIN_DEGREES_PER_SECOND = 180
 local SPIN_SIZE = 50
@@ -19,12 +20,12 @@ local function Spinner(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?
 		},
-		CurrentTime: Fusion.CanBeState<number>,
+		CurrentTime: UsedAs<number>,
 	}
 ): Fusion.Child
 	return scope:New "ImageLabel" {
@@ -77,24 +78,24 @@ largely a standard Fusion component definition.
 
 The main thing to note is that it asks for a `CurrentTime` property.
 
-```Lua linenums="10" hl_lines="10"
+```Lua hl_lines="10"
 local function Spinner(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?
 		},
-		CurrentTime: Fusion.CanBeState<number>,
+		CurrentTime: UsedAs<number>,
 	}
 ): Fusion.Child
 ```
 
 The `CurrentTime` is used to drive the rotation of the loading spinner.
 
-```Lua linenums="35"
+```Lua
 		Rotation = scope:Computed(function(use)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
@@ -105,7 +106,7 @@ That's all that's required for the `Spinner` component.
 Later on, the example creates a `Value` object that will store the current time,
 and starts a process to keep it up to date.
 
-```Lua linenums="46"
+```Lua
 local currentTime = scope:Value(os.clock())
 table.insert(scope,
 	RunService.RenderStepped:Connect(function()
@@ -116,7 +117,7 @@ table.insert(scope,
 
 This can then be passed in as `CurrentTime` when the `Spinner` is created.
 
-```Lua linenums="53" hl_lines="7"
+```Lua hl_lines="7"
 local spinner = scope:Spinner {
 	Layout = {
 		Position = UDim2.fromScale(0.5, 0.5),

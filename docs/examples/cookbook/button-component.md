@@ -15,6 +15,7 @@ own. For further ideas and best practices for building components, see
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
 local Children, OnEvent = Fusion.Children, Fusion.OnEvent
+type UsedAs<T> = Fusion.UsedAs<T>
 
 local COLOUR_BLACK = Color3.new(0, 0, 0)
 local COLOUR_WHITE = Color3.new(1, 1, 1)
@@ -33,17 +34,17 @@ local PADDING = UDim2.fromOffset(6, 4)
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Name: Fusion.CanBeState<string>?,
+		Name: UsedAs<string>?,
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
-			AutomaticSize: Fusion.CanBeState<Enum.AutomaticSize>?
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
+			AutomaticSize: UsedAs<Enum.AutomaticSize>?
 		},
-		Text: Fusion.CanBeState<string>?,
-		Disabled: Fusion.CanBeState<boolean>?,
+		Text: UsedAs<string>?,
+		Disabled: UsedAs<boolean>?,
 		OnClick: (() -> ())?
 	}
 ): Fusion.Child
@@ -140,17 +141,17 @@ readable documentation.
 local function Button(
 	scope: Fusion.Scope<typeof(Fusion)>,
 	props: {
-		Name: Fusion.CanBeState<string>?,
+		Name: UsedAs<string>?,
 		Layout: {
-			LayoutOrder: Fusion.CanBeState<number>?,
-			Position: Fusion.CanBeState<UDim2>?,
-			AnchorPoint: Fusion.CanBeState<Vector2>?,
-			ZIndex: Fusion.CanBeState<number>?,
-			Size: Fusion.CanBeState<UDim2>?,
-			AutomaticSize: Fusion.CanBeState<Enum.AutomaticSize>?
+			LayoutOrder: UsedAs<number>?,
+			Position: UsedAs<UDim2>?,
+			AnchorPoint: UsedAs<Vector2>?,
+			ZIndex: UsedAs<number>?,
+			Size: UsedAs<UDim2>?,
+			AutomaticSize: UsedAs<Enum.AutomaticSize>?
 		},
-		Text: Fusion.CanBeState<string>?,
-		Disabled: Fusion.CanBeState<boolean>?,
+		Text: UsedAs<string>?,
+		Disabled: UsedAs<boolean>?,
 		OnClick: (() -> ())?
 	}
 ): Fusion.Child
@@ -162,10 +163,11 @@ If you're not sure how to write type definitions for scopes,
 goes into further detail.
 
 The property table is laid out with each property on a new line, so it's easy to
-scan the list and see what properties are available. Most are `CanBeState`,
-which allows the user to use state objects if they desire. They're also `?`
-(optional), which can reduce boilerplate when using the component. Not all
-properties have to be that way, but usually it's better to have the flexibility.
+scan the list and see what properties are available. Most are typed with
+[`UsedAs`](../../../api-reference/state/types/usedas), which allows the user to 
+use state objects if they desire. They're also `?` (optional), which can reduce
+boilerplate when using the component. Not all properties have to be that way,
+but usually it's better to have the flexibility.
 
 !!! tip "Property grouping"
 	You can group properties together in nested tables, like the `Layout` table
