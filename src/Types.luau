@@ -261,6 +261,7 @@ export type Fusion = {
 	doCleanup: (...unknown) -> (),
 	scoped: ScopedConstructor,
 	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
+	innerScope: <T>(existing: Scope<T>) -> Scope<T>,
 
 	peek: Use,
 	Value: ValueConstructor,
@@ -269,6 +270,7 @@ export type Fusion = {
 	ForKeys: ForKeysConstructor,
 	ForValues: ForValuesConstructor,
 	Observer: ObserverConstructor,
+	Hourglass: HourglassConstructor,
 
 	Tween: TweenConstructor,
 	Spring: SpringConstructor,

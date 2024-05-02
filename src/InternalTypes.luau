@@ -129,7 +129,6 @@ export type Hourglass = Types.Hourglass & {
 
 	_nextTick: number,
 	_connection: RBXScriptConnection?,
-
 }
 
 return nil
