@@ -65,7 +65,7 @@ end
 
 local function Value<T>(
 	scope: Types.Scope<unknown>,
-	initialValue: T
+	initialValue: T?
 ): Types.Value<T, any>
 	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
 		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
