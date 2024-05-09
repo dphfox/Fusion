@@ -157,6 +157,8 @@ export type Hourglass = Dependent & {
 	type: "Hourglass",
 	onTick: (Hourglass, callback: () -> ()) -> (() -> ()),
 	onBind: (Hourglass, callback: () -> ()) -> (() -> ()),
+	start: (Hourglass) -> (),
+	stop: (Hourglass) -> (),
 	tick: (Hourglass) -> (() -> ())
 }
 export type HourglassConstructor = (
