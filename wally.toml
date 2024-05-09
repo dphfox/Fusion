@@ -3,7 +3,7 @@ name = "plainsour/lemon"
 description = "personal upload. A modern reactive UI library, built specifically for Roblox and Luau --dev0.3"
 license = "MIT"
 authors = ["plainsour"]
-version = "0.3.0-dev.5.3"
+version = "0.3.0-dev.5.4"
 
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"

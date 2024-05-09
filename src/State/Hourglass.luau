@@ -165,6 +165,9 @@ local function Hourglass(
 	local self = (self :: any) :: InternalTypes.Hourglass
 
 	table.insert(scope, self)
+	table.insert(scope, function()
+		self:stop()
+	end)
 
     if intervalState then
 		local interval: any = interval
