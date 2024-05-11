@@ -4,7 +4,7 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	The private generic implementation for all public `For` objects.
+	The generic implementation for all `For` objects.
 ]]
 
 local Package = script.Parent.Parent
@@ -19,10 +19,10 @@ local castToState = require(Package.State.castToState)
 -- Utility
 local never = require(Package.Utility.never)
 
-local Constellation = require(Package.State.For.Constellation)
+local Disassembly = require(Package.State.For.Disassembly)
 
 type Self<S, KI, KO, VI, VO> = Types.For<KO, VO> & {
-	_constellation: Constellation.Self<S, KI, KO, VI, VO>
+	_disassembly: Disassembly.Self<S, KI, KO, VI, VO>
 }
 
 local class = {}
@@ -47,7 +47,7 @@ local function For<S, KI, KO, VI, VO>(
 			scope = scope,
 			validity = "invalid",
 			_EXTREMELY_DANGEROUS_usedAsValue = {},
-			_constellation = Constellation(
+			_disassembly = Disassembly(
 				scope,
 				inputTable,
 				processor
@@ -86,9 +86,9 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	end
 	local outerScope = self.scope :: S & Types.Scope<unknown>
 
-	depend(self, self._constellation)
+	depend(self, self._disassembly)
 	table.clear(self._EXTREMELY_DANGEROUS_usedAsValue)
-	self._constellation:populate(
+	self._disassembly:populate(
 		function<T>(
 			maybeState: Types.UsedAs<T>
 		): T
