@@ -174,9 +174,10 @@ function class._evaluate<S, KI, KO, VI, VO>(
 
 	-- Generate new objects if needed to cover the remaining pending pairs.
 	for pendingKey, pendingValue in pendingPairs do
-		local subObjectScope = deriveScope(outerScope)
-		local subObject = self._constructor(subObjectScope, pendingKey, pendingValue)
-		local subObjectScope = scopePool.giveIfEmpty(subObjectScope)
+		local subObject = self._constructor(deriveScope(outerScope), pendingKey, pendingValue)
+		if subObject.maybeScope ~= nil then
+			subObject.maybeScope = scopePool.giveIfEmpty(subObject.maybeScope)
+		end
 		newSubObjects[subObject] = true
 	end
 

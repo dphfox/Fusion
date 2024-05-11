@@ -4,28 +4,22 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new For object which maps keys of a table using a `processor`
-	function.
+	Constructs and returns a new For state object which processes keys and
+	preserves values.
 
-	Optionally, a `destructor` function can be specified for cleaning up output.
-
-	Additionally, a `meta` table/value can optionally be returned to pass data
-	created when running the processor to the destructor when the created object
-	is cleaned up.
+	https://elttob.uk/Fusion/0.3/api-reference/state/members/forkeys/
 ]]
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 -- State
 local For = require(Package.State.For)
+local Value = require(Package.State.Value)
 local Computed = require(Package.State.Computed)
+local ForTypes = require(Package.State.For.ForTypes)
 -- Logging
-local parseError = require(Package.Logging.parseError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
--- Memory
-local doCleanup = require(Package.Memory.doCleanup)
 
 local function ForKeys<KI, KO, V, S>(
 	scope: Types.Scope<S>,
@@ -43,26 +37,30 @@ local function ForKeys<KI, KO, V, S>(
 		inputTable,
 		function(
 			scope: Types.Scope<S>,
-			inputPair: Types.StateObject<{key: KI, value: V}>
-		)
-			local inputKey = Computed(scope, function(use, scope): KI
-				return use(inputPair).key
+			initialKey: KI,
+			initialValue: V
+		): ForTypes.SubObject<S, KI, KO, V, V>
+			local inputKey = Value(scope, initialKey)
+			local inputValue = Value(scope, initialValue)
+			local outputKey = Computed(scope, function(use, scope)
+				return processor(use, scope, use(inputKey))
 			end)
-			local outputKey = Computed(scope, function(use, scope): KO?
-				local ok, key = xpcall(processor, parseError, use, scope, use(inputKey))
-				if ok then
-					return key
-				else
-					local errorObj = (key :: any) :: Types.Error
-					logErrorNonFatal("callbackError", errorObj)
-					doCleanup(scope)
-					table.clear(scope)
-					return nil
+			return {
+				maybeScope = scope,
+				inputKey = initialKey,
+				inputValue = initialValue,
+				roamKeys = false,
+				roamValues = true,
+				invalidateInputKey = function(self): ()
+					inputKey:set(self.inputKey)
+				end,
+				invalidateInputValue = function(self): ()
+					inputValue:set(self.inputValue)
+				end,
+				useOutputPair = function(self, use): (KO, V)
+					return use(outputKey), self.inputValue
 				end
-			end)
-			return Computed(scope, function(use, scope)
-				return {key = use(outputKey), value = use(inputPair).value}
-			end)
+			}
 		end
 	)
 end
