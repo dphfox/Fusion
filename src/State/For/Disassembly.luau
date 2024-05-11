@@ -11,6 +11,7 @@ local Package = script.Parent.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -24,7 +25,7 @@ local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 
-type Self<S, KI, KO, VI, VO> = Types.GraphObject & {
+type Self<S, KI, KO, VI, VO> = ForTypes.Disassembly<S, KI, KO, VI, KO> & {
 	scope: (S & Types.Scope<unknown>)?,
 	_inputTable: Types.UsedAs<{[KI]: VI}>,
 	_constructor: (
@@ -84,6 +85,21 @@ function class.destroy<S, KI, KO, VI, VO>(
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
+	end
+end
+
+function class.populate<S, KI, KO, VI, VO>(
+	self: Self<S, KI, KO, VI, VO>,
+	use: Types.Use,
+	output: {[KO]: VO}
+): ()
+	for subObject in self._subObjects do
+		local outputKey, outputValue = subObject:useOutputPair(use)
+		if output[outputKey] ~= nil then
+			logErrorNonFatal("forKeyCollision", nil, tostring(outputKey))
+			continue
+		end
+		output[outputKey] = outputValue
 	end
 end
 

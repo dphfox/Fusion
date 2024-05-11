@@ -16,13 +16,14 @@ local depend = require(Package.Graph.depend)
 -- State
 local peek = require(Package.State.peek)
 local castToState = require(Package.State.castToState)
+local ForTypes = require(Package.State.For.ForTypes)
 -- Utility
 local never = require(Package.Utility.never)
 
 local Disassembly = require(Package.State.For.Disassembly)
 
 type Self<S, KI, KO, VI, VO> = Types.For<KO, VO> & {
-	_disassembly: Disassembly.Self<S, KI, KO, VI, VO>
+	_disassembly: ForTypes.Disassembly<S, KI, KO, VI, VO>
 }
 
 local class = {}
@@ -35,10 +36,11 @@ local METATABLE = {__index = class}
 local function For<S, KI, KO, VI, VO>(
 	scope: Types.Scope<S>,
 	inputTable: Types.UsedAs<{[KI]: VI}>,
-	processor: (
+	constructor: (
 		Types.Scope<S>,
-		Types.StateObject<{key: KI, value: VI}>
-	) -> (Types.StateObject<{key: KO?, value: VO?}>)
+		initialKey: KI,
+		initialValue: VI
+	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
 ): Self<S, KI, KO, VI, VO>
 	local self: Self<S, KI, KO, VI, VO> = setmetatable(
 		{
@@ -50,7 +52,7 @@ local function For<S, KI, KO, VI, VO>(
 			_disassembly = Disassembly(
 				scope,
 				inputTable,
-				processor
+				constructor
 			)
 		}, 
 		METATABLE
