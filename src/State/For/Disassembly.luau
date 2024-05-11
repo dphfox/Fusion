@@ -11,14 +11,12 @@ local Package = script.Parent.Parent.Parent
 local Types = require(Package.Types)
 -- Logging
 local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local parseError = require(Package.Logging.parseError)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
 local peek = require(Package.State.peek)
 local castToState = require(Package.State.castToState)
-local Value = require(Package.State.Value)
+local ForTypes = require(Package.State.For.ForTypes)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
@@ -26,26 +24,17 @@ local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 
-export type Self<S, KI, KO, VI, VO> = Types.GraphObject & {
-	populate: (Self<S, KI, KO, VI, VO>, Types.Use, output: {[KO]: VO}) -> (),
+type Self<S, KI, KO, VI, VO> = Types.GraphObject & {
 	scope: (S & Types.Scope<unknown>)?,
 	_inputTable: Types.UsedAs<{[KI]: VI}>,
-	_processor: (
+	_constructor: (
 		Types.Scope<S>,
-		Types.StateObject<{key: KI, value: VI}>
-	) -> (Types.StateObject<{key: KO?, value: VO?}>),
-	_reassembly: Types.GraphObject,
-	_subObjects: {[ForSubObject<S, KI, KO, VI, VO>]: true},
+		initialKey: KI,
+		initialValue: VI
+	) -> ForTypes.SubObject<S, KI, KO, VI, VO>,
+	_subObjects: {[ForTypes.SubObject<S, KI, KO, VI, VO>]: true}
 }
-type ForSubObject<S, KI, KO, VI, VO> = {
-	-- Not all sub objects need to store a scope, for example if the scope
-	-- remains empty, it'll be given back to the scope pool.
-	maybeScope: Types.Scope<S>?,
-	lastInputKey: KI,
-	lastInputValue: VI,
-	setInputKey: (KI) -> (),
-	setInputValue: (VI) -> ()
-}
+
 
 local class = {}
 class.type = "Graph"
@@ -57,10 +46,11 @@ local METATABLE = {__index = class}
 local function Disassembly<S, KI, KO, VI, VO>(
 	scope: S & Types.Scope<unknown>,
 	inputTable: Types.UsedAs<{[KI]: VI}>,
-	processor: (
+	constructor: (
 		Types.Scope<S>,
-		Types.StateObject<{key: KI, value: VI}>
-	) -> (Types.StateObject<{key: KO?, value: VO?}>)
+		initialKey: KI,
+		initialValue: VI
+	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
 ): Self<S, KI, KO, VI, VO>
 	local self = setmetatable(
 		{
@@ -69,7 +59,7 @@ local function Disassembly<S, KI, KO, VI, VO>(
 			scope = scope,
 			validity = "invalid",
 			_inputTable = inputTable,
-			_processor = processor,
+			_constructor = constructor,
 			_subObjects = {}
 		}, 
 		METATABLE
@@ -122,22 +112,22 @@ function class._evaluate<S, KI, KO, VI, VO>(
 
 	local newSubObjects = {} :: typeof(self._subObjects)
 
-	-- TODO: reuse sub objs with nil output keys, so long as they match values.
-	-- This ensures they don't get recomputed either.
 	for subObject in self._subObjects do
 		local reused = false
-		local oldInputKey = subObject.lastInputKey
-		local oldInputValue = subObject.lastInputValue
+		local oldInputKey = subObject.inputKey
+		local oldInputValue = subObject.inputValue
 		local newInputKey: KI
-		-- Reuse when the keys are the same. (If the values are also the same, 
-		-- then nothing is done - nice 🙂)
-		if pendingPairs[oldInputKey] ~= nil then
+		-- Reuse when the keys are identical.
+		if not subObject.roamKeys and pendingPairs[oldInputKey] ~= nil then
 			reused = true
 			newInputKey = oldInputKey
 		else -- Try and reuse some other pair instead.
 			for pendingKey, pendingValue in pendingPairs do
 				reused = true
 				newInputKey = pendingKey
+				if subObject.roamValues then
+					break
+				end
 				if pendingValue == oldInputValue then
 					-- If the values are the same, then no need to update those,
 					-- so prefer this choice to any other.
@@ -149,12 +139,12 @@ function class._evaluate<S, KI, KO, VI, VO>(
 			local newInputValue = pendingPairs[oldInputKey]
 			newSubObjects[subObject] = true
 			if newInputKey ~= oldInputKey then
-				subObject.lastInputKey = newInputKey
-				subObject.setInputKey(newInputKey)
+				subObject.inputKey = newInputKey
+				subObject:invalidateInputKey()
 			end
 			if newInputValue ~= oldInputValue then
-				subObject.lastInputValue = newInputValue
-				subObject.setInputValue(newInputValue)
+				subObject.inputValue = newInputValue
+				subObject:invalidateInputValue()
 			end
 			pendingPairs[newInputKey] = nil
 		else -- Too many sub objects for the number of pairs.
@@ -169,20 +159,9 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	-- Generate new objects if needed to cover the remaining pending pairs.
 	for pendingKey, pendingValue in pendingPairs do
 		local subObjectScope = deriveScope(outerScope)
-		-- TODO: processing
+		local subObject = self._constructor(subObjectScope, pendingKey, pendingValue)
 		local subObjectScope = scopePool.giveIfEmpty(subObjectScope)
-		
-		newSubObjects[{
-			maybeScope = subObjectScope,
-			lastInputKey = pendingKey,
-			lastInputValue = pendingValue,
-			setInputKey = function(key: KI)
-
-			end,
-			setInputValue = function(value: VI)
-
-			end
-		}] = true
+		newSubObjects[subObject] = true
 	end
 
 	self._subObjects = newSubObjects
