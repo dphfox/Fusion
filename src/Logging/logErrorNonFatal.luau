@@ -10,32 +10,16 @@
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
-local messages = require(Package.Logging.messages)
+local formatError = require(Package.Logging.formatError)
+
+local ERROR_INFO_URL = "https://elttob.uk/Fusion/0.3/api-reference/general/errors/#"
 
 local function logErrorNonFatal(
 	messageID: string,
 	errObj: Types.Error?,
 	...: unknown
-)	
-	local formatString: string
-
-	if messages[messageID] ~= nil then
-		formatString = messages[messageID]
-	else
-		messageID = "unknownMessage"
-		formatString = messages[messageID]
-	end
-
-	local errorString
-	if errObj == nil then
-		errorString = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")", ...)
-	else
-		formatString = formatString:gsub("ERROR_MESSAGE", errObj.message)
-		errorString = string.format("[Fusion] " .. formatString .. "\n(ID: " .. messageID .. ")\n---- Stack trace ----\n" .. errObj.trace, ...)
-	end
-
-	local errorString = errorString:gsub("\n", "\n    ")
-	External.errorNonFatal(errorString)
+): ()
+	External.errorNonFatal(formatError(messageID, errObj, ...))
 end
 
 return logErrorNonFatal

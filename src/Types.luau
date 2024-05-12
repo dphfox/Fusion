@@ -8,10 +8,11 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 export type Error = {
-	type: string, -- replace with "Error" when Luau supports singleton types
+	type: "Error",
 	raw: string,
 	message: string,
-	trace: string
+	trace: string,
+	context: string?
 }
 
 -- Types that can be expressed as vectors of numbers, and so can be animated.
