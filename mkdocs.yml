@@ -54,7 +54,7 @@ extra_javascript:
 nav:
   - Home: index.md
   - Tutorials:
-    - Get Started: tutorials/get-started/index.md
+    - Get Started: tutorials/index.md
     - Installing Fusion: tutorials/get-started/installing-fusion.md
     - Developer Tools: tutorials/get-started/developer-tools.md
     - Getting Help: tutorials/get-started/getting-help.md
