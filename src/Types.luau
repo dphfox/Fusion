@@ -245,7 +245,7 @@ export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
 
-	doCleanup: (...unknown) -> (),
+	doCleanup: (unknown) -> (),
 	scoped: ScopedConstructor,
 	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
 
