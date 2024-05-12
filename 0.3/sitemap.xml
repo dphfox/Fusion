@@ -306,6 +306,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.3/tutorials/</loc>
+         <lastmod>2024-05-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.3/tutorials/animation/springs/</loc>
          <lastmod>2024-05-12</lastmod>
          <changefreq>daily</changefreq>
@@ -367,11 +372,6 @@
     </url>
     <url>
          <loc>https://elttob.uk/Fusion/0.3/tutorials/fundamentals/values/</loc>
-         <lastmod>2024-05-12</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://elttob.uk/Fusion/0.3/tutorials/get-started/</loc>
          <lastmod>2024-05-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
