@@ -7,8 +7,9 @@ better!
 ## FusionKit
 
 FusionKit is a range of officially-endorsed tools distributed alongside the
-Elttob&nbsp;Suite. They're designed to take advantage of dedicated deep Fusion
-integrations, and are kept up to date with new releases of Fusion.
+[Elttob&nbsp;Suite](https://suite.elttob.uk/). They're designed to take
+advantage of dedicated deep Fusion integrations, and are kept up to date with
+new releases of Fusion.
 
 !!! note "Work in progress"
 	Official developer tools are still in the works; in the meantime, feel 
