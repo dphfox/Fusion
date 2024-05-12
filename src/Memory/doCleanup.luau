@@ -14,7 +14,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	- an array - `cleanup` will be called on each item
 ]]
 
-local function doCleanupOne(
+local function doCleanup(
 	task: unknown
 )
 	local taskType = typeof(task)
@@ -53,18 +53,10 @@ local function doCleanupOne(
 			-- It is important to iterate backwards through the table, since
 			-- objects are added in order of construction.
 			for index = #task, 1, -1 do
-				doCleanupOne(task[index])
+				doCleanup(task[index])
 				task[index] = nil
 			end
 		end
-	end
-end
-
-local function doCleanup(
-	...: unknown
-)
-	for index = 1, select("#", ...) do
-		doCleanupOne(select(index, ...))
 	end
 end
 

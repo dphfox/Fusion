@@ -245,7 +245,7 @@ export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
 
-	doCleanup: (...unknown) -> (),
+	doCleanup: (unknown) -> (),
 	scoped: ScopedConstructor,
 	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
 
@@ -271,7 +271,6 @@ export type Fusion = {
 	Attribute: (attributeName: string) -> SpecialKey,
 	AttributeChange: (attributeName: string) -> SpecialKey,
 	AttributeOut: (attributeName: string) -> SpecialKey,
-	
 }
 
 return nil
