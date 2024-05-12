@@ -12,6 +12,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+-- Memory
+local doCleanup = require(Package.Memory.doCleanup)
 -- State
 local For = require(Package.State.For)
 local Value = require(Package.State.Value)
@@ -19,6 +21,8 @@ local Computed = require(Package.State.Computed)
 local ForTypes = require(Package.State.For.ForTypes)
 -- Logging
 local logError = require(Package.Logging.logError)
+local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local parseError = require(Package.Logging.parseError)
 local logWarn = require(Package.Logging.logWarn)
 
 local function ForKeys<KI, KO, V, S>(
@@ -42,8 +46,19 @@ local function ForKeys<KI, KO, V, S>(
 		): ForTypes.SubObject<S, KI, KO, V, V>
 			local inputKey = Value(scope, initialKey)
 			local inputValue = Value(scope, initialValue)
-			local outputKey = Computed(scope, function(use, scope)
-				return processor(use, scope, use(inputKey))
+			local outputKey = Computed(scope, function(use, scope): KO?
+				local inputKey = use(inputKey)
+				local ok, result = xpcall(processor, parseError, use, scope, inputKey)
+				if ok then
+					return result
+				else
+					local result: Types.Error = result :: any
+					result.context = `while processing key {tostring(inputKey)}`
+					logErrorNonFatal("callbackError", result)
+					doCleanup(scope)
+					table.clear(scope)
+					return nil
+				end
 			end)
 			return {
 				maybeScope = scope,
@@ -57,8 +72,8 @@ local function ForKeys<KI, KO, V, S>(
 				invalidateInputValue = function(self): ()
 					inputValue:set(self.inputValue)
 				end,
-				useOutputPair = function(self, use): (KO, V)
-					return use(outputKey), self.inputValue
+				useOutputPair = function(self, use): (KO?, V?)
+					return use(outputKey), use(self.inputValue)
 				end
 			}
 		end

@@ -11,7 +11,8 @@ local peek = require(Fusion.State.peek)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
-	local it = getfenv().itFOCUS
+	local it = getfenv().it
+	local itFOCUS = getfenv().itFOCUS
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
@@ -106,7 +107,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("destroys and omits keys that error during processing", function()
+	itFOCUS("destroys and omits keys that error during processing", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -123,10 +124,14 @@ return function()
 			end
 			return generated
 		end)
+		warn("First run")
+		warn(peek(forObject))
 		expect(peek(forObject).foofirst).to.equal(1)
 		expect(peek(forObject).barfirst).to.equal(2)
 		expect(peek(forObject).bazfirst).to.equal(3)
+		warn("Changing suffix to 'second'")
 		suffix:set("second")
+		warn(peek(forObject))
 		expect(peek(forObject).foofirst).to.equal(nil)
 		expect(peek(forObject).barfirst).to.equal(nil)
 		expect(peek(forObject).bazfirst).to.equal(nil)

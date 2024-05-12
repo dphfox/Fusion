@@ -93,9 +93,13 @@ function class.populate<S, KI, KO, VI, VO>(
 	use: Types.Use,
 	output: {[KO]: VO}
 ): ()
+	print("populating")
 	for subObject in self._subObjects do
 		local outputKey, outputValue = subObject:useOutputPair(use)
-		if output[outputKey] ~= nil then
+		print("subobject pairs with", outputKey, "=", outputValue)
+		if outputKey == nil or outputValue == nil then
+			continue
+		elseif output[outputKey] ~= nil then
 			logErrorNonFatal("forKeyCollision", nil, tostring(outputKey))
 			continue
 		end
@@ -107,7 +111,7 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	self: Self<S, KI, KO, VI, VO>
 ): boolean
 	local outerScope = self.scope :: S & Types.Scope<unknown>
-
+	print("evaluating")
 	local inputState = castToState(self._inputTable)
 	if inputState ~= nil then
 		if inputState.scope == nil then
@@ -152,7 +156,7 @@ function class._evaluate<S, KI, KO, VI, VO>(
 			end
 		end
 		if reused then
-			local newInputValue = pendingPairs[oldInputKey]
+			local newInputValue = pendingPairs[newInputKey]
 			newSubObjects[subObject] = true
 			if newInputKey ~= oldInputKey then
 				subObject.inputKey = newInputKey

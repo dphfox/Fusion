@@ -20,7 +20,7 @@ export type SubObject<S, KI, KO, VI, VO> = {
 	roamValues: boolean,
 	invalidateInputKey: (SubObject<S, KI, KO, VI, VO>) -> (),
 	invalidateInputValue: (SubObject<S, KI, KO, VI, VO>) -> (),
-	useOutputPair: (SubObject<S, KI, KO, VI, VO>, Types.Use) -> (KO, VO)
+	useOutputPair: (SubObject<S, KI, KO, VI, VO>, Types.Use) -> (KO?, VO?)
 }
 
 export type Disassembly<S, KI, KO, VI, VO> = Types.GraphObject & {
