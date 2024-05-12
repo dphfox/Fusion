@@ -13,29 +13,26 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	- a table with a `Destroy` or `destroy` function - will be called
 	- an array - `cleanup` will be called on each item
 ]]
+local Package = script.Parent.Parent
+local Types = require(Package.Types)
 
 local function doCleanup(
-	task: unknown
+	task: Types.Task
 )
-	local taskType = typeof(task)
-
 	-- case 1: Instance
-	if taskType == "Instance" then
-		local task = task :: Instance
+	if typeof(task) == "Instance" then
 		task:Destroy()
 
 	-- case 2: RBXScriptConnection
-	elseif taskType == "RBXScriptConnection" then
-		local task = task :: RBXScriptConnection
+	elseif typeof(task) == "RBXScriptConnection" then
 		task:Disconnect()
 
 	-- case 3: callback
-	elseif taskType == "function" then
-		local task = task :: (...unknown) -> (...unknown)
+	elseif typeof(task) == "function" then
 		task()
 
-	elseif taskType == "table" then
-		local task = task :: {destroy: unknown?, Destroy: unknown?}
+	elseif typeof(task) == "table" then
+		local task = (task :: any) :: {Destroy: (...unknown) -> (...unknown)?, destroy: (...unknown) -> (...unknown)?}
 
 		-- case 4: destroy() function
 		if typeof(task.destroy) == "function" then
@@ -49,7 +46,7 @@ local function doCleanup(
 
 		-- case 6: array of tasks
 		elseif task[1] ~= nil then
-			local task = task :: {unknown}
+			local task = task :: {Types.Task}
 			-- It is important to iterate backwards through the table, since
 			-- objects are added in order of construction.
 			for index = #task, 1, -1 do
