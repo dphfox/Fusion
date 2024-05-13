@@ -33,7 +33,7 @@ local function Value<T>(
 	initialValue: T
 ): Self<T, any>
 	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
-		logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
+		External.logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
 	end
 	local self: Self<T, any> = setmetatable(
 		{
