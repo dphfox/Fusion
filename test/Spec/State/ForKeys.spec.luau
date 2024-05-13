@@ -11,10 +11,9 @@ local peek = require(Fusion.State.peek)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
-	local it = getfenv().itFOCUS
-	local itFOCUS = getfenv().itFOCUS
+	local it = getfenv().it
 
-	itFOCUS("constructs in scopes", function()
+	it("constructs in scopes", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -30,7 +29,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("is destroyable", function()
+	it("is destroyable", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -42,7 +41,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	itFOCUS("iterates on constants", function()
+	it("iterates on constants", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -56,7 +55,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("iterates on state objects", function()
+	it("iterates on state objects", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -75,7 +74,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("computes with constants", function()
+	it("computes with constants", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -88,7 +87,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("computes with state objects", function()
+	it("computes with state objects", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -107,7 +106,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("destroys and omits keys that error during processing", function()
+	it("destroys and omits keys that error during processing", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -153,7 +152,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("omits keys that return nil", function()
+	it("omits keys that return nil", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -184,7 +183,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("doesn't destroy inner scope on creation", function()
+	it("doesn't destroy inner scope on creation", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -205,7 +204,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("destroys inner scope on update", function()
+	it("destroys inner scope on update", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -228,7 +227,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("destroys inner scope on destroy", function()
+	it("destroys inner scope on destroy", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -248,7 +247,7 @@ return function()
 		expect(destructed.bar).to.equal(true)
 	end)
 
-	itFOCUS("doesn't recompute when values change", function()
+	it("doesn't recompute when values change", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

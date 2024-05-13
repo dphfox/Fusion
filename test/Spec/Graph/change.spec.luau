@@ -240,7 +240,7 @@ return function()
 				local doNotInvalidate: {Types.GraphObject}
 				for _, object in objects do
 					object.timeliness = "eager"
-					object._evaluate = function()
+					object._evaluate = function(self)
 						if doNotInvalidate == nil then
 							doNotInvalidate = {}
 							for _, object in graph.objects do
@@ -264,11 +264,12 @@ return function()
 			graph: Graphs.Graph
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
+			local eagers = Graphs.selectors.noConnections(graph.allObjects, "dependent")
 			for _, target in targets do
 				change(target)
 			end
 			return Graphs.check(
-				Graphs.selectors.noConnections(graph.allObjects, "dependent"),
+				eagers,
 				Graphs.tests.validity("valid")
 			)
 		end

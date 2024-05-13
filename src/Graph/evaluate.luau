@@ -21,7 +21,6 @@ local function evaluate(
 	local firstEvaluation = target.lastChange == nil
 	local isInvalid = target.validity == "invalid"
 	if firstEvaluation or isInvalid then
-		target.validity = "busy"
 		local needsComputation = isInvalid and firstEvaluation 
 		if not (needsComputation or firstEvaluation) then
 			for dependency in target.dependencySet do
@@ -34,7 +33,11 @@ local function evaluate(
 		end
 		local targetMeaningfullyChanged = false
 		if needsComputation then
+			for dependency in target.dependencySet do
+				dependency.dependentSet[target] = nil
+			end
 			table.clear(target.dependencySet)
+			target.validity = "busy"
 			targetMeaningfullyChanged = target:_evaluate()
 		end
 		if targetMeaningfullyChanged or firstEvaluation then

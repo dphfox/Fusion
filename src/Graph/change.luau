@@ -50,8 +50,8 @@ local function change(
 						done = false
 						table.insert(invalidateList, dependent)
 						table.insert(searchInNext, dependent)
-					-- elseif dependent.validity == "busy" then
-					-- 	return External.logError("infiniteLoop")
+					elseif dependent.validity == "busy" then
+						return External.logError("infiniteLoop")
 					end
 				end
 			end
@@ -68,8 +68,8 @@ local function change(
 		for _, eagerTarget in eagerList do
 			evaluate(eagerTarget)
 		end
-	-- elseif target.validity == "busy" then
-	-- 	return External.logError("infiniteLoop")
+	elseif target.validity == "busy" then
+		return External.logError("infiniteLoop")
 	end
 end
 
