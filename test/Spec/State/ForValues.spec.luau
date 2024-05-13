@@ -126,7 +126,6 @@ return function()
 		expect(table.find(peek(forObject), "barfirst")).to.be.ok()
 		expect(table.find(peek(forObject), "bazfirst")).to.be.ok()
 		suffix:set("second")
-		warn(peek(forObject))
 		expect(table.find(peek(forObject), "foofirst")).to.never.be.ok()
 		expect(table.find(peek(forObject), "barfirst")).to.never.be.ok()
 		expect(table.find(peek(forObject), "bazfirst")).to.never.be.ok()
@@ -298,6 +297,48 @@ return function()
 	end)
 
 	itFOCUS("preserves the relative order of items", function()
-		warn("Test not implemented: ForValues - preserves the relative order of items")
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local data = Value(scope, {"10", "20", "30", "40", "50"})
+		local omit = Value(scope, {})
+		local forValues = ForValues(scope, data, function(use, _, value): string?
+			if table.find(use(omit), value) ~= nil then
+				return nil
+			else
+				return value
+			end
+		end)
+		expect(peek(forValues)[1]).to.equal("10")
+		expect(peek(forValues)[2]).to.equal("20")
+		expect(peek(forValues)[3]).to.equal("30")
+		expect(peek(forValues)[4]).to.equal("40")
+		expect(peek(forValues)[5]).to.equal("50")
+		data:set({"50", "40", "30", "20", "10"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("40")
+		expect(peek(forValues)[3]).to.equal("30")
+		expect(peek(forValues)[4]).to.equal("20")
+		expect(peek(forValues)[5]).to.equal("10")
+		data:set({"50", "30", "10", "40"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("30")
+		expect(peek(forValues)[3]).to.equal("10")
+		expect(peek(forValues)[4]).to.equal("40")
+		expect(peek(forValues)[5]).to.equal(nil)
+		omit:set({"30"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("10")
+		expect(peek(forValues)[3]).to.equal("40")
+		expect(peek(forValues)[4]).to.equal(nil)
+		expect(peek(forValues)[5]).to.equal(nil)
+		data:set({"10", "20", "30", "40", "50"})
+		expect(peek(forValues)[1]).to.equal("10")
+		expect(peek(forValues)[2]).to.equal("20")
+		expect(peek(forValues)[3]).to.equal("40")
+		expect(peek(forValues)[4]).to.equal("50")
+		expect(peek(forValues)[5]).to.equal(nil)
+
+		doCleanup(scope)
 	end)
 end
