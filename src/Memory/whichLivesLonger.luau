@@ -19,7 +19,8 @@ local function whichScopeLivesLonger(
 	-- scope must live longer than the inner scope (assuming idiomatic scopes).
 	-- So, we will search the scopes recursively until we find one of them, at
 	-- which point we know they must have been found inside the other scope.
-	local openSet, nextOpenSet = {scopeA, scopeB}, {}
+	local openSet: {Types.Scope<unknown>} = {scopeA, scopeB}
+	local nextOpenSet: {Types.Scope<unknown>} = {}
 	local openSetSize, nextOpenSetSize = 2, 0
 	local closedSet = {}
 	while openSetSize > 0 do
@@ -34,7 +35,7 @@ local function whichScopeLivesLonger(
 					local inScope = inScope :: {unknown}
 					if inScope[1] ~= nil and closedSet[scope] == nil then
 						nextOpenSetSize += 1
-						nextOpenSet[nextOpenSetSize] = inScope
+						nextOpenSet[nextOpenSetSize] = inScope :: Types.Scope<unknown>
 					end
 				end 
 			end
