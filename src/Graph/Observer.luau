@@ -14,9 +14,6 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 -- Memory
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
--- Logging
-local logWarn = require(Package.Logging.logWarn)
-local logError = require(Package.Logging.logError)
 -- Graph
 local castToGraph = require(Package.Graph.castToGraph)
 local depend = require(Package.Graph.depend)
@@ -38,11 +35,11 @@ local function Observer(
 	watching: unknown
 ): Self
 	if watching == nil then
-		logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
+		External.logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
 	end
 	local watchingGraph = castToGraph(watching)
 	if watchingGraph ~= nil and watchingGraph.scope == nil then
-		logError(
+		External.logError(
 			"useAfterDestroy",
 			nil,
 			`The {nameOf(watchingGraph, "watched")} object`,
@@ -63,7 +60,7 @@ local function Observer(
 	table.insert(scope, self)
 	if watchingGraph ~= nil then
 		if whichLivesLonger(scope, self, watchingGraph.scope :: any, watching) == "definitely-a" then
-			logWarn(
+			External.logWarn(
 				"possiblyOutlives",
 				`The {nameOf(watchingGraph, "watched")} object`,
 				`the Observer that is watching it`
@@ -78,7 +75,7 @@ function class.destroy(
 	self: Self
 ): ()
 	if self.scope == nil then
-		logError("destroyedTwice", nil, "Observer")
+		External.logError("destroyedTwice", nil, "Observer")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do

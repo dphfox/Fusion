@@ -15,7 +15,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local logError = require(Package.Logging.logError)
 local External = require(Package.External)
 local evaluate = require(Package.Graph.evaluate)
 
@@ -41,7 +40,7 @@ local function change(
 		local terminateBy = os.clock() + TERMINATION_TIME * External.safetyTimerMultiplier
 		repeat
 			if os.clock() > terminateBy then
-				return logError("infiniteLoop")
+				return External.logError("infiniteLoop")
 			end
 			table.clear(searchInNext)
 			local done = true
@@ -52,7 +51,7 @@ local function change(
 						table.insert(invalidateList, dependent)
 						table.insert(searchInNext, dependent)
 					-- elseif dependent.validity == "busy" then
-					-- 	return logError("infiniteLoop")
+					-- 	return External.logError("infiniteLoop")
 					end
 				end
 			end
@@ -70,7 +69,7 @@ local function change(
 			evaluate(eagerTarget)
 		end
 	-- elseif target.validity == "busy" then
-	-- 	return logError("infiniteLoop")
+	-- 	return External.logError("infiniteLoop")
 	end
 end
 

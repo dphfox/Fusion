@@ -10,13 +10,13 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local logError = require(Package.Logging.logError)
+local External = require(Package.External)
 
 local function evaluate(
 	target: Types.GraphObject
 ): ()
 	if target.validity == "busy" then
-		return logError("infiniteLoop")
+		return External.logError("infiniteLoop")
 	end
 	local firstEvaluation = target.lastChange == nil
 	local isInvalid = target.validity == "invalid"

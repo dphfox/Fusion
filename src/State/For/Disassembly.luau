@@ -9,9 +9,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent.Parent
 local Types = require(Package.Types)
--- Logging
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
+local External = require(Package.External)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -80,7 +78,7 @@ function class.destroy<S, KI, KO, VI, VO>(
 	self: Self<S, KI, KO, VI, VO>
 )
 	if self.scope == nil then
-		logError("destroyedTwice", nil, "For.Disassembly")
+		External.logError("destroyedTwice", nil, "For.Disassembly")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -105,7 +103,7 @@ function class.populate<S, KI, KO, VI, VO>(
 		if outputKey == nil or outputValue == nil then
 			continue
 		elseif output[outputKey] ~= nil then
-			logErrorNonFatal("forKeyCollision", nil, tostring(outputKey))
+			External.logErrorNonFatal("forKeyCollision", nil, tostring(outputKey))
 			continue
 		end
 		output[outputKey] = outputValue
@@ -119,7 +117,7 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	local inputState = castToState(self._inputTable)
 	if inputState ~= nil then
 		if inputState.scope == nil then
-			logError(
+			External.logError(
 				"useAfterDestroy",
 				nil,
 				`The input {nameOf(inputState, "table")}`,
