@@ -14,7 +14,7 @@
 
 ```Lua
 function Fusion.doCleanup(
-	...: unknown
+	task: Fusion.Task
 ): ()
 ```
 
@@ -30,9 +30,9 @@ Attempts to destroy all arguments based on their runtime type.
 ## Parameters
 
 <h3 markdown>
-	...
+	task
 	<span class="fusiondoc-api-type">
-		: unknown
+		: <a href="../../../memory/types/task">Task</a>
 	</span>
 </h3>
 

@@ -46,6 +46,7 @@ extra_css:
   - assets/theme/admonition.css
   - assets/theme/404.css
   - assets/theme/api-reference.css
+  - assets/theme/dev-tools.css
 
 extra_javascript:
   - assets/scripts/smooth-scroll.js
@@ -54,6 +55,9 @@ nav:
   - Home: index.md
   - Tutorials:
     - Get Started: tutorials/index.md
+    - Installing Fusion: tutorials/get-started/installing-fusion.md
+    - Developer Tools: tutorials/get-started/developer-tools.md
+    - Getting Help: tutorials/get-started/getting-help.md
     - Fundamentals:
       - Scopes: tutorials/fundamentals/scopes.md
       - Values: tutorials/fundamentals/values.md
