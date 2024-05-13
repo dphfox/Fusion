@@ -13,7 +13,7 @@ local SpecExternal = require(script.SpecExternal)
 if TestVars.runTests then
 	print("Running unit tests...")
 	External.safetyTimerMultiplier = 1 / 20
-	External.setExternalScheduler(SpecExternal)
+	External.setExternalProvider(SpecExternal)
 
 	local data
 	SpecExternal.doTaskDeferred(function()

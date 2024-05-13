@@ -10,8 +10,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local logError = require(Package.Logging.logError)
-local logWarn = require(Package.Logging.logWarn)
+local External = require(Package.External)
 local castToState = require(Package.State.castToState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
@@ -34,22 +33,22 @@ local function Out(
 			)
 				local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 				if not ok then
-					logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
+					External.logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
 				end
 	
 				if not castToState(value) then
-					logError("invalidOutType")
+					External.logError("invalidOutType")
 				end
 				local value = value :: Types.StateObject<unknown>
 				if value.kind ~= "Value" then
-					logError("invalidOutType")
+					External.logError("invalidOutType")
 				end
 				local value = value :: Types.Value<unknown>
 	
 				if value.scope == nil then
-					logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+					External.logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
-					logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+					External.logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 				end
 				value:set((applyTo :: any)[propertyName])
 				table.insert(

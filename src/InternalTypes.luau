@@ -14,15 +14,11 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent
 local Types = require(Package.Types)
 
--- Stores useful information about Luau errors.
-
-
 -- An object which stores a value scoped in time.
 export type Contextual<T> = Types.Contextual<T> & {
 	_valuesNow: {[thread]: {value: T}},
 	_defaultValue: T
 }
-
 
 -- A state object which follows another state object using tweens.
 export type Tween<T> = Types.Tween<T> & {

@@ -15,6 +15,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 -- State
@@ -23,10 +24,7 @@ local Value = require(Package.State.Value)
 local Computed = require(Package.State.Computed)
 local ForTypes = require(Package.State.For.ForTypes)
 -- Logging
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local parseError = require(Package.Logging.parseError)
-local logWarn = require(Package.Logging.logWarn)
 
 local SUB_OBJECT_META = {
 	__index = {
@@ -64,7 +62,7 @@ local function SubObject<KI, KO, V, S>(
 		else
 			local result: Types.Error = result :: any
 			result.context = `while processing key {tostring(inputKey)}`
-			logErrorNonFatal("callbackError", result)
+			External.logErrorNonFatal("callbackError", result)
 			doCleanup(scope)
 			table.clear(scope)
 			return nil
@@ -80,9 +78,9 @@ local function ForKeys<KI, KO, V, S>(
 	destructor: unknown?
 ): Types.For<KO, V>
 	if typeof(inputTable) == "function" then
-		logError("scopeMissing", nil, "ForKeys", "myScope:ForKeys(inputTable, function(scope, use, key) ... end)")
+		External.logError("scopeMissing", nil, "ForKeys", "myScope:ForKeys(inputTable, function(scope, use, key) ... end)")
 	elseif destructor ~= nil then
-		logWarn("destructorRedundant", "ForKeys")
+		External.logWarn("destructorRedundant", "ForKeys")
 	end
 	return For(
 		scope, 

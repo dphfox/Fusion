@@ -14,10 +14,12 @@ local messages = require(Package.Logging.messages)
 local ERROR_INFO_URL = "https://elttob.uk/Fusion/0.3/api-reference/general/errors/#"
 
 local function formatError(
+	externalProvider: Types.ExternalProvider?,
 	messageID: string,
 	errorOrTrace: Types.Error | string | nil,
 	...: unknown
 ): string
+	local originalMessageID = messageID
 	local error: Types.Error? = if typeof(errorOrTrace) == "table" then errorOrTrace else nil
 	local trace: string? = if typeof(errorOrTrace) == "table" then errorOrTrace.trace else errorOrTrace
 	local messageText = messages[messageID]
@@ -31,8 +33,13 @@ local function formatError(
 		if error.context ~= nil then
 			messageText ..= ` ({error.context})`
 		end
+	else
+		messageText = messageText:gsub("ERROR_MESSAGE", originalMessageID)
 	end
-	messageText = `[Fusion] {messageText} \nID: {messageID} \nLearn more: {ERROR_INFO_URL}{messageID:lower()}`
+	messageText = `[Fusion] {messageText} \nID: {messageID}`
+	if externalProvider ~= nil and externalProvider.policies.allowWebLinks then
+		messageText ..= `\nLearn more: {ERROR_INFO_URL}{messageID:lower()}`
+	end
 	if trace ~= nil then
 		messageText ..= ` \n---- Stack trace ----\n{trace}`
 	end

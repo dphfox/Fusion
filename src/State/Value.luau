@@ -11,8 +11,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
--- Logging
-local logError = require(Package.Logging.logError)
+local External = require(Package.External)
 -- Graph
 local change = require(Package.Graph.change)
 -- Utility
@@ -55,7 +54,7 @@ function class.destroy<T, S>(
 	self: Self<T, S>
 ): ()
 	if self.scope == nil then
-		logError("destroyedTwice", nil, "Value")
+		External.logError("destroyedTwice", nil, "Value")
 	end
 	self.scope = nil
 end
@@ -63,7 +62,7 @@ end
 function class:get<T, S>(
 	_self: Self<T, S>
 ): never
-	logError("stateGetWasRemoved")
+	External.logError("stateGetWasRemoved")
 	return never()
 end
 

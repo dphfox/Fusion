@@ -267,4 +267,26 @@ export type Fusion = {
 	AttributeOut: (attributeName: string) -> SpecialKey,
 }
 
+export type ExternalProvider = {
+	policies: {
+		allowWebLinks: boolean
+	},
+	
+	logErrorNonFatal: (
+		errorString: string
+	) -> (),
+	logWarn: (
+		errorString: string
+	) -> (),
+	
+	doTaskImmediate: (
+		resume: () -> ()
+	) -> (),
+	doTaskDeferred: (
+		resume: () -> ()
+	) -> (),
+	startScheduler: () -> (),
+	stopScheduler: () -> ()
+}
+
 return nil

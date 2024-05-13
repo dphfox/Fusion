@@ -4,14 +4,15 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
-local logWarn = require(Package.Logging.logWarn)
+local Types = require(Package.Types)
+local External = require(Package.External)
 local doCleanup = require(Package.Memory.doCleanup)
 
 local function legacyCleanup(
-	...: unknown
+	value: Types.Task
 )
-	logWarn("cleanupWasRenamed")
-	return doCleanup(...)
+	External.logWarn("cleanupWasRenamed")
+	return doCleanup(value)
 end
 
 return legacyCleanup

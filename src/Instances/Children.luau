@@ -10,7 +10,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local logWarn = require(Package.Logging.logWarn)
+local External = require(Package.External)
 local Observer = require(Package.Graph.Observer)
 local peek = require(Package.State.peek)
 local castToState = require(Package.State.castToState)
@@ -117,7 +117,7 @@ return {
 					end
 	
 				else
-					logWarn("unrecognisedChildType", childType)
+					External.logWarn("unrecognisedChildType", childType)
 				end
 			end
 	
