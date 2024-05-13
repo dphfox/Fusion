@@ -9,7 +9,6 @@ local New = require(Fusion.Instances.New)
 local Children = require(Fusion.Instances.Children)
 local Value = require(Fusion.State.Value)
 local doCleanup = require(Fusion.Memory.doCleanup)
-local Observer = require(Fusion.Graph.Observer)
 
 return function()
 	local it = getfenv().it
@@ -90,39 +89,25 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
+
 		local child1 = New(scope, "Folder") { Name = "Child1" }
 		local child2 = New(scope, "Folder") { Name = "Child2" }
 		local child3 = New(scope, "Folder") { Name = "Child3" }
 		local child4 = New(scope, "Folder") { Name = "Child4" }
-
 		local children = Value(scope, {child1})
 
-		Observer(scope, children):onChange(function()
-			warn("-> detected change")
-		end)
-
-		warn("Creating parent")
 		local parent = New(scope, "Folder") {
 			[Children] = {
 				children
 			}
 		}
-		warn("Children:", parent:GetChildren())
 
 		expect(child1.Parent).to.equal(parent)
-
-		warn("Setting to {child2, child3}")
 		children:set({child2, child3})
-		warn("Children:", parent:GetChildren())
-
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
-
-		warn("Setting to {child1, child2, child3, child4}")
 		children:set({child1, child2, child3, child4})
-		warn("Children:", parent:GetChildren())
-
 		expect(child1.Parent).to.equal(parent)
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)

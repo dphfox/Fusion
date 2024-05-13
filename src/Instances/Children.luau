@@ -126,24 +126,6 @@ return {
 				-- in that case
 				processChild(value)
 			end
-
-			print("Finished processing children.")
-			print("Parented:")
-			for instance in newParented do
-				print("->", instance.Name)
-			end
-			print("Will be unparented:")
-			for instance in oldParented do
-				print("->", instance.Name)
-			end
-			print("Scopes:")
-			for scope in newScopes do
-				print("->", tostring(scope))
-			end
-			print("Scopes to be destroyed:")
-			for instance in oldScopes do
-				print("->", tostring(scope))
-			end
 	
 			-- unparent any children that are no longer present
 			for oldInstance in pairs(oldParented) do
