@@ -42,7 +42,7 @@ export type Task =
 	{Task}
 
 -- A scope of tasks to clean up.
-export type Scope<Constructors> = {unknown} & Constructors
+export type Scope<Constructors> = {Task} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
@@ -245,7 +245,7 @@ export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
 
-	doCleanup: (unknown) -> (),
+	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,
 	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
 
