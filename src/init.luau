@@ -36,7 +36,7 @@ do
 	External.setExternalProvider(RobloxExternal)
 end
 
-local Fusion: Types.Fusion = {
+local Fusion: Types.Fusion = table.freeze {
 	-- General
 	version = {major = 0, minor = 3, isRelease = false},
 	Contextual = require(script.Utility.Contextual),
