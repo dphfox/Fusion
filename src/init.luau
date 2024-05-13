@@ -34,7 +34,7 @@ export type Version = Types.Version
 -- compiled for Roblox.
 do
 	local RobloxExternal = require(script.RobloxExternal)
-	External.setExternalScheduler(RobloxExternal)
+	External.setExternalProvider(RobloxExternal)
 end
 
 local Fusion: Types.Fusion = {

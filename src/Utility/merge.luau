@@ -8,7 +8,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 local Package = script.Parent.Parent
-local logError = require(Package.Logging.logError)
+local External = require(Package.External)
 
 local function merge(
 	overwrite: "none" | "first" | "all",
@@ -23,7 +23,7 @@ local function merge(
 			if into[key] == nil then
 				into[key] = value
 			elseif overwrite == "none" then
-				logError("mergeConflict", nil, tostring(key))
+				External.logError("mergeConflict", nil, tostring(key))
 			end
 		end
 		return merge(if overwrite == "first" then "none" else overwrite, into, ...)

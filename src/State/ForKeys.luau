@@ -16,15 +16,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local logError = require(Package.Logging.logError)
-local logWarn = require(Package.Logging.logWarn)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 
@@ -35,9 +32,9 @@ local function ForKeys<KI, KO, V, S>(
 	destructor: unknown?
 ): Types.For<KO, V>
 	if typeof(inputTable) == "function" then
-		logError("scopeMissing", nil, "ForKeys", "myScope:ForKeys(inputTable, function(scope, use, key) ... end)")
+		External.logError("scopeMissing", nil, "ForKeys", "myScope:ForKeys(inputTable, function(scope, use, key) ... end)")
 	elseif destructor ~= nil then
-		logWarn("destructorRedundant", "ForKeys")
+		External.logWarn("destructorRedundant", "ForKeys")
 	end
 	return For(
 		scope,
@@ -54,8 +51,8 @@ local function ForKeys<KI, KO, V, S>(
 				if ok then
 					return key
 				else
-					local errorObj = (key :: any) :: InternalTypes.Error
-					logErrorNonFatal("callbackError", errorObj)
+					local errorObj = (key :: any) :: Types.Error
+					External.logErrorNonFatal("callbackError", errorObj)
 					doCleanup(scope)
 					table.clear(scope)
 					return nil

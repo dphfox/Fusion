@@ -10,9 +10,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
 -- Logging
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local parseError = require(Package.Logging.parseError)
 -- State
 local peek = require(Package.State.peek)
@@ -162,8 +161,8 @@ function class:update(): boolean
 					}
 					newProcessors[processor] = true
 				else
-					local errorObj = (outputPair :: any) :: InternalTypes.Error
-					logErrorNonFatal("callbackError", errorObj)
+					local errorObj = (outputPair :: any) :: Types.Error
+					External.logErrorNonFatal("callbackError", errorObj)
 				end
 			end
 		end
@@ -182,7 +181,7 @@ function class:update(): boolean
 		if newOutputTable[key] == nil then
 			newOutputTable[key] = value
 		else
-			logErrorNonFatal("forKeyCollision", nil, key)
+			External.logErrorNonFatal("forKeyCollision", nil, key)
 		end
 	end
 
@@ -205,12 +204,12 @@ function class:_peek(): unknown
 end
 
 function class:get()
-	logError("stateGetWasRemoved")
+	External.logError("stateGetWasRemoved")
 end
 
 function class:destroy()
 	if self.scope == nil then
-		logError("destroyedTwice", nil, "For")
+		External.logError("destroyedTwice", nil, "For")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do

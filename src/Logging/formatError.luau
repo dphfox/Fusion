@@ -8,17 +8,19 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 local Package = script.Parent.Parent
-local InternalTypes = require(Package.InternalTypes)
+local Types = require(Package.Types)
 local messages = require(Package.Logging.messages)
 
 local ERROR_INFO_URL = "https://elttob.uk/Fusion/0.3/api-reference/general/errors/#"
 
 local function formatError(
+	externalProvider: Types.ExternalProvider?,
 	messageID: string,
-	errorOrTrace: InternalTypes.Error | string | nil,
+	errorOrTrace: Types.Error | string | nil,
 	...: unknown
 ): string
-	local error: InternalTypes.Error? = if typeof(errorOrTrace) == "table" then errorOrTrace else nil
+	local originalMessageID = messageID
+	local error: Types.Error? = if typeof(errorOrTrace) == "table" then errorOrTrace else nil
 	local trace: string? = if typeof(errorOrTrace) == "table" then errorOrTrace.trace else errorOrTrace
 	local messageText = messages[messageID]
 	if messageText == nil then
@@ -31,8 +33,13 @@ local function formatError(
 		if error.context ~= nil then
 			messageText ..= ` ({error.context})`
 		end
+	else
+		messageText = messageText:gsub("ERROR_MESSAGE", originalMessageID)
 	end
-	messageText = `[Fusion] {messageText} \nID: {messageID} \nLearn more: {ERROR_INFO_URL}{messageID:lower()}`
+	messageText = `[Fusion] {messageText} \nID: {messageID}`
+	if externalProvider ~= nil and externalProvider.policies.allowWebLinks then
+		messageText ..= `\nLearn more: {ERROR_INFO_URL}{messageID:lower()}`
+	end
 	if trace ~= nil then
 		messageText ..= ` \n---- Stack trace ----\n{trace}`
 	end

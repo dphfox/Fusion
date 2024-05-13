@@ -11,8 +11,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
+local External = require(Package.External)
 -- Logging
-local logError = require(Package.Logging.logError)
 local parseError = require(Package.Logging.parseError)
 
 local class = {}
@@ -58,7 +58,7 @@ function class:is(
 		local ok, value = xpcall(callback, parseError, ...)
 		outerSelf._valuesNow[thread] = prevValue
 		if not ok then
-			logError("callbackError", value :: any)
+			External.logError("callbackError", value :: any)
 		end
 		return value
 	end

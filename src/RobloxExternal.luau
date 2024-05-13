@@ -3,7 +3,7 @@
 --!nolint LocalShadow
 
 --[[
-	Roblox implementation for Fusion's abstract scheduler layer.
+	Roblox implementation for Fusion's abstract provider layer.
 ]]
 
 local RunService = game:GetService("RunService")
@@ -14,8 +14,12 @@ local External = require(Package.External)
 
 local RobloxExternal = {}
 
+RobloxExternal.policies = {
+	allowWebLinks = RunService:IsStudio()
+}
+
 --[[
-   Sends an immediate task to the external scheduler. Throws if none is set.
+   Sends an immediate task to the external provider. Throws if none is set.
 ]]
 function RobloxExternal.doTaskImmediate(
 	resume: () -> ()
@@ -24,7 +28,7 @@ function RobloxExternal.doTaskImmediate(
 end
 
 --[[
-	Sends a deferred task to the external scheduler. Throws if none is set.
+	Sends a deferred task to the external provider. Throws if none is set.
 ]]
 function RobloxExternal.doTaskDeferred(
 	resume: () -> ()
@@ -35,11 +39,16 @@ end
 --[[
 	Errors in a different thread to preserve the flow of execution.
 ]]
-function RobloxExternal.errorNonFatal(
-	err: unknown
+function RobloxExternal.logErrorNonFatal(
+	errorString: string
 )
-	task.spawn(error, err, 0)
+	task.spawn(error, errorString, 0)
 end
+
+--[[
+	Shows a warning message in the output.
+]]
+RobloxExternal.logWarn = warn
 
 --[[
 	Sends an update step to Fusion using the Roblox clock time.

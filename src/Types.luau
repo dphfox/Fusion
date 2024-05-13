@@ -7,9 +7,13 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
---[[
-	General use types
-]]
+export type Error = {
+	type: "Error",
+	raw: string,
+	message: string,
+	trace: string,
+	context: string?
+}
 
 -- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
@@ -68,10 +72,6 @@ type ContextualIsMethods = {
 	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
---[[
-	Generic reactive graph types
-]]
-
 -- A graph object which can have dependents.
 export type Dependency = ScopedObject & {
 	dependentSet: {[Dependent]: unknown}
@@ -95,10 +95,6 @@ export type UsedAs<T> = StateObject<T> | T
 
 -- Function signature for use callbacks.
 export type Use = <T>(target: UsedAs<T>) -> T
-
---[[
-	Specific reactive graph types
-]]
 
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
@@ -174,10 +170,6 @@ export type SpringConstructor = <T>(
 	speed: UsedAs<number>?,
 	damping: UsedAs<number>?
 ) -> Spring<T>
-
---[[
-	Instance related types
-]]
 
 -- Denotes children instances in an instance or component's property table.
 export type SpecialKey = {
@@ -271,6 +263,28 @@ export type Fusion = {
 	Attribute: (attributeName: string) -> SpecialKey,
 	AttributeChange: (attributeName: string) -> SpecialKey,
 	AttributeOut: (attributeName: string) -> SpecialKey,
+}
+
+export type ExternalProvider = {
+	policies: {
+		allowWebLinks: boolean
+	},
+	
+	logErrorNonFatal: (
+		errorString: string
+	) -> (),
+	logWarn: (
+		errorString: string
+	) -> (),
+	
+	doTaskImmediate: (
+		resume: () -> ()
+	) -> (),
+	doTaskDeferred: (
+		resume: () -> ()
+	) -> (),
+	startScheduler: () -> (),
+	stopScheduler: () -> ()
 }
 
 return nil
