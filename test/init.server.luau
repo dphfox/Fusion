@@ -13,7 +13,7 @@ local SpecExternal = require(script.SpecExternal)
 if TestVars.runTests then
 	print("Running unit tests...")
 	-- Suppress "unknown require path" error here.
-	External.setExternalScheduler(SpecExternal)
+	External.setExternalProvider(SpecExternal)
 
 	local data
 	SpecExternal.doTaskDeferred(function()
