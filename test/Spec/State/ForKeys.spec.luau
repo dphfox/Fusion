@@ -107,7 +107,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	itFOCUS("destroys and omits keys that error during processing", function()
+	it("destroys and omits keys that error during processing", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -124,14 +124,10 @@ return function()
 			end
 			return generated
 		end)
-		warn("First run")
-		warn(peek(forObject))
 		expect(peek(forObject).foofirst).to.equal(1)
 		expect(peek(forObject).barfirst).to.equal(2)
 		expect(peek(forObject).bazfirst).to.equal(3)
-		warn("Changing suffix to 'second'")
 		suffix:set("second")
-		warn(peek(forObject))
 		expect(peek(forObject).foofirst).to.equal(nil)
 		expect(peek(forObject).barfirst).to.equal(nil)
 		expect(peek(forObject).bazfirst).to.equal(nil)
@@ -215,33 +211,36 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2} :: {[string]: number})
-		local _ = ForKeys(scope, data, function(_, innerScope, key)
+		local forKeys = ForKeys(scope, data, function(_, innerScope, key)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
 			return key
 		end)
+		peek(forKeys)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		data:set({baz = 3})
+		peek(forKeys)
 		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
 		expect(destructed.baz).to.equal(nil)
 		doCleanup(scope)
 	end)
 
-	it("destroys inner scope on destroy", function()
+	itFOCUS("destroys inner scope on destroy", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = 1, bar = 2})
-		local _ = ForKeys(scope, data, function(_, innerScope, key)
+		local forKeys = ForKeys(scope, data, function(_, innerScope, key)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
 			return key
 		end)
+		peek(forKeys)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		doCleanup(scope)
@@ -255,16 +254,20 @@ return function()
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2})
 		local computations = 0
-		local _ = ForKeys(scope, data, function(_, _, key)
+		local forKeys = ForKeys(scope, data, function(_, _, key)
 			computations += 1
 			return string.upper(key)
 		end)
+		peek(forKeys)
 		expect(computations).to.equal(2)
 		data:set({foo = 3, bar = 4})
+		peek(forKeys)
 		expect(computations).to.equal(2)
 		data:set({foo = 3, bar = 4, baz = 5})
+		peek(forKeys)
 		expect(computations).to.equal(3)
 		data:set({foo = 4, bar = 5, baz = 6})
+		peek(forKeys)
 		expect(computations).to.equal(3)
 		doCleanup(scope)
 	end)
