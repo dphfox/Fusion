@@ -189,4 +189,26 @@ return function()
 		doCleanup(scope)
 	end)
 
+	it("correctly preserves its dependency across multiple evaluations", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local value = Value(scope, 5)
+		local numFires = 0
+		Observer(scope, value):onChange(function()
+			numFires += 1
+		end)
+
+		expect(numFires).to.equal(0)
+		value:set(10)
+		expect(numFires).to.equal(1)
+		value:set(20)
+		expect(numFires).to.equal(2)
+		value:set(30)
+		expect(numFires).to.equal(3)
+		value:set(50)
+		expect(numFires).to.equal(4)
+
+		doCleanup(scope)
+	end)
 end

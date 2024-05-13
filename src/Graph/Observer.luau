@@ -21,6 +21,7 @@ local depend = require(Package.Graph.depend)
 local nameOf = require(Package.Utility.nameOf)
 
 type Self = Types.Observer & {
+	_watchingGraph: Types.GraphObject?,
 	_changeListeners: {[unknown]: () -> ()}
 }
 
@@ -53,6 +54,7 @@ local function Observer(
 			dependentSet = {},
 			lastChange = nil,
 			validity = "valid",
+			_watchingGraph = watching,
 			_changeListeners = {}
 		},
 		METATABLE
@@ -105,6 +107,9 @@ end
 function class._evaluate(
 	self: Self
 ): ()
+	if self._watchingGraph ~= nil then
+		depend(self, self._watchingGraph)
+	end
 	for _, callback in pairs(self._changeListeners) do
 		External.doTaskImmediate(callback)
 	end
