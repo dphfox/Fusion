@@ -12,8 +12,9 @@ local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
 	local it = getfenv().it
+	local itFOCUS = getfenv().itFOCUS
 
-	it("constructs in scopes", function()
+	itFOCUS("constructs in scopes", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -29,7 +30,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("is destroyable", function()
+	itFOCUS("is destroyable", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -41,7 +42,7 @@ return function()
 		end).to.never.throw()
 	end)
 
-	it("iterates on constants", function()
+	itFOCUS("iterates on constants", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -55,7 +56,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("iterates on state objects", function()
+	itFOCUS("iterates on state objects", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -74,7 +75,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("computes with constants", function()
+	itFOCUS("computes with constants", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -87,7 +88,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("computes with state objects", function()
+	itFOCUS("computes with state objects", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -104,7 +105,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("destroys and omits values that error during processing", function()
+	itFOCUS("destroys and omits values that error during processing", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -150,7 +151,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("omits values that return nil", function()
+	itFOCUS("omits values that return nil", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -181,7 +182,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("doesn't destroy inner scope on creation", function()
+	itFOCUS("doesn't destroy inner scope on creation", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -202,7 +203,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("destroys inner scope on update", function()
+	itFOCUS("destroys inner scope on update", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -223,7 +224,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("destroys inner scope on destroy", function()
+	itFOCUS("destroys inner scope on destroy", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -242,7 +243,7 @@ return function()
 		expect(destructed.bar).to.equal(true)
 	end)
 
-	it("doesn't recompute when values roam between keys", function()
+	itFOCUS("doesn't recompute when values roam between keys", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -264,7 +265,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("does not reuse values for duplicated items", function()
+	itFOCUS("does not reuse values for duplicated items", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -282,7 +283,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("orders the input and output arrays the same way", function()
+	itFOCUS("orders the input and output arrays the same way", function()
 		warn("Test not implemented: ForValues - orders the input and output arrays the same way")
 	end)
 end

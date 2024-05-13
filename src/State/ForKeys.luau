@@ -56,13 +56,13 @@ local function SubObject<KI, KO, V, S>(
 	self._processor = processor
 	self._outputKeyState = Computed(scope, function(use, scope): KO?
 		local inputKey = use(self._inputKeyState)
-		local ok, result = xpcall(self._processor, parseError, use, scope, inputKey)
+		local ok, outputKey = xpcall(self._processor, parseError, use, scope, inputKey)
 		if ok then
-			return result
+			return outputKey
 		else
-			local result: Types.Error = result :: any
-			result.context = `while processing key {tostring(inputKey)}`
-			External.logErrorNonFatal("callbackError", result)
+			local error: Types.Error = outputKey :: any
+			error.context = `while processing key {tostring(inputKey)}`
+			External.logErrorNonFatal("callbackError", error)
 			doCleanup(scope)
 			table.clear(scope)
 			return nil
