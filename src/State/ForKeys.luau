@@ -8,6 +8,9 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	preserves values.
 
 	https://elttob.uk/Fusion/0.3/api-reference/state/members/forkeys/
+
+	TODO: the sub objects constructed here can be more efficiently implemented
+	as a dedicated state object.
 ]]
 
 local Package = script.Parent.Parent
@@ -25,6 +28,51 @@ local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local parseError = require(Package.Logging.parseError)
 local logWarn = require(Package.Logging.logWarn)
 
+local SUB_OBJECT_META = {
+	__index = {
+		roamKeys = false,
+		roamValues = true,
+		invalidateInputKey = function(self): ()
+			self._inputKeyState:set(self.inputKey)
+		end,
+		invalidateInputValue = function(self): ()
+			-- do nothing
+		end,
+		useOutputPair = function(self, use)
+			return use(self._outputKeyState), self.inputValue
+		end
+	}
+}
+
+local function SubObject<KI, KO, V, S>(
+	scope: Types.Scope<S>,
+	initialKey: KI,
+	initialValue: V,
+	processor: (Types.Use, Types.Scope<S>, KI) -> KO
+): ForTypes.SubObject<S, KI, KO, V, V>
+	local self = {}
+	self.maybeScope = scope
+	self.inputKey = initialKey
+	self.inputValue = initialValue
+	self._inputKeyState = Value(scope, initialKey)
+	self._processor = processor
+	self._outputKeyState = Computed(scope, function(use, scope): KO?
+		local inputKey = use(self._inputKeyState)
+		local ok, result = xpcall(self._processor, parseError, use, scope, inputKey)
+		if ok then
+			return result
+		else
+			local result: Types.Error = result :: any
+			result.context = `while processing key {tostring(inputKey)}`
+			logErrorNonFatal("callbackError", result)
+			doCleanup(scope)
+			table.clear(scope)
+			return nil
+		end
+	end)
+	return setmetatable(self, SUB_OBJECT_META) :: any
+end
+
 local function ForKeys<KI, KO, V, S>(
 	scope: Types.Scope<S>,
 	inputTable: Types.UsedAs<{[KI]: V}>,
@@ -37,44 +85,10 @@ local function ForKeys<KI, KO, V, S>(
 		logWarn("destructorRedundant", "ForKeys")
 	end
 	return For(
-		scope,
-		inputTable,
-		function(
-			scope: Types.Scope<S>,
-			initialKey: KI,
-			initialValue: V
-		): ForTypes.SubObject<S, KI, KO, V, V>
-			local inputKey = Value(scope, initialKey)
-			local outputKey = Computed(scope, function(use, scope): KO?
-				local inputKey = use(inputKey)
-				local ok, result = xpcall(processor, parseError, use, scope, inputKey)
-				if ok then
-					return result
-				else
-					local result: Types.Error = result :: any
-					result.context = `while processing key {tostring(inputKey)}`
-					logErrorNonFatal("callbackError", result)
-					doCleanup(scope)
-					table.clear(scope)
-					return nil
-				end
-			end)
-			return {
-				maybeScope = scope,
-				inputKey = initialKey,
-				inputValue = initialValue,
-				roamKeys = false,
-				roamValues = true,
-				invalidateInputKey = function(self): ()
-					inputKey:set(self.inputKey)
-				end,
-				invalidateInputValue = function(self): ()
-					-- nothing needs to be invalidated here
-				end,
-				useOutputPair = function(self, use): (KO?, V?)
-					return use(outputKey), self.inputValue
-				end
-			}
+		scope, 
+		inputTable, 
+		function(scope, initialKey, initialValue)
+			return SubObject(scope, initialKey, initialValue, processor)
 		end
 	)
 end
