@@ -98,15 +98,38 @@ function class.populate<S, KI, KO, VI, VO>(
 	use: Types.Use,
 	output: {[KO]: VO}
 ): ()
+	local minArrayIndex = math.huge
+	local maxArrayIndex = -math.huge
+	local hasHoles = false
 	for subObject in self._subObjects do
 		local outputKey, outputValue = subObject:useOutputPair(use)
 		if outputKey == nil or outputValue == nil then
+			hasHoles = true
 			continue
 		elseif output[outputKey] ~= nil then
 			External.logErrorNonFatal("forKeyCollision", nil, tostring(outputKey))
 			continue
 		end
 		output[outputKey] = outputValue
+		if typeof(outputKey) == "number" then
+			minArrayIndex = math.min(minArrayIndex, outputKey)
+			maxArrayIndex = math.max(maxArrayIndex, outputKey)
+		end
+	end
+	-- Be careful of NaN here
+	if hasHoles and maxArrayIndex > minArrayIndex then
+		local output: {[number]: VO} = output :: any
+		local moveToIndex = minArrayIndex
+		for moveFromIndex = minArrayIndex, maxArrayIndex do
+			local outputValue = output[moveFromIndex]
+			if outputValue == nil then
+				continue
+			end
+			-- The ordering is important in case the indices are the same
+			output[moveFromIndex] = nil
+			output[moveToIndex] = outputValue
+			moveToIndex += 1
+		end
 	end
 end
 
