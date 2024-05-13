@@ -45,7 +45,6 @@ local function ForKeys<KI, KO, V, S>(
 			initialValue: V
 		): ForTypes.SubObject<S, KI, KO, V, V>
 			local inputKey = Value(scope, initialKey)
-			local inputValue = Value(scope, initialValue)
 			local outputKey = Computed(scope, function(use, scope): KO?
 				local inputKey = use(inputKey)
 				local ok, result = xpcall(processor, parseError, use, scope, inputKey)
@@ -70,10 +69,10 @@ local function ForKeys<KI, KO, V, S>(
 					inputKey:set(self.inputKey)
 				end,
 				invalidateInputValue = function(self): ()
-					inputValue:set(self.inputValue)
+					-- nothing needs to be invalidated here
 				end,
 				useOutputPair = function(self, use): (KO?, V?)
-					return use(outputKey), use(self.inputValue)
+					return use(outputKey), self.inputValue
 				end
 			}
 		end

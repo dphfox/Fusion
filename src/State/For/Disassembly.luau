@@ -86,6 +86,13 @@ function class.destroy<S, KI, KO, VI, VO>(
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
 	end
+	for subObject in self._subObjects do
+		if subObject.maybeScope ~= nil then
+			doCleanup(subObject.maybeScope)
+			scopePool.clearAndGive(subObject.maybeScope)
+			subObject.maybeScope = nil
+		end
+	end
 end
 
 function class.populate<S, KI, KO, VI, VO>(
