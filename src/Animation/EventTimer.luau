@@ -80,6 +80,7 @@ function class._evaluate(
 	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 	local newValue = currentTime - measureTimeSince
 	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
+	self._watchingLastChange = newWatchingLastChange
 	return oldValue ~= newValue
 end
 
