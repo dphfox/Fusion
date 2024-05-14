@@ -18,7 +18,9 @@ type Self = Types.StateObject<number>
 local class = {}
 class.type = "State"
 class.kind = "ExternalTime"
-class.timeliness = "eager"
+class.timeliness = "lazy"
+class.dependencySet = {}
+class._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 
 local METATABLE = {}
 METATABLE.__index = class
@@ -30,12 +32,10 @@ local function ExternalTime(
 ): Self
 	local self: Self = setmetatable(
 		{
-			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
 			scope = scope,
-			validity = "invalid",
-			_EXTREMELY_DANGEROUS_usedAsValue = nil
+			validity = "invalid"
 		}, 
 		METATABLE
 	) :: any
@@ -60,7 +60,6 @@ end
 function class._evaluate(
 	self: Self
 ): boolean
-	self._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 	-- While someone else could call `change()` on this object, it wouldn't be
 	-- idiomatic. So, since the only idiomatic time this function runs is when
 	-- the external update step runs, it's safe enough to assume that the result
@@ -72,6 +71,7 @@ end
 External.bindToUpdateStep(function(
 	externalNow: number
 ): ()
+	class._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 	for _, timer in allTimers do
 		change(timer)
 	end
