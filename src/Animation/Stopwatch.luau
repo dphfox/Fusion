@@ -5,6 +5,9 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
 	State object for measuring time since an event using a reference timer.
+
+	TODO: this should not be exposed to users until it has a proper reactive API
+	surface
 ]]
 
 local Package = script.Parent.Parent
