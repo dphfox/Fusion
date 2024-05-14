@@ -239,7 +239,8 @@ export type Fusion = {
 
 	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,
-	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
+	deriveScope: <T>(existing: Scope<T>, methods: {[unknown]: unknown}?, ...{[unknown]: unknown}) -> Scope<T>,
+	innerScope: <T>(existing: Scope<T>, ...{[unknown]: unknown}) -> Scope<T>,
 
 	peek: Use,
 	Value: ValueConstructor,
