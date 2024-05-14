@@ -14,75 +14,120 @@ local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 local unpackType = require(Package.Animation.unpackType)
 local SpringScheduler = require(Package.Animation.SpringScheduler)
-local updateAll = require(Package.State.updateAll)
+local change = require(Package.Graph.change)
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
+type Self<T> = Types.Spring<T> & {
+	_speed: Types.UsedAs<number>,
+	_damping: Types.UsedAs<number>,
+	_goal: Types.UsedAs<T>,
+	_goalValue: T,
+
+	_currentType: string,
+	_currentValue: T,
+	_currentSpeed: number,
+	_currentDamping: number,
+
+	_springPositions: {number},
+	_springGoals: {number},
+	_springVelocities: {number},
+
+	_lastSchedule: number,
+	_startDisplacements: {number},
+	_startVelocities: {number}
+}
+
 local class = {}
 class.type = "State"
 class.kind = "Spring"
+class.timeliness = "lazy"
 
-local CLASS_METATABLE = {__index = class}
+local METATABLE = {}
+METATABLE.__index = class
 
---[[
-	Sets the position of the internal springs, meaning the value of this
-	Spring will jump to the given value. This doesn't affect velocity.
-
-	If the type doesn't match the current type of the spring, an error will be
-	thrown.
-]]
-function class:setPosition(
-	newValue: Types.Animatable
-)
-	local self = self :: InternalTypes.Spring<unknown>
-	local newType = typeof(newValue)
-	if newType ~= self._currentType then
-		External.logError("springTypeMismatch", nil, newType, self._currentType)
+local function Spring<T>(
+	scope: Types.Scope<unknown>,
+	goal: Types.UsedAs<T>,
+	speed: Types.UsedAs<number>?,
+	damping: Types.UsedAs<number>?
+): Self<T>
+	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
+		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
+	end
+	-- apply defaults for speed and damping
+	if speed == nil then
+		speed = 10
+	end
+	if damping == nil then
+		damping = 1
 	end
 
-	self._springPositions = unpackType(newValue, newType)
-	self._currentValue = newValue
-	SpringScheduler.add(self)
-	updateAll(self)
-end
-
---[[
-	Sets the velocity of the internal springs, overwriting the existing velocity
-	of this Spring. This doesn't affect position.
-
-	If the type doesn't match the current type of the spring, an error will be
-	thrown.
-]]
-function class:setVelocity(
-	newValue: Types.Animatable
-)
-	local self = self :: InternalTypes.Spring<unknown>
-	local newType = typeof(newValue)
-	if newType ~= self._currentType then
-		External.logError("springTypeMismatch", nil, newType, self._currentType)
+	local dependencySet: {[Types.GraphObject]: unknown} = {}
+	local goalIsState = castToState(goal) ~= nil
+	if goalIsState then
+		local goal = goal :: Types.StateObject<T>
+		dependencySet[goal] = true
+	end
+	if castToState(speed) then
+		local speed = speed :: Types.StateObject<number>
+		dependencySet[speed] = true
+	end
+	if castToState(damping) then
+		local damping = damping :: Types.StateObject<number>
+		dependencySet[damping] = true
 	end
 
-	self._springVelocities = unpackType(newValue, newType)
-	SpringScheduler.add(self)
+	local self: Self<T> = setmetatable(
+		{
+			dependencySet = dependencySet,
+			dependentSet = {},
+			scope = scope,
+			_currentDamping = peek(damping),
+			_currentSpeed = peek(speed),
+			_currentType = nil,
+			_currentValue = nil,
+			_damping = damping,
+			_goal = goal,
+			_goalValue = nil,
+			_lastSchedule = -math.huge,
+			_speed = speed,
+			_springGoals = nil,
+			_springPositions = nil,
+			_springVelocities = nil,
+			_startDisplacements = {},
+			_startVelocities = {}
+		},
+		METATABLE
+	) :: any
+
+	table.insert(scope, self)
+	
+	if goalIsState then
+		local goal = goal :: Types.StateObject<T>
+		if goal.scope == nil then
+			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Spring that is following it`)
+		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
+			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Spring that is following it`)
+		end
+		-- add this object to the goal state's dependent set
+		goal.dependentSet[self] = true
+	end
+
+	self:update()
+
+	return self
 end
 
---[[
-	Adds to the velocity of the internal springs, on top of the existing
-	velocity of this Spring. This doesn't affect position.
-
-	If the type doesn't match the current type of the spring, an error will be
-	thrown.
-]]
-function class:addVelocity(
-	deltaValue: Types.Animatable
-)
-	local self = self :: InternalTypes.Spring<unknown>
+function class.addVelocity<T>(
+	self: Self<T>,
+	deltaValue: T
+): ()
 	local deltaType = typeof(deltaValue)
 	if deltaType ~= self._currentType then
 		External.logError("springTypeMismatch", nil, deltaType, self._currentType)
 	end
-
 	local springDeltas = unpackType(deltaValue, deltaType)
 	for index, delta in ipairs(springDeltas) do
 		self._springVelocities[index] += delta
@@ -90,12 +135,54 @@ function class:addVelocity(
 	SpringScheduler.add(self)
 end
 
---[[
-	Called when the goal state changes value, or when the speed or damping has
-	changed.
-]]
-function class:update(): boolean
-	local self = self :: InternalTypes.Spring<unknown>
+function class.destroy<T>(
+	self: Self<T>
+): ()
+	if self.scope == nil then
+		External.logError("destroyedTwice", nil, "Spring")
+	end
+	SpringScheduler.remove(self)
+	self.scope = nil
+	for dependency in pairs(self.dependencySet) do
+		dependency.dependentSet[self] = nil
+	end
+end
+
+function class.get<T>(
+	self: Self<T>
+): never
+	return External.logError("stateGetWasRemoved")
+end
+
+function class.setPosition<T>(
+	self: Self<T>,
+	newValue: T
+): ()
+	local newType = typeof(newValue)
+	if newType ~= self._currentType then
+		External.logError("springTypeMismatch", nil, newType, self._currentType)
+	end
+	self._springPositions = unpackType(newValue, newType)
+	self._currentValue = newValue
+	SpringScheduler.add(self)
+	change(self)
+end
+
+function class.setVelocity<T>(
+	self: Self<T>,
+	newValue: T
+): ()
+	local newType = typeof(newValue)
+	if newType ~= self._currentType then
+		External.logError("springTypeMismatch", nil, newType, self._currentType)
+	end
+	self._springVelocities = unpackType(newValue, newType)
+	SpringScheduler.add(self)
+end
+
+function class._evaluate<T>(
+	self: Self<T>
+): boolean
 	local goalValue = peek(self._goal)
 
 	-- figure out if this was a goal change or a speed/damping change
@@ -163,103 +250,10 @@ function class:update(): boolean
 	end
 end
 
---[[
-	Returns the interior value of this state object.
-]]
-function class:_peek(): unknown
-	local self = self :: InternalTypes.Spring<unknown>
+function class._peek<T>(
+	self: Self<T>
+): T
 	return self._currentValue
-end
-
-function class:get()
-	External.logError("stateGetWasRemoved")
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Spring<unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Spring")
-	end
-	SpringScheduler.remove(self)
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-end
-
-local function Spring<T>(
-	scope: Types.Scope<unknown>,
-	goal: Types.UsedAs<T>,
-	speed: Types.UsedAs<number>?,
-	damping: Types.UsedAs<number>?
-): Types.Spring<T>
-	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
-		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
-	end
-	-- apply defaults for speed and damping
-	if speed == nil then
-		speed = 10
-	end
-	if damping == nil then
-		damping = 1
-	end
-
-	local dependencySet: {[Types.GraphObject]: unknown} = {}
-	local goalIsState = castToState(goal) ~= nil
-	if goalIsState then
-		local goal = goal :: Types.StateObject<T>
-		dependencySet[goal] = true
-	end
-	if castToState(speed) then
-		local speed = speed :: Types.StateObject<number>
-		dependencySet[speed] = true
-	end
-	if castToState(damping) then
-		local damping = damping :: Types.StateObject<number>
-		dependencySet[damping] = true
-	end
-
-	local self = setmetatable({
-		scope = scope,
-		dependencySet = dependencySet,
-		dependentSet = {},
-		_speed = speed,
-		_damping = damping,
-
-		_goal = goal,
-		_goalValue = nil,
-
-		_currentType = nil,
-		_currentValue = nil,
-		_currentSpeed = peek(speed),
-		_currentDamping = peek(damping),
-
-		_springPositions = nil,
-		_springGoals = nil,
-		_springVelocities = nil,
-
-		_lastSchedule = -math.huge,
-		_startDisplacements = {},
-		_startVelocities = {}
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Spring<T>
-
-	table.insert(scope, self)
-	
-	if goalIsState then
-		local goal = goal :: Types.StateObject<T>
-		if goal.scope == nil then
-			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Spring that is following it`)
-		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
-			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Spring that is following it`)
-		end
-		-- add this object to the goal state's dependent set
-		goal.dependentSet[self] = true
-	end
-
-	self:update()
-
-	return self
 end
 
 return Spring

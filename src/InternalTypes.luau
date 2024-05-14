@@ -33,25 +33,4 @@ export type Tween<T> = Types.Tween<T> & {
 	_currentlyAnimating: boolean
 }
 
--- A state object which follows another state object using spring simulation.
-export type Spring<T> = Types.Spring<T> & {
-	_speed: Types.UsedAs<number>,
-	_damping: Types.UsedAs<number>,
-	_goal: Types.UsedAs<T>,
-	_goalValue: T,
-
-	_currentType: string,
-	_currentValue: T,
-	_currentSpeed: number,
-	_currentDamping: number,
-
-	_springPositions: {number},
-	_springGoals: {number},
-	_springVelocities: {number},
-
-	_lastSchedule: number,
-	_startDisplacements: {number},
-	_startVelocities: {number}
-}
-
 return nil
