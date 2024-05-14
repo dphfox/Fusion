@@ -103,7 +103,6 @@ end
 function class._evaluate<T>(
 	self: Self<T>
 ): boolean
-	print("blip!")
 	local goal = castToState(self._goal)
 	-- Allow non-state goals to pass through transparently.
 	if goal == nil then
