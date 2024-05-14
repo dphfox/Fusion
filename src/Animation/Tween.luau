@@ -18,15 +18,14 @@ local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
 -- Animation
 local ExternalTime = require(Package.Animation.ExternalTime)
-local EventTimer = require(Package.Animation.EventTimer)
+local Stopwatch = require(Package.Animation.Stopwatch)
 local lerpType = require(Package.Animation.lerpType)
 
 export type Self<T> = Types.Tween<T> & {
 	_goal: Types.UsedAs<T>,
-	_eventTimer: Types.StateObject<number>?,
+	_stopwatch: Stopwatch.Stopwatch?,
 	_tweenFrom: T,
-	_tweenTo: T,
-	_awake: boolean
+	_tweenTo: T
 }
 
 local class = {}
@@ -52,10 +51,10 @@ local function Tween<T>(
 	end
 
 	local goalState = castToState(goal)
-	local eventTimer = nil
+	local stopwatch = nil
 
 	if goalState ~= nil then
-		eventTimer = EventTimer(scope, goalState, ExternalTime(scope))
+		stopwatch = Stopwatch(scope, ExternalTime(scope))
 	end
 
 	local self: Self<T> = setmetatable(
@@ -67,16 +66,19 @@ local function Tween<T>(
 			validity = "invalid",
 			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_goal = goal,
-			_eventTimer = eventTimer,
+			_stopwatch = stopwatch,
 			_tweenFrom = nil,
-			_tweenTo = nil,
-			_awake = false
+			_tweenTo = nil
 		},
 		METATABLE
 	) :: any
-
 	table.insert(scope, self)
-	
+
+	if goalState ~= nil then
+		depend(self, goalState) -- TODO: lifetime analysis
+		depend(self, stopwatch)
+	end
+
 	return self
 end
 
@@ -101,12 +103,14 @@ end
 function class._evaluate<T>(
 	self: Self<T>
 ): boolean
+	print("blip!")
 	local goal = castToState(self._goal)
 	-- Allow non-state goals to pass through transparently.
 	if goal == nil then
 		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
 		return false
 	end
+	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
 	depend(self, goal)
 	local newTweenTo = peek(goal)
 	-- Protect against NaN goals.
@@ -116,30 +120,26 @@ function class._evaluate<T>(
 	end
 	-- Respond to changes in the goal state.
 	if self._tweenTo ~= newTweenTo then
-		self._tweenFrom = self._tweenTo
+		self._tweenFrom = self._EXTREMELY_DANGEROUS_usedAsValue
 		self._tweenTo = newTweenTo
-		self._awake = true
+		stopwatch:zero()
+		stopwatch:unpause()
 	end
 	-- Snap to the goal and sleep if no animation can occur.
 	if
 		self._tweenFrom == self._tweenTo or -- endpoints match
-		typeof(self._tweenTo) ~= typeof(self._tweenFrom) or -- type difference
-		self._tweenFrom ~= self._tweenFrom -- last goal was NaN
+		typeof(self._tweenTo) ~= typeof(self._tweenFrom) -- type difference
 	then
 		self._tweenFrom = self._tweenTo
-		self._awake = false
+		stopwatch:pause()
 	end
-	local duration = 1
-	local elapsed = duration
-	-- Don't depend on the timer while asleep.
-	if self._awake then
-		local eventTimer = self._eventTimer :: Types.StateObject<number>
-		depend(self, eventTimer)
-		elapsed = peek(eventTimer)
-	end
+	depend(self, stopwatch)
+	local duration = 0.2
+	local elapsed = peek(stopwatch)
 	-- Go to sleep if the animation is done.
 	if elapsed >= duration then
-		self._awake = false
+		elapsed = duration
+		stopwatch:pause()
 	end	
 	-- Compute actual tweened value.
 	local ratio = elapsed / duration -- TODO: tween ratios
