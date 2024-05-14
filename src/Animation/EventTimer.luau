@@ -32,8 +32,6 @@ class.timeliness = "eager"
 local METATABLE = {}
 METATABLE.__index = class
 
-local allTimers: {Self} = {}
-
 local function EventTimer(
 	scope: Types.Scope<unknown>,
 	watchingGraph: Types.GraphObject,
