@@ -10,83 +10,32 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
-local TweenScheduler = require(Package.Animation.TweenScheduler)
+-- Graph
+local depend = require(Package.Graph.depend)
+-- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+-- Animation
+local ExternalTime = require(Package.Animation.ExternalTime)
+local EventTimer = require(Package.Animation.EventTimer)
+local lerpType = require(Package.Animation.lerpType)
+
+export type Self<T> = Types.Tween<T> & {
+	_goal: Types.UsedAs<T>,
+	_eventTimer: Types.StateObject<number>?,
+	_tweenFrom: T,
+	_tweenTo: T,
+	_awake: boolean
+}
 
 local class = {}
 class.type = "State"
 class.kind = "Tween"
+class.timeliness = "lazy"
 
-local CLASS_METATABLE = {__index = class}
-
---[[
-	Called when the goal state changes value; this will initiate a new tween.
-	Returns false as the current value doesn't change right away.
-]]
-function class:update(): boolean
-	local self = self :: InternalTypes.Tween<unknown>
-	local goalValue = peek(self._goal)
-
-	-- if the goal hasn't changed, then this is a TweenInfo change.
-	-- in that case, if we're not currently animating, we can skip everything
-	if goalValue == self._nextValue and not self._currentlyAnimating then
-		return false
-	end
-
-	local tweenInfo = peek(self._tweenInfo)
-
-	-- if we receive a bad TweenInfo, then error and stop the update
-	if typeof(tweenInfo) ~= "TweenInfo" then
-		External.logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
-		return false
-	end
-
-	self._prevValue = self._currentValue
-	self._nextValue = goalValue
-
-	self._currentTweenStartTime = External.lastUpdateStep()
-	self._currentTweenInfo = tweenInfo
-
-	local tweenDuration = tweenInfo.DelayTime + tweenInfo.Time
-	if tweenInfo.Reverses then
-		tweenDuration += tweenInfo.Time
-	end
-	tweenDuration *= tweenInfo.RepeatCount + 1
-	self._currentTweenDuration = tweenDuration
-
-	-- start animating this tween
-	TweenScheduler.add(self)
-
-	return false
-end
-
---[[
-	Returns the interior value of this state object.
-]]
-function class:_peek(): unknown
-	local self = self :: InternalTypes.Tween<unknown>
-	return self._currentValue
-end
-
-function class:get()
-	External.logError("stateGetWasRemoved")
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Tween<unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Tween")
-	end
-	TweenScheduler.remove(self)
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-end
+local METATABLE = {}
+METATABLE.__index = class
 
 local function Tween<T>(
 	scope: Types.Scope<unknown>,
@@ -96,66 +45,121 @@ local function Tween<T>(
 	if castToState(scope) then
 		External.logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
 	end
-	local currentValue = peek(goal)
 
 	-- apply defaults for tween info
 	if tweenInfo == nil then
 		tweenInfo = TweenInfo.new()
 	end
 
-	local startingTweenInfo = peek(tweenInfo)
-	-- If we start with a bad TweenInfo, then we don't want to construct a Tween
-	if typeof(startingTweenInfo) ~= "TweenInfo" then
-		External.logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
+	local goalState = castToState(goal)
+	local eventTimer = nil
+
+	if goalState ~= nil then
+		eventTimer = EventTimer(scope, goalState, ExternalTime(scope))
 	end
 
-	local dependencySet: {[Types.GraphObject]: unknown} = {}
-	local goalIsState = castToState(goal) ~= nil
-	if goalIsState then
-		local goal = goal :: Types.StateObject<T>
-		dependencySet[goal] = true
-	end
-	local tweenInfoIsState = castToState(tweenInfo)
-	if tweenInfoIsState then
-		local tweenInfo = tweenInfo :: Types.StateObject<TweenInfo>
-		dependencySet[tweenInfo] = true
-	end
-
-	local self = setmetatable({
-		scope = scope,
-		dependencySet = dependencySet,
-		dependentSet = {},
-		_goal = goal,
-		_tweenInfo = tweenInfo,
-		_tweenInfoIsState = tweenInfoIsState,
-
-		_prevValue = currentValue,
-		_nextValue = currentValue,
-		_currentValue = currentValue,
-
-		-- store current tween into separately from 'real' tween into, so it
-		-- isn't affected by :setTweenInfo() until next change
-		_currentTweenInfo = tweenInfo,
-		_currentTweenDuration = 0,
-		_currentTweenStartTime = 0,
-		_currentlyAnimating = false
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Tween<T>
+	local self: Self<T> = setmetatable(
+		{
+			dependencySet = {},
+			dependentSet = {},
+			lastChange = nil,
+			scope = scope,
+			validity = "invalid",
+			_EXTREMELY_DANGEROUS_usedAsValue = nil,
+			_goal = goal,
+			_eventTimer = eventTimer,
+			_tweenFrom = nil,
+			_tweenTo = nil,
+			_awake = false
+		},
+		METATABLE
+	) :: any
 
 	table.insert(scope, self)
 	
-	if goalIsState then
-		local goal = goal :: any
-		if goal.scope == nil then
-			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Tween that is following it`)
-		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
-			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Tween that is following it`)
-		end
-		-- add this object to the goal state's dependent set
-		goal.dependentSet[self] = true
-	end
-
 	return self
+end
+
+function class.destroy<T>(
+	self: Self<T>
+): ()
+	if self.scope == nil then
+		External.logError("destroyedTwice", nil, "Tween")
+	end
+	self.scope = nil
+	for dependency in pairs(self.dependencySet) do
+		dependency.dependentSet[self] = nil
+	end
+end
+
+function class.get<T>(
+	self: Self<T>
+): never
+	return External.logError("stateGetWasRemoved")
+end
+
+function class._evaluate<T>(
+	self: Self<T>
+): boolean
+	local goal = castToState(self._goal)
+	-- Allow non-state goals to pass through transparently.
+	if goal == nil then
+		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
+		return false
+	end
+	depend(self, goal)
+	local newTweenTo = peek(goal)
+	-- Protect against NaN goals.
+	if newTweenTo ~= newTweenTo then
+		External.logWarn("tweenNanGoal")
+		return false
+	end
+	-- Respond to changes in the goal state.
+	if self._tweenTo ~= newTweenTo then
+		self._tweenFrom = self._tweenTo
+		self._tweenTo = newTweenTo
+		self._awake = true
+	end
+	-- Snap to the goal and sleep if no animation can occur.
+	if
+		self._tweenFrom == self._tweenTo or -- endpoints match
+		typeof(self._tweenTo) ~= typeof(self._tweenFrom) or -- type difference
+		self._tweenFrom ~= self._tweenFrom -- last goal was NaN
+	then
+		self._tweenFrom = self._tweenTo
+		self._awake = false
+	end
+	local duration = 1
+	local elapsed = duration
+	-- Don't depend on the timer while asleep.
+	if self._awake then
+		local eventTimer = self._eventTimer :: Types.StateObject<number>
+		depend(self, eventTimer)
+		elapsed = peek(eventTimer)
+	end
+	-- Go to sleep if the animation is done.
+	if elapsed >= duration then
+		self._awake = false
+	end	
+	-- Compute actual tweened value.
+	local ratio = elapsed / duration -- TODO: tween ratios
+	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
+	local newValue = lerpType(
+		self._tweenFrom,
+		self._tweenTo,
+		ratio
+	) :: T
+	-- Protect against NaN after motion.
+	if newValue ~= newValue then
+		External.logWarn("tweenNanMotion")
+		newValue = self._tweenTo
+	end
+	-- Push update and check for similarity.
+	-- Don't need to use the similarity test here because this code doesn't
+	-- deal with tables, and NaN is already guarded against, so the similarity
+	-- test doesn't actually add any new safety here.
+	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
+	return oldValue ~= newValue
 end
 
 return Tween

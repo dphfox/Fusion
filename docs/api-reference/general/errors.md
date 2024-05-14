@@ -689,6 +689,50 @@ for more predictable behaviour and better support for constant values.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## tweenNanGoal
+
+```
+A tween was given a NaN goal, so some animation has been skipped. Ensure no
+tweens have NaN goals.
+```
+
+**Thrown by:**
+[`Tween`](../../animation/members/tween)
+
+The goal parameter given to the tween during construction contained one or more
+NaN values. 
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## tweenNanMotion
+
+```
+A tween encountered NaN during motion, so has snapped to the goal. Ensure no
+tweens have NaN in their tween infos.
+```
+
+**Thrown by:**
+[`Tween`](../../animation/members/tween)
+
+While calculating an updated tween position, the final value contained one or
+more NaN values.
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## unknownMessage
 
 ```
