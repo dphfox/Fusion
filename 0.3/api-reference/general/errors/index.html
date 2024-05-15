@@ -3450,26 +3450,21 @@ future versions of Fusion.
 <hr />
 <div class="fusiondoc-error-api-section">
 <h2 id="destroyedtwice">destroyedTwice<a class="headerlink" href="#destroyedtwice" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>Attempted to destroy Computed twice; ensure you&#39;re not manually calling
-`:destroy()` while using scopes. See discussion #292 on GitHub for advice.
+<div class="highlight"><pre><span></span><code>`doCleanup()` was given something that it is already cleaning up. Unclear how to
+proceed.
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../state/members/value"><code>Value</code></a>,
-<a href="../../state/members/computed"><code>Computed</code></a>,
-<a href="../../state/members/observer"><code>Observer</code></a>,
-<a href="../../state/members/forkeys"><code>ForKeys</code></a>,
-<a href="../../state/members/forvalues"><code>ForValues</code></a>,
-<a href="../../state/members/forpairs"><code>ForPairs</code></a>,
-<a href="../../animation/members/spring"><code>Spring</code></a>,
-<a href="../../animation/members/tween"><code>Tween</code></a></p>
-<p><strong>Related discussions:</strong> 
-<a href="https://github.com/dphfox/Fusion/discussions/292"><code>#292</code></a></p>
-<p>The <code>:destroy()</code> method of the object in question was called more than once.</p>
-<p>This usually means you called <code>:destroy()</code> manually, which is almost never
-required because Fusion's constructors always link objects to
-<a href="../../../tutorials/fundamentals/scopes">scopes</a>. When that scope is passed to 
-<a href="../../memory/members/docleanup"><code>doCleanup()</code></a>, the <code>:destroy()</code> method is
-called on every object inside.</p>
+<a href="../../memory/members/doCleanup"><code>doCleanup</code></a></p>
+<p>You called <code>doCleanup()</code> on a function or object which carried some code. When
+that code was run, it attempted to call <code>doCleanup()</code> on the same thing you
+called with.</p>
+<p>Usually, this would result in an infinite loop, because the same code would try
+to clean itself up over and over again. Because cleanup tasks are only meant to
+run once, this is invalid behaviour and so this error is thrown instead.</p>
+<p>Ensure your code is the rightful owner of scopes that it is trying to clean up.
+In particular, avoid cleaning up scopes you receive from elsewhere, unless you
+and the original provider of the scope agree to transfer the responsibility of
+cleaning up the scope.</p>
 </div>
 <hr />
 <div class="fusiondoc-error-api-section">
