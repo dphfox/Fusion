@@ -65,24 +65,19 @@ local function Computed<T, S>(
 		}, 
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+		if self._innerScope ~= nil then
+			doCleanup(self._innerScope)
+			scopePool.clearAndGive(self._innerScope)
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	return self
-end
-
-function class.destroy<T, S>(
-	self: Self<T, S>
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Computed")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	if self._innerScope ~= nil then
-		doCleanup(self._innerScope)
-		scopePool.clearAndGive(self._innerScope)
-	end
 end
 
 function class.get<T, S>(

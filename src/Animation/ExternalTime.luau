@@ -39,22 +39,17 @@ local function ExternalTime(
 		}, 
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		local index = table.find(allTimers, self)
+		if index ~= nil then
+			table.remove(allTimers, index)
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	table.insert(allTimers, self)
 	return self
-end
-
-function class.destroy(
-	self: Self
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "ExternalTime")
-	end
-	self.scope = nil
-	local index = table.find(allTimers, self)
-	if index ~= nil then
-		table.remove(allTimers, index)
-	end
 end
 
 function class._evaluate(

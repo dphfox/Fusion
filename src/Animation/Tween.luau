@@ -78,7 +78,14 @@ local function Tween<T>(
 		},
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 
 	if goalState ~= nil then
 		depend(self, goalState) -- TODO: lifetime analysis
@@ -86,18 +93,6 @@ local function Tween<T>(
 	end
 
 	return self
-end
-
-function class.destroy<T>(
-	self: Self<T>
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Tween")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
 end
 
 function class.get<T>(

@@ -58,18 +58,13 @@ local function Stopwatch(
 		}, 
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	depend(self, timer) -- TODO: lifetime analysis
 	return self
-end
-
-function class.destroy(
-	self: Self
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Stopwatch")
-	end
-	self.scope = nil
 end
 
 function class.zero(

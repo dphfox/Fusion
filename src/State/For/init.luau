@@ -56,20 +56,17 @@ local function For<S, KI, KO, VI, VO>(
 		}, 
 		METATABLE
 	) :: any
-	table.insert(scope, self)
-	return self
-end
 
-function class.destroy<S, KI, KO, VI, VO>(
-	self: Self<S, KI, KO, VI, VO>
-)
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "For")
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
 	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+
+	return self
 end
 
 function class.get<S, KI, KO, VI, VO>(

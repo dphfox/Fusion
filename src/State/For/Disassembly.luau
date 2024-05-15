@@ -64,33 +64,30 @@ local function Disassembly<S, KI, KO, VI, VO>(
 		METATABLE
 	) :: any
 
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+		for subObject in self._subObjects do
+			if subObject.maybeScope ~= nil then
+				doCleanup(subObject.maybeScope)
+				scopePool.clearAndGive(subObject.maybeScope)
+				subObject.maybeScope = nil
+			end
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+
 	local inputState = castToState(inputTable)
 	if inputState ~= nil then
+		-- TODO: make this a proper depend()
 		self.dependencySet[inputState] = true
 		inputState.dependentSet[self] = true
 	end
-
-	table.insert(scope, self)
+	
 	return self
-end
-
-function class.destroy<S, KI, KO, VI, VO>(
-	self: Self<S, KI, KO, VI, VO>
-)
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "For.Disassembly")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	for subObject in self._subObjects do
-		if subObject.maybeScope ~= nil then
-			doCleanup(subObject.maybeScope)
-			scopePool.clearAndGive(subObject.maybeScope)
-			subObject.maybeScope = nil
-		end
-	end
 end
 
 function class.populate<S, KI, KO, VI, VO>(

@@ -78,7 +78,14 @@ local function Spring<T>(
 		},
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	
 	if goalState ~= nil then
 		depend(self, goalState) -- TODO: lifetime analysis
@@ -111,18 +118,6 @@ function class.addVelocity<T>(
 	self._activeStartV = unpackType(newValue, newType)
 	self._stopwatch:zero()
 	change(self)
-end
-
-function class.destroy<T>(
-	self: Self<T>
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Spring")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
 end
 
 function class.get<T>(

@@ -47,6 +47,7 @@ local function Observer(
 			`the Observer that is watching it`
 		)
 	end
+	
 	local self: Self = setmetatable(
 		{
 			scope = scope,
@@ -59,7 +60,15 @@ local function Observer(
 		},
 		METATABLE
 	) :: any
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+
 	if watchingGraph ~= nil then
 		if whichLivesLonger(scope, self, watchingGraph.scope :: any, watching) == "definitely-a" then
 			External.logWarn(
@@ -71,18 +80,6 @@ local function Observer(
 		depend(self, watchingGraph)
 	end
 	return self
-end
-
-function class.destroy(
-	self: Self
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Observer")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
 end
 
 function class.onBind(

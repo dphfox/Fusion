@@ -46,17 +46,12 @@ local function Value<T>(
 		}, 
 		METATABLE
 	) :: any
-	table.insert(scope, self)
-	return self
-end
-
-function class.destroy<T, S>(
-	self: Self<T, S>
-): ()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Value")
+	local destroy = function()
+		self.scope = nil
 	end
-	self.scope = nil
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+	return self
 end
 
 function class:get<T, S>(
