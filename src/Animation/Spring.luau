@@ -17,6 +17,7 @@ local External = require(Package.External)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 -- Graph
 local depend = require(Package.Graph.depend)
+local change = require(Package.Graph.change)
 -- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
@@ -26,9 +27,16 @@ local Stopwatch = require(Package.Animation.Stopwatch)
 local unpackType = require(Package.Animation.unpackType)
 
 type Self<T> = Types.Spring<T> & {
+	_activeLatestP: {number},
+	_activeLatestV: {number},
+	_activeStartP: {number},
+	_activeStartV: {number},
+	_activeType: string,
+
 	_speed: Types.UsedAs<number>,
 	_damping: Types.UsedAs<number>,
-	_goal: Types.UsedAs<T>
+	_goal: Types.UsedAs<T>,
+	_stopwatch: Stopwatch.Stopwatch
 }
 
 local class = {}
@@ -92,14 +100,17 @@ function class.addVelocity<T>(
 	deltaValue: T
 ): ()
 	local deltaType = typeof(deltaValue)
-	if deltaType ~= self._currentType then
-		External.logError("springTypeMismatch", nil, deltaType, self._currentType)
+	if deltaType ~= self._activeType then
+		External.logError("springTypeMismatch", nil, deltaType, self._activeType)
 	end
-	local springDeltas = unpackType(deltaValue, deltaType)
-	for index, delta in ipairs(springDeltas) do
-		self._springVelocities[index] += delta
+	local newStartV = unpackType(deltaValue, deltaType)
+	for index, velocity in self._activeLatestV do
+		newStartV[index] += velocity
 	end
-	SpringScheduler.add(self)
+	self._activeStartP = self._activeLatestP
+	self._activeStartV = unpackType(newValue, newType)
+	self._stopwatch:zero()
+	change(self)
 end
 
 function class.destroy<T>(
@@ -108,7 +119,6 @@ function class.destroy<T>(
 	if self.scope == nil then
 		External.logError("destroyedTwice", nil, "Spring")
 	end
-	SpringScheduler.remove(self)
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
 		dependency.dependentSet[self] = nil
@@ -126,12 +136,12 @@ function class.setPosition<T>(
 	newValue: T
 ): ()
 	local newType = typeof(newValue)
-	if newType ~= self._currentType then
-		External.logError("springTypeMismatch", nil, newType, self._currentType)
+	if newType ~= self._activeType then
+		External.logError("springTypeMismatch", nil, newType, self._activeType)
 	end
-	self._springPositions = unpackType(newValue, newType)
-	self._currentValue = newValue
-	SpringScheduler.add(self)
+	self._activeStartP = unpackType(newValue, newType)
+	self._activeStartV = self._activeLatestV
+	self._stopwatch:zero()
 	change(self)
 end
 
@@ -140,11 +150,13 @@ function class.setVelocity<T>(
 	newValue: T
 ): ()
 	local newType = typeof(newValue)
-	if newType ~= self._currentType then
-		External.logError("springTypeMismatch", nil, newType, self._currentType)
+	if newType ~= self._activeType then
+		External.logError("springTypeMismatch", nil, newType, self._activeType)
 	end
-	self._springVelocities = unpackType(newValue, newType)
-	SpringScheduler.add(self)
+	self._activeStartP = self._activeLatestP
+	self._activeStartV = unpackType(newValue, newType)
+	self._stopwatch:zero()
+	change(self)
 end
 
 function class._evaluate<T>(
