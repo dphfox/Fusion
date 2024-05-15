@@ -6,8 +6,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 --[[
 	A specialised state object for following a goal state smoothly over time,
 	using a TweenInfo to shape the motion.
-	
-	https://elttob.uk/Fusion/0.3/api-reference/animation/members/tween/
+
+	https://elttob.uk/Fusion/0.3/api-reference/animation/types/tween/
 ]]
 
 local Package = script.Parent.Parent
@@ -66,12 +66,12 @@ local function Tween<T>(
 			lastChange = nil,
 			scope = scope,
 			validity = "invalid",
-			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_activeDuration = nil,
 			_activeElapsed = nil,
 			_activeFrom = nil,
 			_activeTo = nil,
 			_activeTweenInfo = nil,
+			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_goal = goal,
 			_stopwatch = stopwatch,
 			_tweenInfo = tweenInfo or TweenInfo.new()

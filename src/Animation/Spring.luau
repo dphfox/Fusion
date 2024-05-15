@@ -4,39 +4,31 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new computed state object, which follows the value of another
-	state object using a spring simulation.
+	A specialised state object for following a goal state smoothly over time,
+	using physics to shape the motion.
+
+	https://elttob.uk/Fusion/0.3/api-reference/animation/types/spring/
 ]]
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
-local unpackType = require(Package.Animation.unpackType)
-local SpringScheduler = require(Package.Animation.SpringScheduler)
-local change = require(Package.Graph.change)
+-- Memory
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+-- Graph
+local depend = require(Package.Graph.depend)
+-- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+-- Animation
+local ExternalTime = require(Package.Animation.ExternalTime)
+local Stopwatch = require(Package.Animation.Stopwatch)
+local unpackType = require(Package.Animation.unpackType)
 
 type Self<T> = Types.Spring<T> & {
 	_speed: Types.UsedAs<number>,
 	_damping: Types.UsedAs<number>,
-	_goal: Types.UsedAs<T>,
-	_goalValue: T,
-
-	_currentType: string,
-	_currentValue: T,
-	_currentSpeed: number,
-	_currentDamping: number,
-
-	_springPositions: {number},
-	_springGoals: {number},
-	_springVelocities: {number},
-
-	_lastSchedule: number,
-	_startDisplacements: {number},
-	_startVelocities: {number}
+	_goal: Types.UsedAs<T>
 }
 
 local class = {}
@@ -56,66 +48,41 @@ local function Spring<T>(
 	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
 		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
-	-- apply defaults for speed and damping
-	if speed == nil then
-		speed = 10
-	end
-	if damping == nil then
-		damping = 1
-	end
 
-	local dependencySet: {[Types.GraphObject]: unknown} = {}
-	local goalIsState = castToState(goal) ~= nil
-	if goalIsState then
-		local goal = goal :: Types.StateObject<T>
-		dependencySet[goal] = true
-	end
-	if castToState(speed) then
-		local speed = speed :: Types.StateObject<number>
-		dependencySet[speed] = true
-	end
-	if castToState(damping) then
-		local damping = damping :: Types.StateObject<number>
-		dependencySet[damping] = true
+	local goalState = castToState(goal)
+	local stopwatch = nil
+	if goalState ~= nil then
+		stopwatch = Stopwatch(scope, ExternalTime(scope))
 	end
 
 	local self: Self<T> = setmetatable(
 		{
-			dependencySet = dependencySet,
+			dependencySet = {},
 			dependentSet = {},
+			lastChange = nil,
 			scope = scope,
-			_currentDamping = peek(damping),
-			_currentSpeed = peek(speed),
-			_currentType = nil,
-			_currentValue = nil,
-			_damping = damping,
+			validity = "invalid",
+			_damping = damping or 1,
+			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_goal = goal,
-			_goalValue = nil,
-			_lastSchedule = -math.huge,
-			_speed = speed,
-			_springGoals = nil,
-			_springPositions = nil,
-			_springVelocities = nil,
-			_startDisplacements = {},
-			_startVelocities = {}
+			_speed = speed or 10,
+			_stopwatch = stopwatch
 		},
 		METATABLE
 	) :: any
-
 	table.insert(scope, self)
 	
-	if goalIsState then
-		local goal = goal :: Types.StateObject<T>
-		if goal.scope == nil then
-			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Spring that is following it`)
-		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
-			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Spring that is following it`)
-		end
-		-- add this object to the goal state's dependent set
-		goal.dependentSet[self] = true
+	if goalState ~= nil then
+		depend(self, goalState) -- TODO: lifetime analysis
 	end
-
-	self:update()
+	local speedState = castToState(speed)
+	if speedState ~= nil then
+		depend(self, speedState) -- TODO: lifetime analysis
+	end
+	local dampingState = castToState(damping)
+	if dampingState ~= nil then
+		depend(self, dampingState) -- TODO: lifetime analysis
+	end
 
 	return self
 end

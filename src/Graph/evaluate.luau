@@ -4,7 +4,9 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Revalidates a graph object using monotonic painting.
+	Evaluates the graph object if necessary, so that it is up to date.
+	Returns true if it meaningfully changed.
+
 	https://fluff.blog/2024/04/16/monotonic-painting.html
 ]]
 
@@ -14,7 +16,7 @@ local External = require(Package.External)
 
 local function evaluate(
 	target: Types.GraphObject
-): ()
+): boolean
 	if target.validity == "busy" then
 		return External.logError("infiniteLoop")
 	end
@@ -44,6 +46,9 @@ local function evaluate(
 			target.lastChange = os.clock()
 		end
 		target.validity = "valid"
+		return targetMeaningfullyChanged
+	else
+		return false
 	end
 end
 

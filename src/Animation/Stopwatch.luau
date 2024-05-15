@@ -77,17 +77,14 @@ function class.zero(
 ): ()
 	self._measureTimeSince = peek(self._timer)
 	self._EXTREMELY_DANGEROUS_usedAsValue = 0
-	if self:_evaluate() then
-		change(self)
-	end
+	change(self)
 end
 
 function class.pause(
 	self: Self
 ): ()
 	self._playing = false
-	-- Don't need to evaluate here because pausing a stopwatch shouldn't change
-	-- its value
+	change(self)
 end
 
 function class.unpause(
@@ -95,9 +92,7 @@ function class.unpause(
 ): ()
 	self._playing = true
 	self._measureTimeSince = peek(self._timer) - self._EXTREMELY_DANGEROUS_usedAsValue
-	depend(self, self._timer)
-	-- Don't need to evaluate here because unpausing a stopwatch shouldn't 
-	-- change its value
+	change(self)
 end
 
 function class._evaluate(

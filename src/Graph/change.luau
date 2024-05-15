@@ -4,13 +4,11 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Invalidates a graph object's dependents using monotonic painting.
-	https://fluff.blog/2024/04/16/monotonic-painting.html
+	Prompts a graph object to re-evaluate its own value. If it meaningfully
+	changes, then dependents will have to re-evaluate their own values in the
+	future.
 
-	Note: after invalidation, the targeted object will be valid and will have a
-	new `lastChange` time. That's because this function assumes the change on
-	this object is always meaningful - for meaningless changes, do not call this
-	function at all.
+	https://fluff.blog/2024/04/16/monotonic-painting.html
 ]]
 
 local Package = script.Parent.Parent
@@ -30,7 +28,8 @@ local TERMINATION_TIME = 1
 local function change(
 	target: Types.GraphObject
 ): ()
-	if target.validity == "invalid" then
+	local meaningfullyChanged = evaluate(target)
+	if target.validity == "invalid" or not meaningfullyChanged then
 		target.lastChange = os.clock()
 		target.validity = "valid"
 	elseif target.validity == "valid" then
