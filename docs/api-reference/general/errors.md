@@ -781,9 +781,7 @@ is use()-ing. See discussion #292 on GitHub for advice.
 **Related discussions:** 
 [`#292`](https://github.com/dphfox/Fusion/discussions/292)
 
-Your code attempted to access an object after that object was destroyed, either
-because its `:destroy()` method was called manually, or because the object's
-[scope](../../../tutorials/fundamentals/scope) was cleaned up.
+Your code attempted to access an object after that object was destroyed..
 
 Make sure your objects are being added to the correct scopes according to when
 you expect them to be destroyed. Additionally, make sure your code can detect
