@@ -20,27 +20,21 @@ local function getTweenRatio(
 	local numCycles = 1 + tweenInfo.RepeatCount
 	local easeStyle = tweenInfo.EasingStyle
 	local easeDirection = tweenInfo.EasingDirection
-
 	local cycleDuration = delay + duration
 	if reverses then
 		cycleDuration += duration
 	end
-
 	if currentTime >= cycleDuration * numCycles and tweenInfo.RepeatCount > -1 then
 		return 1
 	end
-
 	local cycleTime = currentTime % cycleDuration
-
 	if cycleTime <= delay then
 		return 0
 	end
-
 	local tweenProgress = (cycleTime - delay) / duration
 	if tweenProgress > 1 then
 		tweenProgress = 2 - tweenProgress
 	end
-
 	local ratio = TweenService:GetValue(tweenProgress, easeStyle, easeDirection)
 	return ratio
 end

@@ -20,12 +20,18 @@ local peek = require(Package.State.peek)
 local ExternalTime = require(Package.Animation.ExternalTime)
 local Stopwatch = require(Package.Animation.Stopwatch)
 local lerpType = require(Package.Animation.lerpType)
+local getTweenRatio = require(Package.Animation.getTweenRatio)
+local getTweenDuration = require(Package.Animation.getTweenDuration)
 
 export type Self<T> = Types.Tween<T> & {
+	_activeDuration: number,
+	_activeElapsed: number,
+	_activeFrom: T,
+	_activeTo: T,
+	_activeTweenInfo: TweenInfo,
 	_goal: Types.UsedAs<T>,
 	_stopwatch: Stopwatch.Stopwatch?,
-	_tweenFrom: T,
-	_tweenTo: T
+	_tweenInfo: Types.UsedAs<TweenInfo>,
 }
 
 local class = {}
@@ -45,14 +51,8 @@ local function Tween<T>(
 		External.logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
 	end
 
-	-- apply defaults for tween info
-	if tweenInfo == nil then
-		tweenInfo = TweenInfo.new()
-	end
-
 	local goalState = castToState(goal)
 	local stopwatch = nil
-
 	if goalState ~= nil then
 		stopwatch = Stopwatch(scope, ExternalTime(scope))
 	end
@@ -65,10 +65,14 @@ local function Tween<T>(
 			scope = scope,
 			validity = "invalid",
 			_EXTREMELY_DANGEROUS_usedAsValue = nil,
+			_activeDuration = nil,
+			_activeElapsed = nil,
+			_activeFrom = nil,
+			_activeTo = nil,
+			_activeTweenInfo = nil,
 			_goal = goal,
 			_stopwatch = stopwatch,
-			_tweenFrom = nil,
-			_tweenTo = nil
+			_tweenInfo = tweenInfo or TweenInfo.new()
 		},
 		METATABLE
 	) :: any
@@ -109,7 +113,6 @@ function class._evaluate<T>(
 		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
 		return false
 	end
-	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
 	depend(self, goal)
 	local newTweenTo = peek(goal)
 	-- Protect against NaN goals.
@@ -117,41 +120,40 @@ function class._evaluate<T>(
 		External.logWarn("tweenNanGoal")
 		return false
 	end
-	-- Respond to changes in the goal state.
-	if self._tweenTo ~= newTweenTo then
-		self._tweenFrom = self._EXTREMELY_DANGEROUS_usedAsValue
-		self._tweenTo = newTweenTo
+	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
+	local tweenInfo = peek(self._tweenInfo) :: TweenInfo
+	-- Restart animation when the goal changes, or if the tween info changes
+	-- partway through another animation.
+	if 
+		self._activeTo ~= newTweenTo or
+		(self._activeElapsed < self._activeDuration and self._activeTweenInfo ~= tweenInfo)
+	then
+		self._activeDuration = getTweenDuration(tweenInfo)
+		self._activeFrom = self._EXTREMELY_DANGEROUS_usedAsValue
+		self._activeTo = newTweenTo
+		self._activeTweenInfo = tweenInfo
 		stopwatch:zero()
 		stopwatch:unpause()
 	end
-	-- Snap to the goal and sleep if no animation can occur.
+	depend(self, stopwatch)
+	self._activeElapsed = peek(stopwatch)
 	if
-		self._tweenFrom == self._tweenTo or -- endpoints match
-		typeof(self._tweenTo) ~= typeof(self._tweenFrom) -- type difference
+		self._activeFrom == self._activeTo or -- endpoints match
+		self._activeElapsed >= self._activeDuration or -- animation is done
+		typeof(self._activeTo) ~= typeof(self._activeFrom) -- type difference
 	then
-		self._tweenFrom = self._tweenTo
+		self._activeFrom = self._activeTo
+		self._activeElapsed = self._activeDuration
 		stopwatch:pause()
 	end
-	depend(self, stopwatch)
-	local duration = 0.2
-	local elapsed = peek(stopwatch)
-	-- Go to sleep if the animation is done.
-	if elapsed >= duration then
-		elapsed = duration
-		stopwatch:pause()
-	end	
 	-- Compute actual tweened value.
-	local ratio = elapsed / duration -- TODO: tween ratios
+	local ratio = getTweenRatio(tweenInfo, self._activeElapsed)
 	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
-	local newValue = lerpType(
-		self._tweenFrom,
-		self._tweenTo,
-		ratio
-	) :: T
+	local newValue = lerpType(self._activeFrom, self._activeTo, ratio) :: T
 	-- Protect against NaN after motion.
 	if newValue ~= newValue then
 		External.logWarn("tweenNanMotion")
-		newValue = self._tweenTo
+		newValue = self._activeTo
 	end
 	-- Push update and check for similarity.
 	-- Don't need to use the similarity test here because this code doesn't
