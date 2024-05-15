@@ -80,9 +80,9 @@ end
 function class._evaluate<T, S>(
 	_self: Self<T, S>
 ): boolean
-	-- The only time a meaningful change occurs is when the value object
-	-- manually indicates such a change has occured via `change()`.
-	return false
+	-- The similarity test is done in advance when the value is set, so this
+	-- should be fine.
+	return true
 end
 
 return Value :: Types.ValueConstructor

@@ -29,7 +29,9 @@ local function change(
 	target: Types.GraphObject
 ): ()
 	local meaningfullyChanged = evaluate(target)
-	if target.validity == "invalid" or not meaningfullyChanged then
+	if not meaningfullyChanged then
+		target.validity = "valid"
+	elseif target.validity == "invalid" then
 		target.lastChange = os.clock()
 		target.validity = "valid"
 	elseif target.validity == "valid" then
