@@ -2940,8 +2940,8 @@ you're done with them.</p>
 manage.</p>
 <hr />
 <h2 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h2>
-<p>When you create many objects at once, you often want to  <code>:destroy()</code> them
-together later. </p>
+<p>When you create many objects at once, you often want to destroy them together
+later. </p>
 <p>To make this easier, some people add their objects to an array. Arrays that
 group together objects like this are given a special name: <em>scopes</em>.</p>
 <p>To create a new scope, create an empty array.</p>
@@ -2960,7 +2960,7 @@ group together objects like this are given a special name: <em>scopes</em>.</p>
 <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="hll"><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-<p>That object will add itself to the scope.</p>
+<p>That object will add its <code>destroy()</code> function to the scope:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
@@ -2971,28 +2971,20 @@ group together objects like this are given a special name: <em>scopes</em>.</p>
 <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1">--&gt; function: 0x123456789abcdef</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Repeat as many times as you like. Objects appear in order of creation.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
 <span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing1</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing2</span><span class="p">)</span> <span class="c1">--&gt; true</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing3</span><span class="p">)</span> <span class="c1">--&gt; true</span>
 </code></pre></div></td></tr></table></div>
 <p>Later, destroy the scope by using the <code>doCleanup()</code> function. The contents are
 destroyed in reverse order.</p>
@@ -3015,17 +3007,17 @@ destroyed in reverse order.</p>
 <span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 
 <span class="hll"><span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-</span><span class="c1">-- Using `doCleanup` is the same as:</span>
+</span><span class="c1">-- Using `doCleanup` is conceptually the same as:</span>
 <span class="c1">-- thing3:destroy()</span>
 <span class="c1">-- thing2:destroy()</span>
 <span class="c1">-- thing1:destroy()</span>
 </code></pre></div></td></tr></table></div>
 <p>Scopes passed to <code>doCleanup</code> can contain:</p>
 <ul>
-<li>Objects with <code>:destroy()</code> or <code>:Destroy()</code> methods to be called</li>
-<li>Functions to be run</li>
+<li>Functions to be run (like those <code>destroy()</code> functions above)</li>
 <li>Roblox instances to destroy</li>
 <li>Roblox event connections to disconnect</li>
+<li>Your own objects with <code>:destroy()</code> or <code>:Destroy()</code> methods to be called</li>
 <li>Other nested scopes to be cleaned up</li>
 </ul>
 <p>You can add these manually using <code>table.insert</code> if you need custom behaviour,

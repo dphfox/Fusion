@@ -3855,9 +3855,7 @@ is use()-ing. See discussion #292 on GitHub for advice.
 <a href="../../state/members/observer"><code>Observer</code></a></p>
 <p><strong>Related discussions:</strong> 
 <a href="https://github.com/dphfox/Fusion/discussions/292"><code>#292</code></a></p>
-<p>Your code attempted to access an object after that object was destroyed, either
-because its <code>:destroy()</code> method was called manually, or because the object's
-<a href="../../../tutorials/fundamentals/scope">scope</a> was cleaned up.</p>
+<p>Your code attempted to access an object after that object was destroyed..</p>
 <p>Make sure your objects are being added to the correct scopes according to when
 you expect them to be destroyed. Additionally, make sure your code can detect
 and deal with situations where other objects are no longer available.</p>
