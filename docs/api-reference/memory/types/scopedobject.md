@@ -42,34 +42,26 @@ been destroyed.
 	The `scope` is expected to be set once upon construction. It should not be
 	assigned to again, except when the scope is destroyed - at which point it
 	should be set to `nil` to indicate that it no longer exists inside of a
-	scope. This is typically done inside the `:destroy()` method, if it exists.
-
------
-
-## Methods
+	scope. This is typically done inside of `oldestTask`.
 
 <h3 markdown>
-	destroy
+	oldestTask
 	<span class="fusiondoc-api-type">
-		-> ()
+		: unknown
 	</span>
 </h3>
 
-```Lua
-function ScopedObject:destroy(): ()
-```
+The value inside of `scope` representing the point at which the scoped object
+will be destroyed.
 
-Called by `doCleanup` to destroy this object. User code should generally not
-call this; instead, destroy the scope as a whole.
+!!! note "Unchanged until destruction"
+	The `oldestTask` is expected to be set once upon construction. It should not
+	be assigned to again.
 
-!!! tip "Double-destruction prevention"
-	Fusion's objects throw
-	[`destroyedTwice`](../../../general/errors/#destroyedtwice) if they detect
-	a `nil` scope during`:destroy()`.
-
-	It's strongly recommended that you emulate this behaviour if you're
-	implementing your own objects, as this protects against double-destruction
-	and exposes potential scoping issues further ahead of time.
+	`oldestTask` is typically a callback that cleans up the object, but it's
+	typed ambiguously here as it is only used as a reference for lifetime
+	analysis, representing the point beyond which the object can be considered
+	completely destroyed. It shouldn't be used for much else.
 
 -----
 

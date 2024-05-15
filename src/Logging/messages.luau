@@ -14,7 +14,7 @@ return {
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
 	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	cleanupWasRenamed = "`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.",
-	destroyedTwice = "Attempted to destroy %s twice; ensure you're not manually calling `:destroy()` while using scopes. See discussion #292 on GitHub for advice.",
+	destroyedTwice = "`doCleanup()` was given something that it is already cleaning up. Unclear how to proceed.",
 	destructorRedundant = "%s destructors no longer do anything. If you wish to run code on destroy, `table.insert` a function into the `scope` argument. See discussion #292 on GitHub for advice.",
 	forKeyCollision = "The key '%s' was returned multiple times simultaneously, which is not allowed in `For` objects.",
 	infiniteLoop = "Detected an infinite loop. Consider adding an explicit breakpoint to your code to prevent a cyclic dependency.",

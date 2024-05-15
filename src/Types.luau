@@ -51,7 +51,7 @@ export type Scope<Constructors = any> = {Task} & Constructors
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
 	scope: Scope<unknown>?,
-	destroy: (ScopedObject) -> ()
+	oldestTask: unknown
 }
 
 -- Script-readable version information.

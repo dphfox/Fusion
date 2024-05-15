@@ -76,7 +76,7 @@ local function bindProperty(
 		local value = value :: Types.StateObject<unknown>
 		if value.scope == nil then
 			External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-		elseif whichLivesLonger(scope, instance, value.scope, value) == "definitely-a" then
+		elseif whichLivesLonger(scope, instance, value.scope, value.oldestTask) == "definitely-a" then
 			External.logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		end
 		-- value is a state object - bind to changes

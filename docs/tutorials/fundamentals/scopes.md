@@ -8,8 +8,8 @@ manage.
 
 ## Scopes
 
-When you create many objects at once, you often want to  `:destroy()` them
-together later. 
+When you create many objects at once, you often want to destroy them together
+later. 
 
 To make this easier, some people add their objects to an array. Arrays that
 group together objects like this are given a special name: *scopes*.
@@ -31,7 +31,7 @@ local scope = {}
 local thing = Fusion.Value(scope, "i am a thing")
 ```
 
-That object will add itself to the scope.
+That object will add its `destroy()` function to the scope:
 
 ```Lua linenums="2" hl_lines="6"
 local Fusion = require(ReplicatedStorage.Fusion)
@@ -39,7 +39,7 @@ local Fusion = require(ReplicatedStorage.Fusion)
 local scope = {}
 local thing = Fusion.Value(scope, "i am a thing")
 
-print(scope[1] == thing) --> true
+print(scope[1]) --> function: 0x123456789abcdef
 ```
 
 Repeat as many times as you like. Objects appear in order of creation.
@@ -51,10 +51,6 @@ local scope = {}
 local thing1 = Fusion.Value(scope, "i am thing 1")
 local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
-
-print(scope[1] == thing1) --> true
-print(scope[2] == thing2) --> true
-print(scope[3] == thing3) --> true
 ```
 
 Later, destroy the scope by using the `doCleanup()` function. The contents are
@@ -69,7 +65,7 @@ local thing2 = Fusion.Value(scope, "i am thing 2")
 local thing3 = Fusion.Value(scope, "i am thing 3")
 
 Fusion.doCleanup(scope)
--- Using `doCleanup` is the same as:
+-- Using `doCleanup` is conceptually the same as:
 -- thing3:destroy()
 -- thing2:destroy()
 -- thing1:destroy()
@@ -77,10 +73,10 @@ Fusion.doCleanup(scope)
 
 Scopes passed to `doCleanup` can contain:
 
-- Objects with `:destroy()` or `:Destroy()` methods to be called
-- Functions to be run
+- Functions to be run (like those `destroy()` functions above)
 - Roblox instances to destroy
 - Roblox event connections to disconnect
+- Your own objects with `:destroy()` or `:Destroy()` methods to be called
 - Other nested scopes to be cleaned up
 
 You can add these manually using `table.insert` if you need custom behaviour,

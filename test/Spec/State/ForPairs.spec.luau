@@ -37,7 +37,7 @@ return function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
-			forObject:destroy()
+			doCleanup(forObject)
 		end).to.never.throw()
 	end)
 

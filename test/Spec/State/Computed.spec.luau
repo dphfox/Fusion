@@ -24,7 +24,7 @@ return function()
 		expect(computed).to.be.a("table")
 		expect(computed.type).to.equal("State")
 		expect(computed.kind).to.equal("Computed")
-		expect(scope[1]).to.equal(computed)
+		expect(scope[1]).to.equal(computed.oldestTask)
 
 		doCleanup(scope)
 	end)
@@ -37,7 +37,7 @@ return function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
-			computed:destroy()
+			doCleanup(computed)
 		end).to.never.throw()
 	end)
 

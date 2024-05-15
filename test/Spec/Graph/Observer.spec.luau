@@ -22,7 +22,7 @@ return function()
 
 		expect(observer).to.be.a("table")
 		expect(observer.type).to.equal("Observer")
-		expect(scope[2]).to.equal(observer)
+		expect(scope[2]).to.equal(observer.oldestTask)
 
 		doCleanup(scope)
 	end)
@@ -34,7 +34,7 @@ return function()
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
 		expect(function()
-			observer:destroy()
+			doCleanup(observer)
 		end).to.never.throw()
 	end)
 

@@ -132,4 +132,16 @@ return function()
 		expect(runs[2]).to.equal(2)
 		expect(runs[3]).to.equal(1)
 	end)
+
+	it("should throw for recursive cleanups", function()
+		local expect = getfenv().expect
+		
+		local function cleanupFunc()
+			doCleanup(cleanupFunc)
+		end
+
+		expect(function()
+			doCleanup(cleanupFunc)
+		end).to.throw("destroyedTwice")
+	end)
 end
