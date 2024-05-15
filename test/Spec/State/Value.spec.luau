@@ -21,7 +21,7 @@ return function()
 		expect(value).to.be.a("table")
 		expect(value.type).to.equal("State")
 		expect(value.kind).to.equal("Value")
-		expect(scope[1]).to.equal(value)
+		expect(scope[1]).to.equal(value.oldestTask)
 
 		doCleanup(scope)
 	end)
@@ -30,9 +30,8 @@ return function()
 		local expect = getfenv().expect
 		
 		local value = Value({}, nil)
-		expect(value.destroy).to.be.a("function")
 		expect(function()
-			value:destroy()
+			doCleanup(value)
 		end).to.never.throw()
 	end)
 

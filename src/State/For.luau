@@ -207,20 +207,6 @@ function class:get()
 	External.logError("stateGetWasRemoved")
 end
 
-function class:destroy()
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "For")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	for unusedProcessor in self._existingProcessors do
-		doCleanup(unusedProcessor.scope)
-		scopePool.clearAndGive(unusedProcessor.scope)
-	end
-end
-
 local function For<KI, KO, VI, VO, S>(
 	scope: Types.Scope<S>,
 	inputTable: Types.UsedAs<{ [KI]: VI }>,
@@ -245,7 +231,19 @@ local function For<KI, KO, VI, VO, S>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.For<KI, KO, VI, VO, S>
 
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+		for unusedProcessor in self._existingProcessors do
+			doCleanup(unusedProcessor.scope)
+			scopePool.clearAndGive(unusedProcessor.scope)
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+
 	self:update()
 
 	return self

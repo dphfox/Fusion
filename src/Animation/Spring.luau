@@ -175,18 +175,6 @@ function class:get()
 	External.logError("stateGetWasRemoved")
 end
 
-function class:destroy()
-	local self = self :: InternalTypes.Spring<unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Spring")
-	end
-	SpringScheduler.remove(self)
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-end
-
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
 	goal: Types.UsedAs<T>,
@@ -244,13 +232,21 @@ local function Spring<T>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Spring<T>
 
-	table.insert(scope, self)
+	local destroy = function()
+		SpringScheduler.remove(self :: any)
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	
 	if goalIsState then
 		local goal = goal :: Types.StateObject<T>
 		if goal.scope == nil then
 			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Spring that is following it`)
-		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
+		elseif whichLivesLonger(scope, self.oldestTask, goal.scope, goal.oldestTask) == "definitely-a" then
 			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Spring that is following it`)
 		end
 		-- add this object to the goal state's dependent set

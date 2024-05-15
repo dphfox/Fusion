@@ -35,7 +35,7 @@ return {
 
 		if value.scope == nil then
 			External.logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+		elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
 			External.logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
 		end
 		value:set(applyTo)

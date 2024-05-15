@@ -15,10 +15,18 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+local External = require(Package.External)
+
+local alreadyDestroying: {[Types.Task]: true} = {}
 
 local function doCleanup(
 	task: Types.Task
-)
+): ()
+	if alreadyDestroying[task] then
+		return External.logError("destroyedTwice")
+	end
+	alreadyDestroying[task] = true
+
 	-- case 1: Instance
 	if typeof(task) == "Instance" then
 		task:Destroy()
@@ -55,6 +63,8 @@ local function doCleanup(
 			end
 		end
 	end
+	
+	alreadyDestroying[task] = nil
 end
 
 return doCleanup

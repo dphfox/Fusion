@@ -54,14 +54,6 @@ function class:get()
 	External.logError("stateGetWasRemoved")
 end
 
-function class:destroy()
-	local self = self :: InternalTypes.Value<unknown, unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Value")
-	end
-	self.scope = nil
-end
-
 local function Value<T>(
 	scope: Types.Scope<unknown>,
 	initialValue: T
@@ -77,7 +69,11 @@ local function Value<T>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Value<T, any>
 
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 
 	return self
 end

@@ -37,7 +37,7 @@ local function Attribute(
 					local value = value :: Types.StateObject<unknown>
 					if value.scope == nil then
 						External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-					elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
+					elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
 						External.logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 					end
 					Observer(scope, value :: any):onBind(function()

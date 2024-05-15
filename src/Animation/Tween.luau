@@ -76,18 +76,6 @@ function class:get()
 	External.logError("stateGetWasRemoved")
 end
 
-function class:destroy()
-	local self = self :: InternalTypes.Tween<unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Tween")
-	end
-	TweenScheduler.remove(self)
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-end
-
 local function Tween<T>(
 	scope: Types.Scope<unknown>,
 	goal: Types.UsedAs<T>,
@@ -144,13 +132,21 @@ local function Tween<T>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Tween<T>
 
-	table.insert(scope, self)
+	local destroy = function()
+		TweenScheduler.remove(self)
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 	
 	if goalIsState then
 		local goal = goal :: any
 		if goal.scope == nil then
 			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Tween that is following it`)
-		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
+		elseif whichLivesLonger(scope, self.oldestTask, goal.scope, goal.oldestTask) == "definitely-a" then
 			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Tween that is following it`)
 		end
 		-- add this object to the goal state's dependent set

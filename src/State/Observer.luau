@@ -61,17 +61,6 @@ function class:onBind(
 	return self:onChange(callback)
 end
 
-function class:destroy()
-	local self = self :: InternalTypes.Observer
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Observer")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-end
-
 local function Observer(
 	scope: Types.Scope<unknown>,
 	watching: unknown
@@ -90,7 +79,14 @@ local function Observer(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Observer
 	
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
 
 	if watchingState then
 		local watching: any = watching
@@ -101,7 +97,7 @@ local function Observer(
 				`The {watching.kind or watching.type or "watched"} object`,
 				`the Observer that is watching it`
 			)
-		elseif whichLivesLonger(scope, self, watching.scope, watching) == "definitely-a" then
+		elseif whichLivesLonger(scope, self.oldestTask, watching.scope, watching.oldestTask) == "definitely-a" then
 			local watching: any = watching
 			External.logWarn(
 				"possiblyOutlives",

@@ -151,30 +151,25 @@ You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
 ## destroyedTwice
 
 ```
-Attempted to destroy Computed twice; ensure you're not manually calling
-`:destroy()` while using scopes. See discussion #292 on GitHub for advice.
+`doCleanup()` was given something that it is already cleaning up. Unclear how to
+proceed.
 ```
 
 **Thrown by:**
-[`Value`](../../state/members/value),
-[`Computed`](../../state/members/computed),
-[`Observer`](../../state/members/observer),
-[`ForKeys`](../../state/members/forkeys),
-[`ForValues`](../../state/members/forvalues),
-[`ForPairs`](../../state/members/forpairs),
-[`Spring`](../../animation/members/spring),
-[`Tween`](../../animation/members/tween)
+[`doCleanup`](../../memory/members/doCleanup)
 
-**Related discussions:** 
-[`#292`](https://github.com/dphfox/Fusion/discussions/292)
+You called `doCleanup()` on a function or object which carried some code. When
+that code was run, it attempted to call `doCleanup()` on the same thing you
+called with.
 
-The `:destroy()` method of the object in question was called more than once.
+Usually, this would result in an infinite loop, because the same code would try
+to clean itself up over and over again. Because cleanup tasks are only meant to
+run once, this is invalid behaviour and so this error is thrown instead.
 
-This usually means you called `:destroy()` manually, which is almost never
-required because Fusion's constructors always link objects to
-[scopes](../../../tutorials/fundamentals/scopes). When that scope is passed to 
-[`doCleanup()`](../../memory/members/docleanup), the `:destroy()` method is
-called on every object inside.
+Ensure your code is the rightful owner of scopes that it is trying to clean up.
+In particular, avoid cleaning up scopes you receive from elsewhere, unless you
+and the original provider of the scope agree to transfer the responsibility of
+cleaning up the scope.
 </div>
 
 -----

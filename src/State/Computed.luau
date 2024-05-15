@@ -60,7 +60,7 @@ function class:update(): boolean
 			local target = target :: Types.StateObject<T>
 			if target.scope == nil then
 				External.logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
-			elseif whichLivesLonger(outerScope, self, target.scope, target) == "definitely-a" then
+			elseif whichLivesLonger(outerScope, self.oldestTask, target.scope, target.oldestTask) == "definitely-a" then
 				External.logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
 			end		
 			self.dependencySet[target] = true
@@ -124,21 +124,6 @@ function class:get()
 	External.logError("stateGetWasRemoved")
 end
 
-function class:destroy()
-	local self = self :: InternalTypes.Computed<unknown, unknown>
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Computed")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	if self._innerScope ~= nil then
-		doCleanup(self._innerScope)
-		scopePool.clearAndGive(self._innerScope)
-	end
-end
-
 local function Computed<T, S>(
 	scope: Types.Scope<S>,
 	processor: (Types.Use, Types.Scope<S>) -> T,
@@ -160,7 +145,19 @@ local function Computed<T, S>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Computed<T, S>
 
-	table.insert(scope, self)
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+		if self._innerScope ~= nil then
+			doCleanup(self._innerScope)
+			scopePool.clearAndGive(self._innerScope)
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+
 	self:update()
 	
 	return self
