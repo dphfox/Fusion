@@ -95,10 +95,10 @@ is not generally useful for transition animations.
 ## Reversing
 
 The fifth parameter of `TweenInfo` is a reversing option. When enabled, the
-animation will return to the starting point.
+animation will include a reverse motion, before snapping to the goal at the
+end.
 
-This is not typically useful because the animation doesn't end at the goal value,
-and might not end at the start value either if the animation is interrupted.
+This is not typically useful.
 
 ![Animation and graph toggling reversing on and off.](Reversing-Dark.png#only-dark)
 ![Animation and graph toggling reversing on and off.](Reversing-Light.png#only-light)

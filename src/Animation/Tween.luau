@@ -4,8 +4,10 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new computed state object, which follows the value of another
-	state object using a tween.
+	A specialised state object for following a goal state smoothly over time,
+	using a TweenInfo to shape the motion.
+	
+	https://elttob.uk/Fusion/0.3/api-reference/animation/members/tween/
 ]]
 
 local Package = script.Parent.Parent
