@@ -171,7 +171,7 @@ return function()
 
 	Graphs.propertyTest {
 		testing = "change",
-		it = "throws an error for malformed graphs in finite time",
+		it = "processes malformed graphs in finite time",
 		filters = {Graphs.filters.malformed},
 		perform = function(
 			graph: Graphs.Graph
@@ -184,9 +184,7 @@ return function()
 					end
 				end
 			end)
-			if ok then
-				return "Should not have completed without errors"
-			elseif string.find(err, "infiniteLoop", 1, true) ~= nil then
+			if ok or string.find(err, "infiniteLoop", 1, true) ~= nil then
 				return false
 			else
 				return err

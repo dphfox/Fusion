@@ -13,23 +13,24 @@ local External = require(Package.External)
 -- Graph
 local change = require(Package.Graph.change)
 
-type Self = Types.StateObject<number>
+type ExternalTime = Types.StateObject<number>
+
+type Self = ExternalTime
 
 local class = {}
 class.type = "State"
 class.kind = "ExternalTime"
 class.timeliness = "lazy"
-class.dependencySet = {}
+class.dependencySet = table.freeze {}
 class._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 
-local METATABLE = {}
-METATABLE.__index = class
+local METATABLE = table.freeze {__index = class}
 
 local allTimers: {Self} = {}
 
 local function ExternalTime(
 	scope: Types.Scope<unknown>
-): Self
+): ExternalTime
 	local self: Self = setmetatable(
 		{
 			dependentSet = {},
@@ -72,4 +73,7 @@ External.bindToUpdateStep(function(
 	end
 end)
 
+-- Do *not* freeze the class table, because it stores the shared value of all
+-- external time objects, and is updated every frame because of that.
+-- table.freeze(class)
 return ExternalTime

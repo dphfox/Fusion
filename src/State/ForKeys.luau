@@ -91,4 +91,4 @@ local function ForKeys<KI, KO, V, S>(
 	)
 end
 
-return ForKeys
+return ForKeys :: Types.ForKeysConstructor

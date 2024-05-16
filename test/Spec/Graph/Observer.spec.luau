@@ -22,7 +22,7 @@ return function()
 
 		expect(observer).to.be.a("table")
 		expect(observer.type).to.equal("Observer")
-		expect(scope[2]).to.equal(observer.oldestTask)
+		expect(table.find(scope, observer.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)

@@ -24,7 +24,7 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-		expect(table.find(scope, forObject)).never.to.equal(nil)
+		expect(table.find(scope, forObject.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)

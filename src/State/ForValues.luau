@@ -91,4 +91,4 @@ local function ForValues<K, VI, VO, S>(
 	)
 end
 
-return ForValues
+return ForValues :: Types.ForValuesConstructor

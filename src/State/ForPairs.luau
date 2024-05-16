@@ -94,4 +94,4 @@ local function ForPairs<KI, KO, VI, VO, S>(
 	)
 end
 
-return ForPairs
+return ForPairs :: Types.ForPairsConstructor

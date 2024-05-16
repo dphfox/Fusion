@@ -130,6 +130,27 @@ You attempted to create a type of instance that Fusion can't create.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## cannotDepend
+
+```
+Observer can't depend on Observer.
+```
+
+**Thrown by:**
+[`Observer`](../../graph/members/observer)
+
+You attempted to form a dependency between two
+[graph objects](../../graph/types/graphobject), but either the dependency set or
+dependent set were frozen.
+
+You might be trying to connect them in the wrong order, or the objects might not
+be designed to have dependents or dependencies.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## cleanupWasRenamed
 
 ```
@@ -495,8 +516,8 @@ Roblox's task scheduling APIs.
 ## possiblyOutlives
 
 ```
-The Value object could be destroyed before the Computed that is use()-ing it;
-review the order they're created in, and what scopes they belong to. See
+The use()-d Value object will be destroyed before the Computed that is use()-ing 
+it; review the order they're created in, and what scopes they belong to. See
 discussion #292 on GitHub for advice.
 ```
 

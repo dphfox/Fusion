@@ -30,7 +30,7 @@ class.type = "State"
 class.kind = "For"
 class.timeliness = "lazy"
 
-local METATABLE = {__index = class}
+local METATABLE = table.freeze {__index = class}
 
 local function For<S, KI, KO, VI, VO>(
 	scope: Types.Scope<S>,
@@ -40,7 +40,7 @@ local function For<S, KI, KO, VI, VO>(
 		initialKey: KI,
 		initialValue: VI
 	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
-): Self<S, KI, KO, VI, VO>
+): Types.For<KO, VO>
 	local self: Self<S, KI, KO, VI, VO> = setmetatable(
 		{
 			dependencySet = {},
@@ -102,4 +102,5 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	return true
 end
 
+table.freeze(class)
 return For

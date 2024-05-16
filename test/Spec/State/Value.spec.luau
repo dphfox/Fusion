@@ -21,7 +21,7 @@ return function()
 		expect(value).to.be.a("table")
 		expect(value.type).to.equal("State")
 		expect(value.kind).to.equal("Value")
-		expect(scope[1]).to.equal(value.oldestTask)
+		expect(table.find(scope, value.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)

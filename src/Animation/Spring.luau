@@ -14,7 +14,7 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
 -- Memory
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local checkLifetime = require(Package.Memory.checkLifetime)
 -- Graph
 local depend = require(Package.Graph.depend)
 local change = require(Package.Graph.change)
@@ -44,15 +44,14 @@ class.type = "State"
 class.kind = "Spring"
 class.timeliness = "lazy"
 
-local METATABLE = {}
-METATABLE.__index = class
+local METATABLE = table.freeze {__index = class}
 
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
 	goal: Types.UsedAs<T>,
 	speed: Types.UsedAs<number>?,
 	damping: Types.UsedAs<number>?
-): Self<T>
+): Types.Spring<T>
 	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
 		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
@@ -88,15 +87,30 @@ local function Spring<T>(
 	table.insert(scope, destroy)
 	
 	if goalState ~= nil then
-		depend(self, goalState) -- TODO: lifetime analysis
+		checkLifetime.bOutlivesA(
+			scope, self.oldestTask,
+			goalState.scope, goalState.oldestTask,
+			checkLifetime.formatters.animationGoal
+		)
+		depend(self, goalState)
 	end
 	local speedState = castToState(speed)
 	if speedState ~= nil then
-		depend(self, speedState) -- TODO: lifetime analysis
+		checkLifetime.bOutlivesA(
+			scope, self.oldestTask,
+			speedState.scope, speedState.oldestTask,
+			checkLifetime.formatters.parameter, "speed"
+		)
+		depend(self, speedState)
 	end
 	local dampingState = castToState(damping)
 	if dampingState ~= nil then
-		depend(self, dampingState) -- TODO: lifetime analysis
+		checkLifetime.bOutlivesA(
+			scope, self.oldestTask,
+			dampingState.scope, dampingState.oldestTask,
+			checkLifetime.formatters.parameter, "damping"
+		)
+		depend(self, dampingState)
 	end
 
 	return self
@@ -230,4 +244,5 @@ function class._peek<T>(
 	return self._currentValue
 end
 
-return Spring
+table.freeze(class)
+return Spring :: Types.SpringConstructor

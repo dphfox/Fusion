@@ -24,20 +24,19 @@ local class = {}
 class.type = "State"
 class.kind = "Value"
 class.timeliness = "lazy"
+class.dependencySet = table.freeze {}
 
-local METATABLE = {}
-METATABLE.__index = class
+local METATABLE = table.freeze {__index = class}
 
 local function Value<T>(
 	scope: Types.Scope<unknown>,
 	initialValue: T
-): Self<T, any>
+): Types.Value<T, any>
 	if initialValue == nil and (typeof(scope) ~= "table" or (scope[1] == nil and next(scope) ~= nil)) then
 		External.logError("scopeMissing", nil, "Value", "myScope:Value(initialValue)")
 	end
 	local self: Self<T, any> = setmetatable(
 		{
-			dependencySet = {},
 			dependentSet = {},
 			lastChange = os.clock(),
 			scope = scope,
@@ -80,4 +79,5 @@ function class._evaluate<T, S>(
 	return true
 end
 
+table.freeze(class)
 return Value :: Types.ValueConstructor

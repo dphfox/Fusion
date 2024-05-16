@@ -40,7 +40,7 @@ class.type = "Graph"
 class.kind = "For.Disassembly"
 class.timeliness = "lazy"
 
-local METATABLE = {__index = class}
+local METATABLE = table.freeze {__index = class}
 
 local function Disassembly<S, KI, KO, VI, VO>(
 	scope: S & Types.Scope<unknown>,
@@ -50,7 +50,7 @@ local function Disassembly<S, KI, KO, VI, VO>(
 		initialKey: KI,
 		initialValue: VI
 	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
-): Self<S, KI, KO, VI, VO>
+): ForTypes.Disassembly<S, KI, KO, VI, KO>
 	local self = setmetatable(
 		{
 			dependencySet = {},
@@ -79,13 +79,6 @@ local function Disassembly<S, KI, KO, VI, VO>(
 	end
 	self.oldestTask = destroy
 	table.insert(scope, destroy)
-
-	local inputState = castToState(inputTable)
-	if inputState ~= nil then
-		-- TODO: make this a proper depend()
-		self.dependencySet[inputState] = true
-		inputState.dependentSet[self] = true
-	end
 	
 	return self
 end
@@ -212,4 +205,5 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	return true
 end
 
+table.freeze(class)
 return Disassembly

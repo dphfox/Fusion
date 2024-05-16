@@ -27,7 +27,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return index // 2 % 2 == 0
 					end
@@ -38,7 +38,7 @@ return function()
 			graph: Graphs.Graph
 		)
 			for _, object in graph.allObjects do
-				evaluate(object)
+				evaluate(object, false)
 				if object.validity ~= "valid" then
 					return `{Graphs.nameOf(object)} was not valid`
 				end
@@ -65,7 +65,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return index // 2 % 2 == 0
 					end
@@ -77,7 +77,7 @@ return function()
 		)
 			for _, object in graph.allObjects do
 				local beforeTime = object.lastChange
-				evaluate(object)
+				evaluate(object, false)
 				if object.lastChange == nil then
 					return `{Graphs.nameOf(object)} had a nil change time`
 				end
@@ -100,7 +100,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -119,7 +119,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependent")
 			for _, target in targets do
-				evaluate(target)
+				evaluate(target, false)
 			end
 			return Graphs.check(
 				Graphs.selectors.distance(graph.allObjects, targets, "dependency", 1),
@@ -145,7 +145,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -160,7 +160,7 @@ return function()
 			local diagnosis: string | false = false
 			for _, target in targets do
 				local dependencies = Graphs.selectors.distance(graph.allObjects, {target}, "dependency", 1)
-				evaluate(target)
+				evaluate(target, false)
 				diagnosis = diagnosis or Graphs.check(
 					dependencies,
 					Graphs.tests.validity("valid")
@@ -194,7 +194,7 @@ return function()
 		)
 			local foundTestMarker = false
 			for _, object in graph.allObjects do
-				evaluate(object)
+				evaluate(object, false)
 				if not (object :: any).TEST_MARKER then
 					continue
 				end
@@ -229,7 +229,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -244,7 +244,7 @@ return function()
 				if next(object.dependentSet) == nil then
 					continue
 				end
-				evaluate(object)
+				evaluate(object, false)
 				if next(object.dependentSet) == nil then
 					return `{Graphs.nameOf(object)} did not have dependents after revalidation`
 				end
@@ -267,7 +267,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -287,7 +287,7 @@ return function()
 		)
 			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
 			for _, target in targets do
-				evaluate(target)
+				evaluate(target, false)
 			end
 			return false
 		end
@@ -315,7 +315,41 @@ return function()
 			graph: Graphs.Graph
 		)
 			for _, target in graph.allObjects do
-				evaluate(target)
+				evaluate(target, false)
+			end
+			return false
+		end
+	} (describe)
+
+	Graphs.propertyTest {
+		testing = "evaluate",
+		it = "forcibly runs computations if specified to",
+		filters = {Graphs.filters.wellFormed},
+		preparation = {
+			count = 1,
+			prepare = function(
+				graph: Graphs.Graph
+			)
+				for index, object in graph.allObjects do
+					object._evaluate = function()
+						(object :: any)._TEST_MARKER = true
+						return false
+					end
+					object.validity = "valid"
+					object.lastChange = math.huge
+				end
+			end
+		},
+		perform = function(
+			graph: Graphs.Graph
+		)
+			for _, target in graph.allObjects do
+				evaluate(target, true)
+			end
+			for _, object in graph.allObjects do
+				if (object :: any)._TEST_MARKER ~= true then
+					return `{Graphs.nameOf(object)} was not evaluated`
+				end
 			end
 			return false
 		end
@@ -348,7 +382,7 @@ return function()
 					continue
 				end
 				didAnyTests = true
-				evaluate(object)
+				evaluate(object, false)
 				if not (object :: any).TEST_MARKER then
 					return `{Graphs.nameOf(object)} did not compute despite being invalid`
 				end
@@ -406,7 +440,7 @@ return function()
 					continue
 				end
 				didAnyTests = true
-				evaluate(object)
+				evaluate(object, false)
 				if not (object :: any).TEST_MARKER then
 					return `{Graphs.nameOf(object)} did not compute despite being invalid`
 				end
@@ -433,7 +467,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -468,7 +502,7 @@ return function()
 			local targets = Graphs.selectors.distance(graph.allObjects, directs, "dependent", 1)
 
 			for _, target in targets do
-				evaluate(target)
+				evaluate(target, false)
 			end
 
 			return false
@@ -489,7 +523,7 @@ return function()
 					object._evaluate = function()
 						object.dependencySet = table.clone(dependencySet)
 						for dependency in object.dependencySet do
-							evaluate(dependency)
+							evaluate(dependency, false)
 						end
 						return true
 					end
@@ -505,7 +539,7 @@ return function()
 						object.validity = "invalid"
 						object.lastChange = nil
 					end
-					evaluate(object)
+					evaluate(object, false)
 				end
 			end)
 			if ok then
@@ -537,7 +571,7 @@ return function()
 		)
 			local ok, err = pcall(function()
 				for _, object in graph.objects do
-					evaluate(object)
+					evaluate(object, false)
 				end
 			end)
 			if ok then

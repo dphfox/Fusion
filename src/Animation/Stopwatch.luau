@@ -12,7 +12,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
+-- Memory
+local checkLifetime = require(Package.Memory.checkLifetime)
 -- Graph
 local depend = require(Package.Graph.depend)
 local change = require(Package.Graph.change)
@@ -36,13 +37,12 @@ class.type = "State"
 class.kind = "Stopwatch"
 class.timeliness = "lazy"
 
-local METATABLE = {}
-METATABLE.__index = class
+local METATABLE = table.freeze {__index = class}
 
 local function Stopwatch(
 	scope: Types.Scope<unknown>,
 	timer: Types.StateObject<number>
-): Self
+): Stopwatch
 	local self: Self = setmetatable(
 		{
 			awake = true,
@@ -63,7 +63,13 @@ local function Stopwatch(
 	end
 	self.oldestTask = destroy
 	table.insert(scope, destroy)
-	depend(self, timer) -- TODO: lifetime analysis
+
+	checkLifetime.bOutlivesA(
+		scope, self.oldestTask,
+		timer.scope, timer.oldestTask,
+		checkLifetime.formatters.parameter, "timer"
+	)
+	depend(self, timer)
 	return self
 end
 
@@ -106,4 +112,5 @@ function class._evaluate(
 	
 end
 
+table.freeze(class)
 return Stopwatch

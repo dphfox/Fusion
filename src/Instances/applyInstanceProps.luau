@@ -19,12 +19,17 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
-local castToState = require(Package.State.castToState)
+-- Logging
 local parseError = require(Package.Logging.parseError)
+-- Memory
+local checkLifetime = require(Package.Memory.checkLifetime)
+-- Graph
 local Observer = require(Package.Graph.Observer)
+-- State
+local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
+-- Utility
 local xtypeof = require(Package.Utility.xtypeof)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local function setProperty_unsafe(
 	instance: Instance,
@@ -74,11 +79,11 @@ local function bindProperty(
 )
 	if castToState(value) then
 		local value = value :: Types.StateObject<unknown>
-		if value.scope == nil then
-			External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-		elseif whichLivesLonger(scope, instance, value.scope, value.oldestTask) == "definitely-a" then
-			External.logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-		end
+		checkLifetime.bOutlivesA(
+			scope, instance,
+			value.scope, value.oldestTask,
+			checkLifetime.formatters.boundProperty, property
+		)
 		-- value is a state object - bind to changes
 		Observer(scope, value :: any):onBind(function()
 			setProperty(instance, property, peek(value))

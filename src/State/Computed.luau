@@ -18,7 +18,6 @@ local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)
-local nameOf = require(Package.Utility.nameOf)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -27,7 +26,7 @@ local peek = require(Package.State.peek)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local checkLifetime = require(Package.Memory.checkLifetime)
 local scopePool = require(Package.Memory.scopePool)
 
 type Self<T, S> = Types.Computed<T> & {
@@ -40,13 +39,13 @@ class.type = "State"
 class.kind = "Computed"
 class.timeliness = "lazy"
 
-local METATABLE = {__index = class}
+local METATABLE = table.freeze {__index = class}
 
 local function Computed<T, S>(
 	scope: S & Types.Scope<unknown>,
 	processor: (Types.Use, S) -> T,
 	destructor: unknown?
-): Self<T, S>
+): Types.Computed<T>
 	if typeof(scope) == "function" then
 		External.logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
 	elseif destructor ~= nil then
@@ -98,11 +97,11 @@ function class._evaluate<T, S>(
 	local function use<T>(target: Types.UsedAs<T>): T
 		local targetState = castToState(target)
 		if targetState ~= nil then
-			if targetState.scope == nil then
-				External.logError("useAfterDestroy", nil, `The {nameOf(targetState, "used")} object`, "the Computed that is use()-ing it")
-			elseif whichLivesLonger(outerScope, self, targetState.scope, targetState) == "definitely-a" then
-				External.logWarn("possiblyOutlives", `The {nameOf(targetState, "used")} object`, "the Computed that is use()-ing it")
-			end		
+			checkLifetime.bOutlivesA(
+				outerScope, self.oldestTask, 
+				targetState.scope, targetState.oldestTask, 
+				checkLifetime.formatters.useFunction
+			)
 			depend(self, targetState)
 		end
 		return peek(target)
@@ -131,4 +130,5 @@ function class._evaluate<T, S>(
 	end
 end
 
+table.freeze(class)
 return Computed :: Types.ComputedConstructor

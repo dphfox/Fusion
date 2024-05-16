@@ -13,6 +13,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
+-- Memory
+local checkLifetime = require(Package.Memory.checkLifetime)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -41,8 +43,7 @@ class.type = "State"
 class.kind = "Tween"
 class.timeliness = "lazy"
 
-local METATABLE = {}
-METATABLE.__index = class
+local METATABLE = table.freeze {__index = class}
 
 local function Tween<T>(
 	scope: Types.Scope<unknown>,
@@ -88,8 +89,20 @@ local function Tween<T>(
 	table.insert(scope, destroy)
 
 	if goalState ~= nil then
-		depend(self, goalState) -- TODO: lifetime analysis
-		depend(self, stopwatch)
+		checkLifetime.bOutlivesA(
+			scope, self.oldestTask,
+			goalState.scope, goalState.oldestTask,
+			checkLifetime.formatters.animationGoal
+		)
+	end
+
+	local tweenInfoState = castToState(tweenInfo)
+	if tweenInfoState ~= nil then
+		checkLifetime.bOutlivesA(
+			scope, self.oldestTask,
+			tweenInfoState.scope, tweenInfoState.oldestTask,
+			checkLifetime.formatters.parameter, "tween info"
+		)
 	end
 
 	return self
@@ -160,4 +173,5 @@ function class._evaluate<T>(
 	return oldValue ~= newValue
 end
 
-return Tween
+table.freeze(class)
+return Tween :: Types.TweenConstructor

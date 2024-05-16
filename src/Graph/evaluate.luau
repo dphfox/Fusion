@@ -15,18 +15,19 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 
 local function evaluate(
-	target: Types.GraphObject
+	target: Types.GraphObject,
+	forceComputation: boolean
 ): boolean
 	if target.validity == "busy" then
 		return External.logError("infiniteLoop")
 	end
 	local firstEvaluation = target.lastChange == nil
 	local isInvalid = target.validity == "invalid"
-	if firstEvaluation or isInvalid then
-		local needsComputation = isInvalid and firstEvaluation 
-		if not (needsComputation or firstEvaluation) then
+	if firstEvaluation or isInvalid or forceComputation then
+		local needsComputation = firstEvaluation or forceComputation
+		if not needsComputation then
 			for dependency in target.dependencySet do
-				evaluate(dependency)
+				evaluate(dependency, false)
 				if dependency.lastChange > target.lastChange then
 					needsComputation = true
 					break
@@ -37,12 +38,12 @@ local function evaluate(
 		if needsComputation then
 			for dependency in target.dependencySet do
 				dependency.dependentSet[target] = nil
+				target.dependencySet[dependency] = nil
 			end
-			table.clear(target.dependencySet)
 			target.validity = "busy"
-			targetMeaningfullyChanged = target:_evaluate()
+			targetMeaningfullyChanged = target:_evaluate() or firstEvaluation
 		end
-		if targetMeaningfullyChanged or firstEvaluation then
+		if targetMeaningfullyChanged then
 			target.lastChange = os.clock()
 		end
 		target.validity = "valid"
