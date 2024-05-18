@@ -4,12 +4,17 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Returns a 2x2 matrix of coefficients for a given time, damping and speed.
+	Returns a 2x2 matrix of coefficients for a given time, damping and angular
+	frequency (aka 'speed').
+	
 	Specifically, this returns four coefficients - posPos, posVel, velPos, and
 	velVel - which can be multiplied with position and velocity like so:
 
 	local newPosition = oldPosition * posPos + oldVelocity * posVel
 	local newVelocity = oldPosition * velPos + oldVelocity * velVel
+
+	For speed = 1 and damping = 0, the result is a simple harmonic oscillator
+	with a period of tau.
 
 	Special thanks to AxisAngle for helping to improve numerical precision.
 ]]
@@ -27,62 +32,46 @@ local function springCoefficients(
 
 	if damping > 1 then
 		-- overdamped spring
-		-- solution to the characteristic equation:
-		-- z = -ζω ± Sqrt[ζ^2 - 1] ω
-		-- x[t] -> x0(e^(t z2) z1 - e^(t z1) z2)/(z1 - z2)
-		--		 + v0(e^(t z1) - e^(t z2))/(z1 - z2)
-		-- v[t] -> x0(z1 z2(-e^(t z1) + e^(t z2)))/(z1 - z2)
-		--		 + v0(z1 e^(t z1) - z2 e^(t z2))/(z1 - z2)
 
-		local scaledTime = time * speed
 		local alpha = math.sqrt(damping^2 - 1)
-		local scaledInvAlpha = -0.5 / alpha
-		local z1 = -alpha - damping
-		local z2 = 1 / z1
-		local expZ1 = math.exp(scaledTime * z1)
-		local expZ2 = math.exp(scaledTime * z2)
+		local negHalf_over_alpha_speed = -0.5 / (alpha * speed)
+		local z1 = speed * (alpha + damping) * -1
+		local z2 = speed * (alpha - damping)
+		local exp1 = math.exp(time * z1)
+		local exp2 = math.exp(time * z2)
 
-		posPos = (expZ2*z1 - expZ1*z2) * scaledInvAlpha
-		posVel = (expZ1 - expZ2) * scaledInvAlpha / speed
-		velPos = (expZ2 - expZ1) * scaledInvAlpha * speed
-		velVel = (expZ1*z1 - expZ2*z2) * scaledInvAlpha
+		posPos = (exp2 * z1 - exp1 * z2) * negHalf_over_alpha_speed
+		posVel = (exp1 - exp2) * negHalf_over_alpha_speed / speed
+		velPos = (exp2 - exp1) * negHalf_over_alpha_speed * speed
+		velVel = (exp1 * z1 - exp2 * z2) * negHalf_over_alpha_speed
 
 	elseif damping == 1 then
 		-- critically damped spring
-		-- x[t] -> x0(e^-tω)(1+tω) + v0(e^-tω)t
-		-- v[t] -> x0(t ω^2)(-e^-tω) + v0(1 - tω)(e^-tω)
 
-		local scaledTime = time * speed
-		local expTerm = math.exp(-scaledTime)
+		local time_speed = time * speed
+		local time_speed_neg1 = time_speed * -1
+		local exp = math.exp(time_speed_neg1)
 
-		posPos = expTerm * (1 + scaledTime)
-		posVel = expTerm * time
-		velPos = expTerm * (-scaledTime*speed)
-		velVel = expTerm * (1 - scaledTime)
-
+		posPos = exp * (time_speed + 1)
+		posVel = exp * time
+		velPos = exp * (time_speed_neg1 * speed)
+		velVel = exp * (time_speed_neg1 + 1)
 	else
 		-- underdamped spring
-		-- factored out of the solutions to the characteristic equation:
-		-- α = Sqrt[1 - ζ^2]
-		-- x[t] -> x0(e^-tζω)(α Cos[tα] + ζω Sin[tα])/α
-		--       + v0(e^-tζω)(Sin[tα])/α
-		-- v[t] -> x0(-e^-tζω)(α^2 + ζ^2 ω^2)(Sin[tα])/α
-		--       + v0(e^-tζω)(α Cos[tα] - ζω Sin[tα])/α
 
-		local scaledTime = time * speed
-		local alpha = math.sqrt(1 - damping^2)
-		local invAlpha = 1 / alpha
-		local alphaTime = alpha * scaledTime
-		local expTerm = math.exp(-scaledTime*damping)
-		local sinTerm = expTerm * math.sin(alphaTime)
-		local cosTerm = expTerm * math.cos(alphaTime)
-		local sinInvAlpha = sinTerm*invAlpha
-		local sinInvAlphaDamp = sinInvAlpha*damping
+		local alpha = speed * math.sqrt(1 - damping^2)
+		local overAlpha = 1 / alpha
+		local exp = math.exp(-1 * time * speed * damping)
+		local sin = math.sin(alpha * time)
+		local cos = math.cos(alpha * time)
+		local exp_sin = exp * sin
+		local exp_cos = exp * cos
+		local exp_sin_speed_damping_overAlpha = exp_sin * speed * damping * overAlpha
 
-		posPos = sinInvAlphaDamp + cosTerm
-		posVel = sinInvAlpha
-		velPos = -(sinInvAlphaDamp*damping + sinTerm*alpha)
-		velVel = cosTerm - sinInvAlphaDamp
+		posPos = exp_sin_speed_damping_overAlpha + exp_cos
+		posVel = exp_sin * overAlpha
+		velPos = -1 * ( exp_sin * alpha + speed * damping * exp_sin_speed_damping_overAlpha )
+		velVel = exp_cos - exp_sin_speed_damping_overAlpha
 	end
 
 	return posPos, posVel, velPos, velVel
