@@ -71,6 +71,9 @@ local function Spring<T>(
 		stopwatch = Stopwatch(scope, ExternalTime(scope))
 	end
 
+	local speed = speed or 10
+	local damping = damping or 1
+
 	local self: Self<T> = setmetatable(
 		{
 			dependencySet = {},
@@ -78,16 +81,20 @@ local function Spring<T>(
 			lastChange = nil,
 			scope = scope,
 			validity = "invalid",
-			_activeLatestD = {},
+			_activeDamping = -1,
+			_activeGoal = nil,
+			_activeLatestP = {},
 			_activeLatestV = {},
 			_activeNumSprings = 0,
-			_activeStartD = {},
+			_activeSpeed = -1,
+			_activeStartP = {},
 			_activeStartV = {},
+			_activeTargetP = {},
 			_activeType = "",
-			_damping = damping or 1,
+			_damping = damping,
 			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_goal = goal,
-			_speed = speed or 10,
+			_speed = speed,
 			_stopwatch = stopwatch
 		},
 		METATABLE
@@ -215,18 +222,21 @@ function class._evaluate<T>(
 		damping ~= self._activeDamping
 	then
 		local goalType = typeof(newGoal)
-		self._activeGoal = newGoal
-		self._activeDamping = damping
-		self._activeSpeed = speed
-		self._activeStartP = table.clone(self._activeLatestP)
-		self._activeStartV = table.clone(self._activeLatestV)
 		self._activeTargetP = unpackType(newGoal, goalType)
 		self._activeNumSprings = #self._activeTargetP
 		if goalType ~= self._activeType then
+			self._activeStartP = table.clone(self._activeTargetP)
 			self._activeLatestP = table.clone(self._activeTargetP)
+			self._activeStartV = table.create(self._activeNumSprings, 0)
 			self._activeLatestV = table.create(self._activeNumSprings, 0)
+		else
+			self._activeStartP = table.clone(self._activeLatestP)
+			self._activeStartV = table.clone(self._activeLatestV)
 		end
 		self._activeType = goalType
+		self._activeGoal = newGoal
+		self._activeDamping = damping
+		self._activeSpeed = speed
 		self._stopwatch:zero()
 		self._stopwatch:unpause()
 	end
@@ -253,7 +263,11 @@ function class._evaluate<T>(
 		self._activeLatestP[index] = latestP
 		self._activeLatestV[index] = latestV
 	end
+	-- Sleep and snap to goal if the motion has decayed to a negligible amount.
 	if not isMoving then
+		for index = 1, self._activeNumSprings do
+			self._activeLatestP[index] = self._activeTargetP[index]
+		end
 		stopwatch:pause()
 	end
 	-- Pack springs into final value.
@@ -264,6 +278,7 @@ function class._evaluate<T>(
 	-- deal with tables, and NaN is already guarded against, so the similarity
 	-- test doesn't actually add any new safety here.
 	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
+	self.TEST_VELOCITY = packType(self._activeLatestV, self._activeType)
 	return oldValue ~= newValue
 end
 
