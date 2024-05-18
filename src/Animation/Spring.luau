@@ -18,21 +18,30 @@ local checkLifetime = require(Package.Memory.checkLifetime)
 -- Graph
 local depend = require(Package.Graph.depend)
 local change = require(Package.Graph.change)
+local evaluate = require(Package.Graph.evaluate)
 -- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
 -- Animation
 local ExternalTime = require(Package.Animation.ExternalTime)
 local Stopwatch = require(Package.Animation.Stopwatch)
+local packType = require(Package.Animation.packType)
 local unpackType = require(Package.Animation.unpackType)
+local springCoefficients = require(Package.Animation.springCoefficients)
+
+local EPSILON = 0.00001
 
 type Self<T> = Types.Spring<T> & {
+	_activeDamping: number,
+	_activeGoal: T,
 	_activeLatestP: {number},
 	_activeLatestV: {number},
+	_activeNumSprings: number,
+	_activeSpeed: number,
 	_activeStartP: {number},
 	_activeStartV: {number},
+	_activeTargetP: {number},
 	_activeType: string,
-
 	_speed: Types.UsedAs<number>,
 	_damping: Types.UsedAs<number>,
 	_goal: Types.UsedAs<T>,
@@ -69,6 +78,12 @@ local function Spring<T>(
 			lastChange = nil,
 			scope = scope,
 			validity = "invalid",
+			_activeLatestD = {},
+			_activeLatestV = {},
+			_activeNumSprings = 0,
+			_activeStartD = {},
+			_activeStartV = {},
+			_activeType = "",
 			_damping = damping or 1,
 			_EXTREMELY_DANGEROUS_usedAsValue = nil,
 			_goal = goal,
@@ -120,6 +135,7 @@ function class.addVelocity<T>(
 	self: Self<T>,
 	deltaValue: T
 ): ()
+	evaluate(self, false) -- ensure the _active params are up to date
 	local deltaType = typeof(deltaValue)
 	if deltaType ~= self._activeType then
 		External.logError("springTypeMismatch", nil, deltaType, self._activeType)
@@ -128,9 +144,10 @@ function class.addVelocity<T>(
 	for index, velocity in self._activeLatestV do
 		newStartV[index] += velocity
 	end
-	self._activeStartP = self._activeLatestP
-	self._activeStartV = unpackType(newValue, newType)
+	self._activeStartP = table.clone(self._activeLatestP)
+	self._activeStartV = newStartV
 	self._stopwatch:zero()
+	self._stopwatch:unpause()
 	change(self)
 end
 
@@ -144,13 +161,15 @@ function class.setPosition<T>(
 	self: Self<T>,
 	newValue: T
 ): ()
+	evaluate(self, false) -- ensure the _active params are up to date
 	local newType = typeof(newValue)
 	if newType ~= self._activeType then
 		External.logError("springTypeMismatch", nil, newType, self._activeType)
 	end
 	self._activeStartP = unpackType(newValue, newType)
-	self._activeStartV = self._activeLatestV
+	self._activeStartV = table.clone(self._activeLatestV)
 	self._stopwatch:zero()
+	self._stopwatch:unpause()
 	change(self)
 end
 
@@ -158,90 +177,94 @@ function class.setVelocity<T>(
 	self: Self<T>,
 	newValue: T
 ): ()
+	evaluate(self, false) -- ensure the _active params are up to date
 	local newType = typeof(newValue)
 	if newType ~= self._activeType then
 		External.logError("springTypeMismatch", nil, newType, self._activeType)
 	end
-	self._activeStartP = self._activeLatestP
+	self._activeStartP = table.clone(self._activeLatestP)
 	self._activeStartV = unpackType(newValue, newType)
 	self._stopwatch:zero()
+	self._stopwatch:unpause()
 	change(self)
 end
 
 function class._evaluate<T>(
 	self: Self<T>
 ): boolean
-	local goalValue = peek(self._goal)
-
-	-- figure out if this was a goal change or a speed/damping change
-	if goalValue == self._goalValue then
-		-- speed/damping change
-		local damping = peek(self._damping)
-		if typeof(damping) ~= "number" then
-			External.logErrorNonFatal("mistypedSpringDamping", nil, typeof(damping))
-		elseif damping < 0 then
-			External.logErrorNonFatal("invalidSpringDamping", nil, damping)
-		else
-			self._currentDamping = damping
-		end
-
-		local speed = peek(self._speed)
-		if typeof(speed) ~= "number" then
-			External.logErrorNonFatal("mistypedSpringSpeed", nil, typeof(speed))
-		elseif speed < 0 then
-			External.logErrorNonFatal("invalidSpringSpeed", nil, speed)
-		else
-			self._currentSpeed = speed
-		end
-
+	local goal = castToState(self._goal)
+	-- Allow non-state goals to pass through transparently.
+	if goal == nil then
+		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
 		return false
-	else
-		-- goal change - reconfigure spring to target new goal
-		self._goalValue = goalValue
-
-		local oldType = self._currentType
-		local newType = typeof(goalValue)
-		self._currentType = newType
-
-		local springGoals = unpackType(goalValue, newType)
-		local numSprings = #springGoals
-		self._springGoals = springGoals
-
-		if newType ~= oldType then
-			-- if the type changed, snap to the new value and rebuild the
-			-- position and velocity tables
-			self._currentValue = self._goalValue
-
-			local springPositions = table.create(numSprings, 0)
-			local springVelocities = table.create(numSprings, 0)
-			for index, springGoal in ipairs(springGoals) do
-				springPositions[index] = springGoal
-			end
-			self._springPositions = springPositions
-			self._springVelocities = springVelocities
-
-			-- the spring may have been animating before, so stop that
-			SpringScheduler.remove(self)
-			return true
-
-			-- otherwise, the type hasn't changed, just the goal...
-		elseif numSprings == 0 then
-			-- if the type isn't animatable, snap to the new value
-			self._currentValue = self._goalValue
-			return true
-
-		else
-			-- if it's animatable, let it animate to the goal
-			SpringScheduler.add(self)
-			return false
-		end
 	end
-end
-
-function class._peek<T>(
-	self: Self<T>
-): T
-	return self._currentValue
+	depend(self, goal)
+	local newGoal = peek(goal)
+	-- Protect against NaN goals.
+	if newGoal ~= newGoal then
+		External.logWarn("springNanGoal")
+		return false
+	end
+	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
+	local speed = peek(self._speed) :: number
+	local damping = peek(self._damping) :: number
+	-- Reconfigure spring when any of its parameters are changed.
+	if
+		newGoal ~= self._activeGoal or
+		speed ~= self._activeSpeed or
+		damping ~= self._activeDamping
+	then
+		local goalType = typeof(newGoal)
+		self._activeGoal = newGoal
+		self._activeDamping = damping
+		self._activeSpeed = speed
+		self._activeStartP = table.clone(self._activeLatestP)
+		self._activeStartV = table.clone(self._activeLatestV)
+		self._activeTargetP = unpackType(newGoal, goalType)
+		self._activeNumSprings = #self._activeTargetP
+		if goalType ~= self._activeType then
+			self._activeLatestP = table.clone(self._activeTargetP)
+			self._activeLatestV = table.create(self._activeNumSprings, 0)
+		end
+		self._activeType = goalType
+		self._stopwatch:zero()
+		self._stopwatch:unpause()
+	end
+	depend(self, stopwatch)
+	local elapsed = peek(stopwatch)
+	-- Calculate spring motion.
+	local posPos, posVel, velPos, velVel = springCoefficients(elapsed, damping, speed)
+	local isMoving = false
+	for index = 1, self._activeNumSprings do
+		local startP = self._activeStartP[index]
+		local targetP = self._activeTargetP[index]
+		local startV = self._activeStartV[index]
+		local startD = startP - targetP
+		local latestD = startD * posPos + startV * posVel
+		local latestV = startD * velPos + startV * velVel
+		if latestD ~= latestD or latestV ~= latestV then
+			External.logWarn("springNanMotion")
+			latestD, latestV = 0, 0
+		end
+		if math.abs(latestD) > EPSILON or math.abs(latestV) > EPSILON then
+			isMoving = true
+		end
+		local latestP = latestD + targetP
+		self._activeLatestP[index] = latestP
+		self._activeLatestV[index] = latestV
+	end
+	if not isMoving then
+		stopwatch:pause()
+	end
+	-- Pack springs into final value.
+	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
+	local newValue: T = packType(self._activeLatestP, self._activeType) :: any
+	-- Push update and check for similarity.
+	-- Don't need to use the similarity test here because this code doesn't
+	-- deal with tables, and NaN is already guarded against, so the similarity
+	-- test doesn't actually add any new safety here.
+	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
+	return oldValue ~= newValue
 end
 
 table.freeze(class)
