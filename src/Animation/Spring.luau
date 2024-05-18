@@ -278,7 +278,6 @@ function class._evaluate<T>(
 	-- deal with tables, and NaN is already guarded against, so the similarity
 	-- test doesn't actually add any new safety here.
 	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
-	self.TEST_VELOCITY = packType(self._activeLatestV, self._activeType)
 	return oldValue ~= newValue
 end
 
