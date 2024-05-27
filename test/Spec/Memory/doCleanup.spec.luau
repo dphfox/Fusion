@@ -133,6 +133,7 @@ return function()
 		expect(runs[3]).to.equal(1)
 	end)
 
+<<<<<<< HEAD
 	it("should clean up variadic arguments", function()
 		local expect = getfenv().expect
 		
@@ -145,5 +146,17 @@ return function()
 		doCleanup(doRun, doRun, doRun)
 
 		expect(numRuns).to.equal(3)
+=======
+	it("should throw for recursive cleanups", function()
+		local expect = getfenv().expect
+		
+		local function cleanupFunc()
+			doCleanup(cleanupFunc)
+		end
+
+		expect(function()
+			doCleanup(cleanupFunc)
+		end).to.throw("destroyedTwice")
+>>>>>>> upstream/main
 	end)
 end

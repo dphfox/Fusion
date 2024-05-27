@@ -24,7 +24,11 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
+<<<<<<< HEAD
 		expect(scope[1]).to.equal(forObject)
+=======
+		expect(scope[1]).to.equal(forObject.oldestTask)
+>>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
@@ -37,7 +41,11 @@ return function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
+<<<<<<< HEAD
 			forObject:destroy()
+=======
+			doCleanup(forObject)
+>>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 

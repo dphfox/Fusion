@@ -10,8 +10,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 local isState = require(Package.State.isState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
@@ -34,6 +38,7 @@ local function Out(
 			)
 				local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 				if not ok then
+<<<<<<< HEAD
 					logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
 				end
 	
@@ -43,13 +48,30 @@ local function Out(
 				local value = value :: Types.StateObject<unknown>
 				if value.kind ~= "Value" then
 					logError("invalidOutType")
+=======
+					External.logError("invalidOutProperty", nil, applyTo.ClassName, propertyName)
+				end
+	
+				if not isState(value) then
+					External.logError("invalidOutType")
+				end
+				local value = value :: Types.StateObject<unknown>
+				if value.kind ~= "Value" then
+					External.logError("invalidOutType")
+>>>>>>> upstream/main
 				end
 				local value = value :: Types.Value<unknown>
 	
 				if value.scope == nil then
+<<<<<<< HEAD
 					logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
 				elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 					logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+=======
+					External.logError("useAfterDestroy", nil, `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+				elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
+					External.logWarn("possiblyOutlives", `The Value, which [Out "{propertyName}"] outputs to,`, `the {applyTo.ClassName} instance`)
+>>>>>>> upstream/main
 				end
 				value:set((applyTo :: any)[propertyName])
 				table.insert(

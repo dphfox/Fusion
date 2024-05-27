@@ -18,7 +18,10 @@ export type Dependency = Types.Dependency
 export type Dependent = Types.Dependent
 export type For<KO, VO> = Types.For<KO, VO>
 export type Observer = Types.Observer
+<<<<<<< HEAD
 export type Hourglass = Types.Hourglass
+=======
+>>>>>>> upstream/main
 export type PropertyTable = Types.PropertyTable
 export type Scope<Constructors> = Types.Scope<Constructors>
 export type ScopedObject = Types.ScopedObject
@@ -35,10 +38,17 @@ export type Version = Types.Version
 -- compiled for Roblox.
 do
 	local RobloxExternal = require(script.RobloxExternal)
+<<<<<<< HEAD
 	External.setExternalScheduler(RobloxExternal)
 end
 
 local Fusion: Types.Fusion = {
+=======
+	External.setExternalProvider(RobloxExternal)
+end
+
+local Fusion: Types.Fusion = table.freeze {
+>>>>>>> upstream/main
 	-- General
 	version = {major = 0, minor = 3, isRelease = false},
 	Contextual = require(script.Utility.Contextual),
@@ -57,7 +67,10 @@ local Fusion: Types.Fusion = {
 	ForPairs = require(script.State.ForPairs) :: Types.ForPairsConstructor,
 	ForValues = require(script.State.ForValues) :: Types.ForValuesConstructor,
 	Observer = require(script.State.Observer),
+<<<<<<< HEAD
 	Hourglass = require(script.State.Hourglass),
+=======
+>>>>>>> upstream/main
 	peek = require(script.State.peek),
 	Value = require(script.State.Value),
 

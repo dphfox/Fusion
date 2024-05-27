@@ -48,6 +48,7 @@ These tutorials assume:
 
 Based on your existing knowledge, you may find some tutorials easier or harder.
 Don't be discouraged - Fusion's built to be easy to learn, but it may still take
+<<<<<<< HEAD
 a bit of time to absorb some concepts. Learn at a pace which is right for you.
 
 -----
@@ -134,3 +135,6 @@ users.
 
 For bugs and feature requests, [open an issue](https://github.com/Elttob/Fusion/issues)
 on GitHub.
+=======
+a bit of time to absorb some concepts. Learn at a pace which is right for you.
+>>>>>>> upstream/main

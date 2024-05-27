@@ -10,8 +10,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 local isState = require(Package.State.isState)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
@@ -37,9 +41,15 @@ local function Attribute(
 				if isState(value) then
 					local value = value :: Types.StateObject<unknown>
 					if value.scope == nil then
+<<<<<<< HEAD
 						logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
 					elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 						logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+=======
+						External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+					elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
+						External.logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
+>>>>>>> upstream/main
 					end
 					Observer(scope, value :: any):onBind(function()
 						applyTo:SetAttribute(attributeName, peek(value))

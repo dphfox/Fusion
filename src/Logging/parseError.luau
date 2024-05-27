@@ -13,7 +13,11 @@ local InternalTypes = require(Package.InternalTypes)
 
 local function parseError(
 	err: string
+<<<<<<< HEAD
 ): InternalTypes.Error
+=======
+): Types.Error
+>>>>>>> upstream/main
 	return {
 		type = "Error",
 		raw = err,

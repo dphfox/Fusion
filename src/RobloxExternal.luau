@@ -3,7 +3,11 @@
 --!nolint LocalShadow
 
 --[[
+<<<<<<< HEAD
 	Roblox implementation for Fusion's abstract scheduler layer.
+=======
+	Roblox implementation for Fusion's abstract provider layer.
+>>>>>>> upstream/main
 ]]
 
 local RunService = game:GetService("RunService")
@@ -14,8 +18,17 @@ local External = require(Package.External)
 
 local RobloxExternal = {}
 
+<<<<<<< HEAD
 --[[
    Sends an immediate task to the external scheduler. Throws if none is set.
+=======
+RobloxExternal.policies = {
+	allowWebLinks = RunService:IsStudio()
+}
+
+--[[
+   Sends an immediate task to the external provider. Throws if none is set.
+>>>>>>> upstream/main
 ]]
 function RobloxExternal.doTaskImmediate(
 	resume: () -> ()
@@ -24,7 +37,11 @@ function RobloxExternal.doTaskImmediate(
 end
 
 --[[
+<<<<<<< HEAD
 	Sends a deferred task to the external scheduler. Throws if none is set.
+=======
+	Sends a deferred task to the external provider. Throws if none is set.
+>>>>>>> upstream/main
 ]]
 function RobloxExternal.doTaskDeferred(
 	resume: () -> ()
@@ -35,6 +52,7 @@ end
 --[[
 	Errors in a different thread to preserve the flow of execution.
 ]]
+<<<<<<< HEAD
 function RobloxExternal.errorNonFatal(
 	err: unknown
 )
@@ -42,6 +60,20 @@ function RobloxExternal.errorNonFatal(
 end
 
 --[[
+=======
+function RobloxExternal.logErrorNonFatal(
+	errorString: string
+)
+	task.spawn(error, errorString, 0)
+end
+
+--[[
+	Shows a warning message in the output.
+]]
+RobloxExternal.logWarn = warn
+
+--[[
+>>>>>>> upstream/main
 	Sends an update step to Fusion using the Roblox clock time.
 ]]
 local function performUpdateStep()

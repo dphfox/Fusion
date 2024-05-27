@@ -10,7 +10,11 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local logError = require(Package.Logging.logError)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 
 local keyCache: {[string]: Types.SpecialKey} = {}
 
@@ -30,7 +34,11 @@ local function AttributeChange(
 				applyTo: Instance
 			)
 				if typeof(value) ~= "function" then
+<<<<<<< HEAD
 					logError("invalidAttributeChangeHandler", nil, attributeName)
+=======
+					External.logError("invalidAttributeChangeHandler", nil, attributeName)
+>>>>>>> upstream/main
 				end
 				local value = value :: (...unknown) -> (...unknown)
 				local event = applyTo:GetAttributeChangedSignal(attributeName)

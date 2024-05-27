@@ -10,7 +10,11 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local logError = require(Package.Logging.logError)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 
 local keyCache: {[string]: Types.SpecialKey} = {}
 
@@ -38,9 +42,15 @@ local function OnEvent(
 			)
 				local ok, event = pcall(getProperty_unsafe, applyTo, eventName)
 				if not ok or typeof(event) ~= "RBXScriptSignal" then
+<<<<<<< HEAD
 					logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
 				elseif typeof(callback) ~= "function" then
 					logError("invalidEventHandler", nil, eventName)
+=======
+					External.logError("cannotConnectEvent", nil, applyTo.ClassName, eventName)
+				elseif typeof(callback) ~= "function" then
+					External.logError("invalidEventHandler", nil, eventName)
+>>>>>>> upstream/main
 				else
 					table.insert(scope, event:Connect(callback :: any))
 				end

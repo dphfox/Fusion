@@ -151,6 +151,7 @@ You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
 ## destroyedTwice
 
 ```
+<<<<<<< HEAD
 Attempted to destroy Computed twice; ensure you're not manually calling
 `:destroy()` while using scopes. See discussion #292 on GitHub for advice.
 ```
@@ -175,6 +176,27 @@ required because Fusion's constructors always link objects to
 [scopes](../../../tutorials/fundamentals/scopes). When that scope is passed to 
 [`doCleanup()`](../../memory/members/docleanup), the `:destroy()` method is
 called on every object inside.
+=======
+`doCleanup()` was given something that it is already cleaning up. Unclear how to
+proceed.
+```
+
+**Thrown by:**
+[`doCleanup`](../../memory/members/doCleanup)
+
+You called `doCleanup()` on a function or object which carried some code. When
+that code was run, it attempted to call `doCleanup()` on the same thing you
+called with.
+
+Usually, this would result in an infinite loop, because the same code would try
+to clean itself up over and over again. Because cleanup tasks are only meant to
+run once, this is invalid behaviour and so this error is thrown instead.
+
+Ensure your code is the rightful owner of scopes that it is trying to clean up.
+In particular, avoid cleaning up scopes you receive from elsewhere, unless you
+and the original provider of the scope agree to transfer the responsibility of
+cleaning up the scope.
+>>>>>>> upstream/main
 </div>
 
 -----
@@ -786,9 +808,13 @@ is use()-ing. See discussion #292 on GitHub for advice.
 **Related discussions:** 
 [`#292`](https://github.com/dphfox/Fusion/discussions/292)
 
+<<<<<<< HEAD
 Your code attempted to access an object after that object was destroyed, either
 because its `:destroy()` method was called manually, or because the object's
 [scope](../../../tutorials/fundamentals/scope) was cleaned up.
+=======
+Your code attempted to access an object after that object was destroyed..
+>>>>>>> upstream/main
 
 Make sure your objects are being added to the correct scopes according to when
 you expect them to be destroyed. Additionally, make sure your code can detect

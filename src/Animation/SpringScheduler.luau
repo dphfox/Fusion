@@ -67,7 +67,11 @@ local function updateAllSprings(
 
 		for index, goal in ipairs(spring._springGoals) do
 			if goal ~= goal then
+<<<<<<< HEAD
 				logWarn("springNanGoal")
+=======
+				External.logWarn("springNanGoal")
+>>>>>>> upstream/main
 				continue
 			end
 
@@ -77,7 +81,11 @@ local function updateAllSprings(
 			local newVelocity = oldDisplacement * velPos + oldVelocity * velVel
 
 			if newDisplacement ~= newDisplacement or newVelocity ~= newVelocity then
+<<<<<<< HEAD
 				logWarn("springNanMotion")
+=======
+				External.logWarn("springNanMotion")
+>>>>>>> upstream/main
 				newDisplacement = 0
 				newVelocity = 0
 			end

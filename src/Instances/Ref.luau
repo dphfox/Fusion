@@ -10,8 +10,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local logWarn = require(Package.Logging.logWarn)
 local logError = require(Package.Logging.logError)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 local isState = require(Package.State.isState)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
@@ -26,18 +30,32 @@ return {
 		applyTo: Instance
 	)
 		if not isState(value) then
+<<<<<<< HEAD
 			logError("invalidRefType")
 		end
 		local value = value :: Types.StateObject<unknown>
 		if value.kind ~= "Value" then
 			logError("invalidRefType")
+=======
+			External.logError("invalidRefType")
+		end
+		local value = value :: Types.StateObject<unknown>
+		if value.kind ~= "Value" then
+			External.logError("invalidRefType")
+>>>>>>> upstream/main
 		end
 		local value = value :: Types.Value<unknown>
 
 		if value.scope == nil then
+<<<<<<< HEAD
 			logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
 		elseif whichLivesLonger(scope, applyTo, value.scope, value) == "definitely-a" then
 			logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+=======
+			External.logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+		elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
+			External.logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
+>>>>>>> upstream/main
 		end
 		value:set(applyTo)
 	end

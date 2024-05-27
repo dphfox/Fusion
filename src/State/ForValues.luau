@@ -16,15 +16,22 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
+<<<<<<< HEAD
 local InternalTypes = require(Package.InternalTypes)
+=======
+local External = require(Package.External)
+>>>>>>> upstream/main
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
+<<<<<<< HEAD
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local logError = require(Package.Logging.logError)
 local logWarn = require(Package.Logging.logWarn)
+=======
+>>>>>>> upstream/main
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 
@@ -35,9 +42,15 @@ local function ForValues<K, VI, VO, S>(
 	destructor: unknown?
 ): Types.For<K, VO>
 	if typeof(inputTable) == "function" then
+<<<<<<< HEAD
 		logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(scope, use, value) ... end)")
 	elseif destructor ~= nil then
 		logWarn("destructorRedundant", "ForValues")
+=======
+		External.logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(scope, use, value) ... end)")
+	elseif destructor ~= nil then
+		External.logWarn("destructorRedundant", "ForValues")
+>>>>>>> upstream/main
 	end
 	return For(
 		scope,
@@ -54,8 +67,13 @@ local function ForValues<K, VI, VO, S>(
 				if ok then
 					return {key = nil, value = value}
 				else
+<<<<<<< HEAD
 					local errorObj = (value :: any) :: InternalTypes.Error
 					logErrorNonFatal("callbackError", errorObj)
+=======
+					local errorObj = (value :: any) :: Types.Error
+					External.logErrorNonFatal("callbackError", errorObj)
+>>>>>>> upstream/main
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}

@@ -13,12 +13,18 @@ local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 local TweenScheduler = require(Package.Animation.TweenScheduler)
+<<<<<<< HEAD
 local logError = require(Package.Logging.logError)
 local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 local isState = require(Package.State.isState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local logWarn = require(Package.Logging.logWarn)
+=======
+local isState = require(Package.State.isState)
+local peek = require(Package.State.peek)
+local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+>>>>>>> upstream/main
 
 local class = {}
 class.type = "State"
@@ -44,7 +50,7 @@ function class:update(): boolean
 
 	-- if we receive a bad TweenInfo, then error and stop the update
 	if typeof(tweenInfo) ~= "TweenInfo" then
-		logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
+		External.logErrorNonFatal("mistypedTweenInfo", nil, typeof(tweenInfo))
 		return false
 	end
 
@@ -76,7 +82,7 @@ function class:_peek(): unknown
 end
 
 function class:get()
-	logError("stateGetWasRemoved")
+	External.logError("stateGetWasRemoved")
 end
 
 function class:destroy()
@@ -97,7 +103,11 @@ local function Tween<T>(
 	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
 	if isState(scope) then
+<<<<<<< HEAD
 		logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
+=======
+		External.logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
+>>>>>>> upstream/main
 	end
 	local currentValue = peek(goal)
 
@@ -123,7 +133,7 @@ local function Tween<T>(
 	local startingTweenInfo = peek(tweenInfo)
 	-- If we start with a bad TweenInfo, then we don't want to construct a Tween
 	if typeof(startingTweenInfo) ~= "TweenInfo" then
-		logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
+		External.logError("mistypedTweenInfo", nil, typeof(startingTweenInfo))
 	end
 
 	local self = setmetatable({
@@ -147,14 +157,32 @@ local function Tween<T>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Tween<T>
 
+<<<<<<< HEAD
 	table.insert(scope, self)
+=======
+	local destroy = function()
+		TweenScheduler.remove(self)
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
+	table.insert(scope, destroy)
+>>>>>>> upstream/main
 	
 	if goalIsState then
 		local goal = goal :: any
 		if goal.scope == nil then
+<<<<<<< HEAD
 			logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Tween that is following it`)
 		elseif whichLivesLonger(scope, self, goal.scope, goal) == "definitely-a" then
 			logWarn("possiblyOutlives", `The {goal.kind} object`, `the Tween that is following it`)
+=======
+			External.logError("useAfterDestroy", nil, `The {goal.kind} object`, `the Tween that is following it`)
+		elseif whichLivesLonger(scope, self.oldestTask, goal.scope, goal.oldestTask) == "definitely-a" then
+			External.logWarn("possiblyOutlives", `The {goal.kind} object`, `the Tween that is following it`)
+>>>>>>> upstream/main
 		end
 		-- add this object to the goal state's dependent set
 		goal.dependentSet[self] = true

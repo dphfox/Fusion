@@ -7,9 +7,19 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	Stores common public-facing type information for Fusion APIs.
 ]]
 
+<<<<<<< HEAD
 --[[
 	General use types
 ]]
+=======
+export type Error = {
+	type: "Error",
+	raw: string,
+	message: string,
+	trace: string,
+	context: string?
+}
+>>>>>>> upstream/main
 
 -- Types that can be expressed as vectors of numbers, and so can be animated.
 export type Animatable =
@@ -36,19 +46,30 @@ export type Animatable =
 export type Task =
 	Instance |
 	RBXScriptConnection |
+<<<<<<< HEAD
 	thread |
+=======
+>>>>>>> upstream/main
 	() -> () |
 	{destroy: (unknown) -> ()} |
 	{Destroy: (unknown) -> ()} |
 	{Task}
 
 -- A scope of tasks to clean up.
+<<<<<<< HEAD
 export type Scope<Constructors> = {unknown} & Constructors
+=======
+export type Scope<Constructors> = {Task} & Constructors
+>>>>>>> upstream/main
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
 	scope: Scope<unknown>?,
+<<<<<<< HEAD
 	destroy: (any) -> ()
+=======
+	oldestTask: unknown
+>>>>>>> upstream/main
 }
 
 -- Script-readable version information.
@@ -69,10 +90,13 @@ type ContextualIsMethods = {
 	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
+<<<<<<< HEAD
 --[[
 	Generic reactive graph types
 ]]
 
+=======
+>>>>>>> upstream/main
 -- A graph object which can have dependents.
 export type Dependency = ScopedObject & {
 	dependentSet: {[Dependent]: unknown}
@@ -97,10 +121,13 @@ export type UsedAs<T> = StateObject<T> | T
 -- Function signature for use callbacks.
 export type Use = <T>(target: UsedAs<T>) -> T
 
+<<<<<<< HEAD
 --[[
 	Specific reactive graph types
 ]]
 
+=======
+>>>>>>> upstream/main
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
@@ -109,7 +136,11 @@ export type Value<T, S = T> = StateObject<T> & {
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
+<<<<<<< HEAD
 	initialValue: T?
+=======
+	initialValue: T
+>>>>>>> upstream/main
 ) -> Value<T, any>
 
 -- A state object whose value is derived from other objects using a callback.
@@ -152,6 +183,7 @@ export type ObserverConstructor = (
 	watching: unknown
 ) -> Observer
 
+<<<<<<< HEAD
 -- An object which has intervaled callbacks.
 export type Hourglass = Dependent & {
 	type: "Hourglass",
@@ -166,6 +198,8 @@ export type HourglassConstructor = (
 	interval: UsedAs<number>
 ) -> Hourglass
 
+=======
+>>>>>>> upstream/main
 -- A state object which follows another state object using tweens.
 export type Tween<T> = StateObject<T> & Dependent & {
 	kind: "Tween"
@@ -190,10 +224,13 @@ export type SpringConstructor = <T>(
 	damping: UsedAs<number>?
 ) -> Spring<T>
 
+<<<<<<< HEAD
 --[[
 	Instance related types
 ]]
 
+=======
+>>>>>>> upstream/main
 -- Denotes children instances in an instance or component's property table.
 export type SpecialKey = {
 	type: "SpecialKey",
@@ -260,9 +297,15 @@ export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
 
+<<<<<<< HEAD
 	doCleanup: (...unknown) -> (),
 	scoped: ScopedConstructor,
 	deriveScope: DeriveScopeConstructor,
+=======
+	doCleanup: (Task) -> (),
+	scoped: ScopedConstructor,
+	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
+>>>>>>> upstream/main
 	innerScope: <T>(existing: Scope<T>) -> Scope<T>,
 
 	peek: Use,
@@ -272,7 +315,10 @@ export type Fusion = {
 	ForKeys: ForKeysConstructor,
 	ForValues: ForValuesConstructor,
 	Observer: ObserverConstructor,
+<<<<<<< HEAD
 	Hourglass: HourglassConstructor,
+=======
+>>>>>>> upstream/main
 
 	Tween: TweenConstructor,
 	Spring: SpringConstructor,
@@ -288,7 +334,35 @@ export type Fusion = {
 	Attribute: (attributeName: string) -> SpecialKey,
 	AttributeChange: (attributeName: string) -> SpecialKey,
 	AttributeOut: (attributeName: string) -> SpecialKey,
+<<<<<<< HEAD
 	
 }
 
 return nil
+=======
+}
+
+export type ExternalProvider = {
+	policies: {
+		allowWebLinks: boolean
+	},
+	
+	logErrorNonFatal: (
+		errorString: string
+	) -> (),
+	logWarn: (
+		errorString: string
+	) -> (),
+	
+	doTaskImmediate: (
+		resume: () -> ()
+	) -> (),
+	doTaskDeferred: (
+		resume: () -> ()
+	) -> (),
+	startScheduler: () -> (),
+	stopScheduler: () -> ()
+}
+
+return nil
+>>>>>>> upstream/main
