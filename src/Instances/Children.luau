@@ -10,11 +10,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-<<<<<<< HEAD
-local logWarn = require(Package.Logging.logWarn)
-=======
 local External = require(Package.External)
->>>>>>> upstream/main
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
 local isState = require(Package.State.isState)
@@ -38,11 +34,11 @@ return {
 	)
 		local newParented: Set<Instance> = {}
 		local oldParented: Set<Instance> = {}
-	
+
 		-- save scopes for state object observers
 		local newScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
 		local oldScopes: {[Types.StateObject<unknown>]: Types.Scope<unknown>} = {}
-	
+
 		-- Rescans this key's value to find new instances to parent and state objects
 		-- to observe for changes; then unparents instances no longer found and
 		-- disconnects observers for state objects no longer present.
@@ -51,21 +47,21 @@ return {
 			oldScopes, newScopes = newScopes, oldScopes
 			table.clear(newParented)
 			table.clear(newScopes)
-	
+
 			local function processChild(
 				child: unknown,
 				autoName: string?
 			)
 				local childType = typeof(child)
-	
+
 				if childType == "Instance" then
 					-- case 1; single instance
 					local child = child :: Instance
-	
+
 					newParented[child] = true
 					if oldParented[child] == nil then
 						-- wasn't previously present
-	
+
 						-- TODO: check for ancestry conflicts here
 						child.Parent = applyTo
 					else
@@ -73,21 +69,21 @@ return {
 						-- set so we don't encounter it during unparenting
 						oldParented[child] = nil
 					end
-	
+
 					if EXPERIMENTAL_AUTO_NAMING and autoName ~= nil then
 						child.Name = autoName
 					end
-	
+
 				elseif isState(child) then
 					-- case 2; state object
 					local child = child :: Types.StateObject<unknown>
-	
+
 					local value = peek(child)
 					-- allow nil to represent the absence of a child
 					if value ~= nil then
 						processChild(value, autoName)
 					end
-	
+
 					local childScope = oldScopes[child]
 					if childScope == nil then
 						-- wasn't previously present
@@ -98,17 +94,17 @@ return {
 						-- set so we don't encounter it during unparenting
 						oldScopes[child] = nil
 					end
-	
+
 					newScopes[child] = childScope
-	
+
 				elseif childType == "table" then
 					-- case 3; table of objects
 					local child = child :: {[unknown]: unknown}
-	
+
 					for key, subChild in pairs(child) do
 						local keyType = typeof(key)
 						local subAutoName: string? = nil
-	
+
 						if keyType == "string" then
 							local key = key :: string
 							subAutoName = key
@@ -116,42 +112,38 @@ return {
 							local key = key :: number
 							subAutoName = autoName .. "_" .. key
 						end
-	
+
 						processChild(subChild, subAutoName)
 					end
-	
+
 				else
-<<<<<<< HEAD
-					logWarn("unrecognisedChildType", childType)
-=======
 					External.logWarn("unrecognisedChildType", childType)
->>>>>>> upstream/main
 				end
 			end
-	
+
 			if value ~= nil then
 				-- `propValue` is set to nil on cleanup, so we don't process children
 				-- in that case
 				processChild(value)
 			end
-	
+
 			-- unparent any children that are no longer present
 			for oldInstance in pairs(oldParented) do
 				oldInstance.Parent = nil
 			end
-	
+
 			-- disconnect observers which weren't reused
 			for oldState, childScope in pairs(oldScopes) do
 				doCleanup(childScope)
 				scopePool.clearAndGive(childScope)
 			end
 		end
-	
+
 		table.insert(scope, function()
 			value = nil
 			updateChildren()
 		end)
-	
+
 		-- perform initial child parenting
 		updateChildren()
 	end

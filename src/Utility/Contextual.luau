@@ -11,13 +11,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
-<<<<<<< HEAD
--- Logging
-local logError = require(Package.Logging.logError)
-=======
 local External = require(Package.External)
 -- Logging
->>>>>>> upstream/main
 local parseError = require(Package.Logging.parseError)
 
 local class = {}
@@ -50,7 +45,7 @@ function class:is(
 	-- actually want them to operate on the `self` from this outer lexical scope
 	local outerSelf = self :: InternalTypes.Contextual<unknown>
 	local methods = {}
-	
+
 	function methods:during<T, A...>(
 		callback: (A...) -> T,
 		...: A...
@@ -63,11 +58,7 @@ function class:is(
 		local ok, value = xpcall(callback, parseError, ...)
 		outerSelf._valuesNow[thread] = prevValue
 		if not ok then
-<<<<<<< HEAD
-			logError("callbackError", value :: any)
-=======
 			External.logError("callbackError", value :: any)
->>>>>>> upstream/main
 		end
 		return value
 	end

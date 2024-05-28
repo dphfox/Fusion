@@ -13,9 +13,6 @@ local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
-local logWarn = require(Package.Logging.logWarn)
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
 
 local RunService = game:GetService("RunService")
 
@@ -41,9 +38,9 @@ function class:update(): boolean
 	local self = self :: InternalTypes.Hourglass
 	local interval = peek(self._interval)
 	if typeof(interval) ~= "number" then
-		logErrorNonFatal("mistypedHourglassInterval", nil, typeof(interval))
+		External.logErrorNonFatal("mistypedHourglassInterval", nil, typeof(interval))
 	elseif interval <= 0 then
-		logErrorNonFatal("invalidHourglassInterval", nil, interval)
+		External.logErrorNonFatal("invalidHourglassInterval", nil, interval)
 	else
 		self._currentInterval = interval
 	end
@@ -92,7 +89,7 @@ function class:_peek(): unknown
 end
 
 function class:get()
-	logError("stateGetWasRemoved")
+	External.logError("stateGetWasRemoved")
 end
 
 --[[
@@ -123,7 +120,7 @@ end
 function class:destroy()
 	local self = self :: InternalTypes.Hourglass
 	if self.scope == nil then
-		logError("destroyedTwice", nil, "Hourglass")
+		External.logError("destroyedTwice", nil, "Hourglass")
 	end
 	self.scope = nil
 	for dependency in pairs(self.dependencySet) do
@@ -136,7 +133,7 @@ local function Hourglass(
 	interval: Types.UsedAs<number>?
 ): Types.Hourglass
     if interval == nil then
-        logError("scopeMissing", nil, "Hourglass", "myScope:Hourglass(interval)")
+        External.logError("scopeMissing", nil, "Hourglass", "myScope:Hourglass(interval)")
     end
 
 	local intervalState = typeof(interval) == "table" and (interval :: any).dependentSet ~= nil
@@ -146,9 +143,9 @@ local function Hourglass(
 		interval = .001
 	end
 	if typeof(peek(interval)) ~= "number" then
-		logErrorNonFatal("mistypedHourglassInterval", nil, typeof(interval))
+		External.logErrorNonFatal("mistypedHourglassInterval", nil, typeof(interval))
 	elseif peek(interval) <= 0 then
-		logErrorNonFatal("invalidHourglassInterval", nil, peek(interval))
+		External.logErrorNonFatal("invalidHourglassInterval", nil, peek(interval))
 	end
 
 	local self = setmetatable({
@@ -164,6 +161,13 @@ local function Hourglass(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Hourglass
 
+	local destroy = function()
+		self.scope = nil
+		for dependency in pairs(self.dependencySet) do
+			dependency.dependentSet[self] = nil
+		end
+	end
+	self.oldestTask = destroy
 	table.insert(scope, self)
 	table.insert(scope, function()
 		self:stop()
@@ -172,7 +176,7 @@ local function Hourglass(
     if intervalState then
 		local interval: any = interval
 		if interval.scope == nil then
-			logError(
+			External.logError(
 				"useAfterDestroy",
 				nil,
 				`The {interval.kind or interval.type or "interval"} object`,
@@ -180,7 +184,7 @@ local function Hourglass(
 			)
 		elseif whichLivesLonger(scope, self, interval.scope, interval) == "definitely-a" then
 			local interval: any = interval
-			logWarn(
+			External.logWarn(
 				"possiblyOutlives",
 				`The {interval.kind or interval.type or "interval"} object`,
 				`the Hourglass`

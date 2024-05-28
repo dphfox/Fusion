@@ -18,15 +18,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-<<<<<<< HEAD
-local isState = require(Package.State.isState)
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local logWarn = require(Package.Logging.logWarn)
-=======
 local External = require(Package.External)
 local isState = require(Package.State.isState)
->>>>>>> upstream/main
 local parseError = require(Package.Logging.parseError)
 local Observer = require(Package.State.Observer)
 local peek = require(Package.State.peek)
@@ -57,11 +50,7 @@ local function setProperty(
 
 	if not success then
 		if not pcall(testPropertyAssignable, instance, property) then
-<<<<<<< HEAD
-			logErrorNonFatal("cannotAssignProperty", nil, instance.ClassName, property)
-=======
 			External.logErrorNonFatal("cannotAssignProperty", nil, instance.ClassName, property)
->>>>>>> upstream/main
 		else
 			-- property is assignable, but this specific assignment failed
 			-- this typically implies the wrong type was received
@@ -69,15 +58,9 @@ local function setProperty(
 			local expectedType = typeof((instance :: any)[property])
 
 			if givenType == expectedType then
-<<<<<<< HEAD
-				logErrorNonFatal("propertySetError", err)
-			else
-				logErrorNonFatal("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
-=======
 				External.logErrorNonFatal("propertySetError", err)
 			else
 				External.logErrorNonFatal("invalidPropertyType", nil, instance.ClassName, property, expectedType, givenType)
->>>>>>> upstream/main
 			end
 		end
 	end
@@ -92,15 +75,9 @@ local function bindProperty(
 	if isState(value) then
 		local value = value :: Types.StateObject<unknown>
 		if value.scope == nil then
-<<<<<<< HEAD
-			logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-		elseif whichLivesLonger(scope, instance, value.scope, value) == "definitely-a" then
-			logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
-=======
 			External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
 		elseif whichLivesLonger(scope, instance, value.scope, value.oldestTask) == "definitely-a" then
 			External.logWarn("possiblyOutlives", `The {value.kind} object, bound to {property},`, `the {instance.ClassName} instance`)
->>>>>>> upstream/main
 		end
 		-- value is a state object - bind to changes
 		Observer(scope, value :: any):onBind(function()
@@ -135,21 +112,13 @@ local function applyInstanceProps(
 			local stage = (key :: Types.SpecialKey).stage
 			local keys = specialKeys[stage]
 			if keys == nil then
-<<<<<<< HEAD
-				logError("unrecognisedPropertyStage", nil, stage)
-=======
 				External.logError("unrecognisedPropertyStage", nil, stage)
->>>>>>> upstream/main
 			else
 				keys[key] = value
 			end
 		else
 			-- we don't recognise what this key is supposed to be
-<<<<<<< HEAD
-			logError("unrecognisedPropertyKey", nil, keyType)
-=======
 			External.logError("unrecognisedPropertyKey", nil, keyType)
->>>>>>> upstream/main
 		end
 	end
 

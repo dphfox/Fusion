@@ -7,13 +7,10 @@ local External = require(Fusion.External)
 
 local SpecExternal = {}
 
-<<<<<<< HEAD
-=======
 SpecExternal.policies = {
 	allowWebLinks = true
 }
 
->>>>>>> upstream/main
 local queue = {} :: {thread}
 
 --[[
@@ -44,14 +41,6 @@ end
 --[[
 	Errors in a different thread to preserve the flow of execution.
 ]]
-<<<<<<< HEAD
-function SpecExternal.errorNonFatal(
-	err: unknown
-)
-	-- silently discard
-end
-
-=======
 function SpecExternal.logErrorNonFatal(
 	errorString: string
 ): ()
@@ -66,7 +55,6 @@ function SpecExternal.logWarn(
 ): ()
 	-- silently discard
 end
->>>>>>> upstream/main
 
 local doUpdateSteps = false
 

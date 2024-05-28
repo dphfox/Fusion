@@ -14,40 +14,32 @@ return function()
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
 
 		expect(observer).to.be.a("table")
 		expect(observer.type).to.equal("Observer")
-<<<<<<< HEAD
-		expect(scope[2]).to.equal(observer)
-=======
 		expect(scope[2]).to.equal(observer.oldestTask)
->>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
 		expect(function()
-<<<<<<< HEAD
-			observer:destroy()
-=======
 			doCleanup(observer)
->>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 
 	it("fires once after change", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
@@ -65,7 +57,7 @@ return function()
 
 	it("fires asynchronously", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
@@ -89,7 +81,7 @@ return function()
 
 	it("fires onBind at bind time", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
@@ -106,7 +98,7 @@ return function()
 
 	it("disconnects manually", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local observer = Observer(scope, dependency)
@@ -125,10 +117,10 @@ return function()
 
 	it("disconnects on destroy", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
-		
+
 		local subScope = {}
 		table.insert(scope, subScope)
 		local observer = Observer(subScope, dependency)

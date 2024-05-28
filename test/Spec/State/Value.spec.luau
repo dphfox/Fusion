@@ -14,40 +14,30 @@ return function()
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local value = Value(scope, nil)
 
 		expect(value).to.be.a("table")
 		expect(value.type).to.equal("State")
 		expect(value.kind).to.equal("Value")
-<<<<<<< HEAD
-		expect(scope[1]).to.equal(value)
-=======
 		expect(scope[1]).to.equal(value.oldestTask)
->>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local expect = getfenv().expect
-		
+
 		local value = Value({}, nil)
-<<<<<<< HEAD
-		expect(value.destroy).to.be.a("function")
-		expect(function()
-			value:destroy()
-=======
 		expect(function()
 			doCleanup(value)
->>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 
 	it("accepts a default value", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local value = Value(scope, 5)
 		expect(peek(value)).to.equal(5)
@@ -56,7 +46,7 @@ return function()
 
 	it("is settable", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local value = Value(scope, 0 :: string | number)
 		expect(peek(value)).to.equal(0)

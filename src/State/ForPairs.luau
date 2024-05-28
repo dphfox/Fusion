@@ -16,22 +16,12 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-<<<<<<< HEAD
-local InternalTypes = require(Package.InternalTypes)
-=======
 local External = require(Package.External)
->>>>>>> upstream/main
 -- State
 local For = require(Package.State.For)
 local Computed = require(Package.State.Computed)
 -- Logging
 local parseError = require(Package.Logging.parseError)
-<<<<<<< HEAD
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local logError = require(Package.Logging.logError)
-local logWarn = require(Package.Logging.logWarn)
-=======
->>>>>>> upstream/main
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 
@@ -42,15 +32,9 @@ local function ForPairs<KI, KO, VI, VO, S>(
 	destructor: unknown?
 ): Types.For<KO, VO>
 	if typeof(inputTable) == "function" then
-<<<<<<< HEAD
-		logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
-	elseif destructor ~= nil then
-		logWarn("destructorRedundant", "ForPairs")
-=======
 		External.logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
 	elseif destructor ~= nil then
 		External.logWarn("destructorRedundant", "ForPairs")
->>>>>>> upstream/main
 	end
 	return For(
 		scope,
@@ -64,13 +48,8 @@ local function ForPairs<KI, KO, VI, VO, S>(
 				if ok then
 					return {key = key, value = value}
 				else
-<<<<<<< HEAD
-					local errorObj = (key :: any) :: InternalTypes.Error
-					logErrorNonFatal("callbackError", errorObj)
-=======
 					local errorObj = (key :: any) :: Types.Error
 					External.logErrorNonFatal("callbackError", errorObj)
->>>>>>> upstream/main
 					doCleanup(scope)
 					table.clear(scope)
 					return {key = nil, value = nil}

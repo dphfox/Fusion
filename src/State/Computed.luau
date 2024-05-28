@@ -11,15 +11,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
-<<<<<<< HEAD
--- Logging
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-local logWarn = require(Package.Logging.logWarn)
-=======
 local External = require(Package.External)
 -- Logging
->>>>>>> upstream/main
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
@@ -66,16 +59,10 @@ function class:update(): boolean
 		if isState(target) then
 			local target = target :: Types.StateObject<T>
 			if target.scope == nil then
-<<<<<<< HEAD
-				logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
-			elseif whichLivesLonger(outerScope, self, target.scope, target) == "definitely-a" then
-				logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
-=======
 				External.logError("useAfterDestroy", nil, `The {target.kind} object`, "the Computed that is use()-ing it")
 			elseif whichLivesLonger(outerScope, self.oldestTask, target.scope, target.oldestTask) == "definitely-a" then
 				External.logWarn("possiblyOutlives", `The {target.kind} object`, "the Computed that is use()-ing it")
->>>>>>> upstream/main
-			end		
+			end
 			self.dependencySet[target] = true
 			return (target :: InternalTypes.StateObject<T>):_peek()
 		else
@@ -102,17 +89,10 @@ function class:update(): boolean
 
 		return not similar
 	else
-<<<<<<< HEAD
-		local errorObj = (newValue :: any) :: InternalTypes.Error
-		-- this needs to be non-fatal, because otherwise it'd disrupt the
-		-- update process
-		logErrorNonFatal("callbackError", errorObj)
-=======
 		local errorObj = (newValue :: any) :: Types.Error
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
 		External.logErrorNonFatal("callbackError", errorObj)
->>>>>>> upstream/main
 
 		if innerScope ~= nil then
 			doCleanup(innerScope)
@@ -141,26 +121,7 @@ function class:_peek(): unknown
 end
 
 function class:get()
-<<<<<<< HEAD
-	logError("stateGetWasRemoved")
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Computed<unknown, unknown>
-	if self.scope == nil then
-		logError("destroyedTwice", nil, "Computed")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	if self._innerScope ~= nil then
-		doCleanup(self._innerScope)
-		scopePool.clearAndGive(self._innerScope)
-	end
-=======
 	External.logError("stateGetWasRemoved")
->>>>>>> upstream/main
 end
 
 local function Computed<T, S>(
@@ -169,15 +130,9 @@ local function Computed<T, S>(
 	destructor: unknown?
 ): Types.Computed<T>
 	if typeof(scope) == "function" then
-<<<<<<< HEAD
-		logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
-	elseif destructor ~= nil then
-		logWarn("destructorRedundant", "Computed")
-=======
 		External.logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
 	elseif destructor ~= nil then
 		External.logWarn("destructorRedundant", "Computed")
->>>>>>> upstream/main
 	end
 	local self = setmetatable({
 		scope = scope,
@@ -190,9 +145,6 @@ local function Computed<T, S>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.Computed<T, S>
 
-<<<<<<< HEAD
-	table.insert(scope, self)
-=======
 	local destroy = function()
 		self.scope = nil
 		for dependency in pairs(self.dependencySet) do
@@ -206,9 +158,8 @@ local function Computed<T, S>(
 	self.oldestTask = destroy
 	table.insert(scope, destroy)
 
->>>>>>> upstream/main
 	self:update()
-	
+
 	return self
 end
 

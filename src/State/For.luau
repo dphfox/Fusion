@@ -10,14 +10,8 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local InternalTypes = require(Package.InternalTypes)
-<<<<<<< HEAD
--- Logging
-local logError = require(Package.Logging.logError)
-local logErrorNonFatal = require(Package.Logging.logErrorNonFatal)
-=======
 local External = require(Package.External)
 -- Logging
->>>>>>> upstream/main
 local parseError = require(Package.Logging.parseError)
 -- State
 local peek = require(Package.State.peek)
@@ -59,7 +53,7 @@ function class:update(): boolean
 	table.clear(self.dependencySet)
 
 	if isState(self._inputTable) then
-		local inputTable = self._inputTable :: Types.StateObject<{[unknown]: unknown}> 
+		local inputTable = self._inputTable :: Types.StateObject<{[unknown]: unknown}>
 		inputTable.dependentSet[self], self.dependencySet[inputTable] = true, true
 	end
 
@@ -97,7 +91,7 @@ function class:update(): boolean
 					existingProcessors[tryReuseProcessor] = nil
 				end
 			end
-			
+
 		end
 		-- Next, try and reuse processors who match the key of a remaining pair.
 		-- The value will change but the key will stay stable.
@@ -152,7 +146,7 @@ function class:update(): boolean
 			doCleanup(unusedProcessor.scope)
 			scopePool.clearAndGive(unusedProcessor.scope :: any)
 		end
-		
+
 		for key, remainingValues in remainingPairs do
 			for value in remainingValues do
 				local innerScope = deriveScope(outerScope)
@@ -167,13 +161,8 @@ function class:update(): boolean
 					}
 					newProcessors[processor] = true
 				else
-<<<<<<< HEAD
-					local errorObj = (outputPair :: any) :: InternalTypes.Error
-					logErrorNonFatal("callbackError", errorObj)
-=======
 					local errorObj = (outputPair :: any) :: Types.Error
 					External.logErrorNonFatal("callbackError", errorObj)
->>>>>>> upstream/main
 				end
 			end
 		end
@@ -192,11 +181,7 @@ function class:update(): boolean
 		if newOutputTable[key] == nil then
 			newOutputTable[key] = value
 		else
-<<<<<<< HEAD
-			logErrorNonFatal("forKeyCollision", nil, key)
-=======
 			External.logErrorNonFatal("forKeyCollision", nil, key)
->>>>>>> upstream/main
 		end
 	end
 
@@ -219,25 +204,7 @@ function class:_peek(): unknown
 end
 
 function class:get()
-<<<<<<< HEAD
-	logError("stateGetWasRemoved")
-end
-
-function class:destroy()
-	if self.scope == nil then
-		logError("destroyedTwice", nil, "For")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
-	for unusedProcessor in self._existingProcessors do
-		doCleanup(unusedProcessor.scope)
-		scopePool.clearAndGive(unusedProcessor.scope)
-	end
-=======
 	External.logError("stateGetWasRemoved")
->>>>>>> upstream/main
 end
 
 local function For<KI, KO, VI, VO, S>(
@@ -264,9 +231,6 @@ local function For<KI, KO, VI, VO, S>(
 	}, CLASS_METATABLE)
 	local self = (self :: any) :: InternalTypes.For<KI, KO, VI, VO, S>
 
-<<<<<<< HEAD
-	table.insert(scope, self)
-=======
 	local destroy = function()
 		self.scope = nil
 		for dependency in pairs(self.dependencySet) do
@@ -280,7 +244,6 @@ local function For<KI, KO, VI, VO, S>(
 	self.oldestTask = destroy
 	table.insert(scope, destroy)
 
->>>>>>> upstream/main
 	self:update()
 
 	return self

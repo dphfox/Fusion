@@ -13,7 +13,7 @@ return function()
 
 	it("should destroy instances", function()
 		local expect = getfenv().expect
-		
+
 		local instance = New({}, "Folder") {}
 		-- one of the only reliable ways to test for proper destruction
 		local conn = instance.AncestryChanged:Connect(function() end)
@@ -25,7 +25,7 @@ return function()
 
 	it("should disconnect connections", function()
 		local expect = getfenv().expect
-		
+
 		local instance = New({}, "Folder") {}
 		local conn = instance.AncestryChanged:Connect(function() end)
 
@@ -36,7 +36,7 @@ return function()
 
 	it("should invoke callbacks", function()
 		local expect = getfenv().expect
-		
+
 		local didRun = false
 
 		doCleanup(function()
@@ -48,7 +48,7 @@ return function()
 
 	it("should invoke :destroy() methods", function()
 		local expect = getfenv().expect
-		
+
 		local didRun = false
 
 		doCleanup({
@@ -62,7 +62,7 @@ return function()
 
 	it("should invoke :Destroy() methods", function()
 		local expect = getfenv().expect
-		
+
 		local didRun = false
 
 		doCleanup({
@@ -76,7 +76,7 @@ return function()
 
 	it("should clean up contents of arrays", function()
 		local expect = getfenv().expect
-		
+
 		local numRuns = 0
 
 		local function doRun()
@@ -95,7 +95,7 @@ return function()
 
 	it("should clean up contents of nested arrays", function()
 		local expect = getfenv().expect
-		
+
 		local numRuns = 0
 
 		local function doRun()
@@ -109,7 +109,7 @@ return function()
 
 	it("should clean up contents of arrays in reverse order", function()
 		local expect = getfenv().expect
-		
+
 		local runs = {}
 
 		local tasks = {}
@@ -133,23 +133,9 @@ return function()
 		expect(runs[3]).to.equal(1)
 	end)
 
-<<<<<<< HEAD
-	it("should clean up variadic arguments", function()
-		local expect = getfenv().expect
-		
-		local numRuns = 0
-
-		local function doRun()
-			numRuns += 1
-		end
-
-		doCleanup(doRun, doRun, doRun)
-
-		expect(numRuns).to.equal(3)
-=======
 	it("should throw for recursive cleanups", function()
 		local expect = getfenv().expect
-		
+
 		local function cleanupFunc()
 			doCleanup(cleanupFunc)
 		end
@@ -157,6 +143,5 @@ return function()
 		expect(function()
 			doCleanup(cleanupFunc)
 		end).to.throw("destroyedTwice")
->>>>>>> upstream/main
 	end)
 end

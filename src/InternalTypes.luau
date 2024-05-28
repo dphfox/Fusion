@@ -18,7 +18,6 @@ local Types = require(Package.Types)
 	General use types
 ]]
 
-<<<<<<< HEAD
 -- Stores useful information about Luau errors.
 export type Error = {
 	type: string, -- replace with "Error" when Luau supports singleton types
@@ -27,8 +26,6 @@ export type Error = {
 	trace: string
 }
 
-=======
->>>>>>> upstream/main
 -- An object which stores a value scoped in time.
 export type Contextual<T> = Types.Contextual<T> & {
 	_valuesNow: {[thread]: {value: T}},
@@ -122,12 +119,11 @@ export type Observer = Types.Observer & {
 	_numChangeListeners: number
 }
 
-<<<<<<< HEAD
 -- A ticking like object with an intervaled callback.
 export type Hourglass = Types.Hourglass & {
 	_tickListeners: {[{}]: () -> ()},
 	_numTickisteners: number,
-	
+
 	_interval: Types.UsedAs<number>?,
 	_currentInterval: number,
 
@@ -135,6 +131,4 @@ export type Hourglass = Types.Hourglass & {
 	_connection: RBXScriptConnection?,
 }
 
-=======
->>>>>>> upstream/main
 return nil

@@ -1,8 +1,6 @@
 --!strict
 --!nolint LocalUnused
 --!nolint LocalShadow
-<<<<<<< HEAD
-local chore = nil -- Disable usage of Roblox's chore scheduler
 
 --[[
 	Cleans up the chores passed in as the arguments.
@@ -10,41 +8,34 @@ local chore = nil -- Disable usage of Roblox's chore scheduler
 
 	- an Instance - will be destroyed
 	- an RBXScriptConnection - will be disconnected
-	- a thread - will be canceled
-=======
-local task = nil -- Disable usage of Roblox's task scheduler
-
---[[
-	Cleans up the tasks passed in as the arguments.
-	A task can be any of the following:
-
-	- an Instance - will be destroyed
-	- an RBXScriptConnection - will be disconnected
->>>>>>> upstream/main
 	- a function - will be run
 	- a table with a `Destroy` or `destroy` function - will be called
 	- an array - `cleanup` will be called on each item
 ]]
-<<<<<<< HEAD
+local Package = script.Parent.Parent
+local Types = require(Package.Types)
+local External = require(Package.External)
 
-local function doCleanupOne(
-	chore: unknown
-)
-	local choreType = typeof(chore)
+local alreadyDestroying: {[Types.chore]: true} = {}
+
+local function doCleanup(
+	chore: Types.chore
+): ()
+	if alreadyDestroying[chore] then
+		return External.logError("destroyedTwice")
+	end
+	alreadyDestroying[chore] = true
 
 	-- case 1: Instance
-	if choreType == "Instance" then
-		local chore = chore :: Instance
+	if typeof(chore) == "Instance" then
 		chore:Destroy()
 
 	-- case 2: RBXScriptConnection
-	elseif choreType == "RBXScriptConnection" then
-		local chore = chore :: RBXScriptConnection
+	elseif typeof(chore) == "RBXScriptConnection" then
 		chore:Disconnect()
 
 	-- case 3: thread
-	elseif choreType == "thread" then
-		local chore = chore :: thread
+	elseif typeof(chore) == "thread" then
 		local cancelled; if coroutine.running() ~= chore then
 			cancelled = pcall(function() task.cancel(chore) end)
 		end; if not cancelled then local toCancel = chore
@@ -54,12 +45,11 @@ local function doCleanupOne(
 		end
 
 	-- case 4: callback
-	elseif choreType == "function" then
-		local chore = chore :: (...unknown) -> (...unknown)
+	elseif typeof(chore) == "function" then
 		chore()
 
-	elseif choreType == "table" then
-		local chore = chore :: {destroy: unknown?, Destroy: unknown?}
+	elseif typeof(chore) == "table" then
+		local chore = (chore :: any) :: {Destroy: (...unknown) -> (...unknown)?, destroy: (...unknown) -> (...unknown)?}
 
 		-- case 5: destroy() function
 		if typeof(chore.destroy) == "function" then
@@ -73,77 +63,17 @@ local function doCleanupOne(
 
 		-- case 7: array of chores
 		elseif chore[1] ~= nil then
-			local chore = chore :: {unknown}
+			local chore = chore :: {Types.chore}
 			-- It is important to iterate backwards through the table, since
 			-- objects are added in order of construction.
 			for index = #chore, 1, -1 do
-				doCleanupOne(chore[index])
+				doCleanup(chore[index])
 				chore[index] = nil
 			end
 		end
 	end
-end
 
-local function doCleanup(
-	...: unknown
-)
-	for index = 1, select("#", ...) do
-		doCleanupOne(select(index, ...))
-	end
-=======
-local Package = script.Parent.Parent
-local Types = require(Package.Types)
-local External = require(Package.External)
-
-local alreadyDestroying: {[Types.Task]: true} = {}
-
-local function doCleanup(
-	task: Types.Task
-): ()
-	if alreadyDestroying[task] then
-		return External.logError("destroyedTwice")
-	end
-	alreadyDestroying[task] = true
-
-	-- case 1: Instance
-	if typeof(task) == "Instance" then
-		task:Destroy()
-
-	-- case 2: RBXScriptConnection
-	elseif typeof(task) == "RBXScriptConnection" then
-		task:Disconnect()
-
-	-- case 3: callback
-	elseif typeof(task) == "function" then
-		task()
-
-	elseif typeof(task) == "table" then
-		local task = (task :: any) :: {Destroy: (...unknown) -> (...unknown)?, destroy: (...unknown) -> (...unknown)?}
-
-		-- case 4: destroy() function
-		if typeof(task.destroy) == "function" then
-			local task = (task :: any) :: {destroy: (...unknown) -> (...unknown)}
-			task:destroy()
-
-		-- case 5: Destroy() function
-		elseif typeof(task.Destroy) == "function" then
-			local task = (task :: any) :: {Destroy: (...unknown) -> (...unknown)}
-			task:Destroy()
-
-		-- case 6: array of tasks
-		elseif task[1] ~= nil then
-			local task = task :: {Types.Task}
-			-- It is important to iterate backwards through the table, since
-			-- objects are added in order of construction.
-			for index = #task, 1, -1 do
-				doCleanup(task[index])
-				task[index] = nil
-			end
-		end
-	end
-	
-	alreadyDestroying[task] = nil
->>>>>>> upstream/main
+	alreadyDestroying[chore] = nil
 end
 
 return doCleanup

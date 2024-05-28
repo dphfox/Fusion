@@ -15,7 +15,7 @@ return function()
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local forObject = ForValues(scope, {}, function()
 			-- intentionally blank
@@ -24,34 +24,26 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-<<<<<<< HEAD
-		expect(scope[1]).to.equal(forObject)
-=======
 		expect(scope[1]).to.equal(forObject.oldestTask)
->>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local forObject = ForValues(scope, {}, function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
-<<<<<<< HEAD
-			forObject:destroy()
-=======
 			doCleanup(forObject)
->>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 
 	it("iterates on constants", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {"foo", "bar"}
 		local forObject = ForValues(scope, data, function(_, _, value)
@@ -65,7 +57,7 @@ return function()
 
 	it("iterates on state objects", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = Value(scope, {"foo", "bar"})
 		local forObject = ForValues(scope, data, function(_, _, value)
@@ -84,7 +76,7 @@ return function()
 
 	it("computes with constants", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {"foo", "bar"}
 		local forObject = ForValues(scope, data, function(use, _, value)
@@ -97,7 +89,7 @@ return function()
 
 	it("computes with state objects", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {"foo", "bar"}
 		local suffix = Value(scope, "first")
@@ -114,7 +106,7 @@ return function()
 
 	it("destroys and omits values that error during processing", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {"foo", "bar", "baz"}
 		local suffix = Value(scope, "first")
@@ -160,7 +152,7 @@ return function()
 
 	it("omits values that return nil", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {"foo", "bar", "baz"}
 		local omitThird = Value(scope, false)
@@ -191,7 +183,7 @@ return function()
 
 	it("doesn't destroy inner scope on creation", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
@@ -212,7 +204,7 @@ return function()
 
 	it("destroys inner scope on update", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
@@ -233,7 +225,7 @@ return function()
 
 	it("destroys inner scope on destroy", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
@@ -252,7 +244,7 @@ return function()
 
 	it("doesn't recompute when values roam between keys", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = Value(scope, {"foo", "bar"})
 		local computations = 0
@@ -274,7 +266,7 @@ return function()
 
 	it("does not reuse values for duplicated items", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = Value(scope, {"foo", "foo", "foo"})
 		local computations = 0

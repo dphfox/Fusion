@@ -15,7 +15,7 @@ return function()
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local computed = Computed(scope, function()
 			-- intentionally blank
@@ -24,34 +24,26 @@ return function()
 		expect(computed).to.be.a("table")
 		expect(computed.type).to.equal("State")
 		expect(computed.kind).to.equal("Computed")
-<<<<<<< HEAD
-		expect(scope[1]).to.equal(computed)
-=======
 		expect(scope[1]).to.equal(computed.oldestTask)
->>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local computed = Computed(scope, function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
-<<<<<<< HEAD
-			computed:destroy()
-=======
 			doCleanup(computed)
->>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 
 	it("computes with constants", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local computed = Computed(scope, function(use)
 			return use(5)
@@ -62,7 +54,7 @@ return function()
 
 	it("computes with state objects", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5 :: number | string)
 		local computed = Computed(scope, function(use)
@@ -76,7 +68,7 @@ return function()
 
 	it("preserves value on error", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local dependency = Value(scope, 5)
 		local computed = Computed(scope, function(use)
@@ -93,7 +85,7 @@ return function()
 
 	it("doesn't destroy inner scope on creation", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = false
 		local _ = Computed(scope, function(innerScope)
@@ -108,7 +100,7 @@ return function()
 
 	it("destroys inner scope on update", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = {}
 		local dependency = Value(scope, 1)
@@ -131,7 +123,7 @@ return function()
 
 	it("destroys errored values and preserves the last non-error value", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local numDestructions = {}
 		local dependency = Value(scope, 1)
@@ -158,7 +150,7 @@ return function()
 
 	it("destroys inner scope on destroy", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local destructed = false
 		local _ = Computed(scope, function(use, innerScope)

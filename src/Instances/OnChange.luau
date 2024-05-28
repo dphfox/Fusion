@@ -10,11 +10,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-<<<<<<< HEAD
-local logError = require(Package.Logging.logError)
-=======
 local External = require(Package.External)
->>>>>>> upstream/main
 
 local keyCache: {[string]: Types.SpecialKey} = {}
 
@@ -35,15 +31,9 @@ local function OnChange(
 			)
 				local ok, event = pcall(applyTo.GetPropertyChangedSignal, applyTo, propertyName)
 				if not ok then
-<<<<<<< HEAD
-					logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
-				elseif typeof(callback) ~= "function" then
-					logError("invalidChangeHandler", nil, propertyName)
-=======
 					External.logError("cannotConnectChange", nil, applyTo.ClassName, propertyName)
 				elseif typeof(callback) ~= "function" then
 					External.logError("invalidChangeHandler", nil, propertyName)
->>>>>>> upstream/main
 				else
 					local callback = callback :: (...unknown) -> (...unknown)
 					table.insert(scope, event:Connect(function()

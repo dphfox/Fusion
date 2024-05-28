@@ -16,7 +16,7 @@ return function()
 
 	it("constructs in scopes", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local forObject = For(scope, {}, function()
 			-- intentionally blank
@@ -25,35 +25,27 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-<<<<<<< HEAD
-		expect(scope[1]).to.equal(forObject)
-=======
 		expect(scope[1]).to.equal(forObject.oldestTask)
->>>>>>> upstream/main
 
 		doCleanup(scope)
 	end)
 
 	it("is destroyable", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local forObject = For(scope, {}, function()
 			-- intentionally blank
 		end :: any)
-		
+
 		expect(function()
-<<<<<<< HEAD
-			forObject:destroy()
-=======
 			doCleanup(forObject)
->>>>>>> upstream/main
 		end).to.never.throw()
 	end)
 
 	it("processes pairs for constant tables", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {foo = 1, bar = 2}
 		local seen = {}
@@ -78,7 +70,7 @@ return function()
 
 	it("processes pairs for state tables", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = Value(scope, {foo = 1, bar = 2} :: {[string]: number})
 		local numCalls = 0
@@ -121,13 +113,13 @@ return function()
 		expect(numCalls).to.equal(3)
 		expect(peek(forObject).GARB).to.equal(nil)
 		expect(peek(forObject).BAZ).to.equal(nil)
-		
+
 		doCleanup(scope)
 	end)
 
 	it("omits pairs that error", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {first = 1, second = 2, third = 3}
 		local forObject = For(scope, data, function(scope, inputPair)
@@ -142,7 +134,7 @@ return function()
 
 	it("omits pairs when their value is nil", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = {first = 1, second = 2, third = 3}
 		local omitThird = Value(scope, false)
@@ -173,7 +165,7 @@ return function()
 
 	it("allows values to roam when their key is nil", function()
 		local expect = getfenv().expect
-		
+
 		local scope = {}
 		local data = Value(scope, {"first", "second", "third"})
 		local numCalls = 0

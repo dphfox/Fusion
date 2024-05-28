@@ -9,50 +9,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 local Package = script.Parent
-<<<<<<< HEAD
-local logError = require(Package.Logging.logError)
-
-local External = {}
-
-export type Scheduler = {
-	doTaskImmediate: (
-		resume: () -> ()
-	) -> (),
-	doTaskDeferred: (
-		resume: () -> ()
-	) -> (),
-	errorNonFatal: (
-		err: unknown
-	) -> (),
-	startScheduler: () -> (),
-	stopScheduler: () -> ()
-}
-
-local updateStepCallbacks = {}
-local currentScheduler: Scheduler? = nil
-local lastUpdateStep = 0
-
---[[
-	Sets the external scheduler that Fusion will use for queuing async tasks.
-	Returns the previous scheduler so it can be reset later.
-]]
-function External.setExternalScheduler(
-	newScheduler: Scheduler?
-): Scheduler?
-	local oldScheduler = currentScheduler
-	if oldScheduler ~= nil then
-		oldScheduler.stopScheduler()
-	end
-	currentScheduler = newScheduler
-	if newScheduler ~= nil then
-		newScheduler.startScheduler()
-	end
-	return oldScheduler
-end
-
---[[
-   Sends an immediate task to the external scheduler. Throws if none is set.
-=======
 local formatError = require(Package.Logging.formatError)
 local Types = require(Package.Types)
 
@@ -84,61 +40,31 @@ end
 
 --[[
    Sends an immediate task to the external provider. Throws if none is set.
->>>>>>> upstream/main
 ]]
 function External.doTaskImmediate(
 	resume: () -> ()
 )
-<<<<<<< HEAD
-	if currentScheduler == nil then
-		logError("noTaskScheduler")
-	else
-		currentScheduler.doTaskImmediate(resume)
-=======
 	if currentProvider == nil then
 		formatError(currentProvider, "noTaskScheduler")
 	else
 		currentProvider.doTaskImmediate(resume)
->>>>>>> upstream/main
 	end
 end
 
 --[[
-<<<<<<< HEAD
-	Sends a deferred task to the external scheduler. Throws if none is set.
-=======
 	Sends a deferred task to the external provider. Throws if none is set.
->>>>>>> upstream/main
 ]]
 function External.doTaskDeferred(
 	resume: () -> ()
 )
-<<<<<<< HEAD
-	if currentScheduler == nil then
-		logError("noTaskScheduler")
-	else
-		currentScheduler.doTaskDeferred(resume)
-=======
 	if currentProvider == nil then
 		formatError(currentProvider, "noTaskScheduler")
 	else
 		currentProvider.doTaskDeferred(resume)
->>>>>>> upstream/main
 	end
 end
 
 --[[
-<<<<<<< HEAD
-	Errors in a different thread to preserve the flow of execution.
-]]
-function External.errorNonFatal(
-	err: unknown
-)
-	if currentScheduler == nil then
-		logError("noTaskScheduler")
-	else
-		currentScheduler.errorNonFatal(err)
-=======
 	Errors in the current thread and halts execution.
 ]]
 function External.logError(
@@ -162,14 +88,10 @@ function External.logErrorNonFatal(
 		currentProvider.logErrorNonFatal(errorString)
 	else
 		print(errorString)
->>>>>>> upstream/main
 	end
 end
 
 --[[
-<<<<<<< HEAD
-	Registers a callback to the update step of the external scheduler.
-=======
 	Shows a warning message in the output.
 ]]
 function External.logWarn(
@@ -186,18 +108,12 @@ end
 
 --[[
 	Registers a callback to the update step of the external provider.
->>>>>>> upstream/main
 	Returns a function that can be used to disconnect later.
 
 	Callbacks are given the current number of seconds since an arbitrary epoch.
-	
-<<<<<<< HEAD
-	TODO: This epoch may change between schedulers. We could investigate ways
-	of allowing schedulers to co-operate to keep the epoch the same, so that
-=======
+
 	TODO: This epoch may change between providers. We could investigate ways
 	of allowing providers to co-operate to keep the epoch the same, so that
->>>>>>> upstream/main
 	monotonicity can be better preserved.
 ]]
 function External.bindToUpdateStep(
@@ -215,11 +131,7 @@ end
 --[[
 	Steps time-dependent systems with the current number of seconds since an
 	arbitrary epoch. This should be called as early as possible in the external
-<<<<<<< HEAD
-	scheduler's update cycle.
-=======
 	provider's update cycle.
->>>>>>> upstream/main
 ]]
 function External.performUpdateStep(
 	now: number
