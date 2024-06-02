@@ -65,9 +65,9 @@ local currentTimeObj = getCurrentTimeStateObject()
 print(typeof(currentTimeObj)) --> table
 
 -- ...and you can peek at their value (or ‘state’) at any time.
-print(currentTimeObj:get()) --> 0.0
+print(peek(currentTimeObj)) --> 0.0
 task.wait(5)
-print(currentTimeObj:get()) --> 5.0
+print(peek(currentTimeObj)) --> 5.0
 ```
 
 You can write out your logic using Fusion's built-in state objects.
@@ -80,8 +80,8 @@ local myName = Value("Daniel")
 
 -- This creates a state object from a calculation.
 -- It determines its own value automatically.
-local myGreeting = Computed(function()
-	return "Hello! My name is " .. myName:get()
+local myGreeting = Computed(function(use)
+	return "Hello! My name is " .. use(myName)
 end)
 ```
 
@@ -94,7 +94,7 @@ local myObserver = Observer(myGreeting)
 
 -- Let’s print out the greeting when there’s a new one.
 local disconnect = myObserver:onChange(function()
-	print(myGreeting:get())
+	print(peek(myGreeting))
 end)
 
 -- This will run the code above!
@@ -197,14 +197,14 @@ your program. That means it's easy to process them afterwards.
 
 ```Lua
 -- You can round the animated health to whole numbers.
-local wholeHealth = Computed(function()
-	return math.round(health:get())
+local wholeHealth = Computed(function(use)
+	return math.round(use(health))
 end)
 
 -- You can format it as text and put it in some UI, too.
 local myText = New "TextLabel" {
-	Text = Computed(function()
-		return "Health: " .. wholeHealth:get()
+	Text = Computed(function(use)
+		return "Health: " .. use(wholeHealth)
 	end)
 }
 ```
@@ -218,8 +218,8 @@ local TWEEN_FAST = TweenInfo.new(0.5, Enum.EasingStyle.Elastic)
 local TWEEN_SLOW = TweenInfo.new(2, Enum.EasingStyle.Sine)
 
 -- Choose more dramatic styles at low health...
-local style = Computed(function()
-	return if health:get() < 20 then TWEEN_FAST else TWEEN_SLOW
+local style = Computed(function(use)
+	return if use(health) < 20 then TWEEN_FAST else TWEEN_SLOW
 end)
 
 -- Plug it right into your animation!
