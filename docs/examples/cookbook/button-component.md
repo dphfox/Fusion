@@ -65,7 +65,7 @@ local function Button(
 		TextColor3 = COLOUR_TEXT,
 
 		BackgroundColor3 = scope:Spring(
-			scope:Computed(function(use)
+			scope:Computed(function(use, scope)
 				-- The order of conditions matter here; it defines which states
 				-- visually override other states, with earlier states being
 				-- more important.

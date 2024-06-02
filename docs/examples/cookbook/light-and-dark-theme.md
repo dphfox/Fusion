@@ -28,7 +28,7 @@ local scope = scoped(Fusion)
 Theme.current = scope:Value("light")
 Theme.dynamic = {}
 for colour, variants in Theme.colours do
-	Theme.dynamic[colour] = scope:Computed(function(use)
+	Theme.dynamic[colour] = scope:Computed(function(use, scope)
 		return variants[use(Theme.current)]
 	end)
 end
@@ -71,7 +71,7 @@ desired variant from the list.
 ```Lua
 Theme.dynamic = {}
 for colour, variants in Theme.colours do
-	Theme.dynamic[colour] = scope:Computed(function(use)
+	Theme.dynamic[colour] = scope:Computed(function(use, scope)
 		return variants[use(Theme.current)]
 	end)
 end

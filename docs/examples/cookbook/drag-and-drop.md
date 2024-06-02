@@ -73,7 +73,7 @@ local function Draggable(
 
 	return New "Frame" {
 		Name = props.Name or "Draggable",
-		Parent = scope:Computed(function(use)
+		Parent = scope:Computed(function(use, scope)
 			return
 				if use(props.Dragging.SelfDragInfo) ~= nil
 				then use(props.Dragging.OverlayFrame)
@@ -87,7 +87,7 @@ local function Draggable(
 
 		BackgroundTransparency = 1,
 
-		Position = scope:Computed(function(use)
+		Position = scope:Computed(function(use, scope)
 			local dragInfo = use(props.Dragging.SelfDragInfo)
 			if dragInfo == nil then
 				return use(props.Layout.Position) or UDim2.fromOffset(0, 0)
@@ -99,7 +99,7 @@ local function Draggable(
 		end),
 		-- Calculated manually so the Scale can be set relative to
 		-- `props.Parent` at all times, rather than the `Parent` of this Frame.
-		Size = scope:Computed(function(use)
+		Size = scope:Computed(function(use, scope)
 			local udim2 = use(props.Layout.Size) or UDim2.fromOffset(0, 0)
 			local parentSize = use(parentSize) or Vector2.zero
 			return UDim2.fromOffset(
@@ -182,7 +182,7 @@ local function TodoEntry(
 	}
 
 	local itemPosition = scope:Value(nil)
-	local itemIsDragging = scope:Computed(function(use)
+	local itemIsDragging = scope:Computed(function(use, scope)
 		local dragInfo = use(props.CurrentlyDragging)
 		return dragInfo ~= nil and dragInfo.id == props.Item.id
 	end)
@@ -198,7 +198,7 @@ local function TodoEntry(
 			Name = "TodoEntry",
 
 			Size = UDim2.fromScale(1, 1),
-			BackgroundColor3 = scope:Computed(function(use)
+			BackgroundColor3 = scope:Computed(function(use, scope)
 				return
 					if use(props.Item.completed)
 					then COLOUR_COMPLETED
@@ -284,7 +284,7 @@ local allEntries = scope:ForValues(
 		local itemPosition = scope:Value(nil)
 		return scope:TodoEntry {
 			Item = item,
-			Parent = scope:Computed(function(use)
+			Parent = scope:Computed(function(use, scope)
 				return
 					if use(item.completed)
 					then use(taskLists).completed
@@ -296,7 +296,7 @@ local allEntries = scope:ForValues(
 			},
 			Dragging = {
 				MousePosition = mousePos,
-				SelfDragInfo = scope:Computed(function(use)
+				SelfDragInfo = scope:Computed(function(use, scope)
 					local dragInfo = use(currentlyDragging)
 					return 
 						if dragInfo == nil or dragInfo.id ~= item.id
@@ -401,7 +401,7 @@ it reparents itself to `Dragging.OverlayFrame`, so it can be seen in front of
 other UI.
 
 ```Lua
-		Parent = scope:Computed(function(use)
+		Parent = scope:Computed(function(use, scope)
 			return
 				if use(props.Dragging.SelfDragInfo) ~= nil
 				then use(props.Dragging.OverlayFrame)
@@ -416,7 +416,7 @@ so it doesn't change size when moved to `Dragging.OverlayFrame`.
 ```Lua
 		-- Calculated manually so the Scale can be set relative to
 		-- `props.Parent` at all times, rather than the `Parent` of this Frame.
-		Size = scope:Computed(function(use)
+		Size = scope:Computed(function(use, scope)
 			local udim2 = use(props.Layout.Size) or UDim2.fromOffset(0, 0)
 			local parentSize = use(parentSize) or Vector2.zero
 			return UDim2.fromOffset(
@@ -436,7 +436,7 @@ position of the `Draggable`, that offset can be applied to keep the UI fixed
 in position relative to the mouse.
 
 ```Lua
-		Position = scope:Computed(function(use)
+		Position = scope:Computed(function(use, scope)
 			local dragInfo = use(props.Dragging.SelfDragInfo)
 			if dragInfo == nil then
 				return use(props.Layout.Position) or UDim2.fromOffset(0, 0)
@@ -607,7 +607,7 @@ Each entry dynamically picks one of the two destinations based on its
 completion status.
 
 ```Lua
-			Parent = scope:Computed(function(use)
+			Parent = scope:Computed(function(use, scope)
 				return
 					if use(item.completed)
 					then use(taskLists).completed
@@ -624,7 +624,7 @@ dragged.
 ```Lua
 			Dragging = {
 				MousePosition = mousePos,
-				SelfDragInfo = scope:Computed(function(use)
+				SelfDragInfo = scope:Computed(function(use, scope)
 					local dragInfo = use(currentlyDragging)
 					return 
 						if dragInfo == nil or dragInfo.id ~= item.id

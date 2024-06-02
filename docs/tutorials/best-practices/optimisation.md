@@ -29,7 +29,7 @@ An observer is used to see how often this results in other code being run.
 
 	```Lua
 	local number = scope:Value(1)
-	local isEven = scope:Computed(function(use)
+	local isEven = scope:Computed(function(use, scope)
 		return use(number) % 2 == 0
 	end)
 	scope:Observer(isEven):onChange(function()

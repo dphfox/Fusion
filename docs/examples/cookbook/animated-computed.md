@@ -73,7 +73,7 @@ turns it into a UDim2 position for The Thing to use. You can imagine this as the
 teleport around.
 
 ```Lua
-			scope:Computed(function(use)
+			scope:Computed(function(use, scope)
 				local CENTRE = UDim2.fromScale(0.5, 0.5)
 				local OFFSCREEN = UDim2.fromScale(-0.5, 0.5)
 				return if use(showTheThing) then CENTRE else OFFSCREEN
@@ -87,7 +87,7 @@ independently.
 
 ```Lua
 		Position = scope:Tween(
-			scope:Computed(function(use)
+			scope:Computed(function(use, scope)
 				local CENTRE = UDim2.fromScale(0.5, 0.5)
 				local OFFSCREEN = UDim2.fromScale(-0.5, 0.5)
 				return if use(showTheThing) then CENTRE else OFFSCREEN

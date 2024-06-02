@@ -91,7 +91,7 @@ cause a fatal error that stops your program from running.
 	print("before")
 	print("before")
 
-	scope:Computed(function()
+	scope:Computed(function(use, scope)
 		error("Kaboom!")
 	end)
 
@@ -128,7 +128,7 @@ if any.
 
 ```Lua hl_lines="17"
 local number = scope:Value(1)
-local double = scope:Computed(function(use)
+local double = scope:Computed(function(use, scope)
 	local number = use(number)
 	assert(number ~= 3, "I don't like the number 3")
 	return number * 2
@@ -166,7 +166,7 @@ what should be done about it.
 
 ```Lua hl_lines="4-7 24"
 local number = scope:Value(1)
-local double = scope:Computed(function(use)
+local double = scope:Computed(function(use, scope)
 	local number = use(number)
 	local ok, result = pcall(function()
 		assert(number ~= 3, "I don't like the number 3")
@@ -217,7 +217,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "pcall"
 
 	```Lua
-	local double = scope:Computed(function(use)
+	local double = scope:Computed(function(use, scope)
 		local ok, result = pcall(function()
 			local number = use(number)
 			assert(number ~= 3, "I don't like the number 3")
@@ -234,7 +234,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "xpcall"
 
 	```Lua
-	local double = scope:Computed(function(use)
+	local double = scope:Computed(function(use, scope)
 		local _, result = xpcall(
 			function()
 				local number = use(number)
@@ -252,7 +252,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "Safe"
 
 	```Lua
-	local double = scope:Computed(function(use)
+	local double = scope:Computed(function(use, scope)
 		return Safe {
 			try = function()
 				local number = use(number)
@@ -329,7 +329,7 @@ You must move the `Safe` closer to the source of the error, as discussed before.
 ```Lua
 -- The `Safe` and the the `Computed` have swapped places.
 -- The error is now caught by the `Safe` instead of the `Computed`.
-local result = scope:Computed(function()
+local result = scope:Computed(function(use, scope)
 	return Safe {
 		try = function()
 			error("Kaboom!")

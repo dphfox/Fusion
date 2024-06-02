@@ -41,7 +41,7 @@ local function Spinner(
 		BackgroundTransparency = 1,
 		Image = "rbxassetid://your-loading-spinner-image", -- replace this!
 
-		Rotation = scope:Computed(function(use)
+		Rotation = scope:Computed(function(use, scope)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
 	}
@@ -96,7 +96,7 @@ local function Spinner(
 The `CurrentTime` is used to drive the rotation of the loading spinner.
 
 ```Lua
-		Rotation = scope:Computed(function(use)
+		Rotation = scope:Computed(function(use, scope)
 			return (use(props.CurrentTime) * SPIN_DEGREES_PER_SECOND) % 360
 		end)
 ```

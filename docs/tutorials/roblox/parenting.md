@@ -121,7 +121,7 @@ local folder = scope:New "Folder" {
             Color = Color3.new(1, 0, 0)
         },
         -- state object containing children (or nil)
-        scope:Computed(function(use)
+        scope:Computed(function(use, scope)
             return if use(includeModel)
                 then modelChildren:GetChildren() -- array of children
                 else nil

@@ -20,7 +20,7 @@ local function Button(
     local isHovering = scope:Value(false)
 
     return scope:New "TextButton" {
-        BackgroundColor3 = scope:Computed(function(use)
+        BackgroundColor3 = scope:Computed(function(use, scope)
             return if use(isHovering) then HOVER_COLOUR else REST_COLOUR
         end),
 
@@ -153,7 +153,7 @@ local playNarration = scope:Value(true)
 
 local checkBox = scope:CheckBox {
     Text = "Play sounds",
-    IsChecked = scope:Computed(function(use)
+    IsChecked = scope:Computed(function(use, scope)
         local anyChecked = use(playMusic) or use(playSFX) or use(playNarration)
         local allChecked = use(playMusic) and use(playSFX) and use(playNarration)
 
