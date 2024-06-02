@@ -73,6 +73,15 @@ type ContextualIsMethods = {
 	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
+--  A variant of xpcall() with a fallback value
+export type SafeConstructor = <Success, Fail>(
+    callbacks: {
+        try: () -> Success,
+        fallback: (err: unknown) -> Fail
+    }
+) -> Success | Fail
+
+
 -- A graph object which can have dependents.
 export type Dependency = ScopedObject & {
 	dependentSet: {[Dependent]: unknown}
@@ -251,6 +260,7 @@ export type ContextualConstructor = <T>(defaultValue: T) -> Contextual<T>
 export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
+	Safe: SafeConstructor,
 
 	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,
