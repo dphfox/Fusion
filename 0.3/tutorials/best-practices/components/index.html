@@ -3127,9 +3127,7 @@ There's a number of advantages to this:</p>
 <span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;ReplicatedStorage&quot;</span><span class="p">).</span><span class="n">Fusion</span><span class="p">)</span>
 <span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">PopUp</span><span class="p">(</span>
@@ -3149,11 +3147,9 @@ There's a number of advantages to this:</p>
 
         <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">scope</span><span class="p">:</span><span class="n">Message</span> <span class="p">{</span>
-                <span class="n">Scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">,</span>
                 <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Message</span>
             <span class="p">}</span>
             <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-                <span class="n">Scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">,</span>
                 <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">DismissText</span>
             <span class="p">}</span>
         <span class="p">}</span>
