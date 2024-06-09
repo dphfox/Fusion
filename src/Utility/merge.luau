@@ -24,6 +24,8 @@ local function merge(
 				into[key] = value
 			elseif overwrite == "none" then
 				External.logError("mergeConflict", nil, tostring(key))
+			else
+				into[key] = value
 			end
 		end
 		return merge(if overwrite == "first" then "none" else overwrite, into, ...)
