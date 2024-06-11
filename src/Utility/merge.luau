@@ -20,7 +20,7 @@ local function merge(
 		return into
 	else
 		for key, value in from do
-			if into[key] == nil and overwrite == "none" then
+			if into[key] ~= nil and overwrite == "none" then
 				External.logError("mergeConflict", nil, tostring(key))
 			else
 				into[key] = value
