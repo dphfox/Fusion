@@ -80,7 +80,7 @@ local myName = Value("Daniel")
 
 -- This creates a state object from a calculation.
 -- It determines its own value automatically.
-local myGreeting = Computed(function(use)
+local myGreeting = scope:Computed(function(use)
 	return "Hello! My name is " .. use(myName)
 end)
 ```
@@ -197,13 +197,13 @@ your program. That means it's easy to process them afterwards.
 
 ```Lua
 -- You can round the animated health to whole numbers.
-local wholeHealth = Computed(function(use)
+local wholeHealth = scope:Computed(function(use)
 	return math.round(use(health))
 end)
 
 -- You can format it as text and put it in some UI, too.
 local myText = New "TextLabel" {
-	Text = Computed(function(use)
+	Text = scope:Computed(function(use)
 		return "Health: " .. use(wholeHealth)
 	end)
 }
@@ -218,7 +218,7 @@ local TWEEN_FAST = TweenInfo.new(0.5, Enum.EasingStyle.Elastic)
 local TWEEN_SLOW = TweenInfo.new(2, Enum.EasingStyle.Sine)
 
 -- Choose more dramatic styles at low health...
-local style = Computed(function(use)
+local style = scope:Computed(function(use)
 	return if use(health) < 20 then TWEEN_FAST else TWEEN_SLOW
 end)
 
