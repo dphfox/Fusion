@@ -17,7 +17,7 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local forObject = ForKeys(scope, {}, function(use, scope, key)
+		local forObject = ForKeys(scope, {}, function()
 			-- intentionally blank
 		end :: any)
 
@@ -33,7 +33,7 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local forObject = ForKeys(scope, {}, function(use, scope, key)
+		local forObject = ForKeys(scope, {}, function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
