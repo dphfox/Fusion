@@ -17,7 +17,7 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local computed = Computed(scope, function(use, scope)
+		local computed = Computed(scope, function()
 			-- intentionally blank
 		end :: any)
 
@@ -33,7 +33,7 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local computed = Computed(scope, function(use, scope)
+		local computed = Computed(scope, function()
 			-- intentionally blank
 		end :: any)
 		expect(function()
@@ -45,7 +45,7 @@ return function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local computed = Computed(scope, function(use, scope)
+		local computed = Computed(scope, function(use)
 			return use(5)
 		end)
 		expect(peek(computed)).to.equal(5)
@@ -57,7 +57,7 @@ return function()
 		
 		local scope = {}
 		local dependency = Value(scope, 5 :: number | string)
-		local computed = Computed(scope, function(use, scope)
+		local computed = Computed(scope, function(use)
 			return use(dependency)
 		end)
 		expect(peek(computed)).to.equal(5)
@@ -71,7 +71,7 @@ return function()
 		
 		local scope = {}
 		local dependency = Value(scope, 5)
-		local computed = Computed(scope, function(use, scope)
+		local computed = Computed(scope, function(use)
 			assert(use(dependency) ~= 13, "This is an intentional error from a unit test")
 			return use(dependency)
 		end)

@@ -54,7 +54,7 @@ return function()
 			numCalls += 1
 			local k, v = peek(inputPair).key, peek(inputPair).value
 			seen[k] = v
-			return Computed(scope, function(use, scope)
+			return Computed(scope, function(use)
 				return {key = string.upper(use(inputPair).key), value = (use(inputPair) :: any).value * 10}
 			end)
 		end)
@@ -76,7 +76,7 @@ return function()
 		local numCalls = 0
 		local forObject = For(scope, data, function(scope, inputPair)
 			numCalls += 1
-			return Computed(scope, function(use, scope)
+			return Computed(scope, function(use)
 				return {key = string.upper(use(inputPair).key), value = (use(inputPair) :: any).value * 10}
 			end)
 		end)
@@ -139,7 +139,7 @@ return function()
 		local data = {first = 1, second = 2, third = 3}
 		local omitThird = Value(scope, false)
 		local forObject = For(scope, data, function(scope, inputPair)
-			return Computed(scope, function(use, scope)
+			return Computed(scope, function(use)
 				if use(inputPair).key == "second" then
 					return {key = use(inputPair).key, value = nil}
 				elseif use(inputPair).key == "third" and use(omitThird) then
@@ -171,7 +171,7 @@ return function()
 		local numCalls = 0
 		local forObject = For(scope, data, function(scope, inputPair)
 			numCalls += 1
-			return Computed(scope, function(use, scope)
+			return Computed(scope, function(use)
 				return {key = nil, value = use(inputPair).value}
 			end)
 		end)
