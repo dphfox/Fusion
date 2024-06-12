@@ -18,6 +18,7 @@ local updateAll = require(Package.State.updateAll)
 local isState = require(Package.State.isState)
 local peek = require(Package.State.peek)
 local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+local Computed = require(Package.State.Computed)
 
 local class = {}
 class.type = "State"
@@ -177,13 +178,19 @@ end
 
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
-	goal: Types.UsedAs<T>,
+	goal: Types.UsedAs<T> | (use: Types.Use) -> T,
 	speed: Types.UsedAs<number>?,
 	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
 	if typeof(scope) ~= "table" or isState(scope) then
 		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
+
+	-- Wrap goal in a Computed if it is a function
+	if typeof(goal) == "function" then
+		goal = Computed(goal)
+	end
+
 	-- apply defaults for speed and damping
 	if speed == nil then
 		speed = 10
