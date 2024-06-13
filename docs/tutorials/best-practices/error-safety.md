@@ -166,7 +166,7 @@ what should be done about it.
 
 ```Lua hl_lines="4-7 24"
 local number = scope:Value(1)
-local double = scope:Computed(function()
+local double = scope:Computed(function(use)
 	local number = use(number)
 	local ok, result = pcall(function()
 		assert(number ~= 3, "I don't like the number 3")
@@ -217,7 +217,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "pcall"
 
 	```Lua
-	local double = scope:Computed(function()
+	local double = scope:Computed(function(use)
 		local ok, result = pcall(function()
 			local number = use(number)
 			assert(number ~= 3, "I don't like the number 3")
@@ -234,7 +234,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "xpcall"
 
 	```Lua
-	local double = scope:Computed(function()
+	local double = scope:Computed(function(use)
 		local _, result = xpcall(
 			function()
 				local number = use(number)
@@ -252,7 +252,7 @@ consider this next snippet. You can write it using `Safe`, `xpcall` and `pcall`
 === "Safe"
 
 	```Lua
-	local double = scope:Computed(function()
+	local double = scope:Computed(function(use)
 		return Safe {
 			try = function()
 				local number = use(number)

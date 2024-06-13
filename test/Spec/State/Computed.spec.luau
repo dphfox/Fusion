@@ -88,7 +88,7 @@ return function()
 		
 		local scope = {}
 		local destructed = false
-		local _ = Computed(scope, function(innerScope)
+		local _ = Computed(scope, function(_, innerScope)
 			table.insert(innerScope :: any, function()
 				destructed = true
 			end)
