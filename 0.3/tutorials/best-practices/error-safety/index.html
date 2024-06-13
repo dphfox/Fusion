@@ -3081,7 +3081,7 @@ answer:</p>
 an error to occur, you should always handle the error explicitly, and define
 what should be done about it.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
 <span class="hll">    <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
 </span><span class="hll">        <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
@@ -3121,7 +3121,7 @@ consider this next snippet. You can write it using <code>Safe</code>, <code>xpca
 <div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">pcall</label><label for="__tabbed_4_2">xpcall</label><label for="__tabbed_4_3">Safe</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">ok</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
         <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="nb">assert</span><span class="p">(</span><span class="n">number</span> <span class="o">~=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;I don&#39;t like the number 3&quot;</span><span class="p">)</span>
@@ -3136,7 +3136,7 @@ consider this next snippet. You can write it using <code>Safe</code>, <code>xpca
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kd">local</span> <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">xpcall</span><span class="p">(</span>
         <span class="kr">function</span><span class="p">()</span>
             <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
@@ -3152,7 +3152,7 @@ consider this next snippet. You can write it using <code>Safe</code>, <code>xpca
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">Safe</span> <span class="p">{</span>
         <span class="n">try</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
             <span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>

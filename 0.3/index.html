@@ -2945,9 +2945,9 @@ program. You can peek at their value at any time.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; table</span>
 
 <span class="c1">-- ...and you can peek at their value (or ‘state’) at any time.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 0.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; 0.0</span>
 <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">:</span><span class="n">get</span><span class="p">())</span> <span class="c1">--&gt; 5.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; 5.0</span>
 </code></pre></div>
 <p>You can write out your logic using Fusion's built-in state objects.
 Here's the two basic ones, Value and Computed:</p>
@@ -2957,8 +2957,8 @@ Here's the two basic ones, Value and Computed:</p>
 
 <span class="c1">-- This creates a state object from a calculation.</span>
 <span class="c1">-- It determines its own value automatically.</span>
-<span class="kd">local</span> <span class="n">myGreeting</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="s2">&quot;Hello! My name is &quot;</span> <span class="o">..</span> <span class="n">myName</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+<span class="kd">local</span> <span class="n">myGreeting</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="s2">&quot;Hello! My name is &quot;</span> <span class="o">..</span> <span class="n">use</span><span class="p">(</span><span class="n">myName</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>To watch what a state object does, you can use an Observer.
@@ -2968,7 +2968,7 @@ For example, you can run some code when an object changes value.</p>
 
 <span class="c1">-- Let’s print out the greeting when there’s a new one.</span>
 <span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">myObserver</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">myGreeting</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myGreeting</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- This will run the code above!</span>
@@ -3046,14 +3046,14 @@ want - not just instance properties.</p>
 <p>Tween and Spring are state objects, just like anything else that changes in
 your program. That means it's easy to process them afterwards.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- You can round the animated health to whole numbers.</span>
-<span class="kd">local</span> <span class="n">wholeHealth</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="n">math</span><span class="p">.</span><span class="n">round</span><span class="p">(</span><span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">())</span>
+<span class="kd">local</span> <span class="n">wholeHealth</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">math</span><span class="p">.</span><span class="n">round</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- You can format it as text and put it in some UI, too.</span>
 <span class="kd">local</span> <span class="n">myText</span> <span class="o">=</span> <span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kr">return</span> <span class="s2">&quot;Health: &quot;</span> <span class="o">..</span> <span class="n">wholeHealth</span><span class="p">:</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">Text</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="s2">&quot;Health: &quot;</span> <span class="o">..</span> <span class="n">use</span><span class="p">(</span><span class="n">wholeHealth</span><span class="p">)</span>
     <span class="kr">end</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -3064,8 +3064,8 @@ easy to swap out animations or disable them when needed.</p>
 <span class="kd">local</span> <span class="n">TWEEN_SLOW</span> <span class="o">=</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingStyle</span><span class="p">.</span><span class="n">Sine</span><span class="p">)</span>
 
 <span class="c1">-- Choose more dramatic styles at low health...</span>
-<span class="kd">local</span> <span class="n">style</span> <span class="o">=</span> <span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kr">return</span> <span class="kr">if</span> <span class="n">health</span><span class="p">:</span><span class="n">get</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="kr">then</span> <span class="n">TWEEN_FAST</span> <span class="kr">else</span> <span class="n">TWEEN_SLOW</span>
+<span class="kd">local</span> <span class="n">style</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">health</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="kr">then</span> <span class="n">TWEEN_FAST</span> <span class="kr">else</span> <span class="n">TWEEN_SLOW</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- Plug it right into your animation!</span>

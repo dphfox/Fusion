@@ -2857,7 +2857,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
 <span class="kd">local</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">use</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
