@@ -34,7 +34,7 @@ return {
 	mistypedSpringSpeed = "The speed of a spring must be a number. (got a %s)",
 	mistypedTweenInfo = "The tween info of a tween must be a TweenInfo. (got a %s)",
 	noTaskScheduler = "Fusion is not connected to an external task scheduler.",
-	possiblyOutlives = "%s will be destroyed before %s; review the order they're created in, and what scopes they belong to. See discussion #292 on GitHub for advice.",
+	possiblyOutlives = "%s will be destroyed before %s; %s. To fix this, review the order they're created in, and what scopes they belong to. See discussion #292 on GitHub for advice.",
 	propertySetError = "Error setting property: ERROR_MESSAGE",
 	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion #292 on GitHub for advice.",
 	springNanGoal = "A spring was given a NaN goal, so some simulation has been skipped. Ensure no springs have NaN goals.",

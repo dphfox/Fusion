@@ -18,6 +18,8 @@ local checkLifetime = require(Package.Memory.checkLifetime)
 local castToGraph = require(Package.Graph.castToGraph)
 local depend = require(Package.Graph.depend)
 local evaluate = require(Package.Graph.evaluate)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 type Self = Types.Observer & {
 	_watchingGraph: Types.GraphObject?,
@@ -57,6 +59,7 @@ local function Observer(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Observer"
 	table.insert(scope, destroy)
 
 	if self._watchingGraph ~= nil then

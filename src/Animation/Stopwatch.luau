@@ -19,6 +19,8 @@ local depend = require(Package.Graph.depend)
 local change = require(Package.Graph.change)
 -- State
 local peek = require(Package.State.peek)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 export type Stopwatch = Types.StateObject<number> & {
 	zero: (Stopwatch) -> (),
@@ -62,6 +64,7 @@ local function Stopwatch(
 		self.scope = nil
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Stopwatch"
 	table.insert(scope, destroy)
 
 	checkLifetime.bOutlivesA(

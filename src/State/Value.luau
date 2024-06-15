@@ -17,6 +17,7 @@ local change = require(Package.Graph.change)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
 local never = require(Package.Utility.never)
+local nicknames = require(Package.Utility.nicknames)
 
 type Self<T, S> = Types.Value<T, S>
 
@@ -49,6 +50,7 @@ local function Value<T>(
 		self.scope = nil
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Value"
 	table.insert(scope, destroy)
 	return self
 end

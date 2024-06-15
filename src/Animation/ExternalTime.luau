@@ -12,6 +12,8 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 -- Graph
 local change = require(Package.Graph.change)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 type ExternalTime = Types.StateObject<number>
 
@@ -48,6 +50,7 @@ local function ExternalTime(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "ExternalTime"
 	table.insert(scope, destroy)
 	table.insert(allTimers, self)
 	return self

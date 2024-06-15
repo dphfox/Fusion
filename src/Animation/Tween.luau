@@ -26,6 +26,8 @@ local Stopwatch = require(Package.Animation.Stopwatch)
 local lerpType = require(Package.Animation.lerpType)
 local getTweenRatio = require(Package.Animation.getTweenRatio)
 local getTweenDuration = require(Package.Animation.getTweenDuration)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 export type Self<T> = Types.Tween<T> & {
 	_activeDuration: number,
@@ -86,6 +88,7 @@ local function Tween<T>(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Tween"
 	table.insert(scope, destroy)
 
 	if goalState ~= nil then

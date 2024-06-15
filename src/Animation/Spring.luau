@@ -28,6 +28,8 @@ local Stopwatch = require(Package.Animation.Stopwatch)
 local packType = require(Package.Animation.packType)
 local unpackType = require(Package.Animation.unpackType)
 local springCoefficients = require(Package.Animation.springCoefficients)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 local EPSILON = 0.00001
 
@@ -106,6 +108,7 @@ local function Spring<T>(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Spring"
 	table.insert(scope, destroy)
 	
 	if goalState ~= nil then

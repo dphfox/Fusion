@@ -28,6 +28,8 @@ local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local checkLifetime = require(Package.Memory.checkLifetime)
 local scopePool = require(Package.Memory.scopePool)
+-- Utility
+local nicknames = require(Package.Utility.nicknames)
 
 type Self<T, S> = Types.Computed<T> & {
 	_innerScope: Types.Scope<S>?,
@@ -75,6 +77,7 @@ local function Computed<T, S>(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "Computed"
 	table.insert(scope, destroy)
 	return self
 end

@@ -18,6 +18,7 @@ local castToState = require(Package.State.castToState)
 local ForTypes = require(Package.State.For.ForTypes)
 -- Utility
 local never = require(Package.Utility.never)
+local nicknames = require(Package.Utility.nicknames)
 
 local Disassembly = require(Package.State.For.Disassembly)
 
@@ -64,6 +65,7 @@ local function For<S, KI, KO, VI, VO>(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "For"
 	table.insert(scope, destroy)
 
 	return self

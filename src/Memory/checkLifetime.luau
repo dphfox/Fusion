@@ -34,8 +34,8 @@ function checkLifetime.formatters.boundProperty(
 	property: string
 ): (string, string)
 	local selfName = instance.Name
-	local boundName = nameOf(bound, "bound")
-	return `The {boundName}, bound to the {property} property,`, `the {selfName} instance`
+	local boundName = nameOf(bound, "value")
+	return `The {boundName} (bound to the {property} property)`, `the {selfName} instance`
 end
 
 function checkLifetime.formatters.boundAttribute(
@@ -44,8 +44,8 @@ function checkLifetime.formatters.boundAttribute(
 	attribute: string
 ): (string, string)
 	local selfName = instance.Name
-	local boundName = nameOf(bound, "bound")
-	return `The {boundName}, bound to the {attribute} attribute,`, `the {selfName} instance`
+	local boundName = nameOf(bound, "value")
+	return `The {boundName} (bound to the {attribute} attribute)`, `the {selfName} instance`
 end
 
 function checkLifetime.formatters.propertyOutputsTo(
@@ -54,8 +54,8 @@ function checkLifetime.formatters.propertyOutputsTo(
 	property: string
 ): (string, string)
 	local selfName = instance.Name
-	local boundName = nameOf(bound, "bound")
-	return `The {boundName}, which the {property} property outputs to,`, `the {selfName} instance`
+	local boundName = nameOf(bound, "object")
+	return `The {boundName} (which the {property} property outputs to)`, `the {selfName} instance`
 end
 
 function checkLifetime.formatters.attributeOutputsTo(
@@ -64,8 +64,8 @@ function checkLifetime.formatters.attributeOutputsTo(
 	attribute: string
 ): (string, string)
 	local selfName = instance.Name
-	local boundName = nameOf(bound, "bound")
-	return `The {boundName}, which the {attribute} attribute outputs to,`, `the {selfName} instance`
+	local boundName = nameOf(bound, "object")
+	return `The {boundName} (which the {attribute} attribute outputs to)`, `the {selfName} instance`
 end
 
 function checkLifetime.formatters.refOutputsTo(
@@ -73,8 +73,8 @@ function checkLifetime.formatters.refOutputsTo(
 	bound: unknown
 ): (string, string)
 	local selfName = instance.Name
-	local boundName = nameOf(bound, "bound")
-	return `The {boundName}, which the Ref key outputs to,`, `the {selfName} instance`
+	local boundName = nameOf(bound, "object")
+	return `The {boundName} (which the Ref key outputs to)`, `the {selfName} instance`
 end
 
 function checkLifetime.formatters.animationGoal(
@@ -120,7 +120,15 @@ function checkLifetime.bOutlivesA<A, B, Args...>(
 	if scopeB == nil then
 		External.logError("useAfterDestroy", nil, formatter(a, b, ...))
 	elseif whichLivesLonger(scopeA, a, scopeB, b) == "definitely-a" then
-		External.logWarn("possiblyOutlives", formatter(a, b, ...))
+		local aName, bName = formatter(a, b, ...)
+		External.logWarn(
+			"possiblyOutlives",
+			aName, bName, 
+			if scopeA == scopeB then
+				"they're in the same scope, but the latter is destroyed too quickly"
+			else
+				"the latter is in a different scope that gets destroyed too quickly"
+		)
 	end
 end
 return checkLifetime

@@ -22,6 +22,7 @@ local deriveScope = require(Package.Memory.deriveScope)
 local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
+local nicknames = require(Package.Utility.nicknames)
 
 type Self<S, KI, KO, VI, VO> = ForTypes.Disassembly<S, KI, KO, VI, KO> & {
 	scope: (S & Types.Scope<unknown>)?,
@@ -78,6 +79,7 @@ local function Disassembly<S, KI, KO, VI, VO>(
 		end
 	end
 	self.oldestTask = destroy
+	nicknames[self.oldestTask] = "For (internal disassembler)"
 	table.insert(scope, destroy)
 	
 	return self
