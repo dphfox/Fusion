@@ -516,9 +516,10 @@ Roblox's task scheduling APIs.
 ## possiblyOutlives
 
 ```
-The use()-d Value object will be destroyed before the Computed that is use()-ing 
-it; review the order they're created in, and what scopes they belong to. See
-discussion #292 on GitHub for advice.
+The Computed (bound to the PaddingLeft property) will be destroyed before the 
+UIPadding instance; the latter is in a different scope that gets destroyed too 
+quickly. To fix this, review the order they're created in, and what scopes they 
+belong to. See discussion #292 on GitHub for advice. 
 ```
 
 **Thrown by:**
