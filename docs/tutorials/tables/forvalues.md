@@ -6,7 +6,7 @@ It supports both constants and state objects.
 local numbers = {1, 2, 3, 4, 5}
 local multiplier = Value(2)
 
-local multiplied = ForValues(numbers, function(use, num)
+local multiplied = ForValues(numbers, function(use, scope, num)
 	return num * use(multiplier)
 end)
 
