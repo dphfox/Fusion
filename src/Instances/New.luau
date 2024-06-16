@@ -16,8 +16,6 @@ local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
 type Component = (Types.PropertyTable) -> Instance
 
-local componentCache: {[string]: Component} = {}
-
 local function New(
 	scope: Types.Scope<unknown>,
 	className: string
@@ -27,31 +25,29 @@ local function New(
 		External.logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
 	end
 
-	local component = componentCache[className]
-	if component == nil then
-		component = function(
-			props: Types.PropertyTable
-		): Instance
-			local ok, instance = pcall(Instance.new, className)
-			if not ok then
-				External.logError("cannotCreateClass", nil, className)
-			end
-
-			local classDefaults = defaultProps[className]
-			if classDefaults ~= nil then
-				for defaultProp, defaultValue in pairs(classDefaults) do
-					(instance :: any)[defaultProp] = defaultValue
-				end
-			end
-
-			table.insert(scope, instance)
-			applyInstanceProps(scope, props, instance)
-
-			return instance
+	-- This might look appealing to try and cache. But please don't. The scope
+	-- upvalue is shared between the two curried function calls, so this will
+	-- open incredible cross-codebase wormholes like you've never seen before.
+	return function(
+		props: Types.PropertyTable
+	): Instance
+		local ok, instance = pcall(Instance.new, className)
+		if not ok then
+			External.logError("cannotCreateClass", nil, className)
 		end
-		componentCache[className] = component
+
+		local classDefaults = defaultProps[className]
+		if classDefaults ~= nil then
+			for defaultProp, defaultValue in pairs(classDefaults) do
+				(instance :: any)[defaultProp] = defaultValue
+			end
+		end
+
+		table.insert(scope, instance)
+		applyInstanceProps(scope, props, instance)
+
+		return instance
 	end
-	return component
 end
 
 return New
