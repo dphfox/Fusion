@@ -6,7 +6,7 @@ It supports both constants and state objects.
 local data = {Red = "foo", Blue = "bar"}
 local prefix = scope:Value("Key_")
 
-local renamed = scope:ForKeys(data, function(use, key)
+local renamed = scope:ForKeys(data, function(use, scope, key)
 	return use(prefix) .. key
 end)
 

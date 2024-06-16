@@ -263,11 +263,9 @@ Here's an example of how you could split up some components into modules:
             
             [Children] = {
                 scope:Message {
-					Scope = scope,
                     Text = props.Message
                 }
                 scope:Button {
-					Scope = scope,
                     Text = props.DismissText
                 }
             }
