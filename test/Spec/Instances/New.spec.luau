@@ -53,5 +53,8 @@ return function()
 		New (scope2, "Frame") {}
 		expect(#scope1).to.equal(1)
 		expect(#scope2).to.equal(1)
+		
+		doCleanup(scope1)
+		doCleanup(scope2)
 	end)
 end
