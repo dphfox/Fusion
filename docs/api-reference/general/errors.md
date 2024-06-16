@@ -513,6 +513,26 @@ Roblox's task scheduling APIs.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## poisonedScope
+
+```
+Attempted to use a scope after it's been destroyed; `doCleanup()` was previously
+called on this scope. Ensure you are not reusing scopes after cleanup.
+```
+
+**Thrown by:**
+scopes after being passed to [`doCleanup`](../../memory/members/doCleanup)
+
+If you attempt to read from, or write to, a scope that's been destroyed, this
+message is shown. After a scope has been cleaned up, your code should forget the
+reference to it, as it is no longer valid.
+
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## possiblyOutlives
 
 ```

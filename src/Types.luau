@@ -272,7 +272,7 @@ export type ExternalProvider = {
 	policies: {
 		allowWebLinks: boolean
 	},
-	
+
 	logErrorNonFatal: (
 		errorString: string
 	) -> (),
