@@ -73,7 +73,6 @@ local function Disassembly<S, KI, KO, VI, VO>(
 		for subObject in self._subObjects do
 			if subObject.maybeScope ~= nil then
 				doCleanup(subObject.maybeScope)
-				scopePool.clearAndGive(subObject.maybeScope)
 				subObject.maybeScope = nil
 			end
 		end
@@ -187,7 +186,6 @@ function class._evaluate<S, KI, KO, VI, VO>(
 		else -- Too many sub objects for the number of pairs.
 			if subObject.maybeScope ~= nil then
 				doCleanup(subObject.maybeScope)
-				scopePool.clearAndGive(subObject.maybeScope)
 				subObject.maybeScope = nil
 			end
 		end

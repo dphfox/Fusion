@@ -22,10 +22,10 @@ local function poisonScope(
 	table.clear(scope)
 	setmetatable(scope :: any, {
 		_FUSION_POISONED = true,
-		__index = function(self)
+		__index = function()
 			External.logError("poisonedScope", nil, context)
 		end,
-		__newindex = function(self)
+		__newindex = function()
 			External.logError("poisonedScope", nil, context)
 		end
 	})

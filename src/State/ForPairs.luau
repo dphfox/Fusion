@@ -81,7 +81,7 @@ local function ForPairs<KI, KO, VI, VO, S>(
 	destructor: unknown?
 ): Types.For<KO, VO>
 	if typeof(inputTable) == "function" then
-		External.logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(use, scope, key, value) ... end)")
+		External.logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
 	elseif destructor ~= nil then
 		External.logWarn("destructorRedundant", "ForPairs")
 	end

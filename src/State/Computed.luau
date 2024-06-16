@@ -73,7 +73,6 @@ local function Computed<T, S>(
 		end
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
-			scopePool.clearAndGive(self._innerScope)
 		end
 	end
 	self.oldestTask = destroy
@@ -115,17 +114,18 @@ function class._evaluate<T, S>(
 		local similar = isSimilar(self._EXTREMELY_DANGEROUS_usedAsValue, newValue)
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
-			scopePool.clearAndGive(self._innerScope)
 		end
-		self._EXTREMELY_DANGEROUS_usedAsValue = newValue
 		self._innerScope = innerScope
+
+		self._EXTREMELY_DANGEROUS_usedAsValue = newValue
 		return not similar
 	else
 		local errorObj = (newValue :: any) :: Types.Error
 		if innerScope ~= nil then
 			doCleanup(innerScope)
-			scopePool.clearAndGive(innerScope)
 		end
+		innerScope = nil
+		
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
 		External.logErrorNonFatal("callbackError", errorObj)

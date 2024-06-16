@@ -66,9 +66,8 @@ local function doCleanup(
 			end
 
 			if External.isTimeCritical() then
-				-- If this is a mixed table, it isn't a valid scope.
 				scopePool.giveIfEmpty(task)
-			elseif next(task) == nil then
+			else
 				poisonScope(task, "`doCleanup()` was previously called on this scope. Ensure you are not reusing scopes after cleanup.")
 			end
 		end
