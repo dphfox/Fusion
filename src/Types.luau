@@ -243,6 +243,7 @@ export type Fusion = {
 	scoped: ScopedConstructor,
 	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
 	innerScope: <T>(existing: Scope<T>) -> Scope<T>,
+	Safe: <Success, Fail>({try: () -> Success, fallback: (err: unknown) -> Fail}) -> Success | Fail,
 
 	peek: Use,
 	Value: ValueConstructor,
