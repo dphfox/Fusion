@@ -257,6 +257,7 @@ export type Fusion = {
 	Hydrate: HydrateConstructor,
 
 	Ref: SpecialKey,
+	Child: ({Child}) -> Child,
 	Children: SpecialKey,
 	Out: (propertyName: string) -> SpecialKey,
 	OnEvent: (eventName: string) -> SpecialKey,
