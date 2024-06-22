@@ -98,7 +98,6 @@ local function Tween<T>(
 			goalState.scope, goalState.oldestTask,
 			checkLifetime.formatters.animationGoal
 		)
-		depend(self, goalState)
 	end
 
 	local tweenInfoState = castToState(tweenInfo)

@@ -117,7 +117,6 @@ local function Spring<T>(
 			goalState.scope, goalState.oldestTask,
 			checkLifetime.formatters.animationGoal
 		)
-		depend(self, goalState)
 	end
 	local speedState = castToState(speed)
 	if speedState ~= nil then
