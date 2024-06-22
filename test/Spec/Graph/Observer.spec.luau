@@ -185,6 +185,8 @@ return function()
 		expect(numFires).to.equal(0)
 		value:set(10)
 		expect(numFires).to.equal(1)
+		value:set(20)
+		expect(numFires).to.equal(2)
 
 		doCleanup(scope)
 	end)
