@@ -8,6 +8,7 @@ local Fusion = ReplicatedStorage.Fusion
 local Observer = require(Fusion.Graph.Observer)
 local Value = require(Fusion.State.Value)
 local Computed = require(Fusion.State.Computed)
+local innerScope = require(Fusion.Memory.innerScope)
 local doCleanup = require(Fusion.Memory.doCleanup)
 
 return function()
@@ -122,8 +123,7 @@ return function()
 		local scope = {}
 		local dependency = Value(scope, 5)
 		
-		local subScope = {}
-		table.insert(scope, subScope)
+		local subScope = innerScope(scope)
 		local observer = Observer(subScope, dependency)
 
 		local numFires = 0
