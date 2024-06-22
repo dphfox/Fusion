@@ -18,7 +18,7 @@ local function depend<T>(
 	dependency: Types.GraphObject
 ): ()
 	-- Ensure dependencies are evaluated and up-to-date
-	-- when they are depended on. Also, ewly created objects
+	-- when they are depended on. Also, newly created objects
 	-- might not have any transitive dependencies captured yet,
 	-- so ensure that they're present.
 	evaluate(dependency, false)
