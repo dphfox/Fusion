@@ -7,10 +7,6 @@ local Fusion = ReplicatedStorage.Fusion
 
 local springCoefficients = require(Fusion.Animation.springCoefficients)
 
-print(springCoefficients(3.6, 0.2, 6.3))
-print(springCoefficients(0.24, 1, 3.6))
-print(springCoefficients(1.74, 8.4, 7.2))
-
 return function()
 	local it = getfenv().it
 
@@ -43,7 +39,7 @@ return function()
 
 	local ERROR_MARGIN = 0.00001
 
-	it("should return reasonable underdamped values", function()
+	it("should return the same underdamped values as before", function()
 		local expect = getfenv().expect
 
 		local posPos, posVel, velPos, velVel = springCoefficients(3.6, 0.2, 6.3)
@@ -54,7 +50,7 @@ return function()
 		expect(velVel).to.be.near(-0.009932456541725759, ERROR_MARGIN)
 	end)
 
-	it("should return reasonable critically damped values", function()
+	it("should return the same critically damped values as before", function()
 		local expect = getfenv().expect
 
 		local posPos, posVel, velPos, velVel = springCoefficients(0.24, 1, 3.6)
@@ -65,7 +61,7 @@ return function()
 		expect(velVel).to.be.near(0.057320302809524805, ERROR_MARGIN)
 	end)
 
-	it("should return reasonable overdamped values", function()
+	it("should return the same overdamped values as before", function()
 		local expect = getfenv().expect
 		
 		local posPos, posVel, velPos, velVel = springCoefficients(1.74, 8.4, 7.2)
