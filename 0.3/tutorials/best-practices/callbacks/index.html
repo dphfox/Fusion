@@ -1087,8 +1087,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
-  <a href="#render-callbacks" class="md-nav__link">
-    Render Callbacks
+  <a href="#children-callbacks" class="md-nav__link">
+    Children Callbacks
   </a>
   
 </li>
@@ -2850,8 +2850,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 </li>
       
         <li class="md-nav__item">
-  <a href="#render-callbacks" class="md-nav__link">
-    Render Callbacks
+  <a href="#children-callbacks" class="md-nav__link">
+    Children Callbacks
   </a>
   
 </li>
@@ -3014,14 +3014,14 @@ to do your own processing first:</p>
 </code></pre></div>
 <p>This is the primary way components talk to their controlling code in Fusion.</p>
 <hr />
-<h2 id="render-callbacks">Render Callbacks<a class="headerlink" href="#render-callbacks" title="Permanent link">&para;</a></h2>
+<h2 id="children-callbacks">Children Callbacks<a class="headerlink" href="#children-callbacks" title="Permanent link">&para;</a></h2>
 <p>There's a special kind of callback that's often used when you need more control
 over the children you're putting inside of a component.</p>
 <p>When your component asks for <code>[Children]</code>, the controlling code will construct
 some children for you ahead of time, and pass it into that <code>[Children]</code> key. You
 don't have any control over what that process looks like.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This snippet...</span>
-<span class="kd">local</span> <span class="n">preRendered</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
+<span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
             <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span> 
@@ -3042,7 +3042,7 @@ don't have any control over what that process looks like.</p>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">local</span> <span class="n">preRendered</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
+<span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">children</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -3052,7 +3052,7 @@ want to pass in.</p>
 <p>This callback should be given a descriptive name like <code>Build</code>, <code>Render</code>, or
 whatever terminology fits your code base. Try and be consistent across all of
 your components.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">preRendered</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
     <span class="c1">-- Use a `scope` parameter here so that the component can change when these</span>
     <span class="c1">-- children are destroyed if it needs to. This is especially important for</span>
     <span class="c1">-- components that create multiple sets of children over time.</span>
@@ -3068,10 +3068,18 @@ your components.</p>
     <span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Render callbacks are especially useful if the calling code needs more
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Don't use <code>[Children]</code> to store a function. In general, avoid using special
+keys unless you're actually passing the values through, because changing how
+a special key appears to behave can make code confusing to follow.</p>
+<p>In this case, using a dedicated naming convention like <code>Build</code> ensures that
+users understand that their children are not being created ahead of time.</p>
+</div>
+<p>Children callbacks are especially useful if the controlling code needs more
 information to build the rest of the UI. For example, you might want to share
 some layout information so children can fit into the component more neatly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">preRendered</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
 <span class="hll">    <span class="n">Build</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">textSize</span><span class="p">)</span>
 </span>        <span class="kr">return</span> <span class="p">{</span>
             <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
