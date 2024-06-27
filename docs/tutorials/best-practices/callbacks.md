@@ -158,7 +158,7 @@ This is the primary way components talk to their controlling code in Fusion.
 
 -----
 
-## Render Callbacks
+## Children Callbacks
 
 There's a special kind of callback that's often used when you need more control
 over the children you're putting inside of a component.
@@ -169,7 +169,7 @@ don't have any control over what that process looks like.
 
 ```Lua
 -- This snippet...
-local preRendered = scope:Dialog {
+local dialog = scope:Dialog {
 	[Children] = {
 		scope:Button {
 			Text = "Hello, world!" 
@@ -190,7 +190,7 @@ local children = {
 	}
 }
 
-local preRendered = scope:Dialog {
+local dialog = scope:Dialog {
 	[Children] = children
 }
 ```
@@ -204,7 +204,7 @@ whatever terminology fits your code base. Try and be consistent across all of
 your components.
 
 ```Lua
-local preRendered = scope:Dialog {
+local dialog = scope:Dialog {
 	-- Use a `scope` parameter here so that the component can change when these
 	-- children are destroyed if it needs to. This is especially important for
 	-- components that create multiple sets of children over time.
@@ -221,12 +221,20 @@ local preRendered = scope:Dialog {
 }
 ```
 
-Render callbacks are especially useful if the calling code needs more
+!!! warning
+	Don't use `[Children]` to store a function. In general, avoid using special
+	keys unless you're actually passing the values through, because changing how
+	a special key appears to behave can make code confusing to follow.
+
+	In this case, using a dedicated naming convention like `Build` ensures that
+	users understand that their children are not being created ahead of time.
+
+Children callbacks are especially useful if the controlling code needs more
 information to build the rest of the UI. For example, you might want to share
 some layout information so children can fit into the component more neatly.
 
 ```Lua hl_lines="2 6 10"
-local preRendered = scope:Dialog {
+local dialog = scope:Dialog {
 	Build = function(scope, textSize)
 		return {
 			scope:Button {
