@@ -2957,6 +2957,35 @@ table. Any instance you pass in will be parented:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you're using strictly typed Luau, you might incorrectly see type errors
+when mixing different kinds of value in arrays. This commonly causes
+problems when listing out children.</p>
+<p>If you're seeing type errors, try importing the
+<a href="../../../api-reference/roblox/members/child"><code>Child</code> function</a>
+and using it when listing out children:</p>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">Child</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+</span>
+<span class="c1">-- ... later ...</span>
+
+<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
+<span class="hll">    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">Child</span> <span class="p">{</span>
+</span>        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
+            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+            <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">includeModel</span><span class="p">)</span>
+                <span class="kr">then</span> <span class="n">modelChildren</span><span class="p">:</span><span class="n">GetChildren</span><span class="p">()</span> <span class="c1">-- array of children</span>
+                <span class="kr">else</span> <span class="kc">nil</span>
+        <span class="kr">end</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>Child</code> function doesn't do any processing, but instead encourages the
+Luau type system to infer a more useful type and avoid the problem.</p>
+</div>
 
 <!-- Source file information -->
 
