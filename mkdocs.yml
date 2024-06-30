@@ -146,6 +146,7 @@ nav:
         - Attribute: api-reference/roblox/members/attribute.md
         - AttributeChange: api-reference/roblox/members/attributechange.md
         - AttributeOut: api-reference/roblox/members/attributeout.md
+        - Child: api-reference/roblox/members/child.md
         - Children: api-reference/roblox/members/children.md
         - Hydrate: api-reference/roblox/members/hydrate.md
         - New: api-reference/roblox/members/new.md
