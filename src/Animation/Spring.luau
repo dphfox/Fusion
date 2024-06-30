@@ -53,7 +53,7 @@ type Self<T> = Types.Spring<T> & {
 local class = {}
 class.type = "State"
 class.kind = "Spring"
-class.timeliness = "lazy"
+class.timeliness = "eager"
 
 local METATABLE = table.freeze {__index = class}
 
@@ -94,7 +94,7 @@ local function Spring<T>(
 			_activeTargetP = {},
 			_activeType = "",
 			_damping = damping,
-			_EXTREMELY_DANGEROUS_usedAsValue = nil,
+			_EXTREMELY_DANGEROUS_usedAsValue = peek(goal),
 			_goal = goal,
 			_speed = speed,
 			_stopwatch = stopwatch
@@ -117,7 +117,6 @@ local function Spring<T>(
 			goalState.scope, goalState.oldestTask,
 			checkLifetime.formatters.animationGoal
 		)
-		depend(self, goalState)
 	end
 	local speedState = castToState(speed)
 	if speedState ~= nil then
@@ -137,6 +136,10 @@ local function Spring<T>(
 		)
 		depend(self, dampingState)
 	end
+
+	-- Eagerly evaluated objects need to evaluate themselves so that they're
+	-- valid at all times.
+	evaluate(self, true)
 
 	return self
 end

@@ -24,6 +24,11 @@ local function getTweenRatio(
 	if reverses then
 		cycleDuration += duration
 	end
+	-- If currentTime is infinity, then presumably the tween should be over.
+	-- This avoids NaN when the duration of an infinitely repeating tween is given.
+	if currentTime == math.huge then
+		return 1
+	end
 	if currentTime >= cycleDuration * numCycles and tweenInfo.RepeatCount > -1 then
 		return 1
 	end

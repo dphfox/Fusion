@@ -17,6 +17,7 @@ local External = require(Package.External)
 local checkLifetime = require(Package.Memory.checkLifetime)
 -- Graph
 local depend = require(Package.Graph.depend)
+local evaluate = require(Package.Graph.evaluate)
 -- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
@@ -43,7 +44,7 @@ export type Self<T> = Types.Tween<T> & {
 local class = {}
 class.type = "State"
 class.kind = "Tween"
-class.timeliness = "lazy"
+class.timeliness = "eager"
 
 local METATABLE = table.freeze {__index = class}
 
@@ -74,7 +75,7 @@ local function Tween<T>(
 			_activeFrom = nil,
 			_activeTo = nil,
 			_activeTweenInfo = nil,
-			_EXTREMELY_DANGEROUS_usedAsValue = nil,
+			_EXTREMELY_DANGEROUS_usedAsValue = peek(goal),
 			_goal = goal,
 			_stopwatch = stopwatch,
 			_tweenInfo = tweenInfo or TweenInfo.new()
@@ -107,6 +108,10 @@ local function Tween<T>(
 			checkLifetime.formatters.parameter, "tween info"
 		)
 	end
+
+	-- Eagerly evaluated objects need to evaluate themselves so that they're
+	-- valid at all times.
+	evaluate(self, true)
 
 	return self
 end
