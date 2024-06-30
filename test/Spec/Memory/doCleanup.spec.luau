@@ -88,9 +88,9 @@ return function()
 		doCleanup(arr)
 
 		expect(numRuns).to.equal(3)
-		expect(arr[3]).to.equal(nil)
-		expect(arr[2]).to.equal(nil)
-		expect(arr[1]).to.equal(nil)
+		expect(rawget(arr, 3)).to.equal(nil)
+		expect(rawget(arr, 2)).to.equal(nil)
+		expect(rawget(arr, 1)).to.equal(nil)
 	end)
 
 	it("should clean up contents of nested arrays", function()

@@ -130,6 +130,27 @@ You attempted to create a type of instance that Fusion can't create.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## cannotDepend
+
+```
+Observer can't depend on Observer.
+```
+
+**Thrown by:**
+[`Observer`](../../graph/members/observer)
+
+You attempted to form a dependency between two
+[graph objects](../../graph/types/graphobject), but either the dependency set or
+dependent set were frozen.
+
+You might be trying to connect them in the wrong order, or the objects might not
+be designed to have dependents or dependencies.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## cleanupWasRenamed
 
 ```
@@ -492,12 +513,33 @@ Roblox's task scheduling APIs.
 
 <div class="fusiondoc-error-api-section" markdown>
 
+## poisonedScope
+
+```
+Attempted to use a scope after it's been destroyed; `doCleanup()` was previously
+called on this scope. Ensure you are not reusing scopes after cleanup.
+```
+
+**Thrown by:**
+scopes after being passed to [`doCleanup`](../../memory/members/doCleanup)
+
+If you attempt to read from, or write to, a scope that's been destroyed, this
+message is shown. After a scope has been cleaned up, your code should forget the
+reference to it, as it is no longer valid.
+
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
 ## possiblyOutlives
 
 ```
-The Value object could be destroyed before the Computed that is use()-ing it;
-review the order they're created in, and what scopes they belong to. See
-discussion #292 on GitHub for advice.
+The Computed (bound to the PaddingLeft property) will be destroyed before the 
+UIPadding instance; the latter is in a different scope that gets destroyed too 
+quickly. To fix this, review the order they're created in, and what scopes they 
+belong to. See discussion #292 on GitHub for advice. 
 ```
 
 **Thrown by:**
@@ -678,6 +720,50 @@ their current value and attempt to infer dependencies.
 
 This has been replaced by [use functions](../../state/types/use) in Fusion 0.3
 for more predictable behaviour and better support for constant values.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## tweenNanGoal
+
+```
+A tween was given a NaN goal, so some animation has been skipped. Ensure no
+tweens have NaN goals.
+```
+
+**Thrown by:**
+[`Tween`](../../animation/members/tween)
+
+The goal parameter given to the tween during construction contained one or more
+NaN values. 
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
+</div>
+
+-----
+
+<div class="fusiondoc-error-api-section" markdown>
+
+## tweenNanMotion
+
+```
+A tween encountered NaN during motion, so has snapped to the goal. Ensure no
+tweens have NaN in their tween infos.
+```
+
+**Thrown by:**
+[`Tween`](../../animation/members/tween)
+
+While calculating an updated tween position, the final value contained one or
+more NaN values.
+
+This typically occurs when zero is accidentally divided by zero, or some other
+invalid mathematical operation has occurred. Check that your code is free of
+maths errors, and handles all edge cases.
 </div>
 
 -----

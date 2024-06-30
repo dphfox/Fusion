@@ -11,8 +11,10 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
-local isState = require(Package.State.isState)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
+-- Memory
+local checkLifetime = require(Package.Memory.checkLifetime)
+-- State
+local castToState = require(Package.State.castToState)
 
 return {
 	type = "SpecialKey",
@@ -24,7 +26,7 @@ return {
 		value: unknown,
 		applyTo: Instance
 	)
-		if not isState(value) then
+		if not castToState(value) then
 			External.logError("invalidRefType")
 		end
 		local value = value :: Types.StateObject<unknown>
@@ -32,12 +34,12 @@ return {
 			External.logError("invalidRefType")
 		end
 		local value = value :: Types.Value<unknown>
+		checkLifetime.bOutlivesA(
+			scope, applyTo, 
+			value.scope, value.oldestTask,
+			checkLifetime.formatters.refOutputsTo
+		)
 
-		if value.scope == nil then
-			External.logError("useAfterDestroy", nil, "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-		elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
-			External.logWarn("possiblyOutlives", "The Value object, which [Ref] outputs to,", `the {applyTo} instance`)
-		end
 		value:set(applyTo)
 	end
 } :: Types.SpecialKey

@@ -14,6 +14,8 @@ local External = require(Package.External)
 local defaultProps = require(Package.Instances.defaultProps)
 local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
+type Component = (Types.PropertyTable) -> Instance
+
 local function New(
 	scope: Types.Scope<unknown>,
 	className: string
@@ -22,6 +24,10 @@ local function New(
 		local scope = (scope :: any) :: string
 		External.logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
 	end
+
+	-- This might look appealing to try and cache. But please don't. The scope
+	-- upvalue is shared between the two curried function calls, so this will
+	-- open incredible cross-codebase wormholes like you've never seen before.
 	return function(
 		props: Types.PropertyTable
 	): Instance

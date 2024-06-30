@@ -4,14 +4,13 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new For object which maps pairs of a table using a `processor`
-	function.
+	Constructs and returns a new For state object which processes keys and
+	values in pairs.
 
-	Optionally, a `destructor` function can be specified for cleaning up output.
+	https://elttob.uk/Fusion/0.3/api-reference/state/members/forpairs/
 
-	Additionally, a `meta` table/value can optionally be returned to pass data
-	created when running the processor to the destructor when the created object
-	is cleaned up.
+	TODO: the sub objects constructed here can be more efficiently implemented
+	as a dedicated state object.
 ]]
 
 local Package = script.Parent.Parent
@@ -19,11 +18,61 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 -- State
 local For = require(Package.State.For)
+local Value = require(Package.State.Value)
 local Computed = require(Package.State.Computed)
+local ForTypes = require(Package.State.For.ForTypes)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
+
+local SUB_OBJECT_META = {
+	__index = {
+		roamKeys = false,
+		roamValues = false,
+		invalidateInputKey = function(self): ()
+			self._inputKeyState:set(self.inputKey)
+		end,
+		invalidateInputValue = function(self): ()
+			self._inputValueState:set(self.inputValue)
+		end,
+		useOutputPair = function(self, use)
+			local pair = use(self._outputPairState)
+			return pair.key, pair.value
+		end
+	}
+}
+
+local function SubObject<KI, KO, VI, VO, S>(
+	scope: Types.Scope<S>,
+	initialKey: KI,
+	initialValue: VI,
+	processor: (Types.Use, Types.Scope<S>, KI, VI) -> (KO, VO)
+): ForTypes.SubObject<S, KI, KO, VI, VO>
+	local self = {}
+	self.maybeScope = scope
+	self.inputKey = initialKey
+	self.inputValue = initialValue
+	self._inputKeyState = Value(scope, initialKey)
+	self._inputValueState = Value(scope, initialValue)
+	self._processor = processor
+	self._outputPairState = Computed(scope, function(use, scope): {key: KO?, value: VO?}
+		local inputKey = use(self._inputKeyState)
+		local inputValue = use(self._inputValueState)
+		local ok, outputKey, outputValue = xpcall(self._processor, parseError, use, scope, inputKey, inputValue)
+		if ok then
+			return {key = outputKey, value = outputValue}
+		else
+			local error: Types.Error = outputKey :: any
+			error.context = `while processing key {tostring(inputValue)} and value {tostring(inputValue)}`
+			External.logErrorNonFatal("callbackError", error)
+			doCleanup(scope)
+			table.clear(scope)
+			return {key = nil, value = nil}
+		end
+	end)
+	return setmetatable(self, SUB_OBJECT_META) :: any
+end
 
 local function ForPairs<KI, KO, VI, VO, S>(
 	scope: Types.Scope<S>,
@@ -32,31 +81,17 @@ local function ForPairs<KI, KO, VI, VO, S>(
 	destructor: unknown?
 ): Types.For<KO, VO>
 	if typeof(inputTable) == "function" then
-		External.logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(use, scope, key, value) ... end)")
+		External.logError("scopeMissing", nil, "ForPairs", "myScope:ForPairs(inputTable, function(scope, use, key, value) ... end)")
 	elseif destructor ~= nil then
 		External.logWarn("destructorRedundant", "ForPairs")
 	end
 	return For(
 		scope,
 		inputTable,
-		function(
-			scope: Types.Scope<S>,
-			inputPair: Types.StateObject<{key: KI, value: VI}>
-		)
-			return Computed(scope, function(use, scope): {key: KO?, value: VO?}
-				local ok, key, value = xpcall(processor, parseError, use, scope, use(inputPair).key, use(inputPair).value)
-				if ok then
-					return {key = key, value = value}
-				else
-					local errorObj = (key :: any) :: Types.Error
-					External.logErrorNonFatal("callbackError", errorObj)
-					doCleanup(scope)
-					table.clear(scope)
-					return {key = nil, value = nil}
-				end
-			end)
+		function(scope, initialKey, initialValue)
+			return SubObject(scope, initialKey, initialValue, processor)
 		end
 	)
 end
 
-return ForPairs
+return ForPairs :: Types.ForPairsConstructor

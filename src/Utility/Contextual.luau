@@ -10,22 +10,44 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local InternalTypes = require(Package.InternalTypes)
 local External = require(Package.External)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 
+export type Self<T> = Types.Contextual<T> & {
+	_valuesNow: {[thread]: {value: T}},
+	_defaultValue: T
+}
+
 local class = {}
 class.type = "Contextual"
 
-local CLASS_METATABLE = {__index = class}
-local WEAK_KEYS_METATABLE = {__mode = "k"}
+local METATABLE = table.freeze {__index = class}
+local WEAK_KEYS_METATABLE = table.freeze {__mode = "k"}
+
+local function Contextual<T>(
+	defaultValue: T
+): Types.Contextual<T>
+	local self: Self<T> = setmetatable(
+		{
+			-- if we held strong references to threads here, then if a thread was
+			-- killed before this contextual had a chance to finish executing its
+			-- callback, it would be held strongly in this table forever
+			_valuesNow = setmetatable({}, WEAK_KEYS_METATABLE),
+			_defaultValue = defaultValue
+		}, 
+		METATABLE
+	) :: any
+
+	return self
+end
 
 --[[
 	Returns the current value of this contextual.
 ]]
-function class:now(): unknown
-	local self = self :: InternalTypes.Contextual<unknown>
+function class.now<T>(
+	self: Self<T>
+): T
 	local thread = coroutine.running()
 	local value = self._valuesNow[thread]
 	if typeof(value) ~= "table" then
@@ -38,25 +60,24 @@ end
 --[[
 	Temporarily assigns a value to this contextual.
 ]]
-function class:is(
-	newValue: unknown
+function class.is<T>(
+	self: Self<T>,
+	newValue: T
 )
-	-- Methods use colon `:` syntax for consistency and autocomplete but we
-	-- actually want them to operate on the `self` from this outer lexical scope
-	local outerSelf = self :: InternalTypes.Contextual<unknown>
 	local methods = {}
 	
-	function methods:during<T, A...>(
+	function methods.during<T, A...>(
+		_: any, -- during is called with colon syntax but we don't care
 		callback: (A...) -> T,
 		...: A...
 	): T
 		local thread = coroutine.running()
-		local prevValue = outerSelf._valuesNow[thread]
+		local prevValue = self._valuesNow[thread]
 		-- Storing the value in this format allows us to distinguish storing
 		-- `nil` from not calling `:during()` at all.
-		outerSelf._valuesNow[thread] = { value = newValue }
+		self._valuesNow[thread] = { value = newValue }
 		local ok, value = xpcall(callback, parseError, ...)
-		outerSelf._valuesNow[thread] = prevValue
+		self._valuesNow[thread] = prevValue
 		if not ok then
 			External.logError("callbackError", value :: any)
 		end
@@ -66,19 +87,5 @@ function class:is(
 	return methods
 end
 
-local function Contextual<T>(
-	defaultValue: T
-): Types.Contextual<T>
-	local self = setmetatable({
-		-- if we held strong references to threads here, then if a thread was
-		-- killed before this contextual had a chance to finish executing its
-		-- callback, it would be held strongly in this table forever
-		_valuesNow = setmetatable({}, WEAK_KEYS_METATABLE),
-		_defaultValue = defaultValue
-	}, CLASS_METATABLE)
-	local self = (self :: any) :: InternalTypes.Contextual<T>
-
-	return self
-end
-
+table.freeze(class)
 return Contextual

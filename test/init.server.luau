@@ -1,6 +1,6 @@
 --!strict
 
-local TestEZ = require(script.TestEZ)
+local TestEZ = require(script.TestEZ) :: any
 local TestVars = require(script.TestVars)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -12,7 +12,7 @@ local SpecExternal = require(script.SpecExternal)
 -- run unit tests
 if TestVars.runTests then
 	print("Running unit tests...")
-	-- Suppress "unknown require path" error here.
+	External.safetyTimerMultiplier = 1 / 20
 	External.setExternalProvider(SpecExternal)
 
 	local data
