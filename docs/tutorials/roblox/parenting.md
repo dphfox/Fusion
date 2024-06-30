@@ -129,3 +129,36 @@ local folder = scope:New "Folder" {
     }
 }
 ```
+!!! tip
+
+	If you're using strictly typed Luau, you might incorrectly see type errors
+	when mixing different kinds of value in arrays. This commonly causes
+	problems when listing out children.
+
+	If you're seeing type errors, try importing the
+	[`Child` function](../../../api-reference/roblox/members/child)
+	and using it when listing out children:
+
+	```Lua hl_lines="1 6"
+	local Child = Fusion.Child
+
+	-- ... later ...
+
+	local folder = scope:New "Folder" {
+		[Children] = Child {
+			scope:New "Part" {
+				Name = "Gregory",
+				Color = Color3.new(1, 0, 0)
+			},
+			scope:Computed(function(use)
+				return if use(includeModel)
+					then modelChildren:GetChildren() -- array of children
+					else nil
+			end)
+		}
+	}
+	```
+
+	The `Child` function doesn't do any processing, but instead encourages the
+	Luau type system to infer a more useful type and avoid the problem.
+
