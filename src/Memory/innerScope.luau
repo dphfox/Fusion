@@ -9,13 +9,14 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local deriveScope = require(Package.Memory.deriveScope)
+local ExternalDebug = require(Package.ExternalDebug)
+local deriveScopeImpl = require(Package.Memory.deriveScopeImpl)
 
 local function innerScope<T>(
 	existing: Types.Scope<T>,
 	...: {[unknown]: unknown}
 ): any
-	local new = deriveScope(existing, ...)
+	local new = deriveScopeImpl(existing, ...)
 	table.insert(existing, new)
 	table.insert(
 		new, 
@@ -26,6 +27,7 @@ local function innerScope<T>(
 			end
 		end
 	)
+	ExternalDebug.trackScope(new)
 	return new
 end
 
