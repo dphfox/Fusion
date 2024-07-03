@@ -2872,11 +2872,11 @@ various techniques that can let you do this.</p>
     <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;SelectionBox&quot;</span> <span class="p">{</span>
             <span class="c1">-- the box should adorn to the part, but how do you reference it?</span>
-            <span class="n">Adornee</span> <span class="o">=</span> <span class="err">???</span><span class="p">,</span>
-        <span class="p">},</span>
+<span class="hll">            <span class="n">Adornee</span> <span class="o">=</span> <span class="err">???</span><span class="p">,</span>
+</span>        <span class="p">},</span>
         <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-<span class="hll">            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
-</span>        <span class="p">}</span>
+            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -2918,20 +2918,20 @@ flexible technique if those disadvantages are relevant.</p>
 <code>:set()</code> to reference part of your code without disrupting its structure:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- `selectionTarget` will show as `nil` to all code trying to use it, until the</span>
 <span class="c1">-- `:set()` method is called later on.</span>
-<span class="kd">local</span> <span class="n">selectionTarget</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span> <span class="p">::</span> <span class="nl">Part</span><span class="err">?)</span>
+<span class="kd">local</span> <span class="n">selectionTarget</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Part</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
-<span class="nl">local</span> <span class="nl">ui</span> <span class="err">=</span> <span class="nl">scope</span><span class="err">:</span><span class="nl">New</span> <span class="err">&quot;</span><span class="nl">Folder</span><span class="err">&quot;</span> <span class="err">{</span>
-    <span class="err">[</span><span class="nl">Children</span><span class="err">]</span> <span class="err">=</span> <span class="err">{</span>
-        <span class="nl">scope</span><span class="err">:</span><span class="nl">New</span> <span class="err">&quot;</span><span class="nl">SelectionBox</span><span class="err">&quot;</span> <span class="err">{</span>
-            <span class="nl">Adornee</span> <span class="err">=</span> <span class="nl">selectionTarget</span>
-        <span class="err">},</span>
-        <span class="nl">selectionTarget</span><span class="err">:</span><span class="nl">set</span><span class="err">(</span>
-            <span class="nl">scope</span><span class="err">:</span><span class="nl">New</span> <span class="err">&quot;</span><span class="nl">Part</span><span class="err">&quot;</span> <span class="err">{</span>
-                <span class="nl">Name</span> <span class="err">=</span> <span class="err">&quot;</span><span class="nl">Selection</span> <span class="nl">Target</span><span class="err">&quot;,</span>
-            <span class="err">}</span>
-        <span class="err">)</span>
-    <span class="err">}</span>
-<span class="err">}</span>
+<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;SelectionBox&quot;</span> <span class="p">{</span>
+            <span class="n">Adornee</span> <span class="o">=</span> <span class="n">selectionTarget</span>
+        <span class="p">},</span>
+        <span class="n">selectionTarget</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
+            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
+                <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>It's important to note that the value object will briefly be <code>nil</code> (or whichever
 default value you provide in the constructor). This is because it takes time to
@@ -2942,8 +2942,8 @@ the <code>:set()</code> method is called.</p>
 <p>While dealing with the brief <code>nil</code> value can be annoying, it is also useful,
 because this lets you refer to parts of your UI that haven't yet been created.
 In particular, this lets you create cyclic references.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">aliceRef</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span> <span class="p">::</span> <span class="nl">Instance</span><span class="err">?)</span>
-<span class="nl">local</span> <span class="nl">bobRef</span> <span class="err">=</span> <span class="nl">scope</span><span class="err">:</span><span class="nl">Value</span><span class="err">(</span><span class="nl">nil</span> <span class="p">::</span> <span class="n">Instance</span><span class="err">?</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">aliceRef</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">bobRef</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
 <span class="c1">-- These two `ObjectValue` instances will refer to each other once the code has</span>
 <span class="c1">-- finished running.</span>
