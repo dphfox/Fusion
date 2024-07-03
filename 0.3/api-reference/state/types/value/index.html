@@ -840,8 +840,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_2_8">
@@ -940,20 +938,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
             
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../tutorials/roblox/references/" class="md-nav__link">
-        References
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -976,6 +960,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       
       
+        
+          
         
           
         
@@ -1027,6 +1013,20 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item">
       <a href="../../../../tutorials/best-practices/instance-handling/" class="md-nav__link">
         Instance Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/best-practices/references/" class="md-nav__link">
+        References
       </a>
     </li>
   
@@ -2059,8 +2059,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-" class="md-nav__link">
-    set -&gt; ()
+  <a href="#set-t" class="md-nav__link">
+    set -&gt; T
   </a>
   
 </li>
@@ -2398,8 +2398,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4_5_2">
@@ -2548,20 +2546,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item">
       <a href="../../../roblox/members/out/" class="md-nav__link">
         Out
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../roblox/members/ref/" class="md-nav__link">
-        Ref
       </a>
     </li>
   
@@ -2914,8 +2898,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-" class="md-nav__link">
-    set -&gt; ()
+  <a href="#set-t" class="md-nav__link">
+    set -&gt; T
   </a>
   
 </li>
@@ -2988,18 +2972,20 @@ Luau does not interpret <code>self</code> specially.</p>
 can be used to tell types of state object apart.</p>
 <hr />
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<h3 id="set-">
+<h3 id="set-t">
     set
     <span class="fusiondoc-api-type">
-        -&gt; ()
+        -&gt; T
     </span>
-<a class="headerlink" href="#set-" title="Permanent link">&para;</a></h3>
+<a class="headerlink" href="#set-t" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Value</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span>
     <span class="n">newValue</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">):</span> <span class="p">()</span>
+<span class="p">):</span> <span class="n">T</span>
 </code></pre></div>
-<p>Updates the value of this state object.</p>
-<p>Other objects using the value are notified immediately of the change.</p>
+<p>Updates the value of this state object. Other objects using the value are
+notified of the change.</p>
+<p>The <code>newValue</code> is always returned, so that <code>:set()</code> can be used to capture
+values inside of expressions.</p>
 <hr />
 <h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
 <ul>

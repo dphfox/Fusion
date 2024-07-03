@@ -881,8 +881,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_2_8">
@@ -981,20 +979,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
             
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../roblox/references/" class="md-nav__link">
-        References
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -1017,6 +1001,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       
       
+        
+          
         
           
         
@@ -1068,6 +1054,20 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item">
       <a href="../../best-practices/instance-handling/" class="md-nav__link">
         Instance Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../best-practices/references/" class="md-nav__link">
+        References
       </a>
     </li>
   
@@ -2352,8 +2352,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4_5_2">
@@ -2502,20 +2500,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item">
       <a href="../../../api-reference/roblox/members/out/" class="md-nav__link">
         Out
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/roblox/members/ref/" class="md-nav__link">
-        Ref
       </a>
     </li>
   
@@ -2923,6 +2907,18 @@ specific to value objects, so it's done on the object itself.</p>
 <span class="hll"><span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 25</span>
 </span></code></pre></div></td></tr></table></div>
+<details class="tip">
+<summary><code>:set()</code> returns the value you give it</summary>
+<p>You can use <code>:set()</code> in the middle of calculations:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myNumber</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">computation</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">myNumber</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">computation</span><span class="p">)</span> <span class="c1">--&gt; 14</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myNumber</span><span class="p">))</span> <span class="c1">--&gt; 4</span>
+</code></pre></div>
+<p>This is useful when building complex expressions. On a later page, you'll
+see one such use case.</p>
+<p>Generally though, it's better to keep your expressions simple.</p>
+</details>
 <p>Value objects are Fusion's simplest 'state object'. State objects contain a
 single value - their <em>state</em>, you might say - and that single value can be read
 out at any time using <code>peek()</code>.</p>

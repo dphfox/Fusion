@@ -151,11 +151,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://elttob.uk/Fusion/0.3/api-reference/roblox/members/ref/</loc>
-         <lastmod>2024-07-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://elttob.uk/Fusion/0.3/api-reference/roblox/types/child/</loc>
          <lastmod>2024-07-03</lastmod>
          <changefreq>daily</changefreq>
@@ -351,6 +346,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://elttob.uk/Fusion/0.3/tutorials/best-practices/references/</loc>
+         <lastmod>2024-07-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://elttob.uk/Fusion/0.3/tutorials/best-practices/sharing-values/</loc>
          <lastmod>2024-07-03</lastmod>
          <changefreq>daily</changefreq>
@@ -422,11 +422,6 @@
     </url>
     <url>
          <loc>https://elttob.uk/Fusion/0.3/tutorials/roblox/parenting/</loc>
-         <lastmod>2024-07-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://elttob.uk/Fusion/0.3/tutorials/roblox/references/</loc>
          <lastmod>2024-07-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
