@@ -33,13 +33,14 @@ local CLASS_METATABLE = {__index = class}
 function class:set(
 	newValue: unknown,
 	force: boolean?
-)
+): unknown
 	local self = self :: InternalTypes.Value<unknown, unknown>
 	local oldValue = self._value
 	if force or not isSimilar(oldValue, newValue) then
 		self._value = newValue
 		updateAll(self)
 	end
+	return newValue
 end
 
 --[[

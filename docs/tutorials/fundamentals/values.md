@@ -53,6 +53,21 @@ health:set(25)
 print(peek(health)) --> 25
 ```
 
+??? tip "`:set()` returns the value you give it"
+	You can use `:set()` in the middle of calculations:
+
+	```Lua
+	local myNumber = scope:Value(0)
+	local computation = 10 + myNumber:set(2 + 2)
+	print(computation) --> 14
+	print(peek(myNumber)) --> 4
+	```
+
+	This is useful when building complex expressions. On a later page, you'll
+	see one such use case.
+
+	Generally though, it's better to keep your expressions simple.
+
 Value objects are Fusion's simplest 'state object'. State objects contain a
 single value - their *state*, you might say - and that single value can be read
 out at any time using `peek()`.

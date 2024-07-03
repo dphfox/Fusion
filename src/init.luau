@@ -70,7 +70,6 @@ local Fusion: Types.Fusion = table.freeze {
 	OnChange = require(script.Instances.OnChange),
 	OnEvent = require(script.Instances.OnEvent),
 	Out = require(script.Instances.Out),
-	Ref = require(script.Instances.Ref),
 
 	-- Animation
 	Tween = require(script.Animation.Tween),

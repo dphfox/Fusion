@@ -99,8 +99,8 @@ export type Use = <T>(target: UsedAs<T>) -> T
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
- 	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
-	 ____phantom_setType: (never) -> S -- phantom data so this contains a T
+	set: (Value<T, S>, newValue: S, force: boolean?) -> S,
+	____phantom_setType: (never) -> S -- phantom data so this contains a T
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
@@ -256,7 +256,6 @@ export type Fusion = {
 	New: NewConstructor,
 	Hydrate: HydrateConstructor,
 
-	Ref: SpecialKey,
 	Child: ({Child}) -> Child,
 	Children: SpecialKey,
 	Out: (propertyName: string) -> SpecialKey,
