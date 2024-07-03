@@ -1,7 +1,7 @@
 At some point, you might need to refer to another part of the UI. There are
 various techniques that can let you do this.
 
-```Lua hl_lines="8"
+```Lua hl_lines="5"
 local ui = scope:New "Folder" {
 	[Children] = {
 		scope:New "SelectionBox" {
@@ -65,7 +65,7 @@ Because their `:set()` method returns the value that's passed in, you can use
 ```Lua
 -- `selectionTarget` will show as `nil` to all code trying to use it, until the
 -- `:set()` method is called later on.
-local selectionTarget = scope:Value(nil :: Part?)
+local selectionTarget: Fusion.Value<Part?> = scope:Value(nil)
 
 local ui = scope:New "Folder" {
 	[Children] = {
@@ -94,8 +94,8 @@ because this lets you refer to parts of your UI that haven't yet been created.
 In particular, this lets you create cyclic references.
 
 ```Lua
-local aliceRef = scope:Value(nil :: Instance?)
-local bobRef = scope:Value(nil :: Instance?)
+local aliceRef: Fusion.Value<Instance?> = scope:Value(nil)
+local bobRef: Fusion.Value<Instance?> = scope:Value(nil)
 
 -- These two `ObjectValue` instances will refer to each other once the code has
 -- finished running.
