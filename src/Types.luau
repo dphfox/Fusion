@@ -233,9 +233,17 @@ export type ScopedConstructor = (() -> Scope<{}>)
 
 export type ContextualConstructor = <T>(defaultValue: T) -> Contextual<T>
 
+export type Safe = <Success, Fail>(
+	callbacks: {
+		try: () -> Success,
+		fallback: (err: unknown) -> Fail
+	}
+) -> Success | Fail
+
 export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
+	Safe: Safe,
 
 	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,
