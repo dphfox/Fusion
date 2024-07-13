@@ -16,10 +16,10 @@ local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
 
-local alreadyDestroying: {[Types.chore]: true} = {}
+local alreadyDestroying: {[Types.Task]: true} = {}
 
 local function doCleanup(
-	chore: Types.chore
+	chore: Types.Task
 ): ()
 	if alreadyDestroying[chore] then
 		return External.logError("destroyedTwice")
@@ -36,9 +36,15 @@ local function doCleanup(
 
 	-- case 3: thread
 	elseif typeof(chore) == "thread" then
-		local cancelled; if coroutine.running() ~= chore then
-			cancelled = pcall(function() task.cancel(chore) end)
-		end; if not cancelled then local toCancel = chore
+		local cancelled
+		if coroutine.running() ~= chore then
+			cancelled = pcall(function()
+				task.cancel(chore)
+			end)
+		end
+
+		if not cancelled then
+			local toCancel = chore
 			task.defer(function()
 				task.cancel(toCancel)
 			end)
@@ -63,7 +69,7 @@ local function doCleanup(
 
 		-- case 7: array of chores
 		elseif chore[1] ~= nil then
-			local chore = chore :: {Types.chore}
+			local chore = chore :: {Types.Task}
 			-- It is important to iterate backwards through the table, since
 			-- objects are added in order of construction.
 			for index = #chore, 1, -1 do

@@ -35,7 +35,7 @@ local function logErrorNonFatal(
 	end
 
 	local errorString = errorString:gsub("\n", "\n    ")
-	External.errorNonFatal(errorString)
+	External.logErrorNonFatal(errorString)
 end
 
 return logErrorNonFatal

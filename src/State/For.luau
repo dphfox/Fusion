@@ -143,7 +143,7 @@ function class:update(): boolean
 		-- So, existing processors should be destroyed, and remaining pairs should
 		-- be created. This accomodates for table growth and shrinking.
 		for unusedProcessor in existingProcessors do
-			doCleanup(unusedProcessor.scope)
+			doCleanup(unusedProcessor.scope :: any)
 			scopePool.clearAndGive(unusedProcessor.scope :: any)
 		end
 
@@ -237,8 +237,8 @@ local function For<KI, KO, VI, VO, S>(
 			dependency.dependentSet[self] = nil
 		end
 		for unusedProcessor in self._existingProcessors do
-			doCleanup(unusedProcessor.scope)
-			scopePool.clearAndGive(unusedProcessor.scope)
+			doCleanup(unusedProcessor.scope :: any)
+			scopePool.clearAndGive(unusedProcessor.scope :: any)
 		end
 	end
 	self.oldestTask = destroy

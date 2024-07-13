@@ -13,7 +13,6 @@ local External = require(Package.External)
 local packType = require(Package.Animation.packType)
 local springCoefficients = require(Package.Animation.springCoefficients)
 local updateAll = require(Package.State.updateAll)
-local logWarn = require(Package.Logging.logWarn)
 
 type Set<T> = {[T]: unknown}
 

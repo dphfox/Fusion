@@ -255,12 +255,13 @@ export type ScopedConstructor = (() -> Scope<{}>)
 	& (<A, B, C, D, E, F, G, H, I, J, K>(A & {}, B & {}, C & {}, D & {}, E & {}, F & {}, G & {}, H & {}, I & {}, J & {}, K & {}) -> Scope<A & B & C & D & E & F & G & H & I & J & K>)
 	& (<A, B, C, D, E, F, G, H, I, J, K, L>(A & {}, B & {}, C & {}, D & {}, E & {}, F & {}, G & {}, H & {}, I & {}, J & {}, K & {}, L & {}) -> Scope<A & B & C & D & E & F & G & H & I & J & K & L>)
 
-export type ContextualConstructor = <T>(defaultValue: T) -> Contextual<T>
+export type ContextualConstructor = <T>(defaultValue: T?) -> Contextual<T>
 
 export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
 	Safe: SafeConstructor,
+	Child: ({Child}) -> Child,
 
 	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,

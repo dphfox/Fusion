@@ -43,6 +43,7 @@ local Fusion: Types.Fusion = table.freeze {
 	version = {major = 0, minor = 3, isRelease = false},
 	Contextual = require(script.Utility.Contextual),
 	Safe = require(script.Utility.Safe),
+	Child = require(script.Instances.Child),
 
 	-- Memory
 	cleanup = require(script.Memory.legacyCleanup),

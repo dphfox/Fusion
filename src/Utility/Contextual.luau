@@ -67,7 +67,7 @@ function class:is(
 end
 
 local function Contextual<T>(
-	defaultValue: T
+	defaultValue: T?
 ): Types.Contextual<T>
 	local self = setmetatable({
 		-- if we held strong references to threads here, then if a thread was

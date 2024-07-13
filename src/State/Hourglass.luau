@@ -97,11 +97,13 @@ end
 ]]
 function class:start()
 	local self = self :: InternalTypes.Hourglass
-	-- connection already exists means the hourglass is already running
-	if self._connection then return end; self:update()
+	if self._connection then return end
+	self:update()
 	self._connection = RunService.Heartbeat:Connect(function()
-		local now = os.clock(); if now >= self._nextTick then
-			self:update(); self:tick()
+		local now = os.clock()
+		if now >= self._nextTick then
+			self:update()
+			self:tick()
 		end
 	end)
 end
@@ -111,21 +113,9 @@ end
 ]]
 function class:stop()
 	local self = self :: InternalTypes.Hourglass
-	-- if the connection isn't found then the hourglass is already stopped
 	if self._connection == nil then return end
 	self._connection:Disconnect()
 	self._connection = nil
-end
-
-function class:destroy()
-	local self = self :: InternalTypes.Hourglass
-	if self.scope == nil then
-		External.logError("destroyedTwice", nil, "Hourglass")
-	end
-	self.scope = nil
-	for dependency in pairs(self.dependencySet) do
-		dependency.dependentSet[self] = nil
-	end
 end
 
 local function Hourglass(
@@ -162,16 +152,14 @@ local function Hourglass(
 	local self = (self :: any) :: InternalTypes.Hourglass
 
 	local destroy = function()
+		self:stop()
 		self.scope = nil
 		for dependency in pairs(self.dependencySet) do
 			dependency.dependentSet[self] = nil
 		end
 	end
 	self.oldestTask = destroy
-	table.insert(scope, self)
-	table.insert(scope, function()
-		self:stop()
-	end)
+	table.insert(scope, destroy)
 
     if intervalState then
 		local interval: any = interval

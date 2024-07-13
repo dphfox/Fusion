@@ -124,7 +124,7 @@ export type Hourglass = Types.Hourglass & {
 	_tickListeners: {[{}]: () -> ()},
 	_numTickisteners: number,
 
-	_interval: Types.UsedAs<number>?,
+	_interval: Types.UsedAs<number>,
 	_currentInterval: number,
 
 	_nextTick: number,

@@ -15,6 +15,7 @@ local function whichScopeLivesLonger(
 	scopeA: Types.Scope<unknown>,
 	scopeB: Types.Scope<unknown>
 ): "definitely-a" | "definitely-b" | "unsure"
+	if game:GetService("RunService"):IsRunning() then return "unsure" end
 	-- If we can prove one scope is inside of the other scope, then the outer
 	-- scope must live longer than the inner scope (assuming idiomatic scopes).
 	-- So, we will search the scopes recursively until we find one of them, at
@@ -36,11 +37,11 @@ local function whichScopeLivesLonger(
 						nextOpenSetSize += 1
 						nextOpenSet[nextOpenSetSize] = inScope
 					end
-				end 
+				end
 			end
 		end
 		table.clear(openSet)
-		openSet, nextOpenSet = nextOpenSet, openSet
+		openSet, nextOpenSet = nextOpenSet :: any, openSet
 		openSetSize, nextOpenSetSize = nextOpenSetSize, 0
 	end
 	return "unsure"
