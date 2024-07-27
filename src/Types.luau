@@ -296,4 +296,16 @@ export type ExternalProvider = {
 	stopScheduler: () -> ()
 }
 
+export type ExternalDebugger = {
+	startDebugging: () -> (),
+	stopDebugging: () -> (),
+
+	trackScope: (
+		scope: Scope<unknown>
+	) -> (),
+	untrackScope: (
+		scope: Scope<unknown>
+	) -> ()
+}
+
 return nil
