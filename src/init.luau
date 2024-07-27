@@ -63,13 +63,13 @@ local Fusion: Types.Fusion = table.freeze {
 	Attribute = require(script.Instances.Attribute),
 	AttributeChange = require(script.Instances.AttributeChange),
 	AttributeOut = require(script.Instances.AttributeOut),
+	Child = require(script.Instances.Child),
 	Children = require(script.Instances.Children),
 	Hydrate = require(script.Instances.Hydrate),
 	New = require(script.Instances.New),
 	OnChange = require(script.Instances.OnChange),
 	OnEvent = require(script.Instances.OnEvent),
 	Out = require(script.Instances.Out),
-	Ref = require(script.Instances.Ref),
 
 	-- Animation
 	Tween = require(script.Animation.Tween),

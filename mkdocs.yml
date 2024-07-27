@@ -77,10 +77,10 @@ nav:
       - Events: tutorials/roblox/events.md
       - Change Events: tutorials/roblox/change-events.md
       - Outputs: tutorials/roblox/outputs.md
-      - References: tutorials/roblox/references.md
     - Best Practices:
       - Components: tutorials/best-practices/components.md
       - Instance Handling: tutorials/best-practices/instance-handling.md
+      - References: tutorials/best-practices/references.md
       - Callbacks: tutorials/best-practices/callbacks.md
       - State: tutorials/best-practices/state.md
       - Sharing Values: tutorials/best-practices/sharing-values.md
@@ -146,13 +146,13 @@ nav:
         - Attribute: api-reference/roblox/members/attribute.md
         - AttributeChange: api-reference/roblox/members/attributechange.md
         - AttributeOut: api-reference/roblox/members/attributeout.md
+        - Child: api-reference/roblox/members/child.md
         - Children: api-reference/roblox/members/children.md
         - Hydrate: api-reference/roblox/members/hydrate.md
         - New: api-reference/roblox/members/new.md
         - OnChange: api-reference/roblox/members/onchange.md
         - OnEvent: api-reference/roblox/members/onevent.md
         - Out: api-reference/roblox/members/out.md
-        - Ref: api-reference/roblox/members/ref.md
     - Animation:
       - Types:
         - Animatable: api-reference/animation/types/animatable.md
