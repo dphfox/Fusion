@@ -67,6 +67,10 @@ local function change(
 			table.insert(eagerList, invalidateTarget)
 		end
 	end
+	-- If objects are not executed in order of creations, then dynamic graphs
+	-- may experience 'glitches' where nested graph objects see intermediate
+	-- values before being destroyed.
+	-- https://fluff.blog/2024/07/14/glitches-in-dynamic-reactive-graphs.html
 	table.sort(eagerList, function(a, b)
 		return a.createdAt < b.createdAt
 	end)
