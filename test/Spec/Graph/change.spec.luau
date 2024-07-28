@@ -1,5 +1,6 @@
 --!strict
 --!nolint LocalUnused
+--!nolint LocalShadow
 local task = nil -- Disable usage of Roblox's task scheduler
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -270,6 +271,60 @@ return function()
 				eagers,
 				Graphs.tests.validity("valid")
 			)
+		end
+	} (describe)
+
+	Graphs.propertyTest {
+		testing = "change",
+		it = "revalidates eager objects in order of creation",
+		filters = {Graphs.filters.wellFormed},
+		preparation = {
+			count = 1,
+			prepare = function(
+				graph: Graphs.Graph
+			)
+				local graph: Graphs.Graph & {
+					properOrder: {Types.GraphObject},
+					executionOrder: {Types.GraphObject}
+				} = graph :: any
+				graph.properOrder = {}
+				graph.executionOrder = {}
+				local objects = Graphs.selectors.noConnections(graph.allObjects, "dependent")
+				local doNotInvalidate: {Types.GraphObject}
+				local createAtTime = 0
+				for _, object in objects do
+					object.timeliness = "eager"
+					createAtTime += 1
+					object.createdAt = createAtTime
+					table.insert(graph.properOrder, object)
+					object._evaluate = function(self)
+						table.insert(graph.executionOrder, object)
+						return true
+					end
+				end
+			end
+		},
+		perform = function(
+			graph: Graphs.Graph
+		)
+			local graph: Graphs.Graph & {
+				properOrder: {Types.GraphObject},
+				executionOrder: {Types.GraphObject}
+			} = graph :: any
+
+			local targets = Graphs.selectors.noConnections(graph.allObjects, "dependency")
+			local eagers = Graphs.selectors.noConnections(graph.allObjects, "dependent")
+			for _, target in targets do
+				change(target)
+			end
+
+			for index, properObject in graph.properOrder do
+				if properObject ~= graph.executionOrder[index] then
+					return `Object {index} was evaluated out of order.`
+				end
+			end
+
+			return false
 		end
 	} (describe)
 end

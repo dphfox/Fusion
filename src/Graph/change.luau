@@ -67,6 +67,9 @@ local function change(
 			table.insert(eagerList, invalidateTarget)
 		end
 	end
+	table.sort(eagerList, function(a, b)
+		return a.createdAt < b.createdAt
+	end)
 	for _, eagerTarget in eagerList do
 		evaluate(eagerTarget, true)
 	end

@@ -529,6 +529,7 @@ function Graphs.make(
 		local object: Types.GraphObject = {
 			scope = nil,
 			name = name,
+			createdAt = 0,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
