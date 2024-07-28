@@ -74,7 +74,7 @@ local function change(
 		return a.createdAt < b.createdAt
 	end)
 	for _, eagerTarget in eagerList do
-		evaluate(eagerTarget, true)
+		evaluate(eagerTarget, false)
 	end
 end
 

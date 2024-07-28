@@ -107,7 +107,7 @@ function class._evaluate(
 	for _, callback in self._changeListeners do
 		External.doTaskImmediate(callback)
 	end
-	return false
+	return true
 end
 
 table.freeze(class)
