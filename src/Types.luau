@@ -74,6 +74,7 @@ type ContextualIsMethods = {
 
 -- A graph object which can have dependencies and dependencies.
 export type GraphObject = ScopedObject & {
+	createdAt: number,
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
 	lastChange: number?,

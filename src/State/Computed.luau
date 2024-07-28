@@ -48,6 +48,7 @@ local function Computed<T, S>(
 	processor: (Types.Use, S) -> T,
 	destructor: unknown?
 ): Types.Computed<T>
+	local createdAt = os.clock()
 	if typeof(scope) == "function" then
 		External.logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
 	elseif destructor ~= nil then
@@ -55,6 +56,7 @@ local function Computed<T, S>(
 	end
 	local self: Self<T, S> = setmetatable(
 		{
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,

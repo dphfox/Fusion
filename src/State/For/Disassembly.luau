@@ -52,8 +52,10 @@ local function Disassembly<S, KI, KO, VI, VO>(
 		initialValue: VI
 	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
 ): ForTypes.Disassembly<S, KI, KO, VI, KO>
+	local createdAt = os.clock()
 	local self = setmetatable(
 		{
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			scope = scope,

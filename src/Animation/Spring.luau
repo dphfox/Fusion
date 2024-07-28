@@ -63,6 +63,7 @@ local function Spring<T>(
 	speed: Types.UsedAs<number>?,
 	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
+	local createdAt = os.clock()
 	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
 		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
 	end
@@ -78,6 +79,7 @@ local function Spring<T>(
 
 	local self: Self<T> = setmetatable(
 		{
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,

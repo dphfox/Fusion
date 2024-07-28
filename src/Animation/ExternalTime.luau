@@ -33,8 +33,10 @@ local allTimers: {Self} = {}
 local function ExternalTime(
 	scope: Types.Scope<unknown>
 ): ExternalTime
+	local createdAt = os.clock()
 	local self: Self = setmetatable(
 		{
+			createdAt = createdAt,
 			dependentSet = {},
 			lastChange = nil,
 			scope = scope,

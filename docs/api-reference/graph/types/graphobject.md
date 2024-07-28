@@ -11,9 +11,10 @@
 
 ```Lua
 export type GraphObject = ScopedObject & {
+	createdAt: number
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
-	lastChange: number,
+	lastChange: number?,
 	timeliness: "lazy" | "eager",
 	validity: "valid" | "invalid" | "busy",
 	_evaluate: (GraphObject, lastChange: number?) -> boolean
@@ -33,6 +34,16 @@ allows the lifetime and destruction order of the reactive graph to be analysed.
 -----
 
 ## Members
+
+<h3 markdown>
+	createdAt
+	<span class="fusiondoc-api-type">
+		: number
+	</span>
+</h3>
+
+The `os.clock()` time of this object's construction, measured as early as
+possible in the object's constructor.
 
 <h3 markdown>
 	dependencySet

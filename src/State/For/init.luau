@@ -42,8 +42,10 @@ local function For<S, KI, KO, VI, VO>(
 		initialValue: VI
 	) -> ForTypes.SubObject<S, KI, KO, VI, VO>
 ): Types.For<KO, VO>
+	local createdAt = os.clock()
 	local self: Self<S, KI, KO, VI, VO> = setmetatable(
 		{
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			scope = scope,

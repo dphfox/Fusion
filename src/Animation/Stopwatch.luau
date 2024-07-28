@@ -45,9 +45,11 @@ local function Stopwatch(
 	scope: Types.Scope<unknown>,
 	timer: Types.StateObject<number>
 ): Stopwatch
+	local createdAt = os.clock()
 	local self: Self = setmetatable(
 		{
 			awake = true,
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,

@@ -53,6 +53,7 @@ local function Tween<T>(
 	goal: Types.UsedAs<T>,
 	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
+	local createdAt = os.clock()
 	if castToState(scope) then
 		External.logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
 	end
@@ -65,6 +66,7 @@ local function Tween<T>(
 
 	local self: Self<T> = setmetatable(
 		{
+			createdAt = createdAt,
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
