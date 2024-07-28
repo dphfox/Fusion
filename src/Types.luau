@@ -100,7 +100,7 @@ export type Use = <T>(target: UsedAs<T>) -> T
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
 	timeliness: "lazy",
- 	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
+ 	set: (Value<T, S>, newValue: S, force: boolean?) -> S,
 	____phantom_setType: (never) -> S -- phantom data so this contains S
 }
 export type ValueConstructor = <T>(
