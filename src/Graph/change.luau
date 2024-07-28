@@ -16,11 +16,6 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 local evaluate = require(Package.Graph.evaluate)
 
-local searchInNow: {Types.GraphObject} = {}
-local searchInNext: {Types.GraphObject} = {}
-local invalidateList: {Types.GraphObject} = {}
-local eagerList: {Types.GraphObject} = {}
-
 -- How long should this function run before it's considered to be in an infinite
 -- cycle and error out?
 local TERMINATION_TIME = 1
@@ -37,15 +32,16 @@ local function change(
 		return
 	end
 
-	table.clear(searchInNow)
-	table.clear(invalidateList)
+	local searchInNow: {Types.GraphObject} = {}
+	local searchInNext: {Types.GraphObject} = {}
+	local invalidateList: {Types.GraphObject} = {}
+
 	searchInNow[1] = target
 	local terminateBy = os.clock() + TERMINATION_TIME * External.safetyTimerMultiplier
 	repeat
 		if os.clock() > terminateBy then
 			return External.logError("infiniteLoop")
 		end
-		table.clear(searchInNext)
 		local done = true
 		for _, searchTarget in searchInNow do
 			for dependent in searchTarget.dependentSet do
@@ -59,8 +55,11 @@ local function change(
 			end
 		end
 		searchInNow, searchInNext = searchInNext, searchInNow
+		table.clear(searchInNext)
 	until done
-	table.clear(eagerList)
+
+	local eagerList: {Types.GraphObject} = {}
+
 	for _, invalidateTarget in invalidateList do
 		invalidateTarget.validity = "invalid"
 		if invalidateTarget.timeliness == "eager" then
