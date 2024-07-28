@@ -155,3 +155,100 @@ end
 ```
 
 This is the primary way components talk to their controlling code in Fusion.
+
+-----
+
+## Children Callbacks
+
+There's a special kind of callback that's often used when you need more control
+over the children you're putting inside of a component.
+
+When your component asks for `[Children]`, the controlling code will construct
+some children for you ahead of time, and pass it into that `[Children]` key. You
+don't have any control over what that process looks like.
+
+```Lua
+-- This snippet...
+local dialog = scope:Dialog {
+	[Children] = {
+		scope:Button {
+			Text = "Hello, world!" 
+		},
+		scope:Text {
+			Text = "I am pre-fabricated!" 
+		}
+	}
+}
+
+-- ...is equivalent to this code.
+local children = {
+	scope:Button {
+		Text = "Hello, world!" 
+	},
+	scope:Text {
+		Text = "I am pre-fabricated!" 
+	}
+}
+
+local dialog = scope:Dialog {
+	[Children] = children
+}
+```
+
+However, if your component asks for a callback instead, you can create those
+children on demand, as many times as you'd like, with whatever parameters you
+want to pass in.
+
+This callback should be given a descriptive name like `Build`, `Render`, or
+whatever terminology fits your code base. Try and be consistent across all of
+your components.
+
+```Lua
+local dialog = scope:Dialog {
+	-- Use a `scope` parameter here so that the component can change when these
+	-- children are destroyed if it needs to. This is especially important for
+	-- components that create multiple sets of children over time.
+	Build = function(scope)
+		return {
+			scope:Button {
+				Text = "Hello, world!" 
+			},
+			scope:Text {
+				Text = "I am created on the fly!" 
+			}
+		}
+	end
+}
+```
+
+!!! warning
+	Don't use `[Children]` to store a function. In general, avoid using special
+	keys unless you're actually passing the values through, because changing how
+	a special key appears to behave can make code confusing to follow.
+
+	In this case, using a dedicated naming convention like `Build` ensures that
+	users understand that their children are not being created ahead of time.
+
+Children callbacks are especially useful if the controlling code needs more
+information to build the rest of the UI. For example, you might want to share
+some layout information so children can fit into the component more neatly.
+
+```Lua hl_lines="2 6 10"
+local dialog = scope:Dialog {
+	Build = function(scope, textSize)
+		return {
+			scope:Button {
+				Text = "Hello, world!",
+				TextSize = textSize
+			},
+			scope:Text {
+				Text = "I am created on the fly!",
+				TextSize = textSize
+			}
+		}
+	end
+}
+```
+
+This is also useful for [sharing values to all children](../sharing-values),
+which will be covered on a later page.

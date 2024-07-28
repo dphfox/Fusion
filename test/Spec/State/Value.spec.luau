@@ -96,6 +96,27 @@ return function()
 		
 		value:set(4)
 		expect(value.validity).to.equal("valid")
+		
+		doCleanup(scope)
+	end)
+
+	it("always returns the set value", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local value = Value(scope, 0 :: string | number)
+
+		local foo = value:set(10)
+		expect(foo).to.equal(10)
+
+		local bar = value:set(10)
+		expect(bar).to.equal(10)
+
+		local baz = value:set(25)
+		expect(baz).to.equal(25)
+
+		local garb = value:set(25)
+		expect(garb).to.equal(25)
 
 		doCleanup(scope)
 	end)

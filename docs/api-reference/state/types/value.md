@@ -45,19 +45,21 @@ can be used to tell types of state object apart.
 <h3 markdown>
 	set
 	<span class="fusiondoc-api-type">
-		-> ()
+		-> T
 	</span>
 </h3>
 
 ```Lua
 function Value:set(
 	newValue: T
-): ()
+): T
 ```
 
-Updates the value of this state object.
+Updates the value of this state object. Other objects using the value are
+notified of the change.
 
-Other objects using the value are notified immediately of the change.
+The `newValue` is always returned, so that `:set()` can be used to capture
+values inside of expressions.
 
 -----
 

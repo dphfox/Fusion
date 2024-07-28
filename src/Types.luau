@@ -101,7 +101,7 @@ export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
 	timeliness: "lazy",
  	set: (Value<T, S>, newValue: S, force: boolean?) -> (),
-	 ____TYPEONLY_S: (never) -> S
+	____phantom_setType: (never) -> S -- phantom data so this contains S
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
@@ -236,15 +236,22 @@ export type ScopedConstructor = (() -> Scope<{}>)
 
 export type ContextualConstructor = <T>(defaultValue: T) -> Contextual<T>
 
+export type Safe = <Success, Fail>(
+	callbacks: {
+		try: () -> Success,
+		fallback: (err: unknown) -> Fail
+	}
+) -> Success | Fail
+
 export type Fusion = {
 	version: Version,
 	Contextual: ContextualConstructor,
+	Safe: Safe,
 
 	doCleanup: (Task) -> (),
 	scoped: ScopedConstructor,
-	deriveScope: <T>(existing: Scope<T>) -> Scope<T>,
-	innerScope: <T>(existing: Scope<T>) -> Scope<T>,
-	Safe: <Success, Fail>({try: () -> Success, fallback: (err: unknown) -> Fail}) -> Success | Fail,
+	deriveScope: DeriveScopeConstructor,
+	innerScope: DeriveScopeConstructor,
 
 	peek: Use,
 	Value: ValueConstructor,
@@ -260,7 +267,7 @@ export type Fusion = {
 	New: NewConstructor,
 	Hydrate: HydrateConstructor,
 
-	Ref: SpecialKey,
+	Child: ({Child}) -> Child,
 	Children: SpecialKey,
 	Out: (propertyName: string) -> SpecialKey,
 	OnEvent: (eventName: string) -> SpecialKey,
@@ -290,6 +297,18 @@ export type ExternalProvider = {
 	) -> (),
 	startScheduler: () -> (),
 	stopScheduler: () -> ()
+}
+
+export type ExternalDebugger = {
+	startDebugging: () -> (),
+	stopDebugging: () -> (),
+
+	trackScope: (
+		scope: Scope<unknown>
+	) -> (),
+	untrackScope: (
+		scope: Scope<unknown>
+	) -> ()
 }
 
 return nil
