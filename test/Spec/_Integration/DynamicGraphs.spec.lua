@@ -18,15 +18,19 @@ return function()
 
 			local scope = scoped(Fusion)
 
-			local unrelatedValue = scope:Value(false)
+			local count = 0
+			local unrelatedValue = scope:Value(count)
 			local trigger = scope:Value(false)
 
-			scope:Observer(trigger):onChange(function()
-				unrelatedValue:set(peek(trigger))
+			local o1 = scope:Observer(trigger)
+			o1:onChange(function()
+				count += 1
+				unrelatedValue:set(count)
 			end)
 
 			local numFires = 0
-			scope:Observer(trigger):onChange(function()
+			local o2 = scope:Observer(trigger)
+			o2:onChange(function()
 				numFires += 1
 			end)
 
@@ -36,7 +40,7 @@ return function()
 			expect(numFires).to.equal(2)
 			trigger:set(true)
 			expect(numFires).to.equal(3)
-			
+
 			scope:doCleanup()
 		end)
 	end)

@@ -8,7 +8,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 ]]
 
 return {
-	callbackError = "Error in callback: ERROR_MESSAGE",
+	callbackError = "Error in callback:\nERROR_MESSAGE",
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
@@ -36,7 +36,7 @@ return {
 	noTaskScheduler = "Fusion is not connected to an external task scheduler.",
 	poisonedScope = "Attempted to use a scope after it's been destroyed; %s",
 	possiblyOutlives = "%s will be destroyed before %s; %s. To fix this, review the order they're created in, and what scopes they belong to. See discussion #292 on GitHub for advice.",
-	propertySetError = "Error setting property: ERROR_MESSAGE",
+	propertySetError = "Error setting property:\nERROR_MESSAGE",
 	scopeMissing = "To create %s, provide a scope. (e.g. `%s`). See discussion #292 on GitHub for advice.",
 	springNanGoal = "A spring was given a NaN goal, so some simulation has been skipped. Ensure no springs have NaN goals.",
 	springNanMotion = "A spring encountered NaN during motion, so has snapped to the goal position. Ensure no springs have NaN positions or velocities.",
@@ -44,7 +44,7 @@ return {
 	stateGetWasRemoved = "`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion #217 on GitHub.",
 	tweenNanGoal = "A tween was given a NaN goal, so some animation has been skipped. Ensure no tweens have NaN goals.",
 	tweenNanMotion = "A tween encountered NaN during motion, so has snapped to the goal. Ensure no tweens have NaN in their tween infos.",
-	unknownMessage = "Unknown error: ERROR_MESSAGE",
+	unknownMessage = "Unknown error:\nERROR_MESSAGE",
 	unrecognisedChildType = "'%s' type children aren't accepted by `[Children]`.",
 	unrecognisedPropertyKey = "'%s' keys aren't accepted in property tables.",
 	unrecognisedPropertyStage = "'%s' isn't a valid stage for a special key to be applied at.",
