@@ -81,24 +81,31 @@ end
 function class.zero(
 	self: Self
 ): ()
-	self._measureTimeSince = peek(self._timer)
-	self._EXTREMELY_DANGEROUS_usedAsValue = 0
-	change(self)
+	local newTimepoint = peek(self._timer)
+	if newTimepoint ~= self._measureTimeSince then
+		self._measureTimeSince = newTimepoint
+		self._EXTREMELY_DANGEROUS_usedAsValue = 0
+		change(self)
+	end
 end
 
 function class.pause(
 	self: Self
 ): ()
-	self._playing = false
-	change(self)
+	if self._playing == true then
+		self._playing = false
+		change(self)
+	end
 end
 
 function class.unpause(
 	self: Self
 ): ()
-	self._playing = true
-	self._measureTimeSince = peek(self._timer) - self._EXTREMELY_DANGEROUS_usedAsValue
-	change(self)
+	if self._playing == false then
+		self._playing = true
+		self._measureTimeSince = peek(self._timer) - self._EXTREMELY_DANGEROUS_usedAsValue
+		change(self)
+	end
 end
 
 function class._evaluate(
