@@ -303,6 +303,7 @@ function class._evaluate<T>(
 		self._activeGoal = nextFrameGoal
 		self._activeDamping = nextFrameDamping
 		self._activeSpeed = nextFrameSpeed
+		stopwatch:zero()
 		stopwatch:unpause()
 	end
 
