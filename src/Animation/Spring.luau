@@ -127,7 +127,6 @@ local function Spring<T>(
 			speedState.scope, speedState.oldestTask,
 			checkLifetime.formatters.parameter, "speed"
 		)
-		depend(self, speedState)
 	end
 	local dampingState = castToState(damping)
 	if dampingState ~= nil then
@@ -136,7 +135,6 @@ local function Spring<T>(
 			dampingState.scope, dampingState.oldestTask,
 			checkLifetime.formatters.parameter, "damping"
 		)
-		depend(self, dampingState)
 	end
 
 	-- Eagerly evaluated objects need to evaluate themselves so that they're
@@ -214,25 +212,85 @@ function class._evaluate<T>(
 		return false
 	end
 	depend(self, goal)
-	local newGoal = peek(goal)
+	local nextFrameGoal = peek(goal)
 	-- Protect against NaN goals.
-	if newGoal ~= newGoal then
+	if nextFrameGoal ~= nextFrameGoal then
 		External.logWarn("springNanGoal")
 		return false
 	end
+	local nextFrameGoalType = typeof(nextFrameGoal)
+	local discontinuous = nextFrameGoalType ~= self._activeType
+
 	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
-	local speed = peek(self._speed) :: number
-	local damping = peek(self._damping) :: number
+	local elapsed = peek(stopwatch)
+	depend(self, stopwatch)
+
+	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
+	local newValue: T
+
+	if discontinuous then
+		-- Propagate changes in type instantly throughout the whole reactive
+		-- graph, even if simulation is logically one frame behind, because it
+		-- makes the whole graph behave more consistently.
+		newValue = nextFrameGoal
+	elseif elapsed <= 0 then
+		newValue = oldValue
+	else
+		-- Calculate spring motion.
+		-- IMPORTANT: use the parameters from last frame, not this frame. We're
+		-- integrating the motion that happened over the last frame, after all.
+		-- The stopwatch will have captured the length of time needed correctly.
+		local posPos, posVel, velPos, velVel = springCoefficients(
+			elapsed, 
+			self._activeDamping, 
+			self._activeSpeed
+		)
+		local isMoving = false
+		for index = 1, self._activeNumSprings do
+			local startP = self._activeStartP[index]
+			local targetP = self._activeTargetP[index]
+			local startV = self._activeStartV[index]
+			local startD = startP - targetP
+			local latestD = startD * posPos + startV * posVel
+			local latestV = startD * velPos + startV * velVel
+			if latestD ~= latestD or latestV ~= latestV then
+				External.logWarn("springNanMotion")
+				latestD, latestV = 0, 0
+			end
+			if math.abs(latestD) > EPSILON or math.abs(latestV) > EPSILON then
+				isMoving = true
+			end
+			local latestP = latestD + targetP
+			self._activeLatestP[index] = latestP
+			self._activeLatestV[index] = latestV
+		end
+		-- Sleep and snap to goal if the motion has decayed to a negligible amount.
+		if not isMoving then
+			for index = 1, self._activeNumSprings do
+				self._activeLatestP[index] = self._activeTargetP[index]
+			end
+			stopwatch:pause()
+			stopwatch:zero()
+		end
+		-- Pack springs into final value.
+		newValue = packType(self._activeLatestP, self._activeType) :: any
+	end
+
 	-- Reconfigure spring when any of its parameters are changed.
+	-- This should happen after integrating the last frame's motion.
+	-- NOTE: don't need to add a dependency on these objects! they do not cause
+	-- a spring to wake from sleep, so the stopwatch dependency is sufficient.
+	local nextFrameSpeed = peek(self._speed) :: number
+	local nextFrameDamping = peek(self._damping) :: number
 	if
-		newGoal ~= self._activeGoal or
-		speed ~= self._activeSpeed or
-		damping ~= self._activeDamping
+		discontinuous or
+		nextFrameGoal ~= self._activeGoal or
+		nextFrameSpeed ~= self._activeSpeed or
+		nextFrameDamping ~= self._activeDamping
 	then
-		local goalType = typeof(newGoal)
-		self._activeTargetP = unpackType(newGoal, goalType)
+		self._activeTargetP = unpackType(nextFrameGoal, nextFrameGoalType)
 		self._activeNumSprings = #self._activeTargetP
-		if goalType ~= self._activeType then
+		if discontinuous then
 			self._activeStartP = table.clone(self._activeTargetP)
 			self._activeLatestP = table.clone(self._activeTargetP)
 			self._activeStartV = table.create(self._activeNumSprings, 0)
@@ -241,46 +299,13 @@ function class._evaluate<T>(
 			self._activeStartP = table.clone(self._activeLatestP)
 			self._activeStartV = table.clone(self._activeLatestV)
 		end
-		self._activeType = goalType
-		self._activeGoal = newGoal
-		self._activeDamping = damping
-		self._activeSpeed = speed
-		self._stopwatch:zero()
-		self._stopwatch:unpause()
+		self._activeType = nextFrameGoalType
+		self._activeGoal = nextFrameGoal
+		self._activeDamping = nextFrameDamping
+		self._activeSpeed = nextFrameSpeed
+		stopwatch:unpause()
 	end
-	depend(self, stopwatch)
-	local elapsed = peek(stopwatch)
-	-- Calculate spring motion.
-	local posPos, posVel, velPos, velVel = springCoefficients(elapsed, damping, speed)
-	local isMoving = false
-	for index = 1, self._activeNumSprings do
-		local startP = self._activeStartP[index]
-		local targetP = self._activeTargetP[index]
-		local startV = self._activeStartV[index]
-		local startD = startP - targetP
-		local latestD = startD * posPos + startV * posVel
-		local latestV = startD * velPos + startV * velVel
-		if latestD ~= latestD or latestV ~= latestV then
-			External.logWarn("springNanMotion")
-			latestD, latestV = 0, 0
-		end
-		if math.abs(latestD) > EPSILON or math.abs(latestV) > EPSILON then
-			isMoving = true
-		end
-		local latestP = latestD + targetP
-		self._activeLatestP[index] = latestP
-		self._activeLatestV[index] = latestV
-	end
-	-- Sleep and snap to goal if the motion has decayed to a negligible amount.
-	if not isMoving then
-		for index = 1, self._activeNumSprings do
-			self._activeLatestP[index] = self._activeTargetP[index]
-		end
-		stopwatch:pause()
-	end
-	-- Pack springs into final value.
-	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
-	local newValue: T = packType(self._activeLatestP, self._activeType) :: any
+
 	-- Push update and check for similarity.
 	-- Don't need to use the similarity test here because this code doesn't
 	-- deal with tables, and NaN is already guarded against, so the similarity
