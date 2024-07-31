@@ -12,7 +12,8 @@
 ```Lua
 export type Value<T> = StateObject<T> & {
 	kind: "State",
- 	set: (self, newValue: T) -> ()
+ 	set: (self, newValue: T) -> (),
+	timeliness: "lazy"
 }
 ```
 

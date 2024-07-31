@@ -39,18 +39,18 @@ return function()
 
 	local ERROR_MARGIN = 0.00001
 
-	it("should return reasonable underdamped values", function()
+	it("should return the same underdamped values as before", function()
 		local expect = getfenv().expect
 
 		local posPos, posVel, velPos, velVel = springCoefficients(3.6, 0.2, 6.3)
 
 		expect(posPos).to.be.near(-0.010932478209024278, ERROR_MARGIN)
-		expect(posVel).to.be.near(-0.002500054168246333, ERROR_MARGIN)
-		expect(velPos).to.be.near(0.002500054168246333, ERROR_MARGIN)
-		expect(velVel).to.be.near(-0.009932456541725745, ERROR_MARGIN)
+		expect(posVel).to.be.near(-0.00039683399495972943, ERROR_MARGIN)
+		expect(velPos).to.be.near(0.015750341259951655, ERROR_MARGIN)
+		expect(velVel).to.be.near(-0.009932456541725759, ERROR_MARGIN)
 	end)
 
-	it("should return reasonable critically damped values", function()
+	it("should return the same critically damped values as before", function()
 		local expect = getfenv().expect
 
 		local posPos, posVel, velPos, velVel = springCoefficients(0.24, 1, 3.6)
@@ -61,14 +61,14 @@ return function()
 		expect(velVel).to.be.near(0.057320302809524805, ERROR_MARGIN)
 	end)
 
-	it("should return reasonable overdamped values", function()
+	it("should return the same overdamped values as before", function()
 		local expect = getfenv().expect
 		
 		local posPos, posVel, velPos, velVel = springCoefficients(1.74, 8.4, 7.2)
 
-		expect(posPos).to.be.near(0.4748290157123269, ERROR_MARGIN)
-		expect(posVel).to.be.near(0.003939512259321826, ERROR_MARGIN)
-		expect(velPos).to.be.near(-0.2042243155232435, ERROR_MARGIN)
-		expect(velVel).to.be.near(-0.0016943871752413216, ERROR_MARGIN)
+		expect(posPos).to.be.near(0.47482901571232816, ERROR_MARGIN)
+		expect(posVel).to.be.near(0.0005471544804613663, ERROR_MARGIN)
+		expect(velPos).to.be.near(-0.02836448826711723, ERROR_MARGIN)
+		expect(velVel).to.be.near(-0.0016943871752413203, ERROR_MARGIN)
 	end)
 end

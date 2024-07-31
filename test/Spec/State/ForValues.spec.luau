@@ -24,7 +24,7 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-		expect(scope[1]).to.equal(forObject.oldestTask)
+		expect(table.find(scope, forObject.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)
@@ -187,15 +187,17 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(_, innerScope, value)
+		local forValues = ForValues(scope, data, function(_, innerScope, value)
 			table.insert(innerScope, function()
 				destructed[value] = true
 			end)
 			return value
 		end)
+		peek(forValues)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		data:set({"foo", "bar", "baz"})
+		peek(forValues)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		expect(destructed.baz).to.equal(nil)
@@ -208,15 +210,17 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(_, innerScope, value)
+		local forValues = ForValues(scope, data, function(_, innerScope, value)
 			table.insert(innerScope, function()
 				destructed[value] = true
 			end)
 			return value
 		end)
+		peek(forValues)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		data:set({"baz"})
+		peek(forValues)
 		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
 		expect(destructed.baz).to.equal(nil)
@@ -229,12 +233,13 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {"foo", "bar"})
-		local _ = ForValues(scope, data, function(_, innerScope, value)
+		local forValues = ForValues(scope, data, function(_, innerScope, value)
 			table.insert(innerScope, function()
 				destructed[value] = true
 			end)
 			return value
 		end)
+		peek(forValues)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		doCleanup(scope)
@@ -248,18 +253,23 @@ return function()
 		local scope = {}
 		local data = Value(scope, {"foo", "bar"})
 		local computations = 0
-		ForValues(scope, data, function(_, _, value)
+		local forValues = ForValues(scope, data, function(_, _, value)
 			computations += 1
 			return string.upper(value)
 		end)
+		peek(forValues)
 		expect(computations).to.equal(2)
 		data:set({"bar", "foo"})
+		peek(forValues)
 		expect(computations).to.equal(2)
 		data:set({"baz", "bar", "foo"})
+		peek(forValues)
 		expect(computations).to.equal(3)
 		data:set({"foo", "baz", "bar"})
+		peek(forValues)
 		expect(computations).to.equal(3)
 		data:set({"garb"})
+		peek(forValues)
 		expect(computations).to.equal(4)
 		doCleanup(scope)
 	end)
@@ -270,15 +280,64 @@ return function()
 		local scope = {}
 		local data = Value(scope, {"foo", "foo", "foo"})
 		local computations = 0
-		ForValues(scope, data, function(_, _, value)
+		local forValues = ForValues(scope, data, function(_, _, value)
 			computations += 1
 			return string.upper(value)
 		end)
+		peek(forValues)
 		expect(computations).to.equal(3)
 		data:set({"foo", "foo", "foo", "foo"})
+		peek(forValues)
 		expect(computations).to.equal(4)
 		data:set({"bar", "foo", "foo"})
+		peek(forValues)
 		expect(computations).to.equal(5)
+		doCleanup(scope)
+	end)
+
+	it("preserves the relative order of items", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local data = Value(scope, {"10", "20", "30", "40", "50"})
+		local omit = Value(scope, {})
+		local forValues = ForValues(scope, data, function(use, _, value): string?
+			if table.find(use(omit), value) ~= nil then
+				return nil
+			else
+				return value
+			end
+		end)
+		expect(peek(forValues)[1]).to.equal("10")
+		expect(peek(forValues)[2]).to.equal("20")
+		expect(peek(forValues)[3]).to.equal("30")
+		expect(peek(forValues)[4]).to.equal("40")
+		expect(peek(forValues)[5]).to.equal("50")
+		data:set({"50", "40", "30", "20", "10"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("40")
+		expect(peek(forValues)[3]).to.equal("30")
+		expect(peek(forValues)[4]).to.equal("20")
+		expect(peek(forValues)[5]).to.equal("10")
+		data:set({"50", "30", "10", "40"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("30")
+		expect(peek(forValues)[3]).to.equal("10")
+		expect(peek(forValues)[4]).to.equal("40")
+		expect(peek(forValues)[5]).to.equal(nil)
+		omit:set({"30"})
+		expect(peek(forValues)[1]).to.equal("50")
+		expect(peek(forValues)[2]).to.equal("10")
+		expect(peek(forValues)[3]).to.equal("40")
+		expect(peek(forValues)[4]).to.equal(nil)
+		expect(peek(forValues)[5]).to.equal(nil)
+		data:set({"10", "20", "30", "40", "50"})
+		expect(peek(forValues)[1]).to.equal("10")
+		expect(peek(forValues)[2]).to.equal("20")
+		expect(peek(forValues)[3]).to.equal("40")
+		expect(peek(forValues)[4]).to.equal("50")
+		expect(peek(forValues)[5]).to.equal(nil)
+
 		doCleanup(scope)
 	end)
 end

@@ -10,11 +10,13 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
-local isState = require(Package.State.isState)
-local Observer = require(Package.State.Observer)
+-- Memory
+local checkLifetime = require(Package.Memory.checkLifetime)
+-- Graph
+local Observer = require(Package.Graph.Observer)
+-- State
+local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 
 local keyCache: {[string]: Types.SpecialKey} = {}
 
@@ -33,13 +35,13 @@ local function Attribute(
 				value: unknown,
 				applyTo: Instance
 			)
-				if isState(value) then
+				if castToState(value) then
 					local value = value :: Types.StateObject<unknown>
-					if value.scope == nil then
-						External.logError("useAfterDestroy", nil, `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-					elseif whichLivesLonger(scope, applyTo, value.scope, value.oldestTask) == "definitely-a" then
-						External.logWarn("possiblyOutlives", `The {value.kind} object, bound to [Attribute "{attributeName}"],`, `the {applyTo.ClassName} instance`)
-					end
+					checkLifetime.bOutlivesA(
+						scope, applyTo,
+						value.scope, value.oldestTask,
+						checkLifetime.formatters.boundAttribute, attributeName
+					)
 					Observer(scope, value :: any):onBind(function()
 						applyTo:SetAttribute(attributeName, peek(value))
 					end)

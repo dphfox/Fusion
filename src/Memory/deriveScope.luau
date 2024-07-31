@@ -11,6 +11,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	debugging hooks.
 ]]
 local Package = script.Parent.Parent
+local Types = require(Package.Types)
 local ExternalDebug = require(Package.ExternalDebug)
 local deriveScopeImpl = require(Package.Memory.deriveScopeImpl)
 
@@ -20,4 +21,4 @@ local function deriveScope(...)
 	return scope
 end
 
-return deriveScope
+return deriveScope :: Types.DeriveScopeConstructor

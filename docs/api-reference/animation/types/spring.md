@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Spring<T> = StateObject<T> & Dependent & {
+export type Spring<T> = StateObject<T> & {
 	kind: "Spring",
 	setPosition: (self, newPosition: T) -> (),
 	setVelocity: (self, newVelocity: T) -> (),
@@ -20,9 +20,6 @@ export type Spring<T> = StateObject<T> & Dependent & {
 
 A specialised [state object](../stateobject) for following a goal state smoothly
 over time, using physics to shape the motion.
-
-In addition to the standard state object interfaces, this object is a 
-[dependent](../dependent) so it can receive updates from the goal state.
 
 The methods on this type allow for direct control over the position and velocity
 of the motion. Other than that, this type is of limited utility outside of

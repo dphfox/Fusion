@@ -1,5 +1,5 @@
 <nav class="fusiondoc-api-breadcrumbs">
-	<span>State</span>
+	<span>Graph</span>
 	<span>Members</span>
 	<span>Observer</span>
 </nav>
@@ -50,8 +50,8 @@ destruction tasks for this object.
 
 The target that the observer should watch for changes.
 
-!!! note "Works best with state objects"
-	While non-[state object](../../../state/types/stateobject) values are
+!!! note "Works best with graph objects"
+	While non-[graph object](../../types/graphobject) values are
 	accepted for compatibility, they won't be able to trigger updates.
 
 -----

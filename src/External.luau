@@ -16,6 +16,15 @@ local ERROR_INFO_URL = "https://elttob.uk/Fusion/0.3/api-reference/general/error
 
 local External = {}
 
+-- Indicates that a highly time-critical passage of code is running. During
+-- critical periods of a program, Fusion might decide to change some of its
+-- internal behaviour to be more performance friendly.
+local timeCritical = false
+
+-- Multiplier for running-time safety checks across the Fusion codebase. Used to
+-- stricten tests on infinite loop detection during unit testing.
+External.safetyTimerMultiplier = 1
+
 local updateStepCallbacks = {}
 local currentProvider: Types.ExternalProvider? = nil
 local lastUpdateStep = 0
@@ -39,13 +48,20 @@ function External.setExternalProvider(
 end
 
 --[[
+	Returns true if a highly time-critical passage of code is running.
+]]
+function External.isTimeCritical(): boolean
+	return timeCritical
+end
+
+--[[
    Sends an immediate task to the external provider. Throws if none is set.
 ]]
 function External.doTaskImmediate(
 	resume: () -> ()
 )
 	if currentProvider == nil then
-		formatError(currentProvider, "noTaskScheduler")
+		External.logError("noTaskScheduler")
 	else
 		currentProvider.doTaskImmediate(resume)
 	end
@@ -58,7 +74,7 @@ function External.doTaskDeferred(
 	resume: () -> ()
 )
 	if currentProvider == nil then
-		formatError(currentProvider, "noTaskScheduler")
+		External.logError("noTaskScheduler")
 	else
 		currentProvider.doTaskDeferred(resume)
 	end

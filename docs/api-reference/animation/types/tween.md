@@ -10,16 +10,13 @@
 </h1>
 
 ```Lua
-export type Tween<T> = StateObject<T> & Dependent & {
+export type Tween<T> = StateObject<T>  & {
 	kind: "Tween"
 }
 ```
 
 A specialised [state object](../stateobject) for following a goal state smoothly
 over time, using a `TweenInfo` to shape the motion.
-
-In addition to the standard state object interfaces, this object is a 
-[dependent](../dependent) so it can receive updates from the goal state.
 
 This type isn't generally useful outside of Fusion itself.
 
