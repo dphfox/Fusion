@@ -72,6 +72,7 @@ local function Spring<T>(
 	local stopwatch = nil
 	if goalState ~= nil then
 		stopwatch = Stopwatch(scope, ExternalTime(scope))
+		stopwatch:unpause()
 	end
 
 	local speed = speed or 10
@@ -211,7 +212,7 @@ function class._evaluate<T>(
 		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
 		return false
 	end
-	depend(self, goal)
+	-- depend(self, goal)
 	local nextFrameGoal = peek(goal)
 	-- Protect against NaN goals.
 	if nextFrameGoal ~= nextFrameGoal then
@@ -269,8 +270,10 @@ function class._evaluate<T>(
 			for index = 1, self._activeNumSprings do
 				self._activeLatestP[index] = self._activeTargetP[index]
 			end
-			stopwatch:pause()
-			stopwatch:zero()
+			-- TODO: figure out how to do sleeping correctly for single frame
+			-- changes
+			-- stopwatch:pause()
+			-- stopwatch:zero()
 		end
 		-- Pack springs into final value.
 		newValue = packType(self._activeLatestP, self._activeType) :: any
