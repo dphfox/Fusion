@@ -18,7 +18,7 @@ function Fusion.peek<T>(
 ): T
 ```
 
-Extract a value of type `T` from its input.
+Extracts a value of type `T` from its input.
 
 This is a general-purpose implementation of [`Use`](../../types/use). It does
 not do any extra processing or book-keeping beyond what is required to determine

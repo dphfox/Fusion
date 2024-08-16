@@ -24,7 +24,7 @@ return function()
 		expect(forObject).to.be.a("table")
 		expect(forObject.type).to.equal("State")
 		expect(forObject.kind).to.equal("For")
-		expect(scope[1]).to.equal(forObject.oldestTask)
+		expect(table.find(scope, forObject.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)
@@ -190,15 +190,17 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab", baz = "zab"})
-		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
+		local forPairs = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
 			return value, key
 		end)
+		peek(forPairs)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		data:set({foo = "oof", bar = "rab", baz = "zab"})
+		peek(forPairs)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		expect(destructed.baz).to.equal(nil)
@@ -211,15 +213,17 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab"} :: {[string]: string})
-		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
+		local forPairs = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
 			return value, key
 		end)
+		peek(forPairs)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		data:set({baz = "zab"})
+		peek(forPairs)
 		expect(destructed.foo).to.equal(true)
 		expect(destructed.bar).to.equal(true)
 		expect(destructed.baz).to.equal(nil)
@@ -232,12 +236,13 @@ return function()
 		local scope = {}
 		local destructed = {}
 		local data = Value(scope, {foo = "oof", bar = "rab"})
-		local _ = ForPairs(scope, data, function(_, innerScope, key, value)
+		local forPairs = ForPairs(scope, data, function(_, innerScope, key, value)
 			table.insert(innerScope, function()
 				destructed[key] = true
 			end)
 			return value, key
 		end)
+		peek(forPairs)
 		expect(destructed.foo).to.equal(nil)
 		expect(destructed.bar).to.equal(nil)
 		doCleanup(scope)

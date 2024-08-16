@@ -21,7 +21,7 @@ return function()
 		expect(value).to.be.a("table")
 		expect(value.type).to.equal("State")
 		expect(value.kind).to.equal("Value")
-		expect(scope[1]).to.equal(value.oldestTask)
+		expect(table.find(scope, value.oldestTask :: any)).never.to.equal(nil)
 
 		doCleanup(scope)
 	end)
@@ -60,6 +60,45 @@ return function()
 		doCleanup(scope)
 	end)
 
+	it("updates its last changed time on set", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local value = Value(scope, 1)
+
+		local before = value.lastChange
+		value:set(2)
+		expect(value.lastChange).never.to.equal(before)
+
+		before = value.lastChange
+		value:set(3)
+		expect(value.lastChange).never.to.equal(before)
+
+		before = value.lastChange
+		value:set(4)
+		expect(value.lastChange).never.to.equal(before)
+
+		doCleanup(scope)
+	end)
+
+	it("is always valid", function()
+		local expect = getfenv().expect
+		
+		local scope = {}
+		local value = Value(scope, 1)
+		expect(value.validity).to.equal("valid")
+
+		value:set(2)
+		expect(value.validity).to.equal("valid")
+
+		value:set(3)
+		expect(value.validity).to.equal("valid")
+		
+		value:set(4)
+		expect(value.validity).to.equal("valid")
+		
+		doCleanup(scope)
+	end)
 
 	it("always returns the set value", function()
 		local expect = getfenv().expect

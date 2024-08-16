@@ -85,15 +85,15 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should bind State objects passed as children", function()
+	it("should bind state objects passed as children", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
-		local child1 = New(scope, "Folder") {}
-		local child2 = New(scope, "Folder") {}
-		local child3 = New(scope, "Folder") {}
-		local child4 = New(scope, "Folder") {}
 
+		local child1 = New(scope, "Folder") { Name = "Child1" }
+		local child2 = New(scope, "Folder") { Name = "Child2" }
+		local child3 = New(scope, "Folder") { Name = "Child3" }
+		local child4 = New(scope, "Folder") { Name = "Child4" }
 		local children = Value(scope, {child1})
 
 		local parent = New(scope, "Folder") {
@@ -103,15 +103,11 @@ return function()
 		}
 
 		expect(child1.Parent).to.equal(parent)
-
 		children:set({child2, child3})
-
 		expect(child1.Parent).to.equal(nil)
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
-
 		children:set({child1, child2, child3, child4})
-
 		expect(child1.Parent).to.equal(parent)
 		expect(child2.Parent).to.equal(parent)
 		expect(child3.Parent).to.equal(parent)
@@ -119,7 +115,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should defer updates to State children", function()
+	it("should defer updates to state children", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -143,7 +139,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should recursively bind State children", function()
+	it("should recursively bind state children", function()
 		local expect = getfenv().expect
 		
 		local scope = {}
@@ -174,7 +170,7 @@ return function()
 		doCleanup(scope)
 	end)
 
-	it("should allow for State children to be nil", function()
+	it("should allow for state children to be nil", function()
 		local expect = getfenv().expect
 		
 		local scope = {}

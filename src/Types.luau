@@ -46,7 +46,7 @@ export type Task =
 	{Task}
 
 -- A scope of tasks to clean up.
-export type Scope<Constructors> = {Task} & Constructors
+export type Scope<Constructors = any> = {Task} & Constructors
 
 -- An object which uses a scope to dictate how long it lives.
 export type ScopedObject = {
@@ -72,22 +72,22 @@ type ContextualIsMethods = {
 	during: <R, A...>(ContextualIsMethods, (A...) -> R, A...) -> R
 }
 
--- A graph object which can have dependents.
-export type Dependency = ScopedObject & {
-	dependentSet: {[Dependent]: unknown}
-}
-
--- A graph object which can have dependencies.
-export type Dependent = ScopedObject & {
-	update: (Dependent) -> boolean,
-	dependencySet: {[Dependency]: unknown}
+-- A graph object which can have dependencies and dependencies.
+export type GraphObject = ScopedObject & {
+	createdAt: number,
+	dependencySet: {[GraphObject]: unknown},
+	dependentSet: {[GraphObject]: unknown},
+	lastChange: number?,
+	timeliness: "lazy" | "eager",
+	validity: "valid" | "invalid" | "busy",
+	_evaluate: (GraphObject) -> boolean
 }
 
 -- An object which stores a piece of reactive state.
-export type StateObject<T> = Dependency & {
+export type StateObject<T> = GraphObject & {
 	type: "State",
 	kind: string,
-	____phantom_peekType: (never) -> T -- phantom data so this contains a T
+	_EXTREMELY_DANGEROUS_usedAsValue: T
 }
 
 -- Passing values of this type to `Use` returns `T`.
@@ -99,8 +99,9 @@ export type Use = <T>(target: UsedAs<T>) -> T
 -- A state object whose value can be set at any time by the user.
 export type Value<T, S = T> = StateObject<T> & {
 	kind: "State",
-	set: (Value<T, S>, newValue: S, force: boolean?) -> S,
-	____phantom_setType: (never) -> S -- phantom data so this contains a T
+	timeliness: "lazy",
+ 	set: (Value<T, S>, newValue: S, force: boolean?) -> S,
+	____phantom_setType: (never) -> S -- phantom data so this contains S
 }
 export type ValueConstructor = <T>(
 	scope: Scope<unknown>,
@@ -108,37 +109,39 @@ export type ValueConstructor = <T>(
 ) -> Value<T, any>
 
 -- A state object whose value is derived from other objects using a callback.
-export type Computed<T> = StateObject<T> & Dependent & {
-	kind: "Computed"
+export type Computed<T> = StateObject<T> & {
+	kind: "Computed",
+	timeliness: "lazy"
 }
 export type ComputedConstructor = <T, S>(
-	scope: Scope<S>,
-	callback: (Use, Scope<S>) -> T
+	scope: S & Scope<unknown>,
+	callback: (Use, S) -> T
 ) -> Computed<T>
 
 -- A state object which maps over keys and/or values in another table.
-export type For<KO, VO> = StateObject<{[KO]: VO}> & Dependent & {
+export type For<KO, VO> = StateObject<{[KO]: VO}>  & {
 	kind: "For"
 }
 export type ForPairsConstructor =  <KI, KO, VI, VO, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[KI]: VI}>,
-	processor: (Use, Scope<S>, key: KI, value: VI) -> (KO, VO)
+	processor: (Use, S, key: KI, value: VI) -> (KO, VO)
 ) -> For<KO, VO>
 export type ForKeysConstructor =  <KI, KO, V, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[KI]: V}>,
-	processor: (Use, Scope<S>, key: KI) -> KO
+	processor: (Use, S, key: KI) -> KO
 ) -> For<KO, V>
 export type ForValuesConstructor =  <K, VI, VO, S>(
-	scope: Scope<S>,
+	scope: S & Scope<unknown>,
 	inputTable: UsedAs<{[K]: VI}>,
-	processor: (Use, Scope<S>, value: VI) -> VO
+	processor: (Use, S, value: VI) -> VO
 ) -> For<K, VO>
 
 -- An object which can listen for updates on another state object.
-export type Observer = Dependent & {
+export type Observer = GraphObject & {
 	type: "Observer",
+	timeliness: "eager",
 	onChange: (Observer, callback: () -> ()) -> (() -> ()),
 	onBind: (Observer, callback: () -> ()) -> (() -> ())
 }
@@ -148,7 +151,7 @@ export type ObserverConstructor = (
 ) -> Observer
 
 -- A state object which follows another state object using tweens.
-export type Tween<T> = StateObject<T> & Dependent & {
+export type Tween<T> = StateObject<T> & {
 	kind: "Tween"
 }
 export type TweenConstructor = <T>(
@@ -158,7 +161,7 @@ export type TweenConstructor = <T>(
 ) -> Tween<T>
 
 -- A state object which follows another state object using spring simulation.
-export type Spring<T> = StateObject<T> & Dependent & {
+export type Spring<T> = StateObject<T>  & {
 	kind: "Spring",
 	setPosition: (Spring<T>, newPosition: T) -> (),
 	setVelocity: (Spring<T>, newVelocity: T) -> (),
@@ -278,7 +281,7 @@ export type ExternalProvider = {
 	policies: {
 		allowWebLinks: boolean
 	},
-	
+
 	logErrorNonFatal: (
 		errorString: string
 	) -> (),

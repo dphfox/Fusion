@@ -57,6 +57,15 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
 </div>
 
 <div markdown>
+### Graph
+<a class="fusiondoc-api-index-link" href="graph/members/observer" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
+    <span class="fusiondoc-api-name">Observer</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
+</div>
+
+<div markdown>
 ### State
 <a class="fusiondoc-api-index-link" href="state/types/usedas" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
@@ -68,11 +77,6 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
     <span class="fusiondoc-api-name">Computed</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
-<a class="fusiondoc-api-index-link" href="state/members/observer" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
-    <span class="fusiondoc-api-name">Observer</span>
-    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
-</a>
 <a class="fusiondoc-api-index-link" href="state/members/peek" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
     <span class="fusiondoc-api-name">peek</span>
@@ -81,6 +85,20 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
 <a class="fusiondoc-api-index-link" href="state/members/value" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
     <span class="fusiondoc-api-name">Value</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
+</div>
+
+<div markdown>
+### Animation
+<a class="fusiondoc-api-index-link" href="animation/members/spring" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
+    <span class="fusiondoc-api-name">Spring</span>
+    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
+</a>
+<a class="fusiondoc-api-index-link" href="animation/members/tween" markdown>
+    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
+    <span class="fusiondoc-api-name">Tween</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 </div>
@@ -105,25 +123,6 @@ For a beginner-friendly experience, [try the tutorials.](../tutorials/)
 <a class="fusiondoc-api-index-link" href="roblox/members/new" markdown>
     <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
     <span class="fusiondoc-api-name">New</span>
-    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
-</a>
-</div>
-
-<div markdown>
-### Animation
-<a class="fusiondoc-api-index-link" href="animation/types/animatable" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-note-24:</span>
-    <span class="fusiondoc-api-name">Animatable</span>
-    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
-</a>
-<a class="fusiondoc-api-index-link" href="animation/members/spring" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
-    <span class="fusiondoc-api-name">Spring</span>
-    <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
-</a>
-<a class="fusiondoc-api-index-link" href="animation/members/tween" markdown>
-    <span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
-    <span class="fusiondoc-api-name">Tween</span>
     <span class="fusiondoc-api-index-arrow" markdown>:octicons-chevron-right-24:</span>
 </a>
 </div>

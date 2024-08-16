@@ -4,14 +4,13 @@
 local task = nil -- Disable usage of Roblox's task scheduler
 
 --[[
-	Constructs a new For object which maps values of a table using a `processor`
-	function.
+	Constructs and returns a new For state object which processes values and
+	preserves keys.
 
-	Optionally, a `destructor` function can be specified for cleaning up output.
+	https://elttob.uk/Fusion/0.3/api-reference/state/members/forvalues/
 
-	Additionally, a `meta` table/value can optionally be returned to pass data
-	created when running the processor to the destructor when the created object
-	is cleaned up.
+	TODO: the sub objects constructed here can be more efficiently implemented
+	as a dedicated state object.
 ]]
 
 local Package = script.Parent.Parent
@@ -19,11 +18,58 @@ local Types = require(Package.Types)
 local External = require(Package.External)
 -- State
 local For = require(Package.State.For)
+local Value = require(Package.State.Value)
 local Computed = require(Package.State.Computed)
+local ForTypes = require(Package.State.For.ForTypes)
 -- Logging
 local parseError = require(Package.Logging.parseError)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
+
+local SUB_OBJECT_META = {
+	__index = {
+		roamKeys = true,
+		roamValues = false,
+		invalidateInputKey = function(self): ()
+			-- do nothing
+		end,
+		invalidateInputValue = function(self): ()
+			self._inputValueState:set(self.inputValue)
+		end,
+		useOutputPair = function(self, use)
+			return self.inputKey, use(self._outputValueState)
+		end
+	}
+}
+
+local function SubObject<K, VI, VO, S>(
+	scope: Types.Scope<S>,
+	initialKey: K,
+	initialValue: VI,
+	processor: (Types.Use, Types.Scope<S>, VI) -> VO
+): ForTypes.SubObject<S, K, K, VI, VO>
+	local self = {}
+	self.maybeScope = scope
+	self.inputKey = initialKey
+	self.inputValue = initialValue
+	self._inputValueState = Value(scope, initialValue)
+	self._processor = processor
+	self._outputValueState = Computed(scope, function(use, scope): VO?
+		local inputValue = use(self._inputValueState)
+		local ok, outputValue = xpcall(self._processor, parseError, use, scope, inputValue)
+		if ok then
+			return outputValue
+		else
+			local error: Types.Error = outputValue :: any
+			error.context = `while processing value {tostring(inputValue)}`
+			External.logErrorNonFatal("callbackError", error)
+			doCleanup(scope)
+			table.clear(scope)
+			return nil
+		end
+	end)
+	return setmetatable(self, SUB_OBJECT_META) :: any
+end
 
 local function ForValues<K, VI, VO, S>(
 	scope: Types.Scope<S>,
@@ -32,34 +78,17 @@ local function ForValues<K, VI, VO, S>(
 	destructor: unknown?
 ): Types.For<K, VO>
 	if typeof(inputTable) == "function" then
-		External.logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(use, scope, value) ... end)")
+		External.logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(scope, use, value) ... end)")
 	elseif destructor ~= nil then
 		External.logWarn("destructorRedundant", "ForValues")
 	end
 	return For(
 		scope,
 		inputTable,
-		function(
-			scope: Types.Scope<S>,
-			inputPair: Types.StateObject<{key: K, value: VI}>
-		)
-			local inputValue = Computed(scope, function(use, scope): VI
-				return use(inputPair).value
-			end)
-			return Computed(scope, function(use, scope): {key: nil, value: VO?}
-				local ok, value = xpcall(processor, parseError, use, scope, use(inputValue))
-				if ok then
-					return {key = nil, value = value}
-				else
-					local errorObj = (value :: any) :: Types.Error
-					External.logErrorNonFatal("callbackError", errorObj)
-					doCleanup(scope)
-					table.clear(scope)
-					return {key = nil, value = nil}
-				end
-			end)
+		function(scope, initialKey, initialValue)
+			return SubObject(scope, initialKey, initialValue, processor)
 		end
 	)
 end
 
-return ForValues
+return ForValues :: Types.ForValuesConstructor

@@ -43,4 +43,18 @@ return function()
 			doCleanup(scope)
 		end
 	end)
+
+	it("doesn't incorrectly cache scope between invocations", function()
+		local expect = getfenv().expect
+		
+		local scope1 = {}
+		local scope2 = {}
+		New (scope1, "Frame") {}
+		New (scope2, "Frame") {}
+		expect(#scope1).to.equal(1)
+		expect(#scope2).to.equal(1)
+		
+		doCleanup(scope1)
+		doCleanup(scope2)
+	end)
 end
