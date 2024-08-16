@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/api-reference/state/types/observer/">
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.3/api-reference/graph/types/graphobject/">
       
       <link rel="icon" href="../../../../assets/logo-dark.svg">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-8.2.13">
     
     
       
-        <title>Observer - Fusion</title>
+        <title>GraphObject - Fusion</title>
       
     
     
@@ -95,7 +95,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#observer" class="md-skip">
+        <a href="#graphobject" class="md-skip">
           Skip to content
         </a>
       
@@ -162,7 +162,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Observer
+              GraphObject
             
           </span>
         </div>
@@ -1359,6 +1359,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
+          
+        
       
       
         
@@ -1820,14 +1822,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       
         <label class="md-nav__link" for="__nav_4_4">
-          State
+          Graph
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="State" data-md-level="2">
+      <nav class="md-nav" aria-label="Graph" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_4">
           <span class="md-nav__icon md-icon"></span>
-          State
+          Graph
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1851,20 +1853,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4_4_1">
@@ -1883,76 +1871,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../usedas/" class="md-nav__link">
-        UsedAs
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../computed/" class="md-nav__link">
-        Computed
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dependency/" class="md-nav__link">
-        Dependency
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dependent/" class="md-nav__link">
-        Dependent
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../for/" class="md-nav__link">
-        For
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -1965,12 +1883,12 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Observer
+          GraphObject
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Observer
+        GraphObject
       </a>
       
         
@@ -1997,8 +1915,43 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#type-observer" class="md-nav__link">
-    type : "Observer"
+  <a href="#createdat-number" class="md-nav__link">
+    createdAt : number
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencyset-graphobject-unknown" class="md-nav__link">
+    dependencySet : {[GraphObject]: unknown}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependentset-graphobject-unknown" class="md-nav__link">
+    dependentSet : {[GraphObject]: unknown}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lastchange-number" class="md-nav__link">
+    lastChange : number?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeliness-lazy-eager" class="md-nav__link">
+    timeliness : "lazy" | "eager"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validity-valid-invalid-busy" class="md-nav__link">
+    validity : "valid" | "invalid" | "busy"
   </a>
   
 </li>
@@ -2017,28 +1970,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#onchange-" class="md-nav__link">
-    onChange -&gt; (() -&gt; ())
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#onbind-" class="md-nav__link">
-    onBind -&gt; (() -&gt; ())
+  <a href="#_evaluate-boolean" class="md-nav__link">
+    _evaluate -&gt; boolean
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#learn-more" class="md-nav__link">
-    Learn More
-  </a>
   
 </li>
       
@@ -2057,36 +1996,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../stateobject/" class="md-nav__link">
-        StateObject
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../use/" class="md-nav__link">
-        Use
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../value/" class="md-nav__link">
-        Value
+      <a href="../observer/" class="md-nav__link">
+        Observer
       </a>
     </li>
   
@@ -2116,18 +2027,6 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4_4_2">
@@ -2148,92 +2047,8 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
   
   
     <li class="md-nav__item">
-      <a href="../../members/computed/" class="md-nav__link">
-        Computed
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../members/forkeys/" class="md-nav__link">
-        ForKeys
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../members/forpairs/" class="md-nav__link">
-        ForPairs
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../members/forvalues/" class="md-nav__link">
-        ForValues
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../members/observer/" class="md-nav__link">
         Observer
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../members/peek/" class="md-nav__link">
-        peek
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../members/value/" class="md-nav__link">
-        Value
       </a>
     </li>
   
@@ -2277,14 +2092,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       
         <label class="md-nav__link" for="__nav_4_5">
-          Roblox
+          State
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Roblox" data-md-level="2">
+      <nav class="md-nav" aria-label="State" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_5">
           <span class="md-nav__icon md-icon"></span>
-          Roblox
+          State
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -2308,6 +2123,12 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
           
         
+          
+        
+          
+        
+          
+        
       
       
         <label class="md-nav__link" for="__nav_4_5_1">
@@ -2317,6 +2138,303 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       
       <nav class="md-nav" aria-label="Types" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/usedas/" class="md-nav__link">
+        UsedAs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/computed/" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/for/" class="md-nav__link">
+        For
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/stateobject/" class="md-nav__link">
+        StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/use/" class="md-nav__link">
+        Use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/types/value/" class="md-nav__link">
+        Value
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_2" type="checkbox" id="__nav_4_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/computed/" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../state/members/value/" class="md-nav__link">
+        Value
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Roblox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Roblox" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Roblox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_1" type="checkbox" id="__nav_4_6_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_6_1">
           <span class="md-nav__icon md-icon"></span>
           Types
         </label>
@@ -2380,7 +2498,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_2" type="checkbox" id="__nav_4_5_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_2" type="checkbox" id="__nav_4_6_2" >
       
       
       
@@ -2407,13 +2525,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
       
       
-        <label class="md-nav__link" for="__nav_4_5_2">
+        <label class="md-nav__link" for="__nav_4_6_2">
           Members
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Members" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_5_2">
+        <label class="md-nav__title" for="__nav_4_6_2">
           <span class="md-nav__icon md-icon"></span>
           Members
         </label>
@@ -2584,7 +2702,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
       
       
       
@@ -2595,13 +2713,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
       
       
-        <label class="md-nav__link" for="__nav_4_6">
+        <label class="md-nav__link" for="__nav_4_7">
           Animation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Animation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_6">
+        <label class="md-nav__title" for="__nav_4_7">
           <span class="md-nav__icon md-icon"></span>
           Animation
         </label>
@@ -2616,7 +2734,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_1" type="checkbox" id="__nav_4_6_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_1" type="checkbox" id="__nav_4_7_1" >
       
       
       
@@ -2629,13 +2747,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
       
       
-        <label class="md-nav__link" for="__nav_4_6_1">
+        <label class="md-nav__link" for="__nav_4_7_1">
           Types
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Types" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_6_1">
+        <label class="md-nav__title" for="__nav_4_7_1">
           <span class="md-nav__icon md-icon"></span>
           Types
         </label>
@@ -2699,7 +2817,7 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_2" type="checkbox" id="__nav_4_6_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" type="checkbox" id="__nav_4_7_2" >
       
       
       
@@ -2710,13 +2828,13 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
         
       
       
-        <label class="md-nav__link" for="__nav_4_6_2">
+        <label class="md-nav__link" for="__nav_4_7_2">
           Members
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Members" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_6_2">
+        <label class="md-nav__title" for="__nav_4_7_2">
           <span class="md-nav__icon md-icon"></span>
           Members
         </label>
@@ -2885,8 +3003,43 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#type-observer" class="md-nav__link">
-    type : "Observer"
+  <a href="#createdat-number" class="md-nav__link">
+    createdAt : number
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencyset-graphobject-unknown" class="md-nav__link">
+    dependencySet : {[GraphObject]: unknown}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependentset-graphobject-unknown" class="md-nav__link">
+    dependentSet : {[GraphObject]: unknown}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lastchange-number" class="md-nav__link">
+    lastChange : number?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeliness-lazy-eager" class="md-nav__link">
+    timeliness : "lazy" | "eager"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validity-valid-invalid-busy" class="md-nav__link">
+    validity : "valid" | "invalid" | "busy"
   </a>
   
 </li>
@@ -2905,28 +3058,14 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#onchange-" class="md-nav__link">
-    onChange -&gt; (() -&gt; ())
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#onbind-" class="md-nav__link">
-    onBind -&gt; (() -&gt; ())
+  <a href="#_evaluate-boolean" class="md-nav__link">
+    _evaluate -&gt; boolean
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#learn-more" class="md-nav__link">
-    Learn More
-  </a>
   
 </li>
       
@@ -2953,23 +3092,29 @@ Use&nbsp;the&nbsp;version&nbsp;switcher&nbsp;if you're not on Fusion's dev&nbsp;
 
 <!-- Markdown content -->
 <nav class="fusiondoc-api-breadcrumbs">
-    <span>State</span>
+    <span>Graph</span>
     <span>Types</span>
-    <span>Observer</span>
+    <span>GraphObject</span>
 </nav>
 
-<h1 class="fusiondoc-api-header" id="observer">
+<h1 class="fusiondoc-api-header" id="graphobject">
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
-    <span class="fusiondoc-api-name">Observer</span>
-<a class="headerlink" href="#observer" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Observer</span> <span class="o">=</span> <span class="n">Dependent</span> <span class="o">&amp;</span> <span class="p">{</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;Observer&quot;</span><span class="p">,</span>
-    <span class="n">onChange</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">()),</span>
-    <span class="n">onBind</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span>
+    <span class="fusiondoc-api-name">GraphObject</span>
+<a class="headerlink" href="#graphobject" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">GraphObject</span> <span class="o">=</span> <span class="n">ScopedObject</span> <span class="o">&amp;</span> <span class="p">{</span>
+    <span class="n">createdAt</span><span class="p">:</span> <span class="n">number</span>
+    <span class="n">dependencySet</span><span class="p">:</span> <span class="p">{[</span><span class="n">GraphObject</span><span class="p">]:</span> <span class="n">unknown</span><span class="p">},</span>
+    <span class="n">dependentSet</span><span class="p">:</span> <span class="p">{[</span><span class="n">GraphObject</span><span class="p">]:</span> <span class="n">unknown</span><span class="p">},</span>
+    <span class="n">lastChange</span><span class="p">:</span> <span class="n">number</span><span class="err">?</span><span class="p">,</span>
+    <span class="n">timeliness</span><span class="p">:</span> <span class="s2">&quot;lazy&quot;</span> <span class="o">|</span> <span class="s2">&quot;eager&quot;</span><span class="p">,</span>
+    <span class="n">validity</span><span class="p">:</span> <span class="s2">&quot;valid&quot;</span> <span class="o">|</span> <span class="s2">&quot;invalid&quot;</span> <span class="o">|</span> <span class="s2">&quot;busy&quot;</span><span class="p">,</span>
+    <span class="n">_evaluate</span><span class="p">:</span> <span class="p">(</span><span class="n">GraphObject</span><span class="p">,</span> <span class="n">lastChange</span><span class="p">:</span> <span class="n">number</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">boolean</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>A user-constructed <a href="../dependent">dependent</a> that runs user code when its
-<a href="../dependency">dependency</a> is updated.</p>
+<p>A reactive graph object which can broadcast and receive updates among other
+members of the reactive graph.</p>
+<p>This type includes <a href="../../../memory/types/scopedobject"><code>ScopedObject</code></a>, which
+allows the lifetime and destruction order of the reactive graph to be analysed.</p>
 <div class="admonition note">
 <p class="admonition-title">Non-standard type syntax</p>
 <p>The above type definition uses <code>self</code> to denote methods. At time of writing,
@@ -2977,45 +3122,78 @@ Luau does not interpret <code>self</code> specially.</p>
 </div>
 <hr />
 <h2 id="members">Members<a class="headerlink" href="#members" title="Permanent link">&para;</a></h2>
-<h3 id="type-observer">
-    type
+<h3 id="createdat-number">
+    createdAt
     <span class="fusiondoc-api-type">
-        : "Observer"
+        : number
     </span>
-<a class="headerlink" href="#type-observer" title="Permanent link">&para;</a></h3>
-<p>A type string which can be used for runtime type checking.</p>
+<a class="headerlink" href="#createdat-number" title="Permanent link">&para;</a></h3>
+<p>The <code>os.clock()</code> time of this object's construction, measured as early as
+possible in the object's constructor.</p>
+<h3 id="dependencyset-graphobject-unknown">
+    dependencySet
+    <span class="fusiondoc-api-type">
+        : {[GraphObject]: unknown}
+    </span>
+<a class="headerlink" href="#dependencyset-graphobject-unknown" title="Permanent link">&para;</a></h3>
+<p>Everything this reactive graph object currently declares itself as dependent
+upon.</p>
+<h3 id="dependentset-graphobject-unknown">
+    dependentSet
+    <span class="fusiondoc-api-type">
+        : {[GraphObject]: unknown}
+    </span>
+<a class="headerlink" href="#dependentset-graphobject-unknown" title="Permanent link">&para;</a></h3>
+<p>The reactive graph objects which declare themselves as dependent upon this
+object.</p>
+<h3 id="lastchange-number">
+    lastChange
+    <span class="fusiondoc-api-type">
+        : number?
+    </span>
+<a class="headerlink" href="#lastchange-number" title="Permanent link">&para;</a></h3>
+<p>The <code>os.clock()</code> time of this object's most recent meaningful change, or <code>nil</code>
+if the object is newly created.</p>
+<h3 id="timeliness-lazy-eager">
+    timeliness
+    <span class="fusiondoc-api-type">
+        : "lazy" | "eager"
+    </span>
+<a class="headerlink" href="#timeliness-lazy-eager" title="Permanent link">&para;</a></h3>
+<p>Describes when this object expects to be revalidated. Most objects should use
+<code>lazy</code> timeliness to defer computation as late as possible. However, if it's
+important for this object to respond to changes as soon as possible, for example
+for the purposes of observation, then <code>eager</code> timeliness ensures that a
+revalidation is dispatched as soon as possible.</p>
+<h3 id="validity-valid-invalid-busy">
+    validity
+    <span class="fusiondoc-api-type">
+        : "valid" | "invalid" | "busy"
+    </span>
+<a class="headerlink" href="#validity-valid-invalid-busy" title="Permanent link">&para;</a></h3>
+<p>Whether the most recent validation operation done on this graph object was a
+revalidation or an invalidation. <code>busy</code> is used while the graph object is in
+the middle of a revalidation.</p>
 <hr />
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<h3 id="onchange-">
-    onChange
+<h3 id="_evaluate-boolean">
+    _evaluate
     <span class="fusiondoc-api-type">
-        -&gt; (() -&gt; ())
+        -&gt; boolean
     </span>
-<a class="headerlink" href="#onchange-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Observer</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span>
-<span class="p">):</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span>
+<a class="headerlink" href="#_evaluate-boolean" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">GraphObject</span><span class="p">:</span><span class="nf">_evaluate</span><span class="p">():</span> <span class="n">boolean</span>
 </code></pre></div>
-<p>Registers the callback to run when an update is received. </p>
-<p>The returned function will unregister the callback.</p>
-<h3 id="onbind-">
-    onBind
-    <span class="fusiondoc-api-type">
-        -&gt; (() -&gt; ())
-    </span>
-<a class="headerlink" href="#onbind-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Observer</span><span class="p">:</span><span class="nf">onBind</span><span class="p">(</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span>
-<span class="p">):</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span>
-</code></pre></div>
-<p>Runs the callback immediately, and registers the callback to run when an update
-is received.</p>
-<p>The returned function will unregister the callback.</p>
-<hr />
-<h2 id="learn-more">Learn More<a class="headerlink" href="#learn-more" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="../../../../tutorials/fundamentals/observers">Observers tutorial</a></li>
-</ul>
+<p>Called by Fusion while the graph object is in the process of being evaluated.
+This is where logic to do with computational updates should be placed.</p>
+<p>The return value is <code>true</code> when a 'meaningful change' occurs because of this
+revalidation. A 'meaningful change' is one that would affect dependencies'
+behaviour. This is used to efficiently skip over calculations for dependencies.</p>
+<div class="admonition fail">
+<p class="admonition-title">Restrictions</p>
+<p>This method should finish without spawning new processes, blocking the 
+thread, or erroring.</p>
+</div>
 
 <!-- Source file information -->
 
@@ -3045,9 +3223,9 @@ is received.</p>
 		
 		  
 		  <a
-			href="../for/"
+			href="../../../memory/members/scoped/"
 			class="md-footer__link md-footer__link--prev"
-			aria-label="Previous: For"
+			aria-label="Previous: scoped"
 			rel="prev"
 		  >
 			<div class="md-footer__button md-icon">
@@ -3058,7 +3236,7 @@ is received.</p>
 				<span class="md-footer__direction">
 				  Previous
 				</span>
-				For
+				scoped
 			  </div>
 			</div>
 		  </a>
@@ -3068,9 +3246,9 @@ is received.</p>
 		
 		  
 		  <a
-			href="../stateobject/"
+			href="../observer/"
 			class="md-footer__link md-footer__link--next"
-			aria-label="Next: StateObject"
+			aria-label="Next: Observer"
 			rel="next"
 		  >
 			<div class="md-footer__title">
@@ -3078,7 +3256,7 @@ is received.</p>
 				<span class="md-footer__direction">
 				  Next
 				</span>
-				StateObject
+				Observer
 			  </div>
 			</div>
 			<div class="md-footer__button md-icon">
