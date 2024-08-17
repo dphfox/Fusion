@@ -16,11 +16,15 @@ local applyInstanceProps = require(Package.Instances.applyInstanceProps)
 
 type Component = (Types.PropertyTable) -> Instance
 
+local WEAK_KEYS_METATABLE = {__mode = "k"}
+
+-- if we held strong references to scopes, then they wouldn't be able to get
+-- garbage collected when they fall out of scope
 local scopeComponents: {
 	[Types.Scope<unknown>]: {
 		[string]: Component
 	}
-} = {}
+} = setmetatable({} :: any, WEAK_KEYS_METATABLE)
 
 local function New(
 	scope: Types.Scope<unknown>,
