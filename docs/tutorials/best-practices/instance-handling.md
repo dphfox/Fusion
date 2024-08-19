@@ -132,7 +132,7 @@ example, if you accept a table of `props`, you can add a `[Children]` key:
 
 ```Lua hl_lines="4 8"
 local function PopUp(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		[typeof(Children)]: Fusion.Children
 	}

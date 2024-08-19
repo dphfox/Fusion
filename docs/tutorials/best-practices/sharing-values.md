@@ -57,7 +57,7 @@ codebase will be able to see and interact with those state objects.
 	}
 
 	function Theme.init(
-		scope: Fusion.Scope<typeof(Fusion)>
+		scope: Fusion.Scope
 	)
 		Theme.currentTheme = scope:Value("light")
 	end

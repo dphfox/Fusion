@@ -21,7 +21,7 @@ type DragInfo = {
 }
 
 local function Draggable(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		ID: string,
 		Name: UsedAs<string>?,
@@ -157,7 +157,7 @@ local function getTodoItemForID(
 end
 
 local function TodoEntry(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Item: TodoItem,
 		Parent: UsedAs<Instance?>,
@@ -370,7 +370,7 @@ type DragInfo = {
 }
 
 local function Draggable(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		ID: string,
 		Name: UsedAs<string>?,
@@ -486,7 +486,7 @@ The `TodoEntry` component is meant to represent one individual `TodoItem`.
 
 ```Lua
 local function TodoEntry(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Item: TodoItem,
 		Parent: UsedAs<Instance?>,

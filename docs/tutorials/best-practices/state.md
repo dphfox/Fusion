@@ -12,7 +12,7 @@ local HOVER_COLOUR = Color3.new(0.5, 0.75, 1)
 local REST_COLOUR = Color3.new(0.25, 0.5, 1)
 
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		-- ... some properties ...
 	}
@@ -58,7 +58,7 @@ now there's two state objects where one would have sufficed
 
 ```Lua hl_lines="7"
 local function CheckBox(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		-- ... some properties ...
 	}
@@ -86,7 +86,7 @@ intercept the click or toggle a different state
 
 ```Lua hl_lines="4"
 local function CheckBox(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		IsChecked: Fusion.Value<boolean> -- slightly better
 	}
@@ -111,7 +111,7 @@ check box is completely customisable
 
 ```Lua hl_lines="4-5 10"
 local function CheckBox(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		IsChecked: UsedAs<boolean>, -- best
 		OnClick: () -> ()

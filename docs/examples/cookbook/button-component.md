@@ -32,7 +32,7 @@ local ROUNDED_CORNERS = UDim.new(0, 4)
 local PADDING = UDim2.fromOffset(6, 4)
 
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Name: UsedAs<string>?,
 		Layout: {
@@ -139,7 +139,7 @@ readable documentation.
 
 ```Lua
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Name: UsedAs<string>?,
 		Layout: {

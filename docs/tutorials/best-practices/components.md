@@ -9,7 +9,7 @@ For example, consider this function, which generates a button based on some
 type UsedAs<T> = Fusion.UsedAs<T>
 
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Position: UsedAs<UDim2>?,
 		AnchorPoint: UsedAs<Vector2>?,
@@ -174,7 +174,7 @@ scope with those methods pre-defined.
 
 	```Lua hl_lines="2"
 	local function Component(
-		scope: Fusion.Scope<typeof(Fusion)>,
+		scope: Fusion.Scope,
 		props: {}
 	)
 		return scope:New "Thing" {
@@ -189,7 +189,7 @@ Instead, create a new inner scope with the methods you need.
 
 	```Lua hl_lines="5-8"
 	local function Component(
-		scope: Fusion.Scope<typeof(Fusion)>,
+		scope: Fusion.Scope,
 		props: {}
 	)
 		local scope = scope:innerScope {
@@ -247,7 +247,7 @@ Here's an example of how you could split up some components into modules:
 	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function PopUp(
-		scope: Fusion.Scope<typeof(Fusion)>, 
+		scope: Fusion.Scope, 
 		props: {
 			Message: UsedAs<string>,
 			DismissText: UsedAs<string>
@@ -282,7 +282,7 @@ Here's an example of how you could split up some components into modules:
 	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function Message(
-		scope: Fusion.Scope<typeof(Fusion)>,
+		scope: Fusion.Scope,
 		props: {
 			Text: UsedAs<string>
 		}
@@ -307,7 +307,7 @@ Here's an example of how you could split up some components into modules:
 	type UsedAs<T> = Fusion.UsedAs<T>
 
     local function Button(
-		scope: Fusion.Scope<typeof(Fusion)>,
+		scope: Fusion.Scope,
 		props: {
 			Text: UsedAs<string>
 		}
