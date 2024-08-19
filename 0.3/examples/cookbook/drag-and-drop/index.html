@@ -3311,7 +3311,7 @@ ability aren't locked out of UI functions.</p>
 <span class="p">}</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Draggable</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
         <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
@@ -3447,7 +3447,7 @@ ability aren't locked out of UI functions.</p>
 <span class="kr">end</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
@@ -3654,7 +3654,7 @@ re-parentable container.</p>
 <span class="p">}</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">Draggable</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
         <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
@@ -3752,7 +3752,7 @@ expected to change, so that's specified to be a <code>Value</code> object.</p>
 </code></pre></div>
 <p>The <code>TodoEntry</code> component is meant to represent one individual <code>TodoItem</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
         <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>

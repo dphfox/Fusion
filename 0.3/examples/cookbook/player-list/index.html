@@ -3053,7 +3053,7 @@ updating player list.</p>
 <span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Players</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="n">Player</span><span class="p">}</span><span class="o">&gt;</span>
     <span class="p">}</span>
@@ -3131,7 +3131,7 @@ updating player list.</p>
 thing it needs is a <code>Players</code> list - it handles everything else, including its
 position, size, appearance and behaviour.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="o">&lt;</span><span class="n">typeof</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
     <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
         <span class="n">Players</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="n">Player</span><span class="p">}</span><span class="o">&gt;</span>
     <span class="p">}</span>
