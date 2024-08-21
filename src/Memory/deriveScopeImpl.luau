@@ -25,7 +25,15 @@ local function deriveScopeImpl<T>(
 	local metatable = getmetatable(existing)
 	if methods ~= nil then
 		metatable = table.clone(metatable)
-		metatable.__index = merge("first", table.clone(metatable.__index), methods, ...)
+		metatable.__index = merge(
+			true, {}, 
+			metatable.__index, 
+			merge(
+				false, {},
+				methods, 
+				...
+			)
+		)
 	end
 	local scope = setmetatable(
 		scopePool.reuseAny() :: any or {},
