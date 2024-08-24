@@ -20,7 +20,7 @@ local function New(
 	scope: Types.Scope<unknown>,
 	className: string
 )
-	if (className :: any) == nil then
+	if className == nil then
 		local scope = (scope :: any) :: string
 		External.logError("scopeMissing", nil, "instances using New", "myScope:New \"" .. scope .. "\" { ... }")
 	end
@@ -31,10 +31,7 @@ local function New(
 	return function(
 		props: Types.PropertyTable
 	): Instance
-		local ok, instance = pcall(Instance.new, className)
-		if not ok then
-			External.logError("cannotCreateClass", nil, className)
-		end
+		local instance = Instance.new(className)
 
 		local classDefaults = defaultProps[className]
 		if classDefaults ~= nil then

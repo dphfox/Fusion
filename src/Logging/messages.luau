@@ -12,7 +12,6 @@ return {
 	cannotAssignProperty = "The class type '%s' has no assignable property '%s'.",
 	cannotConnectChange = "The %s class doesn't have a property called '%s'.",
 	cannotConnectEvent = "The %s class doesn't have an event called '%s'.",
-	cannotCreateClass = "Can't create a new instance of class '%s'.",
 	cannotDepend = "%s can't depend on %s.",
 	cleanupWasRenamed = "`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in future versions of Fusion.",
 	destroyedTwice = "`doCleanup()` was given something that it is already cleaning up. Unclear how to proceed.",
