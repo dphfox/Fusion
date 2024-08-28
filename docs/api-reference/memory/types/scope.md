@@ -10,7 +10,7 @@
 </h1>
 
 ```Lua
-export type Scope<Constructors> = {unknown} & Constructors
+export type Scope<Constructors = typeof(Fusion)> = {unknown} & Constructors
 ```
 
 A table collecting all objects created as part of an independent unit of code,

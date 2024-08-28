@@ -54,7 +54,7 @@ extra_javascript:
 nav:
   - Home: index.md
   - Tutorials:
-    - Get Started: tutorials/index.md
+    - Tutorials: tutorials/index.md
     - Installing Fusion: tutorials/get-started/installing-fusion.md
     - Developer Tools: tutorials/get-started/developer-tools.md
     - Getting Help: tutorials/get-started/getting-help.md
@@ -88,7 +88,7 @@ nav:
       - Optimisation: tutorials/best-practices/optimisation.md
     
   - Examples:
-    - Home: examples/index.md
+    - Examples: examples/index.md
     - Cookbook:
       - examples/cookbook/index.md
       - Player List: examples/cookbook/player-list.md
@@ -99,7 +99,7 @@ nav:
       - Loading Spinner: examples/cookbook/loading-spinner.md
       - Drag & Drop: examples/cookbook/drag-and-drop.md
   - API Reference:
-    - api-reference/index.md
+    - API Reference: api-reference/index.md
     - General:
       - Errors: api-reference/general/errors.md
       - Types:
@@ -163,11 +163,7 @@ nav:
       - Members:
         - Tween: api-reference/animation/members/tween.md
         - Spring: api-reference/animation/members/spring.md
-  - Extras:
-    - Home: extras/index.md
-    - Backgrounds: extras/backgrounds.md
-    - Brand Guidelines: extras/brand-guidelines.md
-
+  - "Made with&emsp13;&#x2764;&emsp13;by Studio Elttob": https://elttob.itch.io/
 markdown_extensions:
   - admonition
   - attr_list

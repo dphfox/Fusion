@@ -65,7 +65,7 @@ the button is clicked, the button needs to run some external code:
 
 ```Lua hl_lines="17"
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>
+	scope: Fusion.Scope,
 	props: {
 		Position: UsedAs<UDim2>?,
 		Size: UsedAs<UDim2>?,
@@ -102,7 +102,7 @@ Luau won't add the key to the table if the value is `nil`.
 
 ```Lua hl_lines="7 18"
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Position: UsedAs<UDim2>?,
 		Size: UsedAs<UDim2>?,
@@ -128,7 +128,7 @@ to do your own processing first:
 
 ```Lua hl_lines="19-23"
 local function Button(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Position: UsedAs<UDim2>?,
 		Size: UsedAs<UDim2>?,

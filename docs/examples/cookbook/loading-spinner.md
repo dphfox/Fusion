@@ -17,7 +17,7 @@ local SPIN_DEGREES_PER_SECOND = 180
 local SPIN_SIZE = 50
 
 local function Spinner(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Layout: {
 			LayoutOrder: UsedAs<number>?,
@@ -80,7 +80,7 @@ The main thing to note is that it asks for a `CurrentTime` property.
 
 ```Lua hl_lines="10"
 local function Spinner(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Layout: {
 			LayoutOrder: UsedAs<number>?,

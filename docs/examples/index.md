@@ -1,5 +1,5 @@
 ---
-title: Examples
+  hero_img: ../heroes/examples.jpg
 ---
 
 # Examples

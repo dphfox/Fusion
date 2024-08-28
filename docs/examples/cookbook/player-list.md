@@ -14,7 +14,7 @@ local Children = Fusion.Children
 type UsedAs<T> = Fusion.UsedAs<T>
 
 local function PlayerList(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Players: UsedAs<{Player}>
 	}
@@ -97,7 +97,7 @@ position, size, appearance and behaviour.
 
 ```Lua
 local function PlayerList(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		Players: UsedAs<{Player}>
 	}

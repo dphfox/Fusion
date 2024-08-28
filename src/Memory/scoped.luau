@@ -18,7 +18,7 @@ local function scoped(
 ): any
 	local scope = setmetatable(
 		scopePool.reuseAny() :: any or {},
-		{__index = merge("none", {}, ...)}
+		{__index = merge(false, {}, ...)}
 	) :: any
 	ExternalDebug.trackScope(scope)
 	return scope

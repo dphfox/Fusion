@@ -37,7 +37,7 @@ return {
 }
 ```
 
-!!! fail "Returning multiple values is fragile"
+!!! failure "Returning multiple values is fragile"
     Don't return multiple values directly from your function. When a function
     returns multiple values directly, the extra returned values can easily get
     lost.
@@ -132,7 +132,7 @@ example, if you accept a table of `props`, you can add a `[Children]` key:
 
 ```Lua hl_lines="4 8"
 local function PopUp(
-	scope: Fusion.Scope<typeof(Fusion)>,
+	scope: Fusion.Scope,
 	props: {
 		[typeof(Children)]: Fusion.Children
 	}

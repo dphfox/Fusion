@@ -182,7 +182,7 @@ local scope = scoped(Fusion, {
 
 You can do this for as many tables as you need.
 
-!!! fail "Conflicting names"
+!!! failure "Conflicting names"
 	If you pass in two tables that contain things with the same name, `scoped()`
 	will error.
 

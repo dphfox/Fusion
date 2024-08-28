@@ -11,7 +11,7 @@
 .md-header,
 .md-tabs {
 	color: var(--md-default-fg-color);
-	background-color: var(--md-default-bg-color);
+	background-color: transparent;
 }
 
 .md-header[data-md-state=shadow] {
@@ -307,4 +307,30 @@
 
 #fusiondoc-home {
 	opacity: 0;
+}
+
+
+.fusiondoc-hero {
+	display: block;
+	position: relative;
+	width: 100%;
+	margin-top: -5em;
+	margin-bottom: -5em;
+	height: 10em;
+	max-height: 30svh;
+}
+
+.fusiondoc-hero::before {
+	content: " ";
+	display: block;
+	position: absolute;
+	inset: 0;
+	bottom: -20em;
+	z-index: -1;
+	opacity: 0.4;
+	background: radial-gradient(farthest-corner at 50% 0%, transparent, var(--fusiondoc-bg-1)), var(--hero-img);
+	background-position: center;
+	background-size: cover;
+	box-shadow: inset 0 -15em 15em -1em var(--fusiondoc-bg-1);
+	filter: blur(calc(0.1vw + 0.25em));
 }
