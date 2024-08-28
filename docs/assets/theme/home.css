@@ -118,8 +118,11 @@
 	width: max-content;
 	padding: 0.5em;
 
+	animation: home-scroll-entry 0.5s ease 1s both;
+
 	background-color: var(--fusiondoc-bg-1);
 	font-weight: 700;
+	font-size: 1.25em;
 	overflow: hidden;
 }
 
@@ -132,7 +135,7 @@
 	right: -200%;
 	height: 100%;
 	background: linear-gradient(to right, var(--fusiondoc-bg-1) 40%, transparent 45%, transparent 55%, var(--fusiondoc-bg-1) 60%);
-	opacity: 0.25;
+	opacity: 0.4;
 	animation: home-scroll-shimmer 2s linear infinite;
 }
 
@@ -142,6 +145,17 @@
 	margin-right: 0.5em;
 
 	animation: home-scroll-move 1s ease-in-out infinite alternate;
+}
+
+@keyframes home-scroll-entry {
+	0% {
+		opacity: 0;
+		translate: 0 1em;
+	}
+	100% {
+		opacity: 1;
+		translate: 0 0;
+	}
 }
 
 @keyframes home-scroll-move {
