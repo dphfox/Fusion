@@ -85,9 +85,6 @@
 .highlight > pre,
 .highlighttable {
 	box-shadow: var(--md-shadow-z1);
-}
-
-.highlighttable {
 	border-radius: 0.25rem;
 }
 
