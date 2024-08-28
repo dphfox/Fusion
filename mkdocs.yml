@@ -163,7 +163,7 @@ nav:
       - Members:
         - Tween: api-reference/animation/members/tween.md
         - Spring: api-reference/animation/members/spring.md
-  - "by Studio Elttob": https://elttob.itch.io/
+  - "Made with&emsp13;&#x2764;&emsp13;by Studio Elttob": https://elttob.itch.io/
 markdown_extensions:
   - admonition
   - attr_list
