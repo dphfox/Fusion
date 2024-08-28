@@ -121,6 +121,6 @@ The return value is `true` when a 'meaningful change' occurs because of this
 revalidation. A 'meaningful change' is one that would affect dependencies'
 behaviour. This is used to efficiently skip over calculations for dependencies.
 
-!!! fail "Restrictions"
+!!! failure "Restrictions"
 	This method should finish without spawning new processes, blocking the 
 	thread, or erroring.

@@ -37,7 +37,7 @@ return {
 }
 ```
 
-!!! fail "Returning multiple values is fragile"
+!!! failure "Returning multiple values is fragile"
     Don't return multiple values directly from your function. When a function
     returns multiple values directly, the extra returned values can easily get
     lost.

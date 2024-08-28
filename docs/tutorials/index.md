@@ -5,7 +5,7 @@ You'll not only learn how Fusion's features work, but you'll also be presented
 with wisdom from those who've worked with some of the largest Fusion codebases
 today.
 
-!!! caution "But first, some advice from the maintainers..."
+!!! warning "But first, some advice from the maintainers..."
 	**<span style="font-size: 1.5em; color: var(--fusiondoc-accent);">
 	Fusion is pre-1.0 software.
 	</span>**
