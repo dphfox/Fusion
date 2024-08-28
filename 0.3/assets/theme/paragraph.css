@@ -24,7 +24,7 @@
 .js .md-typeset .tabbed-labels::before {
 	background-color: transparent;
 	height: 100%;
-	box-shadow: 0 -0.325rem var(--md-code-bg-color) inset, 0 -0.4rem var(--fusiondoc-orange) inset;
+	box-shadow: 0 -0.325rem var(--md-code-bg-color) inset, 0 -0.4rem var(--fusiondoc-accent) inset;
 }
 
 .md-typeset .tabbed-labels>label {
@@ -39,6 +39,10 @@
 	box-shadow: none;
 	border-top-left-radius: 0.25rem;
 	border-top-right-radius: 0.25rem;
+}
+
+.md-typeset .tabbed-set {
+	box-shadow: var(--md-shadow-z1);
 }
 
 h1 > .twemoji:first-child,
@@ -72,7 +76,7 @@ h6 > .twemoji:first-child {
 .md-typeset .tabbed-set>input:nth-child(18):checked~.tabbed-labels>:nth-child(18),
 .md-typeset .tabbed-set>input:nth-child(19):checked~.tabbed-labels>:nth-child(19),
 .md-typeset .tabbed-set>input:nth-child(20):checked~.tabbed-labels>:nth-child(20) {
-	color: var(--fusiondoc-orange);
+	color: var(--fusiondoc-accent);
 	font-weight: 700;
 }
 
