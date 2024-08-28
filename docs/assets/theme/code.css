@@ -69,26 +69,34 @@
 }
 
 .highlight .md-clipboard {
-	color: transparent;
+	color: var(--fusiondoc-fg-1) !important;
+	opacity: 0;
+	transition: opacity 0.2s ease;
 }
 
 .highlight:hover .md-clipboard {
-	color: var(--fusiondoc-grey-5);
+	opacity: 0.5;
 }
 
 .highlight .md-clipboard:hover {
-	color: var(--fusiondoc-grey-10);
+	opacity: 1;
 }
 
-pre {
+.highlight > pre,
+.highlighttable {
 	box-shadow: var(--md-shadow-z1);
 }
 
-.tabbed-set pre {
+.highlighttable {
+	border-radius: 0.25rem;
+}
+
+.tabbed-set .highlight > pre {
 	box-shadow: none;
 }
 
 code:not(pre code, .highlight) {
 	background-color: var(--fusiondoc-bg-2) !important;
 	color: inherit !important;
+	box-shadow: var(--md-shadow-z1);
 }
