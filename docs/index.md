@@ -5,12 +5,6 @@
     - navigation
 ---
 
-
-
-
-
-
-
 <div id="fusiondoc-home" markdown>
 <section id="fusiondoc-home-main">
 <section id="fusiondoc-home-main-inner">

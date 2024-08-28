@@ -25,3 +25,10 @@
 		</style>
 	{% endif %}
 {% endblock %}
+
+{% block hero %}
+	{% if page.meta and page.meta.hero_img %}
+		<div class="fusiondoc-hero" style="--hero-img: url({{ page.meta.hero_img }});"></div>
+	{% endif %}
+	{{ super() }}
+{% endblock %}

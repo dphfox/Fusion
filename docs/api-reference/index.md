@@ -1,5 +1,6 @@
 ---
 title: API Reference
+hero_img: ../heroes/api-reference.jpg
 ---
 
 # API Reference

@@ -1,3 +1,7 @@
+---
+  hero_img: ../home/Hero-Light.svg
+---
+
 Welcome to the Fusion tutorial section! Here, you'll learn how to build great
 things with Fusion, even if you're a complete newcomer to the library.
 
