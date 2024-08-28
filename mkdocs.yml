@@ -163,11 +163,7 @@ nav:
       - Members:
         - Tween: api-reference/animation/members/tween.md
         - Spring: api-reference/animation/members/spring.md
-  - Extras:
-    - Home: extras/index.md
-    - Backgrounds: extras/backgrounds.md
-    - Brand Guidelines: extras/brand-guidelines.md
-
+  - "by Studio Elttob": https://elttob.itch.io/
 markdown_extensions:
   - admonition
   - attr_list
