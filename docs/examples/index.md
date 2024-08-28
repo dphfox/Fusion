@@ -1,5 +1,5 @@
 ---
-  hero_img: ../../examples/place-thumbnails/Fusion-Obby.jpg
+  hero_img: ../heroes/examples.jpg
 ---
 
 # Examples
