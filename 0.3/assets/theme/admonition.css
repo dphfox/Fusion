@@ -8,7 +8,7 @@
 	border-width: 0.1rem !important;
 	box-shadow: 
 		0 0.25em 1.5em -0.75em var(--admonition-color),
-		inset 0 1em 2em -2em var(--admonition-color)
+		inset 0 1em 2em -2.25em var(--admonition-color)
 		!important;
 }
 
