@@ -10,6 +10,8 @@
 		0 0.25em 1.5em -0.75em var(--admonition-color),
 		inset 0 1em 2em -2.25em var(--admonition-color)
 		!important;
+
+	background: linear-gradient(var(--admonition-color) -99999%, transparent 5000%), var(--fusiondoc-bg-2);
 }
 
 .md-typeset :is(.admonition, details) > :is(.admonition-title, summary)::before {
@@ -54,5 +56,5 @@
 }
 
 [data-md-color-scheme="fusiondoc-dark"] .md-typeset .admonition.details {
-	--md-code-bg-color:                var(--fusiondoc-grey-1);
+	--md-code-bg-color: var(--fusiondoc-grey-1);
 }
