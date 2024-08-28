@@ -68,15 +68,21 @@ You can write out your logic using Fusion's built-in state objects.
 Here's the two basic ones, Value and Computed:
 
 ```Lua
+-- Start tracking some new objects.
+local scope = Fusion:scoped()
+
 -- This creates a state object that you can set manually.
 -- You can change its value using myName:set().
-local myName = Value("Daniel")
+local myName = scope:Value("Daniel")
 
 -- This creates a state object from a calculation.
 -- It determines its own value automatically.
 local myGreeting = scope:Computed(function(use)
 	return "Hello! My name is " .. use(myName)
 end)
+
+-- Discard all the objects.
+scope:doCleanup()
 ```
 
 To watch what a state object does, you can use an Observer.
@@ -84,7 +90,7 @@ For example, you can run some code when an object changes value.
 
 ```Lua
 -- This observer watches for when the greeting changes.
-local myObserver = Observer(myGreeting)
+local myObserver = scope:Observer(myGreeting)
 
 -- Let’s print out the greeting when there’s a new one.
 local disconnect = myObserver:onChange(function()
@@ -107,20 +113,14 @@ you can easily integrate with your game scripts.
 
 -----
 
-Fusion provides dedicated functions to create and modify instances. They allow
-you to easily configure your instance in one place.
+Fusion provides dedicated functions to create instances. They allow you to
+easily configure your instance in one place.
 
 ```Lua
 -- This will create a red part in the workspace.
-local myPart = New "Part" {
+local myPart = scope:New "Part" {
 	Parent = workspace,
 	BrickColor = BrickColor.Red()
-}
-
--- This adds on some extras after.
-Hydrate(myPart) {
-	Material = "Wood",
-	Transparency = 0.5
 }
 ```
 
@@ -130,12 +130,14 @@ example, you can listen for events or add children.
 ```Lua
 -- This will create a rounded button.
 -- When you click it, it’ll greet you.
-local myButton = New "TextButton" {
+local myButton = scope:New "TextButton" {
 	Text = "Click me",
+
 	[OnEvent "Activated"] = function()
 		print("Hello! I’m a button.")
 	end,
-	[Children] = New "UICorner" {
+
+	[Children] = scope:New "UICorner" {
 		CornerRadius = UDim.new(1, 0)
 	}
 }
@@ -146,10 +148,10 @@ object changes value.
 
 ```Lua
 -- Creating a state object you can control...
-local message = Value("Hello!")
+local message = scope:Value("Hello!")
 
 -- Now you can plug that state object into the Text property.
-local myLabel = New "TextLabel" {
+local myLabel = scope:New "TextLabel" {
 	Text = message
 }
 print(myLabel.Text) --> Hello!
@@ -176,14 +178,14 @@ want - not just instance properties.
 
 ```Lua
 -- This could be anything you want, as long as it's a state object.
-local health = Value(100)
+local health = scope:Value(100)
 
 -- Easily make it tween between values...
 local style = TweenInfo.new(0.5, Enum.EasingStyle.Quad)
-local tweenHealth = Tween(health, style)
+local tweenHealth = scope:Tween(health, style)
 
 -- ...or use spring physics for extra responsiveness.
-local springHealth = Spring(health, 30, 0.9)
+local springHealth = scope:Spring(health, 30, 0.9)
 ```
 
 Tween and Spring are state objects, just like anything else that changes in
@@ -196,7 +198,7 @@ local wholeHealth = scope:Computed(function(use)
 end)
 
 -- You can format it as text and put it in some UI, too.
-local myText = New "TextLabel" {
+local myText = scope:New "TextLabel" {
 	Text = scope:Computed(function(use)
 		return "Health: " .. use(wholeHealth)
 	end)
@@ -217,7 +219,7 @@ local style = scope:Computed(function(use)
 end)
 
 -- Plug it right into your animation!
-local tweenHealth = Tween(health, style)
+local tweenHealth = scope:Tween(health, style)
 ```
 
 -----
