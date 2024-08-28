@@ -170,19 +170,41 @@
 	margin-top: 1rem;
 }
 
-#fusiondoc-home-belowfold > h2.first::before {
-	content: "➀";
+#fusiondoc-home-belowfold > h2.first::before,
+#fusiondoc-home-belowfold > h2.second::before,
+#fusiondoc-home-belowfold > h2.third::before {
+	content: "1";
+	display: inline flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.2em;
+	height: 2em;
+	mask: url(../home/fusion-clip-shape.svg);
+	mask-size: contain;
+	mask-position: center;
+	mask-repeat: no-repeat;
+	background-color: var(--fusiondoc-grey-5);
+	color: var(--fusiondoc-bg-1);
 	margin-right: 0.75rem;
+	vertical-align: middle;
+}
+
+@media screen and (min-width: 80em) {
+	#fusiondoc-home-belowfold > h2.first::before,
+	#fusiondoc-home-belowfold > h2.second::before,
+	#fusiondoc-home-belowfold > h2.third::before {
+		margin-left: -3.5rem;
+		margin-top: -1rem;
+		margin-bottom: -1rem;
+	}
 }
 
 #fusiondoc-home-belowfold > h2.second::before {
-	content: "➁";
-	margin-right: 0.75rem;
+	content: "2";
 }
 
 #fusiondoc-home-belowfold > h2.third::before {
-	content: "➂";
-	margin-right: 0.75rem;
+	content: "3";
 }
 
 #fusiondoc-home {
