@@ -115,14 +115,15 @@
 	align-items: center;
 	justify-content: center;
 
-	width: max-content;
+	width: 100%;
+	max-width: max-content;
 	padding: 0.5em;
 
 	animation: home-scroll-entry 0.5s ease 1s both;
 
 	background-color: var(--fusiondoc-bg-1);
 	font-weight: 700;
-	font-size: 1.25em;
+	font-size: calc(clamp(0.8em, 3vw, 1.25em));
 	overflow: hidden;
 }
 
