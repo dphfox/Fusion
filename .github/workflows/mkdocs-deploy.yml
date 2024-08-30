@@ -6,7 +6,7 @@ on:
 
 env:
   FUSION_VERSION: 0.3
-  FUSION_DEPLOY_TYPE: 'dev'
+  FUSION_DEPLOY_TYPE: 'release'
 
 jobs:
   deploy:
