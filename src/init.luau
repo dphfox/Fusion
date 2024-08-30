@@ -40,7 +40,7 @@ end
 
 local Fusion: Fusion = table.freeze {
 	-- General
-	version = {major = 0, minor = 3, isRelease = true},
+	version = {major = 0, minor = 3, isRelease = false},
 	Contextual = require(script.Utility.Contextual),
 	Safe = require(script.Utility.Safe),
 
