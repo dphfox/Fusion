@@ -4,9 +4,9 @@ It supports both constants and state objects.
 
 ```Lua
 local numbers = {1, 2, 3, 4, 5}
-local multiplier = Value(2)
+local multiplier = scope:Value(2)
 
-local multiplied = ForValues(numbers, function(use, scope, num)
+local multiplied = scope:ForValues(numbers, function(use, scope, num)
 	return num * use(multiplier)
 end)
 
