@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://elttob.uk/Fusion/0.3/tutorials/tables/forvalues/">
       
       <link rel="icon" href="../../../assets/logo-dark.svg">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-8.2.13">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-8.2.13">
     
     
       
@@ -2877,9 +2877,9 @@
 <p><code>ForValues</code> is a state object that processes values from another table.</p>
 <p>It supports both constants and state objects.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">multiplied</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="kr">return</span> <span class="n">num</span> <span class="o">*</span> <span class="n">use</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
