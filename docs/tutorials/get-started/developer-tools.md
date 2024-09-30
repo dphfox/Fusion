@@ -124,6 +124,17 @@ may have something to offer 🙂
 		</nav>
 	</article>
 	<article class="fusiondoc-devtool-entry">
+		<img src="community/onyxui.png" alt="OnyxUI logo">
+		<h3>OnyxUI</h3>
+		<p>
+			Quick, customizable components.
+		</p>
+		<nav>
+			<a href="https://github.com/ImAvafe/OnyxUI">Code on GitHub</a>
+			<a href="https://imavafe.github.io/OnyxUI">Learn more</a>
+		</nav>
+	</article>
+	<article class="fusiondoc-devtool-entry">
 		<img src="community/rojo.png" alt="Rojo logo">
 		<h3>Rojo</h3>
 		<p>
