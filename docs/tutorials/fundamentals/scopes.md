@@ -9,7 +9,7 @@ manage.
 ## Scopes
 
 When you create many objects at once, you often want to destroy them together
-later. 
+later.
 
 To make this easier, some people add their objects to an array. Arrays that
 group together objects like this are given a special name: *scopes*.
@@ -153,6 +153,16 @@ scope:doCleanup()
 This makes it harder to mess up writing scopes. Your code reads more naturally,
 too.
 
+For convenience, Fusion exposes the `insert` method to insert destruction tasks
+into a scope:
+
+```Lua
+local conn, ins = scope:insert(
+	RunService.Heartbeat:Connnect(doUpdate),
+	Instance.new("Part", workspace)
+)
+```
+
 ### Adding Methods In Bulk
 
 Try passing `Fusion` to `scoped()` - it's a table with functions, too.
@@ -269,15 +279,13 @@ local uiScope = scoped(Fusion)
 
 -- ... create the ui ...
 
-table.insert(
-	uiScope,
+uiScope:insert(
 	dropdownOpened:Connect(function()
 		local dropdownScope = uiScope:deriveScope()
 
 		-- ... create the dropdown ...
 
-		table.insert(
-			dropdownScope,
+		dropdownScope:insert(
 			dropdownClosed:Connect(function()
 				dropdownScope:doCleanup()
 			end)
@@ -298,20 +306,18 @@ To help with this, Fusion provides an `innerScope` method. It works just like
 - When the original scope is cleaned up, the 'inner scope' is cleaned up too
 - You can still call `doCleanup()` to clean the inner scope up early
 
-```Lua hl_lines="8"
+```Lua hl_lines="7"
 local uiScope = scoped(Fusion)
 
 -- ... create the ui ...
 
-table.insert(
-	uiScope,
+uiScope:insert(
 	dropdownOpened:Connect(function()
 		local dropdownScope = uiScope:innerScope()
 
 		-- ... create the dropdown ...
 
-		table.insert(
-			dropdownScope,
+		dropdownScope:insert(
 			dropdownClosed:Connect(function()
 				dropdownScope:doCleanup()
 			end)
