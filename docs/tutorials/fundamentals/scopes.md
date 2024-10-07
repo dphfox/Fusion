@@ -153,6 +153,16 @@ scope:doCleanup()
 This makes it harder to mess up writing scopes. Your code reads more naturally,
 too.
 
+For convenience, Fusion exposes the `insert` method to insert destruction tasks
+into a scope:
+
+```Lua
+local conn, ins = scope:insert(
+	RunService.Heartbeat:Connnect(doUpdate),
+	Instance.new("Part", workspace)
+)
+```
+
 ### Adding Methods In Bulk
 
 Try passing `Fusion` to `scoped()` - it's a table with functions, too.
