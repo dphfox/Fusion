@@ -49,8 +49,9 @@ local Fusion: Fusion = table.freeze {
 	deriveScope = require(script.Memory.deriveScope),
 	doCleanup = require(script.Memory.doCleanup),
 	innerScope = require(script.Memory.innerScope),
+	insert = require(script.Memory.insert),
 	scoped = require(script.Memory.scoped),
-	
+
 	-- Graph
 	Observer = require(script.Graph.Observer),
 
