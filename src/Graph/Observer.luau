@@ -20,6 +20,7 @@ local depend = require(Package.Graph.depend)
 local evaluate = require(Package.Graph.evaluate)
 -- Utility
 local nicknames = require(Package.Utility.nicknames)
+local xtypeof = require(Package.Utility.xtypeof)
 
 type Self = Types.Observer & {
 	_watchingGraph: Types.GraphObject?,
@@ -39,7 +40,11 @@ local function Observer(
 ): Types.Observer
 	local createdAt = os.clock()
 	if watching == nil then
-		External.logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
+		if xtypeof(scope) == "state" then
+			External.logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
+		else -- if it isn't a state then assume the scope was given correctly, but the watching value is missing
+			error("Value provided to Observer to watch was not a state.")
+		end
 	end
 
 	local self: Self = setmetatable(
