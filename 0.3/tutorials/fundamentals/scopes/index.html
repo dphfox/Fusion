@@ -1797,10 +1797,6 @@
         
           
         
-          
-        
-          
-        
       
       
         <label class="md-nav__link" for="__nav_4_3_2">
@@ -1851,34 +1847,6 @@
     <li class="md-nav__item">
       <a href="../../../api-reference/memory/members/scoped/" class="md-nav__link">
         scoped
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/memory/members/innerscope/" class="md-nav__link">
-        innerScope
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api-reference/memory/members/insert/" class="md-nav__link">
-        insert
       </a>
     </li>
   
@@ -2995,7 +2963,7 @@ manage.</p>
 <hr />
 <h2 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h2>
 <p>When you create many objects at once, you often want to destroy them together
-later.</p>
+later. </p>
 <p>To make this easier, some people add their objects to an array. Arrays that
 group together objects like this are given a special name: <em>scopes</em>.</p>
 <p>To create a new scope, create an empty array.</p>
@@ -3162,13 +3130,6 @@ methods directly on the scope:</p>
 </span></code></pre></div></td></tr></table></div>
 <p>This makes it harder to mess up writing scopes. Your code reads more naturally,
 too.</p>
-<p>For convenience, Fusion exposes the <code>insert</code> method to insert destruction tasks
-into a scope:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">conn</span><span class="p">,</span> <span class="n">ins</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">RunService</span><span class="p">.</span><span class="n">Heartbeat</span><span class="p">:</span><span class="n">Connnect</span><span class="p">(</span><span class="n">doUpdate</span><span class="p">),</span>
-    <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></div>
 <h3 id="adding-methods-in-bulk">Adding Methods In Bulk<a class="headerlink" href="#adding-methods-in-bulk" title="Permanent link">&para;</a></h3>
 <p>Try passing <code>Fusion</code> to <code>scoped()</code> - it's a table with functions, too.</p>
 <div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
@@ -3262,13 +3223,15 @@ the menu, which you clean up when the menu is closed.</p>
 
 <span class="c1">-- ... create the ui ...</span>
 
-<span class="n">uiScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
+<span class="nb">table.insert</span><span class="p">(</span>
+    <span class="n">uiScope</span><span class="p">,</span>
     <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
         <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
 
         <span class="c1">-- ... create the dropdown ...</span>
 
-        <span class="n">dropdownScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
+        <span class="nb">table.insert</span><span class="p">(</span>
+            <span class="n">dropdownScope</span><span class="p">,</span>
             <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
                 <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
             <span class="kr">end</span><span class="p">)</span>
@@ -3290,13 +3253,15 @@ created, and when the dropdown is closed, the new scope is destroyed.</p>
 
 <span class="c1">-- ... create the ui ...</span>
 
-<span class="n">uiScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
+<span class="nb">table.insert</span><span class="p">(</span>
+    <span class="n">uiScope</span><span class="p">,</span>
     <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
 <span class="hll">        <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">innerScope</span><span class="p">()</span>
 </span>
         <span class="c1">-- ... create the dropdown ...</span>
 
-        <span class="n">dropdownScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
+        <span class="nb">table.insert</span><span class="p">(</span>
+            <span class="n">dropdownScope</span><span class="p">,</span>
             <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
                 <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
             <span class="kr">end</span><span class="p">)</span>
