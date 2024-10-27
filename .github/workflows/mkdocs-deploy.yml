@@ -5,8 +5,8 @@ on:
       - main
 
 env:
-  FUSION_VERSION: 0.3
-  FUSION_DEPLOY_TYPE: 'release'
+  FUSION_VERSION: 0.4
+  FUSION_DEPLOY_TYPE: 'dev'
 
 jobs:
   deploy:

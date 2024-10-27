@@ -63,10 +63,10 @@ return function()
 
 		local counter = 0
 		local function onDestroy()
-		  return counter += 1
+			counter += 1
 		end
 		local function onDestroy2()
-		  return counter += 2
+			counter += 2
 		end
 		local scope = scoped()
 
