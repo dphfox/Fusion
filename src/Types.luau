@@ -252,7 +252,6 @@ export type Fusion = {
 	scoped: ScopedConstructor,
 	deriveScope: DeriveScopeConstructor,
 	innerScope: DeriveScopeConstructor,
-	insert: <Tasks...>(scope: Scope<unknown>, Tasks...) -> Tasks...,
 
 	peek: Use,
 	Value: ValueConstructor,
@@ -289,7 +288,7 @@ export type ExternalProvider = {
 	logWarn: (
 		errorString: string
 	) -> (),
-
+	
 	doTaskImmediate: (
 		resume: () -> ()
 	) -> (),
