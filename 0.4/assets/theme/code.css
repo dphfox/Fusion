@@ -1,0 +1,99 @@
+[data-md-color-scheme="fusiondoc-light"] {
+	--md-code-fg-color:                var(--fusiondoc-grey-2);
+	--md-code-bg-color:                var(--fusiondoc-grey-10);
+	--fusiondoc-code-separator:        var(--fusiondoc-grey-9);
+	--fusiondoc-line-numbers:        var(--fusiondoc-grey-4);
+
+	--md-code-hl-color:                var(--fusiondoc-accent-a20);
+	--md-code-hl-number-color:         hsl(290, 60%, 40%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-4);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-4);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-4);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 30%);
+	--md-code-hl-string-color:         hsl(330, 80%, 40%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-3);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-5);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-5);
+	--md-code-hl-comment-color:        var(--fusiondoc-grey-5);
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-5);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-5);
+}
+
+[data-md-color-scheme="fusiondoc-dark"] {
+	--md-code-fg-color:                var(--fusiondoc-grey-8);
+	--md-code-bg-color:                var(--fusiondoc-grey-2);
+	--fusiondoc-code-separator:        var(--fusiondoc-grey-3);
+	--fusiondoc-line-numbers:        var(--fusiondoc-grey-6);
+
+	--md-code-hl-color:                var(--fusiondoc-accent-a20);
+	--md-code-hl-number-color:         hsl(290, 60%, 70%);
+	--md-code-hl-special-color:        var(--fusiondoc-grey-7);
+	--md-code-hl-function-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-constant-color:       var(--fusiondoc-grey-7);
+	--md-code-hl-keyword-color:        hsl(40, 75%, 60%);
+	--md-code-hl-string-color:         hsl(330, 80%, 70%);
+	--md-code-hl-name-color:           var(--fusiondoc-grey-8);
+	--md-code-hl-operator-color:       var(--fusiondoc-grey-6);
+	--md-code-hl-punctuation-color:    var(--fusiondoc-grey-6);
+	--md-code-hl-comment-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-generic-color:        var(--fusiondoc-grey-6);
+	--md-code-hl-variable-color:       var(--fusiondoc-grey-6);
+}
+
+.md-typeset code {
+	border-radius: 0.25rem;
+}
+
+.highlighttable .linenos {
+	border-bottom-left-radius: 0.25rem;
+	border-top-left-radius: 0.25rem;
+  }
+
+.highlighttable .linenodiv {
+	box-shadow: none;
+}
+
+.highlighttable .linenos {
+	box-shadow: inset -.05rem 0 var(--fusiondoc-code-separator);
+}
+
+.highlight .hll {
+	box-shadow:
+		inset 0.125rem 0 var(--fusiondoc-accent),
+		320px 0 var(--md-code-hl-color);	
+	background: linear-gradient(to left, var(--fusiondoc-accent-a20) 0%, var(--fusiondoc-accent-a10) 100%);
+}
+
+.highlighttable .linenodiv pre {
+	color: var(--fusiondoc-line-numbers);
+}
+
+.highlight .md-clipboard {
+	color: var(--fusiondoc-fg-1) !important;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.highlight:hover .md-clipboard {
+	opacity: 0.5;
+}
+
+.highlight .md-clipboard:hover {
+	opacity: 1;
+}
+
+.highlight > pre,
+.highlighttable {
+	box-shadow: var(--md-shadow-z1);
+	border-radius: 0.25rem;
+}
+
+.tabbed-set .highlight > pre {
+	box-shadow: none;
+}
+
+code:not(pre code, .highlight) {
+	background-color: var(--fusiondoc-bg-2) !important;
+	color: inherit !important;
+	box-shadow: var(--md-shadow-z1);
+}

@@ -1,0 +1,111 @@
+:root {
+	--fusiondoc-grey-0: #000000;
+	--fusiondoc-grey-1: #08001B;
+	--fusiondoc-grey-2: #201432;
+	--fusiondoc-grey-3: #36304f;
+	--fusiondoc-grey-4: #544c68;
+	--fusiondoc-grey-5: #716a87;
+	--fusiondoc-grey-6: #9189a7;
+	--fusiondoc-grey-7: #aeacc3;
+	--fusiondoc-grey-8: #d2cede;
+	--fusiondoc-grey-9: #F5F1FF;
+	--fusiondoc-grey-10: #ffffff;
+
+	--fusiondoc-grey-1-a80: #08001Bcc;
+	--fusiondoc-grey-2-a80: #201432cc;
+	--fusiondoc-grey-8-a80: #d2cedecc;
+	--fusiondoc-grey-9-a80: #F5F1FFcc;
+
+	--fusiondoc-orange: hsl(40, 100%, 50%);
+	--fusiondoc-orange-p1: hsl(40, 100%, 60%);
+	--fusiondoc-orange-p2: hsl(40, 100%, 80%);
+	--fusiondoc-orange-n1: hsl(40, 100%, 40%);
+	--fusiondoc-orange-n2: hsl(40, 100%, 20%);
+	--fusiondoc-orange-a10: hsla(40, 100%, 50%, 10%);
+	--fusiondoc-orange-a20: hsla(40, 100%, 50%, 20%);
+	--fusiondoc-orange-a50: hsla(40, 100%, 50%, 50%);
+
+	--fusiondoc-magenta: hsl(320, 100%, 50%);
+	--fusiondoc-magenta-p1: hsl(320, 100%, 60%);
+	--fusiondoc-magenta-p2: hsl(320, 100%, 80%);
+	--fusiondoc-magenta-n1: hsl(320, 100%, 40%);
+	--fusiondoc-magenta-n2: hsl(320, 100%, 20%);
+	--fusiondoc-magenta-a10: hsl(320, 100%, 50%, 10%);
+	--fusiondoc-magenta-a20: hsl(320, 100%, 50%, 20%);
+	--fusiondoc-magenta-a50: hsl(320, 100%, 50%, 50%);
+
+	--fusiondoc-grey: hsl(240, 5%, 60%);
+	--fusiondoc-grey-p1: hsl(240, 5%, 70%);
+	--fusiondoc-grey-p2: hsl(240, 5%, 80%);
+	--fusiondoc-grey-n1: hsl(240, 5%, 40%);
+	--fusiondoc-grey-n2: hsl(240, 5%, 20%);
+	--fusiondoc-grey-a10: hsl(240, 5%, 60%, 10%);
+	--fusiondoc-grey-a20: hsl(240, 5%, 60%, 20%);
+	--fusiondoc-grey-a50: hsl(240, 5%, 60%, 50%);
+}
+
+[data-md-color-scheme="fusiondoc-light"] {
+	--fusiondoc-bg-0: var(--fusiondoc-grey-8);
+	--fusiondoc-bg-1: var(--fusiondoc-grey-9);
+	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-9-a80);
+	--fusiondoc-bg-2: var(--fusiondoc-grey-10);
+	--fusiondoc-bg-3: var(--fusiondoc-grey-10);
+
+	--fusiondoc-fg-1: var(--fusiondoc-grey-2);
+	--fusiondoc-fg-2: var(--fusiondoc-grey-3);
+	--fusiondoc-fg-3: var(--fusiondoc-grey-4);
+
+	--fusiondoc-accent: var(--fusiondoc-orange-n1);
+	--fusiondoc-accent-light: var(--fusiondoc-orange-p2);
+	--fusiondoc-accent-dark: var(--fusiondoc-orange-n2);
+	--fusiondoc-accent-text: var(--fusiondoc-orange-n2);
+	--fusiondoc-accent-a10: var(--fusiondoc-orange-a10);
+	--fusiondoc-accent-a20: var(--fusiondoc-orange-a20);
+
+	--fusiondoc-accent-hover: var(--fusiondoc-grey);
+	--fusiondoc-accent-hover-text: var(--fusiondoc-grey-n2);
+	--fusiondoc-accent-hover-a10: var(--fusiondoc-grey-a10);
+	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
+
+	--fusiondoc-stroke: hsla(240, 5%, 0%, 15%);
+	--fusiondoc-smoke: var(--fusiondoc-grey-9-a80);
+}
+
+[data-md-color-scheme="fusiondoc-dark"] {
+	--fusiondoc-bg-0: var(--fusiondoc-grey-2);
+	--fusiondoc-bg-1: var(--fusiondoc-grey-1);
+	--fusiondoc-bg-1-a80: var(--fusiondoc-grey-1-a80);
+	--fusiondoc-bg-2: var(--fusiondoc-grey-2);
+	--fusiondoc-bg-3: var(--fusiondoc-grey-3);
+
+	--fusiondoc-fg-1: var(--fusiondoc-grey-9);
+	--fusiondoc-fg-2: var(--fusiondoc-grey-9);
+	--fusiondoc-fg-3: var(--fusiondoc-grey-10);
+
+	--fusiondoc-accent: var(--fusiondoc-orange);
+	--fusiondoc-accent-light: var(--fusiondoc-orange-p2);
+	--fusiondoc-accent-dark: var(--fusiondoc-orange-n2);
+	--fusiondoc-accent-text: var(--fusiondoc-orange-p1);
+	--fusiondoc-accent-a10: var(--fusiondoc-orange-a10);
+	--fusiondoc-accent-a20: var(--fusiondoc-orange-a20);
+
+	--fusiondoc-accent-hover: var(--fusiondoc-grey);
+	--fusiondoc-accent-hover-text: var(--fusiondoc-grey-p1);
+	--fusiondoc-accent-hover-a10: var(--fusiondoc-grey-a10);
+	--fusiondoc-accent-hover-a20: var(--fusiondoc-grey-a20);
+
+	--fusiondoc-stroke: hsla(240, 5%, 100%, 15%);
+	--fusiondoc-smoke: var(--fusiondoc-grey-1-a80);
+}
+
+[data-md-color-scheme="fusiondoc-light"] .fusiondoc-dark-theme-only,
+[data-md-color-scheme="fusiondoc-dark"] .fusiondoc-light-theme-only,
+[data-md-color-scheme="fusiondoc-light"] img[src$="#only-dark"],
+[data-md-color-scheme="fusiondoc-dark"] img[src$="#only-light"] {
+	display: none !important;
+}
+
+[data-md-color-scheme="fusiondoc-light"] img[src$="#only-light"],
+[data-md-color-scheme="fusiondoc-dark"] img[src$="#only-dark"] {
+	display: initial;
+}

@@ -1,0 +1,60 @@
+.md-typeset .admonition-title,
+.md-typeset summary {
+	background: none !important;
+}
+
+.md-typeset :is(.admonition, details) {
+	border-radius: 0.25rem;
+	border-width: 0.1rem !important;
+	box-shadow: 
+		0 0.25em 1.5em -0.75em var(--admonition-color),
+		inset 0 1em 2em -2.25em var(--admonition-color)
+		!important;
+
+	background: linear-gradient(var(--admonition-color) -99999%, transparent 5000%), var(--fusiondoc-bg-2);
+}
+
+.md-typeset :is(.admonition, details) > :is(.admonition-title, summary)::before {
+	background-color: currentColor;
+}
+
+.md-typeset .note {
+	--admonition-color: #448aff;
+}
+.md-typeset .abstract {
+	--admonition-color: #00b0ff;
+}
+.md-typeset .info {
+	--admonition-color: #00b8d4;
+}
+.md-typeset .tip {
+	--admonition-color: #00bfa5;
+}
+.md-typeset .success {
+	--admonition-color: #00c853;
+}
+.md-typeset .question {
+	--admonition-color: #64dd17;
+}
+.md-typeset .warning {
+	--admonition-color: #ff9100;
+}
+.md-typeset .failure {
+	--admonition-color: #ff5252;
+}
+.md-typeset .danger {
+	--admonition-color: #ff1744;
+}
+.md-typeset .bug {
+	--admonition-color: #f50057;
+}
+.md-typeset .example {
+	--admonition-color: #7c4dff;
+}
+.md-typeset .quote {
+	--admonition-color: #9e9e9e;
+}
+
+[data-md-color-scheme="fusiondoc-dark"] .md-typeset .admonition.details {
+	--md-code-bg-color: var(--fusiondoc-grey-1);
+}

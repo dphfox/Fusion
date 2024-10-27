@@ -1,0 +1,38 @@
+.fusiondoc-devtool-gallery {
+	display: flex;
+	flex-direction: column;
+}
+
+.fusiondoc-devtool-entry {
+	background-color: var(--fusiondoc-bg-2);
+	box-shadow: var(--md-shadow-z1);
+	border-radius: 0.25rem;
+	padding: 0.75rem 1rem;
+	margin: 0.5rem 0;
+	margin-top: 0;
+}
+
+.fusiondoc-devtool-entry > h3 {
+	margin-top: 0;
+	color: var(--fusiondoc-fg-3);
+	font-weight: 700;
+}
+
+.fusiondoc-devtool-entry > img {
+	float: right;
+	text-align: right;
+	width: 5rem;
+	aspect-ratio: 1;
+	margin: 0;
+}
+
+.fusiondoc-devtool-entry > nav {
+	display: flex;
+	row-gap: 0.25rem;
+	column-gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.fusiondoc-devtool-entry > nav > * {
+	flex-shrink: 0;
+}

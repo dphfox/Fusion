@@ -1,0 +1,93 @@
+.md-typeset h1 {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.md-typeset h2 {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.md-typeset h3 {
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+.md-typeset hr {
+	border-bottom-color: var(--fusiondoc-stroke) !important;
+}
+
+.md-typeset img {
+	border-radius: 0.25rem;
+}
+
+.js .md-typeset .tabbed-labels::before {
+	background-color: transparent;
+	height: 100%;
+	box-shadow: 0 -0.325rem var(--md-code-bg-color) inset, 0 -0.4rem var(--fusiondoc-accent) inset;
+}
+
+.md-typeset .tabbed-labels>label {
+	color: var(--md-code-fg-color);
+	font-weight: 400;
+	padding: 0;
+	margin: .78125em 1.25em .625em;
+}
+
+.md-typeset .tabbed-labels {
+	background-color: var(--md-code-bg-color);
+	box-shadow: none;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+}
+
+.md-typeset .tabbed-set {
+	box-shadow: var(--md-shadow-z1);
+}
+
+h1 > .twemoji:first-child,
+h2 > .twemoji:first-child,
+h3 > .twemoji:first-child,
+h4 > .twemoji:first-child,
+h5 > .twemoji:first-child,
+h6 > .twemoji:first-child {
+	margin-right: 0.25em;
+}
+
+/* holy shit mkdocs-material, why did you do THIS */
+
+.md-typeset .tabbed-set>input:first-child:checked~.tabbed-labels>:first-child,
+.md-typeset .tabbed-set>input:nth-child(2):checked~.tabbed-labels>:nth-child(2),
+.md-typeset .tabbed-set>input:nth-child(3):checked~.tabbed-labels>:nth-child(3),
+.md-typeset .tabbed-set>input:nth-child(4):checked~.tabbed-labels>:nth-child(4),
+.md-typeset .tabbed-set>input:nth-child(5):checked~.tabbed-labels>:nth-child(5),
+.md-typeset .tabbed-set>input:nth-child(6):checked~.tabbed-labels>:nth-child(6),
+.md-typeset .tabbed-set>input:nth-child(7):checked~.tabbed-labels>:nth-child(7),
+.md-typeset .tabbed-set>input:nth-child(8):checked~.tabbed-labels>:nth-child(8),
+.md-typeset .tabbed-set>input:nth-child(9):checked~.tabbed-labels>:nth-child(9),
+.md-typeset .tabbed-set>input:nth-child(10):checked~.tabbed-labels>:nth-child(10),
+.md-typeset .tabbed-set>input:nth-child(11):checked~.tabbed-labels>:nth-child(11),
+.md-typeset .tabbed-set>input:nth-child(12):checked~.tabbed-labels>:nth-child(12),
+.md-typeset .tabbed-set>input:nth-child(13):checked~.tabbed-labels>:nth-child(13),
+.md-typeset .tabbed-set>input:nth-child(14):checked~.tabbed-labels>:nth-child(14),
+.md-typeset .tabbed-set>input:nth-child(15):checked~.tabbed-labels>:nth-child(15),
+.md-typeset .tabbed-set>input:nth-child(16):checked~.tabbed-labels>:nth-child(16),
+.md-typeset .tabbed-set>input:nth-child(17):checked~.tabbed-labels>:nth-child(17),
+.md-typeset .tabbed-set>input:nth-child(18):checked~.tabbed-labels>:nth-child(18),
+.md-typeset .tabbed-set>input:nth-child(19):checked~.tabbed-labels>:nth-child(19),
+.md-typeset .tabbed-set>input:nth-child(20):checked~.tabbed-labels>:nth-child(20) {
+	color: var(--fusiondoc-accent);
+	font-weight: 700;
+}
+
+.fusiondoc-yt-embed {
+	width: 100%;
+	aspect-ratio: 16/9;
+}
+
+.md-typeset figcaption {
+	color: var(--fusiondoc-fg-3);
+	font-style: normal;
+	font-size: 0.8em;
+	letter-spacing: 0.02em;
+}

@@ -1,0 +1,112 @@
+.fusiondoc-api-header {
+	display: flex;
+	align-items: baseline;
+	margin: 0 !important;
+	flex-wrap: wrap;
+}
+
+.fusiondoc-api-header .fusiondoc-api-icon {
+	margin-right: 0.5em;
+}
+
+.fusiondoc-api-header > * {
+	flex-shrink: 0;
+}
+
+.fusiondoc-api-type {
+	vertical-align: middle;
+	font-size: calc((0.5em + 1rem) / 2);
+	flex-shrink: 0;
+
+	margin-left: 0.5em;
+
+	font-family: var(--md-code-font-family);
+	font-weight: 400;
+}
+
+.fusiondoc-api-type:not(a){
+	opacity: 0.8;
+}
+
+.fusiondoc-api-breadcrumbs {
+	display: flex;
+	align-items: center;
+	height: 2rem;
+}
+
+.fusiondoc-api-breadcrumbs {
+	opacity: 0.8;
+}
+
+.fusiondoc-api-breadcrumbs > *:not(:last-child)::after {
+	content: "›";
+	margin: 0 0.25rem;
+}
+
+.fusiondoc-error-api-section {
+	opacity: 1;
+	transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.fusiondoc-error-api-section.fusiondoc-error-api-section-defocus {
+	opacity: 0.4;
+	filter: blur(0.25rem);
+	pointer-events: none;
+}
+
+.fusiondoc-api-bento {
+	column-width: 12rem;
+	column-gap: 0.5rem;
+}
+
+.fusiondoc-api-bento > * {
+	break-inside: avoid;
+	background-color: var(--fusiondoc-bg-2);
+	box-shadow: var(--md-shadow-z1);
+	border-radius: 0.25rem;
+	padding: 0.75rem 1rem;
+	padding-bottom: 0.01rem;
+	margin: 0.5rem 0;
+	margin-top: 0;
+}
+
+.fusiondoc-api-bento > * :first-child {
+	margin-top: 0 !important;
+}
+
+.fusiondoc-api-bento > * > h3 {
+	font-size: 0.7rem;
+	color: var(--fusiondoc-fg-3);
+	font-weight: 700;
+}
+
+.fusiondoc-api-index-header {
+	color: var(--fusiondoc-fg-1) !important;
+}
+
+.fusiondoc-api-index-header:hover {
+	color: var(--fusiondoc-accent-hover) !important;
+}
+
+.fusiondoc-api-index-link {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+
+	color: var(--fusiondoc-fg-1) !important;
+	margin: 1rem 0;
+}
+
+.fusiondoc-api-index-link:hover {
+	color: var(--fusiondoc-accent-hover) !important;
+}
+
+.fusiondoc-api-index-link > .fusiondoc-api-index-arrow {
+	margin-bottom: -0.3em;
+	transform: translateX(0rem);
+	transition: transform 0.2s ease;
+}
+
+.fusiondoc-api-index-link:hover > .fusiondoc-api-index-arrow {
+	transform: translateX(0.5rem);
+}

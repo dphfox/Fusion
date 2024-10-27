@@ -1,0 +1,40 @@
+#fusion-404 .graphic {
+	display: block;
+	width: 16rem;
+	max-width: 80vmin;
+	aspect-ratio: 1;
+	margin: 0 auto;
+	margin-bottom: 2rem;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+[data-md-color-scheme="fusiondoc-light"] #fusion-404 .graphic {
+	background-image: url("../404-light.svg");
+}
+
+[data-md-color-scheme="fusiondoc-dark"] #fusion-404 .graphic {
+	background-image: url("../404-dark.svg");
+}
+
+#fusion-404 h1 {
+	text-align: center;
+	font-size: 2rem;
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+#fusion-404 h2 {
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 400;
+	
+	margin-top: 0;
+	margin-bottom: 2rem;
+}
+
+#fusion-404 .advice {
+	max-width: max-content;
+	margin: 0 auto;
+}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block fonts %}
+	<!-- Load fonts from Google -->
+	{% if config.theme.font != false %}
+		{% set font = config.theme.font %}
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family={{
+				font.text | replace(' ', '+')
+				}}:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=fallback"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family={{
+				font.code | replace(' ', '+')
+				}}&display=fallback"
+		/>
+		<style>
+			:root {
+				--md-text-font: "{{ font.text }}";
+				--md-code-font: "{{ font.code }}";
+			}
+		</style>
+	{% endif %}
+{% endblock %}
+
+{% block hero %}
+	{% if page.meta and page.meta.hero_img %}
+		<div class="fusiondoc-hero" style="--hero-img: url({{ page.meta.hero_img }});"></div>
+	{% endif %}
+	{{ super() }}
+{% endblock %}

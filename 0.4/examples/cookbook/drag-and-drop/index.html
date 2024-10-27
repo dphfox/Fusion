@@ -1,0 +1,3999 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://elttob.uk/Fusion/0.4/examples/cookbook/drag-and-drop/">
+      
+      <link rel="icon" href="../../../assets/logo-dark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-8.2.13">
+    
+    
+      
+        <title>Drag & Drop - Fusion</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e411adfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+	<!-- Load fonts from Google -->
+	
+		
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=fallback"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=JetBrains+Mono&display=fallback"
+		/>
+		<style>
+			:root {
+				--md-text-font: "Plus Jakarta Sans";
+				--md-code-font: "JetBrains Mono";
+			}
+		</style>
+	
+
+    
+      <link rel="stylesheet" href="../../../assets/theme/fusiondoc.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/colours.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/code.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/paragraph.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/page.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/admonition.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/404.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/api-reference.css">
+    
+      <link rel="stylesheet" href="../../../assets/theme/dev-tools.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="fusiondoc-dark" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#explanation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      <!-- Determine class according to configuration -->
+
+
+
+<!-- Header -->
+<header class="md-header" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="Header"
+  >
+
+    <!-- Link to home -->
+    <a
+      href="../../.."
+      title="Fusion"
+      class="md-header__button md-logo"
+      aria-label="Fusion"
+      data-md-component="logo"
+    >
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+
+    </a>
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm4.75-1.5a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zm0 6a.75.75 0 0 0 0 1.5h11.5a.75.75 0 0 0 0-1.5H8.75zM5 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
+    </label>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            <!-- Fusion -->
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Drag & Drop
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette -->
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: dark)"
+            data-md-color-scheme="fusiondoc-dark"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_1"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_2"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm12-7a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 24 12zM4 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 4 12zm16.485-8.485a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 0 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM6.343 17.657a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 1 1-1.06-1.06l1.767-1.768a.75.75 0 0 1 1.061 0zM12 0a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 12 0zm0 20a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 12 20zM3.515 3.515a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 1 1-1.06 1.06L3.515 4.575a.75.75 0 0 1 0-1.06zm14.142 14.142a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 0 1-1.06 1.06l-1.768-1.767a.75.75 0 0 1 0-1.061z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input
+            class="md-option"
+            data-md-color-media="(prefers-color-scheme: light)"
+            data-md-color-scheme="fusiondoc-light"
+            data-md-color-primary=""
+            data-md-color-accent=""
+            
+              aria-label=""
+            
+            type="radio"
+            name="__palette"
+            id="__palette_2"
+          />
+          
+            <label
+              class="md-header__button md-icon"
+              title=""
+              for="__palette_1"
+              hidden
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16.5 6c0 5.799-4.701 10.5-10.5 10.5-.426 0-.847-.026-1.26-.075A8.5 8.5 0 1 0 16.425 4.74c.05.413.075.833.075 1.259zm-1.732-2.04A9.08 9.08 0 0 1 14.999 6a9 9 0 0 1-11.04 8.768l-.004-.002a9.367 9.367 0 0 1-.78-.218c-.393-.13-.8.21-.67.602a9.938 9.938 0 0 0 .329.855l.004.01A10.002 10.002 0 0 0 12 22a10.002 10.002 0 0 0 4.015-19.16l-.01-.005a9.745 9.745 0 0 0-.855-.328c-.392-.13-.732.276-.602.67a8.934 8.934 0 0 1 .218.779l.002.005z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <!-- Search interface -->
+<div class="md-search" data-md-component="search" role="dialog">
+	<label class="md-search__overlay" for="__search"></label>
+	<div class="md-search__inner" role="search">
+		<form class="md-search__form" name="search">
+
+			<!-- Search input -->
+			<input type="text" class="md-search__input" name="query" aria-label="Search"
+				placeholder="Search" autocapitalize="off" autocorrect="off"
+				autocomplete="off" spellcheck="false" data-md-component="search-query" required />
+
+			<!-- Button to open search -->
+			<label class="md-search__icon md-icon" for="__search">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 1 1 1.06-1.06l5.69 5.69a.75.75 0 1 1-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1 1 11.74 4.547.746.746 0 0 0-.443.442A6.75 6.75 0 0 1 2.5 9.25z"/></svg>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</label>
+
+			<!-- Search options -->
+			<nav class="md-search__options" aria-label="Search">
+
+				<!-- Button to share search -->
+				
+
+				<!-- Button to reset search -->
+				<button type="reset" class="md-search__icon md-icon" aria-label="Clear"
+					tabindex="-1">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5.72 5.72a.75.75 0 0 1 1.06 0L12 10.94l5.22-5.22a.75.75 0 1 1 1.06 1.06L13.06 12l5.22 5.22a.75.75 0 1 1-1.06 1.06L12 13.06l-5.22 5.22a.75.75 0 0 1-1.06-1.06L10.94 12 5.72 6.78a.75.75 0 0 1 0-1.06z"/></svg>
+				</button>
+			</nav>
+
+			<!-- Search suggestions -->
+			
+			<div class="md-search__suggest" data-md-component="search-suggest"></div>
+			
+		</form>
+		<div class="md-search__output">
+			<div class="md-search__scrollwrap" data-md-scrollfix>
+
+				<!-- Search results -->
+				<div class="md-search-result" data-md-component="search-result">
+					<div class="md-search-result__meta">
+						Initializing search
+					</div>
+					<ol class="md-search-result__list"></ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dphfox/Fusion" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dphfox/Fusion
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+	
+	
+
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Examples
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../api-reference/" class="md-tabs__link">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="https://elttob.itch.io/" class="md-tabs__link">
+      Made with&emsp13;&#x2764;&emsp13;by Studio Elttob
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Fusion" class="md-nav__button md-logo" aria-label="Fusion" data-md-component="logo">
+      <!-- Logo -->
+
+  <img src="../../../assets/logo-light.svg" alt="logo" class="fusiondoc-light-theme-only" />
+  <img src="../../../assets/logo-dark.svg" alt="logo" class="fusiondoc-dark-theme-only" />
+
+    </a>
+    Fusion
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dphfox/Fusion" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    dphfox/Fusion
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/get-started/installing-fusion/" class="md-nav__link">
+        Installing Fusion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/get-started/developer-tools/" class="md-nav__link">
+        Developer Tools
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/get-started/getting-help/" class="md-nav__link">
+        Getting Help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Fundamentals
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Fundamentals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Fundamentals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/scopes/" class="md-nav__link">
+        Scopes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/values/" class="md-nav__link">
+        Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/observers/" class="md-nav__link">
+        Observers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/fundamentals/computeds/" class="md-nav__link">
+        Computeds
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Tables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tables" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Tables
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/tables/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/tables/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/tables/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_7">
+          Animation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/animation/tweens/" class="md-nav__link">
+        Tweens
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/animation/springs/" class="md-nav__link">
+        Springs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_8">
+          Roblox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Roblox" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_8">
+          <span class="md-nav__icon md-icon"></span>
+          Roblox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/hydration/" class="md-nav__link">
+        Hydration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/new-instances/" class="md-nav__link">
+        New Instances
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/parenting/" class="md-nav__link">
+        Parenting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/events/" class="md-nav__link">
+        Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/change-events/" class="md-nav__link">
+        Change Events
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/roblox/outputs/" class="md-nav__link">
+        Outputs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_9">
+          Best Practices
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Best Practices" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_9">
+          <span class="md-nav__icon md-icon"></span>
+          Best Practices
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/components/" class="md-nav__link">
+        Components
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/instance-handling/" class="md-nav__link">
+        Instance Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/callbacks/" class="md-nav__link">
+        Callbacks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/state/" class="md-nav__link">
+        State
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/sharing-values/" class="md-nav__link">
+        Sharing Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/error-safety/" class="md-nav__link">
+        Error Safety
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/best-practices/optimisation/" class="md-nav__link">
+        Optimisation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Examples</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Cookbook</a>
+          
+            <label for="__nav_3_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Cookbook" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Cookbook
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../player-list/" class="md-nav__link">
+        Player List
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../animated-computed/" class="md-nav__link">
+        Animated Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fetch-data-from-server/" class="md-nav__link">
+        Fetch Data From Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../light-and-dark-theme/" class="md-nav__link">
+        Light & Dark Theme
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../button-component/" class="md-nav__link">
+        Button Component
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../loading-spinner/" class="md-nav__link">
+        Loading Spinner
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Drag & Drop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Drag & Drop
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#explanation" class="md-nav__link">
+    Explanation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../api-reference/">API Reference</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          General
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="General" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          General
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/errors/" class="md-nav__link">
+        Errors
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/types/contextual/" class="md-nav__link">
+        Contextual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/types/version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" type="checkbox" id="__nav_4_2_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_3">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/members/contextual/" class="md-nav__link">
+        Contextual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/members/safe/" class="md-nav__link">
+        Safe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/general/members/version/" class="md-nav__link">
+        version
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Memory
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Memory" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Memory
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/types/scope/" class="md-nav__link">
+        Scope
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/types/scopedobject/" class="md-nav__link">
+        ScopedObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/types/task/" class="md-nav__link">
+        Task
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/members/derivescope/" class="md-nav__link">
+        deriveScope
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/members/docleanup/" class="md-nav__link">
+        doCleanup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/members/scoped/" class="md-nav__link">
+        scoped
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/members/innerscope/" class="md-nav__link">
+        innerScope
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/memory/members/insert/" class="md-nav__link">
+        insert
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Graph
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Graph" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Graph
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/graph/types/graphobject/" class="md-nav__link">
+        GraphObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/graph/types/observer/" class="md-nav__link">
+        Observer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_2" type="checkbox" id="__nav_4_4_2" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/graph/members/observer/" class="md-nav__link">
+        Observer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          State
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="State" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          State
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_1" type="checkbox" id="__nav_4_5_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/usedas/" class="md-nav__link">
+        UsedAs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/computed/" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/for/" class="md-nav__link">
+        For
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/stateobject/" class="md-nav__link">
+        StateObject
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/use/" class="md-nav__link">
+        Use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/types/value/" class="md-nav__link">
+        Value
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_2" type="checkbox" id="__nav_4_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/computed/" class="md-nav__link">
+        Computed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/forkeys/" class="md-nav__link">
+        ForKeys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/forpairs/" class="md-nav__link">
+        ForPairs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/forvalues/" class="md-nav__link">
+        ForValues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/peek/" class="md-nav__link">
+        peek
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/state/members/value/" class="md-nav__link">
+        Value
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Roblox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Roblox" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Roblox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_1" type="checkbox" id="__nav_4_6_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/types/child/" class="md-nav__link">
+        Child
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/types/propertytable/" class="md-nav__link">
+        PropertyTable
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/types/specialkey/" class="md-nav__link">
+        SpecialKey
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6_2" type="checkbox" id="__nav_4_6_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/attribute/" class="md-nav__link">
+        Attribute
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/attributechange/" class="md-nav__link">
+        AttributeChange
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/attributeout/" class="md-nav__link">
+        AttributeOut
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/child/" class="md-nav__link">
+        Child
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/children/" class="md-nav__link">
+        Children
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/hydrate/" class="md-nav__link">
+        Hydrate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/new/" class="md-nav__link">
+        New
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/onchange/" class="md-nav__link">
+        OnChange
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/onevent/" class="md-nav__link">
+        OnEvent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/roblox/members/out/" class="md-nav__link">
+        Out
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Animation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Animation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Animation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_1" type="checkbox" id="__nav_4_7_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7_1">
+          Types
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Types
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/types/animatable/" class="md-nav__link">
+        Animatable
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/types/spring/" class="md-nav__link">
+        Spring
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/types/tween/" class="md-nav__link">
+        Tween
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" type="checkbox" id="__nav_4_7_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7_2">
+          Members
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Members" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Members
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/members/tween/" class="md-nav__link">
+        Tween
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/animation/members/spring/" class="md-nav__link">
+        Spring
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://elttob.itch.io/" class="md-nav__link">
+        Made with&emsp13;&#x2764;&emsp13;by Studio Elttob
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#explanation" class="md-nav__link">
+    Explanation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                <!-- Edit button -->
+
+
+<!--
+  Hack: check whether the content contains a h1 headline. If it
+  doesn't, the page title (or respectively site name) is used
+  as the main headline.
+-->
+
+  <h1>Drag & Drop</h1>
+
+
+<!-- Markdown content -->
+<p>This example shows a full drag-and-drop implementation for mouse input only,
+using Fusion's Roblox API.</p>
+<p>To ensure best accessibility, any interactions you implement shouldn't force you
+to hold the mouse button down. Either allow drag-and-drop with single clicks, or
+provide a non-dragging alternative. This ensures people with reduced motor
+ability aren't locked out of UI functions.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">UserInputService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;UserInputService&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
+<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="kd">local</span> <span class="n">Children</span><span class="p">,</span> <span class="n">OnEvent</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnEvent</span>
+<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+
+<span class="nb">type</span> <span class="n">DragInfo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">mouseOffset</span><span class="p">:</span> <span class="n">Vector2</span> <span class="c1">-- relative to the dragged item</span>
+<span class="p">}</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Draggable</span><span class="p">(</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
+    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+        <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+    <span class="p">}</span>
+<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+    <span class="c1">-- When `nil`, the parent can&#39;t be measured for some reason.</span>
+    <span class="kd">local</span> <span class="n">parentSize</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+    <span class="kr">do</span>
+        <span class="kd">local</span> <span class="kr">function</span> <span class="nf">measureParentNow</span><span class="p">()</span>
+            <span class="kd">local</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">)</span>
+            <span class="n">parentSize</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
+                <span class="kr">if</span> <span class="n">parent</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="n">parent</span><span class="p">:</span><span class="n">IsA</span><span class="p">(</span><span class="s2">&quot;GuiObject&quot;</span><span class="p">)</span>
+                <span class="kr">then</span> <span class="n">parent</span><span class="p">.</span><span class="n">AbsoluteSize</span>
+                <span class="kr">else</span> <span class="kc">nil</span>
+            <span class="p">)</span>
+        <span class="kr">end</span>
+        <span class="kd">local</span> <span class="n">resizeConn</span> <span class="o">=</span> <span class="kc">nil</span>
+        <span class="kd">local</span> <span class="kr">function</span> <span class="nf">stopMeasuring</span><span class="p">()</span>
+            <span class="kr">if</span> <span class="n">resizeConn</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
+                <span class="n">resizeConn</span><span class="p">:</span><span class="n">Disconnect</span><span class="p">()</span>
+                <span class="n">resizeConn</span> <span class="o">=</span> <span class="kc">nil</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span>
+        <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">):</span><span class="n">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+            <span class="n">stopMeasuring</span><span class="p">()</span>
+            <span class="n">measureParentNow</span><span class="p">()</span>
+            <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">parentSize</span><span class="p">)</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
+                <span class="n">resizeConn</span> <span class="o">=</span> <span class="n">parent</span><span class="p">:</span><span class="n">GetPropertyChangedSignal</span><span class="p">(</span><span class="s2">&quot;AbsoluteSize&quot;</span><span class="p">)</span>
+                    <span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">measureParentNow</span><span class="p">)</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span><span class="p">)</span>
+        <span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">stopMeasuring</span><span class="p">)</span>
+    <span class="kr">end</span>
+
+    <span class="kr">return</span> <span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
+        <span class="n">Name</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Name</span> <span class="ow">or</span> <span class="s2">&quot;Draggable&quot;</span><span class="p">,</span>
+        <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kr">return</span>
+                <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span> <span class="o">~=</span> <span class="kc">nil</span>
+                <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">OverlayFrame</span><span class="p">)</span>
+                <span class="kr">else</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">)</span>
+        <span class="kr">end</span><span class="p">),</span>
+
+        <span class="n">LayoutOrder</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">LayoutOrder</span><span class="p">,</span>
+        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">AnchorPoint</span><span class="p">,</span>
+        <span class="n">ZIndex</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">ZIndex</span><span class="p">,</span>
+        <span class="n">AutomaticSize</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="p">,</span>
+
+        <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+
+        <span class="n">Position</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span>
+            <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+                <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Position</span><span class="p">)</span> <span class="ow">or</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="kr">else</span>
+                <span class="kd">local</span> <span class="n">mousePos</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">MousePosition</span><span class="p">)</span>
+                <span class="kd">local</span> <span class="n">topLeftCorner</span> <span class="o">=</span> <span class="n">mousePos</span> <span class="o">-</span> <span class="n">dragInfo</span><span class="p">.</span><span class="n">mouseOffset</span>
+                <span class="kr">return</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="n">topLeftCorner</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">topLeftCorner</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span><span class="p">),</span>
+        <span class="c1">-- Calculated manually so the Scale can be set relative to</span>
+        <span class="c1">-- `props.Parent` at all times, rather than the `Parent` of this Frame.</span>
+        <span class="n">Size</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">udim2</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Size</span><span class="p">)</span> <span class="ow">or</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">parentSize</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">parentSize</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span>
+            <span class="kr">return</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span>
+                <span class="n">udim2</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">Scale</span> <span class="o">*</span> <span class="n">parentSize</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">udim2</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">Offset</span><span class="p">,</span>
+                <span class="n">udim2</span><span class="p">.</span><span class="n">Y</span><span class="p">.</span><span class="n">Scale</span> <span class="o">*</span> <span class="n">parentSize</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">udim2</span><span class="p">.</span><span class="n">Y</span><span class="p">.</span><span class="n">Offset</span>
+            <span class="p">)</span>
+        <span class="kr">end</span><span class="p">),</span>
+
+        <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;AbsolutePosition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">OutAbsolutePosition</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="n">Children</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="n">COLOUR_COMPLETED</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">COLOUR_NOT_COMPLETED</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">TODO_ITEM_SIZE</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">newUniqueID</span><span class="p">()</span>
+    <span class="c1">-- You can replace this with a better method for generating unique IDs.</span>
+    <span class="kr">return</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;HttpService&quot;</span><span class="p">):</span><span class="n">GenerateGUID</span><span class="p">()</span>
+<span class="kr">end</span>
+
+<span class="nb">type</span> <span class="n">TodoItem</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">todoItems</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">TodoItem</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Wake up today&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Read the Fusion docs&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Take over the universe&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">getTodoItemForID</span><span class="p">(</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span>
+<span class="p">):</span> <span class="n">TodoItem</span><span class="err">?</span>
+    <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">item</span> <span class="kr">in</span> <span class="n">todoItems</span> <span class="kr">do</span>
+        <span class="kr">if</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id</span> <span class="kr">then</span>
+            <span class="kr">return</span> <span class="n">item</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span>
+    <span class="kr">return</span> <span class="kc">nil</span>
+<span class="kr">end</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
+    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
+        <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
+        <span class="p">},</span>
+        <span class="n">OnMouseDown</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span><span class="err">?</span>
+    <span class="p">}</span>
+<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+    <span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">innerScope</span> <span class="p">{</span>
+        <span class="n">Draggable</span> <span class="o">=</span> <span class="n">Draggable</span>
+    <span class="p">}</span>
+
+    <span class="kd">local</span> <span class="n">itemPosition</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+    <span class="kd">local</span> <span class="n">itemIsDragging</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">CurrentlyDragging</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">dragInfo</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="n">dragInfo</span><span class="p">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">id</span>
+    <span class="kr">end</span><span class="p">)</span>
+
+    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Draggable</span> <span class="p">{</span>
+        <span class="n">ID</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="n">Parent</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">,</span>
+        <span class="n">Layout</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">,</span>
+        <span class="n">Dragging</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">,</span>
+
+        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
+            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;TodoEntry&quot;</span><span class="p">,</span>
+
+            <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+                <span class="kr">return</span>
+                    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">completed</span><span class="p">)</span>
+                    <span class="kr">then</span> <span class="n">COLOUR_COMPLETED</span>
+                    <span class="kr">else</span> <span class="n">COLOUR_NOT_COMPLETED</span>
+                <span class="kr">end</span>
+            <span class="kr">end</span><span class="p">),</span>
+            <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">TextSize</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span>
+
+            <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseButton1Down&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">OnMouseDown</span>
+
+            <span class="c1">-- Don&#39;t detect mouse up here, because in some rare cases, the event</span>
+            <span class="c1">-- could be missed due to lag between the item&#39;s position and the</span>
+            <span class="c1">-- cursor position.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="kr">end</span>
+
+<span class="c1">-- Don&#39;t forget to pass this to `doCleanup` if you disable the script.</span>
+<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">mousePos</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">UserInputService</span><span class="p">:</span><span class="n">GetMouseLocation</span><span class="p">())</span>
+<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> 
+    <span class="n">UserInputService</span><span class="p">.</span><span class="n">InputChanged</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">inputObject</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">UserInputType</span> <span class="o">==</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseMovement</span> <span class="kr">then</span>
+            <span class="c1">-- If this code did not read coordinates from the same method, it</span>
+            <span class="c1">-- might inconsistently handle UI insets. So, keep it simple!</span>
+            <span class="n">mousePos</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">UserInputService</span><span class="p">:</span><span class="n">GetMouseLocation</span><span class="p">())</span>
+        <span class="kr">end</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">dropAction</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">taskLists</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForPairs</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="n">incomplete</span> <span class="o">=</span> <span class="s2">&quot;mark-as-incomplete&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="s2">&quot;mark-as-completed&quot;</span> 
+    <span class="p">},</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">listName</span><span class="p">,</span> <span class="n">listDropAction</span><span class="p">)</span>
+        <span class="kr">return</span> 
+            <span class="n">listName</span><span class="p">,</span> 
+            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScrollingFrame&quot;</span> <span class="p">{</span>
+                <span class="n">Name</span> <span class="o">=</span> <span class="err">`</span><span class="n">TaskList</span> <span class="p">({</span><span class="n">listName</span><span class="p">})</span><span class="err">`</span><span class="p">,</span>
+                <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+
+                <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>
+                <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+
+                <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseEnter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                    <span class="n">dropAction</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">listDropAction</span><span class="p">)</span>
+                <span class="kr">end</span><span class="p">,</span>
+
+                <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseLeave&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                    <span class="c1">-- A different item might have overwritten this already.</span>
+                    <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">dropAction</span><span class="p">)</span> <span class="o">==</span> <span class="n">listDropAction</span> <span class="kr">then</span>
+                        <span class="n">dropAction</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+                    <span class="kr">end</span>
+                <span class="kr">end</span><span class="p">,</span>
+
+                <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{</span>
+                        <span class="n">SortOrder</span> <span class="o">=</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+                        <span class="n">Padding</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+    <span class="kr">end</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">overlayFrame</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
+    <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">ZIndex</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="kd">local</span> <span class="n">currentlyDragging</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">allEntries</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span>
+    <span class="n">todoItems</span><span class="p">,</span> 
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">itemPosition</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">TodoEntry</span> <span class="p">{</span>
+            <span class="n">Item</span> <span class="o">=</span> <span class="n">item</span><span class="p">,</span>
+            <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+                <span class="kr">return</span>
+                    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">)</span>
+                    <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">taskLists</span><span class="p">).</span><span class="n">completed</span>
+                    <span class="kr">else</span> <span class="n">use</span><span class="p">(</span><span class="n">taskLists</span><span class="p">).</span><span class="n">incomplete</span>
+            <span class="kr">end</span><span class="p">),</span>
+            <span class="n">Layout</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">Size</span> <span class="o">=</span> <span class="n">TODO_ITEM_SIZE</span><span class="p">,</span>
+                <span class="n">OutAbsolutePosition</span> <span class="o">=</span> <span class="n">itemPosition</span>
+            <span class="p">},</span>
+            <span class="n">Dragging</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">MousePosition</span> <span class="o">=</span> <span class="n">mousePos</span><span class="p">,</span>
+                <span class="n">SelfDragInfo</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+                    <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span>
+                    <span class="kr">return</span> 
+                        <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="ow">or</span> <span class="n">dragInfo</span><span class="p">.</span><span class="n">id</span> <span class="o">~=</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span>
+                        <span class="kr">then</span> <span class="kc">nil</span>
+                        <span class="kr">else</span> <span class="n">dragInfo</span>
+                <span class="kr">end</span><span class="p">)</span>
+                <span class="n">OverlayFrame</span> <span class="o">=</span> <span class="n">overlayFrame</span>
+            <span class="p">},</span>
+            <span class="n">OnMouseDown</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+                    <span class="kd">local</span> <span class="n">itemPos</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">itemPosition</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span>
+                    <span class="kd">local</span> <span class="n">mouseOffset</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">mousePos</span><span class="p">)</span> <span class="o">-</span> <span class="n">itemPos</span>
+                    <span class="n">currentlyDragging</span><span class="p">:</span><span class="n">set</span><span class="p">({</span>
+                        <span class="n">id</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+                        <span class="n">mouseOffset</span> <span class="o">=</span> <span class="n">mouseOffset</span>
+                    <span class="p">})</span>
+                <span class="kr">end</span>
+            <span class="kr">end</span>
+        <span class="p">}</span>
+    <span class="kr">end</span>
+<span class="p">)</span>
+
+<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
+    <span class="n">UserInputService</span><span class="p">.</span><span class="n">InputEnded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">inputObject</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">UserInputType</span> <span class="o">~=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span> <span class="kr">then</span>
+            <span class="kr">return</span>
+        <span class="kr">end</span>
+        <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+            <span class="kr">return</span>
+        <span class="kr">end</span>
+        <span class="kd">local</span> <span class="n">item</span> <span class="o">=</span> <span class="n">getTodoItemForID</span><span class="p">(</span><span class="n">dragInfo</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">action</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">dropAction</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
+            <span class="kr">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;mark-as-incomplete&quot;</span> <span class="kr">then</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+            <span class="kr">elseif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;mark-as-completed&quot;</span> <span class="kr">then</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span>
+        <span class="n">currentlyDragging</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
+    <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">overlayFrame</span><span class="p">,</span>
+        <span class="n">taskLists</span><span class="p">,</span>
+        <span class="c1">-- Don&#39;t pass `allEntries` in here - they manage their own parent!</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
+<p>The basic idea is to create a container which stores the UI you want to drag.
+This container then reparents itself as it gets dragged around between
+different containers.</p>
+<p>The <code>Draggable</code> component implements everything necessary to make a seamlessly
+re-parentable container.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span> <span class="n">DragInfo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">mouseOffset</span><span class="p">:</span> <span class="n">Vector2</span> <span class="c1">-- relative to the dragged item</span>
+<span class="p">}</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Draggable</span><span class="p">(</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
+    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">ID</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+        <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+    <span class="p">}</span>
+<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+</code></pre></div>
+<p>By default, <code>Draggable</code> behaves like a regular Frame, parenting itself to the
+<code>Parent</code> property and applying its <code>Layout</code> properties.</p>
+<p>It only behaves specially when <code>Dragging.SelfDragInfo</code> is provided. Firstly,
+it reparents itself to <code>Dragging.OverlayFrame</code>, so it can be seen in front of
+other UI.</p>
+<div class="highlight"><pre><span></span><code>        <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kr">return</span>
+                <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span> <span class="o">~=</span> <span class="kc">nil</span>
+                <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">OverlayFrame</span><span class="p">)</span>
+                <span class="kr">else</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">)</span>
+        <span class="kr">end</span><span class="p">),</span>
+</code></pre></div>
+<p>Because of this reparenting, <code>Draggable</code> has to do some extra work to keep the
+size consistent; it manually calculates the size based on the size of <code>Parent</code>,
+so it doesn't change size when moved to <code>Dragging.OverlayFrame</code>.</p>
+<div class="highlight"><pre><span></span><code>        <span class="c1">-- Calculated manually so the Scale can be set relative to</span>
+        <span class="c1">-- `props.Parent` at all times, rather than the `Parent` of this Frame.</span>
+        <span class="n">Size</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">udim2</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Size</span><span class="p">)</span> <span class="ow">or</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">parentSize</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">parentSize</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span>
+            <span class="kr">return</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span>
+                <span class="n">udim2</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">Scale</span> <span class="o">*</span> <span class="n">parentSize</span><span class="p">.</span><span class="n">X</span> <span class="o">+</span> <span class="n">udim2</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">Offset</span><span class="p">,</span>
+                <span class="n">udim2</span><span class="p">.</span><span class="n">Y</span><span class="p">.</span><span class="n">Scale</span> <span class="o">*</span> <span class="n">parentSize</span><span class="p">.</span><span class="n">Y</span> <span class="o">+</span> <span class="n">udim2</span><span class="p">.</span><span class="n">Y</span><span class="p">.</span><span class="n">Offset</span>
+            <span class="p">)</span>
+        <span class="kr">end</span><span class="p">),</span>
+</code></pre></div>
+<p>The <code>Draggable</code> also needs to snap to the mouse cursor, so it can be moved by
+the user. Ideally, the mouse would stay fixed in position relative to the
+<code>Draggable</code>, so there are no abrupt changes in the position of any elements.</p>
+<p>As part of <code>Dragging.SelfDragInfo</code>, a <code>mouseOffset</code> is provided, which describes
+how far the mouse should stay from the top-left corner. So, when setting the
+position of the <code>Draggable</code>, that offset can be applied to keep the UI fixed
+in position relative to the mouse.</p>
+<div class="highlight"><pre><span></span><code>        <span class="n">Position</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+            <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">SelfDragInfo</span><span class="p">)</span>
+            <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+                <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Position</span><span class="p">)</span> <span class="ow">or</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="kr">else</span>
+                <span class="kd">local</span> <span class="n">mousePos</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">.</span><span class="n">MousePosition</span><span class="p">)</span>
+                <span class="kd">local</span> <span class="n">topLeftCorner</span> <span class="o">=</span> <span class="n">mousePos</span> <span class="o">-</span> <span class="n">dragInfo</span><span class="p">.</span><span class="n">mouseOffset</span>
+                <span class="kr">return</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="n">topLeftCorner</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">topLeftCorner</span><span class="p">.</span><span class="n">Y</span><span class="p">)</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span><span class="p">),</span>
+</code></pre></div>
+<p>This is all that's needed to make a generic container that can seamlessly move
+between distinct parts of the UI. The rest of the example demonstrates how this
+can be integrated into real world UI.</p>
+<p>The example creates a list of <code>TodoItem</code> objects, each with a unique ID, text
+message, and completion status. Because we don't expect the ID or text to
+change, they're just constant values. However, the completion status <em>is</em>
+expected to change, so that's specified to be a <code>Value</code> object.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span> <span class="n">TodoItem</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">todoItems</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">TodoItem</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Wake up today&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Read the Fusion docs&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">newUniqueID</span><span class="p">(),</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Take over the universe&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>TodoEntry</code> component is meant to represent one individual <code>TodoItem</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">TodoEntry</span><span class="p">(</span>
+    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
+    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">Item</span><span class="p">:</span> <span class="n">TodoItem</span><span class="p">,</span>
+        <span class="n">Parent</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+            <span class="n">OutAbsolutePosition</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">Dragging</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">MousePosition</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">SelfDragInfo</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">CurrentlyDragging</span><span class="err">?</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="n">OverlayFrame</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Instance</span><span class="o">&gt;</span><span class="err">?</span>
+        <span class="p">},</span>
+        <span class="n">OnMouseDown</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span><span class="err">?</span>
+    <span class="p">}</span>
+<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+</code></pre></div>
+<p>Notice that it shares many of the same property groups as <code>Draggable</code> - these
+can be passed directly through. </p>
+<div class="highlight"><pre><span></span><code>    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Draggable</span> <span class="p">{</span>
+        <span class="n">ID</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="n">Name</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Item</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="n">Parent</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Parent</span><span class="p">,</span>
+        <span class="n">Layout</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">,</span>
+        <span class="n">Dragging</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Dragging</span><span class="p">,</span>
+</code></pre></div>
+<p>It also provides an <code>OnMouseDown</code> callback, which can be used to pick up the
+entry if the mouse is pressed down above the entry. Note the comment about why
+it is <em>not</em> desirable to detect mouse-up here; the UI should unconditionally
+respond to mouse-up, even if the mouse happens to briefly leave this element.</p>
+<div class="highlight"><pre><span></span><code>            <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseButton1Down&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">OnMouseDown</span>
+
+            <span class="c1">-- Don&#39;t detect mouse up here, because in some rare cases, the event</span>
+            <span class="c1">-- could be missed due to lag between the item&#39;s position and the</span>
+            <span class="c1">-- cursor position.</span>
+</code></pre></div>
+<p>Now, the destinations for these entries can be created. To help decide where to
+drop items later, the <code>dropAction</code> tracks which destination the mouse is hovered
+over.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">dropAction</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">taskLists</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForPairs</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="n">incomplete</span> <span class="o">=</span> <span class="s2">&quot;mark-as-incomplete&quot;</span><span class="p">,</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="s2">&quot;mark-as-completed&quot;</span> 
+    <span class="p">},</span>
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">listName</span><span class="p">,</span> <span class="n">listDropAction</span><span class="p">)</span>
+        <span class="kr">return</span> 
+            <span class="n">listName</span><span class="p">,</span> 
+            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScrollingFrame&quot;</span> <span class="p">{</span>
+                <span class="n">Name</span> <span class="o">=</span> <span class="err">`</span><span class="n">TaskList</span> <span class="p">({</span><span class="n">listName</span><span class="p">})</span><span class="err">`</span><span class="p">,</span>
+                <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+
+                <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>
+                <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+
+                <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseEnter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                    <span class="n">dropAction</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">listDropAction</span><span class="p">)</span>
+                <span class="kr">end</span><span class="p">,</span>
+
+                <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseLeave&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                    <span class="c1">-- A different item might have overwritten this already.</span>
+                    <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">dropAction</span><span class="p">)</span> <span class="o">==</span> <span class="n">listDropAction</span> <span class="kr">then</span>
+                        <span class="n">dropAction</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+                    <span class="kr">end</span>
+                <span class="kr">end</span><span class="p">,</span>
+
+                <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{</span>
+                        <span class="n">SortOrder</span> <span class="o">=</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+                        <span class="n">Padding</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+    <span class="kr">end</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>This is also where the 'overlay frame' is created, which gives currently-dragged
+UI a dedicated layer above all other UI to freely move around.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">overlayFrame</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
+    <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">ZIndex</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Finally, each <code>TodoItem</code> is created as a <code>TodoEntry</code>. Some state is also created
+to track which entry is being dragged at the moment.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">currentlyDragging</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">DragInfo</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">allEntries</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span>
+    <span class="n">todoItems</span><span class="p">,</span> 
+    <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">itemPosition</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+        <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">TodoEntry</span> <span class="p">{</span>
+            <span class="n">Item</span> <span class="o">=</span> <span class="n">item</span><span class="p">,</span>
+</code></pre></div>
+<p>Each entry dynamically picks one of the two destinations based on its
+completion status.</p>
+<div class="highlight"><pre><span></span><code>            <span class="n">Parent</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+                <span class="kr">return</span>
+                    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">)</span>
+                    <span class="kr">then</span> <span class="n">use</span><span class="p">(</span><span class="n">taskLists</span><span class="p">).</span><span class="n">completed</span>
+                    <span class="kr">else</span> <span class="n">use</span><span class="p">(</span><span class="n">taskLists</span><span class="p">).</span><span class="n">incomplete</span>
+            <span class="kr">end</span><span class="p">),</span>
+</code></pre></div>
+<p>It also provides the information needed by the <code>Draggable</code>.</p>
+<p>Note that the current drag information is filtered from the <code>currentlyDragging</code>
+state so the <code>Draggable</code> won't see information about other entries being
+dragged.</p>
+<div class="highlight"><pre><span></span><code>            <span class="n">Dragging</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">MousePosition</span> <span class="o">=</span> <span class="n">mousePos</span><span class="p">,</span>
+                <span class="n">SelfDragInfo</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
+                    <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span>
+                    <span class="kr">return</span> 
+                        <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="ow">or</span> <span class="n">dragInfo</span><span class="p">.</span><span class="n">id</span> <span class="o">~=</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span>
+                        <span class="kr">then</span> <span class="kc">nil</span>
+                        <span class="kr">else</span> <span class="n">dragInfo</span>
+                <span class="kr">end</span><span class="p">)</span>
+                <span class="n">OverlayFrame</span> <span class="o">=</span> <span class="n">overlayFrame</span>
+            <span class="p">},</span>
+</code></pre></div>
+<p>Now it's time to handle starting and stopping the drag.</p>
+<p>To begin the drag, this code makes use of the <code>OnMouseDown</code> callback. If nothing
+else is being dragged right now, the position of the mouse relative to the item
+is captured. Then, that <code>mouseOffset</code> and the <code>id</code> of the item are passed into
+the <code>currentlyDragging</code> state to indicate this entry is being dragged.</p>
+<div class="highlight"><pre><span></span><code>            <span class="n">OnMouseDown</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+                <span class="kr">if</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+                    <span class="kd">local</span> <span class="n">itemPos</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">itemPosition</span><span class="p">)</span> <span class="ow">or</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">zero</span>
+                    <span class="kd">local</span> <span class="n">mouseOffset</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">mousePos</span><span class="p">)</span> <span class="o">-</span> <span class="n">itemPos</span>
+                    <span class="n">currentlyDragging</span><span class="p">:</span><span class="n">set</span><span class="p">({</span>
+                        <span class="n">id</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+                        <span class="n">mouseOffset</span> <span class="o">=</span> <span class="n">mouseOffset</span>
+                    <span class="p">})</span>
+                <span class="kr">end</span>
+            <span class="kr">end</span>
+</code></pre></div>
+<p>To end the drag, a global <code>InputEnded</code> listener is created, which should
+reliably fire no matter where or when the event occurs. </p>
+<p>If there's a <code>dropAction</code> to take, for example <code>mark-as-completed</code>, then that
+action is executed here. </p>
+<p>In all cases, <code>currentlyDragging</code> is cleared, so the entry is no longer dragged.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
+    <span class="n">UserInputService</span><span class="p">.</span><span class="n">InputEnded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">inputObject</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">inputObject</span><span class="p">.</span><span class="n">UserInputType</span> <span class="o">~=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">UserInputType</span><span class="p">.</span><span class="n">MouseButton1</span> <span class="kr">then</span>
+            <span class="kr">return</span>
+        <span class="kr">end</span>
+        <span class="kd">local</span> <span class="n">dragInfo</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentlyDragging</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">dragInfo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
+            <span class="kr">return</span>
+        <span class="kr">end</span>
+        <span class="kd">local</span> <span class="n">item</span> <span class="o">=</span> <span class="n">getTodoItemForID</span><span class="p">(</span><span class="n">dragInfo</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="kd">local</span> <span class="n">action</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">dropAction</span><span class="p">)</span>
+        <span class="kr">if</span> <span class="n">item</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
+            <span class="kr">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;mark-as-incomplete&quot;</span> <span class="kr">then</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+            <span class="kr">elseif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;mark-as-completed&quot;</span> <span class="kr">then</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">completed</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+            <span class="kr">end</span>
+        <span class="kr">end</span>
+        <span class="n">currentlyDragging</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+    <span class="kr">end</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>All that remains is to parent the task lists and overlay frames to a UI, so they
+can be seen. Because the <code>TodoEntry</code> component manages their own parent, this
+code shouldn't pass in <code>allEntries</code> as a child here.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
+    <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">overlayFrame</span><span class="p">,</span>
+        <span class="n">taskLists</span><span class="p">,</span>
+        <span class="c1">-- Don&#39;t pass `allEntries` in here - they manage their own parent!</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<!-- Source file information -->
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!-- Footer -->
+<footer class="md-footer">
+
+	<!-- Link to previous and/or next page -->
+	
+	  <nav
+		class="md-footer__inner md-grid"
+		aria-label="Footer"
+	  >
+
+		<!-- Link to previous page -->
+		
+		  
+		  <a
+			href="../loading-spinner/"
+			class="md-footer__link md-footer__link--prev"
+			aria-label="Previous: Loading Spinner"
+			rel="prev"
+		  >
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15.28 5.22a.75.75 0 0 0-1.06 0l-6.25 6.25a.75.75 0 0 0 0 1.06l6.25 6.25a.75.75 0 1 0 1.06-1.06L9.56 12l5.72-5.72a.75.75 0 0 0 0-1.06z"/></svg>
+			</div>
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Previous
+				</span>
+				Loading Spinner
+			  </div>
+			</div>
+		  </a>
+		
+
+		<!-- Link to next page -->
+		
+		  
+		  <a
+			href="../../../api-reference/"
+			class="md-footer__link md-footer__link--next"
+			aria-label="Next: API Reference"
+			rel="next"
+		  >
+			<div class="md-footer__title">
+			  <div class="md-ellipsis">
+				<span class="md-footer__direction">
+				  Next
+				</span>
+				API Reference
+			  </div>
+			</div>
+			<div class="md-footer__button md-icon">
+			  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.72 18.78a.75.75 0 0 0 1.06 0l6.25-6.25a.75.75 0 0 0 0-1.06L9.78 5.22a.75.75 0 0 0-1.06 1.06L14.44 12l-5.72 5.72a.75.75 0 0 0 0 1.06z"/></svg>
+			</div>
+		  </a>
+		
+	  </nav>
+	
+
+	<!-- Further information -->
+	<div class="md-footer-meta md-typeset">
+	  <div class="md-footer-meta__inner md-grid">
+		<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+
+		<!-- Social links -->
+		
+	  </div>
+	</div>
+  </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "navigation.instant", "navigation.indexes", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      
+        <script src="../../../assets/scripts/smooth-scroll.js"></script>
+      
+    
+  </body>
+</html>
