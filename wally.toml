@@ -3,7 +3,7 @@ name = "elttob/fusion"
 description = "A modern reactive UI library, built specifically for Roblox and Luau"
 license = "MIT"
 authors = ["Elttob"]
-version = "0.3.0"
+version = "0.4.0-dev1"
 
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
