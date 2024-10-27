@@ -86,7 +86,7 @@ nav:
       - Sharing Values: tutorials/best-practices/sharing-values.md
       - Error Safety: tutorials/best-practices/error-safety.md
       - Optimisation: tutorials/best-practices/optimisation.md
-
+    
   - Examples:
     - Examples: examples/index.md
     - Cookbook:
@@ -118,22 +118,20 @@ nav:
         - deriveScope: api-reference/memory/members/derivescope.md
         - doCleanup: api-reference/memory/members/docleanup.md
         - scoped: api-reference/memory/members/scoped.md
-        - innerScope: api-reference/memory/members/innerscope.md
-        - insert: api-reference/memory/members/insert.md
     - Graph:
       - Types:
-        - GraphObject: api-reference/graph/types/graphobject.md
+        - GraphObject: api-reference/graph/types/graphobject.md 
         - Observer: api-reference/graph/types/observer.md
       - Members:
         - Observer: api-reference/graph/members/observer.md
     - State:
       - Types:
-        - UsedAs: api-reference/state/types/usedas.md
-        - Computed: api-reference/state/types/computed.md
+        - UsedAs: api-reference/state/types/usedas.md 
+        - Computed: api-reference/state/types/computed.md 
         - For: api-reference/state/types/for.md
-        - StateObject: api-reference/state/types/stateobject.md
-        - Use: api-reference/state/types/use.md
-        - Value: api-reference/state/types/value.md
+        - StateObject: api-reference/state/types/stateobject.md 
+        - Use: api-reference/state/types/use.md 
+        - Value: api-reference/state/types/value.md 
       - Members:
         - Computed: api-reference/state/members/computed.md
         - ForKeys: api-reference/state/members/forkeys.md
