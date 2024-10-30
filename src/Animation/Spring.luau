@@ -22,6 +22,7 @@ local evaluate = require(Package.Graph.evaluate)
 -- State
 local castToState = require(Package.State.castToState)
 local peek = require(Package.State.peek)
+local Computed = require(Package.State.Computed)
 -- Animation
 local ExternalTime = require(Package.Animation.ExternalTime)
 local Stopwatch = require(Package.Animation.Stopwatch)
@@ -59,13 +60,17 @@ local METATABLE = table.freeze {__index = class}
 
 local function Spring<T>(
 	scope: Types.Scope<unknown>,
-	goal: Types.UsedAs<T>,
+	goal: Types.UsedAs<T> | (Types.Use, Types.Scope<unknown>) -> T,
 	speed: Types.UsedAs<number>?,
 	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
 	local createdAt = os.clock()
 	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
 		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
+	end
+
+	if typeof(goal) == "function" then
+		goal = Computed(scope, goal)
 	end
 
 	local goalState = castToState(goal)
