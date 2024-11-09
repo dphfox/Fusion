@@ -21,7 +21,7 @@ local function merge(
 	else
 		for _, fromTable in fromTables do
 			for key, value in fromTable do
-				if into[key] == nil then
+				if overwrite or into[key] == nil then
 					into[key] = value
 				elseif not overwrite then
 					External.logError("mergeConflict", nil, tostring(key))
