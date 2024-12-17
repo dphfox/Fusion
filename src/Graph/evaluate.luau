@@ -21,7 +21,7 @@ local function evaluate(
 	if target.validity == "busy" then
 		return External.logError("infiniteLoop")
 	end
-	local firstEvaluation = target.lastChange == nil
+	local firstEvaluation = target.lastCompute == nil or target.lastChange == nil
 	local isInvalid = target.validity == "invalid"
 	if firstEvaluation or isInvalid or forceComputation then
 		local needsComputation = firstEvaluation or forceComputation
