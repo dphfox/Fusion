@@ -53,6 +53,7 @@ local function Stopwatch(
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
+			lastCompute = nil,
 			scope = scope,
 			validity = "invalid",
 			_EXTREMELY_DANGEROUS_usedAsValue = 0,
