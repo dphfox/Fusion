@@ -14,6 +14,7 @@ This example assumes the presence of a Roblox-like `task` scheduler.
 ```Lua linenums="1"
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
+local peek = Fusion.peek
 
 local function fetchUserBio(
 	userID: number
@@ -41,7 +42,7 @@ do
 			task.cancel(fetchInProgress)
 		end
 		fetchInProgress = task.spawn(function()
-			currentUserBio:set(fetchUserBio())
+			currentUserBio:set(fetchUserBio(userID))
 			fetchInProgress = nil
 		end)
 	end

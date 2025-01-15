@@ -7,6 +7,7 @@ APIs.
 
 ```Lua linenums="1"
 local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
 
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
@@ -59,13 +60,18 @@ table.insert(scope,
 	end)
 )
 
-local spinner = scope:Spinner {
-	Layout = {
-		Position = UDim2.fromScale(0.5, 0.5),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Size = UDim2.fromOffset(50, 50)
-	},
-	CurrentTime = currentTime
+local gui = scope:New "ScreenGui" {
+	Name = "SpinnerGui",
+	Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
+
+	[Children] = scope:Spinner {
+		Layout = {
+			Position = UDim2.fromScale(0.5, 0.5),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Size = UDim2.fromOffset(50, 50)
+		},
+		CurrentTime = currentTime
+	}
 }
 ```
 
@@ -118,7 +124,7 @@ table.insert(scope,
 This can then be passed in as `CurrentTime` when the `Spinner` is created.
 
 ```Lua hl_lines="7"
-local spinner = scope:Spinner {
+scope:Spinner {
 	Layout = {
 		Position = UDim2.fromScale(0.5, 0.5),
 		AnchorPoint = Vector2.new(0.5, 0.5),

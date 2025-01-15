@@ -4,7 +4,7 @@ clicking.
 
 This should be a generally useful template for assembling components of your
 own. For further ideas and best practices for building components, see
-[the Components tutorial](../../../tutorials/components/components).
+[the Components tutorial](../../tutorials/best-practices/components).
 
 
 -----
@@ -13,7 +13,7 @@ own. For further ideas and best practices for building components, see
 
 ```Lua linenums="1"
 local Fusion = -- initialise Fusion here however you please!
-local scoped = Fusion.scoped
+local peek = Fusion.peek
 local Children, OnEvent = Fusion.Children, Fusion.OnEvent
 type UsedAs<T> = Fusion.UsedAs<T>
 
@@ -73,9 +73,8 @@ local function Button(
 					if use(props.Disabled) then COLOUR_BG_DISABLED
 					elseif use(isHeldDown) then COLOUR_BG_HELD
 					elseif use(isHovering) then COLOUR_BG_HOVER
-					else return COLOUR_BG_REST
-				end
-			end), 
+					else COLOUR_BG_REST
+				end), 
 			BG_FADE_SPEED
 		),
 
@@ -111,11 +110,11 @@ local function Button(
 		end,
 
 		[Children] = {
-			New "UICorner" {
+			scope:New "UICorner" {
 				CornerRadius = ROUNDED_CORNERS
 			},
 
-			New "UIPadding" {
+			scope:New "UIPadding" {
 				PaddingTop = PADDING.Y,
 				PaddingBottom = PADDING.Y,
 				PaddingLeft = PADDING.X,
@@ -159,12 +158,12 @@ local function Button(
 
 The `scope` parameter specifies that the component depends on Fusion's methods.
 If you're not sure how to write type definitions for scopes,
-[the 'Scopes' section of the Components tutorial](../../../tutorials/components/components/#scopes)
+[the 'Scopes' section of the Components tutorial](../../tutorials/best-practices/components#scopes)
 goes into further detail.
 
 The property table is laid out with each property on a new line, so it's easy to
 scan the list and see what properties are available. Most are typed with
-[`UsedAs`](../../../api-reference/state/types/usedas), which allows the user to 
+[`UsedAs`](../../api-reference/state/types/usedas), which allows the user to 
 use state objects if they desire. They're also `?` (optional), which can reduce
 boilerplate when using the component. Not all properties have to be that way,
 but usually it's better to have the flexibility.

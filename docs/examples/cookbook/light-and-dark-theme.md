@@ -8,6 +8,7 @@ state objects.
 ```Lua linenums="1"
 local Fusion = --initialise Fusion here however you please!
 local scoped = Fusion.scoped
+local peek = Fusion.peek
 
 local Theme = {}
 
