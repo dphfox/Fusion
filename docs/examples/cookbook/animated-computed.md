@@ -12,6 +12,7 @@ local Players = game:GetService("Players")
 
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
+local peek = Fusion.peek
 local Children = Fusion.Children
 
 local TWEEN_INFO = TweenInfo.new(

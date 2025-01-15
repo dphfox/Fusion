@@ -12,7 +12,8 @@ local UserInputService = game:GetService("UserInputService")
 
 local Fusion = -- initialise Fusion here however you please!
 local scoped = Fusion.scoped
-local Children, OnEvent = Fusion.Children, Fusion.OnEvent
+local peek = Fusion.peek
+local Children, OnEvent, Out = Fusion.Children, Fusion.OnEvent, Fusion.Out
 type UsedAs<T> = Fusion.UsedAs<T>
 
 type DragInfo = {
@@ -32,21 +33,22 @@ local function Draggable(
 			AnchorPoint: UsedAs<Vector2>?,
 			ZIndex: UsedAs<number>?,
 			Size: UsedAs<UDim2>?,
+			AutomaticSize: UsedAs<Enum.AutomaticSize>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
 			MousePosition: UsedAs<Vector2>,
 			SelfDragInfo: UsedAs<DragInfo?>,
 			OverlayFrame: UsedAs<Instance?>
-		}
+		},
 		[typeof(Children)]: Fusion.Child
 	}
 ): Fusion.Child
 	-- When `nil`, the parent can't be measured for some reason.
 	local parentSize = scope:Value(nil)
 	do
+		local parent = peek(props.Parent)
 		local function measureParentNow()
-			local parent = peek(props.Parent)
 			parentSize:set(
 				if parent ~= nil and parent:IsA("GuiObject")
 				then parent.AbsoluteSize
@@ -71,7 +73,7 @@ local function Draggable(
 		table.insert(scope, stopMeasuring)
 	end
 
-	return New "Frame" {
+	return scope:New "Frame" {
 		Name = props.Name or "Draggable",
 		Parent = scope:Computed(function(use)
 			return
@@ -79,7 +81,7 @@ local function Draggable(
 				then use(props.Dragging.OverlayFrame)
 				else use(props.Parent)
 		end),
-		
+
 		LayoutOrder = props.Layout.LayoutOrder,
 		AnchorPoint = props.Layout.AnchorPoint,
 		ZIndex = props.Layout.ZIndex,
@@ -108,7 +110,7 @@ local function Draggable(
 			)
 		end),
 
-		[Out "AbsolutePosition"] = props.OutAbsolutePosition,
+		[Out "AbsolutePosition"] = props.Layout.OutAbsolutePosition,
 		[Children] = props[Children]
 	}
 end
@@ -128,33 +130,6 @@ type TodoItem = {
 	text: string,
 	completed: Fusion.Value<boolean>
 }
-local todoItems: Fusion.Value<TodoItem> = {
-	{
-		id = newUniqueID(),
-		text = "Wake up today",
-		completed = Value(true)
-	},
-	{
-		id = newUniqueID(),
-		text = "Read the Fusion docs",
-		completed = Value(true)
-	},
-	{
-		id = newUniqueID(),
-		text = "Take over the universe",
-		completed = Value(false)
-	}
-}
-local function getTodoItemForID(
-	id: string
-): TodoItem?
-	for _, item in todoItems do
-		if item.id == id then
-			return item
-		end
-	end
-	return nil
-end
 
 local function TodoEntry(
 	scope: Fusion.Scope,
@@ -171,7 +146,7 @@ local function TodoEntry(
 		},
 		Dragging: {
 			MousePosition: UsedAs<Vector2>,
-			SelfDragInfo: UsedAs<CurrentlyDragging?>,
+			SelfDragInfo: UsedAs<DragInfo?>,
 			OverlayFrame: UsedAs<Instance>?
 		},
 		OnMouseDown: () -> ()?
@@ -180,12 +155,6 @@ local function TodoEntry(
 	local scope = scope:innerScope {
 		Draggable = Draggable
 	}
-
-	local itemPosition = scope:Value(nil)
-	local itemIsDragging = scope:Computed(function(use)
-		local dragInfo = use(props.CurrentlyDragging)
-		return dragInfo ~= nil and dragInfo.id == props.Item.id
-	end)
 
 	return scope:Draggable {
 		ID = props.Item.id,
@@ -203,11 +172,10 @@ local function TodoEntry(
 					if use(props.Item.completed)
 					then COLOUR_COMPLETED
 					else COLOUR_NOT_COMPLETED
-				end
 			end),
 			Text = props.Item.text,
 			TextSize = 28,
-	
+
 			[OnEvent "MouseButton1Down"] = props.OnMouseDown
 
 			-- Don't detect mouse up here, because in some rare cases, the event
@@ -218,7 +186,37 @@ local function TodoEntry(
 end
 
 -- Don't forget to pass this to `doCleanup` if you disable the script.
-local scope = scoped(Fusion)
+local scope = scoped(Fusion,{
+	TodoEntry = TodoEntry
+})
+
+local todoItems: {TodoItem} = {
+	{
+		id = newUniqueID(),
+		text = "Wake up today",
+		completed = scope:Value(true)
+	},
+	{
+		id = newUniqueID(),
+		text = "Read the Fusion docs",
+		completed = scope:Value(true)
+	},
+	{
+		id = newUniqueID(),
+		text = "Take over the universe",
+		completed = scope:Value(false)
+	}
+}
+local function getTodoItemForID(
+	id: string
+): TodoItem?
+	for _, item in todoItems do
+		if item.id == id then
+			return item
+		end
+	end
+	return nil
+end
 
 local mousePos = scope:Value(UserInputService:GetMouseLocation())
 table.insert(scope, 
@@ -236,18 +234,24 @@ local dropAction = scope:Value(nil)
 local taskLists = scope:ForPairs(
 	{
 		incomplete = "mark-as-incomplete",
-		completed = "mark-as-completed"	
+		completed = "mark-as-completed" 
 	},
 	function(use, scope, listName, listDropAction)
 		return 
 			listName, 
 			scope:New "ScrollingFrame" {
 				Name = `TaskList ({listName})`,
-				Position = UDim2.fromScale(0.1, 0.1),
+				Position = if listName == "incomplete" then
+					UDim2.fromScale(0.1, 0.1)
+				else
+					UDim2.fromScale(.5, .1),
 				Size = UDim2.fromScale(0.35, 0.9),
 
 				BackgroundTransparency = 0.75,
-				BackgroundColor3 = Color3.new(1, 0, 0),
+				BackgroundColor3 = if listName == "incomplete" then
+					Color3.new(1, 0, 0)
+				else
+					Color3.new(0, 1, 0),
 
 				[OnEvent "MouseEnter"] = function()
 					dropAction:set(listDropAction)
@@ -261,7 +265,7 @@ local taskLists = scope:ForPairs(
 				end,
 
 				[Children] = {
-					New "UIListLayout" {
+					scope:New "UIListLayout" {
 						SortOrder = "Name",
 						Padding = UDim.new(0, 5)
 					}
@@ -278,46 +282,43 @@ local overlayFrame = scope:New "Frame" {
 
 local currentlyDragging: Fusion.Value<DragInfo?> = scope:Value(nil)
 
-local allEntries = scope:ForValues(
-	todoItems, 
-	function(use, scope, item)
-		local itemPosition = scope:Value(nil)
-		return scope:TodoEntry {
-			Item = item,
-			Parent = scope:Computed(function(use)
-				return
-					if use(item.completed)
-					then use(taskLists).completed
-					else use(taskLists).incomplete
+for _, item in todoItems do
+	local itemPosition = scope:Value(nil)
+	scope:TodoEntry {
+		Item = item,
+		Parent = scope:Computed(function(use)
+			return
+				if use(item.completed)
+				then use(taskLists).completed
+				else use(taskLists).incomplete
+		end),
+		Layout = {
+			Size = TODO_ITEM_SIZE,
+			OutAbsolutePosition = itemPosition
+		},
+		Dragging = {
+			MousePosition = mousePos,
+			SelfDragInfo = scope:Computed(function(use)
+				local dragInfo = use(currentlyDragging)
+				return 
+					if dragInfo == nil or dragInfo.id ~= item.id
+					then nil
+					else dragInfo
 			end),
-			Layout = {
-				Size = TODO_ITEM_SIZE,
-				OutAbsolutePosition = itemPosition
-			},
-			Dragging = {
-				MousePosition = mousePos,
-				SelfDragInfo = scope:Computed(function(use)
-					local dragInfo = use(currentlyDragging)
-					return 
-						if dragInfo == nil or dragInfo.id ~= item.id
-						then nil
-						else dragInfo
-				end)
-				OverlayFrame = overlayFrame
-			},
-			OnMouseDown = function()
-				if peek(currentlyDragging) == nil then
-					local itemPos = peek(itemPosition) or Vector2.zero
-					local mouseOffset = peek(mousePos) - itemPos
-					currentlyDragging:set({
-						id = item.id,
-						mouseOffset = mouseOffset
-					})
-				end
+			OverlayFrame = overlayFrame
+		},
+		OnMouseDown = function()
+			if peek(currentlyDragging) == nil then
+				local itemPos = peek(itemPosition) or Vector2.zero
+				local mouseOffset = peek(mousePos) - itemPos
+				currentlyDragging:set({
+					id = item.id,
+					mouseOffset = mouseOffset
+				})
 			end
-		}
-	end
-)
+		end
+	}
+end
 
 table.insert(scope,
 	UserInputService.InputEnded:Connect(function(inputObject)
@@ -342,7 +343,8 @@ table.insert(scope,
 )
 
 local ui = scope:New "ScreenGui" {
-	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+	Name = "DragAndDropGui",
+	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui"),
 
 	[Children] = {
 		overlayFrame,
@@ -350,6 +352,7 @@ local ui = scope:New "ScreenGui" {
 		-- Don't pass `allEntries` in here - they manage their own parent!
 	}
 }
+
 ```
 
 ------
@@ -381,13 +384,14 @@ local function Draggable(
 			AnchorPoint: UsedAs<Vector2>?,
 			ZIndex: UsedAs<number>?,
 			Size: UsedAs<UDim2>?,
+			AutomaticSize: UsedAs<Enum.AutomaticSize>?,
 			OutAbsolutePosition: Fusion.Value<Vector2>?,
 		},
 		Dragging: {
 			MousePosition: UsedAs<Vector2>,
 			SelfDragInfo: UsedAs<DragInfo?>,
 			OverlayFrame: UsedAs<Instance?>
-		}
+		},
 		[typeof(Children)]: Fusion.Child
 	}
 ): Fusion.Child
@@ -452,10 +456,7 @@ This is all that's needed to make a generic container that can seamlessly move
 between distinct parts of the UI. The rest of the example demonstrates how this
 can be integrated into real world UI.
 
-The example creates a list of `TodoItem` objects, each with a unique ID, text
-message, and completion status. Because we don't expect the ID or text to
-change, they're just constant values. However, the completion status *is*
-expected to change, so that's specified to be a `Value` object.
+The `TodoEntry` component is meant to represent one individual `TodoItem`.
 
 ```Lua
 type TodoItem = {
@@ -463,28 +464,7 @@ type TodoItem = {
 	text: string,
 	completed: Fusion.Value<boolean>
 }
-local todoItems: Fusion.Value<TodoItem> = {
-	{
-		id = newUniqueID(),
-		text = "Wake up today",
-		completed = Value(true)
-	},
-	{
-		id = newUniqueID(),
-		text = "Read the Fusion docs",
-		completed = Value(true)
-	},
-	{
-		id = newUniqueID(),
-		text = "Take over the universe",
-		completed = Value(false)
-	}
-}
-```
 
-The `TodoEntry` component is meant to represent one individual `TodoItem`.
-
-```Lua
 local function TodoEntry(
 	scope: Fusion.Scope,
 	props: {
@@ -500,7 +480,7 @@ local function TodoEntry(
 		},
 		Dragging: {
 			MousePosition: UsedAs<Vector2>,
-			SelfDragInfo: UsedAs<CurrentlyDragging?>,
+			SelfDragInfo: UsedAs<DragInfo?>,
 			OverlayFrame: UsedAs<Instance>?
 		},
 		OnMouseDown: () -> ()?
@@ -533,9 +513,36 @@ respond to mouse-up, even if the mouse happens to briefly leave this element.
 			-- cursor position.
 ```
 
+The example creates a list of `TodoItem` objects, each with a unique ID, text
+message, and completion status. Because we don't expect the ID or text to
+change, they're just constant values. However, the completion status *is*
+expected to change, so that's specified to be a `Value` object.
+
+```Lua
+local todoItems: {TodoItem} = {
+	{
+		id = newUniqueID(),
+		text = "Wake up today",
+		completed = scope:Value(true)
+	},
+	{
+		id = newUniqueID(),
+		text = "Read the Fusion docs",
+		completed = scope:Value(true)
+	},
+	{
+		id = newUniqueID(),
+		text = "Take over the universe",
+		completed = scope:Value(false)
+	}
+}
+```
+
 Now, the destinations for these entries can be created. To help decide where to
 drop items later, the `dropAction` tracks which destination the mouse is hovered
 over.
+
+The destinations' position and background color are dependant on their source `listName`.
 
 ```Lua
 local dropAction = scope:Value(nil)
@@ -550,11 +557,17 @@ local taskLists = scope:ForPairs(
 			listName, 
 			scope:New "ScrollingFrame" {
 				Name = `TaskList ({listName})`,
-				Position = UDim2.fromScale(0.1, 0.1),
+				Position = if listName == "incomplete" then
+					UDim2.fromScale(0.1, 0.1)
+				else
+					UDim2.fromScale(.5, .1),
 				Size = UDim2.fromScale(0.35, 0.9),
 
 				BackgroundTransparency = 0.75,
-				BackgroundColor3 = Color3.new(1, 0, 0),
+				BackgroundColor3 = if listName == "incomplete" then
+					Color3.new(1, 0, 0)
+				else
+					Color3.new(0, 1, 0),
 
 				[OnEvent "MouseEnter"] = function()
 					dropAction:set(listDropAction)
@@ -595,12 +608,10 @@ to track which entry is being dragged at the moment.
 ```Lua
 local currentlyDragging: Fusion.Value<DragInfo?> = scope:Value(nil)
 
-local allEntries = scope:ForValues(
-	todoItems, 
-	function(use, scope, item)
-		local itemPosition = scope:Value(nil)
-		return scope:TodoEntry {
-			Item = item,
+for _, item in todoItems do
+	local itemPosition = scope:Value(nil)
+	scope:TodoEntry {
+		Item = item,
 ```
 
 Each entry dynamically picks one of the two destinations based on its
@@ -689,16 +700,16 @@ table.insert(scope,
 
 All that remains is to parent the task lists and overlay frames to a UI, so they
 can be seen. Because the `TodoEntry` component manages their own parent, this
-code shouldn't pass in `allEntries` as a child here.
+code shouldn't pass them as a child here.
 
 ```Lua
 local ui = scope:New "ScreenGui" {
-	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+	Parent = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui"),
 
 	[Children] = {
 		overlayFrame,
 		taskLists,
-		-- Don't pass `allEntries` in here - they manage their own parent!
+		-- Don't pass the generated `TodoEntry`s in here - they manage their own parent!
 	}
 }
 ```
