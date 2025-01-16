@@ -66,8 +66,8 @@ end
 
 function class.set<T, S>(
 	self: Self<T, S>,
-	newValue: S
-): S
+	newValue: T
+): T
 	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 	if not isSimilar(oldValue, newValue) then
 		self._EXTREMELY_DANGEROUS_usedAsValue = newValue :: any
