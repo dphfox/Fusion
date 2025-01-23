@@ -158,7 +158,7 @@ into a scope:
 
 ```Lua
 local conn, ins = scope:insert(
-	RunService.Heartbeat:Connnect(doUpdate),
+	RunService.Heartbeat:Connect(doUpdate),
 	Instance.new("Part", workspace)
 )
 ```
