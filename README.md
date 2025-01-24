@@ -1,26 +1,17 @@
 <img align="left" src="./gh-assets/logo-dark-theme.svg#gh-dark-mode-only" alt="Fusion"><img align="left" src="./gh-assets/logo-light-theme.svg#gh-light-mode-only" alt="Fusion"><a href="https://elttob.uk/Fusion/latest"><img align="right" src="./gh-assets/link-docs.svg" alt="Docs"></a><a href="https://github.com/Elttob/Fusion/releases"><img align="right" src="./gh-assets/link-download.svg" alt="Download"></a><img src="./gh-assets/clearfloat.svg">
 
-**Rediscover the joy of coding.**
+### Futuristic Luau for every universe.
 
-Code is more dynamic, complex and intertwined than ever before. Errors cascade
-out of control, things update in the wrong order, and it's all connected by
-difficult, unreadable spaghetti.
+Fusion is a portable Luau companion library for simpler, more descriptive code.
 
-No longer. Fusion introduces modern 'reactive' concepts for managing code, so
-you can spend more time getting your logic right, and less time implementing
-buggy boilerplate code connections.
+With Fusion, assemble straightforward chains of logic that are easy to understand,
+predict and debug. Make strong guarantees about what your code will or won't do.
+Build joyfully custom-fitted APIs to interact with the world outside of your code.
 
-Starting from simple roots, concepts neatly combine and build up with very little
-learning curve. At every stage, you can robustly guarantee what your code will
-do, and when you come back in six months, your code is easy to pick back up.
+Fusion provides batteries-included configuration for Roblox, and fantastic extensibility
+and integration for anything else Luau.
 
 Piqued your interest? [Get going in minutes with our on-rails tutorial.](https://elttob.uk/Fusion/latest/tutorials)
-
-## Issues & contributions
-
-Have you read [our contribution guide](/CONTRIBUTING.md)? It's a real page turner!
-
-We highly recommend reading it before opening an issue or pull request.
 
 ## License
 
