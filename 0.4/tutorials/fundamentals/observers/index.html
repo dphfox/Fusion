@@ -2924,12 +2924,12 @@
 changes that happen to them.</p>
 <p>Observers allow you to detect those changes. Create one with a state object to
 'watch', then connect code to run using <code>:onChange()</code> or <code>:onBind()</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">disconnect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">observer</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">disconnect</span><span class="p">()</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nf">disconnect</span><span class="p">()</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2937,9 +2937,9 @@ changes that happen to them.</p>
 object you want to detect changes on.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
 <p>The observer will watch the state object for changes until it's destroyed. You
 can take advantage of this by connecting your own code using the observer's
@@ -2957,15 +2957,15 @@ changes value.</p>
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...connecting...&quot;</span><span class="p">)</span>
-<span class="hll"><span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-</span><span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<span class="hll"><span class="nv">observer</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll"><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 </span><span class="hll"><span class="kr">end</span><span class="p">)</span>
 </span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting health to 25...&quot;</span><span class="p">)</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -2986,13 +2986,13 @@ disconnect that specific <code>:onChange()</code> handler early.</p>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">disconnect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">observer</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The new value is: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- disconnect the above handler after 5 seconds</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="hll"><span class="n">disconnect</span><span class="p">()</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="hll"><span class="nf">disconnect</span><span class="p">()</span>
 </span></code></pre></div></td></tr></table></div>
 <p>The second method is <code>:onBind()</code>. It works identically to <code>:onChange()</code>, but it
 also runs your code right away, which can often be useful.</p>
@@ -3007,15 +3007,15 @@ also runs your code right away, which can often be useful.</p>
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...connecting...&quot;</span><span class="p">)</span>
-<span class="hll"><span class="n">observer</span><span class="p">:</span><span class="n">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<span class="hll"><span class="nv">observer</span><span class="p">:</span><span class="nf">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+</span><span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting health to 25...&quot;</span><span class="p">)</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -3043,16 +3043,16 @@ notice your observer only runs the first time.</p>
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">observer</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span>
 
-<span class="n">observer</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<span class="nv">observer</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed a change to: &quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting health to 25 three times...&quot;</span><span class="p">)</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">

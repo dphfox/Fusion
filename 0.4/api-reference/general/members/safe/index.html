@@ -2979,12 +2979,12 @@
         -&gt; Success | Fail
     </span>
 <a class="headerlink" href="#safe-success-fail" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Safe</span><span class="o">&lt;</span><span class="n">Success</span><span class="p">,</span> <span class="n">Fail</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">callbacks</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">try</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Success</span><span class="p">,</span>
-        <span class="n">fallback</span><span class="p">:</span> <span class="p">(</span><span class="n">err</span><span class="p">:</span> <span class="n">unknown</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Fail</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Success</span> <span class="o">|</span> <span class="n">Fail</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Fusion</span><span class="p">.</span><span class="nf">Safe</span><span class="o">&lt;</span><span class="nv">Success</span><span class="p">,</span><span class="w"> </span><span class="nv">Fail</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">callbacks</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">try</span><span class="p">:</span><span class="w"> </span><span class="err">()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="py">Success</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">fallback</span><span class="p">:</span><span class="w"> </span><span class="err">(</span><span class="py">err</span><span class="p">:</span><span class="w"> </span><span class="py">unknown</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">Fail</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Success</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">Fail</span>
 </code></pre></div>
 <p>Safely runs a function and returns the value it produces. If the function fails,
 the <code>fallback</code> function can handle the error and produces a fallback value.</p>

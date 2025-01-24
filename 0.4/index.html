@@ -95,7 +95,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rediscover-the-joy-of-coding" class="md-skip">
+        <a href="#futuristic-luau-for-every-universe" class="md-skip">
           Skip to content
         </a>
       
@@ -2957,21 +2957,18 @@
 <div id="fusiondoc-home">
 <section id="fusiondoc-home-main">
 <section id="fusiondoc-home-main-inner">
-<h1 id="rediscover-the-joy-of-coding">Rediscover the joy of coding.<a class="headerlink" href="#rediscover-the-joy-of-coding" title="Permanent link">&para;</a></h1>
+<h1 id="futuristic-luau-for-every-universe">Futuristic Luau for every universe.<a class="headerlink" href="#futuristic-luau-for-every-universe" title="Permanent link">&para;</a></h1>
 <p>
-Code is more dynamic, complex and intertwined than ever before. Errors cascade
-out of control, things update in the wrong order, and it's all connected by
-difficult, unreadable spaghetti.
+Fusion is a portable Luau companion library for simpler, more descriptive code.
 </p>
 <p>
-No longer. Fusion introduces modern 'reactive' concepts for managing code, so
-you can spend more time getting your logic right, and less time implementing
-buggy boilerplate code connections.
+With Fusion, assemble straightforward chains of logic that are easy to understand,
+predict and debug. Make strong guarantees about what your code will or won't do.
+Build joyfully custom-fitted APIs to interact with the world outside of your code.
 </p>
 <p>
-Starting from simple roots, concepts neatly combine and build up with very little
-learning curve. At every stage, you can robustly guarantee what your code will
-do, and when you come back in six months, your code is easy to pick back up.
+Fusion provides batteries-included configuration for Roblox, and fantastic extensibility
+and integration for anything else Luau.
 </p>
 <nav>
 <a href="./tutorials">Getting started guide</a>
@@ -2993,46 +2990,46 @@ into parts easily.</p>
 <p>State objects are used to represent changeable or dynamic values in your
 program. You can peek at their value at any time.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- For example, suppose this function returned a state object.</span>
-<span class="kd">local</span> <span class="n">currentTimeObj</span> <span class="o">=</span> <span class="n">getCurrentTimeStateObject</span><span class="p">()</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentTimeObj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">getCurrentTimeStateObject</span><span class="p">()</span>
 
 <span class="c1">-- State objects are objects...</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">typeof</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; table</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">typeof</span><span class="p">(</span><span class="nv">currentTimeObj</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; table</span>
 
 <span class="c1">-- ...and you can peek at their value (or ‘state’) at any time.</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; 0.0</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">currentTimeObj</span><span class="p">))</span> <span class="c1">--&gt; 5.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentTimeObj</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 0.0</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentTimeObj</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 5.0</span>
 </code></pre></div>
 <p>You can write out your logic using Fusion's built-in state objects.
 Here's the two basic ones, Value and Computed:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Start tracking some new objects.</span>
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">:</span><span class="n">scoped</span><span class="p">()</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">:</span><span class="nf">scoped</span><span class="p">()</span>
 
 <span class="c1">-- This creates a state object that you can set manually.</span>
 <span class="c1">-- You can change its value using myName:set().</span>
-<span class="kd">local</span> <span class="n">myName</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Daniel&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;Daniel&quot;</span><span class="p">)</span>
 
 <span class="c1">-- This creates a state object from a calculation.</span>
 <span class="c1">-- It determines its own value automatically.</span>
-<span class="kd">local</span> <span class="n">myGreeting</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="s2">&quot;Hello! My name is &quot;</span> <span class="o">..</span> <span class="n">use</span><span class="p">(</span><span class="n">myName</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myGreeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;Hello! My name is &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">myName</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- Discard all the objects.</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
 </code></pre></div>
 <p>To watch what a state object does, you can use an Observer.
 For example, you can run some code when an object changes value.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This observer watches for when the greeting changes.</span>
-<span class="kd">local</span> <span class="n">myObserver</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">myGreeting</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myObserver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">myGreeting</span><span class="p">)</span>
 
 <span class="c1">-- Let’s print out the greeting when there’s a new one.</span>
-<span class="kd">local</span> <span class="n">disconnect</span> <span class="o">=</span> <span class="n">myObserver</span><span class="p">:</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myGreeting</span><span class="p">))</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">disconnect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">myObserver</span><span class="p">:</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">myGreeting</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- This will run the code above!</span>
-<span class="n">myName</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Danny&quot;</span><span class="p">)</span>
+<span class="nv">myName</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;Danny&quot;</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <p><img alt="Illustration of creating instances" src="assets/home/Instances-Light.svg#only-light" />
@@ -3044,41 +3041,41 @@ you can easily integrate with your game scripts.</p>
 <p>Fusion provides dedicated functions to create instances. They allow you to
 easily configure your instance in one place.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This will create a red part in the workspace.</span>
-<span class="kd">local</span> <span class="n">myPart</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">,</span>
-    <span class="n">BrickColor</span> <span class="o">=</span> <span class="n">BrickColor</span><span class="p">.</span><span class="n">Red</span><span class="p">()</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myPart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">BrickColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">BrickColor</span><span class="p">.</span><span class="nf">Red</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>They offer powerful features to keep all your instance code close together. For
 example, you can listen for events or add children.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This will create a rounded button.</span>
 <span class="c1">-- When you click it, it’ll greet you.</span>
-<span class="kd">local</span> <span class="n">myButton</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Click me&quot;</span><span class="p">,</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Click me&quot;</span><span class="p">,</span>
 
-    <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello! I’m a button.&quot;</span><span class="p">)</span>
-    <span class="kr">end</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello! I’m a button.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">,</span>
 
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UICorner&quot;</span> <span class="p">{</span>
-        <span class="n">CornerRadius</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UICorner&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">CornerRadius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>You can also plug state objects in directly. The instance updates as the state
 object changes value.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Creating a state object you can control...</span>
-<span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
 
 <span class="c1">-- Now you can plug that state object into the Text property.</span>
-<span class="kd">local</span> <span class="n">myLabel</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">message</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myLabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">message</span>
 <span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myLabel</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; Hello!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">myLabel</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Hello!</span>
 
 <span class="c1">-- The Text property now responds to changes:</span>
-<span class="n">message</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myLabel</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; Goodbye!</span>
+<span class="nv">message</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;Goodbye!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">myLabel</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Goodbye!</span>
 </code></pre></div>
 <hr />
 <p><img alt="Illustration of processing animation" src="assets/home/Animation-Light.svg#only-light" />
@@ -3090,42 +3087,42 @@ completely out of the box.</p>
 <p>Fusion lets you use tweens or physically based springs to animate any value you
 want - not just instance properties.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This could be anything you want, as long as it&#39;s a state object.</span>
-<span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1">-- Easily make it tween between values...</span>
-<span class="kd">local</span> <span class="n">style</span> <span class="o">=</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingStyle</span><span class="p">.</span><span class="n">Quad</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">tweenHealth</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Tween</span><span class="p">(</span><span class="n">health</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">TweenInfo</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="nv">Enum</span><span class="p">.</span><span class="py">EasingStyle</span><span class="p">.</span><span class="py">Quad</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">tweenHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Tween</span><span class="p">(</span><span class="nv">health</span><span class="p">,</span><span class="w"> </span><span class="nv">style</span><span class="p">)</span>
 
 <span class="c1">-- ...or use spring physics for extra responsiveness.</span>
-<span class="kd">local</span> <span class="n">springHealth</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spring</span><span class="p">(</span><span class="n">health</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">springHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Spring</span><span class="p">(</span><span class="nv">health</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">)</span>
 </code></pre></div>
 <p>Tween and Spring are state objects, just like anything else that changes in
 your program. That means it's easy to process them afterwards.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- You can round the animated health to whole numbers.</span>
-<span class="kd">local</span> <span class="n">wholeHealth</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">math</span><span class="p">.</span><span class="n">round</span><span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">health</span><span class="p">))</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">wholeHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nf">use</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- You can format it as text and put it in some UI, too.</span>
-<span class="kd">local</span> <span class="n">myText</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-        <span class="kr">return</span> <span class="s2">&quot;Health: &quot;</span> <span class="o">..</span> <span class="n">use</span><span class="p">(</span><span class="n">wholeHealth</span><span class="p">)</span>
-    <span class="kr">end</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">myText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;Health: &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">wholeHealth</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>You can even configure your animations using state objects, too. This makes it
 easy to swap out animations or disable them when needed.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Define some tweening styles...</span>
-<span class="kd">local</span> <span class="n">TWEEN_FAST</span> <span class="o">=</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingStyle</span><span class="p">.</span><span class="n">Elastic</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">TWEEN_SLOW</span> <span class="o">=</span> <span class="n">TweenInfo</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">Enum</span><span class="p">.</span><span class="n">EasingStyle</span><span class="p">.</span><span class="n">Sine</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">TWEEN_FAST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">TweenInfo</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="nv">Enum</span><span class="p">.</span><span class="py">EasingStyle</span><span class="p">.</span><span class="py">Elastic</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">TWEEN_SLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">TweenInfo</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nv">Enum</span><span class="p">.</span><span class="py">EasingStyle</span><span class="p">.</span><span class="py">Sine</span><span class="p">)</span>
 
 <span class="c1">-- Choose more dramatic styles at low health...</span>
-<span class="kd">local</span> <span class="n">style</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">health</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="kr">then</span> <span class="n">TWEEN_FAST</span> <span class="kr">else</span> <span class="n">TWEEN_SLOW</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">health</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="nv">TWEEN_FAST</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="nv">TWEEN_SLOW</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- Plug it right into your animation!</span>
-<span class="kd">local</span> <span class="n">tweenHealth</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Tween</span><span class="p">(</span><span class="n">health</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">tweenHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Tween</span><span class="p">(</span><span class="nv">health</span><span class="p">,</span><span class="w"> </span><span class="nv">style</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="sparked-your-curiosity">Sparked your curiosity?<a class="headerlink" href="#sparked-your-curiosity" title="Permanent link">&para;</a></h2>

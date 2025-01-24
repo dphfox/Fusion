@@ -3001,18 +3001,18 @@ group together objects like this are given a special name: <em>scopes</em>.</p>
 <p>To create a new scope, create an empty array.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
 
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Later, when you create objects, they will ask for a scope as the first argument.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="hll"><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
 <p>That object will add its <code>destroy()</code> function to the scope:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
@@ -3020,12 +3020,12 @@ group together objects like this are given a special name: <em>scopes</em>.</p>
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am a thing&quot;</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1">--&gt; function: 0x123456789abcdef</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nv">scope</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="c1">--&gt; function: 0x123456789abcdef</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Repeat as many times as you like. Objects appear in order of creation.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span>
@@ -3033,12 +3033,12 @@ group together objects like this are given a special name: <em>scopes</em>.</p>
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Later, destroy the scope by using the <code>doCleanup()</code> function. The contents are
 destroyed in reverse order.</p>
@@ -3053,14 +3053,14 @@ destroyed in reverse order.</p>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 
-<span class="hll"><span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+<span class="hll"><span class="nv">Fusion</span><span class="p">.</span><span class="nf">doCleanup</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
 </span><span class="c1">-- Using `doCleanup` is conceptually the same as:</span>
 <span class="c1">-- thing3:destroy()</span>
 <span class="c1">-- thing2:destroy()</span>
@@ -3095,15 +3095,15 @@ allows Fusion to optimise your code.</p>
 <span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
 </span>
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">()</span>
-</span><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">()</span>
+</span><span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 
-<span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+<span class="nv">Fusion</span><span class="p">.</span><span class="nf">doCleanup</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Unlike <code>{}</code> (which always creates a new array), <code>scoped</code> can re-use old arrays.
 This helps keep your program running smoothly.</p>
@@ -3121,18 +3121,18 @@ syntax.</p>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
 
-<span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-</span><span class="hll">    <span class="n">Value</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">doCleanup</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+</span><span class="hll"><span class="w">    </span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="p">,</span>
+</span><span class="hll"><span class="w">    </span><span class="nv">doCleanup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">doCleanup</span>
 </span><span class="hll"><span class="p">})</span>
-</span><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+</span><span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 
-<span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+<span class="nv">Fusion</span><span class="p">.</span><span class="nf">doCleanup</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>If those functions take <code>scope</code> as their first argument, you can use them as
 methods directly on the scope:</p>
@@ -3147,45 +3147,45 @@ methods directly on the scope:</p>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Value</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
-    <span class="n">doCleanup</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">doCleanup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">doCleanup</span>
 <span class="p">})</span>
-<span class="hll"><span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 </span>
-<span class="hll"><span class="n">scope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="hll"><span class="nv">scope</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
 </span></code></pre></div></td></tr></table></div>
 <p>This makes it harder to mess up writing scopes. Your code reads more naturally,
 too.</p>
 <p>For convenience, Fusion exposes the <code>insert</code> method to insert destruction tasks
 into a scope:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">conn</span><span class="p">,</span> <span class="n">ins</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">RunService</span><span class="p">.</span><span class="n">Heartbeat</span><span class="p">:</span><span class="n">Connnect</span><span class="p">(</span><span class="n">doUpdate</span><span class="p">),</span>
-    <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">conn</span><span class="p">,</span><span class="w"> </span><span class="nv">ins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">RunService</span><span class="p">.</span><span class="py">Heartbeat</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">doUpdate</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Instance</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">workspace</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <h3 id="adding-methods-in-bulk">Adding Methods In Bulk<a class="headerlink" href="#adding-methods-in-bulk" title="Permanent link">&para;</a></h3>
 <p>Try passing <code>Fusion</code> to <code>scoped()</code> - it's a table with functions, too.</p>
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
 </span>
 <span class="c1">-- all still works!</span>
-<span class="kd">local</span> <span class="n">thing1</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing2</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">thing3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 1&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 2&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;i am thing 3&quot;</span><span class="p">)</span>
 
-<span class="n">scope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
 </code></pre></div>
 <p>This gives you access to all of Fusion's functions without having to import
 each one manually.</p>
 <p>If you need to mix in other things, you can pass in another table.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="p">...,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="p">...</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...,</span>
+<span class="w">    </span><span class="nv">Bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...</span>
 <span class="p">})</span>
 </code></pre></div>
 <p>You can do this for as many tables as you need.</p>
@@ -3197,83 +3197,83 @@ will error.</p>
 <h3 id="reusing-methods-from-other-scopes">Reusing Methods From Other Scopes<a class="headerlink" href="#reusing-methods-from-other-scopes" title="Permanent link">&para;</a></h3>
 <p>Sometimes, you'll want to make a new scope with the same methods as an existing
 scope.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">Foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Foo</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bar</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Baz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Baz</span>
 <span class="p">})</span>
 
 <span class="c1">-- `bar` should have the same methods as `foo`</span>
 <span class="c1">-- it&#39;d be nice to define this once only...</span>
-<span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">Foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Foo</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bar</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Baz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Baz</span>
 <span class="p">})</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Baz</span> <span class="o">==</span> <span class="n">bar</span><span class="p">.</span><span class="n">Baz</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">foo</span><span class="p">.</span><span class="py">Baz</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">bar</span><span class="p">.</span><span class="py">Baz</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; true</span>
 
-<span class="n">bar</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="n">foo</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="nv">bar</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
+<span class="nv">foo</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
 </code></pre></div>
 <p>To do this, Fusion provides a <code>deriveScope</code> function. It behaves like <code>scoped</code>
 but lets you skip defining the methods. Instead, you give it an example of what
 the scope should look like.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">Foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Foo</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bar</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Baz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Baz</span>
 <span class="p">})</span>
 
 <span class="c1">-- `bar` should have the same methods as `foo`</span>
 <span class="c1">-- now, it&#39;s only defined once!</span>
-<span class="hll"><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">foo</span><span class="p">:</span><span class="nf">deriveScope</span><span class="p">()</span>
 </span>
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Baz</span> <span class="o">==</span> <span class="n">bar</span><span class="p">.</span><span class="n">Baz</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">foo</span><span class="p">.</span><span class="py">Baz</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">bar</span><span class="p">.</span><span class="py">Baz</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; true</span>
 
-<span class="n">bar</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-<span class="n">foo</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
+<span class="nv">bar</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
+<span class="nv">foo</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
 </code></pre></div>
 <p><em>Deriving</em> scopes like this is highly efficient because Fusion can re-use the
 same information for both scopes. It also helps keep your definitions all in
 one place.</p>
 <p>You can also add more method tables if you'd like to.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">({</span>
-    <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">,</span>
-    <span class="n">Bar</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">,</span>
-    <span class="n">Baz</span> <span class="o">=</span> <span class="n">Baz</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">({</span>
+<span class="w">    </span><span class="nv">Foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Foo</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Bar</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Baz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Baz</span>
 <span class="p">})</span>
 
 <span class="c1">-- `bar` should have the same methods as `foo`</span>
 <span class="c1">-- now, it&#39;s only defined once!</span>
-<span class="hll"><span class="kd">local</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">({</span>
-</span>    <span class="n">Garb</span> <span class="o">=</span> <span class="n">Garb</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">foo</span><span class="p">:</span><span class="nf">deriveScope</span><span class="p">({</span>
+</span><span class="w">    </span><span class="nv">Garb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Garb</span>
 <span class="p">})</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">bar</span><span class="p">.</span><span class="n">Garb</span><span class="p">)</span> <span class="c1">--&gt; function: 0x123456789abcdef</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">Garb</span><span class="p">)</span> <span class="c1">--&gt; nil</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">bar</span><span class="p">.</span><span class="py">Garb</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; function: 0x123456789abcdef</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">foo</span><span class="p">.</span><span class="py">Garb</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; nil</span>
 </code></pre></div>
 <h3 id="inner-scopes">Inner Scopes<a class="headerlink" href="#inner-scopes" title="Permanent link">&para;</a></h3>
 <p>The main reason you would want to create a new scope is to create things that
 get destroyed at different times.</p>
 <p>For example, imagine you're creating a dropdown menu. You create a new scope for
 the menu, which you clean up when the menu is closed.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">uiScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">uiScope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
 
 <span class="c1">-- ... create the ui ...</span>
 
-<span class="n">uiScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">deriveScope</span><span class="p">()</span>
+<span class="nv">uiScope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">dropdownOpened</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">dropdownScope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">uiScope</span><span class="p">:</span><span class="nf">deriveScope</span><span class="p">()</span>
 
-        <span class="c1">-- ... create the dropdown ...</span>
+<span class="w">        </span><span class="c1">-- ... create the dropdown ...</span>
 
-        <span class="n">dropdownScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-            <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-                <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-            <span class="kr">end</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="nv">dropdownScope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">            </span><span class="nv">dropdownClosed</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">                </span><span class="nv">dropdownScope</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
+<span class="w">            </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>This ordinarily works just fine; when the dropdown is opened, the new scope is
@@ -3286,22 +3286,22 @@ created, and when the dropdown is closed, the new scope is destroyed.</p>
 <li>When the original scope is cleaned up, the 'inner scope' is cleaned up too</li>
 <li>You can still call <code>doCleanup()</code> to clean the inner scope up early</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">uiScope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">uiScope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
 
 <span class="c1">-- ... create the ui ...</span>
 
-<span class="n">uiScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">dropdownOpened</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-<span class="hll">        <span class="kd">local</span> <span class="n">dropdownScope</span> <span class="o">=</span> <span class="n">uiScope</span><span class="p">:</span><span class="n">innerScope</span><span class="p">()</span>
+<span class="nv">uiScope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">dropdownOpened</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="hll"><span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">dropdownScope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">uiScope</span><span class="p">:</span><span class="nf">innerScope</span><span class="p">()</span>
 </span>
-        <span class="c1">-- ... create the dropdown ...</span>
+<span class="w">        </span><span class="c1">-- ... create the dropdown ...</span>
 
-        <span class="n">dropdownScope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-            <span class="n">dropdownClosed</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-                <span class="n">dropdownScope</span><span class="p">:</span><span class="n">doCleanup</span><span class="p">()</span>
-            <span class="kr">end</span><span class="p">)</span>
-        <span class="p">)</span>
-    <span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="nv">dropdownScope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">            </span><span class="nv">dropdownClosed</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">                </span><span class="nv">dropdownScope</span><span class="p">:</span><span class="nf">doCleanup</span><span class="p">()</span>
+<span class="w">            </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Now, the dropdown scope is guaranteed to be cleaned up if the UI it came from is

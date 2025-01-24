@@ -2909,19 +2909,19 @@
 <p><code>OnChange</code> is a function that returns keys to use when hydrating or creating an
 instance. Those keys let you connect functions to property changed events on the
 instance.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">input</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextBox&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnChange</span> <span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">newText</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span> <span class="n">newText</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">OnChange</span><span class="w"> </span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p><code>OnChange</code> doesn't need a scope - import it into your code from Fusion directly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">OnChange</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnChange</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">OnChange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">OnChange</span>
 </code></pre></div>
 <p>When you call <code>OnChange</code> with a property name, it will return a special key:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">key</span> <span class="o">=</span> <span class="n">OnChange</span><span class="p">(</span><span class="s2">&quot;Text&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">OnChange</span><span class="p">(</span><span class="s2">&quot;Text&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>When used in a property table, you can pass in a handler and it will be run when
 that property changes.</p>
@@ -2932,18 +2932,18 @@ instance, the callback will not receive any arguments.</p>
 <p>To make working with change events easier, <code>OnChange</code> will pass the new value of
 the property to the callback.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">input</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextBox&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnChange</span><span class="p">(</span><span class="s2">&quot;Text&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">newText</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span> <span class="n">newText</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nf">OnChange</span><span class="p">(</span><span class="s2">&quot;Text&quot;</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>If you're using quotes <code>'' ""</code> for the event name, the extra parentheses <code>()</code>
 are optional:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">input</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextBox&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnChange</span> <span class="s2">&quot;Text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">newText</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span> <span class="n">newText</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">OnChange</span><span class="w"> </span><span class="s2">&quot;Text&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You typed:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">newText</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 

@@ -2945,13 +2945,13 @@ example to report when button clicks occur.</p>
 <p>Callbacks are functions which you pass into other functions. They're useful
 because they allow the function to 'call back' into your code, so your code can
 do something in response:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">printMessage</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">printMessage</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
 <span class="kr">end</span>
 
 <span class="c1">-- Here, we&#39;re passing `printMessage` as a callback</span>
 <span class="c1">-- `task.delay` will call it after 5 seconds</span>
-<span class="n">task</span><span class="p">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">printMessage</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nv">printMessage</span><span class="p">)</span>
 </code></pre></div>
 <p>If your function accepts a callback, then you can call it like any other
 function. Luau will execute the function, then return to your code.</p>
@@ -2959,16 +2959,16 @@ function. Luau will execute the function, then return to your code.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Luau code</label><label for="__tabbed_1_2">Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">fiveTimes</span><span class="p">(</span>
-    <span class="n">callback</span><span class="p">:</span> <span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">fiveTimes</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">callback</span><span class="p">:</span><span class="w"> </span><span class="err">(</span><span class="py">number</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">()</span>
 <span class="p">)</span>
-    <span class="kr">for</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span> <span class="kr">do</span>
-        <span class="n">callback</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="kr">end</span>
+<span class="w">    </span><span class="kr">for</span><span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="kr">do</span>
+<span class="w">        </span><span class="nf">callback</span><span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="kr">end</span>
 
-<span class="n">fiveTimes</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number is&quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="nf">fiveTimes</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number is&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">num</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 </div>
@@ -2986,84 +2986,84 @@ The number is 5
 <h2 id="in-fusion">In Fusion<a class="headerlink" href="#in-fusion" title="Permanent link">&para;</a></h2>
 <p>Components can use callbacks the same way. Consider this button component; when
 the button is clicked, the button needs to run some external code:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Text</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Position</span><span class="p">,</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Size</span><span class="p">,</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Position</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Size</span><span class="p">,</span>
 
-        <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span>
-        <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Text</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
 
-<span class="hll">        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="c1">-- ???</span>
-</span>    <span class="p">}</span>
+<span class="hll"><span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">-- ???</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>It can ask the controlling code to provide an <code>OnClick</code> callback in <code>props</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
-    <span class="n">OnClick</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was clicked&quot;</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">OnClick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was clicked&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Assuming that callback is passed in, the callback can be passed directly into
 <code>[OnEvent]</code>, because <code>[OnEvent]</code> accepts functions. It can even be optional -
 Luau won't add the key to the table if the value is <code>nil</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-<span class="hll">        <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
-</span>    <span class="p">}</span>
-<span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Position</span><span class="p">,</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Size</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Text</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="hll"><span class="w">        </span><span class="nv">OnClick</span><span class="p">:</span><span class="w"> </span><span class="err">(()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">())?</span>
+</span><span class="w">    </span><span class="err">}</span>
+<span class="err">)</span>
+<span class="w">    </span><span class="py">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Position</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Size</span><span class="p">,</span>
 
-        <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span>
-        <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Text</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
 
-<span class="hll">        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span>
-</span>    <span class="p">}</span>
+<span class="hll"><span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">OnClick</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>Alternatively, we can call <code>props.OnClick</code> manually, which is useful if you want
 to do your own processing first:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Position</span><span class="p">,</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Size</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Text</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Disabled</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">OnClick</span><span class="p">:</span><span class="w"> </span><span class="err">(()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">())?</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="err">)</span>
+<span class="w">    </span><span class="py">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Position</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Size</span><span class="p">,</span>
 
-        <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span>
-        <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Text</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
 
-<span class="hll">        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-</span><span class="hll">            <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span>
-</span><span class="hll">                <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span><span class="p">()</span>
-</span><span class="hll">            <span class="kr">end</span>
-</span><span class="hll">        <span class="kr">end</span>
-</span>    <span class="p">}</span>
+<span class="hll"><span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">if</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">OnClick</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">Disabled</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span>
+</span><span class="hll"><span class="w">                </span><span class="nv">props</span><span class="p">.</span><span class="nf">OnClick</span><span class="p">()</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">end</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">end</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>This is the primary way components talk to their controlling code in Fusion.</p>
@@ -3075,29 +3075,29 @@ over the children you're putting inside of a component.</p>
 some children for you ahead of time, and pass it into that <code>[Children]</code> key. You
 don't have any control over what that process looks like.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This snippet...</span>
-<span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span> 
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Text</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;I am pre-fabricated!&quot;</span> 
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">dialog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Dialog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="w"> </span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Text</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;I am pre-fabricated!&quot;</span><span class="w"> </span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">-- ...is equivalent to this code.</span>
-<span class="kd">local</span> <span class="n">children</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-        <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span> 
-    <span class="p">},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">Text</span> <span class="p">{</span>
-        <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;I am pre-fabricated!&quot;</span> 
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">Text</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;I am pre-fabricated!&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">children</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">dialog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Dialog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">children</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>However, if your component asks for a callback instead, you can create those
@@ -3106,20 +3106,20 @@ want to pass in.</p>
 <p>This callback should be given a descriptive name like <code>Build</code>, <code>Render</code>, or
 whatever terminology fits your code base. Try and be consistent across all of
 your components.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
-    <span class="c1">-- Use a `scope` parameter here so that the component can change when these</span>
-    <span class="c1">-- children are destroyed if it needs to. This is especially important for</span>
-    <span class="c1">-- components that create multiple sets of children over time.</span>
-    <span class="n">Build</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-        <span class="kr">return</span> <span class="p">{</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-                <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span> 
-            <span class="p">},</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">Text</span> <span class="p">{</span>
-                <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;I am created on the fly!&quot;</span> 
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">dialog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Dialog</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- Use a `scope` parameter here so that the component can change when these</span>
+<span class="w">    </span><span class="c1">-- children are destroyed if it needs to. This is especially important for</span>
+<span class="w">    </span><span class="c1">-- components that create multiple sets of children over time.</span>
+<span class="w">    </span><span class="nv">Build</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="w"> </span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">Text</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;I am created on the fly!&quot;</span><span class="w"> </span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <div class="admonition warning">
@@ -3133,19 +3133,19 @@ users understand that their children are not being created ahead of time.</p>
 <p>Children callbacks are especially useful if the controlling code needs more
 information to build the rest of the UI. For example, you might want to share
 some layout information so children can fit into the component more neatly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">dialog</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Dialog</span> <span class="p">{</span>
-<span class="hll">    <span class="n">Build</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">textSize</span><span class="p">)</span>
-</span>        <span class="kr">return</span> <span class="p">{</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-                <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
-<span class="hll">                <span class="n">TextSize</span> <span class="o">=</span> <span class="n">textSize</span>
-</span>            <span class="p">},</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">Text</span> <span class="p">{</span>
-                <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;I am created on the fly!&quot;</span><span class="p">,</span>
-<span class="hll">                <span class="n">TextSize</span> <span class="o">=</span> <span class="n">textSize</span>
-</span>            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">dialog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Dialog</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">    </span><span class="nv">Build</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">textSize</span><span class="p">)</span>
+</span><span class="w">        </span><span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">                </span><span class="nv">TextSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">textSize</span>
+</span><span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">Text</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;I am created on the fly!&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">                </span><span class="nv">TextSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">textSize</span>
+</span><span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>This is also useful for <a href="../sharing-values">sharing values to all children</a>,

@@ -3021,18 +3021,18 @@
         -&gt; <a href="../../types/spring">Spring</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#spring-springt" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">goal</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-    <span class="n">damping</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Fusion</span><span class="p">.</span><span class="nf">Spring</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Scope</span><span class="o">&lt;</span><span class="nv">unknown</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">goal</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">speed</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">damping</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">Spring</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>Constructs and returns a new <a href="../../types/spring">spring state object</a>.</p>
 <div class="admonition success">
 <p class="admonition-title">Use scoped() method syntax</p>
 <p>This function is intended to be accessed as a method on a scope:
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">spring</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spring</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">damping</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">spring</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Spring</span><span class="p">(</span><span class="nv">goal</span><span class="p">,</span><span class="w"> </span><span class="nv">speed</span><span class="p">,</span><span class="w"> </span><span class="nv">damping</span><span class="p">)</span>
 </code></pre></div></p>
 </div>
 <hr />

@@ -2925,7 +2925,7 @@ Fusion's Roblox API. It handles many common interactions such as hovering and
 clicking.</p>
 <p>This should be a generally useful template for assembling components of your
 own. For further ideas and best practices for building components, see
-<a href="../../../tutorials/components/components">the Components tutorial</a>.</p>
+<a href="../../tutorials/best-practices/components">the Components tutorial</a>.</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -3040,121 +3040,119 @@ own. For further ideas and best practices for building components, see
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-<span class="kd">local</span> <span class="n">Children</span><span class="p">,</span> <span class="n">OnEvent</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnEvent</span>
-<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="normal">113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">-- initialise Fusion here however you please!</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">peek</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">peek</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Children</span><span class="p">,</span><span class="w"> </span><span class="nv">OnEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Children</span><span class="p">,</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">OnEvent</span>
+<span class="nb">type</span><span class="w"> </span><span class="nv">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span>
 
-<span class="kd">local</span> <span class="n">COLOUR_BLACK</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">COLOUR_WHITE</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_BLACK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_WHITE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">COLOUR_TEXT</span> <span class="o">=</span> <span class="n">COLOUR_WHITE</span>
-<span class="kd">local</span> <span class="n">COLOUR_BG_REST</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;0085FF&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">COLOUR_BG_HOVER</span> <span class="o">=</span> <span class="n">COLOUR_BG_REST</span><span class="p">:</span><span class="n">Lerp</span><span class="p">(</span><span class="n">COLOUR_WHITE</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">COLOUR_BG_HELD</span> <span class="o">=</span> <span class="n">COLOUR_BG_REST</span><span class="p">:</span><span class="n">Lerp</span><span class="p">(</span><span class="n">COLOUR_BLACK</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">COLOUR_BG_DISABLED</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;CCCCCC&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_TEXT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">COLOUR_WHITE</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_BG_REST</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;0085FF&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_BG_HOVER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">COLOUR_BG_REST</span><span class="p">:</span><span class="nf">Lerp</span><span class="p">(</span><span class="nv">COLOUR_WHITE</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_BG_HELD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">COLOUR_BG_REST</span><span class="p">:</span><span class="nf">Lerp</span><span class="p">(</span><span class="nv">COLOUR_BLACK</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">COLOUR_BG_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;CCCCCC&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">BG_FADE_SPEED</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1">-- spring speed units</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">BG_FADE_SPEED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="c1">-- spring speed units</span>
 
-<span class="kd">local</span> <span class="n">ROUNDED_CORNERS</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">PADDING</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ROUNDED_CORNERS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">PADDING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromOffset</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
-        <span class="p">},</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-    <span class="kd">local</span> <span class="n">isHovering</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">isHeldDown</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Name</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Layout</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">            </span><span class="py">LayoutOrder</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AnchorPoint</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">ZIndex</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Size</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AutomaticSize</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Enum</span><span class="p">.</span><span class="py">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">Text</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Disabled</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">OnClick</span><span class="p">:</span><span class="w"> </span><span class="err">(()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">())?</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="err">)</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Child</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">isHovering</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">isHeldDown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-        <span class="n">Name</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Name</span><span class="p">,</span>
 
-        <span class="n">LayoutOrder</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">LayoutOrder</span><span class="p">,</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Position</span><span class="p">,</span>
-        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">AnchorPoint</span><span class="p">,</span>
-        <span class="n">ZIndex</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">ZIndex</span><span class="p">,</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Size</span><span class="p">,</span>
-        <span class="n">AutomaticSize</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">LayoutOrder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">LayoutOrder</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">Position</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">AnchorPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">AnchorPoint</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">ZIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">ZIndex</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">Size</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">AutomaticSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">AutomaticSize</span><span class="p">,</span>
 
-        <span class="n">Text</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span>
-        <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">COLOUR_TEXT</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Text</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">COLOUR_TEXT</span><span class="p">,</span>
 
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spring</span><span class="p">(</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-                <span class="c1">-- The order of conditions matter here; it defines which states</span>
-                <span class="c1">-- visually override other states, with earlier states being</span>
-                <span class="c1">-- more important.</span>
-                <span class="kr">return</span>
-                    <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span> <span class="n">COLOUR_BG_DISABLED</span>
-                    <span class="kr">elseif</span> <span class="n">use</span><span class="p">(</span><span class="n">isHeldDown</span><span class="p">)</span> <span class="kr">then</span> <span class="n">COLOUR_BG_HELD</span>
-                    <span class="kr">elseif</span> <span class="n">use</span><span class="p">(</span><span class="n">isHovering</span><span class="p">)</span> <span class="kr">then</span> <span class="n">COLOUR_BG_HOVER</span>
-                    <span class="kr">else</span> <span class="kr">return</span> <span class="n">COLOUR_BG_REST</span>
-                <span class="kr">end</span>
-            <span class="kr">end</span><span class="p">),</span> 
-            <span class="n">BG_FADE_SPEED</span>
-        <span class="p">),</span>
+<span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Spring</span><span class="p">(</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">                </span><span class="c1">-- The order of conditions matter here; it defines which states</span>
+<span class="w">                </span><span class="c1">-- visually override other states, with earlier states being</span>
+<span class="w">                </span><span class="c1">-- more important.</span>
+<span class="w">                </span><span class="kr">return</span>
+<span class="w">                    </span><span class="kr">if</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">Disabled</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="nv">COLOUR_BG_DISABLED</span>
+<span class="w">                    </span><span class="kr">elseif</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">isHeldDown</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="nv">COLOUR_BG_HELD</span>
+<span class="w">                    </span><span class="kr">elseif</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">isHovering</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="nv">COLOUR_BG_HOVER</span>
+<span class="w">                    </span><span class="kr">else</span><span class="w"> </span><span class="nv">COLOUR_BG_REST</span>
+<span class="w">                </span><span class="kr">end</span><span class="p">),</span><span class="w"> </span>
+<span class="w">            </span><span class="nv">BG_FADE_SPEED</span>
+<span class="w">        </span><span class="p">),</span>
 
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="kr">if</span> <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Disabled</span><span class="p">)</span> <span class="kr">then</span>
-                <span class="c1">-- Explicitly called with no arguments to match the typedef. </span>
-                <span class="c1">-- If passed straight to `OnEvent`, the function might receive</span>
-                <span class="c1">-- arguments from the event. If the function secretly *does*</span>
-                <span class="c1">-- take arguments (despite the type) this would cause problems.</span>
-                <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span><span class="p">()</span>
-            <span class="kr">end</span>
-        <span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="kr">if</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">OnClick</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">Disabled</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">                </span><span class="c1">-- Explicitly called with no arguments to match the typedef. </span>
+<span class="w">                </span><span class="c1">-- If passed straight to `OnEvent`, the function might receive</span>
+<span class="w">                </span><span class="c1">-- arguments from the event. If the function secretly *does*</span>
+<span class="w">                </span><span class="c1">-- take arguments (despite the type) this would cause problems.</span>
+<span class="w">                </span><span class="nv">props</span><span class="p">.</span><span class="nf">OnClick</span><span class="p">()</span>
+<span class="w">            </span><span class="kr">end</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseButton1Down&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="n">isHeldDown</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-        <span class="kr">end</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseButton1Up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="n">isHeldDown</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-        <span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;MouseButton1Down&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">isHeldDown</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;MouseButton1Up&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">isHeldDown</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseEnter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="c1">-- Roblox calls this event even if the button is being covered by</span>
-            <span class="c1">-- other UI. For simplicity, this does not account for that.</span>
-            <span class="n">isHovering</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-        <span class="kr">end</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;MouseLeave&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="c1">-- If the button is being held down, but the cursor moves off the</span>
-            <span class="c1">-- button, then we won&#39;t receive the mouse up event. To make sure</span>
-            <span class="c1">-- the button doesn&#39;t get stuck held down, we&#39;ll release it if the</span>
-            <span class="c1">-- cursor leaves the button.</span>
-            <span class="n">isHeldDown</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-            <span class="n">isHovering</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-        <span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;MouseEnter&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="c1">-- Roblox calls this event even if the button is being covered by</span>
+<span class="w">            </span><span class="c1">-- other UI. For simplicity, this does not account for that.</span>
+<span class="w">            </span><span class="nv">isHovering</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;MouseLeave&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="c1">-- If the button is being held down, but the cursor moves off the</span>
+<span class="w">            </span><span class="c1">-- button, then we won&#39;t receive the mouse up event. To make sure</span>
+<span class="w">            </span><span class="c1">-- the button doesn&#39;t get stuck held down, we&#39;ll release it if the</span>
+<span class="w">            </span><span class="c1">-- cursor leaves the button.</span>
+<span class="w">            </span><span class="nv">isHeldDown</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">            </span><span class="nv">isHovering</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">New</span> <span class="s2">&quot;UICorner&quot;</span> <span class="p">{</span>
-                <span class="n">CornerRadius</span> <span class="o">=</span> <span class="n">ROUNDED_CORNERS</span>
-            <span class="p">},</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UICorner&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">CornerRadius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ROUNDED_CORNERS</span>
+<span class="w">            </span><span class="p">},</span>
 
-            <span class="n">New</span> <span class="s2">&quot;UIPadding&quot;</span> <span class="p">{</span>
-                <span class="n">PaddingTop</span> <span class="o">=</span> <span class="n">PADDING</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span>
-                <span class="n">PaddingBottom</span> <span class="o">=</span> <span class="n">PADDING</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span>
-                <span class="n">PaddingLeft</span> <span class="o">=</span> <span class="n">PADDING</span><span class="p">.</span><span class="n">X</span><span class="p">,</span>
-                <span class="n">PaddingRight</span> <span class="o">=</span> <span class="n">PADDING</span><span class="p">.</span><span class="n">X</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIPadding&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">PaddingTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PADDING</span><span class="p">.</span><span class="py">Y</span><span class="p">,</span>
+<span class="w">                </span><span class="nv">PaddingBottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PADDING</span><span class="p">.</span><span class="py">Y</span><span class="p">,</span>
+<span class="w">                </span><span class="nv">PaddingLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PADDING</span><span class="p">.</span><span class="py">X</span><span class="p">,</span>
+<span class="w">                </span><span class="nv">PaddingRight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PADDING</span><span class="p">.</span><span class="py">X</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 
-<span class="kr">return</span> <span class="n">Button</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">Button</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
@@ -3162,31 +3160,31 @@ own. For further ideas and best practices for building components, see
 you statically type the function signature for components, because it not only
 improves autocomplete and error checking, but also acts as up-to-date, machine
 readable documentation.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Name</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Size</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AutomaticSize</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Enum</span><span class="p">.</span><span class="n">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
-        <span class="p">},</span>
-        <span class="n">Text</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">Disabled</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-        <span class="n">OnClick</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">())</span><span class="err">?</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Name</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Layout</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">            </span><span class="py">LayoutOrder</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AnchorPoint</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">ZIndex</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Size</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AutomaticSize</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Enum</span><span class="p">.</span><span class="py">AutomaticSize</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">Text</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Disabled</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">boolean</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">OnClick</span><span class="p">:</span><span class="w"> </span><span class="err">(()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">())?</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="err">)</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Child</span>
 </code></pre></div>
 <p>The <code>scope</code> parameter specifies that the component depends on Fusion's methods.
 If you're not sure how to write type definitions for scopes,
-<a href="../../../tutorials/components/components/#scopes">the 'Scopes' section of the Components tutorial</a>
+<a href="../../tutorials/best-practices/components#scopes">the 'Scopes' section of the Components tutorial</a>
 goes into further detail.</p>
 <p>The property table is laid out with each property on a new line, so it's easy to
 scan the list and see what properties are available. Most are typed with
-<a href="../../../api-reference/state/types/usedas"><code>UsedAs</code></a>, which allows the user to 
+<a href="../../api-reference/state/types/usedas"><code>UsedAs</code></a>, which allows the user to 
 use state objects if they desire. They're also <code>?</code> (optional), which can reduce
 boilerplate when using the component. Not all properties have to be that way,
 but usually it's better to have the flexibility.</p>

@@ -2922,16 +2922,16 @@
 <!-- Markdown content -->
 <p>At some point, you might need to refer to another part of the UI. There are
 various techniques that can let you do this.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;SelectionBox&quot;</span> <span class="p">{</span>
-            <span class="c1">-- the box should adorn to the part, but how do you reference it?</span>
-<span class="hll">            <span class="n">Adornee</span> <span class="o">=</span> <span class="err">???</span><span class="p">,</span>
-</span>        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;SelectionBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">-- the box should adorn to the part, but how do you reference it?</span>
+<span class="hll"><span class="w">            </span><span class="nv">Adornee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">???</span><span class="p">,</span>
+</span><span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
@@ -2941,17 +2941,17 @@ extract part of the UI that you want to reference later.</p>
 <p>In practice, that means you'll move some of the creation code into a new <code>local</code>
 constant, so that you can refer to it later by name.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- the part is now constructed first, whereas before it was constructed second</span>
-<span class="kd">local</span> <span class="n">selectionTarget</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">selectionTarget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;SelectionBox&quot;</span> <span class="p">{</span>
-            <span class="n">Adornee</span> <span class="o">=</span> <span class="n">selectionTarget</span>
-        <span class="p">},</span>
-        <span class="n">selectionTarget</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;SelectionBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Adornee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">selectionTarget</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">selectionTarget</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>While this is a simple and robust technique, it has some disadvantages:</p>
@@ -2972,19 +2972,19 @@ flexible technique if those disadvantages are relevant.</p>
 <code>:set()</code> to reference part of your code without disrupting its structure:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- `selectionTarget` will show as `nil` to all code trying to use it, until the</span>
 <span class="c1">-- `:set()` method is called later on.</span>
-<span class="kd">local</span> <span class="n">selectionTarget</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Part</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">selectionTarget</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">Part</span><span class="err">?</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;SelectionBox&quot;</span> <span class="p">{</span>
-            <span class="n">Adornee</span> <span class="o">=</span> <span class="n">selectionTarget</span>
-        <span class="p">},</span>
-        <span class="n">selectionTarget</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-                <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;SelectionBox&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Adornee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">selectionTarget</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">selectionTarget</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Selection Target&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>It's important to note that the value object will briefly be <code>nil</code> (or whichever
@@ -2996,20 +2996,20 @@ the <code>:set()</code> method is called.</p>
 <p>While dealing with the brief <code>nil</code> value can be annoying, it is also useful,
 because this lets you refer to parts of your UI that haven't yet been created.
 In particular, this lets you create cyclic references.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">aliceRef</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">bobRef</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">Instance</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">aliceRef</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">bobRef</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">Instance</span><span class="err">?</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
 <span class="c1">-- These two `ObjectValue` instances will refer to each other once the code has</span>
 <span class="c1">-- finished running.</span>
-<span class="kd">local</span> <span class="n">alice</span> <span class="o">=</span> <span class="n">aliceRef</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ObjectValue&quot;</span> <span class="p">{</span>
-        <span class="n">Value</span> <span class="o">=</span> <span class="n">bobRef</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">alice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aliceRef</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ObjectValue&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">bobRef</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
-<span class="kd">local</span> <span class="n">bob</span> <span class="o">=</span> <span class="n">bobRef</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ObjectValue&quot;</span> <span class="p">{</span>
-        <span class="n">Value</span> <span class="o">=</span> <span class="n">aliceRef</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">bob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">bobRef</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ObjectValue&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aliceRef</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Value objects are generally easier to work with than named constants, so they're

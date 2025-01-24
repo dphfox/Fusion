@@ -2922,25 +2922,25 @@
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
     <span class="fusiondoc-api-name">Animatable</span>
 <a class="headerlink" href="#animatable" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Animatable</span> <span class="o">=</span>
-    <span class="n">number</span> <span class="o">|</span>
-    <span class="n">CFrame</span> <span class="o">|</span>
-    <span class="n">Color3</span> <span class="o">|</span>
-    <span class="n">ColorSequenceKeypoint</span> <span class="o">|</span>
-    <span class="n">DateTime</span> <span class="o">|</span>
-    <span class="n">NumberRange</span> <span class="o">|</span>
-    <span class="n">NumberSequenceKeypoint</span> <span class="o">|</span>
-    <span class="n">PhysicalProperties</span> <span class="o">|</span>
-    <span class="n">Ray</span> <span class="o">|</span>
-    <span class="n">Rect</span> <span class="o">|</span>
-    <span class="n">Region3</span> <span class="o">|</span>
-    <span class="n">Region3int16</span> <span class="o">|</span>
-    <span class="n">UDim</span> <span class="o">|</span>
-    <span class="n">UDim2</span> <span class="o">|</span>
-    <span class="n">Vector2</span> <span class="o">|</span>
-    <span class="n">Vector2int16</span> <span class="o">|</span>
-    <span class="n">Vector3</span> <span class="o">|</span>
-    <span class="n">Vector3int16</span>
+<div class="highlight"><pre><span></span><code><span class="nv">export</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span><span class="nv">Animatable</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="nv">number</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">CFrame</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Color3</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">ColorSequenceKeypoint</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">DateTime</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">NumberRange</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">NumberSequenceKeypoint</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">PhysicalProperties</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Ray</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Rect</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Region3</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Region3int16</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">UDim</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">UDim2</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Vector2</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Vector2int16</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Vector3</span><span class="w"> </span><span class="o">|</span>
+<span class="w">    </span><span class="nv">Vector3int16</span>
 </code></pre></div>
 <p>Any data type that Fusion can decompose into a tuple of animatable parameters.</p>
 <div class="admonition note">

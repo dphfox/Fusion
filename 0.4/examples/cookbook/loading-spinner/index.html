@@ -2984,66 +2984,78 @@ APIs.</p>
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
-<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">RunService</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;RunService&quot;</span><span class="p">)</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">RunService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">game</span><span class="p">:</span><span class="nf">GetService</span><span class="p">(</span><span class="s2">&quot;RunService&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">game</span><span class="p">:</span><span class="nf">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-<span class="kd">local</span> <span class="n">Children</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
-<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">-- initialise Fusion here however you please!</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Children</span>
+<span class="nb">type</span><span class="w"> </span><span class="nv">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span>
 
-<span class="kd">local</span> <span class="n">SPIN_DEGREES_PER_SECOND</span> <span class="o">=</span> <span class="mi">180</span>
-<span class="kd">local</span> <span class="n">SPIN_SIZE</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">SPIN_DEGREES_PER_SECOND</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">180</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">SPIN_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Spinner</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
-        <span class="p">},</span>
-        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ImageLabel&quot;</span> <span class="p">{</span>
-        <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Spinner&quot;</span><span class="p">,</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Spinner</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Layout</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">            </span><span class="py">LayoutOrder</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AnchorPoint</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">ZIndex</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">CurrentTime</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Child</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ImageLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Spinner&quot;</span><span class="p">,</span>
 
-        <span class="n">LayoutOrder</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">LayoutOrder</span><span class="p">,</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">Position</span><span class="p">,</span>
-        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">AnchorPoint</span><span class="p">,</span>
-        <span class="n">ZIndex</span> <span class="o">=</span> <span class="n">props</span><span class="p">.</span><span class="n">Layout</span><span class="p">.</span><span class="n">ZIndex</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">LayoutOrder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">LayoutOrder</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">Position</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">AnchorPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">AnchorPoint</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">ZIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">.</span><span class="py">Layout</span><span class="p">.</span><span class="py">ZIndex</span><span class="p">,</span>
 
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="n">SPIN_SIZE</span><span class="p">,</span> <span class="n">SPIN_SIZE</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromOffset</span><span class="p">(</span><span class="nv">SPIN_SIZE</span><span class="p">,</span><span class="w"> </span><span class="nv">SPIN_SIZE</span><span class="p">),</span>
 
-        <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">Image</span> <span class="o">=</span> <span class="s2">&quot;rbxassetid://your-loading-spinner-image&quot;</span><span class="p">,</span> <span class="c1">-- replace this!</span>
+<span class="w">        </span><span class="nv">BackgroundTransparency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rbxassetid://your-loading-spinner-image&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- replace this!</span>
 
-        <span class="n">Rotation</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-            <span class="kr">return</span> <span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">CurrentTime</span><span class="p">)</span> <span class="o">*</span> <span class="n">SPIN_DEGREES_PER_SECOND</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
-        <span class="kr">end</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="nv">Rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="p">(</span><span class="nf">use</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">CurrentTime</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">SPIN_DEGREES_PER_SECOND</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">360</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 
 <span class="c1">-- Don&#39;t forget to pass this to `doCleanup` if you disable the script.</span>
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">Spinner</span> <span class="o">=</span> <span class="n">Spinner</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Spinner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Spinner</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
-<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
-    <span class="n">RunService</span><span class="p">.</span><span class="n">RenderStepped</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="n">currentTime</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
-    <span class="kr">end</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
+<span class="nb">table.insert</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">RunService</span><span class="p">.</span><span class="py">RenderStepped</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="nv">currentTime</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">spinner</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spinner</span> <span class="p">{</span>
-    <span class="n">Layout</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="n">CurrentTime</span> <span class="o">=</span> <span class="n">currentTime</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">gui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SpinnerGui&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Players</span><span class="p">.</span><span class="py">LocalPlayer</span><span class="p">:</span><span class="nf">WaitForChild</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
+
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Spinner</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Layout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">),</span>
+<span class="w">            </span><span class="nv">AnchorPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Vector2</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">),</span>
+<span class="w">            </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromOffset</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">CurrentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">currentTime</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <hr />
@@ -3051,42 +3063,42 @@ APIs.</p>
 <p>The <code>Spinner</code> components implements the animation for the loading spinner. It's
 largely a standard Fusion component definition.</p>
 <p>The main thing to note is that it asks for a <code>CurrentTime</code> property.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">Spinner</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Layout</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">LayoutOrder</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">Position</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">AnchorPoint</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
-            <span class="n">ZIndex</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="err">?</span>
-        <span class="p">},</span>
-<span class="hll">        <span class="n">CurrentTime</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span><span class="p">,</span>
-</span>    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Spinner</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Layout</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">            </span><span class="py">LayoutOrder</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Position</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">UDim2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">AnchorPoint</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">Vector2</span><span class="o">&gt;</span><span class="err">?</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">ZIndex</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="err">?</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="hll"><span class="w">        </span><span class="nv">CurrentTime</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">number</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span class="w">    </span><span class="p">}</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Child</span>
 </code></pre></div>
 <p>The <code>CurrentTime</code> is used to drive the rotation of the loading spinner.</p>
-<div class="highlight"><pre><span></span><code>        <span class="n">Rotation</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-            <span class="kr">return</span> <span class="p">(</span><span class="n">use</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">CurrentTime</span><span class="p">)</span> <span class="o">*</span> <span class="n">SPIN_DEGREES_PER_SECOND</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
-        <span class="kr">end</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="nv">Rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="p">(</span><span class="nf">use</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">CurrentTime</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">SPIN_DEGREES_PER_SECOND</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">360</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>That's all that's required for the <code>Spinner</code> component.</p>
 <p>Later on, the example creates a <code>Value</code> object that will store the current time,
 and starts a process to keep it up to date.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">currentTime</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
-<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span>
-    <span class="n">RunService</span><span class="p">.</span><span class="n">RenderStepped</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-        <span class="n">currentTime</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
-    <span class="kr">end</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">currentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
+<span class="nb">table.insert</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">RunService</span><span class="p">.</span><span class="py">RenderStepped</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">        </span><span class="nv">currentTime</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nb">os.clock</span><span class="p">())</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>This can then be passed in as <code>CurrentTime</code> when the <code>Spinner</code> is created.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">spinner</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Spinner</span> <span class="p">{</span>
-    <span class="n">Layout</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-    <span class="p">},</span>
-<span class="hll">    <span class="n">CurrentTime</span> <span class="o">=</span> <span class="n">currentTime</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="py">Spinner</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Layout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">AnchorPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Vector2</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromOffset</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="hll"><span class="w">    </span><span class="nv">CurrentTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">currentTime</span>
 </span><span class="p">}</span>
 </code></pre></div>
 

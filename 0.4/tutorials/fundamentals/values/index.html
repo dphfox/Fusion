@@ -2910,11 +2910,11 @@
 simplest object.</p>
 <p>Values are objects which store single values. You can write to them with
 their <code>:set()</code> method, and read from them with the <code>peek()</code> function.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 100</span>
-<span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 25</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 100</span>
+<span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 25</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2924,11 +2924,11 @@ to store.</p>
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">doCleanup</span><span class="p">,</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">doCleanup</span><span class="p">,</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">doCleanup</span><span class="p">,</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Fusion provides a global <code>peek()</code> function. It will read the value of whatever
 you give it. You'll use <code>peek()</code> to read the value of lots of things; for now,
@@ -2939,13 +2939,13 @@ it's useful for printing <code>health</code> back out.</p>
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="n">ReplicatedStorage</span><span class="p">.</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">doCleanup</span><span class="p">,</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">doCleanup</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-<span class="hll"><span class="kd">local</span> <span class="n">peek</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">peek</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="nv">ReplicatedStorage</span><span class="p">.</span><span class="py">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">doCleanup</span><span class="p">,</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">doCleanup</span><span class="p">,</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">peek</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">peek</span>
 </span>
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 5</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 5</span>
 </span></code></pre></div></td></tr></table></div>
 <p>You can change the value using the <code>:set()</code> method. Unlike <code>peek()</code>, this is
 specific to value objects, so it's done on the object itself.</p>
@@ -2954,20 +2954,20 @@ specific to value objects, so it's done on the object itself.</p>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">health</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 5</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 5</span>
 
-<span class="hll"><span class="n">health</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">health</span><span class="p">))</span> <span class="c1">--&gt; 25</span>
+<span class="hll"><span class="nv">health</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">health</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 25</span>
 </span></code></pre></div></td></tr></table></div>
 <details class="tip">
 <summary><code>:set()</code> returns the value you give it</summary>
 <p>You can use <code>:set()</code> in the middle of calculations:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myNumber</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">computation</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">myNumber</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">computation</span><span class="p">)</span> <span class="c1">--&gt; 14</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">myNumber</span><span class="p">))</span> <span class="c1">--&gt; 4</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">myNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">computation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">myNumber</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">computation</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; 14</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">myNumber</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 4</span>
 </code></pre></div>
 <p>This is useful when building complex expressions. On a later page, you'll
 see one such use case.</p>

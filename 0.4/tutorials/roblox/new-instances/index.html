@@ -2923,37 +2923,37 @@
 <p>Fusion provides a <code>New</code> function when you're hydrating newly-made instances. It
 creates a new instance, applies some default properties, then hydrates it with
 a property table.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Hello there!&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;Hello there!&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Greeting&quot;</span><span class="p">,</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">PlayerGui</span><span class="p">.</span><span class="n">ScreenGui</span><span class="p">,</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Greeting&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerGui</span><span class="p">.</span><span class="py">ScreenGui</span><span class="p">,</span>
 
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">message</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">message</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span> <span class="c1">--&gt; Greeting</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; Hello there!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Name</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Greeting</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Hello there!</span>
 
-<span class="n">message</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Goodbye friend!&quot;</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1">-- important: changes are applied on the next frame!</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; Goodbye friend!</span>
+<span class="nv">message</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;Goodbye friend!&quot;</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span><span class="w"> </span><span class="c1">-- important: changes are applied on the next frame!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Goodbye friend!</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>The <code>New</code> function is called in two parts. First, call the function with the
 type of instance, then pass in the property table:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">)({</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">,</span>
-    <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">New</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">)({</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div>
 <p>If you're using curly braces <code>{}</code> for your properties, and quotes <code>'' ""</code> for
 your class type, the extra parentheses <code>()</code> are optional:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This only works when you&#39;re using curly braces {} and quotes &#39;&#39; &quot;&quot;!</span>
-<span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">,</span>
-    <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>By design, <code>New</code> works just like <code>Hydrate</code> - it will apply properties the same

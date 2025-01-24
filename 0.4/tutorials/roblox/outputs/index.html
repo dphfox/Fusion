@@ -2922,73 +2922,73 @@
 <!-- Markdown content -->
 <p><code>Out</code> is a function that returns keys to use when hydrating or creating an
 instance. Those keys let you output a property's value to a <code>Value</code> object.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">name</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">()</span>
 
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Out</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Part</span>
 
-<span class="n">thing</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Jimmy&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Jimmy</span>
+<span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Jimmy&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Jimmy</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p><code>Out</code> doesn't need a scope - import it into your code from Fusion directly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">Out</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Out</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Out</span>
 </code></pre></div>
 <p>When you call <code>Out</code> with a property name, it will return a special key:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">key</span> <span class="o">=</span> <span class="n">Out</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">Out</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>When used in a property table, you can pass in a <code>Value</code> object. It will be set
 to the value of the property, and when the property changes, it will be set to
 the new value:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">name</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">()</span>
 
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Out</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">name</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nf">Out</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Part</span>
 
-<span class="n">thing</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Jimmy&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Jimmy</span>
+<span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Jimmy&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Jimmy</span>
 </code></pre></div>
 <p>If you're using quotes <code>'' ""</code> for the event name, the extra parentheses <code>()</code>
 are optional:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Out</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="two-way-binding">Two-Way Binding<a class="headerlink" href="#two-way-binding" title="Permanent link">&para;</a></h2>
 <p>By default, <code>Out</code> only <em>outputs</em> changes to the property. If you set the value
 to something else, the property remains the same:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">name</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">()</span>
 
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">-- When `thing.Name` changes, set `name`</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Out</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="c1">-- When `thing.Name` changes, set `name`</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part Part</span>
-<span class="n">name</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part NewName</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Part Part</span>
+<span class="nv">name</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Part NewName</span>
 </code></pre></div>
 <p>If you want the value to both <em>change</em> and <em>be changed</em> by the property, you
 need to explicitly say so:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">name</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">()</span>
 
-<span class="kd">local</span> <span class="n">thing</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-<span class="hll">    <span class="n">Name</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">-- When `name` changes, set `thing.Name`</span>
-</span>    <span class="p">[</span><span class="n">Out</span> <span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">-- When `thing.Name` changes, set `name`</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">thing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="c1">-- When `name` changes, set `thing.Name`</span>
+</span><span class="w">    </span><span class="p">[</span><span class="nv">Out</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="c1">-- When `thing.Name` changes, set `name`</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; Part Part</span>
-<span class="n">name</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">peek</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="c1">--&gt; NewName NewName</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; Part Part</span>
+<span class="nv">name</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;NewName&quot;</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nv">thing</span><span class="p">.</span><span class="py">Name</span><span class="p">,</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">name</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; NewName NewName</span>
 </span></code></pre></div>
 <p>This is known as two-way binding. Most of the time you won't need it, but it can
 come in handy when working with some kinds of UI - for example, a text box that

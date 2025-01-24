@@ -2993,10 +2993,10 @@
         -&gt; Tasks...
     </span>
 <a class="headerlink" href="#insert-tasks" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">insert</span><span class="o">&lt;</span><span class="n">Tasks</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="p">...:</span> <span class="n">Tasks</span><span class="p">...</span>
-<span class="p">):</span> <span class="n">Tasks</span><span class="p">...</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Fusion</span><span class="p">.</span><span class="nf">insert</span><span class="o">&lt;</span><span class="nv">Tasks</span><span class="o">..</span><span class="p">.</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Scope</span><span class="o">&lt;</span><span class="nv">unknown</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">...:</span><span class="w"> </span><span class="nv">Tasks</span><span class="o">..</span><span class="p">.</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Tasks</span><span class="o">..</span><span class="p">.</span>
 </code></pre></div>
 <p>Inserts destruction <a href="../../types/task">tasks</a> passed in to the
 <a href="../../types/scope">scope</a>. Returns the clean up tasks to be used for variable
@@ -3004,9 +3004,9 @@ declarations.</p>
 <div class="admonition success">
 <p class="admonition-title">Use scoped() method syntax</p>
 <p>This function is intended to be accessed as a method on a scope:
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">conn</span><span class="p">,</span> <span class="n">ins</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">insert</span><span class="p">(</span>
-    <span class="n">RunService</span><span class="p">.</span><span class="n">Heartbeat</span><span class="p">:</span><span class="n">Connnect</span><span class="p">(</span><span class="n">doUpdate</span><span class="p">),</span>
-    <span class="n">Instance</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">,</span> <span class="n">workspace</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">conn</span><span class="p">,</span><span class="w"> </span><span class="nv">ins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">insert</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">RunService</span><span class="p">.</span><span class="py">Heartbeat</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">doUpdate</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Instance</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">&quot;Part&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">workspace</span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div></p>
 </div>

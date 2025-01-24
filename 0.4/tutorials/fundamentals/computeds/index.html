@@ -2938,18 +2938,18 @@
 objects.</p>
 <p>You pass in a callback to define a calculation. Then, you can use
 <code>peek()</code> to read the result of the calculation at any time.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">numCoins</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">itemPrice</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">numCoins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">itemPrice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">finalCoins</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">numCoins</span><span class="p">)</span> <span class="o">-</span> <span class="n">use</span><span class="p">(</span><span class="n">itemPrice</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">finalCoins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">numCoins</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">itemPrice</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">))</span> <span class="c1">--&gt; 40</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">finalCoins</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 40</span>
 
-<span class="n">numCoins</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
-<span class="n">itemPrice</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">finalCoins</span><span class="p">))</span> <span class="c1">--&gt; 10</span>
+<span class="nv">numCoins</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">itemPrice</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">finalCoins</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 10</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
@@ -2959,9 +2959,9 @@ later; for the first part of this tutorial, they'll be left unnamed.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">6</span>
 <span class="normal">7</span>
 <span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">hardMaths</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-</span><span class="hll">    <span class="kr">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">hardMaths</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+</span><span class="hll"><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
 </span><span class="hll"><span class="kr">end</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
 <p>The value the callback returns will be stored as the computed's value. You can
@@ -2971,12 +2971,12 @@ get the computed's current value using <code>peek()</code>:</p>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">hardMaths</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">hardMaths</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">hardMaths</span><span class="p">))</span> <span class="c1">--&gt; 2</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">hardMaths</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 2</span>
 </span></code></pre></div></td></tr></table></div>
 <p>The calculation should be <em>immediate</em> - that is, it should never delay. That
 means you should not use computed objects when you need to wait for something to
@@ -2995,17 +2995,17 @@ objects inside the calculation, your code breaks quickly:</p>
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
-<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 2 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 2 4</span>
 
 <span class="c1">-- The calculation won&#39;t re-run! Oh no!</span>
-<span class="hll"><span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 10 4</span>
+<span class="hll"><span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 10 4</span>
 </span></code></pre></div></td></tr></table></div>
 <p>Instead, the computed object provides a <code>use</code> function as the first argument.
 As your logic runs, you can call this function with different state objects. If
@@ -3021,18 +3021,18 @@ any of them changes, then the computed throws everything away and recalculates.<
 <span class="normal">14</span>
 <span class="normal">15</span>
 <span class="normal">16</span>
-<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-<span class="hll">    <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="c1">-- the calculation will re-run when `number` changes value</span>
-</span>    <span class="kr">return</span> <span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="hll"><span class="w">    </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="c1">-- the calculation will re-run when `number` changes value</span>
+</span><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 2 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 2 4</span>
 
 <span class="c1">-- Now it re-runs!</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 10 20</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 10 20</span>
 </code></pre></div></td></tr></table></div>
 <p>For convenience, <code>use()</code> will also read the value, just like <code>peek()</code>, so you
 can easily replace <code>peek()</code> calls with <code>use()</code> calls. This keeps your logic
@@ -3046,30 +3046,30 @@ concise, readable and easily copyable.</p>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-<span class="hll">    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="hll"><span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 </span><span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 2 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 2 4</span>
 
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">peek</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="n">peek</span><span class="p">(</span><span class="n">double</span><span class="p">))</span> <span class="c1">--&gt; 10 20</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nf">peek</span><span class="p">(</span><span class="nv">number</span><span class="p">),</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">double</span><span class="p">))</span><span class="w"> </span><span class="c1">--&gt; 10 20</span>
 </code></pre></div></td></tr></table></div>
 <p>It's recommended you always give the first parameter the name <code>use</code>, even if it
 already exists. This helps prevent you from using the wrong parameter if you
 have multiple computed objects at the same time.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-    <span class="c1">-- ...</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-        <span class="c1">-- ...</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-            <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="kr">end</span><span class="p">)</span>
-        <span class="c1">-- ...</span>
-    <span class="kr">end</span><span class="p">)</span>
-    <span class="c1">-- ...</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- ...</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">-- ...</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">-- ...</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- ...</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <details class="warning">
@@ -3110,24 +3110,24 @@ add cleanup tasks.</p>
 <span class="normal">20</span>
 <span class="normal">21</span>
 <span class="normal">22</span>
-<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
-    <span class="kd">local</span> <span class="n">current</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
-    <span class="c1">-- suppose we want to run some cleanup code for stuff in here</span>
-<span class="hll">    <span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
-</span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Destroying&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
-    <span class="kr">end</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">current</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">_</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">current</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- suppose we want to run some cleanup code for stuff in here</span>
+<span class="hll"><span class="w">    </span><span class="nb">table.insert</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Destroying&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">current</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting to 25...&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting to 2...&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...cleaning up...&quot;</span><span class="p">)</span>
-<span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+<span class="nf">doCleanup</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -3169,23 +3169,23 @@ when the computed object recalculates.</p>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
-<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="hll"><span class="kd">local</span> <span class="n">double</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">myBrandNewScope</span><span class="p">)</span>
-</span>    <span class="kd">local</span> <span class="n">current</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
-<span class="hll">    <span class="nb">table.insert</span><span class="p">(</span><span class="n">myBrandNewScope</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
-</span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Destroying&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
-    <span class="kr">end</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">current</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">myBrandNewScope</span><span class="p">)</span>
+</span><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">current</span><span class="p">)</span>
+<span class="hll"><span class="w">    </span><span class="nb">table.insert</span><span class="p">(</span><span class="nv">myBrandNewScope</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+</span><span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Destroying&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">current</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting to 25...&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...setting to 2...&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...cleaning up...&quot;</span><span class="p">)</span>
-<span class="n">doCleanup</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+<span class="nf">doCleanup</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -3208,17 +3208,17 @@ object throws away the old calculation.</p>
 <p>It can help to give this parameter the same name as the original scope. This
 stops you from accidentally using the original scope inside the computed, and
 makes your code more easily copyable and movable.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
-    <span class="c1">-- ...</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
-        <span class="c1">-- ...</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
-            <span class="kd">local</span> <span class="n">innerValue</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-        <span class="kr">end</span><span class="p">)</span>
-        <span class="c1">-- ...</span>
-    <span class="kr">end</span><span class="p">)</span>
-    <span class="c1">-- ...</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- ...</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">-- ...</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">)</span>
+<span class="w">            </span><span class="kd">local</span><span class="w"> </span><span class="nv">innerValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">-- ...</span>
+<span class="w">    </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- ...</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <details class="warning">

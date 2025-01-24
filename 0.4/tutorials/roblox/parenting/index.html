@@ -2910,105 +2910,105 @@
 instance.</p>
 <p>It accepts instances, arrays of children, and state objects containing children
 or <code>nil</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-            <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Sammy&quot;</span><span class="p">,</span>
-            <span class="n">Material</span> <span class="o">=</span> <span class="s2">&quot;Glass&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Sammy&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Material</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Glass&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p><code>Children</code> doesn't need a scope - import it into your code from Fusion
 directly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">Children</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Children</span>
 </code></pre></div>
 <p>When using <code>New</code> or <code>Hydrate</code>, you can use <code>[Children]</code> as a key in the property
 table. Any instance you pass in will be parented:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="c1">-- The part will be moved inside of the folder</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">.</span><span class="n">Part</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- The part will be moved inside of the folder</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">.</span><span class="py">Part</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Since <code>New</code> and <code>Hydrate</code> both return their instances, you can nest them:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Makes a Folder, containing a part called Gregory</span>
-<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-        <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-        <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>If you need to parent multiple children, arrays of children are accepted:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Makes a Folder, containing parts called Gregory and Sammy</span>
-<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-            <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Sammy&quot;</span><span class="p">,</span>
-            <span class="n">Material</span> <span class="o">=</span> <span class="s2">&quot;Glass&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Sammy&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Material</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Glass&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Arrays can be nested to any depth; all children will still be parented:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="p">{</span>
-            <span class="p">{</span>
-                <span class="p">{</span>
-                    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-                        <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-                        <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>State objects containing children or <code>nil</code> are also allowed:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">value</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">()</span>
 
-<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">value</span>
 <span class="p">}</span>
 
-<span class="n">value</span><span class="p">:</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-        <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Clyde&quot;</span><span class="p">,</span>
-        <span class="n">Transparency</span> <span class="o">=</span> <span class="mf">0.5</span>
-    <span class="p">}</span>
+<span class="nv">value</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Clyde&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Transparency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>You may use any combination of these to parent whichever children you need:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">modelChildren</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">.</span><span class="n">Model</span><span class="p">:</span><span class="n">GetChildren</span><span class="p">()</span>
-<span class="kd">local</span> <span class="n">includeModel</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">modelChildren</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">.</span><span class="py">Model</span><span class="p">:</span><span class="nf">GetChildren</span><span class="p">()</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">includeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-    <span class="c1">-- array of children</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="c1">-- single instance</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-            <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="c1">-- state object containing children (or nil)</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-            <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">includeModel</span><span class="p">)</span>
-                <span class="kr">then</span> <span class="n">modelChildren</span><span class="p">:</span><span class="n">GetChildren</span><span class="p">()</span> <span class="c1">-- array of children</span>
-                <span class="kr">else</span> <span class="kc">nil</span>
-        <span class="kr">end</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- array of children</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">-- single instance</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">-- state object containing children (or nil)</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">includeModel</span><span class="p">)</span>
+<span class="w">                </span><span class="kr">then</span><span class="w"> </span><span class="nv">modelChildren</span><span class="p">:</span><span class="nf">GetChildren</span><span class="p">()</span><span class="w"> </span><span class="c1">-- array of children</span>
+<span class="w">                </span><span class="kr">else</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <div class="admonition tip">
@@ -3019,22 +3019,22 @@ problems when listing out children.</p>
 <p>If you're seeing type errors, try importing the
 <a href="../../../api-reference/roblox/members/child"><code>Child</code> function</a>
 and using it when listing out children:</p>
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">Child</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">Child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Child</span>
 </span>
 <span class="c1">-- ... later ...</span>
 
-<span class="kd">local</span> <span class="n">folder</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Folder&quot;</span> <span class="p">{</span>
-<span class="hll">    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">Child</span> <span class="p">{</span>
-</span>        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Part&quot;</span> <span class="p">{</span>
-            <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
-            <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-            <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">includeModel</span><span class="p">)</span>
-                <span class="kr">then</span> <span class="n">modelChildren</span><span class="p">:</span><span class="n">GetChildren</span><span class="p">()</span> <span class="c1">-- array of children</span>
-                <span class="kr">else</span> <span class="kc">nil</span>
-        <span class="kr">end</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Folder&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Child</span><span class="w"> </span><span class="p">{</span>
+</span><span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Part&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Gregory&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">includeModel</span><span class="p">)</span>
+<span class="w">                </span><span class="kr">then</span><span class="w"> </span><span class="nv">modelChildren</span><span class="p">:</span><span class="nf">GetChildren</span><span class="p">()</span><span class="w"> </span><span class="c1">-- array of children</span>
+<span class="w">                </span><span class="kr">else</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The <code>Child</code> function doesn't do any processing, but instead encourages the

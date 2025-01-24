@@ -3058,15 +3058,15 @@
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
     <span class="fusiondoc-api-name">GraphObject</span>
 <a class="headerlink" href="#graphobject" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">GraphObject</span> <span class="o">=</span> <span class="n">ScopedObject</span> <span class="o">&amp;</span> <span class="p">{</span>
-    <span class="n">createdAt</span><span class="p">:</span> <span class="n">number</span>
-    <span class="n">dependencySet</span><span class="p">:</span> <span class="p">{[</span><span class="n">GraphObject</span><span class="p">]:</span> <span class="n">unknown</span><span class="p">},</span>
-    <span class="n">dependentSet</span><span class="p">:</span> <span class="p">{[</span><span class="n">GraphObject</span><span class="p">]:</span> <span class="n">unknown</span><span class="p">},</span>
-    <span class="n">lastChange</span><span class="p">:</span> <span class="n">number</span><span class="err">?</span><span class="p">,</span>
-    <span class="n">timeliness</span><span class="p">:</span> <span class="s2">&quot;lazy&quot;</span> <span class="o">|</span> <span class="s2">&quot;eager&quot;</span><span class="p">,</span>
-    <span class="n">validity</span><span class="p">:</span> <span class="s2">&quot;valid&quot;</span> <span class="o">|</span> <span class="s2">&quot;invalid&quot;</span> <span class="o">|</span> <span class="s2">&quot;busy&quot;</span><span class="p">,</span>
-    <span class="n">_evaluate</span><span class="p">:</span> <span class="p">(</span><span class="n">GraphObject</span><span class="p">,</span> <span class="n">lastChange</span><span class="p">:</span> <span class="n">number</span><span class="err">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">boolean</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">export</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span><span class="nv">GraphObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ScopedObject</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">createdAt</span><span class="p">:</span><span class="w"> </span><span class="py">number</span>
+<span class="w">    </span><span class="nv">dependencySet</span><span class="p">:</span><span class="w"> </span><span class="err">{[</span><span class="py">GraphObject</span><span class="p">]:</span><span class="w"> </span><span class="nv">unknown</span><span class="p">},</span>
+<span class="w">    </span><span class="nv">dependentSet</span><span class="p">:</span><span class="w"> </span><span class="err">{[</span><span class="py">GraphObject</span><span class="p">]:</span><span class="w"> </span><span class="nv">unknown</span><span class="p">},</span>
+<span class="w">    </span><span class="nv">lastChange</span><span class="p">:</span><span class="w"> </span><span class="py">number</span><span class="err">?</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">timeliness</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;</span><span class="py">lazy</span><span class="s2">&quot; | &quot;</span><span class="nv">eager</span><span class="s2">&quot;,</span>
+<span class="s2">    validity: &quot;</span><span class="nv">valid</span><span class="s2">&quot; | &quot;</span><span class="nv">invalid</span><span class="s2">&quot; | &quot;</span><span class="nv">busy</span><span class="s2">&quot;,</span>
+<span class="s2">    _evaluate: (GraphObject, lastChange: number?) -&gt; boolean</span>
+<span class="s2">}</span>
 </code></pre></div>
 <p>A reactive graph object which can broadcast and receive updates among other
 members of the reactive graph.</p>
@@ -3139,7 +3139,7 @@ the middle of a revalidation.</p>
         -&gt; boolean
     </span>
 <a class="headerlink" href="#_evaluate-boolean" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">GraphObject</span><span class="p">:</span><span class="nf">_evaluate</span><span class="p">():</span> <span class="n">boolean</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">GraphObject</span><span class="p">:</span><span class="nf">_evaluate</span><span class="p">():</span><span class="w"> </span><span class="nv">boolean</span>
 </code></pre></div>
 <p>Called by Fusion while the graph object is in the process of being evaluated.
 This is where logic to do with computational updates should be placed.</p>

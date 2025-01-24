@@ -2908,34 +2908,34 @@
 <!-- Markdown content -->
 <p><code>OnEvent</code> is a function that returns keys to use when hydrating or creating an
 instance. Those keys let you connect functions to events on the instance.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">,</span> <span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p><code>OnEvent</code> doesn't need a scope - import it into your code from Fusion directly.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">OnEvent</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">OnEvent</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">OnEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">OnEvent</span>
 </code></pre></div>
 <p>When you call <code>OnEvent</code> with an event name, it will return a special key:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">key</span> <span class="o">=</span> <span class="n">OnEvent</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">OnEvent</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>When that key is used in a property table, you can pass in a handler and it will
 be connected to the event for you:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnEvent</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">,</span> <span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nf">OnEvent</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>If you're using quotes <code>'' ""</code> for the event name, the extra parentheses <code>()</code>
 are optional:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">button</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span> <span class="n">numClicks</span><span class="p">,</span> <span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">_</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The button was pressed&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">numClicks</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;time(s)!&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="p">}</span>
 </code></pre></div>
 

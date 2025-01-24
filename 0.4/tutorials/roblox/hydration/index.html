@@ -2925,58 +2925,58 @@ and hiding buttons.</p>
 <p>Fusion provides a <code>Hydrate</code> function for hydrating an instance using a table
 of properties. If you pass in Fusion objects, changes will be applied
 immediately:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">showUI</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">showUI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">StarterGui</span><span class="p">.</span><span class="n">Template</span><span class="p">:</span><span class="n">Clone</span><span class="p">())</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;MainGui&quot;</span><span class="p">,</span>
-    <span class="n">Enabled</span> <span class="o">=</span> <span class="n">showUI</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Hydrate</span><span class="p">(</span><span class="nv">StarterGui</span><span class="p">.</span><span class="py">Template</span><span class="p">:</span><span class="nf">Clone</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MainGui&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">showUI</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span> <span class="c1">--&gt; MainGui</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Enabled</span><span class="p">)</span> <span class="c1">--&gt; false</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Name</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; MainGui</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Enabled</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; false</span>
 
-<span class="n">showUI</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1">-- important: changes are applied on the next frame!</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ui</span><span class="p">.</span><span class="n">Enabled</span><span class="p">)</span> <span class="c1">--&gt; true</span>
+<span class="nv">showUI</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span><span class="w"> </span><span class="c1">-- important: changes are applied on the next frame!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">ui</span><span class="p">.</span><span class="py">Enabled</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; true</span>
 </code></pre></div>
 <hr />
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>The <code>Hydrate</code> function is called in two parts. First, call the function with the
 instance you want to hydrate, then pass in the property table:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">.</span><span class="n">Part</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">.</span><span class="py">Part</span>
 
-<span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">instance</span><span class="p">)({</span>
-    <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Hydrate</span><span class="p">(</span><span class="nv">instance</span><span class="p">)({</span>
+<span class="w">    </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div>
 <p>If you're using curly braces <code>{}</code> to pass your properties in, the extra
 parentheses <code>()</code> are optional:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">workspace</span><span class="p">.</span><span class="n">Part</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">workspace</span><span class="p">.</span><span class="py">Part</span>
 
 <span class="c1">-- This only works when you&#39;re using curly braces {}!</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Hydrate</span><span class="p">(</span><span class="nv">instance</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 <p><code>Hydrate</code> returns the instance you give it, so you can use it in declarations:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">workspace</span><span class="p">.</span><span class="n">Part</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Color</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Hydrate</span><span class="p">(</span><span class="nv">workspace</span><span class="p">.</span><span class="py">Part</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>If you pass in constant values for properties, they'll be applied to the
 instance directly. However, if you pass in a Fusion object (like <code>Value</code>), then
 changes will be applied immediately:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;Loading...&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;Loading...&quot;</span><span class="p">)</span>
 
-<span class="n">scope</span><span class="p">:</span><span class="n">Hydrate</span><span class="p">(</span><span class="n">PlayerGui</span><span class="p">.</span><span class="n">LoadingText</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="n">message</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Hydrate</span><span class="p">(</span><span class="nv">PlayerGui</span><span class="p">.</span><span class="py">LoadingText</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">message</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">PlayerGui</span><span class="p">.</span><span class="n">Message</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; Loading...</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">PlayerGui</span><span class="p">.</span><span class="py">Message</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; Loading...</span>
 
-<span class="n">message</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;All done!&quot;</span><span class="p">)</span>
-<span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1">-- important: changes are applied on the next frame!</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">PlayerGui</span><span class="p">.</span><span class="n">Message</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="c1">--&gt; All done!</span>
+<span class="nv">message</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;All done!&quot;</span><span class="p">)</span>
+<span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span><span class="w"> </span><span class="c1">-- important: changes are applied on the next frame!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">PlayerGui</span><span class="p">.</span><span class="py">Message</span><span class="p">.</span><span class="py">Text</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; All done!</span>
 </code></pre></div>
 
 <!-- Source file information -->

@@ -2928,28 +2928,28 @@ of instances by combining simpler, self-contained parts.</p>
 <p>Anything you return from a component should be supported by
 <a href="../../roblox/parenting/"><code>[Children]</code></a>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- returns an instance</span>
-<span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{}</span>
 
 <span class="c1">-- returns an array of instances</span>
-<span class="kr">return</span> <span class="p">{</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
+<span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{}</span>
 <span class="p">}</span>
 
 <span class="c1">-- returns a state object containing instances</span>
-<span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">number</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{}</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="c1">-- mix of arrays, instances and state objects</span>
-<span class="kr">return</span> <span class="p">{</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-    <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span> <span class="p">...</span> <span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span> <span class="p">...</span> <span class="p">)</span>
+<span class="kr">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 <div class="admonition failure">
@@ -2957,21 +2957,21 @@ of instances by combining simpler, self-contained parts.</p>
 <p>Don't return multiple values directly from your function. When a function
 returns multiple values directly, the extra returned values can easily get
 lost.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">BadThing</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
-    <span class="c1">-- returns *multiple* instances (not surrounded by curly braces!)</span>
-    <span class="kr">return</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">BadThing</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">props</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">-- returns *multiple* instances (not surrounded by curly braces!)</span>
+<span class="w">    </span><span class="kr">return</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{}</span>
 <span class="kr">end</span>
 
-<span class="kd">local</span> <span class="n">things</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1">-- Luau doesn&#39;t let you add multiple returns to a list like this.</span>
-    <span class="c1">-- Only the first Frame will be added.</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">BadThing</span> <span class="p">{},</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">things</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- Luau doesn&#39;t let you add multiple returns to a list like this.</span>
+<span class="w">    </span><span class="c1">-- Only the first Frame will be added.</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">BadThing</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{}</span>
 <span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">things</span><span class="p">)</span> <span class="c1">--&gt; { Frame, TextButton }</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">things</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; { Frame, TextButton }</span>
 </code></pre></div>
 <p>Instead, you should return them inside of an array. Because the array is a
 single return value, it won't get lost.</p>
@@ -2979,40 +2979,40 @@ single return value, it won't get lost.</p>
 <p>If your returns are compatible with <code>[Children]</code> like above, you can insert a
 component anywhere you'd normally insert an instance.</p>
 <p>You can pass in one component on its own...</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-<span class="hll">    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">        <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span>
-</span><span class="hll">    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">        </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span>
+</span><span class="hll"><span class="w">    </span><span class="p">}</span>
 </span><span class="p">}</span>
 </code></pre></div>
 <p>...you can include components as part of an array..</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{},</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIListLayout&quot;</span><span class="w"> </span><span class="p">{},</span>
 
-<span class="hll">        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, world!&quot;</span>
-</span><span class="hll">        <span class="p">},</span>
+<span class="hll"><span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
 </span>
-<span class="hll">        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Hello, again!&quot;</span>
-</span><span class="hll">        <span class="p">}</span>
-</span>    <span class="p">}</span>
+<span class="hll"><span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello, again!&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">}</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>...and you can return them from state objects, too.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">stuff</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;Fusion&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">stuff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;world&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;from&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Fusion&quot;</span><span class="p">}</span>
 
-<span class="kd">local</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{},</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIListLayout&quot;</span><span class="w"> </span><span class="p">{},</span>
 
-        <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">stuff</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="hll">            <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-</span><span class="hll">                <span class="n">Text</span> <span class="o">=</span> <span class="n">text</span>
-</span><span class="hll">            <span class="p">}</span>
-</span>        <span class="kr">end</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">(</span><span class="nv">stuff</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">text</span><span class="p">)</span>
+<span class="hll"><span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">                </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">text</span>
+</span><span class="hll"><span class="w">            </span><span class="p">}</span>
+</span><span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
@@ -3026,15 +3026,15 @@ own content inside.</p>
 <img alt="Separating the pop-up container from the pop-up contents." src="Popup-Exploded-Light.svg#only-light" /></p>
 <p>The simplest way to do this is to pass instances through to <code>[Children]</code>. For
 example, if you accept a table of <code>props</code>, you can add a <code>[Children]</code> key:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PopUp</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-<span class="hll">        <span class="p">[</span><span class="n">typeof</span><span class="p">(</span><span class="n">Children</span><span class="p">)]:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
-</span>    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">PopUp</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="hll"><span class="w">        </span><span class="err">[</span><span class="nf">typeof</span><span class="p">(</span><span class="nv">Children</span><span class="p">)]:</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Children</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-<span class="hll">        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="n">Children</span><span class="p">]</span>
-</span>    <span class="p">}</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">        </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">props</span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <div class="admonition tip">
@@ -3044,35 +3044,35 @@ can make other properties and give them the <code>Fusion.Children</code> type.</
 </div>
 <p>Later on, when a pop-up is created, instances can now be parented into that
 pop-up:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">PopUp</span> <span class="p">{</span>
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Label</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;New item collected&quot;</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">ItemPreview</span> <span class="p">{</span>
-            <span class="n">Item</span> <span class="o">=</span> <span class="n">Items</span><span class="p">.</span><span class="n">BRICK</span>
-        <span class="p">},</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">Button</span> <span class="p">{</span>
-            <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Add to inventory&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="py">PopUp</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Label</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;New item collected&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">ItemPreview</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Items</span><span class="p">.</span><span class="py">BRICK</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">Button</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Add to inventory&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>If you need to add other instances, you can still use arrays and state objects
 as normal. You can include instances you're given, in exactly the same way you
 would include any other instances.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-    <span class="c1">-- ... some other properties ...</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- ... some other properties ...</span>
 
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="c1">-- the component provides some children here</span>
-        <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UICorner&quot;</span> <span class="p">{</span>
-            <span class="n">CornerRadius</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="p">},</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">-- the component provides some children here</span>
+<span class="w">        </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UICorner&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">CornerRadius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">        </span><span class="p">},</span>
 
-        <span class="c1">-- include children from outside the component here</span>
-        <span class="n">props</span><span class="p">[</span><span class="n">Children</span><span class="p">]</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">-- include children from outside the component here</span>
+<span class="w">        </span><span class="nv">props</span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 

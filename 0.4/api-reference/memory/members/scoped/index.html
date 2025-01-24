@@ -2979,9 +2979,9 @@
         -&gt; <a href="../../types/scope">Scope</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#scoped-scopet" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">scoped</span><span class="o">&lt;</span><span class="n">Methods</span><span class="p">...</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="p">...:</span> <span class="p">(</span><span class="n">Methods</span> <span class="o">&amp;</span> <span class="p">{})...</span>
-<span class="p">):</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">merge</span><span class="p">(</span><span class="n">Methods</span><span class="p">)</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Fusion</span><span class="p">.</span><span class="nf">scoped</span><span class="o">&lt;</span><span class="nv">Methods</span><span class="o">..</span><span class="p">.</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="p">...:</span><span class="w"> </span><span class="p">(</span><span class="nv">Methods</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{})...</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Scope</span><span class="o">&lt;</span><span class="nf">merge</span><span class="p">(</span><span class="nv">Methods</span><span class="p">)</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>Returns a blank <a href="../../types/scope">scope</a>. Any method tables passed in as
 arguments are merged together, and used as the <code>__index</code> of the new scope, such

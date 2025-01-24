@@ -3007,25 +3007,25 @@ any code.</p>
 <span class="normal">6</span>
 <span class="normal">7</span>
 <span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
 
-<span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">background</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">),</span>
-    <span class="c1">-- etc.</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">colours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="c1">-- etc.</span>
 <span class="p">}</span>
 
-<span class="kr">return</span> <span class="n">Theme</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">Theme</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">textColour</span> <span class="o">=</span> <span class="n">Theme</span><span class="p">.</span><span class="n">colours</span><span class="p">.</span><span class="n">text</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">textColour</span><span class="p">)</span> <span class="c1">--&gt; 34, 34, 34</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">textColour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Theme</span><span class="p">.</span><span class="py">colours</span><span class="p">.</span><span class="py">text</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">textColour</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; 34, 34, 34</span>
 </code></pre></div></td></tr></table></div>
 </div>
 </div>
@@ -3057,29 +3057,29 @@ codebase will be able to see and interact with those state objects.</p>
 <span class="normal">20</span>
 <span class="normal">21</span>
 <span class="normal">22</span>
-<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
 
-<span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">background</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">light</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
-        <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">light</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
-        <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="c1">-- etc.</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">colours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">dark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nv">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">dark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">-- etc.</span>
 <span class="p">}</span>
 
-<span class="kr">function</span> <span class="nc">Theme</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span>
+<span class="kr">function</span><span class="w"> </span><span class="nc">Theme</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span>
 <span class="p">)</span>
-    <span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
 <span class="kr">end</span>
 
-<span class="kr">return</span> <span class="n">Theme</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">Theme</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -3101,25 +3101,25 @@ codebase will be able to see and interact with those state objects.</p>
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span>
-<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span><span class="p">,</span> <span class="n">peek</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">peek</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="p">,</span><span class="w"> </span><span class="nv">peek</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span><span class="p">,</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">peek</span>
 
-<span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">printTheme</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">theme</span> <span class="o">=</span> <span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="n">peek</span><span class="p">(</span><span class="n">theme</span><span class="p">),</span> 
-        <span class="kr">if</span> <span class="n">typeof</span><span class="p">(</span><span class="n">theme</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span> <span class="kr">then</span> <span class="s2">&quot;constant&quot;</span> <span class="kr">else</span> <span class="s2">&quot;state object&quot;</span>
-    <span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">printTheme</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">peek</span><span class="p">(</span><span class="nv">theme</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nf">typeof</span><span class="p">(</span><span class="nv">theme</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="s2">&quot;constant&quot;</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="s2">&quot;state object&quot;</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="kr">end</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="n">Theme</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
-<span class="n">printTheme</span><span class="p">()</span> <span class="c1">--&gt; light state object</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">scope</span><span class="p">)</span>
+<span class="nf">printTheme</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; light state object</span>
 
-<span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
-<span class="n">printTheme</span><span class="p">()</span> <span class="c1">--&gt; dark state object</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
+<span class="nf">printTheme</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; dark state object</span>
 </code></pre></div></td></tr></table></div>
 </div>
 </div>
@@ -3185,23 +3185,23 @@ this, Fusion introduces <em>contextual values</em>, which can be temporarily cha
 for the duration of a code block.</p>
 <p>To create a contextual, call the <code>Contextual</code> function from Fusion. It asks for
 a default value.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myContextual</span> <span class="o">=</span> <span class="n">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">myContextual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>At any time, you can query its current value using the <code>:now()</code> method.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myContextual</span> <span class="o">=</span> <span class="n">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myContextual</span><span class="p">:</span><span class="n">now</span><span class="p">())</span> <span class="c1">--&gt; foo</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">myContextual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">myContextual</span><span class="p">:</span><span class="nf">now</span><span class="p">())</span><span class="w"> </span><span class="c1">--&gt; foo</span>
 </code></pre></div>
 <p>You can override the value for a limited span of time using <code>:is():during()</code>.
 Pass the temporary value to <code>:is()</code>, and pass a callback to <code>:during()</code>.</p>
 <p>While the callback is running, the contextual will adopt the temporary value.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">myContextual</span> <span class="o">=</span> <span class="n">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">myContextual</span><span class="p">:</span><span class="n">now</span><span class="p">())</span> <span class="c1">--&gt; foo</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">myContextual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">Contextual</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">myContextual</span><span class="p">:</span><span class="nf">now</span><span class="p">())</span><span class="w"> </span><span class="c1">--&gt; foo</span>
 
-<span class="n">myContextual</span><span class="p">:</span><span class="n">is</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">):</span><span class="n">during</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">myContextual</span><span class="p">:</span><span class="n">now</span><span class="p">())</span> <span class="c1">--&gt; bar</span>
+<span class="nv">myContextual</span><span class="p">:</span><span class="nf">is</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">):</span><span class="nf">during</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">myContextual</span><span class="p">:</span><span class="nf">now</span><span class="p">())</span><span class="w"> </span><span class="c1">--&gt; bar</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">myContextual</span><span class="p">:</span><span class="n">now</span><span class="p">())</span> <span class="c1">--&gt; foo</span>
+<span class="nb">print</span><span class="p">(</span><span class="nv">myContextual</span><span class="p">:</span><span class="nf">now</span><span class="p">())</span><span class="w"> </span><span class="c1">--&gt; foo</span>
 </code></pre></div>
 <p>By storing widely-used values inside contextuals, you can isolate different
 code paths from each other, while retaining the easy, hidden referencing that
@@ -3230,26 +3230,26 @@ and helps you locate which code is modifying any shared values.</p>
 <span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
-<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">Contextual</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Contextual</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Contextual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Contextual</span>
 
-<span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
 
-<span class="n">Theme</span><span class="p">.</span><span class="n">colours</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">background</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">light</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
-        <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">light</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
-        <span class="n">dark</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
-    <span class="p">},</span>
-    <span class="c1">-- etc.</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">colours</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">dark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nv">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">dark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">fromHex</span><span class="p">(</span><span class="s2">&quot;222222&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="c1">-- etc.</span>
 <span class="p">}</span>
 
-<span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span> <span class="o">=</span> <span class="n">Contextual</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">Contextual</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
 
-<span class="kr">return</span> <span class="n">Theme</span>
+<span class="kr">return</span><span class="w"> </span><span class="nv">Theme</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <div class="tabbed-block">
@@ -3276,30 +3276,30 @@ and helps you locate which code is modifying any shared values.</p>
 <span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span>
-<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">scoped</span><span class="p">,</span> <span class="n">peek</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span><span class="p">,</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">peek</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Fusion.luau&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="p">,</span><span class="w"> </span><span class="nv">peek</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span><span class="p">,</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">peek</span>
 
-<span class="kd">local</span> <span class="n">Theme</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">require</span><span class="p">(</span><span class="s2">&quot;path/to/Theme.luau&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">printTheme</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">theme</span> <span class="o">=</span> <span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span><span class="p">:</span><span class="n">now</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="n">peek</span><span class="p">(</span><span class="n">theme</span><span class="p">),</span> 
-        <span class="kr">if</span> <span class="n">typeof</span><span class="p">(</span><span class="n">theme</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span> <span class="kr">then</span> <span class="s2">&quot;constant&quot;</span> <span class="kr">else</span> <span class="s2">&quot;state object&quot;</span>
-    <span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">printTheme</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span><span class="p">:</span><span class="nf">now</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span>
+<span class="w">        </span><span class="nf">peek</span><span class="p">(</span><span class="nv">theme</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nf">typeof</span><span class="p">(</span><span class="nv">theme</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="s2">&quot;constant&quot;</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="s2">&quot;state object&quot;</span>
+<span class="w">    </span><span class="p">)</span>
 <span class="kr">end</span>
 
-<span class="n">printTheme</span><span class="p">()</span> <span class="c1">--&gt; light constant</span>
+<span class="nf">printTheme</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; light constant</span>
 
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">override</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
-<span class="n">Theme</span><span class="p">.</span><span class="n">currentTheme</span><span class="p">:</span><span class="n">is</span><span class="p">(</span><span class="n">override</span><span class="p">):</span><span class="n">during</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="n">printTheme</span><span class="p">()</span>  <span class="c1">--&gt; light state object</span>
-    <span class="n">override</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
-    <span class="n">printTheme</span><span class="p">()</span> <span class="c1">--&gt; dark state object</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">)</span>
+<span class="nv">Theme</span><span class="p">.</span><span class="py">currentTheme</span><span class="p">:</span><span class="nf">is</span><span class="p">(</span><span class="nv">override</span><span class="p">):</span><span class="nf">during</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nf">printTheme</span><span class="p">()</span><span class="w">  </span><span class="c1">--&gt; light state object</span>
+<span class="w">    </span><span class="nv">override</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nf">printTheme</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; dark state object</span>
 <span class="kr">end</span><span class="p">)</span>
 
-<span class="n">printTheme</span><span class="p">()</span> <span class="c1">--&gt; light constant</span>
+<span class="nf">printTheme</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; light constant</span>
 </code></pre></div></td></tr></table></div>
 </div>
 </div>

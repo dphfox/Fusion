@@ -3016,17 +3016,17 @@
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
     <span class="fusiondoc-api-name">SpecialKey</span>
 <a class="headerlink" href="#specialkey" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">SpecialKey</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;SpecialKey&quot;</span><span class="p">,</span>
-    <span class="n">kind</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-    <span class="n">stage</span><span class="p">:</span> <span class="s2">&quot;self&quot;</span> <span class="o">|</span> <span class="s2">&quot;descendants&quot;</span> <span class="o">|</span> <span class="s2">&quot;ancestor&quot;</span> <span class="o">|</span> <span class="s2">&quot;observer&quot;</span><span class="p">,</span>
-    <span class="n">apply</span><span class="p">:</span> <span class="p">(</span>
-        <span class="n">self</span><span class="p">,</span>
-        <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">value</span><span class="p">:</span> <span class="n">unknown</span><span class="p">,</span>
-        <span class="n">applyTo</span><span class="p">:</span> <span class="n">Instance</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">export</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span><span class="nv">SpecialKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">type</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SpecialKey&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">kind</span><span class="p">:</span><span class="w"> </span><span class="py">string</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">stage</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;</span><span class="py">self</span><span class="s2">&quot; | &quot;</span><span class="nv">descendants</span><span class="s2">&quot; | &quot;</span><span class="nv">ancestor</span><span class="s2">&quot; | &quot;</span><span class="nv">observer</span><span class="s2">&quot;,</span>
+<span class="s2">    apply: (</span>
+<span class="s2">        self,</span>
+<span class="s2">        scope: Scope&lt;unknown&gt;,</span>
+<span class="s2">        value: unknown,</span>
+<span class="s2">        applyTo: Instance</span>
+<span class="s2">    ) -&gt; ()</span>
+<span class="s2">}</span>
 </code></pre></div>
 <p>When used as the key in a <a href="../propertytable">property table</a>, defines a custom
 operation to apply to the created Roblox instance.</p>
@@ -3076,12 +3076,12 @@ can be observed</li>
         -&gt; ()
     </span>
 <a class="headerlink" href="#apply-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">SpecialKey</span><span class="p">:</span><span class="nf">apply</span><span class="p">(</span>
-    <span class="n">self</span><span class="p">,</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">value</span><span class="p">:</span> <span class="n">unknown</span><span class="p">,</span>
-    <span class="n">applyTo</span><span class="p">:</span> <span class="n">Instance</span>
-<span class="p">):</span> <span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">SpecialKey</span><span class="p">:</span><span class="nf">apply</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">self</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Scope</span><span class="o">&lt;</span><span class="nv">unknown</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">value</span><span class="p">:</span><span class="w"> </span><span class="py">unknown</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">applyTo</span><span class="p">:</span><span class="w"> </span><span class="py">Instance</span>
+<span class="p">):</span><span class="w"> </span><span class="p">()</span>
 </code></pre></div>
 <p>Called to apply this operation to an instance. <code>value</code> is the value from the
 property table, and <code>applyTo</code> is the instance to apply the operation to.</p>

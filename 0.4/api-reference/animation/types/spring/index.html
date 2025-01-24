@@ -3030,12 +3030,12 @@
     <span class="fusiondoc-api-icon" markdown><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M0 4.75C0 3.784.784 3 1.75 3h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0 1 22.25 21H1.75A1.75 1.75 0 0 1 0 19.25V4.75zm1.75-.25a.25.25 0 0 0-.25.25v14.5c0 .138.112.25.25.25h20.5a.25.25 0 0 0 .25-.25V4.75a.25.25 0 0 0-.25-.25H1.75z"/><path fill-rule="evenodd" d="M5 8.75A.75.75 0 0 1 5.75 8h11.5a.75.75 0 0 1 0 1.5H5.75A.75.75 0 0 1 5 8.75zm0 4a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75z"/></svg></span></span>
     <span class="fusiondoc-api-name">Spring</span>
 <a class="headerlink" href="#spring" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="n">export</span> <span class="nb">type</span> <span class="n">Spring</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">StateObject</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="p">{</span>
-    <span class="n">kind</span><span class="p">:</span> <span class="s2">&quot;Spring&quot;</span><span class="p">,</span>
-    <span class="n">setPosition</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">newPosition</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(),</span>
-    <span class="n">setVelocity</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">newVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(),</span>
-    <span class="n">addVelocity</span><span class="p">:</span> <span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">deltaVelocity</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">export</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span><span class="nv">Spring</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">StateObject</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">kind</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;</span><span class="py">Spring</span><span class="s2">&quot;,</span>
+<span class="s2">    setPosition: (self, newPosition: T) -&gt; (),</span>
+<span class="s2">    setVelocity: (self, newVelocity: T) -&gt; (),</span>
+<span class="s2">    addVelocity: (self, deltaVelocity: T) -&gt; ()</span>
+<span class="s2">}</span>
 </code></pre></div>
 <p>A specialised <a href="../stateobject">state object</a> for following a goal state smoothly
 over time, using physics to shape the motion.</p>
@@ -3060,9 +3060,9 @@ can be used to tell types of state object apart.</p>
         -&gt; ()
     </span>
 <a class="headerlink" href="#setposition-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Spring</span><span class="p">:</span><span class="nf">setPosition</span><span class="p">(</span>
-    <span class="n">newPosition</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">):</span> <span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Spring</span><span class="p">:</span><span class="nf">setPosition</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">newPosition</span><span class="p">:</span><span class="w"> </span><span class="py">T</span>
+<span class="p">):</span><span class="w"> </span><span class="p">()</span>
 </code></pre></div>
 <p>Immediately snaps the spring to the given position. The position must have the
 same <code>typeof()</code> as the goal state.</p>
@@ -3072,9 +3072,9 @@ same <code>typeof()</code> as the goal state.</p>
         -&gt; ()
     </span>
 <a class="headerlink" href="#setvelocity-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Spring</span><span class="p">:</span><span class="nf">setVelocity</span><span class="p">(</span>
-    <span class="n">newVelocity</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">):</span> <span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Spring</span><span class="p">:</span><span class="nf">setVelocity</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">newVelocity</span><span class="p">:</span><span class="w"> </span><span class="py">T</span>
+<span class="p">):</span><span class="w"> </span><span class="p">()</span>
 </code></pre></div>
 <p>Overwrites the spring's velocity without changing its position. The velocity
 must have the same <code>typeof()</code> as the goal state.</p>
@@ -3084,9 +3084,9 @@ must have the same <code>typeof()</code> as the goal state.</p>
         -&gt; ()
     </span>
 <a class="headerlink" href="#addvelocity-" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Spring</span><span class="p">:</span><span class="nf">addVelocity</span><span class="p">(</span>
-    <span class="n">deltaVelocity</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">):</span> <span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Spring</span><span class="p">:</span><span class="nf">addVelocity</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">deltaVelocity</span><span class="p">:</span><span class="w"> </span><span class="py">T</span>
+<span class="p">):</span><span class="w"> </span><span class="p">()</span>
 </code></pre></div>
 <p>Appends to the spring's velocity without changing its position. The velocity
 must have the same <code>typeof()</code> as the goal state.</p>

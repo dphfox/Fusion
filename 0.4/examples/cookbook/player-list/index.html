@@ -3002,84 +3002,84 @@ updating player list.</p>
 <span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
-<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Players</span> <span class="o">=</span> <span class="n">game</span><span class="p">:</span><span class="n">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">game</span><span class="p">:</span><span class="nf">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
-<span class="kd">local</span> <span class="n">Children</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Children</span>
-<span class="nb">type</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">-- initialise Fusion here however you please!</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">Children</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Children</span>
+<span class="nb">type</span><span class="w"> </span><span class="nv">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Players</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="n">Player</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;Frame&quot;</span> <span class="p">{</span>
-        <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerList&quot;</span><span class="p">,</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">PlayerList</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Players</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="nv">Player</span><span class="p">}</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Child</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;Frame&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PlayerList&quot;</span><span class="p">,</span>
 
-        <span class="n">Position</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">AnchorPoint</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">fromOffset</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-        <span class="n">AutomaticSize</span> <span class="o">=</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromScale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">AnchorPoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Vector2</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">fromOffset</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">AutomaticSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Y&quot;</span><span class="p">,</span>
 
-        <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+<span class="w">        </span><span class="nv">BackgroundTransparency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
 
-        <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UICorner&quot;</span> <span class="p">{</span>
-                <span class="n">CornerRadius</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-            <span class="p">},</span>
-            <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIListLayout&quot;</span> <span class="p">{</span>
-                <span class="n">SortOrder</span> <span class="o">=</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
-                <span class="n">FillDirection</span> <span class="o">=</span> <span class="s2">&quot;Vertical&quot;</span>
-            <span class="p">},</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UICorner&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">CornerRadius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIListLayout&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nv">SortOrder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nv">FillDirection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Vertical&quot;</span>
+<span class="w">            </span><span class="p">},</span>
 
-            <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Players</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
-                <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-                    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListRow: &quot;</span> <span class="o">..</span> <span class="n">player</span><span class="p">.</span><span class="n">DisplayName</span><span class="p">,</span>
+<span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">Players</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">player</span><span class="p">)</span>
+<span class="w">                </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PlayerListRow: &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">player</span><span class="p">.</span><span class="py">DisplayName</span><span class="p">,</span>
 
-                    <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
-                    <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">),</span>
+<span class="w">                    </span><span class="nv">BackgroundTransparency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 
-                    <span class="n">Text</span> <span class="o">=</span> <span class="n">player</span><span class="p">.</span><span class="n">DisplayName</span><span class="p">,</span>
-                    <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                    <span class="n">Font</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">GothamMedium</span><span class="p">,</span>
-                    <span class="n">TextSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-                    <span class="n">TextXAlignment</span> <span class="o">=</span> <span class="s2">&quot;Right&quot;</span><span class="p">,</span>
-                    <span class="n">TextTruncate</span> <span class="o">=</span> <span class="s2">&quot;AtEnd&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">player</span><span class="p">.</span><span class="py">DisplayName</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">                    </span><span class="nv">Font</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Enum</span><span class="p">.</span><span class="py">Font</span><span class="p">.</span><span class="py">GothamMedium</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextXAlignment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Right&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextTruncate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AtEnd&quot;</span><span class="p">,</span>
 
-                    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIPadding&quot;</span> <span class="p">{</span>
-                        <span class="n">PaddingLeft</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-                        <span class="n">PaddingRight</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="kr">end</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">                    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIPadding&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nv">PaddingLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span>
+<span class="w">                        </span><span class="nv">PaddingRight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 
 <span class="c1">-- Don&#39;t forget to pass this to `doCleanup` if you disable the script.</span>
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">PlayerList</span> <span class="o">=</span> <span class="n">PlayerList</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">PlayerList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerList</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">updatePlayers</span><span class="p">()</span>
-    <span class="n">players</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nv">Players</span><span class="p">:</span><span class="nf">GetPlayers</span><span class="p">())</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">updatePlayers</span><span class="p">()</span>
+<span class="w">    </span><span class="nv">players</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">Players</span><span class="p">:</span><span class="nf">GetPlayers</span><span class="p">())</span>
 <span class="kr">end</span>
-<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">Players</span><span class="p">.</span><span class="n">PlayerAdded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">),</span>
-    <span class="n">Players</span><span class="p">.</span><span class="n">PlayerRemoving</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">)</span>
+<span class="nb">table.insert</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Players</span><span class="p">.</span><span class="py">PlayerAdded</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">updatePlayers</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Players</span><span class="p">.</span><span class="py">PlayerRemoving</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">updatePlayers</span><span class="p">)</span>
 <span class="p">})</span>
 
-<span class="kd">local</span> <span class="n">gui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListGui&quot;</span><span class="p">,</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">gui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PlayerListGui&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Players</span><span class="p">.</span><span class="py">LocalPlayer</span><span class="p">:</span><span class="nf">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
 
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">PlayerList</span> <span class="p">{</span>
-        <span class="n">Players</span> <span class="o">=</span> <span class="n">players</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">PlayerList</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nv">Players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">players</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <hr />
@@ -3087,57 +3087,57 @@ updating player list.</p>
 <p>The <code>PlayerList</code> component is designed to be simple and self-contained. The only
 thing it needs is a <code>Players</code> list - it handles everything else, including its
 position, size, appearance and behaviour.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">PlayerList</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">Players</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="n">Player</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="p">}</span>
-<span class="p">):</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Child</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">PlayerList</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="py">Players</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="p">{</span><span class="nv">Player</span><span class="p">}</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">Child</span>
 </code></pre></div>
 <p>After creating a vertically expanding Frame with some style and layout added,
 it turns the <code>Players</code> into a series of text labels using <code>ForValues</code>, which
 will automatically create and remove them as the <code>Players</code> list changes.</p>
-<div class="highlight"><pre><span></span><code>            <span class="n">scope</span><span class="p">:</span><span class="n">ForValues</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">Players</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">player</span><span class="p">)</span>
-                <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextLabel&quot;</span> <span class="p">{</span>
-                    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListRow: &quot;</span> <span class="o">..</span> <span class="n">player</span><span class="p">.</span><span class="n">DisplayName</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="w">            </span><span class="nv">scope</span><span class="p">:</span><span class="nf">ForValues</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">Players</span><span class="p">,</span><span class="w"> </span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">,</span><span class="w"> </span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="nv">player</span><span class="p">)</span>
+<span class="w">                </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextLabel&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PlayerListRow: &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">player</span><span class="p">.</span><span class="py">DisplayName</span><span class="p">,</span>
 
-                    <span class="n">Size</span> <span class="o">=</span> <span class="n">UDim2</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
-                    <span class="n">BackgroundTransparency</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim2</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">),</span>
+<span class="w">                    </span><span class="nv">BackgroundTransparency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 
-                    <span class="n">Text</span> <span class="o">=</span> <span class="n">player</span><span class="p">.</span><span class="n">DisplayName</span><span class="p">,</span>
-                    <span class="n">TextColor3</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                    <span class="n">Font</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">.</span><span class="n">Font</span><span class="p">.</span><span class="n">GothamMedium</span><span class="p">,</span>
-                    <span class="n">TextSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
-                    <span class="n">TextXAlignment</span> <span class="o">=</span> <span class="s2">&quot;Right&quot;</span><span class="p">,</span>
-                    <span class="n">TextTruncate</span> <span class="o">=</span> <span class="s2">&quot;AtEnd&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">player</span><span class="p">.</span><span class="py">DisplayName</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">                    </span><span class="nv">Font</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Enum</span><span class="p">.</span><span class="py">Font</span><span class="p">.</span><span class="py">GothamMedium</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextXAlignment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Right&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nv">TextTruncate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;AtEnd&quot;</span><span class="p">,</span>
 
-                    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;UIPadding&quot;</span> <span class="p">{</span>
-                        <span class="n">PaddingLeft</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-                        <span class="n">PaddingRight</span> <span class="o">=</span> <span class="n">UDim</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="kr">end</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;UIPadding&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nv">PaddingLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span>
+<span class="w">                        </span><span class="nv">PaddingRight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">UDim</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>That's all that the <code>PlayerList</code> component has to do.</p>
 <p>Later on, the code creates a <code>Value</code> object to store a list of players, and
 update it every time a player joins or leaves the game.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">players</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">updatePlayers</span><span class="p">()</span>
-    <span class="n">players</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">Players</span><span class="p">:</span><span class="n">GetPlayers</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nv">Players</span><span class="p">:</span><span class="nf">GetPlayers</span><span class="p">())</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">updatePlayers</span><span class="p">()</span>
+<span class="w">    </span><span class="nv">players</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">Players</span><span class="p">:</span><span class="nf">GetPlayers</span><span class="p">())</span>
 <span class="kr">end</span>
-<span class="nb">table.insert</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="p">{</span>
-    <span class="n">Players</span><span class="p">.</span><span class="n">PlayerAdded</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">),</span>
-    <span class="n">Players</span><span class="p">.</span><span class="n">PlayerRemoving</span><span class="p">:</span><span class="n">Connect</span><span class="p">(</span><span class="n">updatePlayers</span><span class="p">)</span>
+<span class="nb">table.insert</span><span class="p">(</span><span class="nv">scope</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Players</span><span class="p">.</span><span class="py">PlayerAdded</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">updatePlayers</span><span class="p">),</span>
+<span class="w">    </span><span class="nv">Players</span><span class="p">.</span><span class="py">PlayerRemoving</span><span class="p">:</span><span class="nf">Connect</span><span class="p">(</span><span class="nv">updatePlayers</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre></div>
 <p>That object can then be passed in as <code>Players</code> when creating the <code>PlayerList</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">gui</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ScreenGui&quot;</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;PlayerListGui&quot;</span><span class="p">,</span>
-    <span class="n">Parent</span> <span class="o">=</span> <span class="n">Players</span><span class="p">.</span><span class="n">LocalPlayer</span><span class="p">:</span><span class="n">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">gui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ScreenGui&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;PlayerListGui&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">Parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Players</span><span class="p">.</span><span class="py">LocalPlayer</span><span class="p">:</span><span class="nf">FindFirstChildOfClass</span><span class="p">(</span><span class="s2">&quot;PlayerGui&quot;</span><span class="p">),</span>
 
-    <span class="p">[</span><span class="n">Children</span><span class="p">]</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">PlayerList</span> <span class="p">{</span>
-<span class="hll">        <span class="n">Players</span> <span class="o">=</span> <span class="n">players</span>
-</span>    <span class="p">}</span>
+<span class="w">    </span><span class="p">[</span><span class="nv">Children</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">PlayerList</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">        </span><span class="nv">Players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">players</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 

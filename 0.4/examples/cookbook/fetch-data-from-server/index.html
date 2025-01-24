@@ -2971,49 +2971,51 @@ this in a way that doesn't corrupt your code.</p>
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span> <span class="n">Fusion</span> <span class="o">=</span> <span class="c1">-- initialise Fusion here however you please!</span>
-<span class="kd">local</span> <span class="n">scoped</span> <span class="o">=</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">scoped</span>
+<span class="normal">44</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Fusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">-- initialise Fusion here however you please!</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scoped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">scoped</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">peek</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Fusion</span><span class="p">.</span><span class="py">peek</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">fetchUserBio</span><span class="p">(</span>
-    <span class="n">userID</span><span class="p">:</span> <span class="n">number</span>
-<span class="p">):</span> <span class="n">string</span>
-    <span class="c1">-- pretend this calls out to a server somewhere, causing this code to yield</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="s2">&quot;This is the bio for user &quot;</span> <span class="o">..</span> <span class="n">userID</span> <span class="o">..</span> <span class="s2">&quot;!&quot;</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">fetchUserBio</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">userID</span><span class="p">:</span><span class="w"> </span><span class="py">number</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">string</span>
+<span class="w">    </span><span class="c1">-- pretend this calls out to a server somewhere, causing this code to yield</span>
+<span class="w">    </span><span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;This is the bio for user &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">userID</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;!&quot;</span>
 <span class="kr">end</span>
 
 <span class="c1">-- Don&#39;t forget to pass this to `doCleanup` if you disable the script.</span>
-<span class="kd">local</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">scoped</span><span class="p">(</span><span class="n">Fusion</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">scoped</span><span class="p">(</span><span class="nv">Fusion</span><span class="p">)</span>
 
 <span class="c1">-- This doesn&#39;t have to be a `Value` - any kind of state object works too.</span>
-<span class="kd">local</span> <span class="n">currentUserID</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1670764</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentUserID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">1670764</span><span class="p">)</span>
 
 <span class="c1">-- While the bio is loading, this is `nil` instead of a string.</span>
-<span class="kd">local</span> <span class="n">currentUserBio</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">string</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">string</span><span class="err">?</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 
 <span class="kr">do</span>
-    <span class="kd">local</span> <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="kc">nil</span>
-    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">performFetch</span><span class="p">()</span>
-        <span class="kd">local</span> <span class="n">userID</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">)</span>
-        <span class="n">currentUserBio</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-        <span class="kr">if</span> <span class="n">fetchInProgress</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
-            <span class="n">task</span><span class="p">.</span><span class="n">cancel</span><span class="p">(</span><span class="n">fetchInProgress</span><span class="p">)</span>
-        <span class="kr">end</span>
-        <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="n">task</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-            <span class="n">currentUserBio</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">fetchUserBio</span><span class="p">())</span>
-            <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="kc">nil</span>
-        <span class="kr">end</span><span class="p">)</span>
-    <span class="kr">end</span>
-    <span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">):</span><span class="n">onBind</span><span class="p">(</span><span class="n">performFetch</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">performFetch</span><span class="p">()</span>
+<span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">userID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentUserID</span><span class="p">)</span>
+<span class="w">        </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="nv">task</span><span class="p">.</span><span class="nf">cancel</span><span class="p">(</span><span class="nv">fetchInProgress</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span>
+<span class="w">        </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">task</span><span class="p">.</span><span class="nf">spawn</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nf">fetchUserBio</span><span class="p">(</span><span class="nv">userID</span><span class="p">))</span>
+<span class="w">            </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentUserID</span><span class="p">):</span><span class="nf">onBind</span><span class="p">(</span><span class="nv">performFetch</span><span class="p">)</span>
 <span class="kr">end</span>
 
-<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentUserBio</span><span class="p">):</span><span class="n">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">bio</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentUserBio</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">bio</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User bio is loading...&quot;</span><span class="p">)</span>
-    <span class="kr">else</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded user bio:&quot;</span><span class="p">,</span> <span class="n">bio</span><span class="p">)</span>
-    <span class="kr">end</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentUserBio</span><span class="p">):</span><span class="nf">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">bio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentUserBio</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">bio</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User bio is loading...&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">else</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded user bio:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">bio</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <hr />
@@ -3021,18 +3023,18 @@ this in a way that doesn't corrupt your code.</p>
 <p>If you yield or wait inside of a <code>Computed</code>, you can easily corrupt your entire
 program.</p>
 <p>However, this example has a function, <code>fetchUserBio</code>, that yields. </p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">fetchUserBio</span><span class="p">(</span>
-    <span class="n">userID</span><span class="p">:</span> <span class="n">number</span>
-<span class="p">):</span> <span class="n">string</span>
-    <span class="c1">-- pretend this calls out to a server somewhere, causing this code to yield</span>
-    <span class="n">task</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="s2">&quot;This is the bio for user &quot;</span> <span class="o">..</span> <span class="n">userID</span> <span class="o">..</span> <span class="s2">&quot;!&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">fetchUserBio</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">userID</span><span class="p">:</span><span class="w"> </span><span class="py">number</span>
+<span class="p">):</span><span class="w"> </span><span class="nv">string</span>
+<span class="w">    </span><span class="c1">-- pretend this calls out to a server somewhere, causing this code to yield</span>
+<span class="w">    </span><span class="nv">task</span><span class="p">.</span><span class="nf">wait</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;This is the bio for user &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nv">userID</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="s2">&quot;!&quot;</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>It also has some arbitrary state object, <code>currentUserID</code>, that it needs to
 convert into a bio somehow.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- This doesn&#39;t have to be a `Value` - any kind of state object works too.</span>
-<span class="kd">local</span> <span class="n">currentUserID</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1670764</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentUserID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">1670764</span><span class="p">)</span>
 </code></pre></div>
 <p>Because <code>Computed</code> can't yield, this code has to manually manage a
 <code>currentUserBio</code> object, which will store the output of the code in a way that
@@ -3041,42 +3043,42 @@ can be used by other Fusion objects later.</p>
 be clear and honest when you have no data to show, because it allows other code
 to respond to that case flexibly.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- While the bio is loading, this is `nil` instead of a string.</span>
-<span class="kd">local</span> <span class="n">currentUserBio</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">string</span><span class="err">?</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">string</span><span class="err">?</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
 </code></pre></div>
 <p>To perform the actual fetch, a simple function can be written which calls
 <code>fetchUserBio</code> in a separate task. Once it returns a bio, the <code>currentUserBio</code>
 can be updated.</p>
 <p>To avoid two fetches overwriting each other, any existing fetch task is canceled
 before the new task is created.</p>
-<div class="highlight"><pre><span></span><code>    <span class="kd">local</span> <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="kc">nil</span>
-    <span class="kd">local</span> <span class="kr">function</span> <span class="nf">performFetch</span><span class="p">()</span>
-        <span class="kd">local</span> <span class="n">userID</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">)</span>
-        <span class="n">currentUserBio</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
-        <span class="kr">if</span> <span class="n">fetchInProgress</span> <span class="o">~=</span> <span class="kc">nil</span> <span class="kr">then</span>
-            <span class="n">task</span><span class="p">.</span><span class="n">cancel</span><span class="p">(</span><span class="n">fetchInProgress</span><span class="p">)</span>
-        <span class="kr">end</span>
-        <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="n">task</span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-            <span class="n">currentUserBio</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">fetchUserBio</span><span class="p">())</span>
-            <span class="n">fetchInProgress</span> <span class="o">=</span> <span class="kc">nil</span>
-        <span class="kr">end</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">performFetch</span><span class="p">()</span>
+<span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">userID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentUserID</span><span class="p">)</span>
+<span class="w">        </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">            </span><span class="nv">task</span><span class="p">.</span><span class="nf">cancel</span><span class="p">(</span><span class="nv">fetchInProgress</span><span class="p">)</span>
+<span class="w">        </span><span class="kr">end</span>
+<span class="w">        </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">task</span><span class="p">.</span><span class="nf">spawn</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">currentUserBio</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nf">fetchUserBio</span><span class="p">())</span>
+<span class="w">            </span><span class="nv">fetchInProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 </code></pre></div>
 <p>Finally, to run this function when the <code>currentUserID</code> changes, <code>performFetch</code>
 can be added to an <code>Observer</code>.</p>
 <p>The <code>onBind</code> method also runs <code>performFetch</code> once at the start of the program,
 so the request is sent out automatically.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentUserID</span><span class="p">):</span><span class="n">onBind</span><span class="p">(</span><span class="n">performFetch</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentUserID</span><span class="p">):</span><span class="nf">onBind</span><span class="p">(</span><span class="nv">performFetch</span><span class="p">)</span>
 </code></pre></div>
 <p>That's all you need - now, any other Fusion code can read and depend upon
 <code>currentUserBio</code> as if it were any other kind of state object. Just remember to
 handle the 'loading' state as well as the successful state.</p>
-<div class="highlight"><pre><span></span><code><span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentUserBio</span><span class="p">):</span><span class="n">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="kd">local</span> <span class="n">bio</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentUserBio</span><span class="p">)</span>
-    <span class="kr">if</span> <span class="n">bio</span> <span class="o">==</span> <span class="kc">nil</span> <span class="kr">then</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User bio is loading...&quot;</span><span class="p">)</span>
-    <span class="kr">else</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded user bio:&quot;</span><span class="p">,</span> <span class="n">bio</span><span class="p">)</span>
-    <span class="kr">end</span>
+<div class="highlight"><pre><span></span><code><span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentUserBio</span><span class="p">):</span><span class="nf">onBind</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">bio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentUserBio</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">bio</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User bio is loading...&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">else</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded user bio:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nv">bio</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">end</span>
 <span class="kr">end</span><span class="p">)</span>
 </code></pre></div>
 <p>You may wish to expand this code with error handling if <code>fetchUserBio()</code> can

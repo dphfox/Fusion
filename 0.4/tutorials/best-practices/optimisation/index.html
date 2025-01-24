@@ -3008,24 +3008,24 @@ even or odd.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Luau code</label><label for="__tabbed_1_2">Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">number</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">isEven</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-    <span class="kr">return</span> <span class="n">use</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">isEven</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">number</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
 <span class="kr">end</span><span class="p">)</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">isEven</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; isEven has changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">isEven</span><span class="p">))</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">isEven</span><span class="p">):</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; isEven has changed to &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">isEven</span><span class="p">))</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 2&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 3&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 13&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 14&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number becomes 24&quot;</span><span class="p">)</span>
-<span class="n">number</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="nv">number</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -3106,27 +3106,27 @@ an observer object to see when Fusion thinks the theme meaningfully changed.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Luau code</label><label for="__tabbed_2_2">Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">LIGHT_THEME</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span>
-    <span class="c1">-- imagine theme colours in here</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">LIGHT_THEME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
-<span class="kd">local</span> <span class="n">DARK_THEME</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
-    <span class="c1">-- imagine theme colours in here</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">DARK_THEME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dark&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
-<span class="kd">local</span> <span class="n">currentTheme</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">).</span><span class="n">name</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentTheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentTheme</span><span class="p">):</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentTheme</span><span class="p">).</span><span class="nv">name</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">DARK_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">DARK_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -3149,12 +3149,12 @@ those values.</p>
 <summary>Why won't Fusion skip those updates?</summary>
 <p>In Fusion, it's common to update arrays without creating a new array. This
 is known as <em>mutating</em> the array.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">drinks</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">({</span><span class="s2">&quot;beer&quot;</span><span class="p">,</span> <span class="s2">&quot;pepsi&quot;</span><span class="p">})</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">drinks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">({</span><span class="s2">&quot;beer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pepsi&quot;</span><span class="p">})</span>
 
-<span class="kr">do</span> <span class="c1">-- add tea</span>
-    <span class="kd">local</span> <span class="n">array</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
-    <span class="nb">table.insert</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="s2">&quot;tea&quot;</span><span class="p">)</span> <span class="c1">-- mutation occurs here</span>
-    <span class="n">drinks</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">array</span><span class="p">)</span> <span class="c1">-- still the same array, so it&#39;s ==</span>
+<span class="kr">do</span><span class="w"> </span><span class="c1">-- add tea</span>
+<span class="w">    </span><span class="kd">local</span><span class="w"> </span><span class="nv">array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">drinks</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">table.insert</span><span class="p">(</span><span class="nv">array</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tea&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">-- mutation occurs here</span>
+<span class="w">    </span><span class="nv">drinks</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">array</span><span class="p">)</span><span class="w"> </span><span class="c1">-- still the same array, so it&#39;s ==</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>If Fusion skipped updates when the old and new values were <code>==</code>, then these
@@ -3177,27 +3177,27 @@ skip these updates is by freezing the original tables.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Luau code</label><label for="__tabbed_3_2">Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span> <span class="n">LIGHT_THEME</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">freeze</span> <span class="p">{</span>
-</span>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span>
-    <span class="c1">-- imagine theme colours in here</span>
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">LIGHT_THEME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">table</span><span class="p">.</span><span class="py">freeze</span><span class="w"> </span><span class="p">{</span>
+</span><span class="w">    </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;light&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
-<span class="hll"><span class="kd">local</span> <span class="n">DARK_THEME</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">freeze</span> <span class="p">{</span>
-</span>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
-    <span class="c1">-- imagine theme colours in here</span>
+<span class="hll"><span class="kd">local</span><span class="w"> </span><span class="nv">DARK_THEME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">table</span><span class="p">.</span><span class="py">freeze</span><span class="w"> </span><span class="p">{</span>
+</span><span class="w">    </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dark&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">-- imagine theme colours in here</span>
 <span class="p">}</span>
-<span class="kd">local</span> <span class="n">currentTheme</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
-<span class="n">scope</span><span class="p">:</span><span class="n">Observer</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">):</span><span class="n">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span> <span class="o">..</span> <span class="n">peek</span><span class="p">(</span><span class="n">currentTheme</span><span class="p">).</span><span class="n">name</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">currentTheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">scope</span><span class="p">:</span><span class="nf">Observer</span><span class="p">(</span><span class="nv">currentTheme</span><span class="p">):</span><span class="nf">onChange</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; currentTheme changed to &quot;</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">currentTheme</span><span class="p">).</span><span class="nv">name</span><span class="p">)</span>
 <span class="kr">end</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">DARK_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to DARK_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">DARK_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">DARK_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set to LIGHT_THEME&quot;</span><span class="p">)</span>
-<span class="n">currentTheme</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="n">LIGHT_THEME</span><span class="p">)</span>
+<span class="nv">currentTheme</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="nv">LIGHT_THEME</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">

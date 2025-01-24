@@ -2993,16 +2993,16 @@
         -&gt; <a href="../../types/value">Value</a>&lt;T&gt;
     </span>
 <a class="headerlink" href="#value-valuet" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><span class="kr">function</span> <span class="nc">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">initialValue</span><span class="p">:</span> <span class="n">T</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="kr">function</span><span class="w"> </span><span class="nc">Fusion</span><span class="p">.</span><span class="nf">Value</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Scope</span><span class="o">&lt;</span><span class="nv">unknown</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">initialValue</span><span class="p">:</span><span class="w"> </span><span class="py">T</span>
+<span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nv">Value</span><span class="o">&lt;</span><span class="nv">T</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>Constructs and returns a new <a href="../../types/value">value state object</a>.</p>
 <div class="admonition success">
 <p class="admonition-title">Use scoped() method syntax</p>
 <p>This function is intended to be accessed as a method on a scope:
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">computed</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="n">processor</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">computed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="nv">processor</span><span class="p">)</span>
 </code></pre></div></p>
 </div>
 <hr />

@@ -2965,24 +2965,24 @@ useful, but you should be careful when adding state.</p>
 <hr />
 <h2 id="creation">Creation<a class="headerlink" href="#creation" title="Permanent link">&para;</a></h2>
 <p>You can create state objects inside components as you would anywhere else.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">HOVER_COLOUR</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">REST_COLOUR</span> <span class="o">=</span> <span class="n">Color3</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">HOVER_COLOUR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">REST_COLOUR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Color3</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="kr">function</span> <span class="nf">Button</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="c1">-- ... some properties ...</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-<span class="hll">    <span class="kd">local</span> <span class="n">isHovering</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">Button</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="c1">-- ... some properties ...</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="err">)</span>
+<span class="hll"><span class="w">    </span><span class="py">local</span><span class="w"> </span><span class="nv">isHovering</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
 </span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;TextButton&quot;</span> <span class="p">{</span>
-<span class="hll">        <span class="n">BackgroundColor3</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-</span><span class="hll">            <span class="kr">return</span> <span class="kr">if</span> <span class="n">use</span><span class="p">(</span><span class="n">isHovering</span><span class="p">)</span> <span class="kr">then</span> <span class="n">HOVER_COLOUR</span> <span class="kr">else</span> <span class="n">REST_COLOUR</span>
-</span><span class="hll">        <span class="kr">end</span><span class="p">),</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;TextButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">        </span><span class="nv">BackgroundColor3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">isHovering</span><span class="p">)</span><span class="w"> </span><span class="kr">then</span><span class="w"> </span><span class="nv">HOVER_COLOUR</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="nv">REST_COLOUR</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">end</span><span class="p">),</span>
 </span>
-        <span class="c1">-- ... ... some more code ...</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">-- ... ... some more code ...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>Because these state objects are made with the same <code>scope</code> as the rest of the
@@ -3005,21 +3005,21 @@ this causes a few problems:</p>
 <li>often, the user already has a state object representing the same setting, so
 now there's two state objects where one would have sufficed</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">CheckBox</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-        <span class="c1">-- ... some properties ...</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-<span class="hll">    <span class="kd">local</span> <span class="n">isChecked</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="c1">-- problematic</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">CheckBox</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="w">        </span><span class="c1">-- ... some properties ...</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="err">)</span>
+<span class="hll"><span class="w">    </span><span class="py">local</span><span class="w"> </span><span class="nv">isChecked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="c1">-- problematic</span>
 </span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ImageButton&quot;</span> <span class="p">{</span>
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="n">isChecked</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">isChecked</span><span class="p">))</span>
-        <span class="kr">end</span><span class="p">,</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ImageButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">isChecked</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="ow">not</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">isChecked</span><span class="p">))</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="c1">-- ... some more code ...</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">-- ... some more code ...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>A <em>slightly better</em> solution is to pass the state object in. This ensures the
@@ -3031,19 +3031,19 @@ computing the value dynamically with other state objects instead</li>
 <li>the behaviour of clicking the check box is hardcoded; the user cannot
 intercept the click or toggle a different state</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">CheckBox</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-<span class="hll">        <span class="n">IsChecked</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Value</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span> <span class="c1">-- slightly better</span>
-</span>    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">CheckBox</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="hll"><span class="w">        </span><span class="py">IsChecked</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Value</span><span class="o">&lt;</span><span class="nv">boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">-- slightly better</span>
+</span><span class="w">    </span><span class="p">}</span>
 <span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ImageButton&quot;</span> <span class="p">{</span>
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-            <span class="n">props</span><span class="p">.</span><span class="n">IsChecked</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="n">peek</span><span class="p">(</span><span class="n">props</span><span class="p">.</span><span class="n">IsChecked</span><span class="p">))</span>
-        <span class="kr">end</span><span class="p">,</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ImageButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">            </span><span class="nv">props</span><span class="p">.</span><span class="py">IsChecked</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="ow">not</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">props</span><span class="p">.</span><span class="py">IsChecked</span><span class="p">))</span>
+<span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="c1">-- ... some more code ...</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">-- ... some more code ...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>That's why the <em>best</em> solution is to use <code>UsedAs</code> to create read-only
@@ -3054,20 +3054,20 @@ including dynamic computations</li>
 <li>because the callback is provided by the user, the behaviour of clicking the
 check box is completely customisable</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="kr">function</span> <span class="nf">CheckBox</span><span class="p">(</span>
-    <span class="n">scope</span><span class="p">:</span> <span class="n">Fusion</span><span class="p">.</span><span class="n">Scope</span><span class="p">,</span>
-    <span class="n">props</span><span class="p">:</span> <span class="p">{</span>
-<span class="hll">        <span class="n">IsChecked</span><span class="p">:</span> <span class="n">UsedAs</span><span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">-- best</span>
-</span><span class="hll">        <span class="n">OnClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span>
-</span>    <span class="p">}</span>
-<span class="p">)</span>
-    <span class="kr">return</span> <span class="n">scope</span><span class="p">:</span><span class="n">New</span> <span class="s2">&quot;ImageButton&quot;</span> <span class="p">{</span>
-        <span class="p">[</span><span class="n">OnEvent</span> <span class="s2">&quot;Activated&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-<span class="hll">            <span class="n">props</span><span class="p">.</span><span class="n">OnClick</span><span class="p">()</span>
-</span>        <span class="kr">end</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="kr">function</span><span class="w"> </span><span class="nf">CheckBox</span><span class="p">(</span>
+<span class="w">    </span><span class="nv">scope</span><span class="p">:</span><span class="w"> </span><span class="py">Fusion</span><span class="p">.</span><span class="py">Scope</span><span class="p">,</span>
+<span class="w">    </span><span class="nv">props</span><span class="p">:</span><span class="w"> </span><span class="err">{</span>
+<span class="hll"><span class="w">        </span><span class="py">IsChecked</span><span class="p">:</span><span class="w"> </span><span class="py">UsedAs</span><span class="o">&lt;</span><span class="nv">boolean</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- best</span>
+</span><span class="hll"><span class="w">        </span><span class="nv">OnClick</span><span class="p">:</span><span class="w"> </span><span class="err">()</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">()</span>
+</span><span class="w">    </span><span class="err">}</span>
+<span class="err">)</span>
+<span class="w">    </span><span class="py">return</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">New</span><span class="w"> </span><span class="s2">&quot;ImageButton&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">[</span><span class="nv">OnEvent</span><span class="w"> </span><span class="s2">&quot;Activated&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="hll"><span class="w">            </span><span class="nv">props</span><span class="p">.</span><span class="nf">OnClick</span><span class="p">()</span>
+</span><span class="w">        </span><span class="kr">end</span><span class="p">,</span>
 
-        <span class="c1">-- ... some more code ...</span>
-    <span class="p">}</span>
+<span class="w">        </span><span class="c1">-- ... some more code ...</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="kr">end</span>
 </code></pre></div>
 <p>The control is always top-down here; the check box's appearance is fully
@@ -3083,40 +3083,40 @@ check box, so you can turn them all on/off at once.</p>
 <p>The appearance of that check box would not be controlled by a single state, but
 instead reflects the combination of multiple states. Because the code uses
 <code>UsedAs</code>, you can represent this with a <code>Computed</code> object.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">playMusic</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">playSFX</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">playNarration</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">playMusic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">playSFX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">playNarration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">checkBox</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">CheckBox</span> <span class="p">{</span>
-    <span class="n">Text</span> <span class="o">=</span> <span class="s2">&quot;Play sounds&quot;</span><span class="p">,</span>
-<span class="hll">    <span class="n">IsChecked</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-</span><span class="hll">        <span class="kd">local</span> <span class="n">anyChecked</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">playMusic</span><span class="p">)</span> <span class="ow">or</span> <span class="n">use</span><span class="p">(</span><span class="n">playSFX</span><span class="p">)</span> <span class="ow">or</span> <span class="n">use</span><span class="p">(</span><span class="n">playNarration</span><span class="p">)</span>
-</span><span class="hll">        <span class="kd">local</span> <span class="n">allChecked</span> <span class="o">=</span> <span class="n">use</span><span class="p">(</span><span class="n">playMusic</span><span class="p">)</span> <span class="ow">and</span> <span class="n">use</span><span class="p">(</span><span class="n">playSFX</span><span class="p">)</span> <span class="ow">and</span> <span class="n">use</span><span class="p">(</span><span class="n">playNarration</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">checkBox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">CheckBox</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nv">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Play sounds&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">    </span><span class="nv">IsChecked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Computed</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">use</span><span class="p">)</span>
+</span><span class="hll"><span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">anyChecked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playMusic</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playSFX</span><span class="p">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playNarration</span><span class="p">)</span>
+</span><span class="hll"><span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">allChecked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playMusic</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playSFX</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">use</span><span class="p">(</span><span class="nv">playNarration</span><span class="p">)</span>
 </span><span class="hll">
-</span><span class="hll">        <span class="kr">if</span> <span class="ow">not</span> <span class="n">anyChecked</span> <span class="kr">then</span>
-</span><span class="hll">            <span class="kr">return</span> <span class="s2">&quot;unchecked&quot;</span>
-</span><span class="hll">        <span class="kr">elseif</span> <span class="ow">not</span> <span class="n">allChecked</span> <span class="kr">then</span>
-</span><span class="hll">            <span class="kr">return</span> <span class="s2">&quot;partially-checked&quot;</span>
-</span><span class="hll">        <span class="kr">else</span>
-</span><span class="hll">            <span class="kr">return</span> <span class="s2">&quot;checked&quot;</span>
-</span><span class="hll">        <span class="kr">end</span>
-</span><span class="hll">    <span class="kr">end</span><span class="p">)</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">anyChecked</span><span class="w"> </span><span class="kr">then</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;unchecked&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">elseif</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">allChecked</span><span class="w"> </span><span class="kr">then</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;partially-checked&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">else</span>
+</span><span class="hll"><span class="w">            </span><span class="kr">return</span><span class="w"> </span><span class="s2">&quot;checked&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="kr">end</span>
+</span><span class="hll"><span class="w">    </span><span class="kr">end</span><span class="p">)</span>
 </span><span class="p">}</span>
 </code></pre></div>
 <p>You can then implement the 'check all'/'uncheck all' behaviour inside <code>OnClick</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">local</span> <span class="n">playMusic</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">playSFX</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-<span class="kd">local</span> <span class="n">playNarration</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">playMusic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">playSFX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">playNarration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="nf">Value</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">checkBox</span> <span class="o">=</span> <span class="n">scope</span><span class="p">:</span><span class="n">CheckBox</span> <span class="p">{</span>
-    <span class="c1">-- ... same properties as before ...</span>
-<span class="hll">    <span class="n">OnClick</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-</span><span class="hll">        <span class="kd">local</span> <span class="n">allChecked</span> <span class="o">=</span> <span class="n">peek</span><span class="p">(</span><span class="n">playMusic</span><span class="p">)</span> <span class="ow">and</span> <span class="n">peek</span><span class="p">(</span><span class="n">playSFX</span><span class="p">)</span> <span class="ow">and</span> <span class="n">peek</span><span class="p">(</span><span class="n">playNarration</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">checkBox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">scope</span><span class="p">:</span><span class="py">CheckBox</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">-- ... same properties as before ...</span>
+<span class="hll"><span class="w">    </span><span class="nv">OnClick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+</span><span class="hll"><span class="w">        </span><span class="kd">local</span><span class="w"> </span><span class="nv">allChecked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">playMusic</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">playSFX</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="nv">playNarration</span><span class="p">)</span>
 </span><span class="hll">
-</span><span class="hll">        <span class="n">playMusic</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="n">allChecked</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">playSFX</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="n">allChecked</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">playNarration</span><span class="p">:</span><span class="n">set</span><span class="p">(</span><span class="ow">not</span> <span class="n">allChecked</span><span class="p">)</span>
-</span><span class="hll">    <span class="kr">end</span>
+</span><span class="hll"><span class="w">        </span><span class="nv">playMusic</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="ow">not</span><span class="w"> </span><span class="nv">allChecked</span><span class="p">)</span>
+</span><span class="hll"><span class="w">        </span><span class="nv">playSFX</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="ow">not</span><span class="w"> </span><span class="nv">allChecked</span><span class="p">)</span>
+</span><span class="hll"><span class="w">        </span><span class="nv">playNarration</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="ow">not</span><span class="w"> </span><span class="nv">allChecked</span><span class="p">)</span>
+</span><span class="hll"><span class="w">    </span><span class="kr">end</span>
 </span><span class="p">}</span>
 </code></pre></div>
 <p>Because the check box was written to be flexible, it can handle complex usage
