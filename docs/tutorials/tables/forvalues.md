@@ -116,7 +116,7 @@ names:set({"Amber", "Umair"}) --> Goodbye, Jodi!
 	values will move around too, instead of being recalculated.
 
 	Note that values are only reused once. For example, if you added another
-	occurence of 'Orange', your calculation would have to run again for the second
+	occurrence of 'Orange', your calculation would have to run again for the second
 	'Orange':
 
 	![A diagram visualising how values aren't reused when duplicates appear.](Optimisation-Duplicates-Dark.svg#only-dark)

@@ -28,7 +28,7 @@ declarations.
 	This function is intended to be accessed as a method on a scope:
 	```Lua
 	local conn, ins = scope:insert(
-		RunService.Heartbeat:Connnect(doUpdate),
+		RunService.Heartbeat:Connect(doUpdate),
 		Instance.new("Part", workspace)
 	)
 	```

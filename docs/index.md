@@ -8,21 +8,18 @@
 <div id="fusiondoc-home" markdown>
 <section id="fusiondoc-home-main">
 <section id="fusiondoc-home-main-inner">
-<h1>Rediscover the joy of coding.</h1>
+<h1>Futuristic Luau for every universe.</h1>
 <p>
-Code is more dynamic, complex and intertwined than ever before. Errors cascade
-out of control, things update in the wrong order, and it's all connected by
-difficult, unreadable spaghetti.
+Fusion is a portable Luau companion library for simpler, more descriptive code.
 </p>
 <p>
-No longer. Fusion introduces modern 'reactive' concepts for managing code, so
-you can spend more time getting your logic right, and less time implementing
-buggy boilerplate code connections.
+With Fusion, assemble straightforward chains of logic that are easy to understand,
+predict and debug. Make strong guarantees about what your code will or won't do.
+Build joyfully custom-fitted APIs to interact with the world outside of your code.
 </p>
 <p>
-Starting from simple roots, concepts neatly combine and build up with very little
-learning curve. At every stage, you can robustly guarantee what your code will
-do, and when you come back in six months, your code is easy to pick back up.
+Fusion provides batteries-included configuration for Roblox, and fantastic extensibility
+and integration for anything else Luau.
 </p>
 <nav>
 <a href="./tutorials">Getting started guide</a>

@@ -178,9 +178,9 @@ local function TodoEntry(
 
 			[OnEvent "MouseButton1Down"] = props.OnMouseDown
 
-			-- Don't detect mouse up here, because in some rare cases, the event
-			-- could be missed due to lag between the item's position and the
-			-- cursor position.
+			--[[ Don't detect mouse up here, because in some rare cases, 
+			the event could be missed due to lag between the item's 
+			position and the cursor position.]]
 		}
 	}
 end
@@ -508,9 +508,9 @@ respond to mouse-up, even if the mouse happens to briefly leave this element.
 ```Lua
 			[OnEvent "MouseButton1Down"] = props.OnMouseDown
 
-			-- Don't detect mouse up here, because in some rare cases, the event
-			-- could be missed due to lag between the item's position and the
-			-- cursor position.
+			--[[ Don't detect mouse up here, because in some rare cases, 
+			the event could be missed due to lag between the item's 
+			position and the cursor position.]]
 ```
 
 The example creates a list of `TodoItem` objects, each with a unique ID, text

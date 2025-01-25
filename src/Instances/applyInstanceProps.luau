@@ -13,7 +13,7 @@ local task = nil -- Disable usage of Roblox's task scheduler
 	If a key is used twice, an error will be thrown. This is done to avoid
 	double assignments or double bindings. However, some special keys may want
 	to enable such assignments - in which case unique keys should be used for
-	each occurence.
+	each occurrence.
 ]]
 
 local Package = script.Parent.Parent
