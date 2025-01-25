@@ -8,7 +8,7 @@
 	<span class="fusiondoc-api-icon" markdown>:octicons-workflow-24:</span>
 	<span class="fusiondoc-api-name">Observer</span>
 	<span class="fusiondoc-api-type">
-		-> <a href="../../../state/types/Observer">Observer</a>
+		-> <a href="../../types/Observer">Observer</a>
 	</span>
 </h1>
 
@@ -59,7 +59,7 @@ The target that the observer should watch for changes.
 <h2 markdown>
 	Returns
 	<span class="fusiondoc-api-type">
-		-> <a href="../../../state/types/observer">Observer</a>
+		-> <a href="../../types/observer">Observer</a>
 	</span>
 </h2>
 

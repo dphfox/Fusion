@@ -18,7 +18,7 @@ export type Observer = GraphObject & {
 }
 ```
 
-A [graph object](../graph object) that runs user code when it's updated by the
+A [graph object](../graphobject) that runs user code when it's updated by the
 reactive graph.
 
 !!! note "Non-standard type syntax"
