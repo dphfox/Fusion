@@ -44,13 +44,13 @@ destruction tasks for this object.
 <h3 markdown>
 	processor
 	<span class="fusiondoc-api-type">
-		: (<a href="../../../memory/types/use">Use</a>, 
+		: (<a href="../../types/use">Use</a>, 
 		<a href="../../../memory/types/scope">Scope</a>&lt;S&gt;) -> T
 	</span>
 </h3>
 
 Computes the value that will be used by the computed. The processor is given a
-[use function](../../../memory/types/use) for including other objects in the
+[use function](../../types/use) for including other objects in the
 computation, and a [scope](../../../memory/types/scope) for queueing destruction
 tasks to run on re-computation. The given scope has the same methods as the
 scope used to create the computed.

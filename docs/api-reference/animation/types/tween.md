@@ -15,7 +15,7 @@ export type Tween<T> = StateObject<T>  & {
 }
 ```
 
-A specialised [state object](../stateobject) for following a goal state smoothly
+A specialised [state object](../../../state/types/stateobject) for following a goal state smoothly
 over time, using a `TweenInfo` to shape the motion.
 
 This type isn't generally useful outside of Fusion itself.

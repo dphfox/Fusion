@@ -18,7 +18,7 @@ export type Spring<T> = StateObject<T> & {
 }
 ```
 
-A specialised [state object](../stateobject) for following a goal state smoothly
+A specialised [state object](../../../state/types/stateobject) for following a goal state smoothly
 over time, using physics to shape the motion.
 
 The methods on this type allow for direct control over the position and velocity

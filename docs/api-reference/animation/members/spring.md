@@ -46,7 +46,7 @@ destruction tasks for this object.
 <h3 markdown>
 	goal
 	<span class="fusiondoc-api-type">
-		: <a href="../../../state/types/used">UsedAs</a>&lt;T&gt;
+		: <a href="../../../state/types/usedas">UsedAs</a>&lt;T&gt;
 	</span>
 </h3>
 

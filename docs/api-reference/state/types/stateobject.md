@@ -18,7 +18,7 @@ export type StateObject<T> = GraphObject & {
 ```
 
 Stores a value of `T` which can change over time. As a 
-[graph object](../graphobject), it can broadcast updates when its value changes.
+[graph object](../../../graph/types/graphobject), it can broadcast updates when its value changes.
 
 This type isn't generally useful outside of Fusion itself; you should prefer to
 work with [`UsedAs<T>`](../usedas) in your own code.
