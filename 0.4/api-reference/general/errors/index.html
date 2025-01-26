@@ -3487,7 +3487,7 @@ the details for you.</p>
 <a href="../../state/members/forkeys"><code>ForKeys</code></a>,
 <a href="../../state/members/forvalues"><code>ForValues</code></a>,
 <a href="../../state/members/forpairs"><code>ForPairs</code></a>,
-<a href="../../memory/members/contextual"><code>Contextual</code></a></p>
+<a href="../../general/members/contextual"><code>Contextual</code></a></p>
 <p>Fusion ran a function you specified, but the function threw an error that Fusion
 couldn't handle.</p>
 <p>The error includes a more specific message which can be used to diagnose the
@@ -3577,7 +3577,7 @@ future versions of Fusion.
 proceed.
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../memory/members/doCleanup"><code>doCleanup</code></a></p>
+<a href="../../memory/members/docleanup"><code>doCleanup</code></a></p>
 <p>You called <code>doCleanup()</code> on a function or object which carried some code. When
 that code was run, it attempted to call <code>doCleanup()</code> on the same thing you
 called with.</p>
@@ -3711,7 +3711,7 @@ it something else.</p>
 <div class="highlight"><pre><span></span><code>The damping ratio for a spring must be &gt;= 0. (damping was -1.00)
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../roblox/members/spring"><code>Spring</code></a></p>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
 <p>You provided a damping ratio that the spring doesn't support, for example <code>NaN</code>,
 or a negative damping implying negative friction.</p>
 </div>
@@ -3721,7 +3721,7 @@ or a negative damping implying negative friction.</p>
 <div class="highlight"><pre><span></span><code>The speed of a spring must be &gt;= 0. (speed was NaN)
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../roblox/members/spring"><code>Spring</code></a></p>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
 <p>You provided a speed multiplier that the spring doesn't support, for example
 <code>NaN</code> or a negative speed implying the spring moves backwards through time.</p>
 </div>
@@ -3745,7 +3745,7 @@ of their arguments.</p>
 <div class="highlight"><pre><span></span><code>The damping ratio for a spring must be a number. (got a string)
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../roblox/members/spring"><code>Spring</code></a></p>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
 <p>You provided a damping ratio that the spring couldn't understand. Damping ratio
 has to be a number.</p>
 </div>
@@ -3755,7 +3755,7 @@ has to be a number.</p>
 <div class="highlight"><pre><span></span><code>The speed of a spring must be a number. (got a string)
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../roblox/members/spring"><code>Spring</code></a></p>
+<a href="../../animation/members/spring"><code>Spring</code></a></p>
 <p>You provided a speed multiplier that the spring couldn't understand. Speed has
 to be a number.</p>
 </div>
@@ -3765,7 +3765,7 @@ to be a number.</p>
 <div class="highlight"><pre><span></span><code>The tween info of a tween must be a TweenInfo. (got a table)
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-<a href="../../roblox/members/tween"><code>Tween</code></a></p>
+<a href="../../animation/members/tween"><code>Tween</code></a></p>
 <p>You provided an easing curve that the tween couldn't understand. The easing
 curve has to be specified using Roblox's <code>TweenInfo</code> data type.</p>
 </div>
@@ -3787,7 +3787,7 @@ Roblox's task scheduling APIs.</p>
 called on this scope. Ensure you are not reusing scopes after cleanup.
 </code></pre></div>
 <p><strong>Thrown by:</strong>
-scopes after being passed to <a href="../../memory/members/doCleanup"><code>doCleanup</code></a></p>
+scopes after being passed to <a href="../../memory/members/docleanup"><code>doCleanup</code></a></p>
 <p>If you attempt to read from, or write to, a scope that's been destroyed, this
 message is shown. After a scope has been cleaned up, your code should forget the
 reference to it, as it is no longer valid.</p>
@@ -3810,7 +3810,7 @@ belong to. See discussion #292 on GitHub for advice.
 <a href="../../roblox/members/out"><code>Out</code></a>,
 <a href="../../roblox/members/ref"><code>Ref</code></a>,
 <a href="../../state/members/computed"><code>Computed</code></a>,
-<a href="../../state/members/observer"><code>Observer</code></a></p>
+<a href="../../graph/members/observer"><code>Observer</code></a></p>
 <p><strong>Related discussions:</strong> 
 <a href="https://github.com/dphfox/Fusion/discussions/292"><code>#292</code></a></p>
 <p>If you use an object after it's been destroyed, then your code can break. This
@@ -3854,7 +3854,7 @@ discussion #292 on GitHub for advice.
 <a href="../../roblox/members/hydrate"><code>Hydrate</code></a>,
 <a href="../../state/members/value"><code>Value</code></a>,
 <a href="../../state/members/computed"><code>Computed</code></a>,
-<a href="../../state/members/observer"><code>Observer</code></a>,
+<a href="../../graph/members/observer"><code>Observer</code></a>,
 <a href="../../state/members/forkeys"><code>ForKeys</code></a>,
 <a href="../../state/members/forvalues"><code>ForValues</code></a>,
 <a href="../../state/members/forpairs"><code>ForPairs</code></a>,
@@ -4016,7 +4016,7 @@ is use()-ing. See discussion #292 on GitHub for advice.
 <a href="../../roblox/members/out"><code>Out</code></a>,
 <a href="../../roblox/members/ref"><code>Ref</code></a>,
 <a href="../../state/members/computed"><code>Computed</code></a>,
-<a href="../../state/members/observer"><code>Observer</code></a></p>
+<a href="../../graph/members/observer"><code>Observer</code></a></p>
 <p><strong>Related discussions:</strong> 
 <a href="https://github.com/dphfox/Fusion/discussions/292"><code>#292</code></a></p>
 <p>Your code attempted to access an object after that object was destroyed..</p>
