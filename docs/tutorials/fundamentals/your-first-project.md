@@ -235,6 +235,41 @@ numCoins:set(75)
 --> The number of coins is 75
 ```
 
+### Tidying up
+
+Our Fusion code is feature-complete, but before it stops running, we want to
+delete everything we've made to ensure we aren't consuming resources forever.
+
+Luckily, that's very simple. When you're done with all of the objects in a group,
+you can destroy the group all in one go:
+
+```Lua linenums="4" hl_lines="19"
+local g = Fusion:Group()
+
+local numCoins = g:Value(50)
+
+local message = g:Computed(function(use)
+	return "The number of coins is " .. use(numCoins)
+end)
+
+g:Observer(message):onBind(function()
+	print(Fusion.peek(message))
+end)
+
+--> The number of coins is 50
+
+numCoins:set(75)
+
+--> The number of coins is 75
+
+g:destroy()
+```
+
+Just like that, everything you've made with `g:` gets dismantled and stops
+running.
+
+-----
+
 With that, you've written your first file of Fusion code, touching on all of the
 major Fusion concepts!
 
