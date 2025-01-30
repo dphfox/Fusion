@@ -57,7 +57,7 @@ If it is a state object, this object will respond to changes in that state.
 <h3 markdown>
 	processor
 	<span class="fusiondoc-api-type">
-		: (<a href="../../../memory/types/use">Use</a>, 
+		: (<a href="../../types/use">Use</a>, 
 		<a href="../../../memory/types/scope">Scope</a>&lt;S&gt;,
 		key: KI, value: VI) -> (KO, VO)
 	</span>
@@ -66,7 +66,7 @@ If it is a state object, this object will respond to changes in that state.
 Accepts a `KI` key and `VI` value pair from the input table, and returns the 
 `KO` key and `VO` value pair that should appear in the output table.
 
-The processor is given a [use function](../../../memory/types/use) for including
+The processor is given a [use function](../../types/use) for including
 other objects in the computation, and a [scope](../../../memory/types/scope) for
 queueing destruction tasks to run on re-computation. The given scope has the
 same methods as the scope used to create the whole object.

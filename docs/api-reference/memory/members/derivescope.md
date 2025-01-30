@@ -23,7 +23,7 @@ Returns a blank [scope](../../types/scope) with the same methods as an existing
 scope, plus some optional additional methods which are merged in to only the
 new scope.
 
-Unlike [innerScope](../derivescope), the returned scope has a completely
+Unlike [innerScope](../innerscope), the returned scope has a completely
 independent lifecycle from the original scope.
 
 !!! note "Pseudo type"

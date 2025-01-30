@@ -38,7 +38,7 @@ Error in callback: attempt to perform arithmetic (add) on number and string
 [`ForKeys`](../../state/members/forkeys),
 [`ForValues`](../../state/members/forvalues),
 [`ForPairs`](../../state/members/forpairs),
-[`Contextual`](../../memory/members/contextual)
+[`Contextual`](../../general/members/contextual)
 
 Fusion ran a function you specified, but the function threw an error that Fusion
 couldn't handle.
@@ -177,7 +177,7 @@ proceed.
 ```
 
 **Thrown by:**
-[`doCleanup`](../../memory/members/doCleanup)
+[`doCleanup`](../../memory/members/docleanup)
 
 You called `doCleanup()` on a function or object which carried some code. When
 that code was run, it attempted to call `doCleanup()` on the same thing you
@@ -395,7 +395,7 @@ The damping ratio for a spring must be >= 0. (damping was -1.00)
 ```
 
 **Thrown by:**
-[`Spring`](../../roblox/members/spring)
+[`Spring`](../../animation/members/spring)
 
 You provided a damping ratio that the spring doesn't support, for example `NaN`,
 or a negative damping implying negative friction.
@@ -412,7 +412,7 @@ The speed of a spring must be >= 0. (speed was NaN)
 ```
 
 **Thrown by:**
-[`Spring`](../../roblox/members/spring)
+[`Spring`](../../animation/members/spring)
 
 You provided a speed multiplier that the spring doesn't support, for example
 `NaN` or a negative speed implying the spring moves backwards through time.
@@ -451,7 +451,7 @@ The damping ratio for a spring must be a number. (got a string)
 ```
 
 **Thrown by:**
-[`Spring`](../../roblox/members/spring)
+[`Spring`](../../animation/members/spring)
 
 You provided a damping ratio that the spring couldn't understand. Damping ratio
 has to be a number.
@@ -468,7 +468,7 @@ The speed of a spring must be a number. (got a string)
 ```
 
 **Thrown by:**
-[`Spring`](../../roblox/members/spring)
+[`Spring`](../../animation/members/spring)
 
 You provided a speed multiplier that the spring couldn't understand. Speed has
 to be a number.
@@ -485,7 +485,7 @@ The tween info of a tween must be a TweenInfo. (got a table)
 ```
 
 **Thrown by:**
-[`Tween`](../../roblox/members/tween)
+[`Tween`](../../animation/members/tween)
 
 You provided an easing curve that the tween couldn't understand. The easing
 curve has to be specified using Roblox's `TweenInfo` data type.
@@ -521,7 +521,7 @@ called on this scope. Ensure you are not reusing scopes after cleanup.
 ```
 
 **Thrown by:**
-scopes after being passed to [`doCleanup`](../../memory/members/doCleanup)
+scopes after being passed to [`doCleanup`](../../memory/members/docleanup)
 
 If you attempt to read from, or write to, a scope that's been destroyed, this
 message is shown. After a scope has been cleaned up, your code should forget the
@@ -552,7 +552,7 @@ belong to. See discussion #292 on GitHub for advice.
 [`Out`](../../roblox/members/out),
 [`Ref`](../../roblox/members/ref),
 [`Computed`](../../state/members/computed),
-[`Observer`](../../state/members/observer)
+[`Observer`](../../graph/members/observer)
 
 **Related discussions:** 
 [`#292`](https://github.com/dphfox/Fusion/discussions/292)
@@ -614,7 +614,7 @@ discussion #292 on GitHub for advice.
 [`Hydrate`](../../roblox/members/hydrate),
 [`Value`](../../state/members/value),
 [`Computed`](../../state/members/computed),
-[`Observer`](../../state/members/observer),
+[`Observer`](../../graph/members/observer),
 [`ForKeys`](../../state/members/forkeys),
 [`ForValues`](../../state/members/forvalues),
 [`ForPairs`](../../state/members/forpairs),
@@ -862,7 +862,7 @@ is use()-ing. See discussion #292 on GitHub for advice.
 [`Out`](../../roblox/members/out),
 [`Ref`](../../roblox/members/ref),
 [`Computed`](../../state/members/computed),
-[`Observer`](../../state/members/observer)
+[`Observer`](../../graph/members/observer)
 
 **Related discussions:** 
 [`#292`](https://github.com/dphfox/Fusion/discussions/292)
