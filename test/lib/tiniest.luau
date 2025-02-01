@@ -1,7 +1,7 @@
 -- From dphfox/tiniest, licenced under MIT
 --!strict
 
-local tiniest_plugin = require("tiniest_plugin")
+local tiniest_plugin = require("./tiniest_plugin")
 
 type Context = DescribeContext | RunContext
 

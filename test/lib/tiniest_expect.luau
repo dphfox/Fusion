@@ -1,7 +1,7 @@
 -- From dphfox/tiniest, licenced under MIT
 --!strict
 
-local tiniest_quote = require("tiniest_quote")
+local tiniest_quote = require("./tiniest_quote")
 
 local tiniest_expect = {}
 

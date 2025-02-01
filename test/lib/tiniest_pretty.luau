@@ -1,8 +1,8 @@
 -- From dphfox/tiniest, licenced under MIT
 --!strict
 
-local tiniest_plugin = require("tiniest_plugin")
-local tiniest = require("tiniest")
+local tiniest_plugin = require("./tiniest_plugin")
+local tiniest = require("./tiniest")
 type Test = tiniest.Test
 type TestRunResult = tiniest.TestRunResult
 type RunResult = tiniest.RunResult
