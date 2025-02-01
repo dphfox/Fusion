@@ -1990,13 +1990,6 @@ switcher to go back to a current version of Fusion.
 </li>
         
           <li class="md-nav__item">
-  <a href="#lastcompute-number" class="md-nav__link">
-    lastCompute : number?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#timeliness-lazy-eager" class="md-nav__link">
     timeliness : "lazy" | "eager"
   </a>
@@ -3020,13 +3013,6 @@ switcher to go back to a current version of Fusion.
 </li>
         
           <li class="md-nav__item">
-  <a href="#lastcompute-number" class="md-nav__link">
-    lastCompute : number?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#timeliness-lazy-eager" class="md-nav__link">
     timeliness : "lazy" | "eager"
   </a>
@@ -3102,10 +3088,9 @@ switcher to go back to a current version of Fusion.
 <span class="w">    </span><span class="nv">dependencySet</span><span class="p">:</span><span class="w"> </span><span class="err">{[</span><span class="py">GraphObject</span><span class="p">]:</span><span class="w"> </span><span class="nv">unknown</span><span class="p">},</span>
 <span class="w">    </span><span class="nv">dependentSet</span><span class="p">:</span><span class="w"> </span><span class="err">{[</span><span class="py">GraphObject</span><span class="p">]:</span><span class="w"> </span><span class="nv">unknown</span><span class="p">},</span>
 <span class="w">    </span><span class="nv">lastChange</span><span class="p">:</span><span class="w"> </span><span class="py">number</span><span class="err">?</span><span class="p">,</span>
-<span class="w">    </span><span class="nv">lastCompute</span><span class="p">:</span><span class="w"> </span><span class="py">number</span><span class="err">?</span><span class="p">,</span>
 <span class="w">    </span><span class="nv">timeliness</span><span class="p">:</span><span class="w"> </span><span class="err">&quot;</span><span class="py">lazy</span><span class="s2">&quot; | &quot;</span><span class="nv">eager</span><span class="s2">&quot;,</span>
 <span class="s2">    validity: &quot;</span><span class="nv">valid</span><span class="s2">&quot; | &quot;</span><span class="nv">invalid</span><span class="s2">&quot; | &quot;</span><span class="nv">busy</span><span class="s2">&quot;,</span>
-<span class="s2">    _evaluate: (GraphObject) -&gt; boolean</span>
+<span class="s2">    _evaluate: (GraphObject, lastChange: number?) -&gt; boolean</span>
 <span class="s2">}</span>
 </code></pre></div>
 <p>A reactive graph object which can broadcast and receive updates among other
@@ -3150,14 +3135,6 @@ object.</p>
     </span>
 <a class="headerlink" href="#lastchange-number" title="Permanent link">&para;</a></h3>
 <p>The <code>os.clock()</code> time of this object's most recent meaningful change, or <code>nil</code>
-if the object is newly created.</p>
-<h3 id="lastcompute-number">
-    lastCompute
-    <span class="fusiondoc-api-type">
-        : number?
-    </span>
-<a class="headerlink" href="#lastcompute-number" title="Permanent link">&para;</a></h3>
-<p>The <code>os.clock()</code> time of when this object was most recently computed, or <code>nil</code>
 if the object is newly created.</p>
 <h3 id="timeliness-lazy-eager">
     timeliness
