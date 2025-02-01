@@ -13,21 +13,21 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = require(ReplicatedStorage.Fusion)
 ```
 
-### Your first group
+### Your first scope
 
 Fusion is a library where you will be creating a lot of objects. Fusion groups
 these objects together so they can be managed in bulk.
 
 If you've used other Luau libraries before, this idea goes by many names, like
-"maids" or "janitors". However, in Fusion, we simply call them *groups*.
+"maids" or "janitors". However, in Fusion, we call them *scopes*.
 
-Let's start by creating a group for ourselves.
+Let's start by creating a scope for ourselves.
 
 ```Lua linenums="1" hl_lines="4"
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = require(ReplicatedStorage.Fusion)
 
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 ```
 
 ### Your first value
@@ -35,13 +35,13 @@ local g = Fusion:Group()
 Now, we will create our first Fusion object - the *value*. As the name suggests,
 values are very simple objects; they store a single value, much like a variable.
 
-Call the `:Value()` function on the group to create a value, and give it 
+Call the `:Value()` function on the scope to create a value, and give it 
 something to be stored.
 
 ```Lua linenums="4" hl_lines="3"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 ```
 
 ### Peeking
@@ -54,9 +54,9 @@ else to happen.
 By using `Fusion.peek`, we can read and print out the contents of `numCoins`.
 
 ```Lua linenums="4" hl_lines="5"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
 print(Fusion.peek(numCoins)) --> 50
 ```
@@ -66,15 +66,15 @@ print(Fusion.peek(numCoins)) --> 50
 Let's try running a computation instead. To do this, we will create a
 second Fusion object - the *computed*.
 
-Call the `:Computed()` function on the group to create a computed, and give it
+Call the `:Computed()` function on the scope to create a computed, and give it
 a function to run as a calculation. For now, it'll just be hardcoded.
 
 ```Lua linenums="4" hl_lines="5-7"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function()
+local message = scope:Computed(function()
 	return "I am a message"
 end)
 
@@ -87,11 +87,11 @@ anything else.
 Let's change the print statement to show the message instead.
 
 ```Lua linenums="4" hl_lines="9"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function()
+local message = scope:Computed(function()
 	return "I am a message"
 end)
 
@@ -106,11 +106,11 @@ in your calculation, computeds will give you a `use` parameter.
 Add this `use` parameter to your computed callback.
 
 ```Lua linenums="4" hl_lines="5"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "I am a message"
 end)
 
@@ -124,11 +124,11 @@ computation to that other Fusion object under the hood.
 Let's change our message to tell us the number of coins:
 
 ```Lua linenums="4" hl_lines="6"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
@@ -145,11 +145,11 @@ they are storing.
 Let's use this at the end and re-print the message.
 
 ```Lua linenums="4" hl_lines="11-13"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
@@ -168,19 +168,19 @@ be nice to do that automatically.
 
 To do that, Fusion has a third kind of object - the *observer*.
 
-Call the `:Observer()` function on the group to create an observer, and pass the
+Call the `:Observer()` function on the scope to create an observer, and pass the
 object you want the observer to watch and detect changes to.
 
 ```Lua linenums="4" hl_lines="9"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
-g:Observer(message)
+scope:Observer(message)
 
 print(Fusion.peek(message)) --> The number of coins is 50
 
@@ -194,15 +194,15 @@ observer with the callback you want - we'll print the message inside ours, and
 get rid of the old prints.
 
 ```Lua linenums="4" hl_lines="9-11"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
-g:Observer(message):onChange(function()
+scope:Observer(message):onChange(function()
 	print(Fusion.peek(message))
 end)
 
@@ -216,15 +216,15 @@ The message gets printed after we change the number of coins!
 If you want to print the message immediately, too, use `:onBind()` instead:
 
 ```Lua linenums="4" hl_lines="9"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
-g:Observer(message):onBind(function()
+scope:Observer(message):onBind(function()
 	print(Fusion.peek(message))
 end)
 
@@ -240,19 +240,19 @@ numCoins:set(75)
 Our Fusion code is feature-complete, but before it stops running, we want to
 delete everything we've made to ensure we aren't consuming resources forever.
 
-Luckily, that's very simple. When you're done with all of the objects in a group,
-you can destroy the group all in one go:
+Luckily, that's very simple. When you're done with all of the objects in a scope,
+you can destroy the scope all in one go with `scope:doCleanup()`.
 
 ```Lua linenums="4" hl_lines="19"
-local g = Fusion:Group()
+local scope = Fusion:Scope()
 
-local numCoins = g:Value(50)
+local numCoins = scope:Value(50)
 
-local message = g:Computed(function(use)
+local message = scope:Computed(function(use)
 	return "The number of coins is " .. use(numCoins)
 end)
 
-g:Observer(message):onBind(function()
+scope:Observer(message):onBind(function()
 	print(Fusion.peek(message))
 end)
 
@@ -262,10 +262,10 @@ numCoins:set(75)
 
 --> The number of coins is 75
 
-g:destroy()
+scope:doCleanup()
 ```
 
-Just like that, everything you've made with `g:` gets dismantled and stops
+Just like that, everything you've made with `scope:` gets dismantled and stops
 running.
 
 -----
