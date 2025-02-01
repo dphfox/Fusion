@@ -21,14 +21,14 @@ local function evaluate(
 	if target.validity == "busy" then
 		return External.logError("infiniteLoop")
 	end
-	local firstEvaluation = target.lastChange == nil
+	local firstEvaluation = target.lastCompute == nil or target.lastChange == nil
 	local isInvalid = target.validity == "invalid"
 	if firstEvaluation or isInvalid or forceComputation then
 		local needsComputation = firstEvaluation or forceComputation
 		if not needsComputation then
 			for dependency in target.dependencySet do
 				evaluate(dependency, false)
-				if dependency.lastChange > target.lastChange then
+				if dependency.lastChange > target.lastCompute then
 					needsComputation = true
 					break
 				end
@@ -42,6 +42,7 @@ local function evaluate(
 			end
 			target.validity = "busy"
 			targetMeaningfullyChanged = target:_evaluate() or firstEvaluation
+			target.lastCompute = os.clock()
 		end
 		if targetMeaningfullyChanged then
 			target.lastChange = os.clock()
