@@ -67,6 +67,7 @@ local function Computed<T, S>(
 		end
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
+			self._innerScope = nil
 		end
 	end
 	self.oldestTask = destroy
@@ -100,6 +101,7 @@ function class._evaluate<T, S>(
 		local similar = isSimilar(self._EXTREMELY_DANGEROUS_usedAsValue, newValue)
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
+			self._innerScope = nil
 		end
 		self._innerScope = innerScope
 
