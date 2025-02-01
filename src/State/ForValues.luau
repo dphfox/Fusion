@@ -74,14 +74,8 @@ end
 local function ForValues<K, VI, VO, S>(
 	scope: Types.Scope<S>,
 	inputTable: Types.UsedAs<{[K]: VI}>,
-	processor: (Types.Use, Types.Scope<S>, VI) -> VO,
-	destructor: unknown?
+	processor: (Types.Use, Types.Scope<S>, VI) -> VO
 ): Types.For<K, VO>
-	if typeof(inputTable) == "function" then
-		External.logError("scopeMissing", nil, "ForValues", "myScope:ForValues(inputTable, function(scope, use, value) ... end)")
-	elseif destructor ~= nil then
-		External.logWarn("destructorRedundant", "ForValues")
-	end
 	return For(
 		scope,
 		inputTable,

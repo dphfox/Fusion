@@ -64,9 +64,6 @@ local function Spring<T>(
 	damping: Types.UsedAs<number>?
 ): Types.Spring<T>
 	local createdAt = os.clock()
-	if typeof(scope) ~= "table" or castToState(scope) ~= nil then
-		External.logError("scopeMissing", nil, "Springs", "myScope:Spring(goalState, speed, damping)")
-	end
 
 	local goalState = castToState(goal)
 	local stopwatch = nil
@@ -163,12 +160,6 @@ function class.addVelocity<T>(
 	self._stopwatch:zero()
 	self._stopwatch:unpause()
 	change(self)
-end
-
-function class.get<T>(
-	self: Self<T>
-): never
-	return External.logError("stateGetWasRemoved")
 end
 
 function class.setPosition<T>(

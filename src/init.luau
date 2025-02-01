@@ -45,7 +45,6 @@ local Fusion: Fusion = table.freeze {
 	Safe = require(script.Utility.Safe),
 
 	-- Memory
-	cleanup = require(script.Memory.legacyCleanup),
 	deriveScope = require(script.Memory.deriveScope),
 	doCleanup = require(script.Memory.doCleanup),
 	innerScope = require(script.Memory.innerScope),

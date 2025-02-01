@@ -73,13 +73,6 @@ local function For<S, KI, KO, VI, VO>(
 	return self
 end
 
-function class.get<S, KI, KO, VI, VO>(
-	_self: Self<S, KI, KO, VI, VO>
-): never
-	External.logError("stateGetWasRemoved")
-	return never()
-end
-
 function class._evaluate<S, KI, KO, VI, VO>(
 	self: Self<S, KI, KO, VI, VO>
 ): boolean

@@ -45,15 +45,9 @@ local METATABLE = table.freeze {__index = class}
 
 local function Computed<T, S>(
 	scope: S & Types.Scope<unknown>,
-	processor: (Types.Use, S) -> T,
-	destructor: unknown?
+	processor: (Types.Use, S) -> T
 ): Types.Computed<T>
 	local createdAt = os.clock()
-	if typeof(scope) == "function" then
-		External.logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
-	elseif destructor ~= nil then
-		External.logWarn("destructorRedundant", "Computed")
-	end
 	local self: Self<T, S> = setmetatable(
 		{
 			createdAt = createdAt,
@@ -81,13 +75,6 @@ local function Computed<T, S>(
 	nicknames[self.oldestTask] = "Computed"
 	table.insert(scope, destroy)
 	return self
-end
-
-function class.get<T, S>(
-	_self: Self<T, S>
-): never
-	External.logError("stateGetWasRemoved")
-	return never()
 end
 
 function class._evaluate<T, S>(
