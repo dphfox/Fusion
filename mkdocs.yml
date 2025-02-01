@@ -59,10 +59,11 @@ nav:
     - Developer Tools: tutorials/get-started/developer-tools.md
     - Getting Help: tutorials/get-started/getting-help.md
     - Fundamentals:
-      - Scopes: tutorials/fundamentals/scopes.md
+      - Your First Project: tutorials/fundamentals/your-first-project.md
       - Values: tutorials/fundamentals/values.md
       - Observers: tutorials/fundamentals/observers.md
       - Computeds: tutorials/fundamentals/computeds.md
+      - Scopes: tutorials/fundamentals/scopes.md
     - Tables:
       - ForValues: tutorials/tables/forvalues.md
       - ForKeys: tutorials/tables/forkeys.md
