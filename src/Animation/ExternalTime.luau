@@ -39,7 +39,6 @@ local function ExternalTime(
 			createdAt = createdAt,
 			dependentSet = {},
 			lastChange = nil,
-			lastCompute = nil,
 			scope = scope,
 			validity = "invalid"
 		}, 

@@ -67,7 +67,6 @@ local function Tween<T>(
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
-			lastCompute = nil,
 			scope = scope,
 			validity = "invalid",
 			_activeDuration = nil,

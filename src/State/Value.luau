@@ -37,7 +37,6 @@ local function Value<T>(
 			createdAt = createdAt,
 			dependentSet = {},
 			lastChange = os.clock(),
-			lastCompute = os.clock(),
 			scope = scope,
 			validity = "valid",
 			_EXTREMELY_DANGEROUS_usedAsValue = initialValue

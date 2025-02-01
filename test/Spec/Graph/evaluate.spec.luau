@@ -415,7 +415,6 @@ return function()
 					local seen = {}
 					for _, searchTarget in searchNow do
 						searchTarget.lastChange = -depth
-						searchTarget.lastCompute = -depth
 						searchTarget.validity = if depth == 0 then "valid" else "invalid"
 						for dependent in searchTarget.dependentSet do
 							if seen[dependent] then
