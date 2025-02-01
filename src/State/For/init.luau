@@ -9,7 +9,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -17,7 +16,6 @@ local peek = require(Package.State.peek)
 local castToState = require(Package.State.castToState)
 local ForTypes = require(Package.State.For.ForTypes)
 -- Utility
-local never = require(Package.Utility.never)
 local nicknames = require(Package.Utility.nicknames)
 
 local Disassembly = require(Package.State.For.Disassembly)
@@ -71,13 +69,6 @@ local function For<S, KI, KO, VI, VO>(
 	table.insert(scope, destroy)
 
 	return self
-end
-
-function class.get<S, KI, KO, VI, VO>(
-	_self: Self<S, KI, KO, VI, VO>
-): never
-	External.logError("stateGetWasRemoved")
-	return never()
 end
 
 function class._evaluate<S, KI, KO, VI, VO>(

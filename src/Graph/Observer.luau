@@ -38,9 +38,6 @@ local function Observer(
 	watching: unknown
 ): Types.Observer
 	local createdAt = os.clock()
-	if watching == nil then
-		External.logError("scopeMissing", nil, "Observers", "myScope:Observer(watching)")
-	end
 
 	local self: Self = setmetatable(
 		{

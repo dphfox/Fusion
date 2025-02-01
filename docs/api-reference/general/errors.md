@@ -151,24 +151,6 @@ be designed to have dependents or dependencies.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## cleanupWasRenamed
-
-```
-`Fusion.cleanup` was renamed to `Fusion.doCleanup`. This will be an error in
-future versions of Fusion.
-```
-
-**Thrown by:**
-[`doCleanup`](../../memory/members/docleanup)
-
-You attempted to use `cleanup()` in Fusion 0.3, which replaces it with the
-`doCleanup()` method.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
 ## destroyedTwice
 
 ```
@@ -191,34 +173,6 @@ Ensure your code is the rightful owner of scopes that it is trying to clean up.
 In particular, avoid cleaning up scopes you receive from elsewhere, unless you
 and the original provider of the scope agree to transfer the responsibility of
 cleaning up the scope.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## destructorRedundant
-
-```
-Computed destructors no longer do anything. If you wish to run code on destroy,
-`table.insert` a function into the `scope` argument. See discussion #292 on
-GitHub for advice.
-```
-
-**Thrown by:**
-[`Computed`](../../state/members/computed),
-[`ForKeys`](../../state/members/forkeys),
-[`ForValues`](../../state/members/forvalues),
-[`ForPairs`](../../state/members/forpairs)
-
-**Related discussions:** 
-[`#292`](https://github.com/dphfox/Fusion/discussions/292)
-
-You passed an extra parameter to the constructor, which has historically been
-interpreted as a function that runs when a value is cleaned up.
-
-This mechanism has been replaced by
-[scopes](../../../tutorials/fundamentals/scopes).
 </div>
 
 -----
@@ -371,23 +325,6 @@ type.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## invalidRefType
-
-```
-Instance refs must be Value objects.
-```
-
-**Thrown by:**
-[`Ref`](../../roblox/members/ref)
-
-`Ref` expected you to give it a [value](../../state/members/value), but you gave
-it something else.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
 ## invalidSpringDamping
 
 ```
@@ -533,54 +470,6 @@ reference to it, as it is no longer valid.
 
 <div class="fusiondoc-error-api-section" markdown>
 
-## possiblyOutlives
-
-```
-The Computed (bound to the PaddingLeft property) will be destroyed before the 
-UIPadding instance; the latter is in a different scope that gets destroyed too 
-quickly. To fix this, review the order they're created in, and what scopes they 
-belong to. See discussion #292 on GitHub for advice. 
-```
-
-**Thrown by:**
-[`Spring`](../../animation/members/spring),
-[`Tween`](../../animation/members/tween),
-[`New`](../../roblox/members/new),
-[`Hydrate`](../../roblox/members/hydrate),
-[`Attribute`](../../roblox/members/attribute),
-[`AttributeOut`](../../roblox/members/attributeout),
-[`Out`](../../roblox/members/out),
-[`Ref`](../../roblox/members/ref),
-[`Computed`](../../state/members/computed),
-[`Observer`](../../graph/members/observer)
-
-**Related discussions:** 
-[`#292`](https://github.com/dphfox/Fusion/discussions/292)
-
-If you use an object after it's been destroyed, then your code can break. This
-mainly happens when one object 'outlives' another object that it's using.
-
-Because [scopes](../../../tutorials/fundamentals/scopes) clean up the newest
-objects first, this can happen when an old object depends on something much
-newer that itself. During cleanup, a situation could arise where the newer
-object is destroyed, then the older object runs code of some kind that needed
-the newer object to be there.
-
-Fusion can check for situations like this by analysing the scopes. This message
-is shown when Fusion can prove one of these situations will occur.
-
-There are two typical solutions:
-
-- If the objects should always be created and destroyed at the exact same time,
-then ensure they're created in the correct order.
-- Otherwise, move the objects into separate scopes, and ensure that both scopes
-can exist without the other scope.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
 ## propertySetError
 
 ```
@@ -596,39 +485,6 @@ You attempted to set a property, but Roblox threw an error in response.
 
 The error includes a more specific message which can be used to diagnose the
 issue.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## scopeMissing
-
-```
-To create Observers, provide a scope. (e.g. `myScope:Observer(watching)`). See
-discussion #292 on GitHub for advice.
-```
-
-**Thrown by:**
-[`New`](../../roblox/members/new),
-[`Hydrate`](../../roblox/members/hydrate),
-[`Value`](../../state/members/value),
-[`Computed`](../../state/members/computed),
-[`Observer`](../../graph/members/observer),
-[`ForKeys`](../../state/members/forkeys),
-[`ForValues`](../../state/members/forvalues),
-[`ForPairs`](../../state/members/forpairs),
-[`Spring`](../../animation/members/spring),
-[`Tween`](../../animation/members/tween)
-
-**Related discussions:** 
-[`#292`](https://github.com/dphfox/Fusion/discussions/292)
-
-You attempted to create an object without providing a
-[scope](../../../tutorials/fundamentals/scopes) as the first parameter.
-
-Scopes are mandatory for all Fusion constructors so that Fusion knows when the
-object should be destroyed.
 </div>
 
 -----
@@ -690,36 +546,6 @@ The type 'Vector3' doesn't match the spring's type 'Color3'.
 
 The spring expected you to provide a type matching the data type that the spring
 is currently outputting. However, you provided a different data type.
-</div>
-
------
-
-<div class="fusiondoc-error-api-section" markdown>
-
-## stateGetWasRemoved
-
-```
-`StateObject:get()` has been replaced by `use()` and `peek()` - see discussion
-#217 on GitHub.
-```
-
-**Thrown by:**
-[`Value`](../../state/members/value),
-[`Computed`](../../state/members/computed),
-[`ForKeys`](../../state/members/forkeys),
-[`ForValues`](../../state/members/forvalues),
-[`ForPairs`](../../state/members/forpairs),
-[`Spring`](../../animation/members/spring),
-[`Tween`](../../animation/members/tween)
-
-**Related discussions:** 
-[`#217`](https://github.com/dphfox/Fusion/discussions/217)
-
-Older versions of Fusion let you call `:get()` directly on state objects to read
-their current value and attempt to infer dependencies.
-
-This has been replaced by [use functions](../../state/types/use) in Fusion 0.3
-for more predictable behaviour and better support for constant values.
 </div>
 
 -----
@@ -860,7 +686,6 @@ is use()-ing. See discussion #292 on GitHub for advice.
 [`Attribute`](../../roblox/members/attribute),
 [`AttributeOut`](../../roblox/members/attributeout),
 [`Out`](../../roblox/members/out),
-[`Ref`](../../roblox/members/ref),
 [`Computed`](../../state/members/computed),
 [`Observer`](../../graph/members/observer)
 

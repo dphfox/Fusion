@@ -54,9 +54,6 @@ local function Tween<T>(
 	tweenInfo: Types.UsedAs<TweenInfo>?
 ): Types.Tween<T>
 	local createdAt = os.clock()
-	if castToState(scope) then
-		External.logError("scopeMissing", nil, "Tweens", "myScope:Tween(goalState, tweenInfo)")
-	end
 
 	local goalState = castToState(goal)
 	local stopwatch = nil
@@ -116,12 +113,6 @@ local function Tween<T>(
 	evaluate(self, true)
 
 	return self
-end
-
-function class.get<T>(
-	self: Self<T>
-): never
-	return External.logError("stateGetWasRemoved")
 end
 
 function class._evaluate<T>(

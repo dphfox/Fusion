@@ -17,7 +17,6 @@ local External = require(Package.External)
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
-local never = require(Package.Utility.never)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -27,7 +26,6 @@ local peek = require(Package.State.peek)
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local checkLifetime = require(Package.Memory.checkLifetime)
-local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nicknames = require(Package.Utility.nicknames)
 
@@ -45,15 +43,9 @@ local METATABLE = table.freeze {__index = class}
 
 local function Computed<T, S>(
 	scope: S & Types.Scope<unknown>,
-	processor: (Types.Use, S) -> T,
-	destructor: unknown?
+	processor: (Types.Use, S) -> T
 ): Types.Computed<T>
 	local createdAt = os.clock()
-	if typeof(scope) == "function" then
-		External.logError("scopeMissing", nil, "Computeds", "myScope:Computed(function(use, scope) ... end)")
-	elseif destructor ~= nil then
-		External.logWarn("destructorRedundant", "Computed")
-	end
 	local self: Self<T, S> = setmetatable(
 		{
 			createdAt = createdAt,
@@ -75,19 +67,13 @@ local function Computed<T, S>(
 		end
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
+			self._innerScope = nil
 		end
 	end
 	self.oldestTask = destroy
 	nicknames[self.oldestTask] = "Computed"
 	table.insert(scope, destroy)
 	return self
-end
-
-function class.get<T, S>(
-	_self: Self<T, S>
-): never
-	External.logError("stateGetWasRemoved")
-	return never()
 end
 
 function class._evaluate<T, S>(
@@ -111,11 +97,11 @@ function class._evaluate<T, S>(
 		return peek(target)
 	end
 	local ok, newValue = xpcall(self._processor, parseError, use, innerScope)
-	local innerScope = scopePool.giveIfEmpty(innerScope)
 	if ok then
 		local similar = isSimilar(self._EXTREMELY_DANGEROUS_usedAsValue, newValue)
 		if self._innerScope ~= nil then
 			doCleanup(self._innerScope)
+			self._innerScope = nil
 		end
 		self._innerScope = innerScope
 
@@ -123,10 +109,7 @@ function class._evaluate<T, S>(
 		return not similar
 	else
 		local errorObj = (newValue :: any) :: Types.Error
-		if innerScope ~= nil then
-			doCleanup(innerScope)
-		end
-		innerScope = nil
+		doCleanup(innerScope)
 		
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process

@@ -19,7 +19,6 @@ local ForTypes = require(Package.State.For.ForTypes)
 -- Memory
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
-local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nameOf = require(Package.Utility.nameOf)
 local nicknames = require(Package.Utility.nicknames)
@@ -196,9 +195,6 @@ function class._evaluate<S, KI, KO, VI, VO>(
 	-- Generate new objects if needed to cover the remaining pending pairs.
 	for pendingKey, pendingValue in pendingPairs do
 		local subObject = self._constructor(deriveScope(outerScope), pendingKey, pendingValue)
-		if subObject.maybeScope ~= nil then
-			subObject.maybeScope = scopePool.giveIfEmpty(subObject.maybeScope)
-		end
 		newSubObjects[subObject] = true
 	end
 

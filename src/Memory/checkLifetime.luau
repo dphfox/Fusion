@@ -12,7 +12,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local External = require(Package.External)
-local whichLivesLonger = require(Package.Memory.whichLivesLonger)
 local nameOf = require(Package.Utility.nameOf)
 
 local checkLifetime = {}
@@ -119,16 +118,7 @@ function checkLifetime.bOutlivesA<A, B, Args...>(
 )
 	if scopeB == nil then
 		External.logError("useAfterDestroy", nil, formatter(a, b, ...))
-	elseif whichLivesLonger(scopeA, a, scopeB, b) == "definitely-a" then
-		local aName, bName = formatter(a, b, ...)
-		External.logWarn(
-			"possiblyOutlives",
-			aName, bName, 
-			if scopeA == scopeB then
-				"they're in the same scope, but the latter is destroyed too quickly"
-			else
-				"the latter is in a different scope that gets destroyed too quickly"
-		)
 	end
 end
+
 return checkLifetime
