@@ -533,7 +533,6 @@ function Graphs.make(
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
-			lastCompute = nil,
 			timeliness = "lazy" :: "lazy",
 			validity = "valid" :: "valid",
 			_evaluate = function()

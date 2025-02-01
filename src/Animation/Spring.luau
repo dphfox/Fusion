@@ -81,7 +81,6 @@ local function Spring<T>(
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
-			lastCompute = nil,
 			scope = scope,
 			validity = "invalid",
 			_activeDamping = -1,

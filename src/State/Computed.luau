@@ -52,7 +52,6 @@ local function Computed<T, S>(
 			dependencySet = {},
 			dependentSet = {},
 			lastChange = nil,
-			lastCompute = nil,
 			scope = scope,
 			validity = "invalid",
 			_EXTREMELY_DANGEROUS_usedAsValue = nil,

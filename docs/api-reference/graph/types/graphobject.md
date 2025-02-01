@@ -15,10 +15,9 @@ export type GraphObject = ScopedObject & {
 	dependencySet: {[GraphObject]: unknown},
 	dependentSet: {[GraphObject]: unknown},
 	lastChange: number?,
-	lastCompute: number?,
 	timeliness: "lazy" | "eager",
 	validity: "valid" | "invalid" | "busy",
-	_evaluate: (GraphObject) -> boolean
+	_evaluate: (GraphObject, lastChange: number?) -> boolean
 }
 ```
 
@@ -74,16 +73,6 @@ object.
 </h3>
 
 The `os.clock()` time of this object's most recent meaningful change, or `nil`
-if the object is newly created.
-
-<h3 markdown>
-	lastCompute
-	<span class="fusiondoc-api-type">
-		: number?
-	</span>
-</h3>
-
-The `os.clock()` time of when this object was most recently computed, or `nil`
 if the object is newly created.
 
 <h3 markdown>
