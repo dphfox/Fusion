@@ -120,4 +120,5 @@ function checkLifetime.bOutlivesA<A, B, Args...>(
 		External.logError("useAfterDestroy", nil, formatter(a, b, ...))
 	end
 end
+
 return checkLifetime

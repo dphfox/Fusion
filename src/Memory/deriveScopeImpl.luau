@@ -13,7 +13,6 @@ local task = nil -- Disable usage of Roblox's task scheduler
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
 local merge = require(Package.Utility.merge)
-local scopePool = require(Package.Memory.scopePool)
 
 -- This return type is technically a lie, but it's required for useful type
 -- checking behaviour.
@@ -35,11 +34,7 @@ local function deriveScopeImpl<T>(
 			)
 		)
 	end
-	local scope = setmetatable(
-		scopePool.reuseAny() :: any or {},
-		metatable
-	)
-	return scope
+	return setmetatable({}, metatable)
 end
 
 return (deriveScopeImpl :: any) :: Types.DeriveScopeConstructor

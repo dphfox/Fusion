@@ -16,11 +16,6 @@ local ERROR_INFO_URL = "https://elttob.uk/Fusion/0.3/api-reference/general/error
 
 local External = {}
 
--- Indicates that a highly time-critical passage of code is running. During
--- critical periods of a program, Fusion might decide to change some of its
--- internal behaviour to be more performance friendly.
-local timeCritical = false
-
 -- Multiplier for running-time safety checks across the Fusion codebase. Used to
 -- stricten tests on infinite loop detection during unit testing.
 External.safetyTimerMultiplier = 1
@@ -45,13 +40,6 @@ function External.setExternalProvider(
 		newProvider.startScheduler()
 	end
 	return oldProvider
-end
-
---[[
-	Returns true if a highly time-critical passage of code is running.
-]]
-function External.isTimeCritical(): boolean
-	return timeCritical
 end
 
 --[[

@@ -11,12 +11,10 @@ local task = nil -- Disable usage of Roblox's task scheduler
 
 local Package = script.Parent.Parent
 local Types = require(Package.Types)
-local External = require(Package.External)
 -- Graph
 local change = require(Package.Graph.change)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
-local never = require(Package.Utility.never)
 local nicknames = require(Package.Utility.nicknames)
 
 type Self<T, S> = Types.Value<T, S>

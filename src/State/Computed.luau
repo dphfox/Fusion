@@ -17,7 +17,6 @@ local External = require(Package.External)
 local parseError = require(Package.Logging.parseError)
 -- Utility
 local isSimilar = require(Package.Utility.isSimilar)
-local never = require(Package.Utility.never)
 -- Graph
 local depend = require(Package.Graph.depend)
 -- State
@@ -27,7 +26,6 @@ local peek = require(Package.State.peek)
 local doCleanup = require(Package.Memory.doCleanup)
 local deriveScope = require(Package.Memory.deriveScope)
 local checkLifetime = require(Package.Memory.checkLifetime)
-local scopePool = require(Package.Memory.scopePool)
 -- Utility
 local nicknames = require(Package.Utility.nicknames)
 
@@ -98,7 +96,6 @@ function class._evaluate<T, S>(
 		return peek(target)
 	end
 	local ok, newValue = xpcall(self._processor, parseError, use, innerScope)
-	local innerScope = scopePool.giveIfEmpty(innerScope)
 	if ok then
 		local similar = isSimilar(self._EXTREMELY_DANGEROUS_usedAsValue, newValue)
 		if self._innerScope ~= nil then
@@ -110,10 +107,7 @@ function class._evaluate<T, S>(
 		return not similar
 	else
 		local errorObj = (newValue :: any) :: Types.Error
-		if innerScope ~= nil then
-			doCleanup(innerScope)
-		end
-		innerScope = nil
+		doCleanup(innerScope)
 		
 		-- this needs to be non-fatal, because otherwise it'd disrupt the
 		-- update process
