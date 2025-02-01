@@ -71,27 +71,27 @@ local function packType(
 
 	elseif typeString == "Region3int16" then
 		return Region3int16.new(
-			Vector3int16.new(numbers[1], numbers[2], numbers[3]),
-			Vector3int16.new(numbers[4], numbers[5], numbers[6])
+			Vector3int16.new(math.round(numbers[1]), math.round(numbers[2]), math.round(numbers[3])),
+			Vector3int16.new(math.round(numbers[4]), math.round(numbers[5]), math.round(numbers[6]))
 		)
 
 	elseif typeString == "UDim" then
-		return UDim.new(numbers[1], numbers[2])
+		return UDim.new(numbers[1], math.round(numbers[2]))
 
 	elseif typeString == "UDim2" then
-		return UDim2.new(numbers[1], numbers[2], numbers[3], numbers[4])
+		return UDim2.new(numbers[1], math.round(numbers[2]), numbers[3], math.round(numbers[4]))
 
 	elseif typeString == "Vector2" then
 		return Vector2.new(numbers[1], numbers[2])
 
 	elseif typeString == "Vector2int16" then
-		return Vector2int16.new(numbers[1], numbers[2])
+		return Vector2int16.new(math.round(numbers[1]), math.round(numbers[2]))
 
 	elseif typeString == "Vector3" then
 		return Vector3.new(numbers[1], numbers[2], numbers[3])
 
 	elseif typeString == "Vector3int16" then
-		return Vector3int16.new(numbers[1], numbers[2], numbers[3])
+		return Vector3int16.new(math.round(numbers[1]), math.round(numbers[2]), math.round(numbers[3]))
 	else
 		return nil
 	end
