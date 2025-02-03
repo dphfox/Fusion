@@ -5,15 +5,11 @@
 	],
 	"tree": {
 		"$className": "DataModel",
-		"ReplicatedStorage": {
-			"$className": "ReplicatedStorage",
-			"Fusion": {
-				"$path": "default.project.json"
-			}
-		},
 		"ServerScriptService": {
-			"$className": "ServerScriptService",
-			"FusionTest": {
+			"src": {
+				"$path": "src"
+			},
+			"test": {
 				"$path": "test"
 			}
 		}
