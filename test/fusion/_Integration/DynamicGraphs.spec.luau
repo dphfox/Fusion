@@ -29,6 +29,7 @@ return function(tiniest: tiniest.Configured): ()
 			expect(numFires).is(2)
 			trigger:set(true)
 			expect(numFires).is(3)
+			scope:doCleanup()
 		end)
 	end)
 end
