@@ -36,7 +36,7 @@ local function Tag(tagName: string): Types.SpecialKey
 						applyTo,
 						value.scope,
 						value.oldestTask,
-						checkLifetime.formatters.boundAttribute,
+						checkLifetime.formatters.boundTag,
 						tagName
 					)
 					Observer(scope, value :: any):onBind(function()
