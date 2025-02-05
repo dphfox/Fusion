@@ -40,14 +40,16 @@ local function Tag(tagName: string): Types.SpecialKey
 						tagName
 					)
 					Observer(scope, value :: any):onBind(function()
-						if peek(value) and not applyTo:HasTag(tagName) then
+						if peek(value) then
 							applyTo:AddTag(tagName)
 						elseif applyTo:HasTag(tagName) then
 							applyTo:RemoveTag(tagName)
 						end
 					end)
 				else
-					applyTo:AddTag(tagName)
+					if value then
+						applyTo:AddTag(tagName)
+					end
 				end
 			end,
 		}
