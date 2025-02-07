@@ -38,9 +38,9 @@ do
 	External.setExternalProvider(RobloxExternal)
 end
 
-local Fusion: Fusion = table.freeze {
+local Fusion: Fusion = table.freeze({
 	-- General
-	version = {major = 0, minor = 4, isRelease = false},
+	version = { major = 0, minor = 4, isRelease = false },
 	Contextual = require(script.Utility.Contextual),
 	Safe = require(script.Utility.Safe),
 
@@ -73,10 +73,11 @@ local Fusion: Fusion = table.freeze {
 	OnChange = require(script.Instances.OnChange),
 	OnEvent = require(script.Instances.OnEvent),
 	Out = require(script.Instances.Out),
+	Tag = require(script.Instances.Tag),
 
 	-- Animation
 	Tween = require(script.Animation.Tween),
 	Spring = require(script.Animation.Spring),
-}
+})
 
 return Fusion
