@@ -53,7 +53,7 @@ type Self<T> = Types.Spring<T> & {
 local class = {}
 class.type = "State"
 class.kind = "Spring"
-class.timeliness = "lazy"
+class.timeliness = "eager"
 
 local METATABLE = table.freeze {__index = class}
 
