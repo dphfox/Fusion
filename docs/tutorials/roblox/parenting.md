@@ -7,11 +7,11 @@ or `nil`.
 ```Lua
 local folder = scope:New "Folder" {
     [Children] = {
-        New "Part" {
+        scope:New "Part" {
             Name = "Gregory",
             Color = Color3.new(1, 0, 0)
         },
-        New "Part" {
+        scope:New "Part" {
             Name = "Sammy",
             Material = "Glass"
         }
