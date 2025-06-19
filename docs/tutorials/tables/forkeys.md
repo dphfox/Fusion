@@ -51,7 +51,7 @@ local foodSet = scope:Value({})
 
 local prefixes = { pie = "tasty", chocolate = "yummy", broccoli = "gross" }
 local renamedFoodSet = scope:ForKeys(foodSet, function(use, scope, food)
-	return prefixes[food] .. food
+	return prefixes[food] .. "_" .. food
 end)
 
 foodSet:set({ pie = true })
@@ -68,7 +68,7 @@ local foodSet = scope:Value({ broccoli = true, chocolate = true })
 
 local prefixes = { chocolate = "yummy", broccoli = scope:Value("gross") }
 local renamedFoodSet = scope:ForKeys(foodSet, function(use, scope, food)
-	return use(prefixes[food]) .. food
+	return use(prefixes[food]) .. "_" .. food
 end)
 
 print(peek(renamedFoodSet)) --> { gross_broccoli = true, yummy_chocolate = true }
