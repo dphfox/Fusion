@@ -123,7 +123,7 @@ local folder = scope:New "Folder" {
         -- state object containing children (or nil)
         scope:Computed(function(use)
             return if use(includeModel)
-                then modelChildren:GetChildren() -- array of children
+                then modelChildren -- array of children
                 else nil
         end)
     }
@@ -152,7 +152,7 @@ local folder = scope:New "Folder" {
 			},
 			scope:Computed(function(use)
 				return if use(includeModel)
-					then modelChildren:GetChildren() -- array of children
+					then modelChildren -- array of children
 					else nil
 			end)
 		}
