@@ -5,3 +5,4 @@
 [tools]
 rojo = "rojo-rbx/rojo@7.4.1"
 selene = "Kampfkarren/selene@0.26.1"
+luau-lsp = "JohnnyMorganz/luau-lsp@1.38.1"

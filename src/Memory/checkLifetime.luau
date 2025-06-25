@@ -47,6 +47,16 @@ function checkLifetime.formatters.boundAttribute(
 	return `The {boundName} (bound to the {attribute} attribute)`, `the {selfName} instance`
 end
 
+function checkLifetime.formatters.boundTag(
+	instance: Instance,
+	bound: unknown,
+	tag: string
+): (string, string)
+	local selfName = instance.Name
+	local boundName = nameOf(bound, "value")
+	return `The {boundName} (bound to the {tag} CollectionService tag)`, `the {selfName} instance`
+end
+
 function checkLifetime.formatters.propertyOutputsTo(
 	instance: Instance,
 	bound: unknown,
