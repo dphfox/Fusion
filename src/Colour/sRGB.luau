@@ -16,40 +16,32 @@ local sRGB = {}
 -- Equivalent to f_inv. Takes a linear sRGB channel and returns
 -- the sRGB channel
 local function transform(channel: number): number
-    if channel >= 0.04045 then
-        return ((channel + 0.055)/(1 + 0.055))^2.4
-    else
-        return channel / 12.92
-    end
+	if channel < 0.04045 then
+		return channel / 12.92
+	end
+
+	return ((channel + 0.055) / 1.055) ^ 2.4
 end
 
 -- Equivalent to f. Takes an sRGB channel and returns
 -- the linear sRGB channel
 local function inverse(channel: number): number
-    if channel >= 0.0031308 then
-        return (1.055) * channel^(1.0/2.4) - 0.055
-    else
-        return 12.92 * channel
-    end
+	if channel < 0.0031308 then
+		return 12.92 * channel
+	end
+
+	return (1.055 * channel ^ (1 / 2.4)) - 0.055
 end
 
 -- Uses a transformation to convert linear RGB into sRGB.
 function sRGB.fromLinear(rgb: Color3): Color3
-    return Color3.new(
-        transform(rgb.R),
-        transform(rgb.G),
-        transform(rgb.B)
-    )
+	return Color3.new(inverse(rgb.R), inverse(rgb.G), inverse(rgb.B))
 end
 
 -- Converts an sRGB into linear RGB using a
 -- (The inverse of sRGB.fromLinear).
 function sRGB.toLinear(srgb: Color3): Color3
-    return Color3.new(
-        inverse(srgb.R),
-        inverse(srgb.G),
-        inverse(srgb.B)
-    )
+	return Color3.new(transform(srgb.R), transform(srgb.G), transform(srgb.B))
 end
 
 return sRGB
