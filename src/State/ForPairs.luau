@@ -64,7 +64,7 @@ local function SubObject<KI, KO, VI, VO, S>(
 			return {key = outputKey, value = outputValue}
 		else
 			local error: Types.Error = outputKey :: any
-			error.context = `while processing key {tostring(inputValue)} and value {tostring(inputValue)}`
+			error.context = `while processing key {tostring(inputKey)} and value {tostring(inputValue)}`
 			External.logErrorNonFatal("callbackError", error)
 			doCleanup(scope)
 			table.clear(scope)
