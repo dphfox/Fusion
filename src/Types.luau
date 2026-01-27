@@ -43,6 +43,8 @@ export type Task =
 	() -> () |
 	{destroy: (unknown) -> ()} |
 	{Destroy: (unknown) -> ()} |
+	{disconnect: (unknown) -> ()} |
+	{Disconnect: (unknown) -> ()} |
 	{Task}
 
 -- A scope of tasks to clean up.
