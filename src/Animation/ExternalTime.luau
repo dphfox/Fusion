@@ -24,7 +24,6 @@ class.type = "State"
 class.kind = "ExternalTime"
 class.timeliness = "lazy"
 class.dependencySet = table.freeze {}
-class._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 
 local METATABLE = table.freeze {__index = class}
 
@@ -40,8 +39,9 @@ local function ExternalTime(
 			dependentSet = {},
 			lastChange = nil,
 			scope = scope,
-			validity = "invalid"
-		}, 
+			validity = "invalid",
+			_EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep(),
+		},
 		METATABLE
 	) :: any
 	local destroy = function()
@@ -66,13 +66,13 @@ function class._evaluate(
 	-- the external update step runs, it's safe enough to assume that the result
 	-- has always meaningfully changed. The worst that can happen is unexpected
 	-- refreshing for people doing unorthodox shenanigans, which is an OK trade.
+	self._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 	return true
 end
 
 External.bindToUpdateStep(function(
 	externalNow: number
 ): ()
-	class._EXTREMELY_DANGEROUS_usedAsValue = External.lastUpdateStep()
 	for _, timer in allTimers do
 		change(timer)
 	end

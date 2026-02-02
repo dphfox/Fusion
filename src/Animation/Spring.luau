@@ -110,7 +110,7 @@ local function Spring<T>(
 	self.oldestTask = destroy
 	nicknames[self.oldestTask] = "Spring"
 	table.insert(scope, destroy)
-	
+
 	if goalState ~= nil then
 		checkLifetime.bOutlivesA(
 			scope, self.oldestTask,
@@ -203,8 +203,12 @@ function class._evaluate<T>(
 		self._EXTREMELY_DANGEROUS_usedAsValue = self._goal :: T
 		return false
 	end
-	-- depend(self, goal)
-	local nextFrameGoal = peek(goal)
+
+	local nextFrameGoal = depend(self, goal)
+
+	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
+	local elapsed = depend(self, stopwatch)
+
 	-- Protect against NaN goals.
 	if nextFrameGoal ~= nextFrameGoal then
 		External.logWarn("springNanGoal")
@@ -213,11 +217,6 @@ function class._evaluate<T>(
 	local nextFrameGoalType = typeof(nextFrameGoal)
 	local discontinuous = nextFrameGoalType ~= self._activeType
 
-	local stopwatch = self._stopwatch :: Stopwatch.Stopwatch
-	local elapsed = peek(stopwatch)
-	depend(self, stopwatch)
-
-	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 	local newValue: T
 
 	if discontinuous then
@@ -225,16 +224,14 @@ function class._evaluate<T>(
 		-- graph, even if simulation is logically one frame behind, because it
 		-- makes the whole graph behave more consistently.
 		newValue = nextFrameGoal
-	elseif elapsed <= 0 then
-		newValue = oldValue
 	else
 		-- Calculate spring motion.
 		-- IMPORTANT: use the parameters from last frame, not this frame. We're
 		-- integrating the motion that happened over the last frame, after all.
 		-- The stopwatch will have captured the length of time needed correctly.
 		local posPos, posVel, velPos, velVel = springCoefficients(
-			elapsed, 
-			self._activeDamping, 
+			elapsed,
+			self._activeDamping,
 			self._activeSpeed
 		)
 		local isMoving = false
@@ -257,14 +254,11 @@ function class._evaluate<T>(
 			self._activeLatestV[index] = latestV
 		end
 		-- Sleep and snap to goal if the motion has decayed to a negligible amount.
-		if not isMoving then
-			for index = 1, self._activeNumSprings do
-				self._activeLatestP[index] = self._activeTargetP[index]
-			end
-			-- TODO: figure out how to do sleeping correctly for single frame
-			-- changes
-			-- stopwatch:pause()
-			-- stopwatch:zero()
+		if not isMoving and stopwatch:isPlaying() then
+			self._activeLatestP = table.clone(self._activeTargetP)
+			self._activeLatestV = table.create(self._activeNumSprings, 0)
+			stopwatch:pause()
+			stopwatch:zero()
 		end
 		-- Pack springs into final value.
 		newValue = packType(self._activeLatestP, self._activeType) :: any
@@ -305,6 +299,7 @@ function class._evaluate<T>(
 	-- Don't need to use the similarity test here because this code doesn't
 	-- deal with tables, and NaN is already guarded against, so the similarity
 	-- test doesn't actually add any new safety here.
+	local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 	self._EXTREMELY_DANGEROUS_usedAsValue = newValue
 	return oldValue ~= newValue
 end

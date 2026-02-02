@@ -25,12 +25,14 @@ local nicknames = require(Package.Utility.nicknames)
 export type Stopwatch = Types.StateObject<number> & {
 	zero: (Stopwatch) -> (),
 	pause: (Stopwatch) -> (),
-	unpause: (Stopwatch) -> ()
+	unpause: (Stopwatch) -> (),
+	isPlaying: (Stopwatch) -> boolean,
 }
 
 type Self = Stopwatch & {
 	_measureTimeSince: number,
 	_playing: boolean,
+	_zeroFlag: boolean,
 	_timer: Types.StateObject<number>
 }
 
@@ -58,8 +60,9 @@ local function Stopwatch(
 			_EXTREMELY_DANGEROUS_usedAsValue = 0,
 			_measureTimeSince = 0, -- this should be set on unpause
 			_playing = false,
-			_timer = timer
-		}, 
+			_zeroFlag = true,
+			_timer = timer,
+		},
 		METATABLE
 	) :: any
 	local destroy = function()
@@ -81,12 +84,9 @@ end
 function class.zero(
 	self: Self
 ): ()
-	local newTimepoint = peek(self._timer)
-	if newTimepoint ~= self._measureTimeSince then
-		self._measureTimeSince = newTimepoint
-		self._EXTREMELY_DANGEROUS_usedAsValue = 0
-		change(self)
-	end
+	self._zeroFlag = true
+	self._measureTimeSince = peek(self._timer)
+	change(self)
 end
 
 function class.pause(
@@ -103,17 +103,28 @@ function class.unpause(
 ): ()
 	if self._playing == false then
 		self._playing = true
-		self._measureTimeSince = peek(self._timer) - self._EXTREMELY_DANGEROUS_usedAsValue
+		self._measureTimeSince = peek(self._timer) - (
+			if self._zeroFlag then
+				0
+			else
+				self._EXTREMELY_DANGEROUS_usedAsValue
+		)
 		change(self)
 	end
+end
+
+function class.isPlaying(
+	self: Self
+): boolean
+	return self._playing
 end
 
 function class._evaluate(
 	self: Self
 ): boolean
 	if self._playing then
-		depend(self, self._timer)
-		local currentTime = peek(self._timer)
+		self._zeroFlag = false
+		local currentTime = depend(self, self._timer)
 		local oldValue = self._EXTREMELY_DANGEROUS_usedAsValue
 		local newValue = currentTime - self._measureTimeSince
 		self._EXTREMELY_DANGEROUS_usedAsValue = newValue
@@ -121,7 +132,6 @@ function class._evaluate(
 	else
 		return false
 	end
-	
 end
 
 table.freeze(class)
