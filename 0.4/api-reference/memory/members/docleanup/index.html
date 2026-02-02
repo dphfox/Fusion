@@ -3015,6 +3015,8 @@ to determine what should happen.</p>
 <li>if <code>function</code>, it is called</li>
 <li>...else if <code>{destroy: (self) -&gt; ()}</code>, <code>:destroy()</code> is called </li>
 <li>...else if <code>{Destroy: (self) -&gt; ()}</code>, <code>:Destroy()</code> is called</li>
+<li>...else if <code>{disconnect: (self) -&gt; ()}</code>, <code>:disconnect()</code> is called </li>
+<li>...else if <code>{Disconnect: (self) -&gt; ()}</code>, <code>:Disconnect()</code> is called</li>
 <li>...else if <code>{any}</code>, <code>doCleanup</code> is called on all members</li>
 </ul>
 <p>When Fusion is running inside of Roblox:</p>
