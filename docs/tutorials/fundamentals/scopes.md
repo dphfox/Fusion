@@ -77,6 +77,7 @@ Scopes passed to `doCleanup` can contain:
 - Roblox instances to destroy
 - Roblox event connections to disconnect
 - Your own objects with `:destroy()` or `:Destroy()` methods to be called
+- Your own objects with `:disconnect()` or `:Disconnect()` methods to be called
 - Other nested scopes to be cleaned up
 
 You can add these manually using `table.insert` if you need custom behaviour,

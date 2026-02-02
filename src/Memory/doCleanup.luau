@@ -41,7 +41,14 @@ local function doCleanup(
 		task()
 
 	elseif typeof(task) == "table" then
-		local task = (task :: any) :: {Destroy: (...unknown) -> (...unknown)?, destroy: (...unknown) -> (...unknown)?}
+		local task = (
+			task :: any
+		) :: {
+			Destroy: (...unknown) -> ...unknown?,
+			destroy: (...unknown) -> ...unknown?,
+			Disconnect: (...unknown) -> ...unknown?,
+			disconnect: (...unknown) -> ...unknown?,
+		}
 
 		-- case 4: destroy() function
 		if typeof(task.destroy) == "function" then
@@ -65,6 +72,16 @@ local function doCleanup(
 			end
 
 			ExternalDebug.untrackScope(task)
+
+		-- case 7: Disconnect() function
+		elseif typeof(task.Disconnect) == "function" then
+			local task = (task :: any) :: { Disconnect: (...unknown) -> ...unknown }
+			task:Disconnect()
+
+		-- case 8: disconnect() function
+		elseif typeof(task.disconnect) == "function" then
+			local task = (task :: any) :: { disconnect: (...unknown) -> ...unknown }
+			task:disconnect()
 		end
 	end
 	

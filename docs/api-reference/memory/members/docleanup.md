@@ -42,6 +42,8 @@ to determine what should happen.
 - if `function`, it is called
 - ...else if `{destroy: (self) -> ()}`, `:destroy()` is called 
 - ...else if `{Destroy: (self) -> ()}`, `:Destroy()` is called
+- ...else if `{disconnect: (self) -> ()}`, `:disconnect()` is called 
+- ...else if `{Disconnect: (self) -> ()}`, `:Disconnect()` is called
 - ...else if `{any}`, `doCleanup` is called on all members
 
 When Fusion is running inside of Roblox:

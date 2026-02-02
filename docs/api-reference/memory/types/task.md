@@ -16,6 +16,8 @@ export type Task =
 	| () -> () 
 	| {destroy: (self) -> ()} 
 	| {Destroy: (self) -> ()} 
+	| {disconnect: (self) -> ()} 
+	| {Disconnect: (self) -> ()} 
 	| {Task}
 ```
 Types which [`doCleanup`](../../members/docleanup) has defined behaviour for.

@@ -74,6 +74,34 @@ return function()
 		expect(didRun).to.equal(true)
 	end)
 
+	it("should invoke :disconnect() methods", function()
+		local expect = getfenv().expect
+		
+		local didRun = false
+
+		doCleanup({
+			disconnect = function()
+				didRun = true
+			end
+		})
+
+		expect(didRun).to.equal(true)
+	end)
+
+	it("should invoke :Disconnect() methods", function()
+		local expect = getfenv().expect
+		
+		local didRun = false
+
+		doCleanup({
+			Disconnect = function()
+				didRun = true
+			end
+		})
+
+		expect(didRun).to.equal(true)
+	end)
+
 	it("should clean up contents of arrays", function()
 		local expect = getfenv().expect
 		
