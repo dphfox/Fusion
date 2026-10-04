@@ -83,6 +83,9 @@ function RobloxExternal.startScheduler()
 			connection:Disconnect()
 		end
 	end
+	-- Animations created before the first frame must start on the same clock
+	-- as subsequent update steps.
+	performUpdateStep()
 end
 
 --[[
