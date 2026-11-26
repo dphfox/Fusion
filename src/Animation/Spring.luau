@@ -157,6 +157,10 @@ function class.addVelocity<T>(
 	end
 	self._activeStartP = table.clone(self._activeLatestP)
 	self._activeStartV = newStartV
+	-- Keep the latest state in sync, so another setter called before the next
+	-- frame builds on this one instead of the state from before it.
+	self._activeLatestP = table.clone(self._activeStartP)
+	self._activeLatestV = table.clone(self._activeStartV)
 	self._stopwatch:zero()
 	self._stopwatch:unpause()
 	change(self)
@@ -173,6 +177,10 @@ function class.setPosition<T>(
 	end
 	self._activeStartP = unpackType(newValue, newType)
 	self._activeStartV = table.clone(self._activeLatestV)
+	-- Keep the latest state in sync, so another setter called before the next
+	-- frame builds on this one instead of the state from before it.
+	self._activeLatestP = table.clone(self._activeStartP)
+	self._activeLatestV = table.clone(self._activeStartV)
 	self._stopwatch:zero()
 	self._stopwatch:unpause()
 	change(self)
@@ -189,6 +197,10 @@ function class.setVelocity<T>(
 	end
 	self._activeStartP = table.clone(self._activeLatestP)
 	self._activeStartV = unpackType(newValue, newType)
+	-- Keep the latest state in sync, so another setter called before the next
+	-- frame builds on this one instead of the state from before it.
+	self._activeLatestP = table.clone(self._activeStartP)
+	self._activeLatestV = table.clone(self._activeStartV)
 	self._stopwatch:zero()
 	self._stopwatch:unpause()
 	change(self)
